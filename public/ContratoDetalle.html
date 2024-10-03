@@ -331,7 +331,7 @@
                         <li id="ofertas">
                             <a href="OfertaGeneral.html"><i class="fa fa-fw fa-file-o"></i> Ofertas</a>
                         </li>
-                        <li id="contratos">
+                        <li id="contratos-terceros">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
@@ -342,11 +342,17 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="contratos">
+                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
+                                </li>
+                                <li>
+                                    <a href="RenovacionContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Renovación contratos de alquileres</a>
+                                </li>
+                                <li>
+                                    <a href="ActualizacionIpcContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Actualización IPC contratos de alquileres</a>
                                 </li>
                             </ul>
                         </li>
@@ -611,14 +617,33 @@
                                                                                             <input id="chkContratoCerrado" type="checkbox" name="chkContratoCerrado" data-bind="checked: contratoCerrado"/> Contrato cerrado
                                                                                         </div>
                                                                                     </section>
-                                                                                    <section class="col col-md-8">
-                                                                                    </section>
+                                                                                    
                                                                                     <section class="col col-md-2">
                                                                                         <label class="label">Fecha cierre contrato</label>
                                                                                         <label class="input">
                                                                                             <input id="txtFechaCierreContrato" name="txtFechaCierreContrato" data-bind="value: fechaCierreContrato" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                         </label>
                                                                                     </section>
+                                                                                    <section class="col col-md-2">
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <label class="label">Fecha renovación IPC</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtFechaRenovacionIpc" name="txtFechaRenovacionIpc" data-bind="value: fechaRenovacionIpc" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                        </label>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <label class="label">IPC</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtIpc" name="txtIpc" data-bind="value: ipc" disabled/>
+                                                                                        </label>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <div style="margin-top: 10%;">
+                                                                                            <input id="chkRenovar" type="checkbox" name="chkRenovar" data-bind="checked: renovar"/> Renovar (Alquileres)
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    
                                                                                 </div>
                                                                                 <div class="row">
                                                                                         <section class="col col-md-2">
@@ -705,13 +730,13 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <section class="col col-md-2">
+                                                                                <section class="col col-md-6">
                                                                                     <label class="label">Forma de pago</label>
                                                                                     <label style="width:100%; height:50px;">
                                                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-4">
                                                                                     <label class="label">IBAN del cliente</label>
                                                                                     <label class="input">
                                                                                         <input id="txtIban" name="txtIban" data-bind="value: iban" disabled/>
@@ -723,10 +748,18 @@
                                                                                         <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeClienteFormat" disabled/>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-2">
-                                                                                    <label class="label">Certificación final</label>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Certificación final (Obras)</label>
                                                                                     <label class="input">
                                                                                         <input id="txtCertificacionFinal" name="txtCertificacionFinal" data-bind="value: certificacionFinal"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Importe anual para la renovación (Alquileres)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtImporteAnualRenovacion" name="txtImporteAnualRenovacion" data-bind="value: importeAnualRenovacionFormat" disabled/>
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
@@ -735,13 +768,12 @@
                                                                                         <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-1">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">% Reten</label>
                                                                                     <label class="input">
                                                                                         <input id="txtPorcentajeRetencion" name="txtPorcentajeRetencion" data-bind="value: porcentajeRetencion"/>
                                                                                     </label>
                                                                                 </section>
-                                                                                
                                                                             </div>
                                                                             <div class="row">
 
@@ -757,13 +789,13 @@
                                                                                         <input id="txtFechaFinal" name="txtFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Preaviso</label>
                                                                                     <label class="input">
                                                                                         <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label" id="labObras">Fecha inicio fact.</label>
                                                                                     <label class="label" id="labNoObras">Fecha primera factura</label>
                                                                                     <label class="input">
@@ -774,6 +806,12 @@
                                                                                     <label class="label">Fecha original</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaOriginal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Fecha fin alquiler</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaFinAlquiler" name="txtFechaFinAlquiler" data-bind="value: fechaFinAlquiler" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
                                                                             </div>
@@ -2870,6 +2908,7 @@
         <!-- /.modal-dialog -->
     </div>
     <!--End Modal-->
+    <!-- Modal -->
     <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -2925,6 +2964,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>  
+    <!--End modal-->
     <!-- Modal -->
     <div class="modal fade" id="modalConcepto" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">

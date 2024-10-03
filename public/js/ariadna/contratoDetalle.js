@@ -222,6 +222,11 @@ function initForm() {
             vm.fechaCierreContrato(null);
         }
       });
+
+    $("#txtFechaInicio").change(function (e) {
+        if( vm.contratoId() == 0) vm.fechaOriginal(this.value);
+    });
+
     
 
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
@@ -925,6 +930,15 @@ function admData() {
     //
     self.files = ko.observable();
 
+    //IPC
+    self.fechaRenovacionIpc = ko.observable();
+    self.ipc = ko.observable();
+    //
+    self.renovar = ko.observable();
+    self.importeAnualRenovacion = ko.observable();
+    self.importeAnualRenovacionFormat = ko.observable();
+    self.fechaFinAlquiler = ko.observable();
+
 }
 
 function loadData(data) {  
@@ -950,10 +964,19 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
+    //
     vm.importeCliente(data.importeCliente);
     vm.importeClienteFormat(data.importeCliente);
+    vm.importeAnualRenovacion(data.importeAnualRenovacion);
+    vm.importeAnualRenovacionFormat(numeral(data.importeAnualRenovacion).format('0,0.00'));
+
     vm.certificacionFinal(data.certificacionFinal);
     loadTipoProyecto(data.tipoProyectoId);
+    vm.fechaRenovacionIpc(spanishDate(data.fechaRenovacionIpc));
+    vm.ipc(data.ipc);
+    vm.renovar(data.renovar);
+    vm.fechaFinAlquiler(spanishDate(data.fechaFinAlquiler));
+    
     
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);
@@ -1017,7 +1040,7 @@ function loadData(data) {
         $('#btnAltaPrefactura').hide();
     }
     loadDepartamento(data.tipoContratoId);
-    recalcularCostesImportesDesdeCoste();
+    recalcularCostesImportesDesdeCoste(true);
     cargaTablaDocumentacion();
     
     if(data.tipoContratoId == 8) {
@@ -1284,6 +1307,11 @@ var generarContratoDb = function () {
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
             "liquidarBasePrefactura": vm.liquidarBase(),
+            "fechaRenovacionIpc": spanishDbDate(vm.fechaRenovacionIpc()),
+            "ipc": vm.ipc(),
+            "renovar": vm.renovar(),
+            "fechaFinAlquiler": spanishDbDate(vm.fechaFinAlquiler()),
+            "importeAnualRenovacion": vm.importeAnualRenovacion()
         }
     };
     if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -2191,7 +2219,7 @@ var cargaAgente = function (id, encarga) {
         if(contratoId != 0) {
                     
         } else {
-            recalcularCostesImportesDesdeCoste();
+            recalcularCostesImportesDesdeCoste(encarga);
         }
     });
 };
@@ -2312,7 +2340,7 @@ var cambioCampoConRecalculoDesdeCoste = function () {
 };
 
 
-var recalcularCostesImportesDesdeCoste = function () {
+var recalcularCostesImportesDesdeCoste = function (encarga) {
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
@@ -2330,10 +2358,12 @@ var recalcularCostesImportesDesdeCoste = function () {
     //if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100));
+        if(vm.tipoContratoId() == 3) { if(!encarga) vm.importeAnualRenovacion(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)); }
         vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
     }
     //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    if(vm.tipoContratoId() == 3) { if(!encarga) vm.importeAnualRenovacion(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1)); }
     if (vm.mantenedorId()) {
         vm.importeMantenedor(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio());
         vm.importeMantenedor(roundToTwo(vm.importeMantenedor()));
@@ -2342,6 +2372,13 @@ var recalcularCostesImportesDesdeCoste = function () {
      
     vm.importeCliente(roundToTwo(vm.importeCliente()));
     vm.importeClienteFormat(numeral(vm.importeCliente()).format('0,0.00'));
+    if(vm.tipoContratoId() == 3) {
+        if(!encarga) {
+            vm.importeAnualRenovacion(roundToTwo(vm.importeCliente()));
+            vm.importeAnualRenovacionFormat(numeral(vm.importeCliente()).format('0,0.00'));
+        }
+    }
+    //
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
@@ -2350,7 +2387,9 @@ var recalcularCostesImportesDesdeCoste = function () {
 
 var calcularInverso = function(carga) {
     if(!carga) {
-        if(!vm.importeCliente()) vm.importeCliente(0)
+        if(!vm.importeCliente()) { 
+            vm.importeCliente(0); 
+        }
         if(!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     
         if(!vm.porcentajeBeneficio()) {
@@ -5922,9 +5961,9 @@ var nuevoContratoOK = function () {
                 required: true,
                 fechaFinalSuperiorAInicial: true
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: true
-            }
+            } */
         },
         // Messages for form validation
         messages: {
@@ -5934,9 +5973,9 @@ var nuevoContratoOK = function () {
             txtNFechaFinal: {
                 required: "Debe elegir una fecha"
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: "Debe elegir una fecha"
-            }
+            } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {

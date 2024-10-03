@@ -279,13 +279,13 @@ function buscarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                loadTablaFacturas(data);
-                // mostramos el botén de alta
-                $("#btnAlta").show();
-                $('#checkMain').prop('checked', false);
                 //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
                 if(data) {
                     if(data.length > 0) {
+                        loadTablaFacturas(data);
+                        // mostramos el botón de alta
+                        $("#btnAlta").show();
+                        $('#checkMain').prop('checked', false);
                         for(var i = 0; i < data.length; i++) {
                             if(data[i].total == 0) {
                                 facturasCero.push(data[i].vNum);

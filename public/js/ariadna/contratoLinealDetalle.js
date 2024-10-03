@@ -229,6 +229,11 @@ function initForm() {
         }
       });
 
+      
+    $("#txtFechaInicio").change(function (e) {
+        if( vm.contratoId() == 0) vm.fechaOriginal(this.value);
+    });
+
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
         if (e.target.hash == '#s3'){
@@ -5968,9 +5973,9 @@ var nuevoContratoOK = function () {
                 required: true,
                 fechaFinalSuperiorAInicial: true
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: true
-            }
+            } */
         },
         // Messages for form validation
         messages: {
@@ -5980,9 +5985,9 @@ var nuevoContratoOK = function () {
             txtNFechaFinal: {
                 required: "Debe elegir una fecha"
             },
-            txtNFechaNuevoContrato: {
+          /*   txtNFechaNuevoContrato: {
                 required: "Debe elegir una fecha"
-            }
+            } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {
