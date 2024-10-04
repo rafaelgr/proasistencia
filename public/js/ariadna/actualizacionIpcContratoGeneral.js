@@ -5,6 +5,7 @@ Funciones js par la página ActualizarContratoGeneral.html
 ---------------------------------------------------------------------------*/
 
 var dataContratos;
+var dataContratosActualizados;
 var contratoId;
 var usuario;
 var departamento;
@@ -27,6 +28,10 @@ function initForm() {
      $("#cmbDepartamentosTrabajo").select2(select2Spanish());
 
      $("#frmActualizarIpcContratos").submit(function () {
+        return false;
+    });
+
+    $("#frmRevertirIpcContratos").submit(function () {
         return false;
     });
     
@@ -641,7 +646,11 @@ var prepararActualizacionIpc = function () {
     //mensRenovacion();
     limpiaDatosModal();
 };
+var preparaRestauracionIpc = function () {
+    //primero buscamos los contratos que se pueden actualizar
+    getContratosActulizados();
 
+};
 var mensRenovacion = function() {
     // mensaje de confirmación
     var mens = "¿Se actualizarán todos los contratos seleccionados. ¿Realmente desea realizar esta acción?";
@@ -691,6 +700,28 @@ var actualizarContratos = function() {
     })
 }
 
+var getContratosActulizados = function() {
+    let url = myconfig.apiUrl + "/api/contratos/actualizados/precio";
+    let m = '';
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) return;
+        if(data) {
+            m = JSON.stringify(data);
+            if(data.length > 0) {
+                var mens = "Estos son los contratros que se van a actualizar.\n" + m;
+                mensNormal(mens);
+                //$('#modalActualizarIpcContratos').modal('hide');
+                //$('#btnActualizarIpcContratos').hide();
+                //limpiaDatos();
+                //loadTablaContratos(null);
+            } else {
+                var mens = "No se ha actualizado nada, los contratos seleccionados no tienen prefacturas o estas no son posteriores a la fecha de renovación del IPC.";
+                mensAlerta(mens);
+            }
+        }
+    })
+}
+
 function limpiaDatos () {
     vm.desdeFecha(null);
     vm.hastaFecha(null);
@@ -709,4 +740,113 @@ function limpiaDatosModal () {
 imprimirInforme = function () {
     var url = "InfContratos.html";
     window.open(url, '_blank');
+}
+
+//funciones relacionadas con r4evertir el IPC
+
+function initTablaContratosActualizados() {
+
+
+    tablaContratosActualizados = $('#dt_contrato').DataTable({
+        bSort: true,
+        responsive: true,
+    /*     columnDefs: [
+            { "sType": "date-uk", "targets": [3, 4] }
+        ], */
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+       
+        autoWidth: true,
+        paging: true,
+        "pageLength": 100,
+        preDrawCallback: function () { },
+        rowCallback: function (nRow) { },
+        drawCallback: function (oSettings) { },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataContratosActualizados,
+        columns: [
+            { data: "referencia" },
+           
+            {
+                data: "importeCliente",
+                render: function (data, type, row) {
+                    var string = numeral(data).format('0,0.00');
+                    return string;
+                }
+            },
+            {
+                data: "antTotalCliente",
+                render: function (data, type, row) {
+                    var string = numeral(data).format('0,0.00');
+                    return string;
+                }
+            },
+            {
+                data: "importeAnualRenovacion",
+                render: function (data, type, row) {
+                    var string = numeral(data).format('0,0.00');
+                    return string;
+                }
+            },
+            {
+                data: "precaturas",
+                
+            },
+           
+            {
+                data: "contratoId",
+                render: function (data, type, row) {
+                    var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteContrato(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-success' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                    return html;
+                },
+                responsivePriority: 1
+            }
+        ]
+    });
+
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+
+        "date-uk-asc": function (a, b) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+
+        "date-uk-desc": function (a, b) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
+    // Apply the filter
+    $("#dt_contrato thead th input[type=text]").on('keyup change', function () {
+        tablaContratosActualizados
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
+    });
+
 }

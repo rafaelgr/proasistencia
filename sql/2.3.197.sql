@@ -8,3 +8,7 @@ CREATE TABLE `prefacturas_lineas_actualizadas`(
   `coste` DECIMAL(14,4),
   PRIMARY KEY (`prefacturaPrecioId`)
 );
+
+ALTER TABLE `contratos`   
+  ADD COLUMN `antTotalCliente` DECIMAL(12,2) DEFAULT 0 NULL AFTER `fechaFinAlquiler`,
+  ADD COLUMN `fechaActulizacionContrato` DATE NULL AFTER `antTotalCliente`;
