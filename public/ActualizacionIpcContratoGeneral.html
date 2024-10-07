@@ -635,7 +635,7 @@
                                                 <button id="btnActualizarIpcContratos" title="Actualizar contratos" data-toggle="modal" data-target="#modalActualizarIpcContratos" onclick="prepararActualizacionIpc()" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-repeat"></i>
                                                 </button>
-                                                <button id="btnDeshacerIpcContratos" title="Restaura última actualización contratos" onclick="preparaRestauracionIpc()" class="btn btn-primary btn-circle btn-lg">
+                                                <button id="btnDeshacerIpcContratos" title="Restaura última actualización contratos" data-toggle="modal" data-target="#modalRevertirIpcContratos" onclick="preparaRestauracionIpc()" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-fast-backward"></i>
                                                 </button>
                                                 <button id="btnPrint" title="Informe" class="btn btn-warning btn-circle btn-lg">
@@ -818,7 +818,7 @@
 <!--End modal-->
  <!-- Modal -->
  <div class="modal fade" id="modalRevertirIpcContratos" tabindex="-1" role="dialog">
-    <div class="modal-dialog" style=" width: 300px">
+    <div class="modal-dialog" style="width: 95%;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -831,7 +831,7 @@
                     <fieldset>
                     </fieldset>
                     <footer>
-                        <button id="btnRevertirIpcContratos" class="btn btn-primary" onclick="aceptarContratosNuevos()">
+                        <button id="btnRevertirIpcContratos" class="btn btn-primary" onclick="revertirIpcActualizado()">
                             REVERTIR
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -839,7 +839,7 @@
                         </button>
                     </footer>
                 </form>
-                <div id="tbFacturasRegistros">
+                <div id="tbContratosActualizados">
                     <table id="dt_contratosActualizados" class="table table-striped table-bordered table-hover"  style="width: 100%;">
                         <thead>
                             <tr>

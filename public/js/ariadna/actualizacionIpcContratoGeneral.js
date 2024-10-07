@@ -9,6 +9,8 @@ var dataContratosActualizados;
 var contratoId;
 var usuario;
 var departamento;
+let ids = [];
+var tablaContratosActualizados;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -39,6 +41,7 @@ function initForm() {
         if(err) return;
         ajustaDepartamentos(data)
         initTablaContratos();
+        initTablaContratosActualizados();
         // ocultamos el botón de alta hasta que se haya producido una búsqueda
         $("#btnActualizarIpcContratos").hide();
         //cargarContratos()();
@@ -587,39 +590,9 @@ function ajustaDepartamentos(data) {
 
 var aceptarContratosNuevos = function () {
     if (!actualizarIpcOk()) return;
-    //primero comprobamos que los implicados en los contratos estén de alta
-   /*  llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
-        if (err) {
-            return mensErrorAjax(err);
-        }
-        if(data) { //si no se encuentra activo
-            // mensaje de confirmación
-            //procesamos el mansaje
-            var mens = "Los siguientes implicados en el contrato no se encuantran activos.<br>"
-            for(let d of data) {
-                mens += JSON.stringify(d) + "<br>";
-            }
-            mens = mens.replace(/["{}]/g, '');
-            mens += "¿Realmente desea actualizar el contrato?.";
-            $.SmartMessageBox({
-                title: "<i class='fa fa-info'></i> Mensaje",
-                content: mens,
-                buttons: '[Aceptar][Cancelar]'
-            }, function (ButtonPressed) {
-                if (ButtonPressed === "Aceptar") {
-                    actualizarContratos();
-                }
-                if (ButtonPressed === "Cancelar") {
-                    // no hacemos nada (no quiere borrar)
-                    return;
-                }
-            });
-        } else {
-            actualizarContratos();
-        }
-    }); */
     mensRenovacion()
 };
+
 
 var actualizarIpcOk = function () {
     $('#frmActualizarIpcContratos').validate({
@@ -708,12 +681,7 @@ var getContratosActulizados = function() {
         if(data) {
             m = JSON.stringify(data);
             if(data.length > 0) {
-                var mens = "Estos son los contratros que se van a actualizar.\n" + m;
-                mensNormal(mens);
-                //$('#modalActualizarIpcContratos').modal('hide');
-                //$('#btnActualizarIpcContratos').hide();
-                //limpiaDatos();
-                //loadTablaContratos(null);
+                loadTablaContratosActualizados(data);
             } else {
                 var mens = "No se ha actualizado nada, los contratos seleccionados no tienen prefacturas o estas no son posteriores a la fecha de renovación del IPC.";
                 mensAlerta(mens);
@@ -747,7 +715,7 @@ imprimirInforme = function () {
 function initTablaContratosActualizados() {
 
 
-    tablaContratosActualizados = $('#dt_contrato').DataTable({
+    tablaContratosActualizados = $('#dt_contratosActualizados').DataTable({
         bSort: true,
         responsive: true,
     /*     columnDefs: [
@@ -809,8 +777,11 @@ function initTablaContratosActualizados() {
                 }
             },
             {
-                data: "precaturas",
-                
+                data: "prefacturas",
+                render: function (data, type, row) {
+                    if(data == 'noPrefacturas') return 'NO' 
+                    return 'SI'; 
+                }
             },
            
             {
@@ -842,7 +813,7 @@ function initTablaContratosActualizados() {
     });
 
     // Apply the filter
-    $("#dt_contrato thead th input[type=text]").on('keyup change', function () {
+    $("#dt_contratosActualizados thead th input[type=text]").on('keyup change', function () {
         tablaContratosActualizados
             .column($(this).parent().index() + ':visible')
             .search(this.value)
@@ -850,3 +821,63 @@ function initTablaContratosActualizados() {
     });
 
 }
+
+function loadTablaContratosActualizados(data) {
+    ids = [];
+    var dt = $('#dt_contratosActualizados').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    if(data) {
+        for (let d of data) {
+            ids.push(d.contratoId)
+        }
+    }
+    dataContratosActualizados = data;
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+    
+}
+
+
+var revertirIpcActualizado = function () {
+    mensRevertirIpc();
+}
+
+var mensRevertirIpc = function() {
+    // mensaje de confirmación
+    var mens = "¿Se Revertira el IPC al estado anterior de todos los contratos de la tabla. ¿Realmente desea realizar esta acción?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            revertirIpc();
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+var revertirIpc = function() {
+    let url = myconfig.apiUrl + "/api/contratos/actualizados/revertir/ipc";
+    llamadaAjax("PUT", url, dataContratosActualizados, function (err, data) {
+        if (err) return;
+        if(data) {
+            if(data.length > 0) {
+                var mens = "Los contratos se han actualizado correctamente. Estas son las  referencias.\n" + data;
+                mensNormal(mens);
+                $('#modalRevertirIpcContratos').modal('hide');
+                //limpiaDatos();
+                //loadTablaContratos(null);
+            } else {
+                var mens = "No se ha actualizado nada, los contratos seleccionados no tienen prefacturas o estas no son posteriores a la fecha de renovación del IPC.";
+                mensAlerta(mens);
+            }
+        }
+    })
+}
+
