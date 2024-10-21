@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "f89b0687c77d469f8883441aaa9296fd",
+  "ReportGuid": "19f6b849d9d3483db71f036582d10c17",
   "ReportName": "FacturaGrupo",
   "ReportAlias": "FacturaGrupo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1726570844733+0200)/",
+  "ReportChanged": "/Date(1729495969482+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1304,7 +1304,7 @@
               "Ident": "StiText",
               "Name": "Text39",
               "Guid": "bbf14fc4f5944a48ea1bcdc085b990d8",
-              "ClientRectangle": "11.2,0,5.4,0.8",
+              "ClientRectangle": "11.2,0.4,5.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1322,7 +1322,7 @@
               "Ident": "StiText",
               "Name": "Text41",
               "Guid": "327da162a0c9d9011b99f5f2daeb2614",
-              "ClientRectangle": "16.8,0,2,0.8",
+              "ClientRectangle": "16.8,0.4,2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1415,6 +1415,51 @@
                 "WordWrap": true
               },
               "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text25",
+              "Guid": "fde0f4f7047b40dcb8b1b38129c70519",
+              "ClientRectangle": "11.2,0,5.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Retencion {cabecera.porcentajeRetencion.ToString(\"0.00\")} % "
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text28",
+              "Guid": "f5f1a35a05ad411cb9cf8127383932cc",
+              "ClientRectangle": "16.8,0,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{cabecera.importeRetencion}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "NegativePattern": 8,
+                "DecimalSeparator": ",",
+                "GroupSeparator": ".",
+                "UseLocalSetting": false,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Type": "DataColumn"
             }
           },
           "ResetPageNumber": true,
