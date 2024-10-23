@@ -82,6 +82,19 @@ function initForm() {
             }
         );
 
+        //Evento de marcar/desmarcar todos los checks del grid contratos actualizados
+    $('#checkMainActu').click(
+        function(e){
+            if($('#checkMainActu').prop('checked')) {
+                $('.checkAllActu').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAllActu').prop('checked', false);
+                updateAll(false);
+            }
+        }
+    );
+
         $("#txtIpc").focus(function () {
             $('#txtIpc').val(null);
         });
@@ -567,6 +580,26 @@ function updateAllContratos(option) {
     }
 }
 
+function updateAll(opcion) {
+    var tb = $('#dt_contratosActualizados').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    ids = [];
+    if(opcion) {
+        if(datos) {
+            for( var i = 0; i < datos.length; i++) {
+                    
+                    ids.push(datos[i].contratoId)        
+            }
+            console.log(ids);
+        }
+    } else {
+        ids = [];
+        console.log(ids);
+    }
+}
+
+
+
 function ajustaDepartamentos(data) {
     //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO OBRAS DEL COMBO
     var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
@@ -686,6 +719,8 @@ var getContratosActulizados = function() {
                 var mens = "No se ha actualizado nada, los contratos seleccionados no tienen prefacturas o estas no son posteriores a la fecha de renovación del IPC.";
                 mensAlerta(mens);
             }
+        } else {
+            loadTablaContratosActualizados(data);
         }
     })
 }
@@ -713,31 +748,20 @@ imprimirInforme = function () {
 //funciones relacionadas con r4evertir el IPC
 
 function initTablaContratosActualizados() {
-
-
     tablaContratosActualizados = $('#dt_contratosActualizados').DataTable({
         bSort: true,
         responsive: true,
-    /*     columnDefs: [
-            { "sType": "date-uk", "targets": [3, 4] }
-        ], */
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-       
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'l C Br >r>" +
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         autoWidth: true,
         paging: true,
         "pageLength": 100,
-        preDrawCallback: function () { },
-        rowCallback: function (nRow) { },
-        drawCallback: function (oSettings) { },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
             infoFiltered: "(filtrado de un total de _MAX_ registros)",
-            infoPostFix: "",
-            loadingRecords: "Cargando...",
             zeroRecords: "No se encontraron resultados",
             emptyTable: "Ningún dato disponible en esta tabla",
             paginate: {
@@ -745,71 +769,72 @@ function initTablaContratosActualizados() {
                 previous: "Anterior",
                 next: "Siguiente",
                 last: "Último"
-            },
-            aria: {
-                sortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
         data: dataContratosActualizados,
         columns: [
+            {
+                data: "contratoId",
+                width: "10%",
+                render: function (data, type, row) {
+                    return `<label class="input">
+                                <input id="chkActu${data}" type="checkbox" name="chkActu${data}" class="checkAllActu">
+                            </label>`;
+                }
+            },
             { data: "referencia" },
-           
             {
                 data: "importeCliente",
                 render: function (data, type, row) {
-                    var string = numeral(data).format('0,0.00');
-                    return string;
+                    return numeral(data).format('0,0.00');
                 }
             },
             {
                 data: "antTotalCliente",
                 render: function (data, type, row) {
-                    var string = numeral(data).format('0,0.00');
-                    return string;
+                    return numeral(data).format('0,0.00');
                 }
             },
             {
                 data: "importeAnualRenovacion",
                 render: function (data, type, row) {
-                    var string = numeral(data).format('0,0.00');
-                    return string;
+                    return numeral(data).format('0,0.00');
                 }
             },
             {
                 data: "prefacturas",
                 render: function (data, type, row) {
-                    if(data == 'noPrefacturas') return 'NO' 
-                    return 'SI'; 
+                    return data === 'noPrefacturas' ? 'NO' : 'SI';
                 }
             },
-           
             {
                 data: "contratoId",
                 render: function (data, type, row) {
-                    var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteContrato(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                    var bt2 = "<button class='btn btn-circle btn-success' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                    return html;
+                    return `<div class='pull-right'>
+                                <button class='btn btn-circle btn-danger' onclick='deleteContrato(${data});' title='Eliminar registro'> 
+                                    <i class='fa fa-trash-o fa-fw'></i> 
+                                </button>
+                                <button class='btn btn-circle btn-success' onclick='editContrato(${data});' title='Editar registro'> 
+                                    <i class='fa fa-edit fa-fw'></i> 
+                                </button>
+                            </div>`;
                 },
                 responsivePriority: 1
             }
         ]
     });
 
-    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-        "date-uk-pre": function (a) {
-            var ukDatea = a.split('/');
-            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
-        },
-
-        "date-uk-asc": function (a, b) {
-            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-        },
-
-        "date-uk-desc": function (a, b) {
-            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    // Delegación de eventos para los checkboxes generados dinámicamente
+    $('#dt_contratosActualizados tbody').on('change', 'input[type="checkbox"].checkAllActu', function() {
+        var contratoId = $(this).attr('id').replace('chkActu', ''); // Extraer el contratoId del id del checkbox
+        if (this.checked) {
+            ids.push(contratoId); // Agregar contratoId a la lista
+        } else {
+            ids = ids.filter(function(id) {
+                return id !== contratoId; // Eliminar contratoId de la lista
+            });
         }
+        console.log(ids); // Mostrar el array actualizado en la consola
     });
 
     // Apply the filter
@@ -819,25 +844,21 @@ function initTablaContratosActualizados() {
             .search(this.value)
             .draw();
     });
-
 }
 
 function loadTablaContratosActualizados(data) {
-    ids = [];
+    ids = []; // Reiniciar el array de ids seleccionados
     var dt = $('#dt_contratosActualizados').dataTable();
-    if (data !== null && data.length === 0) {
+    
+    if (data && data.length === 0) {
         data = null;
     }
-    if(data) {
-        for (let d of data) {
-            ids.push(d.contratoId)
-        }
-    }
+
+    // Actualizar datos de la tabla
     dataContratosActualizados = data;
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
-    
 }
 
 
@@ -864,7 +885,7 @@ var mensRevertirIpc = function() {
 
 var revertirIpc = function() {
     let url = myconfig.apiUrl + "/api/contratos/actualizados/revertir/ipc";
-    llamadaAjax("PUT", url, dataContratosActualizados, function (err, data) {
+    llamadaAjax("PUT", url, ids, function (err, data) {
         if (err) return;
         if(data) {
             if(data.length > 0) {
