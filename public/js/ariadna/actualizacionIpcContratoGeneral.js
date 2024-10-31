@@ -39,7 +39,7 @@ function initForm() {
     
     recuperaDepartamento(function(err, data) {
         if(err) return;
-        ajustaDepartamentos(data)
+        ajustaDepartamentos(data);
         initTablaContratos();
         initTablaContratosActualizados();
         // ocultamos el botón de alta hasta que se haya producido una búsqueda
@@ -601,7 +601,7 @@ function updateAll(opcion) {
 
 
 function ajustaDepartamentos(data) {
-    //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO OBRAS DEL COMBO
+    //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO Alquileres DEL COMBO
     var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
      for (var i = 0; i < data.length; i++) {
             if (data[i].departamentoId != 3) {
