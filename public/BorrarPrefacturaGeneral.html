@@ -493,7 +493,7 @@
                 <li>Inicio</li>
                 <li>Gestión</li>
                 <li>Facturación</li>
-                <li>Prefacturas</li>
+                <li>Borrar prefacturas</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -517,7 +517,7 @@
                     <h1 class="page-title txt-color-blueDark">
 
                     <!-- PAGE HEADER -->
-                    <i class="fa-fw fa fa-th"></i> Prefacturas <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                    <i class="fa-fw fa fa-trash"></i> Borrado prefacturas <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                 </h1>
                 </div>
                 <!-- end col -->
@@ -570,7 +570,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento prefacturas </h2>
+                                <h2>Borrado de prefacturas </h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -631,8 +631,13 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">                                            
-                                                <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
+                                                <button id="btnBuscar" title="Buscar prefacturas" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
+                                                </button>
+                                            </div>
+                                            <div class="pull-right">                                            
+                                                <button id="btnBorrar" title="Borrar prefacturas" class="btn btn-danger btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-trash"></i>
                                                 </button>
                                             </div>
                                         </fieldset>
@@ -652,9 +657,7 @@
                                                     <th class="hasinput">
                                                         <input type="text" class="form-control" placeholder="" />
                                                     </th>
-                                                    <th class="hasinput">
-                                                        <input type="text" class="form-control" placeholder="" />
-                                                    </th>
+                                                   
                                                     <th class="hasinput">
                                                         <input type="text" class="form-control" placeholder="" />
                                                     </th>
@@ -735,7 +738,6 @@
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="6" style="text-align:right">Total:</th>
-                                                    <th></th>
                                                     <th></th>
                                                     <th></th>
                                                     <th></th>

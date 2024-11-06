@@ -25,6 +25,8 @@ function initForm() {
     pageSetUp();
     getVersionFooter();
     //
+    $('#btnBorrar').hide();
+    $('#btnBorrar').click(borrarUltimaLiquidacion());
     $('#btnBuscar').click(cargarPrefacturas(null));
     $('#frmBuscar').submit(function () {
         return false
@@ -275,8 +277,6 @@ function initTablaPrefacturas() {
                 return string;
             }
         }, {
-            data: "vFac"
-        }, {
             data: "vFPago"
         }, {
             data: "observaciones"
@@ -318,7 +318,6 @@ function initTablaPrefacturas() {
     });
 
     // Hide some columns by default
-    tablaPrefacturas.columns(8).visible(false);
     tablaPrefacturas.columns(10).visible(false);
 }
 
@@ -485,6 +484,7 @@ function cargarPrefacturas(id) {
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     loadTablaPrefacturas(data);
+                    $('#btnBorrar').show();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -516,6 +516,7 @@ function cargarPrefacturas(id) {
                 data: JSON.stringify(data),
                 success: function (data, status) {
                     loadTablaPrefacturas(data);
+                    $('#btnBorrar').show();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
@@ -646,4 +647,59 @@ function updateAll(option) {
             });
         }
     }
+}
+
+function borrarUltimaLiquidacion() {
+    var mf = function() {
+   
+     // antes comprobamos si han borrado el campo cliente
+     if ($("#txtCliente").val() == "") vm.sclienteId(0);
+     var desdeFecha = 0;
+     var hastaFecha = 0;
+     desdeFecha = spanishDbDate(vm.desdeFecha());
+     if(vm.hastaFecha()) { 
+         hastaFecha = spanishDbDate(vm.hastaFecha());
+     }
+     
+     var url = myconfig.apiUrl + "/api/prefacturas/borrar/seleccionadas/" + desdeFecha + "/" + hastaFecha + "/" + usuario.usuarioId;
+     if (vm.sclienteId()) url += "/" + vm.sclienteId(); else url += "/0"
+     url += "/" + vm.sdepartamentoId();
+     if (vm.sempresaId()) url += "/" + vm.sempresaId(); else url += "/0"
+
+    var mens = "Se borrarán las prefacturas seleccionadas, esta acción no se podrá deshacer. ¿Desea continuar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    if(data.affectedRows == 0) {
+                        mensError("No se ha borrado nada");
+                        return;
+                    }
+                    mensNormal("Se han borrado las prefacturas seleccionados");    
+                    loadTablaPrefacturas(null);
+                    $('#btnBorrar').hide();  
+                    $('#checkMain').porp('checked', false);        
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+    }
+    return mf
 }
