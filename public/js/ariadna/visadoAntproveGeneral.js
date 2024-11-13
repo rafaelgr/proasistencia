@@ -159,7 +159,22 @@ function initTablaAnticipos() {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
+        },
+        {
+            data: "ref",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+        },{
+            data: "direccionTrabajo",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+
+        },
+         {
             data: "vNum"
         }, {
             data: "fecha",
