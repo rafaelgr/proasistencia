@@ -15,6 +15,7 @@ var init = 0;
 var visadas;
 var registros;
 var usuario;
+var anticipos;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -38,27 +39,48 @@ function initForm() {
     
   
     visadas = gup('visadas');
-
+    
     if(visadas == 1) {
         $("#chkVisadas").prop( "checked", true );
+        $('#btnAlta').hide();
+        $('#checkMain').hide();
       }else {
         $("#chkVisadas").prop( "checked", false );
+        $('#btnAlta').show();
+        $('#checkMain').show();
       }
-    $('#btnPrint').click(printGeneral);
+   
+    $('#btnAlta').click(visarAnticipos);
    
     $('#frmBuscar').submit(function () {
         return false
     });
 
+        //Evento de marcar/desmarcar todos los checks
+        $('#checkMain').click(
+            function(e){
+                if($('#checkMain').prop('checked')) {
+                    $('.checkAll').prop('checked', true);
+                } else {
+                    $('.checkAll').prop('checked', false);
+                }
+            }
+        );
 
 
+
+    
     $('#chkVisadas').change(function () {
         var visada = 0;
+        $('#btnAlta').show();
+        $('#checkMain').show()
         checkCerrados =  this;
         if (this.checked) {
             visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
         } 
-        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId+ "/" + vm.sdepartamentoId();
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
             registros = data.length;
@@ -150,7 +172,7 @@ function initTablaAnticipos() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -230,7 +252,9 @@ function initModal(antproveId) {
 }
 
 function loadTablaAnticipos(data) {
+    anticipos = data;
     var dt = $('#dt_anticipo').dataTable();
+    $('#checkMain').prop('checked', false);//valor por defecto
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -243,7 +267,22 @@ function loadTablaAnticipos(data) {
         if (v.visada == 1) {
             $(field).attr('checked', true);
         }
+        if(!$("#chkVisadas").prop( "checked" )) return;
         $(field).change(function () {
+            mensajeConfirmacion(this, v)
+        });
+    });
+}
+
+function mensajeConfirmacion(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa quitar la marca de visado?, el anticipo pasará a estar pendiente de visar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
             var quantity = 0;
             var data = {
                 antprove: {
@@ -254,7 +293,7 @@ function loadTablaAnticipos(data) {
                     visada: 0
                 }
             };
-            if (this.checked) {
+            if (t.checked) {
                 data.antprove.visada = 1;
             }
             var url = "", type = "";
@@ -281,7 +320,11 @@ function loadTablaAnticipos(data) {
                     mensErrorAjax(err);
                 }
             });
-        });
+                    
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
     });
 }
 
@@ -570,4 +613,61 @@ var printGeneral = function () {
          var url = "InfVisadosGeneral.html?visadas=" + vis;
          window.open(url, '_blank');
     }
+}
+
+
+function visarAnticipos() {
+    mensajeConfirmacionVisar();
+    
+}
+
+function mensajeConfirmacionVisar(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa visar los anticipos seleccionados?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var contador = 0;
+            anticipos.forEach(function (v) {
+                contador++;
+                var field = "#chk" + v.antproveId;
+                if (!$(field).prop('checked'))  return;
+                    var data = {
+                        antprove: {
+                            antproveId: v.antproveId,
+                            empresaId: v.empresaId,
+                            proveedorId: v.proveedorId,
+                            fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                            visada: 1
+                        }
+                    };
+                   
+                    var url = "", type = "";
+                    // updating record
+                    var type = "PUT";
+                    var url = sprintf('%s/api/anticiposProveedores/visadas/modificar/%s', myconfig.apiUrl, v.antproveId);
+                    var data2 = [];
+                    data2.push(data);
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(data2),
+                        success: function (data, status) {
+                            if(contador == anticipos.length)     buscarAnticipos()();
+                            
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                        }
+                    });
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
 }

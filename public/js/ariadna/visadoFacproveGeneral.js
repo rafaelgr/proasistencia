@@ -69,21 +69,9 @@ function initForm() {
     
 
     $('#chkVisadas').change(function () {
-        var visada = 0;
-        $('#btnAlta').show();
-        $('#checkMain').show()
-        checkCerrados =  this;
-        if (this.checked) {
-            visada = 1;
-            $('#btnAlta').hide();
-            $('#checkMain').hide();
-        } 
-        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId+ "/" + vm.sdepartamentoId();
-        llamadaAjax("GET", url, null, function(err, data){
-            if (err) return;
-            registros = data.length;
-            loadTablaFacturas(data);
-        });
+        $('.ocultar').show();
+        if(!$('#chkVisadas').prop('checked')) $('.ocultar').hide();
+        buscarVisadas()
     });
 
     //Evento asociado al cambio de departamento
@@ -95,12 +83,21 @@ function initForm() {
     });
 
     vm = new admData();
+
     ko.applyBindings(vm);
+
+       
+    $("#cmbProveedores").select2(select2Spanish());
+
+    $('.ocultar').hide();
+   
 
     recuperaDepartamento(function(err, data) {
         if(err) return;
         initTablaFacturas();
         buscarFacturas()();
+        loadProveedores();
+        estableceFecha();
         // comprobamos parámetros
         facproveId = gup('FacturaId');
     });
@@ -114,6 +111,15 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.dFecha = ko.observable();
+    self.hFecha = ko.observable();
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
     
 } 
 
@@ -254,6 +260,17 @@ function initTablaFacturas() {
     tablaCarro.column(12).visible(false);
 }
 
+
+function loadProveedores(proveedorId) {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        $("#cmbProveedores").val([proveedorId]).trigger('change');
+    });
+}
+
+
 function initModal(facproveId) {
     init++
 
@@ -285,10 +302,24 @@ function loadTablaFacturas(data) {
         if (v.visada == 1) {
             $(field).attr('checked', true);
         }
+        if(!$("#chkVisadas").prop( "checked" )) return;
+        $('#btnAlta').hide();
+        $('#checkMain').hide();
         $(field).change(function () {
-            if(!$("#chkVisadas").prop( "checked" )) return;
-            $('#btnAlta').hide();
-            $('#checkMain').hide();
+          mensajeConfirmacion(this, v);
+        });
+    });
+}
+
+function mensajeConfirmacion(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa quitar la marca de visada?, la factura pasará a estar pendiente de visar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
             var quantity = 0;
             var data = {
                 facprove: {
@@ -326,7 +357,11 @@ function loadTablaFacturas(data) {
                     mensErrorAjax(err);
                 }
             });
-        });
+                    
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
     });
 }
 
@@ -577,40 +612,58 @@ function informePDF(data) {
 }
 
 function visarFacturas() {
-    var contador = 0;
-    facturas.forEach(function (v) {
-        contador++;
-        var field = "#chk" + v.facproveId;
-        if (!$(field).prop('checked'))  return;
-            var data = {
-                facprove: {
-                    facproveId: v.facproveId,
-                    empresaId: v.empresaId,
-                    proveedorId: v.proveedorId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    visada: 1
-                }
-            };
-           
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/facturasProveedores/visadas/modificar/%s', myconfig.apiUrl, v.facproveId);
-            var data2 = [];
-            data2.push(data);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data2),
-                success: function (data, status) {
-                    if(contador == facturas.length)     buscarFacturas()();
-                    
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+    mensajeConfirmacionVisar();
+}
+
+function mensajeConfirmacionVisar(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa visar las facturas seleccionadas?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var contador = 0;
+            facturas.forEach(function (v) {
+                contador++;
+                var field = "#chk" + v.facproveId;
+                if (!$(field).prop('checked'))  return;
+                    var data = {
+                        facprove: {
+                            facproveId: v.facproveId,
+                            empresaId: v.empresaId,
+                            proveedorId: v.proveedorId,
+                            fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                            visada: 1
+                        }
+                    };
+                   
+                    var url = "", type = "";
+                    // updating record
+                    var type = "PUT";
+                    var url = sprintf('%s/api/facturasProveedores/visadas/modificar/%s', myconfig.apiUrl, v.facproveId);
+                    var data2 = [];
+                    data2.push(data);
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(data2),
+                        success: function (data, status) {
+                            if(contador == facturas.length)     buscarFacturas()();
+                            
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                        }
+                    });
             });
+                    
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
     });
 }
 
@@ -657,4 +710,40 @@ var printGeneral = function () {
          var url = "InfVisadosGeneral.html?visadas=" + vis + '&departamentoId='+vm.sdepartamentoId();
          window.open(url, '_blank');
     }
+}
+ function buscarVisadas() {
+    var visada = 0;
+    var dFecha = null;
+    var hFecha = null;
+    var proId = null;
+        $('#btnAlta').show();
+        $('#checkMain').show()
+        if ($('#chkVisadas').prop('checked')) {
+            visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
+        } else {
+            dFecha = vm.dFecha();
+            hFecha = vm.hFecha();
+            proId = vm.sproveedorId();
+
+        }
+        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha +  "/" + proId;
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            registros = data.length;
+            loadTablaFacturas(data);
+        });
+ }
+
+ function estableceFecha() {
+    // Restar 1 año a la fecha actual
+    var fechaInicio;
+    var fActual = new Date();
+    var ano = fActual.getFullYear() - 1; // Resta 1 año a la fecha actual
+    var mes = fActual.getMonth();
+    var dia = fActual.getDay();
+
+    fechaInicio = moment(ano + "-" + mes + "-" + dia).format('DD/MM/YYYY');
+    vm.dFecha(fechaInicio);
 }
