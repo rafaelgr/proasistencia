@@ -67,9 +67,30 @@ function initForm() {
     
 
     $('#chkVisadas').change(function () {
-        $('.ocultar').show();
-        if(!$('#chkVisadas').prop('checked')) $('.ocultar').hide();
-        //buscarVisadas()
+        var visada = 0;
+        $('#btnAlta').show();
+        $('#checkMain').show()
+        if(this.checked) { 
+            $('.ocultar').show();
+            visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
+        }else {
+            estableceFecha();
+            loadProveedores()
+            $('.ocultar').hide();
+           buscarFacturas()();
+        }
+             
+    });
+
+    $('#chkVisadas').change(function () {
+        
+       
+        if (this.checked) {
+           
+        } 
+        
     });
 
     //Evento asociado al cambio de departamento
@@ -77,7 +98,7 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        buscarFacturas()();
+        if(!$('#chkVisadas').prop('checked'))   buscarFacturas()();
     });
 
     vm = new admData();
@@ -126,12 +147,37 @@ function initTablaFacturas() {
         paging: false,
         autoWidth: true,
         "bDestroy": true,
-        "columnDefs": [ {
-            "targets": 0,
-            "width": "20%",
-            "orderable": false
-            } ],
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>",
+        "columnDefs": [ 
+            {
+                "targets": 0,
+                "width": "20%",
+                "orderable": false
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [6],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+         ],
+
+            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
             "oColVis": {
                 "buttonText": "Mostrar / ocultar columnas"
             },
@@ -198,11 +244,7 @@ function initTablaFacturas() {
         }, {
             data: "vNum"
         }, {
-            data: "fecha_recepcion",
-            render: function (data, type, row) {
-                if(!data) return "";
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha_recepcion"
         },{
             data: "total",
             render: function (data, type, row) {
@@ -301,13 +343,14 @@ function loadTablaFacturas(data) {
         var field = "#chk" + v.facproveId;
         if (v.visada == 1) {
             $(field).attr('checked', true);
+            $(field).attr('disabled', true);
         }
-        if(!$("#chkVisadas").prop( "checked" )) return;
-        $('#btnAlta').hide();
-        $('#checkMain').hide();
-        $(field).change(function () {
+        //if(!$("#chkVisadas").prop( "checked" )) return;
+        //$('#btnAlta').hide();
+        //$('#checkMain').hide();
+       /*  $(field).change(function () {
           mensajeConfirmacion(this, v);
-        });
+        }); */
     });
 }
 
@@ -345,13 +388,7 @@ function mensajeConfirmacion(t, v) {
                 contentType: "application/json",
                 data: JSON.stringify(data2),
                 success: function (data, status) {
-                    if($("#chkVisadas").prop( "checked" )) {
-                        vis = 1;
-                      }else {
-                          vis = 0;
-                      }
-                    var url = "VisadoFacproveGeneral.html?visadas="+ vis;
-                    window.open(url, '_self');
+                    buscarVisadas()();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
