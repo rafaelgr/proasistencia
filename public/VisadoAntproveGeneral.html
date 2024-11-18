@@ -593,20 +593,42 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-6">
+                                                <section class="col col-md-2">
                                                     <label class="checkbox">
                                                         <input id="chkVisadas" type="checkbox" name="chkVisadas">
                                                         <i></i>Ver solo anticipos visados
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
-                                                   
+                                                <section class="col col-md-3 ocultar">
+                                                    <label class="label">Desde fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: dFecha" class="datepicker"  data-dateformat="dd/mm/yy"/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3 ocultar">
+                                                    <label class="label">Hasta fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hFecha" class="datepicker"  data-dateformat="dd/mm/yy"/>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-3 ocultar">
+                                                    <label class="label">Proveedor</label>
+                                                    <label style="width:100%; height:50px;">
+                                                        <select style="width:100%" id="cmbProveedores" name="cmbProveedores" data-bind="options: posiblesProveedores, optionsText: 'nombre', optionsValue: 'proveedorId', value: sproveedorId, valueAllowUnset: true, selectedOptions: elegidosProveedores, selected2:{}"></select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                                <section style="margin-bottom: 0; margin-top: 2%;" class="col col-md-1 ocultar">
+                                                        <button id="btnBuscar" title="Buscar anticipos" class="btn btn-success btn-circle btn-lg">
+                                                            <i class="fa fa-lg fa-search"></i>
+                                                        </button>                                      
                                                 </section>
                                             </div>
                                         </fieldset>
+                                       
                                         <fieldset>
                                             <div class="pull-left"> 
-                                                    <button id="btnAlta" title="Visar facturas" class="btn btn-success btn-circle btn-lg">
+                                                    <button id="btnAlta" title="Visar anticipos" class="btn btn-success btn-circle btn-lg">
                                                         <i class="fa fa-lg fa-crosshairs"></i>
                                                     </button>                                      
                                             </div>
@@ -641,9 +663,7 @@
                                                     <th data-hide="phone">
                                                         Fecha
                                                     </th>
-                                                    <th data-hide="phone">
-                                                        Fecha recepcion
-                                                    </th>
+                                                   
                                                     <th data-hide="phone">
                                                         Base
                                                     </th>

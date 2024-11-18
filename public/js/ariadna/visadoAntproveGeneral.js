@@ -51,6 +51,7 @@ function initForm() {
       }
    
     $('#btnAlta').click(visarAnticipos);
+    $('#btnBuscar').click(buscarVisadas)
    
     $('#frmBuscar').submit(function () {
         return false
@@ -74,18 +75,17 @@ function initForm() {
         var visada = 0;
         $('#btnAlta').show();
         $('#checkMain').show()
-        checkCerrados =  this;
-        if (this.checked) {
+        if(this.checked) { 
+            $('.ocultar').show();
             visada = 1;
             $('#btnAlta').hide();
             $('#checkMain').hide();
-        } 
-        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId+ "/" + vm.sdepartamentoId();
-        llamadaAjax("GET", url, null, function(err, data){
-            if (err) return;
-            registros = data.length;
-            loadTablaAnticipos(data);
-        });
+        }else {
+            estableceFecha();
+            loadProveedores()
+            $('.ocultar').hide();
+           buscarAnticipos()();
+        }
     });
 
     //Evento asociadpo al checkbox
@@ -97,12 +97,16 @@ function initForm() {
         }
     });
 
+    $("#cmbProveedores").select2(select2Spanish());
+
+    $('.ocultar').hide();
+
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        buscarAnticipos()();
+        if(!$('#chkVisadas').prop('checked')) buscarAnticipos()();
     });
 
     vm = new admData();
@@ -112,6 +116,8 @@ function initForm() {
         if(err) return;
         initTablaAnticipos();
         buscarAnticipos()();
+        loadProveedores();
+        estableceFecha();
         // comprobamos parámetros
         antproveId = gup('AnticipoId');
     });
@@ -125,6 +131,15 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+     //
+     self.dFecha = ko.observable();
+     self.hFecha = ko.observable();
+     //
+     self.proveedorId = ko.observable();
+     self.sproveedorId = ko.observable();
+     //
+     self.posiblesProveedores = ko.observableArray([]);
+     self.elegidosProveedores = ko.observableArray([]);
     
 } 
 
@@ -134,6 +149,39 @@ function initTablaAnticipos() {
         autoWidth: true,
         paging: false,
         "bDestroy": true,
+        "columnDefs": [ 
+            {
+                "targets": 0,
+                "width": "20%",
+                "orderable": false
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [6],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+         ],
+         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+         "t" +
+         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+         "oColVis": {
+             "buttonText": "Mostrar / ocultar columnas"
+         },
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -200,14 +248,6 @@ function initTablaAnticipos() {
             data: "vNum"
         }, {
             data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "fecha_recepcion",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
         },{
             data: "total",
             render: function (data, type, row) {
@@ -232,6 +272,17 @@ function initTablaAnticipos() {
                 return html;
             }
         }]
+    });
+}
+
+function loadProveedores() {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        vm.proveedorId(0);
+        vm.sproveedorId(0);
+        $("#cmbProveedores").val([0]).trigger('change');
     });
 }
 
@@ -266,11 +317,12 @@ function loadTablaAnticipos(data) {
         var field = "#chk" + v.antproveId;
         if (v.visada == 1) {
             $(field).attr('checked', true);
+            $(field).attr('disabled', true);
         }
-        if(!$("#chkVisadas").prop( "checked" )) return;
+       /*  if(!$("#chkVisadas").prop( "checked" )) return;
         $(field).change(function () {
             mensajeConfirmacion(this, v)
-        });
+        }); */
     });
 }
 
@@ -332,10 +384,10 @@ function buscarAnticipos() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
           }
           else {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
           }
         $.ajax({
             type: "GET",
@@ -572,6 +624,8 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
+
+
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
@@ -670,4 +724,43 @@ function mensajeConfirmacionVisar(t, v) {
             // no hacemos nada (no quiere borrar)
         }
     });
+}
+
+function buscarVisadas() {
+    var visada = 0;
+    var dFecha = 0;
+    var hFecha = 0;
+    var proId = 0;
+        $('#btnAlta').show();
+        $('#checkMain').show()
+        if ($('#chkVisadas').prop('checked')) {
+            visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
+            dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if(vm.hFecha()) {
+                hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            } 
+            proId = vm.sproveedorId();
+        } 
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha +  "/" + proId;
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            registros = data.length;
+            loadTablaAnticipos(data);
+        });
+ }
+
+
+function estableceFecha() {
+    // Restar 1 año a la fecha actual
+    var fechaInicio;
+    var fActual = new Date();
+    var ano = fActual.getFullYear() - 1; // Resta 1 año a la fecha actual
+    var mes = fActual.getMonth();
+    var dia = fActual.getDay();
+
+    fechaInicio = moment(ano + "-" + mes + "-" + dia).format('DD/MM/YYYY');
+    vm.dFecha(fechaInicio);
+    vm.hFecha(null)
 }

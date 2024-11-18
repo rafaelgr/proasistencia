@@ -84,14 +84,6 @@ function initForm() {
              
     });
 
-    $('#chkVisadas').change(function () {
-        
-       
-        if (this.checked) {
-           
-        } 
-        
-    });
 
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
@@ -146,12 +138,17 @@ function initTablaFacturas() {
     tablaCarro = $('#dt_factura').DataTable({
         paging: false,
         autoWidth: true,
+        responsive: true,
         "bDestroy": true,
         "columnDefs": [ 
             {
                 "targets": 0,
                 "width": "20%",
                 "orderable": false
+            },
+            {
+                targets: 15, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             },
             { 
                 "type": "datetime-moment",
@@ -182,16 +179,13 @@ function initTablaFacturas() {
                 "buttonText": "Mostrar / ocultar columnas"
             },
         preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
-            }
+            
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+          
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
+           
         },
         language: {
             processing: "Procesando...",
@@ -214,7 +208,14 @@ function initTablaFacturas() {
             }
         },
         data: dataFacturas,
-        columns: [{
+        columns: [   {
+            data: "facproveId",
+            render: function (data, type, row) {
+               return null;
+            }
+
+        },
+        {
             data: "facproveId",
             width: '10%',
             render: function (data, type, row) {
@@ -443,7 +444,7 @@ function initTablaContratos(facproveId) {
         
         autoWidth: true,
         paging: true,
-        responsive: true,
+        
         "bDestroy": true,
         language: {
             processing: "Procesando...",
