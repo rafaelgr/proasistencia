@@ -21,10 +21,6 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
-
-
-
-datePickerSpanish(); // see comun.js
 var url;
 var vm = null;
 
@@ -34,6 +30,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    datePickerSpanish(); // see comun.js
     //
     
 
@@ -50,6 +47,7 @@ function initForm() {
       }
     $('#btnPrint').click(printGeneral);
     $('#btnAlta').click(visarFacturas);
+    $('#btnBuscar').click(buscarVisadas)
    
     $('#frmBuscar').submit(function () {
         return false
@@ -71,7 +69,7 @@ function initForm() {
     $('#chkVisadas').change(function () {
         $('.ocultar').show();
         if(!$('#chkVisadas').prop('checked')) $('.ocultar').hide();
-        buscarVisadas()
+        //buscarVisadas()
     });
 
     //Evento asociado al cambio de departamento
@@ -261,12 +259,14 @@ function initTablaFacturas() {
 }
 
 
-function loadProveedores(proveedorId) {
+function loadProveedores() {
     llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
         if (err) return;
-        var proveedores = [{ comercialId: 0, nombre: "" }].concat(data);
+        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
         vm.posiblesProveedores(proveedores);
-        $("#cmbProveedores").val([proveedorId]).trigger('change');
+        vm.proveedorId(0);
+        vm.sproveedorId(0);
+        $("#cmbProveedores").val([0]).trigger('change');
     });
 }
 
@@ -367,14 +367,16 @@ function mensajeConfirmacion(t, v) {
 
 function buscarFacturas() {
     var mf = function () {
+        
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
           }
           else {
             $('#checkMain').prop('checked', false);
-              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
-          }
+              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
+            }
+          
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + url,
@@ -713,21 +715,21 @@ var printGeneral = function () {
 }
  function buscarVisadas() {
     var visada = 0;
-    var dFecha = null;
-    var hFecha = null;
-    var proId = null;
+    var dFecha = 0;
+    var hFecha = 0;
+    var proId = 0;
         $('#btnAlta').show();
         $('#checkMain').show()
         if ($('#chkVisadas').prop('checked')) {
             visada = 1;
             $('#btnAlta').hide();
             $('#checkMain').hide();
-        } else {
-            dFecha = vm.dFecha();
-            hFecha = vm.hFecha();
+            dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if(vm.hFecha()) {
+                hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            } 
             proId = vm.sproveedorId();
-
-        }
+        } 
         var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha +  "/" + proId;
         llamadaAjax("GET", url, null, function(err, data){
             if (err) return;
@@ -746,4 +748,5 @@ var printGeneral = function () {
 
     fechaInicio = moment(ano + "-" + mes + "-" + dia).format('DD/MM/YYYY');
     vm.dFecha(fechaInicio);
+    vm.hFecha(null)
 }
