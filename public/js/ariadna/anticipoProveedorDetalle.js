@@ -2211,16 +2211,16 @@ function nuevaServiciada() {
     llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
         if (err) return;
         for(var i = 0; i < data.length; i++){
-            acumulado += parseFloat(data[i].importe);
+            acumulado += data[i].importe;
         }
-        acumulado = roundToTwo(acumulado);
+        
         if(vm.antproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
+            imp = Math.trunc(imp * 100) / 100;
             
         } else {
             imp = acumulado + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
+            imp = Math.trunc(imp * 100) / 100;
             if($('#chkCompleto').prop("checked")) {
                 tot = parseFloat(numeroDbf(vm.total()));
             } else {

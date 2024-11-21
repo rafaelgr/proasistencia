@@ -2526,17 +2526,19 @@ function nuevaServiciada() {
     //recalculamos el acumulado de todas las empresas serviciadas de la factura
     llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/servicidas/facturas/proveedor/todas/" + facproveId, null, function (err, data) {
         if (err) return;
+        var is = 0;
         for(var i = 0; i < data.length; i++){
-            acumulado += parseFloat(data[i].importe);
+            acumulado += data[i].importe;
         }
-        acumulado = roundToTwo(acumulado);
+      
         if(vm.facproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
+            imp = Math.trunc(imp * 100) / 100;
             tot = parseFloat(numeroDbf(vm.total()));
         } else {
+            is = parseFloat(vm.importeServiciada());
             imp = acumulado + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
+            imp = Math.trunc(imp * 100) / 100;
             tot = parseFloat(numeroDbf(vm.total()));
         }
     
