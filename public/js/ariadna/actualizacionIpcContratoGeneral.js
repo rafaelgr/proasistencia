@@ -174,8 +174,15 @@ function initTablaContratos() {
     tablaContratos = $('#dt_contrato').DataTable({
         fnCreatedRow: function (nRow, aData, iDataIndex) {
             var fechaActual = new Date();
+            var fechaFinal;
             fechaActual = moment(fechaActual).format('YYYY-MM-DD');
-            var fechaFinal = moment(aData.fechaFinal).format('YYYY-MM-DD');
+
+            if(aData.fechaFinAlquiler) {
+                fechaFinal = moment(aData.fechaFinAlquiler).format('YYYY-MM-DD');
+            } else {
+                fechaFinal = moment(aData.fechaFinal).format('YYYY-MM-DD');
+            }
+
             if (fechaActual >= aData.plazo && aData.contratoCerrado == 0) {
                 $(nRow).attr('style', 'background: #FFA96C');
             }
@@ -481,7 +488,13 @@ function cargarContratos() {
                                 if(d.preaviso == null) {
                                     d.preaviso = 0;
                                 }
-                                d.plazo = restarDias(d.fechaFinal, d.preaviso);
+
+                                if(d.fechaFinAlquiler) {
+                                    d.plazo = restarDias(d.fechaFinAlquiler, d.preaviso);
+                                } else {
+                                    d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                                }
+                                
                                 d.plazo = moment(d.plazo).format('YYYY-MM-DD');
                             }, this);
                             
