@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "e063888da98f4ab7b358f0d49f427452",
+  "ReportGuid": "c9a3515ae2da4a7b84110beef278fc08",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1732879243961+0100)/",
+  "ReportChanged": "/Date(1732881842300+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -597,6 +597,21 @@
           },
           "LineSpacing": 1.1499999761581421,
           "Type": "Expression"
+        },
+        "5": {
+          "Ident": "StiImage",
+          "Name": "Image3",
+          "Guid": "b50d6f28d1a74230a366044146f2459e",
+          "ClientRectangle": "0.6,13.2,4.4,2.4",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Stretch": true,
+          "ImageURL": {
+            "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/Sello_Proyecta.png"
+          }
         }
       },
       "PageWidth": 21.0,
