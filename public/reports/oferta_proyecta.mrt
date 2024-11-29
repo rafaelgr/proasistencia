@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "10cb794e7c7a4cdeba3f9aeca7086d23",
+  "ReportGuid": "e063888da98f4ab7b358f0d49f427452",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1698055523654+0200)/",
+  "ReportChanged": "/Date(1732879243961+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -302,7 +302,7 @@
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\nu.abrev, a.nombre AS articulo, a.articuloId\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
+        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\nu.abrev, a.nombre AS articulo, a.articuloId\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,2"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -454,7 +454,7 @@
               "Guid": "a4c28bd8c2ca45b99a020d431768ff1d",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "5.4,2.2,13.4,0.8",
+              "ClientRectangle": "5.4,2.6,13.4,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -475,7 +475,7 @@
               "Ident": "StiText",
               "Name": "Text21",
               "Guid": "c5103814dac84015bac6dc7da1be2e63",
-              "ClientRectangle": "11.6,3.4,7.2,0.4",
+              "ClientRectangle": "11.6,2,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -869,28 +869,6 @@
                 "WordWrap": true
               },
               "LineSpacing": 1.25,
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text1",
-              "CanShrink": true,
-              "CanGrow": true,
-              "ClientRectangle": "2.2,0,0.6,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "-  "
-              },
-              "HorAlignment": "Width",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
               "Type": "Expression"
             }
           },
