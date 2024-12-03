@@ -266,17 +266,22 @@ function initForm() {
         // create a FormData object which will be sent as the data payload in the
         // AJAX request
         var formData = new FormData();
-        // loop through all the selected files and add them to the formData object
         
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
         if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf");
+
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
-        var name = vm.ref() + "." + ext;
+        formData.append('uploads[]', file, + file.name);
+
+        // Agregar un objeto JSON como string
+        var data = generarFacturaDb();
+        data.facproveId = 0;
+        const jsonData = JSON.stringify(data);
+        formData.append('json', jsonData);
             
             $.ajax({
-                url: '/api/upload/s3/' + name + "/" + vm.facproveId(),
+                url: '/api/upload/s3/externo/',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -873,13 +878,8 @@ var aceptarFactura = function (salir) {
 }
 
 var generarFacturaDb = function () {
-    if($('#chkNoContabilizar').prop("checked")) {
-        vm.noContabilizar(true);
-    } else {
-        vm.noContabilizar(false);
-    }
+    
     var data = {
-        facprove: {
             "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
             "numeroFacturaProveedor2": vm.numero2(),
@@ -923,7 +923,6 @@ var generarFacturaDb = function () {
             "enviadaCorreo": vm.enviadaCorreo(),
             "esColaborador": 0
 
-        }
     };
     if(vm.stipoOperacionId() == 2 || vm.stipoOperacionId() == 3) {
         data.facprove.totalConIva =  numeroDbf(vm.total());
