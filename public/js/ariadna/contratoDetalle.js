@@ -64,8 +64,11 @@ function initForm() {
     $('#txtNumPagos2').on('blur', verPrefacturasAGenerarPlanificacion);
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(clicAceptar);
     $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
+    $("#btnAceptarResumen").click(function() {
         clicAceptar(false);
     });
 
@@ -169,6 +172,10 @@ function initForm() {
         return false;
     });
 
+    $("#frmResumen").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -200,6 +207,17 @@ function initForm() {
 
     $("#cmbTiposContrato").select2(select2Spanish());
     loadTiposContrato(null);
+
+
+    $("#cmbJefesObra").select2(select2Spanish());
+    loadJefesObra();
+
+    $("#cmbTecnicos").select2(select2Spanish());
+    loadTecnicos();
+
+
+
+
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if(e.added) {
@@ -939,6 +957,33 @@ function admData() {
     self.importeAnualRenovacionFormat = ko.observable();
     self.fechaFinAlquiler = ko.observable();
 
+    //PESTAÑA RESUMEN
+    self.resumenExp = ko.observable();
+    self.resumenDistrito = ko.observable();
+    self.resumenPtoAceptado = ko.observable();
+    self.resumenAutorizacion = ko.observable();
+    self.resumenActa = ko.observable();
+    self.resumenDni = ko.observable();
+    self.resumenCif = ko.observable();
+    self.resumenTasas = ko.observable();
+    self.resumenIcio = ko.observable();
+    self.resumenFormulario = ko.observable();
+    self.resumenDr = ko.observable();
+    self.resumenTasasVisado = ko.observable();
+    self.resumenDiario = ko.observable();
+    // combo jefe de obras
+    self.jefeObraId = ko.observable();
+    self.sjefeObraId = ko.observable();
+    //
+    self.posiblesJefesObra = ko.observableArray([]);
+    self.elegidosJefesObra = ko.observableArray([]);
+    //combo tecnicos
+    self.tecnicoId = ko.observable();
+    self.stecnicoId = ko.observable();
+    //
+    self.posiblesTecnicos = ko.observableArray([]);
+    self.elegidosTecnicos = ko.observableArray([]);
+
 }
 
 function loadData(data) {  
@@ -1198,6 +1243,32 @@ var clicAceptar = function (salir) {
     
 }
 
+var clicAceptarResumen = function (salir) {
+    guardarContrato(function (err, tipo) {
+        if (err) return mensError(err);
+        var url;
+        if(DesdeContrato == "true" && AscContratoId != 0){
+            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+        } else {
+            url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+        }
+        if (tipo == 'POST') {
+            if(vm.beneficioLineal() == 0) {
+                url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+            } else {
+                url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+            }
+           
+        }
+        if(salir) {
+            window.open(url, '_self');
+        } else {
+            mensNormal('Contrato guardado.')
+        }
+    })
+
+}
+
 var guardarContrato = function (done) {
     var firma = parseInt(vm.firmaActa());
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
@@ -1260,6 +1331,16 @@ var guardarContrato = function (done) {
     }
 }
 
+var guardarContratoResumen = function (done) {
+    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
+        if (err) return errorGeneral(err, done);
+        actualizaAsociados(vm.firmaActa(), function(err, result) {
+            if (err) return errorGeneral(err, done);
+            done(null, 'PUT');
+        });
+    });
+}
+
 
 var generarContratoDb = function () {
     if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
@@ -1312,6 +1393,33 @@ var generarContratoDb = function () {
             "renovar": vm.renovar(),
             "fechaFinAlquiler": spanishDbDate(vm.fechaFinAlquiler()),
             "importeAnualRenovacion": vm.importeAnualRenovacion()
+        }
+    };
+    if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
+    return data;
+}
+
+var generarResumenDb = function () {
+    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
+    var data = {
+        contrato: {
+            "contratoId": vm.contratoId(),
+            "resumenExp" : vm.resumenExp(),
+            "resumenJefeObra": vm.sJefeObraId(),
+            "resumenTecnico": vm.stecnicoId(),
+            "resumenDistrito": vm.resumenDistrito(),
+            "resumenPtoAceptado": vm.resumenPtoAceptado(),
+            "resumenAutorizacion": vm.resumenAutorizacion(),
+            "resumenActa": vm.resumenActa(),
+            "resumenDni": vm.resumenDni(),
+            "resumenCif": vm.resumenCif(),
+            "resumenTasas": vm.resumenTasas(),
+            "resumenIcio": vm.resumenIcio(),
+            "resumenFormulario": vm.resumenFormulario(),
+            "resumenDr": vm.resumenDr(),
+            "resumenTasasVisado": vm.resumenTasasVisado(),
+            "resumenDiario": vm.resumenDiario(),
+
         }
     };
     if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -8429,3 +8537,40 @@ function uploadDocum(arr) {
             });       
 }
 
+//FUNCIONES RELACIONADAS CON LA PESTAÑA RESUMEN
+
+
+function loadJefesObra(id) {
+    llamadaAjax('GET', "/api/comerciales/colaboradores/activos/por/tipo/" + 5, null, function (err, data) {
+        if (err) return;
+        var jefesObra = [{
+            comercialId: 0,
+            nombre: ""
+        }].concat(data.map(function(item) {
+            return {
+                jefeObraId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                nombre: item.nombre
+            };
+        }));
+        vm.posiblesJefesObra(jefesObra);
+        $("#cmbJefesObra").val([id]).trigger('change');
+    });
+}
+
+
+function loadTecnicos(id) {
+    llamadaAjax('GET', "/api/comerciales/comerciales_activos", null, function (err, data) {
+        if (err) return;
+        var tecnicos = [{
+            tecnicoId: 0,
+            nombre: ""
+        }].concat(data.map(function(item) {
+            return {
+                tecnicoId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                nombre: item.nombre
+            };
+        }));
+        vm.posiblesTecnicos(tecnicos);
+        $("#cmbCTecnicos").val([id]).trigger('change');
+    });
+}
