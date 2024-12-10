@@ -8523,6 +8523,13 @@ function loadJefesObra(id) {
     });
 }
 
+function buscaTecnicos() {
+    llamadaAjax("GET", "/api/comerciales/tecnicos/contrato/" + contratoId + proId, null, function (err, data) {
+        if (err) return;
+        loadTecnicos(data);
+    });
+}
+
 
 function loadTecnicos(id) {
     var data = {

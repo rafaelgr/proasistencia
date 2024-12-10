@@ -8516,9 +8516,19 @@ function loadJefesObra(id) {
     });
 }
 
+function buscaTecnicos() {
+    llamadaAjax("GET", "/api/comerciales/tecnicos/contrato/" + contratoId + proId, null, function (err, data) {
+        if (err) return;
+        loadTecnicos(data);
+    });
+}
+
 
 function loadTecnicos(id) {
-    llamadaAjax('GET', "/api/comerciales/comerciales_activos", null, function (err, data) {
+    var data = {
+        tiposComercialesId: [6, 7]
+    }
+    llamadaAjax('POST', "/api/comerciales/colaboradores/por/tipos/", data, function (err, data) {
         if (err) return;
         var tecnicos = [{
             tecnicoId: null,

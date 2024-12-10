@@ -15,4 +15,15 @@ ALTER TABLE `contratos`
   ADD COLUMN `resumenTasasVisado` VARCHAR(255) NULL  AFTER `resumenDr`,
   ADD COLUMN `resumenDiario` TEXT NULL AFTER `resumenTasasVisado`;
 
+CREATE TABLE `contrato_tecnicos`(  
+  `contratoTecnicoId` INT(11) NOT NULL AUTO_INCREMENT,
+  `contratoId` INT(11) NOT NULL,
+  `tecnicoId` INT(11) NOT NULL,
+  PRIMARY KEY (`contratoTecnicoId`)
+);
+
+
+ALTER TABLE `contrato_tecnicos`  
+  ADD CONSTRAINT `contratoTecnicoFK` FOREIGN KEY (`tecnicoId`) REFERENCES `comerciales`(`comercialId`),
+  ADD CONSTRAINT `tecnicoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`);
 
