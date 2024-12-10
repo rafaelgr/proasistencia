@@ -69,7 +69,7 @@ function initForm() {
     });
 
     $("#btnAceptarResumen").click(function() {
-        clicAceptar(false);
+        guardarContratoResumen();
     });
 
     $("#btnSalir").click(salir());
@@ -210,10 +210,10 @@ function initForm() {
 
 
     $("#cmbJefesObra").select2(select2Spanish());
-    loadJefesObra();
+    loadJefesObra(null);
 
     $("#cmbTecnicos").select2(select2Spanish());
-    loadTecnicos();
+    loadTecnicos(null);
 
 
 
@@ -1063,6 +1063,25 @@ function loadData(data) {
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.servicioId(data.servicioId);
 
+    //DATOS DE LA PESTAÑA RESUMEN
+    vm.resumenExp(data.resumenExp);
+    loadJefesObra(data.resumenJefeObraId);
+    vm.jefeObraId(data.resumenJefeObraId);
+    loadTecnicos(data.resumenTecnicoId);
+    vm.tecnicoId(data.resumenTecnicoId);
+    vm.resumenDistrito(data.resumenDistrito);
+    vm.resumenPtoAceptado(data.resumenPtoAceptado);
+    vm.resumenAutorizacion(data.resumenAutorizacion);
+    vm.resumenActa(data.resumenActa);
+    vm.resumenDni(data.resumenDni);
+    vm.resumenCif(data.resumenCif);
+    vm.resumenTasas(data.resumenTasas);
+    vm.resumenIcio(data.resumenIcio);
+    vm.resumenFormulario(data.resumenFormulario);
+    vm.resumenDr(data.resumenDr);
+    vm.resumenTasasVisado(data.resumenTasasVisado);
+    vm.resumenDiario(data.resumenDiario);
+
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
     $('#frCliente').attr('src', url)
@@ -1243,31 +1262,6 @@ var clicAceptar = function (salir) {
     
 }
 
-var clicAceptarResumen = function (salir) {
-    guardarContrato(function (err, tipo) {
-        if (err) return mensError(err);
-        var url;
-        if(DesdeContrato == "true" && AscContratoId != 0){
-            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-        } else {
-            url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
-        }
-        if (tipo == 'POST') {
-            if(vm.beneficioLineal() == 0) {
-                url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-            } else {
-                url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-            }
-           
-        }
-        if(salir) {
-            window.open(url, '_self');
-        } else {
-            mensNormal('Contrato guardado.')
-        }
-    })
-
-}
 
 var guardarContrato = function (done) {
     var firma = parseInt(vm.firmaActa());
@@ -1331,16 +1325,6 @@ var guardarContrato = function (done) {
     }
 }
 
-var guardarContratoResumen = function (done) {
-    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
-        if (err) return errorGeneral(err, done);
-        actualizaAsociados(vm.firmaActa(), function(err, result) {
-            if (err) return errorGeneral(err, done);
-            done(null, 'PUT');
-        });
-    });
-}
-
 
 var generarContratoDb = function () {
     if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
@@ -1399,32 +1383,6 @@ var generarContratoDb = function () {
     return data;
 }
 
-var generarResumenDb = function () {
-    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
-    var data = {
-        contrato: {
-            "contratoId": vm.contratoId(),
-            "resumenExp" : vm.resumenExp(),
-            "resumenJefeObra": vm.sJefeObraId(),
-            "resumenTecnico": vm.stecnicoId(),
-            "resumenDistrito": vm.resumenDistrito(),
-            "resumenPtoAceptado": vm.resumenPtoAceptado(),
-            "resumenAutorizacion": vm.resumenAutorizacion(),
-            "resumenActa": vm.resumenActa(),
-            "resumenDni": vm.resumenDni(),
-            "resumenCif": vm.resumenCif(),
-            "resumenTasas": vm.resumenTasas(),
-            "resumenIcio": vm.resumenIcio(),
-            "resumenFormulario": vm.resumenFormulario(),
-            "resumenDr": vm.resumenDr(),
-            "resumenTasasVisado": vm.resumenTasasVisado(),
-            "resumenDiario": vm.resumenDiario(),
-
-        }
-    };
-    if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
-    return data;
-}
 
 function compruebaAnticiposVinculados() {
     llamadaAjax('GET', "/api/contratos/anticipos/no-vinculados/" + vm.contratoId(), null, function (err, data) {
@@ -8544,7 +8502,7 @@ function loadJefesObra(id) {
     llamadaAjax('GET', "/api/comerciales/colaboradores/activos/por/tipo/" + 5, null, function (err, data) {
         if (err) return;
         var jefesObra = [{
-            comercialId: 0,
+            jefeObraId: null,
             nombre: ""
         }].concat(data.map(function(item) {
             return {
@@ -8554,6 +8512,7 @@ function loadJefesObra(id) {
         }));
         vm.posiblesJefesObra(jefesObra);
         $("#cmbJefesObra").val([id]).trigger('change');
+        vm.sjefeObraId(id);
     });
 }
 
@@ -8562,7 +8521,7 @@ function loadTecnicos(id) {
     llamadaAjax('GET', "/api/comerciales/comerciales_activos", null, function (err, data) {
         if (err) return;
         var tecnicos = [{
-            tecnicoId: 0,
+            tecnicoId: null,
             nombre: ""
         }].concat(data.map(function(item) {
             return {
@@ -8571,6 +8530,44 @@ function loadTecnicos(id) {
             };
         }));
         vm.posiblesTecnicos(tecnicos);
-        $("#cmbCTecnicos").val([id]).trigger('change');
+        $("#cmbTecnicos").val([id]).trigger('change');
+        vm.sjefeObraId(id);
     });
+}
+
+
+var guardarContratoResumen = function () {
+    var data = generarResumenDb();
+    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data2) {
+        if (err) return;
+        mensNormal("Resumen guardado.")
+    });
+}
+
+
+
+var generarResumenDb = function () {
+    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
+    var data = {
+        contrato: {
+            "contratoId": vm.contratoId(),
+            "resumenExp" : vm.resumenExp(),
+            "resumenJefeObraId": vm.sjefeObraId(),
+            "resumenTecnicoId": vm.stecnicoId(),
+            "resumenDistrito": vm.resumenDistrito(),
+            "resumenPtoAceptado": vm.resumenPtoAceptado(),
+            "resumenAutorizacion": vm.resumenAutorizacion(),
+            "resumenActa": vm.resumenActa(),
+            "resumenDni": vm.resumenDni(),
+            "resumenCif": vm.resumenCif(),
+            "resumenTasas": vm.resumenTasas(),
+            "resumenIcio": vm.resumenIcio(),
+            "resumenFormulario": vm.resumenFormulario(),
+            "resumenDr": vm.resumenDr(),
+            "resumenTasasVisado": vm.resumenTasasVisado(),
+            "resumenDiario": vm.resumenDiario(),
+
+        }
+    };
+    return data;
 }

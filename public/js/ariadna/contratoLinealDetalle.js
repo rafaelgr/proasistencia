@@ -75,6 +75,10 @@ function initForm() {
         clicAceptar(false);
     });
 
+    $("#btnAceptarResumen").click(function() {
+        guardarContratoResumen();
+    });
+
     $("#btnSalir").click(salir());
     //$("#btnImprimir").click(imprimir);
     $('#txtCosteUnidad').focus( function () {
@@ -175,8 +179,13 @@ function initForm() {
         return false;
     });
 
+    $("#frmResumen").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
+
     $("#cmbEmpresas").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioEmpresa(e.added);
@@ -499,6 +508,14 @@ function initForm() {
 
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
+
+    $("#cmbJefesObra").select2(select2Spanish());
+    loadJefesObra(null);
+
+    $("#cmbTecnicos").select2(select2Spanish());
+    loadTecnicos(null);
+
+
     $("#cmbTiposIva").select2().on('change', function (e) {
         cambioTiposIva(e.added);
     });
@@ -933,6 +950,33 @@ function admData() {
     //
     self.files = ko.observable();
 
+     //PESTAÑA RESUMEN
+     self.resumenExp = ko.observable();
+     self.resumenDistrito = ko.observable();
+     self.resumenPtoAceptado = ko.observable();
+     self.resumenAutorizacion = ko.observable();
+     self.resumenActa = ko.observable();
+     self.resumenDni = ko.observable();
+     self.resumenCif = ko.observable();
+     self.resumenTasas = ko.observable();
+     self.resumenIcio = ko.observable();
+     self.resumenFormulario = ko.observable();
+     self.resumenDr = ko.observable();
+     self.resumenTasasVisado = ko.observable();
+     self.resumenDiario = ko.observable();
+     // combo jefe de obras
+     self.jefeObraId = ko.observable();
+     self.sjefeObraId = ko.observable();
+     //
+     self.posiblesJefesObra = ko.observableArray([]);
+     self.elegidosJefesObra = ko.observableArray([]);
+     //combo tecnicos
+     self.tecnicoId = ko.observable();
+     self.stecnicoId = ko.observable();
+     //
+     self.posiblesTecnicos = ko.observableArray([]);
+     self.elegidosTecnicos = ko.observableArray([]);
+
 }
 
 function loadData(data) {  
@@ -996,6 +1040,25 @@ function loadData(data) {
     document.title = "CONTRATO: " + vm.referencia();
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.servicioId(data.servicioId);
+
+    //DATOS DE LA PESTAÑA RESUMEN
+    vm.resumenExp(data.resumenExp);
+    loadJefesObra(data.resumenJefeObraId);
+    vm.jefeObraId(data.resumenJefeObraId);
+    loadTecnicos(data.resumenTecnicoId);
+    vm.tecnicoId(data.resumenTecnicoId);
+    vm.resumenDistrito(data.resumenDistrito);
+    vm.resumenPtoAceptado(data.resumenPtoAceptado);
+    vm.resumenAutorizacion(data.resumenAutorizacion);
+    vm.resumenActa(data.resumenActa);
+    vm.resumenDni(data.resumenDni);
+    vm.resumenCif(data.resumenCif);
+    vm.resumenTasas(data.resumenTasas);
+    vm.resumenIcio(data.resumenIcio);
+    vm.resumenFormulario(data.resumenFormulario);
+    vm.resumenDr(data.resumenDr);
+    vm.resumenTasasVisado(data.resumenTasasVisado);
+    vm.resumenDiario(data.resumenDiario);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -8439,3 +8502,82 @@ function uploadDocum(arr) {
             });       
 }
 
+//FUNCIONES RELACIONADAS CON LA PESTAÑA RESUMEN
+
+
+function loadJefesObra(id) {
+    llamadaAjax('GET', "/api/comerciales/colaboradores/activos/por/tipo/" + 5, null, function (err, data) {
+        if (err) return;
+        var jefesObra = [{
+            jefeObraId: null,
+            nombre: ""
+        }].concat(data.map(function(item) {
+            return {
+                jefeObraId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                nombre: item.nombre
+            };
+        }));
+        vm.posiblesJefesObra(jefesObra);
+        $("#cmbJefesObra").val([id]).trigger('change');
+        vm.sjefeObraId(id);
+    });
+}
+
+
+function loadTecnicos(id) {
+    var data = {
+        tiposComercialesId: [6, 7]
+    }
+    llamadaAjax('POST', "/api/comerciales/colaboradores/por/tipos/", data, function (err, data) {
+        if (err) return;
+        var tecnicos = [{
+            tecnicoId: null,
+            nombre: ""
+        }].concat(data.map(function(item) {
+            return {
+                tecnicoId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                nombre: item.nombre
+            };
+        }));
+        vm.posiblesTecnicos(tecnicos);
+        $("#cmbTecnicos").val([id]).trigger('change');
+        vm.sjefeObraId(id);
+    });
+}
+
+
+var guardarContratoResumen = function () {
+    var data = generarResumenDb();
+    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data2) {
+        if (err) return;
+        mensNormal("Resumen guardado.")
+    });
+}
+
+
+
+var generarResumenDb = function () {
+    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
+    var data = {
+        contrato: {
+            "contratoId": vm.contratoId(),
+            "resumenExp" : vm.resumenExp(),
+            "resumenJefeObraId": vm.sjefeObraId(),
+            "resumenTecnicoId": vm.stecnicoId(),
+            "resumenDistrito": vm.resumenDistrito(),
+            "resumenPtoAceptado": vm.resumenPtoAceptado(),
+            "resumenAutorizacion": vm.resumenAutorizacion(),
+            "resumenActa": vm.resumenActa(),
+            "resumenDni": vm.resumenDni(),
+            "resumenCif": vm.resumenCif(),
+            "resumenTasas": vm.resumenTasas(),
+            "resumenIcio": vm.resumenIcio(),
+            "resumenFormulario": vm.resumenFormulario(),
+            "resumenDr": vm.resumenDr(),
+            "resumenTasasVisado": vm.resumenTasasVisado(),
+            "resumenDiario": vm.resumenDiario(),
+
+        }
+    };
+    return data;
+}
