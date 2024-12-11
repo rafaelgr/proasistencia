@@ -2385,7 +2385,7 @@
                                             </div>                                        
                                         </div>
                                         <!-- 11º TAB (DOCUMENTACIÓN) -->
-                                    <div class="tab-pane fade" id="s11">
+                                        <div class="tab-pane fade" id="s11">
                                         
                                         <div class="row" id="documentacion">
                                             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -2451,18 +2451,18 @@
                                             </article>
                                             <!-- WIDGET END -->
                                         </div>
-                                    </div>
-                                    <!-- 11º TAB (DOCUMENTACIÓN) -->
-                                    <div class="tab-pane fade" id="s12">
+                                        </div>
+                                        <!-- 11º TAB (DOCUMENTACIÓN) -->
+                                        <div class="tab-pane fade" id="s12">
                                         <div id="datosCliente">
                                             <div class="container">
                                                 <iframe id="frCliente" class="responsive-iframe" src="about:blank"></iframe>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--FIN 11º TAB-->
-                                    <!-- TAB resumen-->
-                                    <div class="tab-pane fade" id="s13">
+                                        </div>
+                                        <!--FIN 11º TAB-->
+                                        <!-- TAB resumen-->
+                                        <div class="tab-pane fade" id="s13">
                                         <section id="widget-grid" class="">
                                             <div class="row">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -2501,48 +2501,58 @@
                                                                                     <select style="width:100%" id="cmbJefesObra" name="cmbJefesObra" data-bind="options: posiblesJefesObra, optionsText: 'nombre', optionsValue: 'jefeObraId', value: sjefeObraId, valueAllowUnset: true, selectedOptions: elegidosJefesObra, selected2:{}"></select><i></i>
                                                                                 </label>
                                                                             </section>                                                                                
-                                                                            <section class="col col-md-3">
-                                                                                <label class="label">Tecnicos</label>
-                                                                                <label style="width:100%; height:50px;">
-                                                                                    <select style="width:100%" id="cmbTecnicos" name="cmbTecnicos"  multiple="multiple"  data-bind="options: posiblesTecnicos, optionsText: 'nombre', optionsValue: 'tecnicoId', value: stecnicoId, valueAllowUnset: true, selectedOptions: elegidosTecnicos, selected2:{}"></select><i></i>
-                                                                                </label>
-                                                                            </section>    
-                                                                            <section class="col col-md-4">
+                                                                            <section class="col col-md-7">
                                                                                 <label class="label">Distrito</label>
                                                                                 <label class="input">
                                                                                     <input id="txtResumenDistrito" name="txtResumenDistrito" type="text" data-bind="value: resumenDistrito" />
                                                                                 </label>
                                                                             </section>                               
                                                                         </div>
-                                
                                                                         <div class="row">
-                                                                            <section class="col col-md-3">
-                                                                                <label class="label">Autorización</label>
-                                                                                <label class="input">
-                                                                                    <input id="txtResumenAutorizacion" name="txtResumenAutorizacion" data-bind="value: resumenAutorizacion"/>
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Tecnicos</label>
+                                                                                <label style="width:100%;">
+                                                                                    <select style="width:100%" id="cmbTecnicos" name="cmbTecnicos"  multiple="multiple"  data-bind="options: posiblesTecnicos, optionsText: 'nombre', optionsValue: 'tecnicoId', value: stecnicoId, valueAllowUnset: true, selectedOptions: elegidosTecnicos, selected2:{}"></select><i></i>
                                                                                 </label>
-                                                                            </section>
-                                                                            <section class="col col-md-3">
-                                                                                <label class="label">Acta</label>
-                                                                                <label class="input">
-                                                                                    <input id="txtResumenActa" name="txtResumenActa" data-bind="value: resumenActa"/>
-                                                                                </label>
-                                                                            </section>
-                                                                            <section class="col col-md-3">
-                                                                                <label class="label">DNI</label>
-                                                                                <label class="input">
-                                                                                    <input id="txtResumenDni" name="txtResumenDni" data-bind="value: resumenDni"/>
-                                                                                </label>
-                                                                            </section>
-                                                                            <section class="col col-md-3">
-                                                                                <label class="label">CIF</label>
-                                                                                <label class="input">
-                                                                                    <input id="txtResumenCif" name="txtResumenCif" data-bind="value: resumenCif"/>
-                                                                                </label>
+                                                                            </section>    
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
                                                                             </section>
                                                                         </div>
-                                                                            
-                                                                        
+                                                                        <section class="col col-md-12" style="border:solid; border-width:1px;">
+                                                                            <header>Representación</header>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Autorización</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenAutorizacion" name="txtResumenAutorizacion" data-bind="value: resumenAutorizacion"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Acta</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenActa" name="txtResumenActa" data-bind="value: resumenActa"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">DNI</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenDni" name="txtResumenDni" data-bind="value: resumenDni"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">CIF</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenCif" name="txtResumenCif" data-bind="value: resumenCif"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>    
+                                                                        </section> 
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                            </section>
+                                                                        </div>
                                                                         <div class="row">
                                                                             <section class="col col-md-3">
                                                                                 <label class="label">Tasas</label>
@@ -2601,11 +2611,11 @@
                                                 </article>
                                             </div>
                                         </section>
-                                    </div>
-                                    <!--FIN TAB RESUMEN-->
+                                        </div>
+                                        <!--FIN TAB RESUMEN-->
                                     </div>
                             </div>
-                        </div>
+                            </div>
                     </article>
                 </div>
             </section>

@@ -12,8 +12,9 @@ ALTER TABLE `contratos`
   ADD COLUMN `resumenIcio` VARCHAR(255) NULL AFTER `resumenTasas`,
   ADD COLUMN `resumenFormulario` VARCHAR(255) NULL AFTER `resumenIcio`,
   ADD COLUMN `resumenDr` VARCHAR(255) NULL AFTER `resumenFormulario`,
-  ADD COLUMN `resumenTasasVisado` VARCHAR(255) NULL  AFTER `resumenDr`,
-  ADD COLUMN `resumenDiario` TEXT NULL AFTER `resumenTasasVisado`;
+  ADD COLUMN `resumenDiario` TEXT NULL AFTER `resumenDr`;
+
+  ALTER TABLE `contratos` DROP `resumenTecnicoId`; 
 
 CREATE TABLE `contrato_tecnicos`(  
   `contratoTecnicoId` INT(11) NOT NULL AUTO_INCREMENT,
