@@ -29,7 +29,7 @@ ALTER TABLE `contrato_tecnicos`
   ADD CONSTRAINT `tecnicoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`);
 
 
-CREATE TABLE `contratro_tasasVisado`(  
+CREATE TABLE `contratro_tasasvisado`(  
   `tasaVisadoId` INT(11) NOT NULL AUTO_INCREMENT,
   `contratoId` INT(11),
   `titulo` VARCHAR(255) NOT NULL,

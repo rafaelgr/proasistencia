@@ -6,6 +6,7 @@ var contratoId = 0;
 var lineaEnEdicion = false;
 
 var dataContratosLineas;
+var dataContratosTasas;
 var dataBases;
 var dataComisionistas;
 var dataGenerarPrefacturas;
@@ -116,6 +117,15 @@ function initForm() {
     $("#renovarContratos-form").submit(function () {
         return false;
     });
+
+    $("#lineaVisado-form").submit(function () {
+        return false;
+    });
+
+    $("#frmLineaVisado").submit(function () {
+        return false;
+    });
+
     $("#concepto-form").submit(function () {
         return false;
     });
@@ -520,6 +530,7 @@ function initForm() {
     $("#txtPrecio").blur(cambioPrecioCantidad);
 
     initTablaContratosLineas();
+    initTablaContratosLineasTasas();
     initTablaBases();
     initTablaComisionistas();
     initTablaGenerarPrefacturas();
@@ -626,6 +637,7 @@ function initForm() {
             
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
+            loadContratoTasasVisado(data.contratoId)
            
             //loadComisionistas(data.contratoId);
             if(data.tipoContratoId != 8) {
@@ -971,6 +983,9 @@ function admData() {
     self.resumenDr = ko.observable();
     self.resumenTasasVisado = ko.observable();
     self.resumenDiario = ko.observable();
+    self.tituloTasa = ko.observable();
+    self.contenidoTasa = ko.observable();
+    self.tasaVisadoId = ko.observable();
     // combo jefe de obras
     self.jefeObraId = ko.observable();
     self.sjefeObraId = ko.observable();
@@ -8593,5 +8608,166 @@ function buscarTecnicos() {
     llamadaAjax("GET", "/api/contratos/tecnicos/asociados/" + contratoId, null, function (err, data) {
         if (err) return;
         loadTecnicos(data);
+    });
+}
+
+var guardarLineaTasa = function () {
+    if (!datosOKLineasTasa()) {
+        return;
+    }
+    var data = {
+        contratoLineaTasa: {
+            tasaVisadoId: vm.tasaVisadoId(),
+            titulo: vm.tituloTasa(),
+            contenido: vm.contenidoTasa(),
+            contratoId: vm.contratoId(),
+        }
+    }
+    var verboAjax = '';
+    var urlAjax = '';
+    if (!lineaEnEdicion) {
+        verbo = 'POST';
+        urlAjax = myconfig.apiUrl + "/api/contratos/lineas/visado/tasas";
+    } else {
+        verbo = 'PUT';
+        urlAjax = myconfig.apiUrl + "/api/contratos/lineas/visado/tasas/" + vm.tasaVisadoId();
+    }
+    llamadaAjax(verbo, urlAjax, data, function (err, data) {
+        if (err) return;
+        $('#modalLineaVisado').modal('hide');
+        loadContratoTasasVisado(vm.contratoId());
+    });
+}
+
+
+function datosOKLineasTasa() {
+    $('#lineaVisado-form').validate({
+        rules: {
+            txtTituloTasa: {
+                required: true
+            },
+            txtContenidoTasa: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtTituloTasa: {
+                required: "Debe dar un texto al título"
+            },
+            txtContenidoTasa: {
+                required: 'Necesita un contenido'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#lineaVisado-form").validate().settings;
+    return $('#lineaVisado-form').valid();
+}
+
+
+
+function nuevaLineaTasa() {
+    limpiaDataLineaTasa(); // es un alta
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLineaTasa(data) {
+    vm.tasaVisadoId(0);
+    vm.tituloTasa(null);
+    vm.contenidoTasa(null)
+}
+
+function loadDataLineaTasa(data) {
+    vm.tasaVisadoId(data.tasaVisadoId);
+    vm.tituloTasa(data.titulo);
+    vm.contenidoTasa(data.contenido);
+}
+
+
+function editContratoLineaTasa(id) {
+    lineaEnEdicion = true;
+    llamadaAjax('GET', "/api/contratos/linea/visado/tasas/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) {
+            loadDataLineaTasa(data[0]);
+        }
+    });
+}
+
+function deleteContratoLineaTasa(id) {
+    // mensaje de confirmación
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/lineas/visado/tasas/" + id, null, function (err, data) {
+            if (err) return;
+            loadContratoTasasVisado(vm.contratoId());
+            mensNormal("registro borrado correctamente.");
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadContratoTasasVisado(id) {
+    llamadaAjax('GET', "/api/contratos/lineas/visado/tasas/" + id, null, function (err, data) {
+        loadTablaContratoTasasVisado(data);
+    });
+}
+
+function loadTablaContratoTasasVisado(data) {
+    var dt = $('#dt_lineasVisado').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function initTablaContratosLineasTasas() {
+    tablaContratosLineas = $('#dt_lineasVisado').DataTable({
+        autoWidth: true,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataContratosTasas,
+        columns: [{
+            data: "titulo"
+        }, {
+            data: "contenido"
+        }, {
+            data: "tasaVisadoId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLineaTasa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLineaVisado' onclick='editContratoLineaTasa(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
     });
 }

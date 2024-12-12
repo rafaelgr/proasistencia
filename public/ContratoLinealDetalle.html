@@ -2632,7 +2632,7 @@
                                                                         <div class="jarviswidget" id="wid-id-new-18" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                                             <header>
                                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                                                                <h2>LINEAS DEL CONTRATO</h2>
+                                                                                <h2>LINEAS DE LAS TASAS</h2>
                                                                             </header>
                                                                             <div>
                                                                                 <div class="jarviswidget-editbox">
@@ -2642,7 +2642,7 @@
                                                                                     <form id="frmLineaVisado">
                                                                                         <fieldset>
                                                                                             <div class="pull-right">
-                                                                                                <button id="btnNuevaLineaVisado" title="Nueva línea" data-toggle="modal" data-target="#modalLineaVisado" onclick="nuevaLineaVisado()" class="btn btn-success btn-circle btn-lg">
+                                                                                                <button id="btnNuevaLineaVisado" title="Nueva línea" data-toggle="modal" data-target="#modalLineaVisado" onclick="nuevaLineaTasa()" class="btn btn-success btn-circle btn-lg">
                                                                                                     <i class="fa fa-lg fa-plus"></i>
                                                                                                 </button>
                                                                                             </div>
@@ -2650,7 +2650,7 @@
                                                                                     </form>
                                                                                     <hr/>
                                                                                     <div id="tbLineasVisado">
-                                                                                        <table id="dt_lineas" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                        <table id="dt_lineasVisado" class="table table-striped table-bordered table-hover" width="100%">
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th data-class="expand">
@@ -3582,6 +3582,57 @@
         <!-- /.modal-dialog -->
     </div>  
     <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalLineaVisado" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog"  style="width: 1100px; height: 100%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> TASAS VISADO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="lineaVisado-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Titulo</label>
+                                        <label class="input">
+                                            <input id="txtTituloTasa" name="txtTituloTasa" type="text" data-bind="value: tituloTasa" />
+                                        </label>
+                                    </section>
+                                    
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Descripción </label>
+                                        <label class="textarea textarea-resizable">
+                                            <textarea id="txtContenidoTasa" rows="6" class="custom-scroll" data-bind="value: contenidoTasa">
+                                            </textarea>
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarLineaVisado" class="btn btn-primary" onclick="guardarLineaTasa()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+     <!--End modal-->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
