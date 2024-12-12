@@ -1067,7 +1067,8 @@ function loadData(data) {
     vm.resumenExp(data.resumenExp);
     loadJefesObra(data.resumenJefeObraId);
     vm.jefeObraId(data.resumenJefeObraId);
-    loadTecnicos(data.resumenTecnicoId);
+    buscarTecnicos();
+    //loadTecnicos(data.resumenTecnicoId);
     vm.tecnicoId(data.resumenTecnicoId);
     vm.resumenDistrito(data.resumenDistrito);
     vm.resumenPtoAceptado(data.resumenPtoAceptado);
@@ -8524,31 +8525,36 @@ function buscaTecnicos() {
 }
 
 
-function loadTecnicos(id) {
+function loadTecnicos(tecnicosId) {
     var data = {
         tiposComercialesId: [6, 7]
     }
+    var ids = [];
     llamadaAjax('POST', "/api/comerciales/colaboradores/por/tipos/", data, function (err, data) {
         if (err) return;
-        var tecnicos = [{
-            tecnicoId: null,
-            nombre: ""
-        }].concat(data.map(function(item) {
-            return {
-                tecnicoId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
-                nombre: item.nombre
-            };
-        }));
-        vm.posiblesTecnicos(tecnicos);
-        $("#cmbTecnicos").val([id]).trigger('change');
-        vm.sjefeObraId(id);
+        if(data) {
+            var tecnicos = data.map(function(item) {
+                return {
+                    tecnicoId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                    nombre: item.nombre
+                };
+            });
+            vm.posiblesTecnicos(tecnicos);
+            if(tecnicosId) {
+                vm.elegidosTecnicos(tecnicosId);
+                for ( var i = 0; i < tecnicosId.length; i++ ) {
+                    ids.push(tecnicosId[i].comercialId)
+                }
+                $("#cmbTecnicos").val(ids).trigger('change');
+            }
+        }
     });
 }
 
 
 var guardarContratoResumen = function () {
     var data = generarResumenDb();
-    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data2) {
+    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/resumen/" + contratoId, data, function (err, data2) {
         if (err) return;
         mensNormal("Resumen guardado.")
     });
@@ -8557,13 +8563,12 @@ var guardarContratoResumen = function () {
 
 
 var generarResumenDb = function () {
-    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
+    var tec = vm.elegidosTecnicos();
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
             "resumenExp" : vm.resumenExp(),
             "resumenJefeObraId": vm.sjefeObraId(),
-            "resumenTecnicoId": vm.stecnicoId(),
             "resumenDistrito": vm.resumenDistrito(),
             "resumenPtoAceptado": vm.resumenPtoAceptado(),
             "resumenAutorizacion": vm.resumenAutorizacion(),
@@ -8574,10 +8579,19 @@ var generarResumenDb = function () {
             "resumenIcio": vm.resumenIcio(),
             "resumenFormulario": vm.resumenFormulario(),
             "resumenDr": vm.resumenDr(),
-            "resumenTasasVisado": vm.resumenTasasVisado(),
             "resumenDiario": vm.resumenDiario(),
 
-        }
+        },
+        tecnicos: [
+            vm.elegidosTecnicos()
+        ]
     };
     return data;
+}
+
+function buscarTecnicos() {
+    llamadaAjax("GET", "/api/contratos/tecnicos/asociados/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTecnicos(data);
+    });
 }
