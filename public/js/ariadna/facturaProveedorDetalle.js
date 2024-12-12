@@ -266,22 +266,17 @@ function initForm() {
         // create a FormData object which will be sent as the data payload in the
         // AJAX request
         var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
         
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
         if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf");
-
         // add the files to formData object for the data payload
-        formData.append('uploads[]', file, + file.name);
-
-        // Agregar un objeto JSON como string
-        var data = generarFacturaDb();
-        data.facproveId = 0;
-        const jsonData = JSON.stringify(data);
-        formData.append('json', jsonData);
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+        var name = vm.ref() + "." + ext;
             
             $.ajax({
-                url: '/api/upload/s3/externo/',
+                url: '/api/upload/s3/' + name + "/" + vm.facproveId(),
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -878,8 +873,13 @@ var aceptarFactura = function (salir) {
 }
 
 var generarFacturaDb = function () {
-    
+    if($('#chkNoContabilizar').prop("checked")) {
+        vm.noContabilizar(true);
+    } else {
+        vm.noContabilizar(false);
+    }
     var data = {
+        facprove: {
             "facproveId": vm.facproveId(),
             "numeroFacturaProveedor": vm.numero(),
             "numeroFacturaProveedor2": vm.numero2(),
@@ -923,6 +923,7 @@ var generarFacturaDb = function () {
             "enviadaCorreo": vm.enviadaCorreo(),
             "esColaborador": 0
 
+        }
     };
     if(vm.stipoOperacionId() == 2 || vm.stipoOperacionId() == 3) {
         data.facprove.totalConIva =  numeroDbf(vm.total());
@@ -2525,17 +2526,19 @@ function nuevaServiciada() {
     //recalculamos el acumulado de todas las empresas serviciadas de la factura
     llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/servicidas/facturas/proveedor/todas/" + facproveId, null, function (err, data) {
         if (err) return;
+        var is = 0;
         for(var i = 0; i < data.length; i++){
-            acumulado += parseFloat(data[i].importe);
+            acumulado += data[i].importe;
         }
-        acumulado = roundToTwo(acumulado);
+      
         if(vm.facproveServiciadoId() != 0) {
             imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
+            imp = Math.trunc(imp * 100) / 100;
             tot = parseFloat(numeroDbf(vm.total()));
         } else {
+            is = parseFloat(vm.importeServiciada());
             imp = acumulado + parseFloat(vm.importeServiciada());
-            imp = parseFloat(imp.toFixed(2));
+            imp = Math.trunc(imp * 100) / 100;
             tot = parseFloat(numeroDbf(vm.total()));
         }
     
