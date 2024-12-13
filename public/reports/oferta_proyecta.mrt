@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "24776bc217514987a6d2b4c4c3e64c00",
+  "ReportGuid": "37c882bb6230415598d0d742aa4843bb",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1732883423848+0100)/",
+  "ReportChanged": "/Date(1734081585500+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -426,7 +426,7 @@
           "Ident": "StiPageHeaderBand",
           "Name": "cabeceraPresentacion",
           "PrintOn": "OnlyFirstPage",
-          "ClientRectangle": "0,0.4,19,9.4",
+          "ClientRectangle": "0,0.4,19,17",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -454,12 +454,12 @@
               "Guid": "a4c28bd8c2ca45b99a020d431768ff1d",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "5.4,2.6,13.4,0.8",
+              "ClientRectangle": "5.4,2.6,13.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{ofertas.clienteNombre} \r\n{ofertas.clienteCodPostal} {ofertas.clientePoblacion}"
+                "Value": "{ofertas.clienteNombre} \r\n"
               },
               "HorAlignment": "Right",
               "Font": ";;Bold;",
@@ -469,6 +469,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
+              "LineSpacing": 2.0,
               "Type": "Expression"
             },
             "2": {
@@ -493,7 +494,7 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text24",
-              "ClientRectangle": "0.6,9.4,18.2,0.6",
+              "ClientRectangle": "0.6,9,18.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -507,6 +508,99 @@
               "TextBrush": "solid:Black",
               "LineSpacing": 1.1499999761581421,
               "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "Guid": "6f363140c58b4a27b76ca01b4098a8da",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "5.4,3.2,13.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ofertas.clienteCodPostal} {ofertas.clientePoblacion}"
+              },
+              "HorAlignment": "Right",
+              "Font": ";;Bold;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "LineSpacing": 2.0,
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text22",
+              "ClientRectangle": "0.6,12,18.2,1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Estamos a su disposición para cualquier aclaración\r\n\r\nAtentamente,"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "LineSpacing": 1.5,
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text23",
+              "ClientRectangle": "1.6,11.2,17.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "- {ofertas.clienteDireccion}. {ofertas.clienteCodPostal}. {ofertas.clientePoblacion}"
+              },
+              "Font": ";10;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "LineSpacing": 1.1499999761581421,
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text30",
+              "ClientRectangle": "0.6,9.8,18.2,1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Atendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los\r\n \r\nservicios detallados a continuación, para la comunidad de propietarios sita en:"
+              },
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "LineSpacing": 1.5,
+              "Type": "Expression"
+            },
+            "8": {
+              "Ident": "StiImage",
+              "Name": "Image3",
+              "Guid": "b50d6f28d1a74230a366044146f2459e",
+              "ClientRectangle": "0.4,13,5,3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageURL": {
+                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/Sello_Proyecta.png"
+              }
             }
           }
         },
@@ -514,7 +608,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PiePresentacion",
           "PrintOn": "OnlyFirstPage",
-          "ClientRectangle": "0,26.3,19,1.4",
+          "ClientRectangle": "0,25.9,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -524,9 +618,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text28",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "0.2,0.16,18.6,0.6",
+              "ClientRectangle": "0.2,0.36,18.6,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -534,88 +626,18 @@
                 "Value": "{ofertas.empresaDireccion} {ofertas.empresaCodPostal} {ofertas.empresaPoblacion} | Telf:  91 290 50 30  email: info@proyectarquitectos.es "
               },
               "HorAlignment": "Center",
+              "VertAlignment": "Bottom",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
               "Type": "Expression"
             }
-          }
-        },
-        "2": {
-          "Ident": "StiText",
-          "Name": "Text22",
-          "ClientRectangle": "0.6,11.8,18.2,1",
-          "Interaction": {
-            "Ident": "StiInteraction"
           },
-          "Text": {
-            "Value": "Estamos a su disposición para cualquier aclaración\r\nAtentamente,"
-          },
-          "Font": ";10;;",
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:Black",
-          "LineSpacing": 1.5,
-          "Type": "Expression"
-        },
-        "3": {
-          "Ident": "StiText",
-          "Name": "Text23",
-          "ClientRectangle": "1.8,11.2,17.2,0.4",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Text": {
-            "Value": "- {ofertas.clienteDireccion}. {ofertas.clienteCodPostal}. {ofertas.clientePoblacion}"
-          },
-          "Font": ";10;Bold;",
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:Black",
-          "LineSpacing": 1.1499999761581421,
-          "Type": "Expression"
-        },
-        "4": {
-          "Ident": "StiText",
-          "Name": "Text30",
-          "ClientRectangle": "0.6,10.2,18.2,1",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Text": {
-            "Value": "Atendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los servicios detallados a continuación, para la comunidad de propietarios sita en:"
-          },
-          "Font": ";10;;",
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "TextBrush": "solid:Black",
-          "TextOptions": {
-            "WordWrap": true
-          },
-          "LineSpacing": 1.1499999761581421,
-          "Type": "Expression"
-        },
-        "5": {
-          "Ident": "StiImage",
-          "Name": "Image3",
-          "Guid": "b50d6f28d1a74230a366044146f2459e",
-          "ClientRectangle": "0.6,13.2,4.4,2.4",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Stretch": true,
-          "ImageURL": {
-            "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/Sello_Proyecta.png"
-          }
+          "CanGrow": false
         }
       },
       "PageWidth": 21.0,
-      "PageHeight": 29.7,
+      "PageHeight": 28.0,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
@@ -623,7 +645,7 @@
         "Left": 1.0,
         "Right": 1.0,
         "Top": 1.0,
-        "Bottom": 1.0
+        "Bottom": 0.5
       },
       "ReportUnit": {
         "Ident": "StiCentimetersUnit"
@@ -689,7 +711,7 @@
               "Guid": "6a16b5f2ff124ad4bb1785a5a652305e",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "5.6,0.8,13.2,0.4",
+              "ClientRectangle": "5.6,1,13.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -710,7 +732,7 @@
               "Ident": "StiText",
               "Name": "Text20",
               "Guid": "ffe098fd8dd44fac8c1ee997469e3de0",
-              "ClientRectangle": "15,1.4,3.8,0.4",
+              "ClientRectangle": "15,1.6,3.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -730,7 +752,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PiePagina",
-          "ClientRectangle": "0,43.12,19,1.2",
+          "ClientRectangle": "0,43,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -740,9 +762,9 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text37",
-              "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0.2,0.16,18.6,0.6",
+              "ClientRectangle": "0.2,0,18.6,0.4",
+              "Restrictions": "None",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -750,6 +772,7 @@
                 "Value": "{ofertas.empresaDireccion} {ofertas.empresaCodPostal} {ofertas.empresaPoblacion} | Telf:  91 290 50 30  email: info@proyectarquitectos.es "
               },
               "HorAlignment": "Center",
+              "VertAlignment": "Bottom",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -761,7 +784,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text34",
-              "ClientRectangle": "0.2,0.62,18.6,0.4",
+              "ClientRectangle": "0.2,0.5,18.6,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -769,12 +792,14 @@
                 "Value": "Pag. {PageNumberThrough-1} de {TotalPageCountThrough-1}"
               },
               "HorAlignment": "Center",
+              "VertAlignment": "Bottom",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
             }
-          }
+          },
+          "CanGrow": false
         },
         "2": {
           "Ident": "StiDataBand",
@@ -1227,7 +1252,7 @@
         "14": {
           "Ident": "StiFooterBand",
           "Name": "PieFormaPago",
-          "ClientRectangle": "0,27.4,19,5.6",
+          "ClientRectangle": "0,27.4,19,7.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1278,7 +1303,7 @@
               "Guid": "c8ed469b7cfe4fd28ae18d321e5a4f00",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "12.8,2.4,6,1",
+              "ClientRectangle": "12.8,2.4,6,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1329,7 +1354,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text7",
-              "ClientRectangle": "10.6,4.6,2.4,0.4",
+              "ClientRectangle": "9,4.6,2.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1346,7 +1371,7 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text17",
-              "ClientRectangle": "10.6,5,2.4,0.4",
+              "ClientRectangle": "9,5,2.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1359,14 +1384,28 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiImage",
+              "Name": "Image4",
+              "Guid": "a0d34bec1bf44b6da01422ac5b278794",
+              "ClientRectangle": "13.2,3.6,5,3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageURL": {
+                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/Sello_Proyecta.png"
+              }
             }
           },
-          "NewPageAfter": true,
           "PrintIfEmpty": true
         }
       },
       "PageWidth": 21.0,
-      "PageHeight": 29.7,
+      "PageHeight": 28.7,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
@@ -1374,7 +1413,7 @@
         "Left": 1.0,
         "Right": 1.0,
         "Top": 1.0,
-        "Bottom": 1.0
+        "Bottom": 0.2
       },
       "ReportUnit": {
         "Ident": "StiCentimetersUnit"
