@@ -1388,13 +1388,8 @@
             "7": {
               "Ident": "StiImage",
               "Name": "Image4",
-<<<<<<< HEAD
-              "Guid": "c781a856e3f2448a946cdb6c252b7fea",
-              "ClientRectangle": "12.8,3.6,3.8,2.2",
-=======
               "Guid": "a0d34bec1bf44b6da01422ac5b278794",
               "ClientRectangle": "13.2,3.6,5,3",
->>>>>>> develop
               "Interaction": {
                 "Ident": "StiInteraction"
               },
