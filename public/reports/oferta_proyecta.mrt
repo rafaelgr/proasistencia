@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "37c882bb6230415598d0d742aa4843bb",
+  "ReportGuid": "75421c2869c547e5a396c799fc9f20e9",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1734081585500+0100)/",
+  "ReportChanged": "/Date(1734084034403+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -536,7 +536,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text22",
-              "ClientRectangle": "0.6,12,18.2,1",
+              "ClientRectangle": "0.6,12.6,18.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -547,13 +547,12 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "LineSpacing": 1.5,
               "Type": "Expression"
             },
             "6": {
               "Ident": "StiText",
               "Name": "Text23",
-              "ClientRectangle": "1.6,11.2,17.2,0.4",
+              "ClientRectangle": "1.6,11.8,17.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -570,7 +569,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text30",
-              "ClientRectangle": "0.6,9.8,18.2,1",
+              "ClientRectangle": "0.6,9.8,18.2,1.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -584,14 +583,13 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "LineSpacing": 1.5,
               "Type": "Expression"
             },
             "8": {
               "Ident": "StiImage",
               "Name": "Image3",
-              "Guid": "b50d6f28d1a74230a366044146f2459e",
-              "ClientRectangle": "0.4,13,5,3",
+              "Guid": "3c96d41f14ec45b5b8e31edec1a0b251",
+              "ClientRectangle": "0.4,13.8,3.8,2.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1389,7 +1387,7 @@
               "Ident": "StiImage",
               "Name": "Image4",
               "Guid": "a0d34bec1bf44b6da01422ac5b278794",
-              "ClientRectangle": "13.2,3.6,5,3",
+              "ClientRectangle": "12.8,3.6,3.8,2.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
