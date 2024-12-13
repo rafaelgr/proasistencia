@@ -1,18 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-<<<<<<< HEAD
-  "ReportGuid": "4a1768e571e24b19a27c6af2e8320bc3",
-  "ReportName": "OfertaGeneral",
-  "ReportAlias": "OfertaGeneral",
-  "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1734082689018+0100)/",
-=======
   "ReportGuid": "37c882bb6230415598d0d742aa4843bb",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
   "ReportChanged": "/Date(1734081585500+0100)/",
->>>>>>> develop
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -502,11 +494,7 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text24",
-<<<<<<< HEAD
-              "ClientRectangle": "0.4,8.6,18.2,0.6",
-=======
               "ClientRectangle": "0.6,9,18.2,0.6",
->>>>>>> develop
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -548,11 +536,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text22",
-<<<<<<< HEAD
-              "ClientRectangle": "0.6,12,18.2,1.2",
-=======
               "ClientRectangle": "0.6,12,18.2,1",
->>>>>>> develop
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -563,10 +547,7 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-<<<<<<< HEAD
-=======
               "LineSpacing": 1.5,
->>>>>>> develop
               "Type": "Expression"
             },
             "6": {
@@ -589,20 +570,12 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text30",
-<<<<<<< HEAD
-              "ClientRectangle": "0.4,9.4,18.2,1.6",
-=======
               "ClientRectangle": "0.6,9.8,18.2,1",
->>>>>>> develop
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-<<<<<<< HEAD
-                "Value": "Atendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los\r\n\r\nservicios detallados a continuación, para la comunidad de propietarios sita en:"
-=======
                 "Value": "Atendiendo su solicitud, les adjuntamos presupuesto Ref.: {ofertas.referencia}, correspondiente a los honorarios de los\r\n \r\nservicios detallados a continuación, para la comunidad de propietarios sita en:"
->>>>>>> develop
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
@@ -611,21 +584,14 @@
               "TextOptions": {
                 "WordWrap": true
               },
-<<<<<<< HEAD
-=======
               "LineSpacing": 1.5,
->>>>>>> develop
               "Type": "Expression"
             },
             "8": {
               "Ident": "StiImage",
               "Name": "Image3",
               "Guid": "b50d6f28d1a74230a366044146f2459e",
-<<<<<<< HEAD
-              "ClientRectangle": "0.6,13.4,3.8,2.2",
-=======
               "ClientRectangle": "0.4,13,5,3",
->>>>>>> develop
               "Interaction": {
                 "Ident": "StiInteraction"
               },
