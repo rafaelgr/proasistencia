@@ -1015,6 +1015,7 @@ function admData() {
 function loadData(data) {  
     if(data.beneficioLineal) {
         var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId;
+        if(dep == 'arquitectura')   url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId + "&dep=arquitectura";
         window.open(url, '_self');
        //return;
     }
