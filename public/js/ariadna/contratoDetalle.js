@@ -637,7 +637,7 @@ function initForm() {
             
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
-            loadContratoTasasVisado(data.contratoId)
+           
            
             //loadComisionistas(data.contratoId);
             if(data.tipoContratoId != 8) {
@@ -658,6 +658,8 @@ function initForm() {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
+
+            //loadContratoTasasVisado(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
