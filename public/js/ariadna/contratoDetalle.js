@@ -20,6 +20,7 @@ var dataFactCol;
 var dataAntCol;
 var ContratoId = 0;
 var cmd;
+var dep;
 var usuario;
 var dataConceptosLineas;
 var dataPlanificacionLineas;
@@ -65,6 +66,8 @@ function initForm() {
     $('#txtNumPagos2').on('blur', verPrefacturasAGenerarPlanificacion);
 
     // asignación de eventos al clic
+    $("#btnAceptar").click(clicAceptar);
+
     $("#btnAceptar2").click(function() {
         clicAceptar(false);
     });
@@ -569,6 +572,7 @@ function initForm() {
     reglasDeValidacionAdicionales();
 
     cmd = gup('CMD');
+    dep = gup('dep');
     ContratoId = gup('ContratoId');
     DesdeContrato = gup('DesdeContrato');
     AscContratoId = gup('AscContratoId')
@@ -637,6 +641,13 @@ function initForm() {
             
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
+            try {
+                loadContratoTasasVisado(data.contratoId);
+
+            }catch(e) {
+                //no hacemos nada
+            }
+           
            
            
             //loadComisionistas(data.contratoId);
@@ -658,8 +669,6 @@ function initForm() {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
-
-            //loadContratoTasasVisado(data.contratoId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -1245,6 +1254,7 @@ function datosOK() {
 function salir() {
     var mf = function () {
         var url = "ContratoGeneral.html";
+        if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html";
         if(DesdeContrato == "true" && AscContratoId != 0){
             url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true', '_self';
             window.open(url, '_self');
@@ -1260,14 +1270,19 @@ var clicAceptar = function (salir) {
             var url;
             if(DesdeContrato == "true" && AscContratoId != 0){
                 url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+                if(dep == 'arquitectura')  url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true&dep=arquitectura';
             } else {
                 url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+                if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
             }
             if (tipo == 'POST') {
                 if(vm.beneficioLineal() == 0) {
                     url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    if(dep == 'arquitectura') url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
+                    
                 } else {
                     url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    if(dep == 'arquitectura')  url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
                 }
                
             }

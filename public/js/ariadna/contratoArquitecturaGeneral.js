@@ -26,18 +26,10 @@ function initForm() {
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
 
-    initTablaContratos();
-
-        contratoId = gup('ContratoId');
-        if (contratoId !== '') {
-            cargarContratos()(contratoId);
-
-        } else {
-            cargarContratos()();
-        }
     
-    /* recuperaDepartamento(function(err, data) {
+    recuperaDepartamento(function(err, data) {
         if(err) return;
+        ajustaDepartamentos(data)
         initTablaContratos();
 
         contratoId = gup('ContratoId');
@@ -47,18 +39,19 @@ function initForm() {
         } else {
             cargarContratos()();
         }
-    }); */
+    }); 
 
      //Evento asociado al cambio de departamento
-     /* $("#cmbDepartamentosTrabajo").on('change', function (e) {
+     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         cargarContratos()();
-    }); */
+    });
 
-    vm.sdepartamentoId(5);//DEPARTAMENTO DE ARQUITECTURA SIEMPRE
-    cargarContratos()();
+    // select2 things
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
 
     // de smart admin
     pageSetUp();
@@ -75,6 +68,7 @@ function initForm() {
         if($('#chkPreaviso').is(':checked')) {
             $('#chkPreaviso').prop("checked", false);
         }
+        if(vm.sdepartamentoId() != 5) return;
         var url = myconfig.apiUrl + "/api/contratos/arquitectura/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         checkCerrados =  this;
         if (this.checked) {
@@ -98,6 +92,7 @@ function initForm() {
         if($('#chkCerrados').is(':checked')) {
             $('#chkCerrados').prop("checked", false);
         }
+        if(vm.sdepartamentoId() != 5) return;
         var url = myconfig.apiUrl + "/api/contratos/arquitectura/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         if (this.checked) {
             url =  myconfig.apiUrl + "/api/contratos/arquitectura/preaviso/usuario/departamento/todos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
@@ -234,8 +229,6 @@ function initTablaContratos() {
         }, {
             data: "referencia"
         }, {
-            data: "tipo"
-        }, {
             data: "fechaInicio",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -246,8 +239,6 @@ function initTablaContratos() {
                 return moment(data).format('DD/MM/YYYY');
             }
         },  {
-            data: "empresa"
-        }, {
             data: "cliente"
         }, {
             data: "total",
@@ -259,6 +250,8 @@ function initTablaContratos() {
             data: "mantenedor"
         }, {
             data: "agente"
+        }, {
+            data: "tecnicoNombre"
         }, {
             data: "observaciones"
         }, {
@@ -298,8 +291,8 @@ function initTablaContratos() {
     });
 
     // Hide some columns by default
-    tablaContratos.columns(7).visible(false);
-    tablaContratos.columns(8).visible(false);
+    tablaContratos.columns(5).visible(false);
+    tablaContratos.columns(6).visible(false);
     //tablaContratos.columns(9).visible(false);
 }
 
@@ -341,7 +334,7 @@ function buscarContratos() {
 
 function crearContrato() {
     var mf = function () {
-        var url = "ContratoDetalle.html?ContratoId=0";
+        var url = "ContratoDetalle.html?ContratoId=0&dep=arquitectura";
         window.open(url, '_new');
     };
     return mf;
@@ -382,12 +375,13 @@ function deleteContrato(id) {
 }
 
 function editContrato(id) {
-    var url = "ContratoDetalle.html?ContratoId=" + id;
+    var url = "ContratoDetalle.html?ContratoId=" + id + "&dep=arquitectura"
     window.open(url, '_new');
 }
 
 function cargarContratos() {
     var mf = function (id) {
+        if(vm.sdepartamentoId() != 5) return;
         if (id) {
             var data = {
                 id: contratoId
@@ -395,7 +389,7 @@ function cargarContratos() {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/" + contratoId,
+                url: myconfig.apiUrl + "/api/contratos/arquitectura/" + contratoId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -511,8 +505,26 @@ function cargarContratos2() {
     });
 }
 
-
-
+function ajustaDepartamentos(data) {
+    //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO OBRAS DEL COMBO
+    var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
+     for (var i = 0; i < data.length; i++) {
+            if (data[i].departamentoId != 5) {
+                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
+                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
+            }
+    }
+    console.log(data);
+    var departamentos = [{
+        departamentoId: 0,
+        nombre: ""
+    }].concat(data);
+    vm.posiblesDepartamentos(departamentos);
+    if(id != 5)  {
+        $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
+        vm.sdepartamentoId(0);
+    }
+}
 imprimirInforme = function () {
     var url = "InfContratos.html";
     window.open(url, '_blank');
