@@ -29,6 +29,12 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
+
+     
+    $('#frmCopia').submit(function () {
+        return false
+    });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarTarifas();
@@ -326,21 +332,10 @@ function copiarTarifa() {
         }
     }
 
-    llamadaAjax("POST", "/api/tarifas_proveedor" , data, function (err, data) {
+    llamadaAjax("POST", "/api/tarifas_proveedor/crea/adjunta" , data, function (err, data) {
         if (err) return;
-        var data2 = {
-            tarifaProveedor: {
-                "tarifaProveedorId": vm.tarifaProveedorId(),
-                "nuevaTarifaProveedorId": data.tarifaProveedorId,
-                "tiposProfesionalesId": vm.elegidosTiposProfesional()
-            }
-        }
-        llamadaAjax("POST", "/api/tarifas_proveedor/copia/tarifa/proveedor/nombre" , data2, function (err, data) {
-            if (err) return;
-            $('#modalCopia').modal('hide');
-            window.open("TarifaProveedorGeneral.html", '_self');
-        });
-        
+        $('#modalCopia').modal('hide');
+        cargarTarifas()();
     });
 }
 
