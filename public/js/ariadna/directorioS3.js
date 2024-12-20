@@ -294,7 +294,7 @@ var descargarRenombrarFacproves2 = function() {
         if(data.length == 0) return;
         for(let i = 0; i < data.length; i++) {
             obj = {
-                Key: "facturas_proveedores/" + data[i].ref + ".pdf"
+                Key: "facturas_proveedores/" + data[i].nombreFacprovePdf
             }
             arr.push(obj);
         }
