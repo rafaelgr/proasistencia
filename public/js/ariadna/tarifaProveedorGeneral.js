@@ -340,7 +340,7 @@ function copiarTarifa() {
 }
 
 function datosOKNuevoNombre() {
-    $('#frmTarifa').validate({
+    $('#frmCopia').validate({
         rules: {
             
             txtNuevoNombre: {
@@ -359,7 +359,7 @@ function datosOKNuevoNombre() {
             error.insertAfter(element.parent());
         }
     });
-    var opciones = $("#frmTarifa").validate().settings;
-    return $('#frmTarifa').valid();
+    var opciones = $("#frmCopia").validate().settings;
+    return $('#frmCopia').valid();
 }
 
