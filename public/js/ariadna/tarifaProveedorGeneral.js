@@ -22,6 +22,10 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+
+    vm = new admData();
+    ko.applyBindings(vm);
+    
     //
     $('#btnBuscar').click(buscarTarifas());
     $('#btnAlta').click(crearTarifa());
@@ -56,6 +60,11 @@ function initForm() {
         // criterio puede cambiar y habrá que adaptarlo.
         cargarTarifas()();
     }
+}
+
+function admData() {
+    var self = this;
+    self.nombre = ko.observable();
 }
 
 function initTablaTarifas() {
@@ -328,7 +337,7 @@ function copiarTarifa() {
     var data = {
         tarifaProveedor: {
             "tarifaProveedorId": 0,
-            "nombre": vm.nuevoNombre()
+            "nombre": vm.nombre()
         }
     }
 
