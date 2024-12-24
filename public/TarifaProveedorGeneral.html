@@ -535,8 +535,8 @@
                                         </header>
                                         <fieldset>
                                             <div class="pull-right">    
-                                                <button id="btnCopiar" title="Copiar tarifa" data-toggle="modal" data-target="#modalCopia" class="btn btn-success btn-circle btn-lg">
-                                                    <i class="fa fa-lg fa-crosshairs"></i>
+                                                <button id="btnCopiar" title="Adjuntar tarifas" data-toggle="modal" data-target="#modalCopia" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-clone"></i>
                                                 </button>                                          
                                                 <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
@@ -607,16 +607,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title"> COPIA TARIFA</h4>
+                <h4 class="modal-title"> ADJUNTAR TARIFAS</h4>
             </div>
             <div class="modal-body no-padding">
                 
                     <form id="frmCopia" class="smart-form">
                             <fieldset>
-                                    <legend>Se copiará la tarifa, se tiene que introducir un nombre.</legend>
+                                    <legend>Se adjuntaran las tarifas seleccionadas creando una nueva, se tiene que introducir un nombre.</legend>
                                     <div class="row">
                                             <section class="col col-md-12">
-                                                    <label class="label">Nombre</label>
+                                                    <label class="label">Nombre nueva tarifa</label>
                                                     <label class="input">
                                                         <input id="txtNuevoNombre" name="txtNuevoNombre" type="text" data-bind="value: nombre"/>
                                                     </label>

@@ -536,6 +536,9 @@
                                         </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                                <button id="btnCopiar2" title="Adjuntar tarifas" data-toggle="modal" data-target="#modalCopia2" onclick="buscarTarifas()" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-clone"></i>
+                                                </button>   
                                                 <button id="btnSalir" title="Salir sin guardar" class="btn btn-warning btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                 </button>
@@ -601,6 +604,7 @@
                                          </fieldset>
                                         <fieldset>
                                             <div class="pull-right">
+                                               
                                                 <button id="btnNuevaLinea" title="Nueva línea" data-toggle="modal" data-target="#modalLinea" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-plus"></i>
                                                 </button>
@@ -732,7 +736,7 @@
                                                 <section class="col col-md-12">
                                                         <label class="label">Nombre</label>
                                                         <label class="input">
-                                                            <input id="txtNuevoNombre" name="txtNuevoNombre" type="text" data-bind="value: nuevoNombre"/>
+                                                            <input id="txtNuevoNombre" name="txtNuevoNombre" type="text" data-bind="value: nuevoNombreAdjunta"/>
                                                         </label>
                                                 </section>
                                         </div>
@@ -747,7 +751,6 @@
                                 </footer>
                         </form>
                          <hr/>
-                
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -796,6 +799,78 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+             <!--MODAL-->
+ <div class="modal fade" id="modalCopia2" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"> ADJUNTAR TARIFAS</h4>
+            </div>
+            <div class="modal-body no-padding">
+                
+                    <form id="frmCopiaAdjunta" class="smart-form">
+                            <fieldset>
+                                    <legend>Se adjuntaran las tarifas seleccionadas con la actual, creando una nueva, se tiene que introducir un nombre.</legend>
+                                    <div class="row">
+                                            <section class="col col-md-12">
+                                                    <label class="label">Nombre nueva tarifa</label>
+                                                    <label class="input">
+                                                        <input id="txtNuevoNombreAdjunta" name="txtNuevoNombreAdjunta" type="text" data-bind="value: nuevoNombreAdjunta"/>
+                                                    </label>
+                                            </section>
+                                    </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="pull-right">
+                                    <button id="btnSalirAsociarRegistros" title="Salir" data-dismiss="modal"  class="btn btn-warning btn-circle btn-lg">
+                                        <i class="fa fa-lg fa-sign-out"></i>
+                                    </button>
+                                    <button id="btnAceptarNombreAdjunto" title="Adjuntar tarifas" onClick="copiarTarifaAdjunta()" class="btn btn-success btn-circle btn-lg">
+                                        <i class="fa fa-lg fa-check"></i>
+                                    </button>
+                                </div>
+                            </fieldset>
+                    </form>
+                     <hr/>
+                     <div id="tbTarifa">
+                        <table id="dt_tarifa" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        SEL
+                                    </th>
+                                    <th class="hasinput">
+                                        <input type="text" class="form-control" placeholder="" />
+                                    </th>
+                                    
+                                    <th style="width:10%">
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <i class="fa fa-fw fa-clipboard">
+                                    </th>
+                                    <th data-hide="expand">
+                                        <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Nombre tarifa
+                                    </th>
+                                                         
+                                    <th style="width:10%; text-align: center;">
+                                        <i class="fa fa-fw fa-gears">
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--END MODAL-->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

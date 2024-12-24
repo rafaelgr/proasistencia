@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataTarifas;
 var tarifaProveedorId;
+var contador = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -29,6 +30,8 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarTarifas());
     $('#btnAlta').click(crearTarifa());
+    $('#btnCopiar').click(limpiarModal);
+    
    
     $('#frmBuscar').submit(function () {
         return false
@@ -206,8 +209,11 @@ function loadTablaTarifas(data) {
     }
    
     dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+
     data.forEach(function (v) {
-        dt.fnAddData(data);
+       
         var field = "#chk" + v.tarifaProveedorId;
         if (v.sel == 1) {
             $(field).attr('checked', true);
@@ -223,6 +229,11 @@ function loadTablaTarifas(data) {
             };
             if (this.checked) {
                 data.tarifaProveedor.sel = 1;
+                contador++;
+                console.log(contador);
+            } else {
+                contador--;
+                console.log(contador)
             }
             var url = "", type = "";
             // updating record
@@ -242,9 +253,6 @@ function loadTablaTarifas(data) {
             });
         });
     });
-
-    //dt.fnAddData(data);
-    dt.fnDraw();
 }
 
 function buscarTarifas() {
@@ -334,6 +342,9 @@ function cargarTarifas() {
 
 function copiarTarifa() {
     if(!datosOKNuevoNombre()) return;
+    if(contador == 0) {
+        return mensError('No se ha seleccionado ninguna tarifa');
+    }
     var data = {
         tarifaProveedor: {
             "tarifaProveedorId": 0,
@@ -344,6 +355,8 @@ function copiarTarifa() {
     llamadaAjax("POST", "/api/tarifas_proveedor/crea/adjunta" , data, function (err, data) {
         if (err) return;
         $('#modalCopia').modal('hide');
+        contador = 0;
+        console.log(contador);
         cargarTarifas()();
     });
 }
@@ -370,5 +383,10 @@ function datosOKNuevoNombre() {
     });
     var opciones = $("#frmCopia").validate().settings;
     return $('#frmCopia').valid();
+}
+
+
+function limpiarModal() {
+    vm.nombre(null);
 }
 
