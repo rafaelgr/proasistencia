@@ -10,6 +10,7 @@ var responsiveHelper_datatable_tabletools = undefined;
 
 var dataTarifas;
 var tarifaProveedorId;
+var contador = 0;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -22,11 +23,23 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+
+    vm = new admData();
+    ko.applyBindings(vm);
+    
     //
     $('#btnBuscar').click(buscarTarifas());
     $('#btnAlta').click(crearTarifa());
+    $('#btnCopiar').click(limpiarModal);
+    
    
     $('#frmBuscar').submit(function () {
+        return false
+    });
+
+
+     
+    $('#frmCopia').submit(function () {
         return false
     });
     //$('#txtBuscar').keypress(function (e) {
@@ -50,6 +63,11 @@ function initForm() {
         // criterio puede cambiar y habrá que adaptarlo.
         cargarTarifas()();
     }
+}
+
+function admData() {
+    var self = this;
+    self.nombre = ko.observable();
 }
 
 function initTablaTarifas() {
@@ -94,6 +112,10 @@ function initTablaTarifas() {
             ],
             "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
         },
+        columnDefs: [{
+            "width": "20%",
+            "targets": 0
+        }],
         autoWidth: true,
         paging: true,
         "pageLength": 100,
@@ -133,10 +155,10 @@ function initTablaTarifas() {
         columns: [{
             data: "tarifaProveedorId",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (row.contafich) {
-                    html = "<i class='fa fa-file'></i>";
-                }
+                var html = '<label class="input">';
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
                 return html;
             }
         }, {
@@ -185,9 +207,52 @@ function loadTablaTarifas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
+   
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
+
+    data.forEach(function (v) {
+       
+        var field = "#chk" + v.tarifaProveedorId;
+        if (v.sel == 1) {
+            $(field).attr('checked', true);
+        }
+        $(field).change(function () {
+            var quantity = 0;
+            var data = {
+                tarifaProveedor: {
+                    tarifaProveedorId: v.tarifaProveedorId,
+                    nombre: v.nombre,
+                    sel: 0
+                }
+            };
+            if (this.checked) {
+                data.tarifaProveedor.sel = 1;
+                contador++;
+                console.log(contador);
+            } else {
+                contador--;
+                console.log(contador)
+            }
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/tarifas_proveedor/%s', myconfig.apiUrl, v.tarifaProveedorId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        });
+    });
 }
 
 function buscarTarifas() {
@@ -275,4 +340,53 @@ function cargarTarifas() {
     return mf;
 }
 
+function copiarTarifa() {
+    if(!datosOKNuevoNombre()) return;
+    if(contador == 0) {
+        return mensError('No se ha seleccionado ninguna tarifa');
+    }
+    var data = {
+        tarifaProveedor: {
+            "tarifaProveedorId": 0,
+            "nombre": vm.nombre()
+        }
+    }
+
+    llamadaAjax("POST", "/api/tarifas_proveedor/crea/adjunta" , data, function (err, data) {
+        if (err) return;
+        $('#modalCopia').modal('hide');
+        contador = 0;
+        console.log(contador);
+        cargarTarifas()();
+    });
+}
+
+function datosOKNuevoNombre() {
+    $('#frmCopia').validate({
+        rules: {
+            
+            txtNuevoNombre: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+           
+            txNuevoNombre: {
+                required: 'Debe elegir un nombre'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#frmCopia").validate().settings;
+    return $('#frmCopia').valid();
+}
+
+
+function limpiarModal() {
+    vm.nombre(null);
+}
 

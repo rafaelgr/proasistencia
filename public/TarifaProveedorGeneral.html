@@ -537,7 +537,10 @@
                                             Criterios filtrado.
                                         </header>
                                         <fieldset>
-                                            <div class="pull-right">                                              
+                                            <div class="pull-right">    
+                                                <button id="btnCopiar" title="Adjuntar tarifas" data-toggle="modal" data-target="#modalCopia" class="btn btn-primary btn-circle btn-lg">
+                                                    <i class="fa fa-lg fa-clone"></i>
+                                                </button>                                          
                                                 <button id="btnBuscar" title="Buscar" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
                                                 </button>
@@ -552,7 +555,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>
-                                                        <i class="fa fa-fw fa-search"></i>
+                                                        SEL
                                                     </th>
                                                     <th class="hasinput">
                                                         <input type="text" class="form-control" placeholder="" />
@@ -599,6 +602,48 @@
 <!-- END MAIN CONTENT -->
 </div>
 <!-- END MAIN PANEL -->
+ <!--MODAL-->
+ <div class="modal fade" id="modalCopia" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"> ADJUNTAR TARIFAS</h4>
+            </div>
+            <div class="modal-body no-padding">
+                
+                    <form id="frmCopia" class="smart-form">
+                            <fieldset>
+                                    <legend>Se adjuntaran las tarifas seleccionadas creando una nueva, se tiene que introducir un nombre.</legend>
+                                    <div class="row">
+                                            <section class="col col-md-12">
+                                                    <label class="label">Nombre nueva tarifa</label>
+                                                    <label class="input">
+                                                        <input id="txtNuevoNombre" name="txtNuevoNombre" type="text" data-bind="value: nombre"/>
+                                                    </label>
+                                            </section>
+                                    </div>
+                            </fieldset>
+                            <footer>
+                                <button id="btnAceptarNombre" class="btn btn-primary" onclick="copiarTarifa()">
+                                    Aceptar
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                            </footer>
+                    </form>
+                     <hr/>
+            
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--END MODAL-->
 <!-- PAGE FOOTER -->
 <div class="page-footer">
     <div class="row">
