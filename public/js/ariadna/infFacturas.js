@@ -430,7 +430,11 @@ var rptFacturaParametros = function (sql) {
             sql += " AND pf.empresaId IN (" + empresaId + ")";
         }
         if(agenteId) {
-            sql += " AND cnt.agenteId IN (" + agenteId + ")";
+            if(departamentoId && departamentoId == 7) {
+                sql += " AND s.agenteId IN (" + agenteId + ")";
+            } else {
+                sql += " AND cnt.agenteId IN (" + agenteId + ")";
+            }
         }
         if (dFecha) {
             sql += " AND pf.fecha >= '" + dFecha + " 00:00:00'";

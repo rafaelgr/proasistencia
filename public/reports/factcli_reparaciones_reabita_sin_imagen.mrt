@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "7915a794487f40b5a48266bbc3a55829",
+  "ReportGuid": "899da30701ba4055bd4a62a88e06b3a2",
   "ReportName": "FacturaReabita",
   "ReportAlias": "FacturaReabita",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1629273051624+0200)/",
+  "ReportChanged": "/Date(1735202089264+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,42 +32,48 @@
             "Index": -1,
             "NameInSource": "facturaId",
             "Alias": "facturaId",
-            "Type": "System.Int32"
+            "Type": "System.Int32",
+            "Key": "35cacbabe4fd4d23b0005195213b3c64"
           },
           "1": {
             "Name": "prefacturaId",
             "Index": -1,
             "NameInSource": "prefacturaId",
             "Alias": "prefacturaId",
-            "Type": "System.Int32"
+            "Type": "System.Int32",
+            "Key": "1468489984904edb8e07b7b32da98cb4"
           },
           "2": {
             "Name": "ano",
             "Index": -1,
             "NameInSource": "ano",
             "Alias": "ano",
-            "Type": "System.Int32"
+            "Type": "System.Int32",
+            "Key": "1677e32e133e47b58a996d2a1a438613"
           },
           "3": {
             "Name": "numero",
             "Index": -1,
             "NameInSource": "numero",
             "Alias": "numero",
-            "Type": "System.Int32"
+            "Type": "System.Int32",
+            "Key": "852b7ae455764f80ace5fa8fc1de232b"
           },
           "4": {
             "Name": "serie",
             "Index": -1,
             "NameInSource": "serie",
             "Alias": "serie",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "2cc80729ef6541758b6a583448c7f946"
           },
           "5": {
             "Name": "fecha",
             "Index": -1,
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "789ea1f259a545de83810487eff8f029"
           },
           "6": {
             "Name": "empresaId",
@@ -414,7 +420,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, fp.formapagoId AS formapagoId, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento + 1 DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\n"
+        "SqlCommand": "SELECT pf.facturaId, pf.prefacturaId, pf.ano, pf.numero, pf.serie,  DATE_FORMAT(pf.fecha,'%d-%m-%Y') AS fecha, pf.empresaId, pf.clienteId, \r\npf.contratoClienteMantenimientoId,pf.importeAnticipo, pf.restoCobrar, pf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, \r\npf.emisorPoblacion, pf.emisorProvincia, tpv1.nombre AS receptorTipoVia,pf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, \r\npf.receptorProvincia,pf.total, pf.totalConIva, fp.nombre AS formaPago, fp.formapagoId AS formapagoId, pf.observaciones, pf.periodo, pf.porcentajeRetencion, pf.importeRetencion,\r\nfp.numeroVencimientos, fp.primerVencimiento, fp.restoVencimiento, cl.proId, tpv.nombre AS postalTipoVia, cl.direccion3 AS postalDireccion, \r\ncl.codPostal3 AS postalCodPostal, cl.poblacion3 AS postalPoblacion, cl.provincia3 AS postalProvincia,cl.iban, \r\nDATE_ADD(pf.fecha,INTERVAL fp.primerVencimiento + 1 DAY) AS vencimiento,\r\nCONCAT(SUBSTR(cl.iban,1,20), \"****\")  AS cuenta,\r\ncl.direccion2 AS direccion2, cl.codPostal2 AS codPostal2, cl.poblacion AS poblacion2, cl.provincia AS provincia2,\r\ncom.direccion AS direccionAgente, com.poblacion AS poblacionAgente, com.provincia AS provinciaAgente, com.codPostal AS codPostalAgente,\r\ncom.nif AS nifAgente, com.nombre AS nombreAgente, tpv2.nombre AS agenteTipoVia\r\nFROM facturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\r\nLEFT JOIN clientes AS cl ON cl.clienteId = pf.clienteId\r\nLEFT JOIN tipos_via AS tpv ON tpv.tipoViaId = cl.tipoViaId3\r\nLEFT JOIN tipos_via AS tpv1 ON tpv1.tipoViaId = cl.tipoViaId\r\nLEFT JOIN comerciales AS com ON com.comercialId = cl.comercialId\r\nLEFT JOIN tipos_via AS tpv2 ON tpv2.tipoViaId = com.tipoViaId\r\nLEFT JOIN partes as p ON p.facturaId = pf.facturaId\r\nLEFT JOIN servicios as s on s.servicioId = p.servicioId\r\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
