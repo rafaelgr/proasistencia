@@ -603,13 +603,19 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-6">
+                                                <section class="col col-md-4">
                                                     <label class="checkbox">
                                                         <input id="chkTodos" type="checkbox" name="chkTodos">
                                                         <i></i>Ver también facturas contabilizadas
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
+                                                <section class="col col-md-4">
+                                                    <label class="checkbox">
+                                                        <input id="chkSinDocPago" type="checkbox" name="chkSinDocPago">
+                                                        <i></i>ver solo facturas sin documento de pago
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-4">
                                                     <label  class="label"> Filtrar Por</label>
                                                     <div id= "radioFecha" style="margin-bottom: 5%;">
                                                         <div><input type='radio' id='radioFecha1' name='filtroFechaGroup' value='0' data-bind="checked: filtroFecha"/> Fecha recepcion factura </div>
@@ -646,6 +652,17 @@
                                         </fieldset>
                                         
                                         <fieldset>
+                                            <div class="pull-left">
+                                                <div style="margin-bottom: 2px;">
+                                                    <span  style="background-color: #F85F6A; color: #F85F6A;">text</span><span> Más de un documento de pago asociado</span>
+                                                </div>
+                                                <div style="margin-bottom: 2px;">
+                                                    <span  style="background-color: #FFF800; color: #FFF800;">text</span><span> Un documento de pago asociado</span>
+                                                </div>
+                                                <div>
+                                                    <span  style="background-color: #11F611; color: #11F611;">text</span><span> documento de pago no necesario</span>
+                                                </div>
+                                            </div>
                                             <div class="pull-right">
                                                 <button id="btnLimpiar" title="Limpiar filtros" class="btn btn-success btn-circle btn-lg">
                                                     <i class="fa fa-lg fas fa-eraser"></i>
