@@ -132,7 +132,16 @@ function initForm() {
         } else {
             cargarFacturas2()();
         }
-    })
+    });
+
+    $('#chkSinDocPago').change(function () {
+        var todos =  $('#chkTodos').prop('checked');
+        if (todos) {
+            cargarFacturas2All()();
+        } else {
+            cargarFacturas2()();
+        }
+    });
    
 }
 
@@ -174,6 +183,13 @@ function compruebaFiltros(id) {
             $('#hf').text('Hasta fecha');
         }
     
+        if(filtros.sinDocPago == true) {
+            $('#chkSinDocPago').prop('checked', true);
+
+        } else {
+            $('#chkSinDocPago').prop('checked', false);
+        }
+
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
             if(id > 0) {
@@ -571,12 +587,14 @@ function editFactura(id) {
     // hay que abrir la página de detalle de prefactura
     // pasando en la url ese ID
     var contabilizadas = $('#chkTodos').prop('checked');
+    var sinDocPago = $('#chkSinDocPago').prop('checked');
     var busquedaFacturas = 
         {
             empresaId:vm.sempresaId(),
             dFecha: vm.dFecha(),
             hFecha: vm.hFecha(),
             contabilizadas: contabilizadas,
+            sinDocPago: sinDocPago,
             filtroFecha: vm.filtroFecha()
         }
     setCookie("filtro_facproves", JSON.stringify(busquedaFacturas), 1);
@@ -619,9 +637,24 @@ function cargarFacturas2(id) {
             });
         } else {
             if(!dFecha) return;
+            var usu = usuario.usuarioId;
+            var dep = vm.sdepartamentoId();
+            var emp =  vm.sempresaId();
+            var filtroFecha = vm.filtroFecha();
+            var sinDocPago = $('#chkSinDocPago').prop('checked');
+            var url = "/api/facturasProveedores/usuario/logado/departamento/" 
+            + usu
+            + "/" + dep
+            + "/" + dFecha 
+            + "/" + hFecha 
+            + "/" + emp
+            + "/" + colaborador 
+            + "/" + filtroFecha
+            + "/" + sinDocPago
+
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador + "/" + vm.filtroFecha(),
+                url: myconfig.apiUrl + url,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -649,9 +682,26 @@ function cargarFacturas2All() {
             if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
             if(!datosOK()) return;
         }
+
+        var usu = usuario.usuarioId;
+        var dep = vm.sdepartamentoId();
+        var emp =  vm.sempresaId();
+        var filtroFecha = vm.filtroFecha();
+        var sinDocPago = $('#chkSinDocPago').prop('checked');
+
+        var url = "/api/facturasProveedores/usuario/logado/departamento/all/" 
+            + usu
+            + "/" + dep
+            + "/" + dFecha 
+            + "/" + hFecha 
+            + "/" + emp
+            + "/" + colaborador 
+            + "/" + filtroFecha
+            + "/" + sinDocPago
+
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturasProveedores/usuario/logado/departamento/all/"  + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId() + "/" + colaborador + "/" + vm.filtroFecha(),
+            url: myconfig.apiUrl + url,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
