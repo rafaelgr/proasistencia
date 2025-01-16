@@ -18,6 +18,7 @@ var antproveId;
 var filtros = {};
 var datadocpago;
 var init = 0;
+var cofigTabla;
 
 
 function initForm() {
@@ -826,10 +827,12 @@ function initTablaDocpago(facproveId) {
         },  {
             data: "documentoPagoId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDocpago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt1 = "";
+                if(usuario.puedeEditar) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDocpago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                }
+              
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editDocpago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                if(row.contabilizada && !usuario.puedeEditar) bt1 = '';
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
             }
@@ -856,7 +859,7 @@ function cargadDocpago() {
                 },
                 error: function (err) {
                     mensErrorAjax(err);
-                    $('#modalContrato').modal('hide');
+                    $('#modalDocPago').modal('hide');
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
@@ -886,11 +889,7 @@ function editDocpago(id) {
 function deleteDocpago(id) {
     var url = myconfig.apiUrl + "/api/facturasProveedores/nuevo/" + id + "/" + usuario.nombre;
     // mensaje de confirmación
-    var mens = "¿Qué desea hacer con este registro?";
-    mens += "<ul>"
-    mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizada, con lo que puede ser contabilizada de nuevo</li>";
-    mens += "<li><strong>Borrar:</strong> Elimina completamente la factura. ¡¡ Atención !! Puede dejar huecos en los números de factura de la serie</li>";
-    mens += "</ul>"
+    var mens = "Se borrará el documento de pago y cualquier registro vinculado a el dejará de estarlo, ¿Desea continuar?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
@@ -900,11 +899,15 @@ function deleteDocpago(id) {
             
             $.ajax({
                 type: "DELETE",
-                url: myconfig.apiUrl + "/api/facturasProveedores/archivo/" + data.nombreFacprovePdf,
+                url: myconfig.apiUrl + "/api/documentos_pago/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
+                data: null,
                 success: function (data, status) {
+                    $("#modalDocPago").modal('hide');
+                    mensNormal("Documento de pago borrado correctamente");
+                    var fn = buscarFacturas();
+                    fn();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
