@@ -10,14 +10,6 @@ var breakpointDefinition = {
     phone: 480
 };
 var usuario;
-var configuracion = null;
-
-fetch('/config')
-    .then(response => response.json())
-    .then(config => {
-        configuracion = config; // Usa la configuración en el cliente
-    });
-
 // License Key
 
 // Create the report viewer with default options
@@ -219,12 +211,6 @@ var obtainReport = function (carga) {
         connectionString += "Pwd=" + myconfig.report.password + ";";
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.facturaId')
-
-        if (vm.sdepartamentoId() == 8 && vm.sempresaId() == 2) {
-            // Establecer la URL del logo en la variable 'LogoPath'
-            report.dictionary.variables.getByName('LogoPath').value = `${configuracion.protocol}${configuracion.host}/ficheros/logos/logo_proasistencia_nuevo.png`;
-         } 
-        
         var pos = 0;
         for (var i = 0; i < report.dataSources.items.length; i++) {
             var str = report.dataSources.items[i].sqlCommand;
@@ -305,8 +291,6 @@ var obtainReportPdf = function () {
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
-
-        
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.facturaId')
         var pos = 0;
