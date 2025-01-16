@@ -168,6 +168,14 @@ app.use((error, req, res, next) => {
     });
 });
 
+app.get('/config', (req, res) => {
+    res.json({
+        host: process.env.SERVER,
+        protocol: process.env.PROTOCOL,
+    });
+});
+
+
 
 // -- general GET (to know if the server is up and runnig)
 router.get('/', function (req, res) {
