@@ -20,6 +20,8 @@ var antDepartamentoId;
 
 var antproveId;
 var filtros = {};
+var init = 0;
+var datadocpago;
 
 
 function initForm() {
@@ -381,9 +383,9 @@ function initTablaFacturas() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
+                var bt3 = "<button class='btn btn-circle btn-info' title='Documentosd de pago asociados' data-toggle='modal' data-target='#modalDocPago' onclick='initModal(" + data + ");'> <i class='fa fa-fw fa-files-o'></i> </button>";
                 if(row.contabilizada && !usuario.puedeEditar) bt1 = '';
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 +  "</div>";
                 return html;
             }
         }]
@@ -754,5 +756,158 @@ var mostrarMensajeFacturaNoCambiada = function () {
 var mostrarMensajeFacturaBorrada = function () {
     var mens = "La factura se ha borrado correctamente.";
     mensNormal(mens);
+}
+
+//FUNCIONES RELACIONADAS CON EL MODAL DOCPAGO 
+
+function initModal(facproveId) {
+    init++
+
+    $('#modalDocPago').on('hidden.bs.modal', function () {
+        $('#modalDocPago').off('show.bs.modal');
+    });
+    
+    if(init == 1){
+        $('#modalDocPago').on('show.bs.modal', function (e) {
+            initTablaDocpago(facproveId);
+        })
+    }else {
+        cargadDocpago()(facproveId);
+    }
+}
+
+function initTablaDocpago(facproveId) {
+    tablaCarro = $('#dt_docpago').dataTable({
+        
+        autoWidth: true,
+        paging: true,
+        
+        "bDestroy": true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: datadocpago,
+        columns: [{
+            data: "nombre"
+        }, {
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "nombreFacprovePdf",
+           
+        },  {
+            data: "documentoPagoId",
+            render: function (data, type, row) {
+                var bt1 = "";
+                if(usuario.puedeEditar) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteDocpago(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                }
+              
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editDocpago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
+                return html;
+            }
+        }]
+    });
+    if(init == 1){
+        cargadDocpago()(facproveId);
+    }
+}
+
+function cargadDocpago() {
+    var mf = function (facproveId) {
+        if (facproveId) {
+            var data = null;
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/buscar/docpago/factura/" + facproveId,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadTablaDocpago(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    $('#modalDocPago').modal('hide');
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+    };
+    return mf;
+}
+
+function loadTablaDocpago(data) {
+    var dt = $('#dt_docpago').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function editDocpago(id) {
+    // hay que abrir la página de detalle de factura
+    // pasando en la url ese ID
+    var url = "DocumentoPagoDetalle.html?DocumentoPagoId=" + id;
+    window.open(url, '_blank');
+}
+
+
+function deleteDocpago(id) {
+    var url = myconfig.apiUrl + "/api/facturasProveedores/nuevo/" + id + "/" + usuario.nombre;
+    // mensaje de confirmación
+    var mens = "Se borrará el documento de pago y cualquier registro vinculado a el dejará de estarlo, ¿Desea continuar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Cancelar][Borrar documento de pago]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Borrar documento de pago") {
+            
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    $("#modalDocPago").modal('hide');
+                    mensNormal("Documento de pago borrado correctamente");
+                    var fn = buscarFacturas();
+                    fn();
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
 }
 

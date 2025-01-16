@@ -820,7 +820,10 @@ function initTablaDocpago(facproveId) {
         columns: [{
             data: "nombre"
         }, {
-            data: "fecha"
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
         }, {
             data: "nombreFacprovePdf",
            
