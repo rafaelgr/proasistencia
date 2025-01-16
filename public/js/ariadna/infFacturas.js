@@ -220,7 +220,7 @@ var obtainReport = function (carga) {
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.facturaId')
 
-        if (vm.sdepartamentoId() == 8 && vm.ssempresaId() == 2) {
+        if (vm.sdepartamentoId() == 8 && vm.sempresaId() == 2) {
             // Establecer la URL del logo en la variable 'LogoPath'
             report.dictionary.variables.getByName('LogoPath').value = `${configuracion.protocol}${configuracion.host}/ficheros/logos/logo_proasistencia_nuevo.png`;
          } 
