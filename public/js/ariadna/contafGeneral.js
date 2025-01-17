@@ -281,6 +281,21 @@ function buscarFacturas() {
             success: function (data, status) {
                 //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
                 if(data) {
+                    if(data.error) {
+                        // Crear un blob con el contenido
+                        const blob = new Blob([JSON.stringify(data.error[0])], { type: "text/plain" });
+
+                        // Crear un enlace para descargar el archivo
+                        const enlace = document.createElement("a");
+                        enlace.href = URL.createObjectURL(blob);
+                        enlace.download = "archivo_generado.txt";
+
+                        // Agregar el enlace al DOM, hacer clic y luego eliminarlo
+                        document.body.appendChild(enlace);
+                        enlace.click();
+                        document.body.removeChild(enlace);
+                        return;
+                    }
                     if(data.length > 0) {
                         loadTablaFacturas(data);
                         // mostramos el botón de alta
