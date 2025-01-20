@@ -606,10 +606,10 @@ function loadData(data, desdeLoad, importacion) {
     loadTiposVia3(data.tipoViaId3);
 
     //direción ofertas
-    vm.direccionOfertas(data.direccion3);
-    vm.codPostalOfertas(data.codPostal3);
-    vm.provinciaOfertas(data.provincia3);
-    vm.poblacionOfertas(data.poblacion3);
+    vm.direccionOfertas(data.direccionOfertas);
+    vm.codPostalOfertas(data.codPostalOfertas);
+    vm.provinciaOfertas(data.provinciaOfertas);
+    vm.poblacionOfertas(data.poblacionOfertas);
     vm.emailOfertas(data.emailOfertas);
     vm.numeroOfertas(data.numeroOfertas);
     vm.puertaOfertas(data.puertaOfertas);
@@ -841,6 +841,7 @@ function aceptar() {
                 "loginWeb": vm.loginWeb(),
                 "passWeb": vm.passWeb(),
                 "direccionOfertas" : vm.direccionOfertas(),
+                "tipoViaIdOfertas": vm.stipoViaIdOfertas(),
                 "codPostalOfertas" : vm.codPostalOfertas(),
                 "poblacionOfertas" : vm.poblacionOfertas(),
                 "provinciaOfertas" : vm.provinciaOfertas(),
