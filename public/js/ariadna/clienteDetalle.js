@@ -205,6 +205,10 @@ function initForm() {
     $("#cmbTiposVia3").select2(select2Spanish());
     loadTiposVia3();
 
+        // select2 things
+        $("#cmbTiposViaOfertas").select2(select2Spanish());
+        loadTiposViaOfertas();
+
     $("#cmbTiposIva").select2(select2Spanish());
     loadTiposIva();
 
@@ -520,7 +524,22 @@ function admData() {
     self.telefonoAgente = ko.observable();
     self.correoAgente = ko.observable();
     self.contactoAgente = ko.observable();
-
+    
+    //VALORES DIRECCIÓN OFERTAS
+    self.direccionOfertas = ko.observable();
+    self.codPostalOfertas = ko.observable();
+    self.poblacionOfertas = ko.observable();
+    self.provinciaOfertas = ko.observable();
+    self.numeroOfertas = ko.observable();
+    self.puertaOfertas = ko.observable();
+    self.emailOfertas = ko.observable();
+     //
+     self.tipoViaIdOfertas = ko.observable();
+     self.stipoViaIdOfertas = ko.observable();
+     //
+     self.posiblesTiposViaOfertas = ko.observableArray([]);
+     self.elegidosTiposViaOfertas = ko.observableArray([]);
+    
 }
 
 function loadData(data, desdeLoad, importacion) {
@@ -585,6 +604,17 @@ function loadData(data, desdeLoad, importacion) {
 
     loadTiposVia2(data.tipoViaId2);
     loadTiposVia3(data.tipoViaId3);
+
+    //direción ofertas
+    vm.direccionOfertas(data.direccion3);
+    vm.codPostalOfertas(data.codPostal3);
+    vm.provinciaOfertas(data.provincia3);
+    vm.poblacionOfertas(data.poblacion3);
+    vm.emailOfertas(data.emailOfertas);
+    vm.numeroOfertas(data.numeroOfertas);
+    vm.puertaOfertas(data.puertaOfertas);
+    loadTiposViaOfertas(data.tipoViaIdOfertas);
+
 
     loadTiposClientes(data.tipoClienteId);
     loadFormasPago(data.formaPagoId);
@@ -809,7 +839,14 @@ function aceptar() {
                 "limiteCredito": vm.limiteCredito(),
                 "emailFacturas": vm.emailFacturas(),
                 "loginWeb": vm.loginWeb(),
-                "passWeb": vm.passWeb()
+                "passWeb": vm.passWeb(),
+                "direccionOfertas" : vm.direccionOfertas(),
+                "codPostalOfertas" : vm.codPostalOfertas(),
+                "poblacionOfertas" : vm.poblacionOfertas(),
+                "provinciaOfertas" : vm.provinciaOfertas(),
+                "numeroOfertas" : vm.numeroOfertas(),
+                "puertaOfertas" : vm.puertaOfertas(),
+                "emailOfertas" : vm.emailOfertas()
             } 
         };
         
@@ -1083,6 +1120,24 @@ function loadTiposVia3(id) {
             var tiposVia3 = [{ tipoViaId: 0, nombre: "" }].concat(data);
             vm.posiblesTiposVia3(tiposVia3);
             $("#cmbTiposVia3").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposViaOfertas(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposViaOfertas = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaOfertas(tiposViaOfertas);
+            $("#cmbTiposViaOfertas").val([id]).trigger('change');
         },
         error: function (err) {
             mensErrorAjax(err);
