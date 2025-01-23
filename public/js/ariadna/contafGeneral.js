@@ -281,21 +281,60 @@ function buscarFacturas() {
             success: function (data, status) {
                 //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
                 if(data) {
-                    if(data.error) {
-                        // Crear un blob con el contenido
-                        const blob = new Blob([JSON.stringify(data.error[0])], { type: "text/plain" });
+                    if (data.error) {
+                        // Crear una variable para almacenar el texto formateado
+                        var datos = data.error;
+                        var formattedText = "";
+                    
+                        // Recorrer el array `data` usando un bucle for
+                        for (var i = 0; i < datos.length; i++) {
+                            var item = datos[i];
+                    
+                            // Recorrer cada objeto dentro de `item`
+                            for (var key in item) {
+                                if (item.hasOwnProperty(key)) {
+                                    // Verificar si el valor es un objeto y convertirlo en JSON si es necesario
+                                    var value = item[key];
+                                    if (typeof value === 'object' && value !== null) {
+                                        value = JSON.stringify(value);  // Convertir el objeto a una cadena JSON legible
+                                        if(value == "nombre") value.replace(/,/g, ';');  // Eliminar los dos puntos
+                                    }
+                    
+                                    // Agregar el valor convertido a la cadena formateada
+                                    formattedText += key + ": " + value + ",";  // Usar coma para separar las claves y valores
+                                }
+                            }
+                    
+                            // Reemplazar las comas por saltos de línea
+                            formattedText = formattedText.replace(/,/g, '\r\n');  // Sustituir todas las comas por saltos de línea
+                    
+                            // Agregar un salto de línea adicional entre objetos para mayor separación
+                            formattedText += "\r\n"; // Este salto es para separar cada objeto
+                        }
 
+                         // Reemplazar los caracteres no deseados:
+                        // Eliminar las comillas dobles, llaves y corchetes
+                        formattedText = formattedText
+                        .replace(/["{}[\]]/g, '')  // Eliminar comillas dobles, llaves y corchetes
+                        .replace(/:/g, ' ');  // Eliminar los dos puntos
+                    
+                        // Crear un archivo de texto con el contenido formateado
+                        var blob = new Blob([formattedText], { type: "text/plain;charset=utf-8" });
+                    
                         // Crear un enlace para descargar el archivo
-                        const enlace = document.createElement("a");
+                        var enlace = document.createElement("a");
                         enlace.href = URL.createObjectURL(blob);
                         enlace.download = "archivo_generado.txt";
-
+                    
                         // Agregar el enlace al DOM, hacer clic y luego eliminarlo
                         document.body.appendChild(enlace);
                         enlace.click();
                         document.body.removeChild(enlace);
-                        return;
                     }
+                    
+                    
+                    
+                    
                     if(data.length > 0) {
                         loadTablaFacturas(data);
                         // mostramos el botón de alta
