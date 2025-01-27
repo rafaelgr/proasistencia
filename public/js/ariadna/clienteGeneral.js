@@ -90,6 +90,11 @@ function admData() {
 }
 
 function initTablaClientes() {
+    var buttonCommon = {
+        exportOptions: {
+            columns: ':visible'
+        }
+    };
     tablaCarro = $('#dt_cliente').DataTable({
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
@@ -100,8 +105,8 @@ function initTablaClientes() {
         buttons: [
             'copy', 
             'csv', 
-            $.extend( true, {}, {
-                extend: 'excel'
+            $.extend( true, {  }, buttonCommon, {
+                extend: 'excel',
             } ), 
             {
                
@@ -171,7 +176,27 @@ function initTablaClientes() {
             data: "cuentaContable"
         },{
             data: "tipo"
-        }, {
+        },{
+            data: "nombreAgente"
+        },{
+            data: "tipoViaOfertasNombre"
+        },{
+            data: "direccionOfertas"
+            
+        },{
+              data: "codPostalOfertas"
+        },{
+             data: "poblacionOfertas"
+        },{
+             data: "provinciaOfertas"
+        },{
+            data: "numeroOfertas" 
+        },{
+            data: "puertaOfertas" 
+        },{
+            data: "emailOfertas" 
+        },
+         {
             data: "clienteId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteCliente(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -181,6 +206,15 @@ function initTablaClientes() {
             }
         }]
     });
+    tablaCarro.column(10).visible(false);
+    tablaCarro.column(11).visible(false);
+    tablaCarro.column(12).visible(false);
+    tablaCarro.column(13).visible(false);
+    tablaCarro.column(14).visible(false);
+    tablaCarro.column(15).visible(false);
+    tablaCarro.column(16).visible(false);
+    tablaCarro.column(17).visible(false);
+
 }
 
 function datosOK() {
