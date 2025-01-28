@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "b1011b97bda44d118d8387d358ee8646",
+  "ReportGuid": "bd91af3553ff4d879c8aa0f5b639296b",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1738063114984+0100)/",
+  "ReportChanged": "/Date(1738065678202+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -797,11 +797,11 @@
         "4": {
           "Ident": "StiHeaderBand",
           "Name": "CabeceraLineas",
-          "ClientRectangle": "0,9.6,19,0.8",
+          "ClientRectangle": "0,9.6,19,0.9",
           "Interaction": {
             "Ident": "StiInteraction"
           },
-          "Border": ";;;;;;;solid:Black",
+          "Border": "Bottom;;;;;;;solid:Black",
           "Brush": "solid:",
           "Components": {
             "0": {
@@ -814,8 +814,9 @@
               "Text": {
                 "Value": "Linea"
               },
+              "VertAlignment": "Bottom",
               "Font": ";11;Bold;",
-              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -824,15 +825,16 @@
               "Ident": "StiText",
               "Name": "Text26",
               "Guid": "04288d0701a72bb3616bd3d99ebab435",
-              "ClientRectangle": "2.2,0.4,11.8,0.4",
+              "ClientRectangle": "2,0.4,12,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Descripcion"
               },
+              "VertAlignment": "Bottom",
               "Font": ";11;Bold;",
-              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -855,8 +857,9 @@
                 "Value": "Uds."
               },
               "HorAlignment": "Right",
+              "VertAlignment": "Bottom",
               "Font": ";11;Bold;",
-              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -873,8 +876,9 @@
                 "Value": "Importe"
               },
               "HorAlignment": "Right",
+              "VertAlignment": "Bottom",
               "Font": ";11;Bold;",
-              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -890,8 +894,9 @@
               "Text": {
                 "Value": "Ud."
               },
+              "VertAlignment": "Bottom",
               "Font": ";11;Bold;",
-              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -908,8 +913,9 @@
                 "Value": "P.V.P\r\nOferta"
               },
               "HorAlignment": "Right",
+              "VertAlignment": "Bottom",
               "Font": ";11;Bold;",
-              "Border": "Bottom;;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
@@ -920,7 +926,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
-          "ClientRectangle": "0,11.2,19,1.4",
+          "ClientRectangle": "0,11.3,19,1.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1106,7 +1112,7 @@
         "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
-          "ClientRectangle": "0,13.4,19,0.2",
+          "ClientRectangle": "0,13.5,19,0.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1165,7 +1171,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
-          "ClientRectangle": "0,14.4,19,0.6",
+          "ClientRectangle": "0,14.5,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1226,7 +1232,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,15.8,19,0.4",
+          "ClientRectangle": "0,15.9,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1275,7 +1281,7 @@
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
           "Guid": "c9589c016d7c4f77b0530bec428c9207",
-          "ClientRectangle": "0,17,19,0",
+          "ClientRectangle": "0,17.1,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1291,7 +1297,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "b06d3654b24a43ca85a9a915c543df13",
-          "ClientRectangle": "0,17.8,19,0.6",
+          "ClientRectangle": "0,17.9,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1382,7 +1388,7 @@
         "11": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand2",
-          "ClientRectangle": "0,19.2,19,0.4",
+          "ClientRectangle": "0,19.3,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1393,7 +1399,7 @@
         "12": {
           "Ident": "StiDataBand",
           "Name": "DataBand2",
-          "ClientRectangle": "0,20.4,19,5.2",
+          "ClientRectangle": "0,20.5,19,5.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
