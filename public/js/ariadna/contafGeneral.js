@@ -282,59 +282,31 @@ function buscarFacturas() {
                 //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
                 if(data) {
                     if (data.error) {
-                        // Crear una variable para almacenar el texto formateado
-                        var datos = data.error;
-                        var formattedText = "";
-                    
-                        // Recorrer el array `data` usando un bucle for
-                        for (var i = 0; i < datos.length; i++) {
-                            var item = datos[i];
-                    
-                            // Recorrer cada objeto dentro de `item`
-                            for (var key in item) {
-                                if (item.hasOwnProperty(key)) {
-                                    // Verificar si el valor es un objeto y convertirlo en JSON si es necesario
-                                    var value = item[key];
-                                    if (typeof value === 'object' && value !== null) {
-                                        value = JSON.stringify(value);  // Convertir el objeto a una cadena JSON legible
-                                        if(value == "nombre") value.replace(/,/g, ';');  // Eliminar los dos puntos
-                                    }
-                    
-                                    // Agregar el valor convertido a la cadena formateada
-                                    formattedText += key + ": " + value + ",";  // Usar coma para separar las claves y valores
-                                }
-                            }
-                    
-                            // Reemplazar las comas por saltos de línea
-                            formattedText = formattedText.replace(/,/g, '\r\n');  // Sustituir todas las comas por saltos de línea
-                    
-                            // Agregar un salto de línea adicional entre objetos para mayor separación
-                            formattedText += "\r\n"; // Este salto es para separar cada objeto
-                        }
+                        var cuentas = JSON.stringify(data.error);
 
-                         // Reemplazar los caracteres no deseados:
-                        // Eliminar las comillas dobles, llaves y corchetes
-                        formattedText = formattedText
-                        .replace(/["{}[\]]/g, '')  // Eliminar comillas dobles, llaves y corchetes
-                        .replace(/:/g, ' ');  // Eliminar los dos puntos
-                    
+                        // Insertar salto de línea antes de cada "cuentacontable" y reemplazar los caracteres innecesarios
+                        cuentas = cuentas.replace(/cuentacontable/g, "\r\ncuentacontable")
+                                        .replace(/[\]\[{()}"]/g, '')  // Eliminar los corchetes y comillas
+                                        .replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
+
+                        // Mensaje de error
+                        mensError("Falta la cuenta contable en las siguientes facturas " + cuentas + ". Se ha generado un archivo de texto con esta información.");
+
                         // Crear un archivo de texto con el contenido formateado
-                        var blob = new Blob([formattedText], { type: "text/plain;charset=utf-8" });
-                    
+                        var blob = new Blob([cuentas], { type: "text/plain;charset=utf-8" });
+
                         // Crear un enlace para descargar el archivo
                         var enlace = document.createElement("a");
                         enlace.href = URL.createObjectURL(blob);
                         enlace.download = "archivo_generado.txt";
-                    
+
                         // Agregar el enlace al DOM, hacer clic y luego eliminarlo
                         document.body.appendChild(enlace);
                         enlace.click();
                         document.body.removeChild(enlace);
-                    }
-                    
-                    
-                    
-                    
+                        return;
+
+                    }             
                     if(data.length > 0) {
                         loadTablaFacturas(data);
                         // mostramos el botón de alta
