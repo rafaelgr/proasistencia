@@ -66,6 +66,7 @@ function initForm() {
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
     $("#btnImportar").click(importar());
+    $("#btnOfertaTrabajo").click(copiarDireccionOfertaEnTrabajo);
     $("#btnTrabajoFiscal").click(copiarDireccionTrabajoEnFiscal);
     $("#btnFiscalPostal").click(copiarDireccionFiscalEnPostal);
 
@@ -1843,6 +1844,15 @@ function cambioCodComercial(data) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+var copiarDireccionOfertaEnTrabajo = function () {
+    var d = vm.direccionOfertas() + vm.numeroOfertas() + vm.puertaOfertas()
+    vm.direccion2();
+    vm.codPostal2();
+    vm.provincia2();
+    vm.poblacion2();
+    loadTiposVia(vm.stipoViaIdOfertas());
 }
 
 var copiarDireccionTrabajoEnFiscal = function () {
