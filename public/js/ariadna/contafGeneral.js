@@ -281,6 +281,32 @@ function buscarFacturas() {
             success: function (data, status) {
                 //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
                 if(data) {
+                    if (data.error) {
+                        var cuentas = JSON.stringify(data.error);
+
+                        // Insertar salto de línea antes de cada "cuentacontable" y reemplazar los caracteres innecesarios
+                        cuentas = cuentas.replace(/cuentacontable/g, "\r\ncuentacontable")
+                                        .replace(/[\]\[{()}"]/g, '')  // Eliminar los corchetes y comillas
+                                        .replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
+
+                        // Mensaje de error
+                        mensError("Falta la cuenta contable en las siguientes facturas " + cuentas + ". Se ha generado un archivo de texto con esta información.");
+
+                        // Crear un archivo de texto con el contenido formateado
+                        var blob = new Blob([cuentas], { type: "text/plain;charset=utf-8" });
+
+                        // Crear un enlace para descargar el archivo
+                        var enlace = document.createElement("a");
+                        enlace.href = URL.createObjectURL(blob);
+                        enlace.download = "archivo_generado.txt";
+
+                        // Agregar el enlace al DOM, hacer clic y luego eliminarlo
+                        document.body.appendChild(enlace);
+                        enlace.click();
+                        document.body.removeChild(enlace);
+                        return;
+
+                    }             
                     if(data.length > 0) {
                         loadTablaFacturas(data);
                         // mostramos el botón de alta
