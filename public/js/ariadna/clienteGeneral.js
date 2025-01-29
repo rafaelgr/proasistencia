@@ -90,6 +90,11 @@ function admData() {
 }
 
 function initTablaClientes() {
+    var buttonCommon = {
+        exportOptions: {
+            columns: ':visible'
+        }
+    };
     tablaCarro = $('#dt_cliente').DataTable({
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
@@ -100,8 +105,8 @@ function initTablaClientes() {
         buttons: [
             'copy', 
             'csv', 
-            $.extend( true, {}, {
-                extend: 'excel'
+            $.extend( true, {  }, buttonCommon, {
+                extend: 'excel',
             } ), 
             {
                
@@ -113,7 +118,7 @@ function initTablaClientes() {
         ],
         columnDefs: [
             {
-                targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                targets: 19, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
                 className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             }
         ],
@@ -171,7 +176,27 @@ function initTablaClientes() {
             data: "cuentaContable"
         },{
             data: "tipo"
-        }, {
+        },{
+            data: "nombreAgente"
+        },{
+            data: "tipoViaOfertasNombre"
+        },{
+            data: "direccionOfertas"
+            
+        },{
+              data: "codPostalOfertas"
+        },{
+             data: "poblacionOfertas"
+        },{
+             data: "provinciaOfertas"
+        },{
+            data: "numeroOfertas" 
+        },{
+            data: "puertaOfertas" 
+        },{
+            data: "emailOfertas" 
+        },
+         {
             data: "clienteId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteCliente(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -181,6 +206,12 @@ function initTablaClientes() {
             }
         }]
     });
+    //COLUMNAS NO VISIBLES POR DEFECTO
+    for( let i = 10; i <= 18;  i++) {
+        tablaCarro.column(i).visible(false);
+    }
+
+
 }
 
 function datosOK() {
