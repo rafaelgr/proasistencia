@@ -67,3 +67,15 @@ ALTER TABLE `clientes`
 ALTER TABLE `clientes`   
   ADD COLUMN `numeroOfertas` VARCHAR(255) NULL AFTER `direccionOfertas`,
   ADD COLUMN `puertaOfertas` VARCHAR(255) NULL AFTER `numeroOfertas`;
+
+
+UPDATE clientes AS c
+INNER JOIN tmpClientesOfertas AS tmp ON tmp.clienteId = c.clienteId
+SET c.direccionOfertas = tmp.direccionOfertas,
+c.poblacionOfertas = tmp.poblacionOfertas,
+c.codPostalOfertas = tmp.codPostalOfertas,
+c.provinciaOfertas = tmp.provinciaOfertas,
+c.emailOfertas = tmp.emailOfertas,
+c.tipoViaIdOfertas = tmp.tipoViaIdOfertas,
+c.numeroOfertas = tmp.numeroOfertas,
+c.puertaOfertas = tmp.puertaOfertas;
