@@ -1720,7 +1720,23 @@ function guardaClienteAgente() {
                     "provincia3": vm.provincia3(),
                     "codPostal3": vm.codPostal3(),
                     "tipoViaId3": vm.stipoViaId3(),
-                    "tarifaId": vm.starifaClienteId()
+                    "tarifaId": vm.starifaClienteId(),
+                    "colaboradorId": vm.scomercialId(),
+                    "tipoIvaId": vm.stipoIvaId(),
+                    "facturarPorEmail": vm.facturarPorEmail(),
+                    "limiteCredito": vm.limiteCredito(),
+                    "emailFacturas": vm.emailFacturas(),
+                    "loginWeb": vm.loginWeb(),
+                    "passWeb": vm.passWeb(),
+
+                    "direccionOfertas" : vm.direccionOfertas(),
+                    "tipoViaIdOfertas": vm.stipoViaIdOfertas(),
+                    "codPostalOfertas" : vm.codPostalOfertas(),
+                    "poblacionOfertas" : vm.poblacionOfertas(),
+                    "provinciaOfertas" : vm.provinciaOfertas(),
+                    "numeroOfertas" : vm.numeroOfertas(),
+                    "puertaOfertas" : vm.puertaOfertas(),
+                    "emailOfertas" : vm.emailOfertas()
                 }
             }
             $.ajax({
@@ -1847,12 +1863,12 @@ function cambioCodComercial(data) {
 }
 
 var copiarDireccionOfertaEnTrabajo = function () {
-    var d = vm.direccionOfertas() + vm.numeroOfertas() + vm.puertaOfertas()
-    vm.direccion2();
-    vm.codPostal2();
-    vm.provincia2();
-    vm.poblacion2();
-    loadTiposVia(vm.stipoViaIdOfertas());
+    var d = vm.direccionOfertas() + ", "+ vm.numeroOfertas() + " Nº " + vm.puertaOfertas()
+    vm.direccion2(d);
+    vm.codPostal2(vm.codPostalOfertas());
+    vm.provincia2(vm.provinciaOfertas());
+    vm.poblacion2(vm.poblacionOfertas());
+    loadTiposVia2(vm.stipoViaIdOfertas());
 }
 
 var copiarDireccionTrabajoEnFiscal = function () {

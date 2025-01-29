@@ -118,7 +118,7 @@ function initTablaClientes() {
         ],
         columnDefs: [
             {
-                targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                targets: 19, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
                 className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             }
         ],
@@ -206,14 +206,11 @@ function initTablaClientes() {
             }
         }]
     });
-    tablaCarro.column(10).visible(false);
-    tablaCarro.column(11).visible(false);
-    tablaCarro.column(12).visible(false);
-    tablaCarro.column(13).visible(false);
-    tablaCarro.column(14).visible(false);
-    tablaCarro.column(15).visible(false);
-    tablaCarro.column(16).visible(false);
-    tablaCarro.column(17).visible(false);
+    //COLUMNAS NO VISIBLES POR DEFECTO
+    for( let i = 10; i <= 18;  i++) {
+        tablaCarro.column(i).visible(false);
+    }
+
 
 }
 
