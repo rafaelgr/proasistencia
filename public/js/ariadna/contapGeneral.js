@@ -284,6 +284,7 @@ function buscarFacturas() {
 
                         // Insertar salto de línea antes de cada "cuentacontable" y reemplazar los caracteres innecesarios
                         cuentas = cuentas.replace(/cuentacontable/g, "\r\ncuentacontable")
+                                        .replace(/cuentaCompras/g, "\r\ncuentaCompras")
                                         .replace(/[\]\[{()}"]/g, '')  // Eliminar los corchetes y comillas
                                         //.replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
 
