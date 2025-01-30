@@ -1863,7 +1863,10 @@ function cambioCodComercial(data) {
 }
 
 var copiarDireccionOfertaEnTrabajo = function () {
-    var d = vm.direccionOfertas() + ", "+ vm.numeroOfertas() + " Nº " + vm.puertaOfertas()
+    var d = vm.direccionOfertas() + ", "+ vm.numeroOfertas();
+    if(vm.puertaOfertas()) {
+        d += " Nº " + vm.puertaOfertas();
+    }
     vm.direccion2(d);
     vm.codPostal2(vm.codPostalOfertas());
     vm.provincia2(vm.provinciaOfertas());
