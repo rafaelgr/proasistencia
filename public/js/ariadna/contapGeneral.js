@@ -285,7 +285,7 @@ function buscarFacturas() {
                         // Insertar salto de línea antes de cada "cuentacontable" y reemplazar los caracteres innecesarios
                         cuentas = cuentas.replace(/cuentacontable/g, "\r\ncuentacontable")
                                         .replace(/[\]\[{()}"]/g, '')  // Eliminar los corchetes y comillas
-                                        .replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
+                                        //.replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
 
                         // Mensaje de error
                         mensError("Falta la cuenta contable en las siguientes facturas " + cuentas + ". Se ha generado un archivo de texto con esta información.");
