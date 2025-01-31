@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "677d838f76b3498c88880c77958c8191",
+  "ReportGuid": "b272d3768cb14c77808387149a27e0bb",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1738326806000+0100)/",
+  "ReportChanged": "/Date(1738339120427+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -228,55 +228,48 @@
             "Type": "System.Decimal"
           },
           "8": {
-            "Name": "importe",
-            "Index": -1,
-            "NameInSource": "importe",
-            "Alias": "importe",
-            "Type": "System.Decimal"
-          },
-          "9": {
             "Name": "perdto",
             "Index": -1,
             "NameInSource": "perdto",
             "Alias": "perdto",
             "Type": "System.Decimal"
           },
-          "10": {
+          "9": {
             "Name": "abrev",
             "Index": -1,
             "NameInSource": "abrev",
             "Alias": "abrev",
             "Type": "System.String"
           },
-          "11": {
+          "10": {
             "Name": "articulo",
             "Index": -1,
             "NameInSource": "articulo",
             "Alias": "articulo",
             "Type": "System.String"
           },
-          "12": {
+          "11": {
             "Name": "articuloId",
             "Index": -1,
             "NameInSource": "articuloId",
             "Alias": "articuloId",
             "Type": "System.Int32"
           },
-          "13": {
+          "12": {
             "Name": "impDescUni",
             "Index": -1,
             "NameInSource": "impDescUni",
             "Alias": "impDescUni",
             "Type": "System.Decimal"
           },
-          "14": {
+          "13": {
             "Name": "primera_linea",
             "Index": -1,
             "NameInSource": "primera_linea",
             "Alias": "primera_linea",
             "Type": "System.String"
           },
-          "15": {
+          "14": {
             "Name": "resto_lineas",
             "Index": -1,
             "NameInSource": "resto_lineas",
@@ -285,7 +278,7 @@
           }
         },
         "NameInSource": "PROAS_REPORT",
-        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.totalLinea / ol.cantidad AS importe, ol.importe, ol.perdto, \r\n\tu.abrev, a.nombre AS articulo, a.articuloId, ROUND(ol.importe - (ol.importe * (ol.perdto / 100)), 2) AS  impDescUni, SUBSTRING_INDEX(ol.descripcion, '\\n', 1) AS primera_linea,\r\n\tCASE \r\n        WHEN LOCATE('\\n', ol.descripcion) > 0 THEN SUBSTRING(ol.descripcion, LOCATE('\\n', ol.descripcion) + 1)\r\n        ELSE ''\r\n    END AS resto_lineas\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
+        "SqlCommand": "SELECT ol.ofertaId, ol.ofertaLineaId, \r\nol.linea, ol.capituloLinea, ol.descripcion, ol.cantidad, ol.totalLinea, ol.importe, ol.perdto, \r\n\tu.abrev, a.nombre AS articulo, a.articuloId, ROUND(ol.importe - (ol.importe * (ol.perdto / 100)), 2) AS  impDescUni, SUBSTRING_INDEX(ol.descripcion, '\\n', 1) AS primera_linea,\r\n\tCASE \r\n        WHEN LOCATE('\\n', ol.descripcion) > 0 THEN SUBSTRING(ol.descripcion, LOCATE('\\n', ol.descripcion) + 1)\r\n        ELSE ''\r\n    END AS resto_lineas\r\nFROM ofertas_lineas AS ol\r\nLEFT JOIN unidades AS u on u.unidadId = ol.unidadId\r\nLEFT JOIN articulos AS a ON a.articuloId = ol.articuloId\r\nORDER BY 4,3"
       },
       "2": {
         "Ident": "StiMySqlSource",
@@ -690,7 +683,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PiePagina",
-          "ClientRectangle": "0,36.7,19,1.8",
+          "ClientRectangle": "0,31.2,19,1.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -926,7 +919,8 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
-          "ClientRectangle": "0,10.5,19,1.2",
+          "CanShrink": true,
+          "ClientRectangle": "0,10.5,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1084,9 +1078,10 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text23",
+              "CanShrink": true,
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.4,0.6,11.2,0.4",
+              "ClientRectangle": "2.4,0.4,11.2,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1102,6 +1097,12 @@
                 "WordWrap": true
               },
               "TextQuality": "Wysiwyg",
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 5.0,
+                "Bottom": 0.0
+              },
               "Type": "Expression"
             }
           },
@@ -1112,7 +1113,7 @@
         "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
-          "ClientRectangle": "0,12.5,19,0.2",
+          "ClientRectangle": "0,12.1,19,0.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1171,7 +1172,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
-          "ClientRectangle": "0,13.5,19,0.6",
+          "ClientRectangle": "0,13.1,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1232,7 +1233,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,14.9,19,0.4",
+          "ClientRectangle": "0,14.5,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1281,7 +1282,7 @@
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
           "Guid": "c9589c016d7c4f77b0530bec428c9207",
-          "ClientRectangle": "0,16.1,19,0",
+          "ClientRectangle": "0,15.7,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1297,7 +1298,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "b06d3654b24a43ca85a9a915c543df13",
-          "ClientRectangle": "0,16.9,19,0.6",
+          "ClientRectangle": "0,16.5,19,0.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1388,7 +1389,7 @@
         "11": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand2",
-          "ClientRectangle": "0,18.3,19,0.4",
+          "ClientRectangle": "0,17.9,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1399,7 +1400,7 @@
         "12": {
           "Ident": "StiDataBand",
           "Name": "DataBand2",
-          "ClientRectangle": "0,19.5,19,5.2",
+          "ClientRectangle": "0,19.1,19,5.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
