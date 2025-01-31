@@ -135,6 +135,23 @@ function initForm() {
         }
     });
 
+    
+    $("#txtEmail").on('change', function (e) {
+        var correo = $("#txtCorreoOfertas").val();
+        var val = $('#txtEmail').val();
+        if(val != "" && correo == "") {
+            vm.emailOfertas(val);
+        }
+    });
+
+    $("#txtEmailFacturas").on('change', function (e) {
+        var correo = $("#txtCorreoOfertas").val();
+        var val = $('#txtEmailFacturas').val();
+        if(val != "" && correo == "") {
+            vm.emailOfertas(val);
+        }
+    });
+
      //actuaizacion de visualización del iban
      $(function () {
         $("#txtIban").change(function () {
@@ -1587,6 +1604,7 @@ function cambioAgente(data, desdeLoad) {
                     vm.poblacion3(data.poblacion);
                     vm.codPostal3(data.codPostal);
                     vm.provincia3(data.provincia);
+                    vm.emailOfertas(data.email);
                     loadTiposVia3(data.tipoViaId);
                     realizarCambioAgente(data);
                 }
