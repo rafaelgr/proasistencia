@@ -121,12 +121,13 @@ function admData() {
 
 function initTablaPrefacturas() {
     tablaCarro = $('#dt_prefactura').DataTable({
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
-        columnDefs: [{
-            "width": "20%",
-            "targets": 0
-        }],
+        columnDefs: [ {
+            "targets": 0,
+            "orderable": false,
+            "width": "20%"
+            }],
         dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' f> <'col-sm-3 col-xs-3'Cl>>>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -219,6 +220,7 @@ function initTablaPrefacturas() {
             }
         }]
     });
+    tablaCarro.column(10).visible(false);
 }
 
 function datosOK() {
