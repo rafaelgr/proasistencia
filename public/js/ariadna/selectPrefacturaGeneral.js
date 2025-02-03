@@ -71,6 +71,19 @@ function initForm() {
 
     });
 
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function(e){
+            if($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAllPrefacturas(true);
+                  
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAllPrefacturas(false);
+            }
+        }
+    );
    
 }
 
@@ -159,7 +172,7 @@ function initTablaPrefacturas() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -596,3 +609,45 @@ var initAutoCliente = function () {
         return r;
     }, "Debe seleccionar un cliente válido");
 };
+
+//SELECIÓN MÚLTIPLE
+
+function updateAllPrefacturas(opcion) {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_prefactura').dataTable().api();
+    var datos = tb.rows( {page:'current'} ).data();
+    if(opcion)  sel = 1
+    
+    if(datos) {
+        for( var i = 0; i < datos.length; i++) {
+            var data = {
+                prefactura: {
+                    prefacturaId: datos[i].prefacturaId,
+                    empresaId: datos[i].empresaId,
+                    clienteId: datos[i].clienteId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+            }
+        };
+                
+               
+        var url = "", type = "";
+         // updating record
+         var type = "PUT";
+         var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, datos[i].prefacturaId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}
