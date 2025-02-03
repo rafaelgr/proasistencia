@@ -1229,7 +1229,7 @@ function datosOK() {
 
 function salir() {
     var mf = function () {
-        var url = "ContratoGeneral.html";
+        var url = "ContratoGeneral.html?ConservaFiltro=true";
         if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html";
         if(DesdeContrato == "true" && AscContratoId != 0){
             url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true', '_self';
@@ -1248,7 +1248,7 @@ var clicAceptar = function (salir) {
                     url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
                     if(dep == 'arquitectura')  url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true&dep=arquitectura';
                 } else {
-                    url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+                    url = "ContratoGeneral.html?ConservaFiltro=true&ContratoId=" + vm.contratoId(); // default PUT
                     if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
                 }
                 if (tipo == 'POST') {

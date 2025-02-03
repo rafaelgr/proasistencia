@@ -12,6 +12,8 @@ var dataContratos;
 var contratoId;
 var usuario;
 var departamento;
+var filtros = {};
+var tablaContratos;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -25,18 +27,23 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
+    initTablaContratos();
+    //
+    filtros = getCookie('filtro_contratos');
+    if(filtros != undefined) {
+        filtros = JSON.parse(filtros);
+    }
     
     recuperaDepartamento(function(err, data) {
         if(err) return;
-        initTablaContratos();
+        var conservaFiltro = gup("ConservaFiltro");
+        var cleaned = gup("cleaned");
+        //if(conservaFiltro != 'true' && cleaned != true) limpiarFiltros();
 
         contratoId = gup('ContratoId');
-        if (contratoId !== '') {
-            cargarContratos()(contratoId);
-
-        } else {
-            cargarContratos()();
-        }
+        var c = contratoId;
+        
+        compruebaFiltros(c);
     });
 
      //Evento asociado al cambio de departamento
@@ -53,6 +60,7 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarContratos());
     $('#btnAlta').click(crearContrato());
+    $('#btnLimpiar').click(limpiarFiltros);
     $('#btnPrint').click(imprimirInforme);
     $('#frmBuscar').submit(function () {
         return false
@@ -103,6 +111,44 @@ function initForm() {
     })
 }
 
+function compruebaFiltros(id) {
+    if(filtros) {
+            $('#chkCerrados').prop('checked', filtros.cerrados);
+            if(id > 0) {
+                setTimeout(function() {
+                    cargarContratos()(id);
+                }, 1000);
+               
+            } else {
+                cargarContratos()();
+            }
+       /*  if(id) {
+            cargarFacturas2()(id);
+        } */
+    } else{
+        vm.sempresaId(0);
+        loadEmpresas(0);
+        estableceFechaEjercicio();
+        if(id) {
+            setTimeout(function() {
+                cargarFacturas2(id)();
+            }, 1000);
+        } else{
+            cargarFacturas2()();
+        }
+
+    }
+}
+
+var limpiarFiltros = function() {
+    var returnUrl = "ContratoGeneral.html?cleaned=true"
+    deleteCookie('filtro_contratos');
+    tablaContratos.state.clear();
+    window.open(returnUrl, '_self');
+    //window.location.reload();
+}
+
+
 function admData() {
     var self = this;
     
@@ -152,6 +198,12 @@ function initTablaContratos() {
                 $(nRow).attr('style', 'background: #99DACF'); 
             }
         },
+        "stateSave": true,
+        "stateLoaded": function (settings, state) {
+            state.columns.forEach(function (column, index) {
+                $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
+             });
+        },
         bSort: true,
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [3,4] },
@@ -180,16 +232,13 @@ function initTablaContratos() {
         paging: true,
         "pageLength": 100,
         preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contrato'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+         
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
+           
         },
         language: {
             processing: "Procesando...",
@@ -369,12 +418,20 @@ function deleteContrato(id) {
 }
 
 function editContrato(id) {
+    var cerrados = $('#chkCerrados').prop('checked');
+    var preaviso = $('#chkPreaviso').prop('checked');
+    var busquedaContratos = 
+        {
+            cerrados: cerrados,
+            preaviso: preaviso
+        }
+    setCookie("filtro_contratos", JSON.stringify(busquedaContratos), 1);
     var url = "ContratoDetalle.html?ContratoId=" + id;
     window.open(url, '_new');
 }
 
 function cargarContratos() {
-    var mf = function (id) {
+    var mf = function (id, cerrados) {
         if (id) {
             var data = {
                 id: contratoId
@@ -400,13 +457,16 @@ function cargarContratos() {
                 }
             });
         } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
+            if(cerrados !== undefined) {
+                if($('#chkPreaviso').is(':checked')) {
+                    $('#chkPreaviso').prop("checked", false);
+                }
+                var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
+                if (cerrados) {
+                    url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
+                } 
+                llamadaAjax("GET", url, null, function(err, data){
+                    if (err) return;
                     data.forEach(function(d) {
                         if(d.preaviso == null) {
                             d.preaviso = 0;
@@ -414,14 +474,33 @@ function cargarContratos() {
                         d.plazo = restarDias(d.fechaFinal, d.preaviso);
                         d.plazo = moment(d.plazo).format('YYYY-MM-DD');
                     }, this);
-                    
                     loadTablaContratos(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+                });
+
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        data.forEach(function(d) {
+                            if(d.preaviso == null) {
+                                d.preaviso = 0;
+                            }
+                            d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                            d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                        }, this);
+                        
+                        loadTablaContratos(data);
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+            }
         }
     };
     return mf;
@@ -481,38 +560,6 @@ function restarDias(fecha, dias){
     document.body.appendChild(form);
     form.submit();
 }; */
-
-function cargarContratos2() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaContratos(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
-
-function cargarContratos2All() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos/all",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaContratos(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
 
 
 imprimirInforme = function () {
