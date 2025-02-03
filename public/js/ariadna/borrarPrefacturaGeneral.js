@@ -533,7 +533,7 @@ function ajustaDepartamentos(data) {
     //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO Alquileres DEL COMBO
     var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
      for (var i = 0; i < data.length; i++) {
-            if (data[i].departamentoId != 3) {
+            if (data[i].departamentoId != 3 &&  data[i].departamentoId != 4) {
                 data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
                 i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
             }
