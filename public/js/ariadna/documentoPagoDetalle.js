@@ -455,7 +455,7 @@ function aceptar(salir) {
         if (documentoPagoId != 0) {
             verb = "PUT";
             url =  myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId;
-            returnUrl = "DocumentosPagoGeneral.html?DocumentoPagoId=";
+            returnUrl = "DocumentosPagoGeneral.html?ConservaFiltro=true&DocumentoPagoId=";
         }
             $.ajax({
                 type: verb,
@@ -575,7 +575,7 @@ function upload(a) {
 
 function salir() {
     var mf = function() {
-        var url = "DocumentosPagoGeneral.html";
+        var url = "DocumentosPagoGeneral.html?ConservaFiltro=true";
         window.open(url, '_self');
     }
     return mf;

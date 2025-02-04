@@ -13,6 +13,11 @@ var documentoPagoId;
 var datosArrayRegistros = [];
 var dataRegistros;
 var dataAsociarFacturas;
+var tablaDocPago;
+
+var filtros = {
+    buscar: null
+}
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -76,10 +81,19 @@ function initForm() {
     initTablaRegistros();
     initTablaFacturasRegistros();
 
+    var f = getCookie('filtro_docpago');
+    if(f != undefined) {
+        filtros = JSON.parse(f);
+    }
+    
+    var conservaFiltro = gup("ConservaFiltro");
+    var cleaned = gup("cleaned");
+    if(conservaFiltro != 'true' && cleaned != 'true') limpiarFiltros();
+
     // Add event listener for opening and closing details
     $('#dt_documentoPago').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
-        var row = tablaCarro.row(tr);
+        var row = tablaDocPago.row(tr);
  
         if (row.child.isShown()) {
             // This row is already open - close it
@@ -95,28 +109,9 @@ function initForm() {
     documentoPagoId = gup('DocumentoPagoId');
     if (documentoPagoId !== '') {
         // cargar la tabla con un único valor que es el que corresponde.
-        var data = {
-            id: documentoPagoId
-        }
-        // hay que buscar ese elemento en concreto
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/documentos_pago/" + documentoPagoId,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                var data2 = [data];
-                loadTablaDocumentospago(data2);
-            },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-        });
+        compruebaFiltros(documentoPagoId)
     } else{
-        buscarTodos();
+        compruebaFiltros()
     }
 }
 
@@ -161,9 +156,15 @@ function admData() {
 } */
 
     function initTablaDocumentospago() {
-        tablaCarro = $('#dt_documentoPago').DataTable({
+        tablaDocPago = $('#dt_documentoPago').DataTable({
             autoWidth: true,
             bSort: true,
+            "stateSave": true,
+            "stateLoaded": function (settings, state) {
+                state.columns.forEach(function (column, index) {
+                    $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
+                });
+            },
             "aoColumnDefs": [
                 { "sType": "date-uk", "aTargets": [2] }
             ],
@@ -262,8 +263,8 @@ function admData() {
             }
         });
     
-        tablaCarro.columns(4).visible(false);
-        tablaCarro.columns(5).visible(false);
+        tablaDocPago.columns(4).visible(false);
+        tablaDocPago.columns(5).visible(false);
     }
     
 
@@ -341,7 +342,7 @@ function loadTablaDocumentospago(data) {
 }
 
 function buscarDocumentospago() {
-    var mf = function () {
+    var mf = function (id) {
         var aBuscar = $('#txtBuscar').val();
         if(aBuscar == '') $('#txtBuscar').val('*')
         if (!datosOK()) {
@@ -350,6 +351,29 @@ function buscarDocumentospago() {
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
         // enviar la consulta por la red (AJAX)
+        if(id > 0) {
+            var data = {
+                id: id
+            }
+            // hay que buscar ese elemento en concreto
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    var data2 = [data];
+                    loadTablaDocumentospago(data2);
+                    return;
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    return;
+                }
+            });
+        }
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/documentos_pago/?nombre=" + aBuscar,
@@ -359,10 +383,9 @@ function buscarDocumentospago() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaDocumentospago(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+            }
         });
     };
     return mf;
@@ -442,8 +465,12 @@ function deleteDocumentPago(id) {
 }
 
 function editDocumentPago(id) {
-    // hay que abrir la página de detalle de documentpago
-    // pasando en la url ese ID
+    var buscar  = $('#txtBuscar').val();
+    filtros = 
+        {
+            buscar: buscar
+        }
+    setCookie("filtro_docpago", JSON.stringify(filtros), 1);
     var url = "DocumentoPagoDetalle.html?DocumentoPagoId=" + id;
     window.open(url, '_self');
 }
@@ -799,6 +826,24 @@ function procesaClavesTransferencias(cod) {
         arr.push(obj);
     });
     return arr;
+}
+
+//FILTROS 
+
+function compruebaFiltros(id) {
+    if(filtros) {
+            $('#txtBuscar').val(filtros.buscar);
+            buscarDocumentospago()(id);
+    } else {
+        buscarDocumentospago()(id);
+    }
+}
+
+var limpiarFiltros = function() {
+    var returnUrl = "DocumentosPagoGeneral.html?cleaned=true"
+    deleteCookie('filtro_docpago');
+    tablaDocPago.state.clear();
+    window.open(returnUrl, '_self');
 }
 
 

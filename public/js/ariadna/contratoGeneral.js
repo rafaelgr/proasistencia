@@ -133,7 +133,7 @@ function compruebaFiltros(id) {
                 cargarContratos()(id,  filtros);
             }
     } else {
-        cargarContratos()(id, null);
+        cargarContratos()(id, filtros);
     }
 }
 
@@ -142,7 +142,6 @@ var limpiarFiltros = function() {
     deleteCookie('filtro_contratos');
     tablaContratos.state.clear();
     window.open(returnUrl, '_self');
-    //window.location.reload();
 }
 
 
