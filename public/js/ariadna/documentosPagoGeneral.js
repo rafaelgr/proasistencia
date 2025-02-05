@@ -367,27 +367,26 @@ function buscarDocumentospago() {
                     // hay que mostrarlo en la zona de datos
                     var data2 = [data];
                     loadTablaDocumentospago(data2);
-                    return;
                 },
                 error: function (err) {
                     mensErrorAjax(err);
-                    return;
+                }
+            });
+        } else {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/documentos_pago/?nombre=" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaDocumentospago(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
                 }
             });
         }
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/documentos_pago/?nombre=" + aBuscar,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaDocumentospago(data);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-            }
-        });
     };
     return mf;
 }
