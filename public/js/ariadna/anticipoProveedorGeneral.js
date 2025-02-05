@@ -286,19 +286,20 @@ function deleteAnticipo(id) {
         contentType: "application/json",
         data: null,
         success: function (data, status) {
+            var mens = "¿Qué desea hacer con este registro?";
+            mens += "<ul>"
+            mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizado, con lo que puede ser contabilizado de nuevo</li>";
+            mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo.</li>";
+            mens += "</ul>"
             if(data.facproveId) {
-                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
-            } else {
-                 mens = "¿Realmente desea borrar este registro?";
-            }
-            // mensaje de confirmación
-    
+                mens += " ¡¡¡¡ATENCION!!! Este registro tiene facturas asociadas.";
+            } 
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Aceptar][Cancelar]'
+        buttons: '[Cancelar][Descontabilizar anticipo][Borrar anticipo]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
+        if (ButtonPressed === "Borrar anticipo") {
             var data = {
                 id: antproveId
             }
@@ -333,6 +334,19 @@ function deleteAnticipo(id) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
+            });
+        }
+        if (ButtonPressed === "Descontabilizar anticipo") {
+            var data = { facturaId: id };
+            llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposProveedores/descontabilizar/" + id, null, function (err, data) {
+                if (err) return;
+                $('#chkTodos').prop('checked',false);
+                if(data.changedRows > 0) {
+                    mostrarMensajeAnticipoDescontabilizado();
+                } else {
+                    mostrarMensajeAnticipoNoCambiado();
+                }
+                buscarFacturas()();
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -490,3 +504,15 @@ imprimirAnticipo = function () {
     var url = "InfAnticiposProveedores.html";
     window.open(url, '_blank');
 }
+
+var mostrarMensajeAnticipoDescontabilizado = function () {
+    var mens = "El anticipo se ha descontabilizado correctamente.";
+    mensNormal(mens);
+}
+
+
+
+var mostrarMensajeAnticipoNoCambiado = function () {
+    var mens = "El anticipo NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}   
