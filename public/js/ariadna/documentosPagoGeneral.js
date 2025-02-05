@@ -50,6 +50,7 @@ function initForm() {
     $('#btnBuscar').click(buscarDocumentospago());
     //$('#btnBuscar2').click(buscarDocumentospago2());
     $('#btnAlta').click(crearDocumentPago());
+    $('#btnLimpiar').click(limpiarFiltros)
 
     $('#frmBuscar').submit(function () {
         return false
@@ -243,8 +244,8 @@ function admData() {
         // Añadir la búsqueda por columnas
         $('#dt_documentoPago thead tr:eq(1) th').each(function (i) {
             $('input', this).on('keyup change', function () {
-                if (tablaCarro.column(i).search() !== this.value) {
-                    tablaCarro.column(i).search(this.value).draw();
+                if (tablaDocPago.column(i).search() !== this.value) {
+                    tablaDocPago.column(i).search(this.value).draw();
                 }
             });
         });
