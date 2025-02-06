@@ -261,9 +261,11 @@ function initForm() {
     $("#txtCertificacionFinal").change(function (e) {
         vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
        
-        let ip = numeroDbf(vm.importePrefacturado());
-        let dif2 =  ip - vm.certificacionFinal();
-        vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
+        if(vm.importePrefacturado() && vm.certificacionFinal()) {
+            let ip = numeroDbf(vm.importePrefacturado());
+            let dif2 =  ip - vm.certificacionFinal();
+            vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
+        }
     });
 
     
