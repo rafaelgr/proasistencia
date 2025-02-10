@@ -557,7 +557,10 @@ function admData() {
      //
      self.posiblesTiposViaOfertas = ko.observableArray([]);
      self.elegidosTiposViaOfertas = ko.observableArray([]);
-    
+     //DATOS DEL PRESIDENTE DE LA COMUNIDAD
+     self.nombrePresidente = ko.observable();
+     self.dniPresidente = ko.observable();
+     self.correoPresidente = ko.observable();    
 }
 
 function loadData(data, desdeLoad, importacion) {
@@ -598,6 +601,10 @@ function loadData(data, desdeLoad, importacion) {
     vm.emailFacturas(data.emailFacturas);
     vm.loginWeb(data.loginWeb);
     vm.passWeb(data.passWeb);
+    //
+    vm.nombrePresidente(data.nombrePresidente);
+    vm.dniPresidente(data.dniPresidente);
+    vm.correoPresidente(data.correoPresidente);
 
     if(importacion) {
         vm.direccion2(data.direccion);
@@ -865,7 +872,11 @@ function aceptar() {
                 "provinciaOfertas" : vm.provinciaOfertas(),
                 "numeroOfertas" : vm.numeroOfertas(),
                 "puertaOfertas" : vm.puertaOfertas(),
-                "emailOfertas" : vm.emailOfertas()
+                "emailOfertas" : vm.emailOfertas(),
+                "nombrePresidente": vm.nombrePresidente(),
+                "dniPresidente": vm.dniPresidente(),
+                "correoPresidente": vm.correoPresidente()
+                
             } 
         };
         
@@ -1754,7 +1765,11 @@ function guardaClienteAgente() {
                     "provinciaOfertas" : vm.provinciaOfertas(),
                     "numeroOfertas" : vm.numeroOfertas(),
                     "puertaOfertas" : vm.puertaOfertas(),
-                    "emailOfertas" : vm.emailOfertas()
+                    "emailOfertas" : vm.emailOfertas(),
+
+                    "nombrePresidente": vm.nombrePresidente(),
+                    "dniPresidente": vm.dniPresidente(),
+                    "correoPresidente": vm.correoPresidente()
                 }
             }
             $.ajax({
