@@ -158,13 +158,11 @@ function initForm() {
         if(err) return;
         if(data) {
             initAutoCliente();
-            vm.contratoId(gup('contratoId'));
+            vm.contratoId(gup('ContratoId'));
                 verb = "GET";
                 var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
                 llamadaAjax(verb, url, null, function (err, data) {
-                    vm.sempresaId(data.empresaId);
-                    vm.sdepartamentoId(data.tipoContratoId);
-                    obtainReportJson();
+                    obtainReportJson(data);
                     $('#selector').hide();
                 });
         }
@@ -219,6 +217,7 @@ function admData() {
     self.elegidosColaboradores = ko.observableArray([]);
      //
      self.scontratoId = ko.observable();
+     self.contratoId = ko.observable();
      //
      self.posiblesContratos = ko.observableArray([]);
      self.elegidosContratos = ko.observableArray([]);
@@ -372,7 +371,7 @@ var rptContratosParametrosJson = function () {
 
 
     
-    var url = "/api/contratos/inf/contratos/json/visor/" + dFecha + "/" + hFecha;
+    var url = "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
     url += "/" + empresaId;
     url += "/" + clienteId;
     url += "/" + departamentoId;
@@ -393,13 +392,13 @@ var rptContratosParametrosJson = function () {
 
 var obtainReportJson = function (obj) {
     let file = ";"
-    if(vm.departamentoId() == 8)  file = "../reports/contrato_reabita.mrt";
+    file = "../reports/contrato_reabita2.mrt";
     var report = new Stimulsoft.Report.StiReport();
         
         
     report.loadFile(file);
 
-    var dataSet = new Stimulsoft.System.Data.DataSet("liq_ant");
+    var dataSet = new Stimulsoft.System.Data.DataSet("datos_contrato");
     dataSet.readJson(obj);
     
      // Remove all connections from the report template
