@@ -34,6 +34,9 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamento();
 
+    $("#cmbTiposProfesional").select2(select2Spanish());
+    loadTiposProfesionales();
+
     adminId = gup('TipoProyectoId');
     if (adminId != 0) {
         var data = {
@@ -75,6 +78,13 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    //
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesional = ko.observableArray([]);
+    self.elegidosTiposProfesional = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -84,6 +94,7 @@ function loadData(data) {
     vm.visibleApp(data.visibleApp);
     vm.activo(data.activo);
     loadDepartamento(data.tipoMantenimientoId);
+    loadTiposProfesionales(data.tiposProfesionales);
 }
 
 function datosOK() {
@@ -137,7 +148,10 @@ function aceptar() {
                 "abrev": vm.abrev(),
                 "tipoMantenimientoId": vm.sdepartamentoId(),
                 "activo": vm.activo(),
-                "visibleApp": vm.visibleApp()
+                "visibleApp": vm.visibleApp(),
+                "profesiones": {
+                    "profesiones": vm.elegidosTiposProfesional()
+                }
             }
         };
         if (adminId == 0) {
@@ -199,4 +213,30 @@ function loadDepartamento(departamentoId) {
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
+
+function loadTiposProfesionales(tiposProfesionalesIds) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var ids = [];
+            var tiposProfesionales  = data
+            vm.posiblesTiposProfesional(tiposProfesionales);
+            if(tiposProfesionalesIds) {
+                vm.elegidosTiposProfesional(tiposProfesionalesIds);
+                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                    ids.push(tiposProfesionalesIds[i])
+                }
+                $("#cmbTiposProfesional").val(ids).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
     
