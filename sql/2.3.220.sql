@@ -41,3 +41,49 @@ VALUES
     0,'TRAMITACIÓN DE LICENCIAS', 5, 'TL', 1
 );
 
+CREATE TABLE `estados_expediente` (  
+  `estadoExpedienteId` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255),
+  PRIMARY KEY (`estadoExpedienteId`) 
+);
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Solicitud');
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Estudio'); 
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Enviado');
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Adjudicado'); 
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Iniciado'); 
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Finalizado'); 
+INSERT INTO `estados_expediente` (`nombre`) VALUES ('Denegado'); 
+
+CREATE TABLE `expedientes` (  
+  `expedienteId` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(255),
+  `referencia` VARCHAR(255),
+  `fecha` DATE,
+  `empresaId` INT(11),
+  `clienteId` INT(11),
+  `estadoExpedienteId` INT(11),
+  `direccion` VARCHAR(255),
+  `direccionTrabajo` VARCHAR(255),
+  `departamentoId` INT(11),
+  `contacto` VARBINARY(255),
+  `obesrvaciones` TEXT,
+  `agenteId` INT(11),
+  `comercialId` INT(11),
+  `jefeGrupoId` INT(11),
+  `jefeObrasId` INT(11),
+  `oficinaTecnicaId` INT(11),
+  `asesorTecnicoId` INT(11),
+  PRIMARY KEY (`expedienteId`) ,
+  CONSTRAINT `exp_empresaFK` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`),
+  CONSTRAINT `exp_clienteFK` FOREIGN KEY (`clienteId`) REFERENCES `clientes`(`clienteId`),
+  CONSTRAINT `exp_depatamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos`(`departamentoId`),
+  CONSTRAINT `exp_agenteFK` FOREIGN KEY (`agenteId`) REFERENCES `comerciales`(`comercialId`),
+  CONSTRAINT `exp_comercialFK` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`),
+  CONSTRAINT `exp_tecnicoFK` FOREIGN KEY (`asesorTecnicoId`) REFERENCES `comerciales`(`comercialId`),
+  CONSTRAINT `exp_jefeGrupoFK` FOREIGN KEY (`jefeGrupoId`) REFERENCES `comerciales`(`comercialId`),
+  CONSTRAINT `exp_jefeObrasFK` FOREIGN KEY (`jefeObrasId`) REFERENCES `comerciales`(`comercialId`),
+  CONSTRAINT `exp_oficinaTecnicaFK` FOREIGN KEY (`oficinaTecnicaId`) REFERENCES `comerciales`(`comercialId`),
+  CONSTRAINT `exp_estadoFK` FOREIGN KEY (`estadoExpedienteId`) REFERENCES `estados_expediente`(`estadoExpedienteId`)
+);
+
+
