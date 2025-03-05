@@ -65,7 +65,7 @@ CREATE TABLE `expedientes` (
   `direccion` VARCHAR(255),
   `direccionTrabajo` VARCHAR(255),
   `departamentoId` INT(11),
-  `contacto` VARBINARY(255),
+  `contacto` VARCHAR(255),
   `observaciones` TEXT,
   `agenteId` INT(11),
   `comercialId` INT(11),
@@ -85,5 +85,18 @@ CREATE TABLE `expedientes` (
   CONSTRAINT `exp_oficinaTecnicaFK` FOREIGN KEY (`oficinaTecnicaId`) REFERENCES `comerciales`(`comercialId`),
   CONSTRAINT `exp_estadoFK` FOREIGN KEY (`estadoExpedienteId`) REFERENCES `estados_expediente`(`estadoExpedienteId`)
 );
+
+
+ALTER TABLE `expedientes`   
+	ADD COLUMN `tipoViaId` INT(11) NULL AFTER `referencia`,
+	CHANGE `direccion` `direccion` VARCHAR(255) CHARSET latin1 COLLATE latin1_swedish_ci NULL  AFTER `tipoViaId`,
+	ADD COLUMN `poblacion` VARCHAR(255) NULL AFTER `direccion`,
+	ADD COLUMN `provincia` VARCHAR(255) NULL AFTER `poblacion`,
+	ADD COLUMN `codPostal` VARCHAR(255) NULL AFTER `provincia`,
+  ADD CONSTRAINT `exp_tipoViaFK` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via`(`tipoViaId`);
+
+  ALTER TABLE `ofertas`   
+	ADD COLUMN `expedienteId` INT(11) NULL AFTER `beneficioLineal`,
+  ADD CONSTRAINT `of_expediente` FOREIGN KEY (`expedienteId`) REFERENCES  `expedientes`(`expedienteId`);
 
 
