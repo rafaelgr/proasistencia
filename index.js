@@ -91,6 +91,7 @@ var anticipos_clientes = require('./lib/anticipos_clientes/anticiposClientes_con
 //SERVICIOS
 var servicios_router = require('./lib/servicios/servicios_controller');
 var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
+var estados_expediente_router = require('./lib/estados_expediente/estados_expediente_controller');
 var estados_parte_profesional_router = require('./lib/estados_parte_profesional/estados_parte_profesional_controller');
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
@@ -258,6 +259,7 @@ app.use('/api/anticiposClientes/', anticipos_clientes);
 
 //servicios
 app.use('/api/servicios', servicios_router);
+app.use('/api/estados_expediente', estados_expediente_router);
 app.use('/api/estados_parte', estados_parte_router);
 app.use('/api/estados_parte_profesional', estados_parte_profesional_router);
 app.use('/api/partes', partes_router);

@@ -66,7 +66,7 @@ CREATE TABLE `expedientes` (
   `direccionTrabajo` VARCHAR(255),
   `departamentoId` INT(11),
   `contacto` VARBINARY(255),
-  `obesrvaciones` TEXT,
+  `observaciones` TEXT,
   `agenteId` INT(11),
   `comercialId` INT(11),
   `jefeGrupoId` INT(11),
