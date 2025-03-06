@@ -99,4 +99,24 @@ ALTER TABLE `expedientes`
 	ADD COLUMN `expedienteId` INT(11) NULL AFTER `beneficioLineal`,
   ADD CONSTRAINT `of_expediente` FOREIGN KEY (`expedienteId`) REFERENCES  `expedientes`(`expedienteId`);
 
+  ALTER TABLE `ofertas`   
+	ADD COLUMN `esCoste` TINYINT(1) DEFAULT 0 NULL AFTER `expedienteId`;
+
+  ALTER TABLE ofertas 
+  ADD COLUMN `comercialId` INT(11) AFTER esCoste,
+  ADD COLUMN  `jefeGrupoId` INT(11) AFTER comercialId,
+  ADD COLUMN `jefeObrasId` INT(11) AFTER jefeGrupoId,
+  ADD COLUMN  `oficinaTecnicaId` INT(11) AFTER jefeObrasId,
+  ADD COLUMN  `asesorTecnicoId` INT(11) AFTER oficinaTecnicaId,
+  ADD CONSTRAINT `of_comercialFK` FOREIGN KEY (`comercialId`) REFERENCES `comerciales`(`comercialId`),
+  ADD CONSTRAINT `of_tecnicoFK` FOREIGN KEY (`asesorTecnicoId`) REFERENCES `comerciales`(`comercialId`),
+  ADD CONSTRAINT `of_jefeGrupoFK` FOREIGN KEY (`jefeGrupoId`) REFERENCES `comerciales`(`comercialId`),
+  ADD CONSTRAINT `of_jefeObrasFK` FOREIGN KEY (`jefeObrasId`) REFERENCES `comerciales`(`comercialId`),
+  ADD CONSTRAINT `of_oficinaTecnicaFK` FOREIGN KEY (`oficinaTecnicaId`) REFERENCES `comerciales`(`comercialId`);
+
+  ALTER TABLE `ofertas`   
+	ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`;
+
+
+
 
