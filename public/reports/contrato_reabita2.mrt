@@ -2,8 +2,74 @@
 <StiSerializer version="1.02" type="Net" application="StiReport">
   <Dictionary Ref="1" type="Dictionary" isKey="true">
     <BusinessObjects isList="true" count="0" />
-    <Databases isList="true" count="0" />
-    <DataSources isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ejemplo_json Ref="2" type="Stimulsoft.Report.Dictionary.StiJsonDatabase" isKey="true">
+        <Alias>ejemplo_json</Alias>
+        <Key>13cf6597d4f743a2be226721600ba4c6</Key>
+        <Name>ejemplo_json</Name>
+        <PathData>E:\node_apps\proasistencia\public\reports\ejemplo_json.json</PathData>
+      </ejemplo_json>
+    </Databases>
+    <DataSources isList="true" count="3">
+      <datos_contrato Ref="3" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato</Alias>
+        <Columns isList="true" count="16">
+          <value>ORIGINAL,contratoId,contratoId,contratoId,System.Decimal,_x0035_6ebb999335d494cae234dcdde09f885</value>
+          <value>ORIGINAL,nombrePresidente,nombrePresidente,nombrePresidente,System.String,d074c3d17a744e1da4671b99832ae48b</value>
+          <value>ORIGINAL,correoPresidente,correoPresidente,correoPresidente,System.String,f1f7abfab9884e08874d54b8cf786096</value>
+          <value>ORIGINAL,dniPresidente,dniPresidente,dniPresidente,System.String,b0d45b60b333418fa89f903de0f017f7</value>
+          <value>ORIGINAL,direccionTrabajo,direccionTrabajo,direccionTrabajo,System.String,_x0036_9522d8d5423485fbf091851e3e05f6b</value>
+          <value>ORIGINAL,codPostalTrabajo,codPostalTrabajo,codPostalTrabajo,System.Decimal,_x0033_6d4607aead74c9d90cec2bae999e89e</value>
+          <value>ORIGINAL,PoblacionTrabajo,PoblacionTrabajo,PoblacionTrabajo,System.String,e760a88626344a76b0a892106a72b4a3</value>
+          <value>ORIGINAL,provinciaTrabajo,provinciaTrabajo,provinciaTrabajo,System.String,_x0038_7eca91810fa446bac4215251a761f84</value>
+          <value>ORIGINAL,tipoProyecto,tipoProyecto,tipoProyecto,System.String,_x0033_b8befd24cee49e6a5e2bc2748fe0099</value>
+          <value>ORIGINAL,referencia,referencia,referencia,System.String,_x0031_5bc4ac962dd4285a4574ffbb2cb06bf</value>
+          <value>ORIGINAL,cerFinal,cerFinal,cerFinal,System.String,_x0039_fdecd393ebe4f088ee867d2dcba3433</value>
+          <value>ORIGINAL,fecha,fecha,fecha,System.String,_x0033_ce1d1e72f38431da213266182332fd4</value>
+          <value>ORIGINAL,iban,iban,iban,System.String,aeba457ea0cd48b5889f8a891069f0a2</value>
+          <value>ORIGINAL,parrafo1,parrafo1,parrafo1,System.String,_x0037_da217032e114047a1d4c5ebeea4b2b0</value>
+          <value>pagos,System.String</value>
+          <value>letras,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>1fc1308dbd954062a4c84b0aac52c19b</Key>
+        <Name>datos_contrato</Name>
+        <NameInSource>ejemplo_json.datos_contrato</NameInSource>
+      </datos_contrato>
+      <datos_contrato_letras Ref="4" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato_letras</Alias>
+        <Columns isList="true" count="8">
+          <value>contratoId,System.Decimal</value>
+          <value>formaPagoId,System.Decimal</value>
+          <value>concepto,System.String</value>
+          <value>totalAlCliente,System.Decimal</value>
+          <value>sumTotalAlcliente,System.Decimal</value>
+          <value>totletras,System.Decimal</value>
+          <value>numletras,System.Decimal</value>
+          <value>relationId,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>83d4cbfd976f46cea2989b6abaf439ad</Key>
+        <Name>datos_contrato_letras</Name>
+        <NameInSource>ejemplo_json.datos_contrato_letras</NameInSource>
+      </datos_contrato_letras>
+      <datos_contrato_pagos Ref="5" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato_pagos</Alias>
+        <Columns isList="true" count="7">
+          <value>contratoId,System.Decimal</value>
+          <value>formaPagoId,System.Decimal</value>
+          <value>formaPagoNombre,System.String</value>
+          <value>importePrefacturadoIva,System.Decimal</value>
+          <value>concepto,System.String</value>
+          <value>porcentaje,System.Decimal</value>
+          <value>relationId,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>7656e938f84e420f91166ae2cf9d8d14</Key>
+        <Name>datos_contrato_pagos</Name>
+        <NameInSource>ejemplo_json.datos_contrato_pagos</NameInSource>
+      </datos_contrato_pagos>
+    </DataSources>
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
@@ -17,15 +83,15 @@
   <Key>7230e7358106451eb2cc815f8ce2229b</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
-    <Page1 Ref="2" type="Page" isKey="true">
+    <Page1 Ref="6" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="10">
-        <PageFooterBand1 Ref="3" type="PageFooterBand" isKey="true">
+      <Components isList="true" count="9">
+        <PageFooterBand1 Ref="7" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,109.6,19,1.2</ClientRectangle>
+          <ClientRectangle>0,32.04,19,1.2</ClientRectangle>
           <Components isList="true" count="2">
-            <Text2 Ref="4" type="Text" isKey="true">
+            <Text2 Ref="8" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.2,0.62,1.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -34,13 +100,13 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
-              <Page isRef="2" />
-              <Parent isRef="3" />
+              <Page isRef="6" />
+              <Parent isRef="7" />
               <Text>pág. {PageNumber}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text2>
-            <Text17 Ref="5" type="Text" isKey="true">
+            <Text17 Ref="9" type="Text" isKey="true">
               <Border>Top;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.4,19,0.2</ClientRectangle>
@@ -49,8 +115,8 @@
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text17</Name>
-              <Page isRef="2" />
-              <Parent isRef="3" />
+              <Page isRef="6" />
+              <Parent isRef="7" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text17>
@@ -58,10 +124,10 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>PageFooterBand1</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
         </PageFooterBand1>
-        <Text1 Ref="6" type="Text" isKey="true">
+        <Text1 Ref="10" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>1.4,101.02,6.2,0.4</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -69,13 +135,13 @@
           <Font>Tahoma,10</Font>
           <Margins>0,0,0,0</Margins>
           <Name>Text1</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
           <Text>FDO. {datos_contrato.nombrePresidente}</Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
         </Text1>
-        <Text3 Ref="7" type="Text" isKey="true">
+        <Text3 Ref="11" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>8.6,101.02,6,0.4</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -83,137 +149,309 @@
           <Font>Tahoma,10</Font>
           <Margins>0,0,0,0</Margins>
           <Name>Text3</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
           <Text>FDO. Mª DOLORES GOMEZ MARTIN</Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
         </Text3>
-        <DataBand1 Ref="8" type="DataBand" isKey="true">
+        <DataBand1 Ref="12" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,0.4,19,46.8</ClientRectangle>
-          <Components isList="true" count="3">
-            <Text18 Ref="9" type="Text" isKey="true">
+          <ClientRectangle>0,0.4,19,10.2</ClientRectangle>
+          <Components isList="true" count="12">
+            <Text18 Ref="13" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,2.4,18.6,24.4</ClientRectangle>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,2,18.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
-              <Page isRef="2" />
-              <Parent isRef="8" />
-              <Text>{datos_contrato.nombrePresidente}, mayor de edad, con domicilio a estos efectos de comunicaciones en &lt;br&gt;{datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}-{datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente} y correo electrónico   {datos_contrato.correoPresidente}.
-
-Dª. MARÍA DOLORES GÓMEZ MARTÍN, &lt;br&gt;mayor de edad, con domicilio a estos efectos &lt;br&gt;en Los Molinos - Madrid, Calle  Real, nº  1, con DNI. 50700591N y correo electrónico administracion@reabita.es.&lt;br&gt;
-
-
-										&lt;b&gt;INTERVIENEN&lt;b&gt;&lt;br&gt;
-
-{datos_contrato.nombrePresidente}, en calidad de Presidenta de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}-{datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente}, denominándose en lo sucesivo la PROPIEDAD 
-
-Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el CONTRATISTA. 
-
-Ambas partes se reconocen mutua y recíprocamente capacidad legal suficiente para suscribir el presente CONTRATO DE EJECUCIÓN DE OBRA y en su virtud, 
-
-EXPONEN
-
-I.- Que la Propiedad desea llevar a cabo las Obras {datos_contrato.tipoProyecto}, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} } ({datos_contrato.codPostalTrabajo}-{datos_contrato.PoblacionTrabajo}), en base al Presupuesto que se adjunta de Ref. {datos_contrato.referencia}  por importe  {datos_contrato.cerFinal}  más IVA , de fecha {datos_contrato.fecha}. 
-
-Y en base a todo lo anterior, acuerdan la realización de las referidas obras por parte de REABITA OBRAS DE  REHABILITACIÓN, S.L. con arreglo  a las siguientes 
-
-ESTIPULACIONES
-
-Primera. - Objeto del contrato. 
-
-Constituye el objeto del presente contrato la ejecución total, con suministro de materiales, de las obras necesarias para la realización del Presupuesto a que se hace referencia en el expositivo  de este contrato. 
-
-El CONTRATISTA no podrá variar ninguna dimensión ni calidad especificada en el Presupuesto sin la aprobación escrita por parte de la PROPIEDAD, quedando obligado a realizar los trabajos con sujeción en todo momento a las órdenes e instrucciones dadas por la Dirección Facultativa. o en su defecto el representante de la PROPIEDAD. 
-
-Segunda. - Precio. 
-
-El precio de la obra será el que resulte de multiplicar los precios unitarios que figuran en el presupuesto económico ofertado por el CONTRATISTA y aceptado por la PROPIEDAD por las unidades de obra realmente ejecutadas, según medición aprobada por la Dirección Facultativa o en su defecto, el representante de la PROPIEDAD.
-
-El precio comprende la ejecución material, los materiales, mano de obra, acabados, medios auxiliares y de elevación, medidas de seguridad y salud, limpieza de los tajos, gastos generales, beneficio industrial, etc., así como cualquier gasto, medio o prestación necesaria, inherente o complementaria para la correcta ejecución de la obra contratada conforme a las prescripciones legales, técnicas, contractuales, o a las indicaciones de la Dirección de Obra.
-
-En el presupuesto económico no está incluido el 10% del Impuesto sobre el Valor Añadido (IVA), el cual se facturará adicionalmente. 
-
-
-Tercera. - CARGOS DE REPRESENTACION 
-
-La PROPIEDAD nombrará una persona que le represente en todos los actos y en su relación con el CONTRATISTA
-
-Asimismo, el CONTRATISTA, antes del comienzo de la ejecución de las obras, designará a un Jefe de Obra que asumirá, la representación técnica del constructor en la misma. 
-
-Cuarta. - Modificaciones al proyecto y obras adicionales.
-
-Si durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la PROPIEDAD, hubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras adicionales que no estuviesen contempladas en el Presupuesto,  la valoración de esta unidad de obra será objeto de precio contradictorio en base a los precios ofertados por  el CONTRATISTA.
-
-Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente Contrato a todos los efectos. 
-
-Quinta. - SEGURIDAD Y SALUD.
-
-Si la obra requiriera la elaboración  de un Proyecto, la PROPIEDAD, deberá entregar al CONTRATISTA  el Estudio de Seguridad y Salud, incluido en el mismo, antes del inicio de las obras.
-
-El CONTRATISTA una vez analizado el Estudio de Seguridad y Salud, presentará a la PROPIEDAD  el Plan de Seguridad de las obras.
-
-Si la obra no requiriera proyecto, el CONTRATISTA elaborará directamente el Plan de Seguridad y Salud.
-
-El CONTRATISTA obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y  Salud nombrado por la PROPIEDAD,
- 
-Sexta. - GASTOS ADICIONALES 
-
-Serán por cuenta de la PROPIEDAD los siguientes gastos: 
-
-1.	La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o futuros, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.
-2.	Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que fueran necesarios.
-3.	Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.
-4.	El consumo de agua y energía eléctrica.
-5.	Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como local para acopio de materiales y aseo de operarios.
-6.	Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.
-
-El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares (grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las obras, serán por cuenta del CONTRATISTA.
-
-Séptima. - Certificaciones Y ABONO DE LAS obraS. 
-
-Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, emitiéndose la correspondiente Certificación de Obra que será entregada a la PROPIEDAD, quien dispondrá de un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, se entenderá aceptada.
-
-El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e intereses, se realizará mediante recibo/letras domiciliado en la cta. cte. número {datos_contrato.iban}  se adjunta orden Sepa de domiciliación, y en los siguientes plazos:</Text>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>{datos_contrato.nombrePresidente}, mayor de edad, con domicilio a estos efectos de 	comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente} y correo electrónico {datos_contrato.correoPresidente}</Text>
               <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text18>
-            <Text19 Ref="10" type="Text" isKey="true">
+            <Text19 Ref="14" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.6,0.2,6,0.4</ClientRectangle>
+              <ClientRectangle>0.2,0.2,6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
+              <Font>Tahoma,9</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
-              <Page isRef="2" />
-              <Parent isRef="8" />
+              <Page isRef="6" />
+              <Parent isRef="12" />
               <Text>En  Madrid, a 16 de octubre de 2024</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text19>
-            <Text20 Ref="11" type="Text" isKey="true">
+            <Text20 Ref="15" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>8,2,1.8,0.4</ClientRectangle>
+              <ClientRectangle>8,1.4,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
-              <Page isRef="2" />
-              <Parent isRef="8" />
+              <Page isRef="6" />
+              <Parent isRef="12" />
               <Text>REUNIDOS
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text20>
+            <Text21 Ref="16" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,2.8,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text21>
+            <Text22 Ref="17" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.6,3.8,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>INTERVIENEN
+</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text22>
+            <Text23 Ref="18" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,4.4,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>{datos_contrato.nombrePresidente}, en calidad de Presidenta de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-
+{datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente}, denominándose en lo sucesivo la &lt;b&gt;PROPIEDAD&lt;/b&gt;.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text23>
+            <Text24 Ref="19" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,5.2,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el &lt;b&gt;CONTRATISTA&lt;/b&gt;.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text24>
+            <Text25 Ref="20" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,6.8,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>Ambas partes se reconocen mutua y recíprocamente capacidad legal suficiente para suscribir el presente &lt;b&gt;CONTRATO DE EJECUCIÓN DE OBRA&lt;/b&gt; y en su virtud,</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text25>
+            <Text26 Ref="21" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,7.6,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>&lt;p&gt;I.- la Propiedad desea llevar a cabo las Obras Obras de Reabilitación, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}- {datos_contrato.PoblacionTrabajo}), en base al Presupuesto que se adjunta de Ref.{datos_contrato.referencia} por importe {datos_contrato.cerFinal}€ más IVA , de fecha {datos_contrato.fecha}.&lt;/p&gt;
+&lt;p&gt; Y en base a todo lo anterior, acuerdan la realización de las referidas obras por parte de REABITA OBRAS DE REHABILITACIÓN, S.L. con arreglo a las siguientes&lt;/p&gt;</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text26>
+            <Text27 Ref="22" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.8,6.2,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>EXPONEN</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text27>
+            <Text28 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.2,8.6,3.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>ESTIPULACIONES</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text28>
+            <Text29 Ref="24" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,9.4,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>&lt;b&gt;Primera. - OBJETO DEL CONTRATO.&lt;/b&gt;&lt;/br&gt;
+&lt;p&gt;Constituye el objeto del presente contrato la ejecución total, con suministro de materiales, de las obras 
+necesarias para la realización del Presupuesto a que se hace referencia en el expositivo de este contrato.&lt;/p&gt;
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; no podrá variar ninguna dimensión ni calidad especificada en el Presupuesto sin la 
+aprobación escrita por parte de la &lt;b&gt;PROPIEDAD&lt;/b&gt;, quedando obligado a realizar los trabajos con sujeción 
+en todo momento a las órdenes e instrucciones dadas por la Dirección Facultativa. o en su defecto el representante
+ de la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt;
+
+&lt;b&gt;Segunda. - PRECIO.&lt;/b&gt;
+
+&lt;p&gt;El precio de la obra será el que resulte de multiplicar los precios unitarios que figuran en el presupuesto económico 
+ofertadopor el &lt;b&gt;CONTRATISTA&lt;/b&gt; y aceptado por la &lt;b&gt;PROPIEDAD&lt;/b&gt; por las unidades de obra realmente ejecutadas, según medición 
+aprobada por la Dirección Facultativa o en su defecto, el representante de la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p&gt;El precio comprende la ejecución material, los materiales, mano de obra, acabados, medios auxiliares y de elevación,
+ medidas de seguridad y salud, limpieza de los tajos, gastos generales, beneficio industrial, etc., así como cualquier gasto, medio o 
+prestación necesaria, inherente o complementaria para la correcta ejecución de la obra contratada conforme a las 
+prescripciones legales, técnicas, contractuales, o a las indicaciones de la Dirección de Obra.&lt;/p&gt;
+&lt;p&gt;En el presupuesto económico no está incluido el 10% del Impuesto sobre el Valor Añadido (IVA), el cual se facturará adicionalmente.&lt;/p&gt; 
+
+&lt;b&gt;Tercera. - CARGOS DE REPRESENTACION&lt;/b&gt;
+
+&lt;p&gt;La &lt;b&gt;PROPIEDAD&lt;/b&gt; nombrará una persona que le represente en todos los actos y en su relación con el &lt;b&gt;CONTRATISTA&lt;/b&gt;
+Asimismo, el &lt;b&gt;CONTRATISTA&lt;/b&gt;, antes del comienzo de la ejecución de las obras, designará a un Jefe de Obra que asumirá, 
+la representación técnica del constructor en la misma.&lt;/p&gt;
+
+&lt;b&gt;Cuarta. - MODIFICACIONES AL PROYECTO Y OBRAS ADICIONALES.&lt;/b&gt;
+
+&lt;p&gt; durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la &lt;b&gt;PROPIEDAD&lt;/b&gt;, 
+hubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras 
+adicionales que no estuviesen contempladas en el Presupuesto, la valoración de esta unidad de obra será objeto de precio 
+contradictorio en base a los precios ofertados por el &lt;b&gt;CONTRATISTA&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p&gt;Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente 
+Contrato a todos los efectos.&lt;/p&gt;
+
+&lt;b&lt;Quinta. - SEGURIDAD Y SALUD.&lt;/b&gt;
+
+&lt;p&gt;Si la obra requiriera la elaboración de un Proyecto, la &lt;b&gt;PROPIEDAD&lt;/b&gt;, deberá entregar al &lt;b&gt;CONTRATISTA&lt;/b&gt; el Estudio de 
+Seguridad y Salud, incluido en el mismo, antes del inicio de las obras.&lt;/p&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; una vez analizado el Estudio de Seguridad y Salud, presentará a la &lt;b&gt;PROPIEDAD&lt;/b&gt; el Plan de Seguridad de 
+las obras.&lt;/p&gt;
+
+&lt;p&gt;Si la obra no requiriera proyecto, el &lt;b&gt;CONTRATISTA&lt;/b&gt; elaborará directamente el Plan de Seguridad y Salud.&lt;/p&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y Salud nombrado 
+por la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt;
+
+&lt;b&gt;Sexta. - GASTOS ADICIONALES&lt;/b&gt; 
+
+&lt;p&gt;Serán por cuenta de la &lt;b&gt;PROPIEDAD&lt;/b&gt; los siguientes gastos:&lt;/p&gt;
+&lt;ol&gt;
+ &lt;li&gt;La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, 
+actuales o futuros, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.&lt;/li&gt;
+&lt;li&gt;Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de 
+que fueran necesarios.&lt;/li&gt;
+&lt;li&gt;Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.&lt;/li&gt;
+&lt;li&gt;El consumo de agua y energía eléctrica.&lt;/li&gt;
+&lt;li&gt;Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como 
+local para acopio de materiales y aseo de operarios.&lt;/li&gt;
+&lt;li&gt;Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares 
+(grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las 
+obras, serán por cuenta del &lt;b&gt;CONTRATISTA&lt;/b&gt;.&lt;/p&gt;
+
+
+&lt;b&gt;Séptima. - CERTIFICACIONES Y ABONO DE LAS OBRAS.&lt;/b&gt;
+
+&lt;p&gt;Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, 
+emitiéndose la correspondiente Certificación de Obra que será entregada a la &lt;b&gt;PROPIEDAD&lt;/b&gt;, quien dispondrá 
+de un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, 
+se entenderá aceptada.&lt;/p&gt;
+
+&lt;p&gt;El abono de las obras por importe de {datos_contrato.cerFinal}€ Incluido IVA e intereses, se realizará mediante recibo/letras 
+domiciliado en la cta. cte. número {datos_contrato.iban} se adjunta orden Sepa de domiciliación, y en los 
+siguientes plazos:&lt;/p&gt;</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text29>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -221,15 +459,15 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand1</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
           <Sort isList="true" count="0" />
         </DataBand1>
-        <HeaderBand2 Ref="12" type="HeaderBand" isKey="true">
+        <HeaderBand2 Ref="25" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,48,19,0.8</ClientRectangle>
+          <ClientRectangle>0,11.4,19,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text9 Ref="13" type="Text" isKey="true">
+            <Text9 Ref="26" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.2,1.4,0.4</ClientRectangle>
@@ -238,8 +476,8 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
-              <Page isRef="2" />
-              <Parent isRef="12" />
+              <Page isRef="6" />
+              <Parent isRef="25" />
               <Text>RECIBOS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -248,16 +486,16 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>HeaderBand2</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
         </HeaderBand2>
-        <DataBand2 Ref="14" type="DataBand" isKey="true">
+        <DataBand2 Ref="27" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <CanShrink>True</CanShrink>
-          <ClientRectangle>0,49.6,19,1</ClientRectangle>
+          <ClientRectangle>0,13,19,1</ClientRectangle>
           <Components isList="true" count="5">
-            <Text4 Ref="15" type="Text" isKey="true">
+            <Text4 Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -265,13 +503,13 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
-              <Page isRef="2" />
-              <Parent isRef="14" />
+              <Page isRef="6" />
+              <Parent isRef="27" />
               <Text>{datos_contrato_pagos.concepto}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text4>
-            <Text5 Ref="16" type="Text" isKey="true">
+            <Text5 Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>1.4,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="2">
@@ -282,12 +520,12 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
-              <Page isRef="2" />
-              <Parent isRef="14" />
+              <Page isRef="6" />
+              <Parent isRef="27" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text5>
-            <Text6 Ref="17" type="Text" isKey="true">
+            <Text6 Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.4,0,6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -296,13 +534,13 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
-              <Page isRef="2" />
-              <Parent isRef="14" />
+              <Page isRef="6" />
+              <Parent isRef="27" />
               <Text>{datos_contrato_pagos.porcentaje}% del importe total del presupuesto </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text6>
-            <Text7 Ref="18" type="Text" isKey="true">
+            <Text7 Ref="31" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>9.4,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -310,11 +548,11 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
-              <Page isRef="2" />
-              <Parent isRef="14" />
+              <Page isRef="6" />
+              <Parent isRef="27" />
               <Text>{datos_contrato_pagos.importePrefacturadoIva}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="19" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -325,7 +563,7 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               </TextFormat>
               <Type>Expression</Type>
             </Text7>
-            <Text8 Ref="20" type="Text" isKey="true">
+            <Text8 Ref="33" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11.4,0,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -333,8 +571,8 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
-              <Page isRef="2" />
-              <Parent isRef="14" />
+              <Page isRef="6" />
+              <Parent isRef="27" />
               <Text>IVA incluido</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -346,15 +584,15 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand2</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
           <Sort isList="true" count="0" />
         </DataBand2>
-        <HeaderBand1 Ref="21" type="HeaderBand" isKey="true">
+        <HeaderBand1 Ref="34" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,51.4,19,0.8</ClientRectangle>
+          <ClientRectangle>0,14.8,19,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text15 Ref="22" type="Text" isKey="true">
+            <Text15 Ref="35" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.2,1.4,0.4</ClientRectangle>
@@ -363,8 +601,8 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
-              <Page isRef="2" />
-              <Parent isRef="21" />
+              <Page isRef="6" />
+              <Parent isRef="34" />
               <Text>LETRAS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -373,15 +611,15 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>HeaderBand1</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
         </HeaderBand1>
-        <DataBand4 Ref="23" type="DataBand" isKey="true">
+        <DataBand4 Ref="36" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,53,19,0.4</ClientRectangle>
+          <ClientRectangle>0,16.4,19,0.4</ClientRectangle>
           <Components isList="true" count="6">
-            <Text12 Ref="24" type="Text" isKey="true">
+            <Text12 Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -389,13 +627,13 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
-              <Page isRef="2" />
-              <Parent isRef="23" />
+              <Page isRef="6" />
+              <Parent isRef="36" />
               <Text>{datos_contrato_letras.numletras}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text12>
-            <Text13 Ref="25" type="Text" isKey="true">
+            <Text13 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.8,0,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -403,13 +641,13 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
-              <Page isRef="2" />
-              <Parent isRef="23" />
+              <Page isRef="6" />
+              <Parent isRef="36" />
               <Text>Con un total de </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text13>
-            <Text10 Ref="26" type="Text" isKey="true">
+            <Text10 Ref="39" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.2,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -417,11 +655,11 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
-              <Page isRef="2" />
-              <Parent isRef="23" />
+              <Page isRef="6" />
+              <Parent isRef="36" />
               <Text>{datos_contrato_letras.sumTotalAlcliente}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="27" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -432,7 +670,7 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               </TextFormat>
               <Type>Expression</Type>
             </Text10>
-            <Text11 Ref="28" type="Text" isKey="true">
+            <Text11 Ref="41" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>5.2,0,6.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -440,13 +678,13 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
-              <Page isRef="2" />
-              <Parent isRef="23" />
+              <Page isRef="6" />
+              <Parent isRef="36" />
               <Text>Cada una de las cuales con un importe de </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text11>
-            <Text14 Ref="29" type="Text" isKey="true">
+            <Text14 Ref="42" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>11.8,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -454,11 +692,11 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
-              <Page isRef="2" />
-              <Parent isRef="23" />
+              <Page isRef="6" />
+              <Parent isRef="36" />
               <Text>{datos_contrato_letras.totalAlCliente}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
+              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
@@ -469,7 +707,7 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               </TextFormat>
               <Type>Expression</Type>
             </Text14>
-            <Text16 Ref="31" type="Text" isKey="true">
+            <Text16 Ref="44" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,0,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -478,8 +716,8 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
-              <Page isRef="2" />
-              <Parent isRef="23" />
+              <Page isRef="6" />
+              <Parent isRef="36" />
               <Text>IVA incluido</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -491,50 +729,168 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand4</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
           <Sort isList="true" count="0" />
         </DataBand4>
-        <FooterBand1 Ref="32" type="FooterBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,54.2,19,1.6</ClientRectangle>
-          <Components isList="true" count="1">
-            <RichText3 Ref="33" type="Stimulsoft.Report.Components.StiRichText" isKey="true">
-              <BackColor>Transparent</BackColor>
-              <ClientRectangle>0.2,0.2,18.6,1.2</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <DataColumn />
-              <Expressions isList="true" count="0" />
-              <Margins>0,0,0,0</Margins>
-              <Name>RichText3</Name>
-              <Page isRef="2" />
-              <Parent isRef="32" />
-              <Text>__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang3082__LP___x005C_fonttbl__LP___x005C_f0_x005C_fnil_x005C_fcharset0_x0020_Tahoma_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.19041__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_f0_x005C_fs20_x005C_lang1034_x0020__x002A__x0020_las_x0020_letras_x0020_de_x0020_cambio_x0020_se_x0020_entregar_x005C__x0027_e1n_x0020_en_x0020_un_x0020_plazo_x0020_no_x0020_superior_x0020_a_x0020_dos_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_del_x0020_inicio_x0020_de_x0020_los_x0020_trabajos_x002C__x0020_debidamente_x0020_firmadas_x0020_y_x0020_domiciliadas_x0020_en_x0020_la_x0020_cuenta_x0020_de_x0020_la_x0020_Comunidad_x002C__x0020_con_x0020_vencimientos_x0020_mensuales_x0020_y_x0020_sucesivos_x002C__x0020_siendo_x0020_el_x0020_primer_x0020_vencimiento_x0020_a_x0020_los_x0020_treinta_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_de_x0020_inicio_x0020_de_x0020_los_x0020_trabajos._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_expndtw0_x005C_f1_x005C_fs17_x005C_lang3082_x005C_par_x000D__x000A___RP___x000D__x000A_</Text>
-            </RichText3>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Name>FooterBand1</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
-        </FooterBand1>
-        <DataBand3 Ref="34" type="DataBand" isKey="true">
+        <DataBand3 Ref="45" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,56.6,19,43.4</ClientRectangle>
-          <Components isList="true" count="1">
-            <RichText2 Ref="35" type="Stimulsoft.Report.Components.StiRichText" isKey="true">
-              <BackColor>Transparent</BackColor>
-              <ClientRectangle>0.2,0,18.6,43.2</ClientRectangle>
+          <ClientRectangle>0,17.6,19,4.6</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text31 Ref="46" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,0.2,18.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <DataColumn />
               <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
-              <Name>RichText2</Name>
-              <Page isRef="2" />
-              <Parent isRef="34" />
-              <Text>__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang3082__LP___x005C_fonttbl__LP___x005C_f0_x005C_fnil_x005C_fcharset0_x0020_Tahoma_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C_colortbl_x0020__x003B__x005C_red255_x005C_green0_x005C_blue0_x003B___RP___x000D__x000A___LP___x005C_stylesheet__LP___x0020_Normal_x003B___RP____LP___x005C_s1_x0020_heading_x0020_1_x003B___RP____LP___x005C_s2_x0020_heading_x0020_2_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.19041__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_f0_x005C_fs16_x005C_lang1034_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_fs20_x0020__x002A__x0020_El_x0020_resto_x002C__x0020_19.326_x002C_42_x0020__x005C__x0027_80_x0020_incluido_x0020_IVA_x0020_mediante_x0020_doce_x0020__x0028_12_x0029__x0020__x0020_letras_x0020_de_x0020_cambio_x0020_que_x0020_se_x0020_entregar_x005C__x0027_e1n_x0020_en_x0020_un_x0020_plazo_x0020_no_x0020_superior_x0020_a_x0020_dos_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_del_x0020_inicio_x0020_de_x0020_los_x0020_trabajos_x002C__x0020_debidamente_x0020_firmadas_x0020_y_x0020_domiciliadas_x0020_en_x0020_la_x0020_cuenta_x0020_de_x0020_la_x0020_Comunidad_x002C__x0020_por_x0020_un_x0020_importe_x0020_cada_x0020_una_x0020_de_x0020_las_x0020_11primeras_x0020_de_x0020_1.601_x002C_53_x005C__x0027_80_x0020_incluido_x0020_IVA_x002C__x0020_y_x0020_la_x0020_n_x005C__x0027_famero_x0020_12_x0020_por_x0020_importe_x0020_1.610_x002C_59_x005C__x0027_80_x0020__x0020_incluido_x0020_IVA_x002C__x0020_con_x0020_vencimientos_x0020_mensuales_x0020_y_x0020_sucesivos_x002C__x0020_siendo_x0020_el_x0020_primer_x0020_vencimiento_x0020_a_x0020_los_x0020_treinta_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_de_x0020_inicio_x0020_de_x0020_los_x0020_trabajos._x005C_par_x000D__x000A__x005C_par_x000D__x000A__x002A__x0020_En_x0020_el_x0020_supuesto_x0020_de_x0020_que_x0020_exista_x0020_diferencia_x0020_entre_x0020_el_x0020_importe_x0020_resultante_x0020_de_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra_x0020_y_x0020_el_x0020_Presupuesto_x0020_inicial_x002C__x0020_ser_x005C__x0027_e1_x0020_abonado_x0020_mediante_x0020_un_x0020_recibo_x002F_letra_x0020_de_x0020_cambio_x002C__x0020_que_x0020_se_x0020_entregar_x005C__x0027_e1_x0020_a_x0020_La_x0020_Contrata_x0020_en_x0020_un_x0020_plazo_x0020_no_x0020_superior_x0020_a_x0020_los_x0020_cinco_x0020_d_x005C__x0027_edas_x0020_desde_x0020_la_x0020_fecha_x0020_de_x0020_certificaci_x005C__x0027_f3n_x0020_final_x0020_de_x0020_obra_x002C__x0020_debidamente_x0020_aceptada_x0020_y_x0020_domiciliada_x0020_en_x0020_la_x0020_misma_x0020_cta._x0020_cte._x0020_de_x0020_la_x0020_Comunidad_x0020_y_x0020_con_x0020_vencimiento_x0020_a_x0020_los_x0020_30_x0020_d_x005C__x0027_edas_x0020_desde_x0020_el_x0020_vencimiento_x0020_de_x0020_la_x0020_ultima_x0020_letra_x0020_de_x0020_cambio._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_expndtw0_x005C_lang3082_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_lang1034_x0020_El_x0020_costo_x0020_de_x0020_los_x0020_timbres_x0020_de_x0020_dichos_x0020_efectos_x0020_ser_x005C__x0027_e1_x0020_por_x0020_cuenta_x0020_de_x0020_la_x0020_Propiedad_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_expndtw0_x005C_lang3082_x005C_par_x000D__x000A_Tal_x0020_y_x0020_como_x0020_indica_x0020_el_x0020_Certificado_x0020_expedido_x0020_por_x0020_la_x0020_Administraci_x005C__x0027_f3n_x0020_y_x0020_que_x0020_se_x0020_adjunta_x0020_al_x0020_Contrato_x002C__x0020_los_x0020_propietarios_x0020_de_x0020_las_x0020_fincas_x002C__x0020_conocen_x0020_y_x0020_aceptan_x0020_de_x0020_forma_x0020_solidaria_x0020_el_x0020_abono_x0020_de_x0020_los_x0020_importes_x0020_indicados_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_las_x0020_condiciones_x0020_de_x0020__x0020_financiaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_y_x0020_aplazamiento_x0020_de_x0020_los_x0020_pagos_x0020_recogidos_x0020_en_x0020_el_x0020_Cuadro_x0020_de_x0020_Financiaci_x005C__x0027_f3n_x0020_que_x0020_se_x0020_adjunta_x0020_al_x0020_Contrato._x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_expndtw0_x0020_La_x0020_demora_x0020_a_x0020_su_x0020_vencimiento_x0020_o_x0020_el_x0020_impago_x0020_de_x0020_una_x0020_de_x0020_las_x0020_cantidades_x0020_aplazadas_x002C__x0020_dar_x005C__x0027_e1_x0020_derecho_x0020_a_x0020_la_x0020__x005C_b_x0020_CONTRATA_x0020__x005C_b0_x0020_a_x0020_resolver_x0020_el_x0020_presente_x0020_Contrato_x002C__x0020_dando_x0020_lugar_x0020_a_x0020_la_x0020_p_x005C__x0027_e9rdida_x0020_de_x0020_la_x0020_garant_x005C__x0027_eda_x0020_de_x0020_los_x0020_trabajos_x0020_ejecutados_x002C__x0020_pudiendo_x0020_exigir_x0020_el_x0020_pago_x0020_de_x0020_todas_x0020_las_x0020_cantidades_x0020_pendientes_x002C__x0020_incluso_x0020_las_x0020_cantidades_x0020_aplazadas_x0020_y_x0020_no_x0020_vencidas_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_el_x0020_devengo_x0020_de_x0020_intereses_x0020_por_x0020_demora_x0020_al_x0020_tipo_x0020_del_x0020_inter_x005C__x0027_e9s_x0020_legal._x005C_cf1_x005C_par_x000D__x000A__x005C_cf0_x005C_par_x000D__x000A__x005C_b_x0020_Octava._x0020_-_x0020__x005C_caps_x0020_Recepci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_obra_x005C_caps0_x0020_._x0020__x005C_par_x000D__x000A__x005C_b0_x005C_par_x000D__x000A_Dentro_x0020_de_x0020_los_x0020_10_x0020_d_x005C__x0027_edas_x0020_siguientes_x0020_a_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra_x002C__x0020_se_x0020_proceder_x005C__x0027_e1_x0020_a_x0020_su_x0020_recepci_x005C__x0027_f3n_x002C__x0020_la_x0020_cual_x0020_se_x0020_consignar_x005C__x0027_e1_x0020_en_x0020_un_x0020_Acta_x0020_que_x0020_estar_x005C__x0027_e1_x0020_firmada_x0020_por_x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_y_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x0020_y_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_si_x0020_existiera._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A_En_x0020_el_x0020_supuesto_x0020_de_x0020_que_x0020_no_x0020_se_x0020_firmara_x0020_el_x0020_Acta_x0020_de_x0020_recepci_x005C__x0027_f3n_x0020_y_x0020_no_x0020_hubiese_x0020_reclamaci_x005C__x0027_f3n_x0020_expresa_x002C__x0020_la_x0020_Obra_x0020_se_x0020_entender_x005C__x0027_e1_x0020_recibida_x0020_de_x0020_conformidad_x0020__x0020_transcurridos_x0020_30_x0020_d_x005C__x0027_edas_x0020_desde_x0020_la_x0020_fecha_x0020_de_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_b_x0020_Novena._x0020_-_x0020_GARANT_x005C__x0027_cdAS._x005C_caps_x005C_par_x000D__x000A__x005C_b0_x005C_caps0_x005C_par_x000D__x000A_El_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_se_x0020_obliga_x0020_a_x0020_suscribir_x0020_antes_x0020_del_x0020_inicio_x0020_de_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x002C__x0020_un_x0020_Seguro_x0020_de_x0020_Responsabilidad_x0020_Civil_x0020_de_x0020_explotaci_x005C__x0027_f3n_x002C__x0020_que_x0020_incluir_x005C__x0027_e1_x0020_la_x0020_responsabilidad_x0020_civil_x0020_por_x0020_da_x005C__x0027_f1os_x0020_a_x0020_terceros_x0020_por_x0020_todo_x0020_el_x0020_tiempo_x0020_que_x0020_duren_x0020_las_x0020_obras_x002C__x0020_con_x0020_una_x0020_cobertura_x0020_m_x005C__x0027_ednima_x0020_por_x0020_siniestro_x0020_de_x0020_600.000_x0020__x005C__x0027_80_x0020_con_x0020_una_x0020_Compa_x005C__x0027_f1_x005C__x0027_eda_x0020_de_x0020_Seguros_x0020_de_x0020_reconocida_x0020_solvencia_x002C__x0020_si_x0020_bien_x0020_la_x0020_suscripci_x005C__x0027_f3n_x0020_de_x0020_esta_x0020_p_x005C__x0027_f3liza_x0020_no_x0020_eximir_x005C__x0027_e1_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_de_x0020_las_x0020_responsabilidades_x0020_previstas_x0020_en_x0020_este_x0020_contrato._x005C_par_x000D__x000A__x005C_par_x000D__x000A_Asimismo_x002C__x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_se_x0020_obliga_x0020_a_x0020_concertar_x0020_un_x0020_seguro_x0020_de_x0020_responsabilidad_x0020_civil_x0020_patronal_x0020_que_x0020_cubra_x0020_las_x0020_indemnizaciones_x0020_por_x0020_da_x005C__x0027_f1os_x0020_y_x0020_perjuicios_x0020_que_x0020_se_x0020_puedan_x0020_derivar_x0020_de_x0020_los_x0020_accidentes_x0020_de_x0020_trabajo_x0020_de_x0020_los_x0020_operarios_x0020_de_x0020_su_x0020_plantilla_x0020_y_x0020_de_x0020_la_x0020_de_x0020_sus_x0020_subcontratistas_x0020_que_x0020_presten_x0020_servicio_x0020_en_x0020_la_x0020_obra_x002C__x0020_por_x0020_un_x0020_importe_x0020_m_x005C__x0027_ednimo_x0020_de_x0020_600.000_x0020__x005C__x0027_80_x0020_por_x0020_siniestro_x002C__x0020_debiendo_x0020_facilitar_x0020_a_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x0020__x005C_b0_x0020_un_x0020_ejemplar_x0020_de_x0020_la_x0020_p_x005C__x0027_f3liza_x0020_y_x0020_del_x0020_documento_x0020_acreditativo_x0020_del_x0020_pago_x0020_de_x0020_la_x0020_prima_x0020_del_x0020_seguro_x0020_antes_x0020_del_x0020_comienzo_x0020_de_x0020_la_x0020_obra_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_de_x0020_los_x0020_sucesivos_x0020_recibos_x0020_acreditativos_x0020_de_x0020_estar_x0020_al_x0020_corriente_x0020_en_x0020_el_x0020_pago_x0020_de_x0020_las_x0020_primas_x0020_durante_x0020_la_x0020_vigencia_x0020_del_x0020_contrato._x005C_par_x000D__x000A__x005C_par_x000D__x000A_El_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_responder_x005C__x0027_e1_x0020_asimismo_x0020_de_x0020_los_x0020_da_x005C__x0027_f1os_x0020_materiales_x0020_ocasionados_x0020_por_x0020_vicios_x0020_y_x0020_defectos_x0020_de_x0020_la_x0020_construcci_x005C__x0027_f3n_x0020_en_x0020_los_x0020_plazos_x0020_establecidos_x0020_en_x0020_la_x0020_Ley_x0020_de_x0020_Ordenaci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_Edificaci_x005C__x0027_f3n_x0020_y_x0020_que_x0020_son:_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1144_x005C_qj_x0020_De_x0020_los_x0020_que_x0020_afecten_x0020_a_x0020_elementos_x0020_de_x0020_terminaci_x005C__x0027_f3n_x0020_o_x0020_acabado_x0020_y_x0020_que_x0020_se_x0020_manifiesten_x0020_en_x0020_el_x0020_plazo_x0020_de_x0020_un_x0020_a_x005C__x0027_f1o._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li709_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_2._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1144_x005C_qj_x0020_Durante_x0020_tres_x0020_a_x005C__x0027_f1os_x002C__x0020_de_x0020_los_x0020_da_x005C__x0027_f1os_x0020_materiales_x0020_causados_x0020_en_x0020_el_x0020_edificio_x0020_por_x0020_vicios_x0020_o_x0020_defectos_x0020_de_x0020_los_x0020_elementos_x0020_constructivos_x0020_o_x0020_de_x0020_las_x0020_instalaciones_x0020_que_x0020_ocasionen_x0020_el_x0020_incumplimiento_x0020_de_x0020_los_x0020_requisitos_x0020_de_x0020_habitabilidad_x0020_establecidos_x0020_en_x0020_el_x0020_art_x005C__x0027_edculo_x0020_3.1.c_x0029__x0020_de_x0020_la_x0020_Ley_x0020_38_x002F_1999_x002C__x0020_de_x0020_6_x0020_de_x0020_noviembre_x002C__x0020_de_x0020_Ordenaci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_Edificaci_x005C__x0027_f3n._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_3._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1144_x005C_qj_x0020_Durante_x0020_diez_x0020_a_x005C__x0027_f1os_x002C__x0020_de_x0020_los_x0020_da_x005C__x0027_f1os_x0020_materiales_x0020_causados_x0020_en_x0020_el_x0020_edificio_x0020_por_x0020_vicios_x0020_o_x0020_defectos_x0020_que_x0020_afecten_x0020_a_x0020_la_x0020_cimentaci_x005C__x0027_f3n_x002C__x0020_los_x0020_soportes_x002C__x0020_las_x0020_vigas_x002C__x0020_los_x0020_forjados_x002C__x0020_los_x0020_muros_x0020_de_x0020_carga_x0020_u_x0020_otros_x0020_elementos_x0020_estructurales_x0020_y_x0020_que_x0020_comprometan_x0020_directamente_x0020_la_x0020_resistencia_x0020_mec_x005C__x0027_e1nica_x0020_y_x0020_estabilidad_x0020_del_x0020_edificio._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A_Los_x0020_plazos_x0020_se_x0020_computar_x005C__x0027_e1n_x0020_desde_x0020_la_x0020_fecha_x0020_de_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra._x005C_b_x005C_par_x000D__x000A__x005C_par_x000D__x000A_D_x005C__x0027_e9cima-_x0020__x005C_caps_x0020_Resoluci_x005C__x0027_f3n_x0020_del_x0020_contrato_x005C_caps0_x0020_._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A_A._x005C_b0_x0020__x0020_Sin_x0020_perjuicio_x0020_de_x0020_los_x0020_establecidos_x0020_legalmente_x002C__x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x0020_podr_x005C__x0027_e1_x0020_resolver_x0020_el_x0020_presente_x0020_contrato_x0020_por_x0020_los_x0020_siguientes_x0020_motivos:_x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi-425_x005C_li1134_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_disoluci_x005C__x0027_f3n_x0020_o_x0020_extinci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_empresa_x0020_que_x0020_act_x005C__x0027_faa_x0020_como_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020_._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_2._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_mala_x0020_fe_x0020_en_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_los_x0020_trabajos_x0020_y_x0020_la_x0020_desobediencia_x0020_o_x0020_incumplimiento_x0020_de_x0020_las_x0020__x005C__x0027_f3rdenes_x0020_dadas_x0020_por_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_y_x0020_el_x0020_Coordinador_x0020_de_x0020_Seguridad._x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi-425_x005C_li1134_x005C_qj_x0020__x0020_3._x0020__x0020__x0020_Por_x0020_incumplimiento_x0020_de_x0020_las_x0020_obligaciones_x0020_del_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_en_x0020_materia_x0020_de_x0020_Seguridad_x0020_y_x0020_Salud._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_li1134_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_b_x0020_B._x005C_b0_x0020__x0020_Sin_x0020_perjuicio_x0020_de_x0020_los_x0020_establecidos_x0020_legalmente_x002C__x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_podr_x005C__x0027_e1_x0020_resolver_x0020_el_x0020_presente_x0020_contrato_x0020_por_x0020_los_x0020_siguientes_x0020_motivos:_x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_el_x0020_incumplimiento_x0020_de_x0020_alguna_x0020_o_x0020_algunas_x0020_de_x0020_las_x0020_estipulaciones_x0020_establecidas_x0020_en_x0020_el_x0020_presente_x0020_contrato._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li1143_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_2._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_el_x0020_impago_x0020_o_x0020_demora_x0020_en_x0020_el_x0020_pago_x0020_del_x0020_importe_x0020_correspondiente_x0020_a_x0020_cualquiera_x0020_de_x0020_las_x0020_Certificaciones_x0020_de_x0020_Obra_x002C__x0020_se_x0020_considerar_x005C__x0027_e1_x0020_impago_x0020_o_x0020_demora_x0020_cuando_x0020_habiendo_x0020_transcurridos_x0020_10_x0020_d_x005C__x0027_edas_x0020_naturales_x0020_desde_x0020_su_x0020_presentaci_x005C__x0027_f3n_x0020_y_x0020_sin_x0020_que_x0020_haya_x0020_habido_x0020_reclamaci_x005C__x0027_f3n_x0020_expresa_x0020_de_x0020_la_x0020_Propiedad_x002C__x0020_no_x0020_se_x0020_haya_x0020_producido_x0020_el_x0020_pago._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_3._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_el_x0020_impago_x0020_o_x0020_demora_x0020_en_x0020_el_x0020_pago_x0020_del_x0020_importe_x0020_de_x0020_cualquiera_x0020_de_x0020_las_x0020_letras_x0020_de_x0020_cambio_x0020_debidamente_x0020_aceptadas_x0020_que_x0020_llegado_x0020_su_x0020_vencimiento_x0020_no_x0020_hayan_x0020_sido_x0020_abonadas._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_4._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_disoluci_x005C__x0027_f3n_x0020_o_x0020_extinci_x005C__x0027_f3n_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020_._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_5._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_paralizaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_durante_x0020_m_x005C__x0027_e1s_x0020_de_x0020_un_x0020_mes_x002C__x0020_por_x0020_causas_x0020_no_x0020__x0020_imputables_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A_Si_x0020_la_x0020_resoluci_x005C__x0027_f3n_x0020_del_x0020_contrato_x0020_es_x0020_por_x0020_causas_x0020_no_x0020_imputables_x0020_a_x0020_la_x0020_CONSTRUCTORA_x0020_se_x0020_proceder_x005C__x0027_e1_x0020_a_x0020_la_x0020_liquidaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_realmente_x0020_ejecutadas_x0020_y_x0020_acopio_x0020_de_x0020_materiales_x0020_dentro_x0020_del_x0020_mes_x0020_siguiente_x0020_a_x0020_la_x0020_resoluci_x005C__x0027_f3n_x005C_par_x000D__x000A__x005C_par_x000D__x000A_Si_x0020_se_x0020_produce_x0020_la_x0020_resoluci_x005C__x0027_f3n_x0020_del_x0020_contrato_x0020_por_x0020_causas_x0020_imputables_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x002C__x0020__x005C_b0_x005C__x0027_e9ste_x0020_deber_x005C__x0027_e1_x0020_dejar_x0020_la_x0020_obra_x0020_libre_x0020_en_x0020_un_x0020_plazo_x0020_m_x005C__x0027_e1ximo_x0020_de_x0020_quince_x0020_d_x005C__x0027_edas_x002C__x0020_contando_x0020_desde_x0020_la_x0020_comunicaci_x005C__x0027_f3n_x0020_por_x0020_escrito_x0020_de_x0020_la_x0020_resoluci_x005C__x0027_f3n_x0020_del_x0020_presente_x0020_contrato_x0020_efectuada_x0020_por_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020_._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_b_x0020_Decimoprimera._x0020_-_x0020_CL_x005C__x0027_c1SULA_x0020_DE_x0020_SUMISI_x005C__x0027_d3N_x0020_EXPRESA_x005C_b0_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Para_x0020_la_x0020_interpretaci_x005C__x0027_f3n_x0020_y_x0020_cumplimiento_x0020_de_x0020_este_x0020_contrato_x002C__x0020_las_x0020_partes_x0020_se_x0020_someten_x0020_expresamente_x0020_a_x0020_los_x0020_Juzgados_x0020_y_x0020_Tribunales_x0020_de_x0020_Madrid_x002C__x0020_con_x0020_renuncia_x0020_expresa_x0020_a_x0020_cualquier_x0020_otro_x0020_fuero_x0020_o_x0020_competencia_x0020_que_x0020_pudiera_x0020_corresponderles._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Y_x0020_en_x0020_prueba_x0020_de_x0020_conformidad_x002C__x0020_ambas_x0020_partes_x0020_contratantes_x0020_firman_x0020_el_x0020_presente_x0020_contrato_x0020_por_x0020_duplicado_x0020_y_x0020_a_x0020_un_x0020_solo_x0020_efecto_x002C__x0020_junto_x0020_con_x0020_sus_x0020_anexos_x0020_que_x0020_se_x0020_unen_x0020_al_x0020_presente_x002C__x0020_en_x0020_el_x0020_lugar_x0020_y_x0020_fecha_x0020_establecidos_x0020_en_x0020_el_x0020_encabezamiento_x0020_del_x0020_mismo._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_keepn_x005C_widctlpar_x005C_s2_x005C_fi696_x005C_li12_x005C_qj_x005C_par_x000D__x000A_LA_x0020_PROPIEDAD....................................................EL_x0020_CONTRATISTA_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_par_x000D__x000A__x005C_fs16_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_lang2070_x005C_tab_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_f1_x005C_fs17_x005C_lang3082_x005C_par_x000D__x000A___RP___x000D__x000A_</Text>
-            </RichText2>
+              <Name>Text31</Name>
+              <Page isRef="6" />
+              <Parent isRef="45" />
+              <Text>&lt;ul&gt;
+&lt;li&gt;las letras de cambio se entregarán en un plazo no superior a dos días de la fecha del inicio de los trabajos, 
+debidamente firmadas y domiciliadas en la cuenta de la Comunidad, con vencimientos mensuales y sucesivos, siendo el 
+primer vencimiento a los treinta días de la fecha de inicio de los trabajos.&lt;/li&gt;
+
+
+&lt;li&gt;El resto, 19.326,42 € incluido IVA mediante doce (12)  letras de cambio que se entregarán en un plazo no superior 
+a dos días de la fecha del inicio de los trabajos, debidamente firmadas y domiciliadas en la cuenta de la Comunidad, 
+por un importe cada una de las 11primeras de 1.601,53€ incluido IVA, y la número 12 por importe 1.610,59€  
+incluido IVA, con vencimientos mensuales y sucesivos, siendo el primer vencimiento a los treinta días de la fecha de 
+inicio de los trabajos.&lt;/li&gt;
+
+&lt;li&gt;En el supuesto de que exista diferencia entre el importe resultante de la Certificación Final de Obra y el 
+Presupuesto inicial, será abonado mediante un recibo/letra de cambio, que se entregará a La Contrata en un plazo no 
+superior a los cinco días desde la fecha de certificación final de obra, debidamente aceptada y domiciliada en la 
+misma cta. cte. de la Comunidad y con vencimiento a los 30 días desde el vencimiento de la ultima letra de cambio.&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;p&gt;El costo de los timbres de dichos efectos será por cuenta de la Propiedad&lt;/p&gt;
+
+&lt;p&gt;Tal y como indica el Certificado expedido por la Administración y que se adjunta al Contrato, los propietarios de 
+las fincas, conocen y aceptan de forma solidaria el abono de los importes indicados, así como las condiciones de  
+financiación de las obras y aplazamiento de los pagos recogidos en el Cuadro de Financiación que se adjunta al 
+Contrato.&lt;/p&gt;
+
+&lt;p&gt;La demora a su vencimiento o el impago de una de las cantidades aplazadas, dará derecho a la &lt;b&gt;CONTRATA&lt;/b&gt; a 
+resolver el presente Contrato, dando lugar a la pérdida de la garantía de los trabajos ejecutados, pudiendo exigir el 
+pago de todas las cantidades pendientes, incluso las cantidades aplazadas y no vencidas, así como el devengo de 
+intereses por demora al tipo del interés legal.&lt;/p&gt;
+
+&lt;b&gt;Octava. - Recepción de la obra.&lt;/b&gt; 
+
+&lt;p&gt;Dentro de los 10 días siguientes a la Certificación Final de Obra, se procederá a su recepción, la cual se consignará en un Acta que estará firmada por el &lt;b&gt;CONTRATISTA&lt;/b&gt; y la &lt;b&gt;PROPIEDAD&lt;/b&gt; y la Dirección Facultativa si existiera.&lt;/p&gt;
+
+&lt;p&gt;En el supuesto de que no se firmara el Acta de recepción y no hubiese reclamación expresa, la Obra se entenderá recibida de conformidad  transcurridos 30 días desde la fecha de la Certificación Final de Obra.&lt;/p&gt; 
+
+&lt;b&gt;Novena. - GARANTÍAS.&lt;/b&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; se obliga a suscribir antes del inicio de la ejecución de las obras, un Seguro de Responsabilidad Civil de explotación, que incluirá la responsabilidad civil por daños a terceros por todo el tiempo que duren las obras, con una cobertura mínima por siniestro de 600.000 € con una Compañía de Seguros de reconocida solvencia, si bien la suscripción de esta póliza no eximirá al &lt;b&gt;CONTRATISTA&lt;/b&gt; de las responsabilidades previstas en este contrato.&lt;/p&gt;
+
+&lt;p&gt;Asimismo, el &lt;b&gt;CONTRATISTA&lt;/b&gt; se obliga a concertar un seguro de responsabilidad civil patronal que cubra las indemnizaciones por daños y perjuicios que se puedan derivar de los accidentes de trabajo de los operarios de su plantilla y de la de sus subcontratistas que presten servicio en la obra, por un importe mínimo de 600.000 € por siniestro, debiendo facilitar a la &lt;b&gt;PROPIEDAD&lt;/b&gt; un ejemplar de la póliza y del documento acreditativo del pago de la prima del seguro antes del comienzo de la obra, así como de los sucesivos recibos acreditativos de estar al corriente en el pago de las primas durante la vigencia del contrato.&lt;/p&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; responderá asimismo de los daños materiales ocasionados por vicios y defectos de la construcción en los plazos establecidos en la Ley de Ordenación de la Edificación y que son:&lt;/p&gt;
+&lt;ol&gt;
+       &lt;li&gt;De los que afecten a elementos de terminación o acabado y que se manifiesten en el plazo de un año.&lt;/li&gt;
+
+       &lt;li&gt;Durante tres años, de los daños materiales causados en el edificio por vicios o defectos de los elementos constructivos o de las instalaciones que ocasionen el incumplimiento de los requisitos de habitabilidad establecidos en el artículo 3.1.c) de la Ley 38/1999, de 6 de noviembre, de Ordenación de la Edificación.&lt;/li&gt;
+
+       &lt;li&gt;Durante diez años, de los daños materiales causados en el edificio por vicios o defectos que afecten a la cimentación, los soportes, las vigas, los forjados, los muros de carga u otros elementos estructurales y que comprometan directamente la resistencia mecánica y estabilidad del edificio.&lt;/li&gt;
+
+&lt;/ol&gt;
+
+&lt;p&gt;Los plazos se computarán desde la fecha de la Certificación Final de Obra.&lt;/p&gt;
+
+&lt;b&gt;Décima- Resolución del contrato. &lt;/b&gt;
+
+&lt;p&gt;A. Sin perjuicio de los establecidos legalmente, la PROPIEDAD podrá resolver el presente contrato por los siguientes motivos:&lt;/p&gt;
+
+&lt;ol&gt;
+
+       &lt;li&gt;Por la disolución o extinción de la empresa que actúa como &lt;b&gt;CONTRATISTA&lt;/b&gt;.&lt;li&gt;
+
+       &lt;li&gt;Por la mala fe en la ejecución de los trabajos y la desobediencia o incumplimiento de las órdenes dadas por la Dirección Facultativa y el Coordinador de Seguridad.&lt;/li&gt;
+
+ &lt;li&gt;Por incumplimiento de las obligaciones del &lt;b&gt;CONTRATISTA&lt;/b&gt; en materia de Seguridad y Salud.&lt;/li&gt;
+
+&lt;/ol&gt;
+&lt;p&gt;B. Sin perjuicio de los establecidos legalmente, el &lt;b&gt;CONTRATISTA&lt;/b&gt; podrá resolver el presente contrato por los siguientes motivos:&lt;/p&gt;
+
+&lt;ol&gt;
+       &lt;li&gt;Por el incumplimiento de alguna o algunas de las estipulaciones establecidas en el presente contrato.&lt;/li&gt;
+
+       &lt;li&gt;Por el impago o demora en el pago del importe correspondiente a cualquiera de las Certificaciones de Obra, se considerará impago o demora cuando habiendo transcurridos 10 días naturales desde su presentación y sin que haya habido reclamación expresa de la Propiedad, no se haya producido el pago.&lt;/li&gt;
+
+       &lt;li&gt;Por el impago o demora en el pago del importe de cualquiera de las letras de cambio debidamente aceptadas que llegado su vencimiento no hayan sido abonadas.&lt;/li&gt;
+
+       &lt;li&gt;Por la disolución o extinción de la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/li&gt;
+
+       &lt;li&gt;Por la paralización de las obras durante más de un mes, por causas no  imputables al &lt;b&gt;CONTRATISTA&lt;/b&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Si la resolución del contrato es por causas no imputables a la CONSTRUCTORA se procederá a la liquidación de las obras realmente ejecutadas y acopio de materiales dentro del mes siguiente a la resolución&lt;/p&gt;
+
+&lt;p&gt;Si se produce la resolución del contrato por causas imputables al &lt;b&gt;CONTRATISTA&lt;/b&gt;, éste deberá dejar la obra libre en un plazo máximo de quince días, contando desde la comunicación por escrito de la resolución del presente contrato efectuada por la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt; 
+
+&lt;b&gt;Decimoprimera. - CLÁSULA DE SUMISIÓN EXPRESA&lt;/b&gt;
+
+&lt;p&gt;Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a los Juzgados y Tribunales de Madrid, con renuncia expresa a cualquier otro fuero o competencia que pudiera corresponderles.&lt;/p&gt;
+
+&lt;p&gt;Y en prueba de conformidad, ambas partes contratantes firman el presente contrato por duplicado y a un solo efecto, junto con sus anexos que se unen al presente, en el lugar y fecha establecidos en el encabezamiento del mismo.&lt;p&gt;
+</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text31>
+            <Text30 Ref="47" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.4,1.2,13.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="6" />
+              <Parent isRef="45" />
+              <Text>LA PROPIEDAD....................................................EL CONTRATISTA</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text30>
+            <Text32 Ref="48" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.4,3.4,5.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="6" />
+              <Parent isRef="45" />
+              <Text>FDO. {datos_contrato.nombrePresidente}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text32>
+            <Text33 Ref="49" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8,3.4,6.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text33</Name>
+              <Page isRef="6" />
+              <Parent isRef="45" />
+              <Text>FDO. Mª DOLORES GOMEZ MARTIN</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text33>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -542,8 +898,8 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand3</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
+          <Page isRef="6" />
+          <Parent isRef="6" />
           <Sort isList="true" count="0" />
         </DataBand3>
       </Components>
@@ -568,10 +924,10 @@ El abono de las obras por importe de {datos_contrato.cerFinal}  Incluido IVA e i
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>2/13/2025 4:25:43 PM</ReportChanged>
+  <ReportChanged>3/7/2025 12:09:45 PM</ReportChanged>
   <ReportCreated>2/6/2025 12:48:22 PM</ReportCreated>
   <ReportFile>E:\node_apps\proasistencia\public\reports\contrato_reabita2.mrt</ReportFile>
-  <ReportGuid>d1c6099737f14530930eeb6fcef5792a</ReportGuid>
+  <ReportGuid>c1250133a2a64cf981b079c2006a86e7</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
