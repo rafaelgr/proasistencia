@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "3664eb8d09a441c0a272cf8fdad61ce6",
+  "ReportGuid": "eb61a3ccfa784c359237c403de734ee6",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1737718714735+0100)/",
+  "ReportChanged": "/Date(1741608721411+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -712,21 +712,6 @@
           "Brush": "solid:",
           "Components": {
             "0": {
-              "Ident": "StiImage",
-              "Name": "Image1",
-              "Guid": "d28b88a72f6d7eb7bb2d6d88b75e75d3",
-              "ClientRectangle": "0.4,0.2,3.8,1.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "Stretch": true,
-              "ImageURL": {
-                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_proasistencia.png"
-              }
-            },
-            "1": {
               "Ident": "StiText",
               "Name": "Text8",
               "ClientRectangle": "13.6,1,5,0.6",
@@ -743,7 +728,7 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "2": {
+            "1": {
               "Ident": "StiText",
               "Name": "Text9",
               "Guid": "0c9b2f884eb0512c4f5f017fcd4c8806",
@@ -760,6 +745,20 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiImage",
+              "Name": "Image2",
+              "ClientRectangle": "0.4,0.2,3.8,1.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageURL": {
+                "Value": "https://comercializa-server.s3.eu-west-3.amazonaws.com/logos/logo_proasistencia_nuevo.jpg"
+              }
             }
           }
         },
