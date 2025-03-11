@@ -95,6 +95,18 @@ ALTER TABLE `expedientes`
 	ADD COLUMN `codPostal` VARCHAR(255) NULL AFTER `provincia`,
   ADD CONSTRAINT `exp_tipoViaFK` FOREIGN KEY (`tipoViaId`) REFERENCES `tipos_via`(`tipoViaId`);
 
+  ALTER TABLE `expedientes`   
+	ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `asesorTecnicoId`;
+
+  ALTER TABLE `expedientes`  
+  ADD CONSTRAINT `exp_tipoProyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `proasistencia`.`tipos_proyecto`(`tipoProyectoId`);
+
+  ALTER TABLE `expedientes`   
+	ADD COLUMN `importeObra` DECIMAL(12,2) NULL AFTER `tipoProyectoId`;
+
+
+
+
   ALTER TABLE `ofertas`   
 	ADD COLUMN `expedienteId` INT(11) NULL AFTER `beneficioLineal`,
   ADD CONSTRAINT `of_expediente` FOREIGN KEY (`expedienteId`) REFERENCES  `expedientes`(`expedienteId`);
@@ -116,6 +128,46 @@ ALTER TABLE `expedientes`
 
   ALTER TABLE `ofertas`   
 	ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`;
+
+  ALTER TABLE `tipos_proyecto`   
+	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `visibleApp`;
+
+
+INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev, esTecnico, visibleApp, activo)
+VALUES
+(
+    0,'CERTIFICADOS TÉCNICOS',5, 'CE', 1, 0, 1
+);
+
+INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev, esTecnico, visibleApp, activo)
+VALUES
+(
+    0,'Dirección facultativa', 5, 'DF', 1, 0, 1
+);
+
+INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev , esTecnico, visibleApp, activo)
+VALUES
+(
+    0,'CERTIFICADO EFICIENCIA ENERGÉTICA', 5, 'CEE', 1, 0, 1
+);
+
+INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev , esTecnico, visibleApp, activo )
+VALUES
+(
+    0,'ORGANISMO DE CONTROL AUTORIZADO', 5, 'OCA', 1, 0, 1
+);
+
+INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev , esTecnico, visibleApp, activo)
+VALUES
+(
+    0,'Proyectos y memorias', 5,'PYT', 1, 0, 1
+);
+
+INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev , esTecnico, visibleApp, activo )
+VALUES
+(
+    0,'TRAMITACIÓN DE LICENCIAS', 5, 'TL', 1, 0, 1
+);
 
 
 
