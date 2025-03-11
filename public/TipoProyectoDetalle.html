@@ -602,25 +602,31 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-3">
+                                                <section class="col col-md-2">
                                                     <label class="label">Departamento</label>
                                                     <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select>
                                                     </label>
                                                 </section>   
-                                                <section class="col col-md-2" style="padding-top: 3%">
-                                                    <label class="checkbox">
+                                                <section class="col col-md-6">
+                                                    <label class="label">Tipo profesion</label>
+                                                    <label style="width:100%;">
+                                                        <select style="width:100%" id="cmbTiposProfesional" name="cmbTiposProfesional"  multiple="multiple" data-bind="options: posiblesTiposProfesional, optionsText: 'nombre', optionsValue: 'tipoProfesionalId', value: stipoProfesionalId, valueAllowUnset: true, selectedOptions: elegidosTiposProfesional, selected2:{}"></select>
+                                                        <i></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <div style="margin-top: 15%;">
+                                                        <input id="chkVisibleApp" type="checkbox" name="chkVisibleApp" data-bind="checked: visibleApp"> 
+                                                        <i></i> Visible en App móvil
+                                                    </div>
+                                                </section>
+                                                <section class="col col-md-2">
+                                                    <div style="margin-top: 15%;">
                                                         <input id="chkActivo" type="checkbox" name="chkActivo" data-bind="checked: activo"> 
                                                         <i></i> Activo
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4" style="padding-top: 3%">
-                                                    <label class="checkbox">
-                                                        <input id="chkVisibleApp" type="checkbox" name="chkVisibleApp" data-bind="checked: visibleApp"> 
-                                                        <i></i> Visible en la App móvil
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-3"></section>                                             
+                                                    </div>
+                                                </section>                                  
                                             </div>
                                         </fieldset>
                                         <fieldset>
