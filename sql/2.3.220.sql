@@ -1,44 +1,43 @@
 //CAPITULOS TECNICOS
 
 ALTER TABLE `grupo_articulo`   
-	ADD COLUMN `referencia` VARCHAR(255) NULL AFTER `departamentoId`,
-	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `referencia`;
+	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `departamentoId`;
 
 
-INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, referencia, esTecnico )
+INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, esTecnico )
 VALUES
 (
-    0,'CERTIFICADOS TÉCNICOS',5, 'CE', 1
+    0,'CERTIFICADOS TÉCNICOS', 5, 1
 );
 
-INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, referencia, esTecnico )
+INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, esTecnico )
 VALUES
 (
-    0,'Dirección facultativa', 5, 'DF', 1
+    0,'Dirección facultativa', 5, 1
 );
 
-INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, referencia , esTecnico )
+INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId , esTecnico )
 VALUES
 (
-    0,'CERTIFICADO EFICIENCIA ENERGÉTICA', 5, 'CEE', 1
+    0,'CERTIFICADO EFICIENCIA ENERGÉTICA', 5, 1
 );
 
-INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, referencia , esTecnico )
+INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId , esTecnico )
 VALUES
 (
-    0,'ORGANISMO DE CONTROL AUTORIZADO', 5, 'OCA', 1
+    0,'ORGANISMO DE CONTROL AUTORIZADO', 5, 1
 );
 
-INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, referencia , esTecnico )
+INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId , esTecnico )
 VALUES
 (
-    0,'Proyectos y memorias', 5,'PYT', 1
+    0,'Proyectos y memorias', 5, 1
 );
 
-INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, referencia , esTecnico )
+INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId , esTecnico )
 VALUES
 (
-    0,'TRAMITACIÓN DE LICENCIAS', 5, 'TL', 1
+    0,'TRAMITACIÓN DE LICENCIAS', 5, 1
 );
 
 CREATE TABLE `estados_expediente` (  
@@ -136,7 +135,7 @@ ALTER TABLE `expedientes`
 INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev, esTecnico, visibleApp, activo)
 VALUES
 (
-    0,'CERTIFICADOS TÉCNICOS',5, 'CE', 1, 0, 1
+    0,'CERTIFICADOS TÉCNICOS',5, 'CT', 1, 0, 1
 );
 
 INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev, esTecnico, visibleApp, activo)
@@ -148,7 +147,7 @@ VALUES
 INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev , esTecnico, visibleApp, activo)
 VALUES
 (
-    0,'CERTIFICADO EFICIENCIA ENERGÉTICA', 5, 'CEE', 1, 0, 1
+    0,'CERTIFICADO EFICIENCIA ENERGÉTICA', 5, 'INF', 1, 0, 1
 );
 
 INSERT INTO tipos_proyecto( tipoProyectoId,nombre, tipoMantenimientoId, abrev , esTecnico, visibleApp, activo )
@@ -170,5 +169,27 @@ VALUES
 );
 
 
+ALTER TABLE `grupo_articulo`   
+	ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `departamentoId`,
+  ADD CONSTRAINT `capitulos_tipo_proyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `proasistencia`.`tipos_proyecto`(`tipoProyectoId`);
+
+UPDATE grupo_articulo AS g
+INNER JOIN tipos_proyecto  AS t ON t.nombre = g.nombre
+SET g.tipoProyectoId = t.tipoProyectoId
+WHERE t.esTecnico = 1;
+
+#EN ESTE PUNTO EJECUTAR 2.3.220_insert_articulos_tecnicos.sql
+
+UPDATE articulos AS a
+INNER JOIN tipos_proyecto AS t ON t.abrev = a.codigoBarras
+LEFT JOIN grupo_articulo AS g ON g.tipoProyectoId = t.tipoProyectoId
+SET a.grupoArticuloId = g.grupoArticuloId
+WHERE NOT g.grupoArticuloId IS NULL 
 
 
+ALTER TABLE `articulos`   
+	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `administracion`;
+
+UPDATE articulos 
+SET esTecnico = 1
+WHERE NOT codigoBarras IS NULL AND codigoBarras <> '';
