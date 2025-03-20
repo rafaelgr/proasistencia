@@ -3,6 +3,25 @@
 ALTER TABLE `grupo_articulo`   
 	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `departamentoId`;
 
+ALTER TABLE `grupo_articulo`   
+	ADD COLUMN `aplicarFormula` TINYINT(1) DEFAULT 0 NULL AFTER `esTecnico`,
+	ADD COLUMN `limiteImpObra` DECIMAL(12,2) NULL AFTER `aplicarFormula`,
+	ADD COLUMN `porcen1` DECIMAL(12,2) NULL AFTER `limiteImpObra`,
+	ADD COLUMN `porcen2` DECIMAL(12,2) NULL AFTER `porcen1`,
+	ADD COLUMN `porcen3` DECIMAL(12,2) NULL AFTER `porcen2`,
+	ADD COLUMN `porcen4` DECIMAL(12,2) NULL AFTER `porcen3`;
+
+  ALTER TABLE `grupo_articulo`   
+	CHANGE `limiteImpObra` `limiteImpObra` DECIMAL(12,2) DEFAULT 0 NULL,
+	CHANGE `porcen1` `porcen1` DECIMAL(12,2) DEFAULT 0 NULL,
+	CHANGE `porcen2` `porcen2` DECIMAL(12,2) DEFAULT 0 NULL,
+	CHANGE `porcen3` `porcen3` DECIMAL(12,2) DEFAULT 0 NULL,
+	CHANGE `porcen4` `porcen4` DECIMAL(12,2) DEFAULT 0 NULL;
+
+
+ALTER TABLE `parametros`   
+	ADD COLUMN `indiceCorrector` DECIMAL(12,2) NULL AFTER `raiz_url_server`;
+
 
 INSERT INTO grupo_articulo( grupoArticuloId,nombre, departamentoId, esTecnico )
 VALUES
@@ -193,3 +212,12 @@ ALTER TABLE `articulos`
 UPDATE articulos 
 SET esTecnico = 1
 WHERE NOT codigoBarras IS NULL AND codigoBarras <> '';
+
+ALTER TABLE `grupo_articulo`   
+	ADD COLUMN `aplicarFormula` TINYINT(1) DEFAULT 0 NULL AFTER `esTecnico`,
+	ADD COLUMN `limiteImpObra` DECIMAL(12,2) NULL AFTER `aplicarFormula`,
+	ADD COLUMN `porcen1` DECIMAL(12,2) NULL AFTER `limiteImpObra`,
+	ADD COLUMN `porcen2` DECIMAL(12,2) NULL AFTER `porcen1`,
+	ADD COLUMN `porcen3` DECIMAL(12,2) NULL AFTER `porcen2`,
+	ADD COLUMN `porcen4` DECIMAL(12,2) NULL AFTER `porcen3`;
+
