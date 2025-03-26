@@ -145,7 +145,9 @@ ALTER TABLE `expedientes`
   ADD CONSTRAINT `of_oficinaTecnicaFK` FOREIGN KEY (`oficinaTecnicaId`) REFERENCES `comerciales`(`comercialId`);
 
   ALTER TABLE `ofertas`   
-	ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`;
+	 ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`;
+   ADD COLUMN `desglosado` TINYINT(1) DEFAULT 0 NULL AFTER `valorado`;
+   ADD COLUMN `noMostrarIva` TINYINT(1) DEFAULT 0 NULL AFTER `desglosado`;
 
   ALTER TABLE `tipos_proyecto`   
 	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `visibleApp`;
@@ -221,3 +223,10 @@ ALTER TABLE `grupo_articulo`
 	ADD COLUMN `porcen3` DECIMAL(12,2) NULL AFTER `porcen2`,
 	ADD COLUMN `porcen4` DECIMAL(12,2) NULL AFTER `porcen3`;
 
+
+ALTER TABLE `ofertas`   
+	ADD COLUMN `ofertaCosteId` INT(11) NULL AFTER `desglosado`,
+  ADD CONSTRAINT `of_presupuestocoste` FOREIGN KEY (`ofertaCosteId`) REFERENCES `ofertas`(`ofertaId`);
+
+ALTER TABLE `ofertas`   
+	ADD COLUMN `incrementoMediciones` DECIMAL(5,2) NULL AFTER `ofertaCosteId`;
