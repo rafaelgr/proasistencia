@@ -147,7 +147,7 @@ ALTER TABLE `expedientes`
   ALTER TABLE `ofertas`   
 	 ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`;
    ADD COLUMN `desglosado` TINYINT(1) DEFAULT 0 NULL AFTER `valorado`;
-   ADD COLUMN `noMostrarIva` TINYINT(1) DEFAULT 0 NULL AFTER `desglosado`;
+   ADD COLUMN `mostrarIva` TINYINT(1) DEFAULT 0 NULL AFTER `desglosado`;
 
   ALTER TABLE `tipos_proyecto`   
 	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `visibleApp`;
