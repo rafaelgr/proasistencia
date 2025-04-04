@@ -117,7 +117,7 @@ ALTER TABLE `expedientes`
 	ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `asesorTecnicoId`;
 
   ALTER TABLE `expedientes`  
-  ADD CONSTRAINT `exp_tipoProyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `proasistencia`.`tipos_proyecto`(`tipoProyectoId`);
+  ADD CONSTRAINT `exp_tipoProyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto`(`tipoProyectoId`);
 
   ALTER TABLE `expedientes`   
 	ADD COLUMN `importeObra` DECIMAL(12,2) NULL AFTER `tipoProyectoId`;
@@ -145,8 +145,8 @@ ALTER TABLE `expedientes`
   ADD CONSTRAINT `of_oficinaTecnicaFK` FOREIGN KEY (`oficinaTecnicaId`) REFERENCES `comerciales`(`comercialId`);
 
   ALTER TABLE `ofertas`   
-	 ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`;
-   ADD COLUMN `desglosado` TINYINT(1) DEFAULT 0 NULL AFTER `valorado`;
+	 ADD COLUMN `valorado` TINYINT(1) DEFAULT 0 NULL AFTER `asesorTecnicoId`,
+   ADD COLUMN `desglosado` TINYINT(1) DEFAULT 0 NULL AFTER `valorado`,
    ADD COLUMN `mostrarIva` TINYINT(1) DEFAULT 0 NULL AFTER `desglosado`;
 
   ALTER TABLE `tipos_proyecto`   
@@ -192,7 +192,7 @@ VALUES
 
 ALTER TABLE `grupo_articulo`   
 	ADD COLUMN `tipoProyectoId` INT(11) NULL AFTER `departamentoId`,
-  ADD CONSTRAINT `capitulos_tipo_proyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `proasistencia`.`tipos_proyecto`(`tipoProyectoId`);
+  ADD CONSTRAINT `capitulos_tipo_proyectoFK` FOREIGN KEY (`tipoProyectoId`) REFERENCES `tipos_proyecto`(`tipoProyectoId`);
 
 UPDATE grupo_articulo AS g
 INNER JOIN tipos_proyecto  AS t ON t.nombre = g.nombre
@@ -205,7 +205,7 @@ UPDATE articulos AS a
 INNER JOIN tipos_proyecto AS t ON t.abrev = a.codigoBarras
 LEFT JOIN grupo_articulo AS g ON g.tipoProyectoId = t.tipoProyectoId
 SET a.grupoArticuloId = g.grupoArticuloId
-WHERE NOT g.grupoArticuloId IS NULL 
+WHERE NOT g.grupoArticuloId IS NULL;
 
 
 ALTER TABLE `articulos`   
@@ -215,8 +215,7 @@ UPDATE articulos
 SET esTecnico = 1
 WHERE NOT codigoBarras IS NULL AND codigoBarras <> '';
 
-ALTER TABLE `grupo_articulo`   
-	ADD COLUMN `aplicarFormula` TINYINT(1) DEFAULT 0 NULL AFTER `esTecnico`,
+ALTER TABLE `grupo_articulo` 
 	ADD COLUMN `limiteImpObra` DECIMAL(12,2) NULL AFTER `aplicarFormula`,
 	ADD COLUMN `porcen1` DECIMAL(12,2) NULL AFTER `limiteImpObra`,
 	ADD COLUMN `porcen2` DECIMAL(12,2) NULL AFTER `porcen1`,
