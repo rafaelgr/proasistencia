@@ -229,3 +229,11 @@ ALTER TABLE `ofertas`
 
 ALTER TABLE `ofertas`   
 	ADD COLUMN `incrementoMediciones` DECIMAL(5,2) NULL AFTER `ofertaCosteId`;
+
+  ALTER TABLE `parametros`   
+	ADD COLUMN `margenArquitectura` DECIMAL(5,2) NULL AFTER `margenMantenimiento`;
+
+  ALTER TABLE `ofertas`   
+	ADD COLUMN `sistemaPago` TEXT NULL AFTER `conceptosExcluidos`;
+
+
