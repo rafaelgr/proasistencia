@@ -237,3 +237,7 @@ ALTER TABLE `ofertas`
 	ADD COLUMN `sistemaPago` TEXT NULL AFTER `conceptosExcluidos`;
 
 
+ALTER TABLE `expedientes`   
+	ADD COLUMN `formaPagoId` INT(11) NULL AFTER `importeObra`;
+
+
