@@ -240,4 +240,16 @@ ALTER TABLE `ofertas`
 ALTER TABLE `expedientes`   
 	ADD COLUMN `formaPagoId` INT(11) NULL AFTER `importeObra`;
 
+CREATE TABLE `tipos_texto` (  
+  `tipoTextoId` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255),
+  PRIMARY KEY (`tipoTextoId`) 
+);
 
+ALTER TABLE `textos_predeterminados`   
+	ADD COLUMN `departamentoId` INT NULL AFTER `abrev`,
+	ADD COLUMN `empresaId` INT NULL AFTER `departamentoId`,
+	ADD COLUMN `tipoTextoId` INT(11) NULL AFTER `empresaId`,
+  ADD CONSTRAINT `texto_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos`(`departamentoId`),
+  ADD CONSTRAINT `texto_empresaFK` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`),
+  ADD CONSTRAINT `texto_tipoFK` FOREIGN KEY (`tipoTextoId`) REFERENCES `tipos_texto`(`tipoTextoId`);

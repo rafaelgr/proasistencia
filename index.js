@@ -49,6 +49,7 @@ var tarifas_proveedor_router = require('./lib/tarifas_proveedor/tarifa_proveedor
 var contabilidad_router = require('./lib/contabilidad/contabilidad_controller');
 var unidades_router = require('./lib/unidades/unidades_controller');
 var tipos_via_router = require('./lib/tipos_via/tipos_via_controller');
+var tipos_texto_router = require('./lib/tipos_texto/tipos_texto_controller');
 var tipos_proveedor_router = require('./lib/tipos_proveedor/tipos_proveedor_controller');
 var tipos_profesional_router = require('./lib/tipos_profesional/tipos_profesional_controller')
 var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
@@ -205,6 +206,7 @@ app.use('/api/contratos_mantenedores', contratos_mantenedores_router);
 app.use('/api/tipos_forma_pago', tipos_forma_pago_router);
 app.use('/api/formas_pago', formas_pago_router);
 app.use('/api/tipos_iva', tipos_iva_router);
+app.use('/api/tipos_texto', tipos_texto_router);
 app.use('/api/articulos', articulos_router);
 app.use('/api/parametros', parametros_router);
 app.use('/api/prefacturas', prefacturas_router);
