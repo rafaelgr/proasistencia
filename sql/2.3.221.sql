@@ -253,3 +253,10 @@ ALTER TABLE `textos_predeterminados`
   ADD CONSTRAINT `texto_departamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos`(`departamentoId`),
   ADD CONSTRAINT `texto_empresaFK` FOREIGN KEY (`empresaId`) REFERENCES `empresas`(`empresaId`),
   ADD CONSTRAINT `texto_tipoFK` FOREIGN KEY (`tipoTextoId`) REFERENCES `tipos_texto`(`tipoTextoId`);
+
+  ALTER TABLE `ofertas`   
+	ADD COLUMN `tituloTexto` VARCHAR(255) NULL AFTER `incrementoMediciones`,
+	ADD COLUMN `tituloId` INT(11) NULL AFTER `tituloTexto`,
+  ADD COLUMN `conceptoExcluidoId` INT(11) NULL AFTER `tituloId`,
+  ADD COLUMN `sistemaPagoId` INT(11) NULL AFTER `conceptoExcluidoId`;
+
