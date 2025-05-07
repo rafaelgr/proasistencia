@@ -223,7 +223,7 @@ function aceptar() {
                 "bucket_folder":  vm.bucketFolder(),
                 "identity_pool": vm.identityPool(),
                 "raiz_url": vm.raizUrl(),
-                "bucket":  vm.bucketDocum(),
+                "bucket_docum":  vm.bucketDocum(),
                 "bucket_region_docum":  vm.bucketRegionDocum(),
                 "bucket_folder_docum":  vm.bucketFolderDocum(),
                 "identity_pool_docum": vm.identityPoolDocum(),
