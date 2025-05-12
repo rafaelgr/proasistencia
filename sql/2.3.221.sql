@@ -260,3 +260,6 @@ ALTER TABLE `textos_predeterminados`
   ADD COLUMN `conceptoExcluidoId` INT(11) NULL AFTER `tituloId`,
   ADD COLUMN `sistemaPagoId` INT(11) NULL AFTER `conceptoExcluidoId`;
 
+
+ALTER TABLE `ofertas`   
+	ADD COLUMN `esTecnico` TINYINT(1) DEFAULT 0 NULL AFTER `mostrarIva`;
