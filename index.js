@@ -43,11 +43,13 @@ var contratos_cliente_mantenimiento_router = require('./lib/contratos-cliente-ma
 var clientes_comisionistas_router = require('./lib/clientes-comisionistas/clientes_comisionistas_controller');
 var contrato_mantenimiento_comisionistas_router = require('./lib/contrato-mantenimiento-comisionistas/contrato_mantenimiento_comisionistas_controller');
 var grupo_articulos_router = require('./lib/grupos-articulos/grupo_articulo_controller');
+var grupo_articulos_tecnico_router = require('./lib/grupos-articulos_tecnicos/grupo_articulo_tecnico_controller');
 var tarifas_cliente_router = require('./lib/tarifas_cliente/tarifa_cliente_controller');
 var tarifas_proveedor_router = require('./lib/tarifas_proveedor/tarifa_proveedor_controller');
 var contabilidad_router = require('./lib/contabilidad/contabilidad_controller');
 var unidades_router = require('./lib/unidades/unidades_controller');
 var tipos_via_router = require('./lib/tipos_via/tipos_via_controller');
+var tipos_texto_router = require('./lib/tipos_texto/tipos_texto_controller');
 var tipos_proveedor_router = require('./lib/tipos_proveedor/tipos_proveedor_controller');
 var tipos_profesional_router = require('./lib/tipos_profesional/tipos_profesional_controller')
 var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
@@ -63,6 +65,7 @@ var cuentas_router = require('./lib/cuentas/cuentas_controller');
 var liquidaciones_router = require('./lib/liquidaciones/liquidaciones_controller');
 var ofertas_router = require('./lib/ofertas/ofertas_controller');
 var contratos_router = require('./lib/contratos/contratos_controller');
+var expedientes_router = require('./lib/expedientes/expedientes_controller');
 var tipos_proyectos_router = require('./lib/tipos_proyectos/tipos_proyectos_controller');
 var textos_predeterminados_router = require('./lib/textos_predeterminados/textos_predeterminados_controller');
 var correoElectronico = require('./lib/correoElectronico/correoElectronico.controller');
@@ -89,6 +92,7 @@ var anticipos_clientes = require('./lib/anticipos_clientes/anticiposClientes_con
 //SERVICIOS
 var servicios_router = require('./lib/servicios/servicios_controller');
 var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
+var estados_expediente_router = require('./lib/estados_expediente/estados_expediente_controller');
 var estados_parte_profesional_router = require('./lib/estados_parte_profesional/estados_parte_profesional_controller');
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
@@ -202,6 +206,7 @@ app.use('/api/contratos_mantenedores', contratos_mantenedores_router);
 app.use('/api/tipos_forma_pago', tipos_forma_pago_router);
 app.use('/api/formas_pago', formas_pago_router);
 app.use('/api/tipos_iva', tipos_iva_router);
+app.use('/api/tipos_texto', tipos_texto_router);
 app.use('/api/articulos', articulos_router);
 app.use('/api/parametros', parametros_router);
 app.use('/api/prefacturas', prefacturas_router);
@@ -211,6 +216,7 @@ app.use('/api/contratos_cliente_mantenimiento', contratos_cliente_mantenimiento_
 app.use('/api/clientes_comisionistas', clientes_comisionistas_router);
 app.use('/api/contrato_mantenimiento_comisionistas', contrato_mantenimiento_comisionistas_router);
 app.use('/api/grupo_articulo', grupo_articulos_router);
+app.use('/api/grupo_articulo_tecnico', grupo_articulos_tecnico_router);
 app.use('/api/tarifas_cliente', tarifas_cliente_router);
 app.use('/api/tarifas_proveedor', tarifas_proveedor_router);
 app.use('/api/contabilidad', contabilidad_router);
@@ -224,6 +230,7 @@ app.use('/api/facturasProveedores', facturasProveedores_router);
 app.use('/api/liquidaciones', liquidaciones_router);
 app.use('/api/ofertas', ofertas_router);
 app.use('/api/contratos', contratos_router);
+app.use('/api/expedientes', expedientes_router);
 app.use('/api/tipos_proyectos', tipos_proyectos_router);
 app.use('/api/tipos_profesional', tipos_profesional_router);
 app.use('/api/textos_predeterminados', textos_predeterminados_router);
@@ -254,6 +261,7 @@ app.use('/api/anticiposClientes/', anticipos_clientes);
 
 //servicios
 app.use('/api/servicios', servicios_router);
+app.use('/api/estados_expediente', estados_expediente_router);
 app.use('/api/estados_parte', estados_parte_router);
 app.use('/api/estados_parte_profesional', estados_parte_profesional_router);
 app.use('/api/partes', partes_router);

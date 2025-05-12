@@ -490,8 +490,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Administracion</li>
-                <li>Textos predeterminados</li>
-                <li>Detalle texto</li>
+                <li>Tipos de Texto </li>
+                <li>Detalle tipo de Texto</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -515,8 +515,8 @@
                     <h1 class="page-title txt-color-blueDark">
 
                             <!-- PAGE HEADER -->
-                            <i class="fa-fw fa fa-asterisk"></i>
-                            Detalle texto <a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
+                            <i class="fa-fw fa fa-map-markery"></i>
+                            Detalle tipo VIA<a href="#" title="Ayuda"><i class="fa fa-question"></i></a>
                         </h1>
                 </div>
                 <!-- end col -->
@@ -569,7 +569,7 @@
                                 -->
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento textos predeterminados </h2>
+                                <h2>Mantenimiento tipos de texto</h2>
                             </header>
                             <!-- widget div-->
                             <div>
@@ -582,44 +582,16 @@
                                 <!-- widget content -->
                                 <div class="widget-body">
                                     <!-- this is what the user will see -->
-                                    <form id="frmTextoPredeterminado" class="smart-form">
+                                    <form id="frmTipoTexto" class="smart-form">
                                         <header>
-                                            Datos del texto
+                                            Datos del tipo de Texto
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
-                                                    <label class="label">Texto</label>
+                                                <section class="col col-md-12">
+                                                    <label class="label">Nombre</label>
                                                     <label class="input">
-                                                        <textarea style="width:100%" id="txtTexto" rows="4" class="custom-scroll" data-bind="value:texto"></textarea>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Abreviatura</label>
-                                                    <label class="input">
-                                                        <input id="txtAbrev" name="txtAbrev" type="text" data-bind="value: abrev" />
-                                                    </label>
-                                                </section>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="row">
-                                                <section class="col col-sm-4" >
-                                                    <label class="label">Departamento</label>
-                                                        <label style="width:100%;">
-                                                            <select style="width:100%" id="cmbDepartamentos" name="cmbDepartamentos" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                                        </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Empresa</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">tipo de texto</label>
-                                                    <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbTipostexto" name="cmbTipostexto" data-bind="options: posiblesTiposTexto, optionsText: 'nombre', optionsValue: 'tipoTextoId', value: stipoTextoId, valueAllowUnset: true, selectedOptions: elegidosTiposTexto, selected2:{}"></select><i></i>
+                                                        <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                     </label>
                                                 </section>
                                             </div>
@@ -691,6 +663,8 @@
     <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
     <!-- BOOTSTRAP JS -->
     <script src="js/bootstrap/bootstrap.min.js"></script>
+    <!-- MOMENT -->
+    <script src="js/moment.js"></script>
     <!-- CUSTOM NOTIFICATION -->
     <script src="js/notification/SmartNotification.min.js"></script>
     <!-- JARVIS WIDGETS -->
@@ -728,12 +702,11 @@
     <script src="js/smart-chat-ui/smart.chat.manager.min.js"></script>
     <!--- KNOCKOUT JS -->
     <script src="js/knockout-3.1.0.js"></script>
-    <script src="js/numeral.js"></script>
     <!-- PAGE RELATED PLUGIN(S) 
         <script src="..."></script>-->
     <script src="myconfig.js"></script>
-    <script src="js/ariadna/textoPredeterminadoDetalle.js"></script>
     <script src="js/ariadna/comun.js"></script>
+    <script src="js/ariadna/tipoTextoDetalle.js"></script>
     <!-- PAGE RELATED PLUGIN(S) -->
     <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

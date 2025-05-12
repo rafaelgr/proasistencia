@@ -15,9 +15,12 @@ var usuario;
 // Create the report viewer with default options
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.Continuous;
+options.appearance.culture = "es"; // Esto *puede* funcionar en versiones antiguas
+
 var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
+
 
 
 
