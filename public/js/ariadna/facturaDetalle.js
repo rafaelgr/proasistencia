@@ -154,6 +154,62 @@ function initForm() {
     desdeContrato = gup("desdeContrato");
     ContratoId = gup("ContratoId");
 
+    //evento asociado a la carga de un archivo
+    $('#upload-input').on('change', function () {
+        var files = $(this).get(0).files;
+        
+        // create a FormData object which will be sent as the data payload in the
+        // AJAX request
+        var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
+        
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf");
+        // add the files to formData object for the data payload
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+        var name =  vm.serie() + "-" + vm.ano() + "-" + vm.numero().toString().padStart(6, '0') + "_" + vm.empresaId() + "." +ext;
+            
+            $.ajax({
+                url: '/api/upload/s3/factura/' + name + "/" + vm.facturaId(),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    filename = data;
+                    vm.file(filename);
+                    checkVisibility(filename);
+                },
+                xhr: function () {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            // calculate the percentage of upload completed
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            // update the Bootstrap progress bar with the new percentage
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+                            // once the upload reaches 100%, set the progress bar text to done
+                            if (percentComplete === 100) {
+                                $('.progress-bar').html('Fichero subido');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                error: function (xhr, textStatus, errorThrwon) {
+                    var m = xhr.responseText;
+                    if (!m) m = "Error al cargar";
+                    mensError(m);
+                    return;
+                }
+            });
+    });
+
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
     $('#noCobro').hide();
@@ -172,6 +228,11 @@ function initForm() {
             var clienteId = data.clienteId;
             var empresaId = data.empresaId;
             var fecha = moment(data.fecha).format('YYYY-MM-DD');
+
+            //se carga el pdf de la factura si existe
+            if(vm.nombreFacturaPdf()) {
+                loadDoc(vm.nombreFacturaPdf());
+            }
             $('#chkEnviadaCorreo').click(
                 function(e){
                     var enviadaCorreo = $('#chkEnviadaCorreo').prop('checked');
@@ -373,6 +434,10 @@ function admData() {
     self.noCobro = ko.observable();
     // 
     self.enviadaCorreo = ko.observable();
+    //
+
+    self.file = ko.observable();
+    self.nombreFacturaPdf = ko.observable();
 }
 
 function loadData(data, desdeLinea) {
@@ -407,6 +472,7 @@ function loadData(data, desdeLinea) {
     vm.conceptoAnticipo(data.conceptoAnticipo);
     vm.contabilizada(data.contabilizada);
     vm.beneficioLineal(data.beneficioLineal);
+    vm.nombreFacturaPdf(data.nombreFacturaPdf)
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -2244,6 +2310,53 @@ function bloqueaEdicionCampos() {
 }
     
 
+//CARGA DE PDF
 
+function checkVisibility(filename) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var p = data
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+            // see it in container
+            var url = p.raiz_url_server + "facturas/" + filename;
+            if (ext == "pdf") {
+                // <iframe src="" width="100%" height="600px"></iframe>
+                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+            } else {
+                // .html("<img src=' + this.href + '>");
+                $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            }
+            $("#msgContainer").html('');
+        } else {
+            $("#msgContainer").html('Vista previa no dispònible');
+            $("#docContainer").html('');
+        }
+    });
+   
+}
 
-
+//funciones de la pestaña de facturas en PDF
+function loadDoc(filename) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var p = data
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+            // see it in container
+            var url = p.raiz_url_server + "facturas/" + filename;
+            if (ext == "pdf") {
+                // <iframe src="" width="100%" height="600px"></iframe>
+                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+            } else {
+                // .html("<img src=' + this.href + '>");
+                $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            }
+            $("#msgContainer").html('');
+        } else {
+            $("#msgContainer").html('Vista previa no dispònible');
+            $("#docContainer").html('');
+        }
+    });
+   
+}
