@@ -578,6 +578,9 @@
                                             <span class="hidden-mobile hidden-tablet">Historial de colaboradores</span>
                                         </a>
                                     </li>
+                                    <li id="tabCorreo">
+                                        <a data-toggle="tab" href="#s5"><i class="fa fa-envelope-o"></i> <span class="hidden-mobile hidden-tablet">Correos empresa</span></a>
+                                    </li>
                                 </ul>
                             </header>
                             <!-- widget div-->
@@ -1236,6 +1239,43 @@
                                                 <!-- WIDGET END -->
                                             </div>
                                         </div>
+                                        <!--INICIO QUINTO TAB-->
+                                        <div class="tab-pane fade" id="s5">
+                                            <header>
+                                                Correos de empresa
+                                            </header>
+                                            <form id="frmComercialCorreos">
+                                                <fieldset>
+                                                    <div class="pull-right">
+                                                            <button id="btnNuevoCorreo" title="Nuevo Correo" data-toggle="modal"  data-target="#modalLineaCorreo" onclick="nuevaLinea()" class="btn btn-success btn-circle btn-lg">
+                                                                <i class="fa fa-lg fa-plus"></i>
+                                                            </button>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                            <hr>
+                                            <div id="tbComercialCorreos">
+                                                <table id="dt_comercialCorreos" class="table table-striped table-bordered table-hover" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th data-class="expand">
+                                                                <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Empresa
+                                                            </th>   
+                                                            <th data-hide="phone">
+                                                                Correo
+                                                            </th>
+                                                            <th data-hide="phone">
+                                                                Contraseña
+                                                            </th>
+                                                            <th>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--FIN QUINTO TAB-->
+                                        
                                         
                                     </div>
                                 </div>
@@ -1338,6 +1378,61 @@
                         </fieldset>
                         <footer>
                             <button id="btnAceptarComercial" class="btn btn-primary" onclick="aceptarExportar()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+       <!-- Modal -->
+    <div class="modal fade" id="modalLineaCorreo" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LINEA CORREO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="linea-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                
+                                <div class="row">
+                                    <div class="col col-md-6">
+                                        <label class="label">Empresa</label>
+                                        <label style="width:100%; height:50px;">
+                                            <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select>
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                    <section class="col col-md-3">
+                                        <label class="label">Correo</label>
+                                        <label class="input">
+                                            <input id="txtCorreo" name="txtCorreo" type="text" data-bind="value: correo" />
+                                        </label>
+                                    </section>
+                                    <section class="col col-md-3">
+                                        <label class="label">Password</label>
+                                        <label class="input">
+                                            <input id="txtPassword" name="txtPassword" type="text" data-bind="value: password" />
+                                        </label>
+                                    </section>
+                                    
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarLinea" class="btn btn-primary" onclick="aceptarLinea()">
                                 Aceptar
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">

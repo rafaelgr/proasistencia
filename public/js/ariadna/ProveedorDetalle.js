@@ -19,6 +19,7 @@ var dataUsuarios;
 var dataindices;
 var usuarioEnEdicion = false;
 var indiceEnEdicion = false;
+var tablaFacturas;
 
 
 datePickerSpanish(); // see comun.js
@@ -1324,6 +1325,7 @@ function initTablaFacturas() {
     };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
+        bSort: true,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
@@ -1344,8 +1346,32 @@ function initTablaFacturas() {
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
+        columnDefs: [
+           
+            { 
+                "type": "datetime-moment",
+                "targets": [3, 4],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+        ],
         
         autoWidth: true,
+        
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -1443,15 +1469,10 @@ function initTablaFacturas() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
+            
         },  {
-            data: "fecha_recepcion",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha_recepcion"
         }, {
             data: "total",
             render: function (data, type, row) {
@@ -1482,6 +1503,22 @@ function initTablaFacturas() {
                 return html;
             }
         }]
+    });
+
+     //function sort by date
+     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
     });
 
     // Apply the filter

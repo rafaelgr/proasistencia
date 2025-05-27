@@ -4670,7 +4670,7 @@ function initTablaFacproves() {
         }
     };
     tablaFacproves = $('#dt_facprove').DataTable({
-        bSort: false,
+        bSort: true,
         responsive: true,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
@@ -4697,6 +4697,29 @@ function initTablaFacproves() {
         ],
         
         autoWidth: true,
+        columnDefs: [
+           
+            { 
+                "type": "datetime-moment",
+                "targets": [5, 6],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+        ],
         
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -4799,15 +4822,9 @@ function initTablaFacproves() {
         }, {
             data: "emisorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
         },  {
-            data: "fecha_recepcion",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha_recepcion"
         }, 
         {
             data: "importeServiciado",
