@@ -2273,30 +2273,30 @@ var recuperaParametrosPorDefecto = function (){
     });
 }
 
-//funciones de la pestaña de facturas en PDF
 function loadDoc(filename) {
-    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
-        if (err) return;
-        var p = data
-        var ext = filename.split('.').pop().toLowerCase();
-        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
-            // see it in container
-            var url = p.raiz_url_server + "facturas_proveedores/" + filename;
-            if (ext == "pdf") {
-                // <iframe src="" width="100%" height="600px"></iframe>
-                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
-            } else {
-                // .html("<img src=' + this.href + '>");
-                $("#docContainer").html('<img src="' + url + '" width="100%">');;
-            }
-            $("#msgContainer").html('');
-        } else {
-            $("#msgContainer").html('Vista previa no dispònible');
-            $("#docContainer").html('');
+    if (!/^[a-zA-Z0-9_\-]+\.(pdf|jpg|png|gif)$/i.test(filename)) {
+        $("#msgContainer").html('Nombre de archivo no permitido');
+        return;
+    }
+
+    llamadaAjax('GET', "/api/facturasProveedores/get/url/s3/" + encodeURIComponent(filename), null, function (err, data) {
+        if (err || !data.url) {
+            $("#msgContainer").html('Error al cargar el documento');
+            return;
         }
+
+        const url = data.url;
+        const ext = filename.split('.').pop().toLowerCase();
+
+        if (ext == "pdf") {
+            $("#docContainer").html('<iframe src="' + url + '" frameborder="0" width="100%" height="600px"></iframe>');
+        } else {
+            $("#docContainer").html('<img src="' + url + '" width="100%">');
+        }
+        $("#msgContainer").html('');
     });
-   
 }
+
 
 /* function loadDoc(filename) {
     var ext = filename.split('.').pop().toLowerCase();

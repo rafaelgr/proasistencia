@@ -504,55 +504,89 @@ function initArbolDocumentacion() {
 });
 
 }
-
-// Función para listar objetos con paginación
-async function listAllObjects(parametros) {
-    let objects = [];
-    let continuationToken = null;
-
-  
-    AWS.config.region = parametros.bucket_region_server; // Región
+async function listAllObjectsWithSignedUrls(parametros) {
+    AWS.config.region = parametros.bucket_region_server;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId:  parametros.identity_pool_server,
+      IdentityPoolId: parametros.identity_pool_server,
     });
     var s3 = new AWS.S3();
-      
-      
+  
+    let objects = [];
+    let continuationToken = null;
   
     do {
-        const params = {
-            Bucket: parametros.bucket_server,
-            Prefix: directorio,
-            ContinuationToken: continuationToken
-          };
-       
+      const params = {
+        Bucket: parametros.bucket_server,
+        Prefix: directorio,
+        ContinuationToken: continuationToken,
+      };
+  
       const response = await s3.listObjectsV2(params).promise();
       objects = objects.concat(response.Contents);
       continuationToken = response.NextContinuationToken;
     } while (continuationToken);
-
-    objectsS3 = objects
+  
+    // Ahora genero URL firmadas para cada objeto
+    for (const obj of objects) {
+      obj.signedUrl = s3.getSignedUrl('getObject', {
+        Bucket: parametros.bucket_server,
+        Key: obj.Key,
+        Expires: 300 // duración en segundos (5 minutos)
+      });
+    }
+  
+    objectsS3 = objects;
     return objects;
   }
+  
 
-async function getObj(parametros) {
-
-
-    AWS.config.region = parametros.bucket_region_server; // Región
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId:  parametros.identity_pool_server,
+  async function getObjectsdocumentacion() {
+    llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const parametros = data;
+  
+      try {
+        const objetos = await listAllObjectsWithSignedUrls(parametros);
+  
+        let carpetas = [];
+        let archivos = [];
+        let id = 1;
+        let documentoId = 1;
+        let antCarpeta = null;
+  
+        objetos.forEach(e => {
+          // Extraer nombre carpeta por el prefijo antes de "/"
+          const indexSlash = e.Key.indexOf("/");
+          const carpetaNombre = indexSlash > -1 ? e.Key.substring(0, indexSlash) : "SinCarpeta";
+  
+          if (!antCarpeta) {
+            carpetas.push({ carpetaNombre, carpetaId: id });
+            archivos.push({ data: e, carpetaId: id, documentoId });
+            antCarpeta = carpetaNombre;
+          } else {
+            if (carpetaNombre !== antCarpeta) {
+              id++;
+              carpetas.push({ carpetaNombre, carpetaId: id });
+              archivos.push({ data: e, carpetaId: id, documentoId });
+              antCarpeta = carpetaNombre;
+            } else {
+              archivos.push({ data: e, carpetaId: id, documentoId });
+            }
+          }
+          documentoId++;
+        });
+  
+        const regs = ProcesaDocumObjTree(archivos, carpetas);
+        loadDocumentacionTree(regs);
+  
+      } catch (error) {
+        console.error("Error al listar o generar URLs firmadas:", error);
+      }
     });
-    var s3 = new AWS.S3();
-    
-    const params = {
-        Bucket: parametros.bucket_server,
-        Key: obj.Key
-      };
-
-      const response = await s3.getObject(params).promise();
-      return response;
-}
-
+  }
 
 
 
@@ -565,54 +599,13 @@ function descargarArchivo(url, nombreArchivo) {
     link.click();
 }
 
+async function getSignedUrlForObject(bucket, key) {
+    const s3 = new AWS.S3();
+    const params = { Bucket: bucket, Key: key, Expires: 300 }; // 5 minutos
   
-function getObjectsdocumentacion() {
-    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
-        if (err) return;
-        parametros = data;
-        var carpetas = [];
-        var id = 1;
-        var documentoId = 1;
-        var antCarpeta = null;
-        //var obj = [];
-        var archivos = [];
-      
-       
-        listAllObjects(parametros)
-        .then(obj => {
-            // objects contiene todos los objetos del bucket
-             // Descargar archivos y guardarlos en el directorio temporal local
-            
-             obj.forEach(e => {
-                e.location = parametros.raiz_url_server + e.Key;
-                var a = e.Key.indexOf("/");
-                var b = e.Key.substring(0, a);
-                if(!antCarpeta) {
-                    carpetas.push( { carpetaNombre: b, carpetaId: id });
-                    archivos.push( { data: e, carpetaId: id, documentoId: documentoId });
-                    antCarpeta = b;
-                } else {
-                    if(b != antCarpeta) {
-                        id++;
-                        carpetas.push( { carpetaNombre: b, carpetaId: id });
-                        archivos.push( {  data: e, carpetaId: id, documentoId: documentoId });
-                        antCarpeta = b;
-                    } else {
-                        archivos.push( {  data: e, carpetaId: id, documentoId: documentoId })
-                        antCarpeta = b;
-                    }
-                }
-                documentoId++;
-                //console.log(documentoId);
-            });
-            var regs = ProcesaDocumObjTree(archivos, carpetas)
-            loadDocumentacionTree(regs);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-    });
-}
+    return s3.getSignedUrlPromise('getObject', params);
+  }
+
 
 function descargaObjectdocumentacion(obj) {
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
@@ -696,7 +689,7 @@ function ProcesaDocumObjTree(doc, carpeta) {
                     //var html = '<ul style="list-style-type: none; color: black"><li style="display: inline; margin-right: 10px;">' + l[index] + '</li><li style="display: inline; margin-right: 10px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</li><li style="display: inline; margin-right: 10px;">' + r + ' KB ' + '</li></ul>'
 					docObj = {
                         documentoId: e.documentoId,
-						location: e.data.location,
+						location: e.data.signedUrl,
                         key: e.data.Key,
                         text: l[index],
                         id: e.documentoId,
@@ -736,7 +729,7 @@ function ProcesaDocumObjTree(doc, carpeta) {
                     //var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
 					docObj = {
                         documentoId: e.documentoId,
-                        location: e.data.location,
+                        location: e.data.signedUrl,
                         key: e.data.Key,
                         text: l[index],
                         id: e.documentoId,
@@ -781,7 +774,7 @@ function ProcesaDocumObjTree(doc, carpeta) {
                 //var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
 				docObj = {
                     documentoId: e.documentoId,
-                    location: e.data.location,
+                    location: e.data.signedUrl,
                     key: e.data.Key,
                     text: l[index],
                     id: e.documentoId,
