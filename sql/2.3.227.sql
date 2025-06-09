@@ -62,4 +62,5 @@ ALTER TABLE `propuesta_lineas`
 	ADD COLUMN `propuestaImporte` DECIMAL(12,2) NULL AFTER `dto`,
 	ADD COLUMN `propuestaTotalLinea` DECIMAL(12,2) NULL AFTER `propuestaImporte`;
 
-
+ALTER TABLE `parametros`   
+	CHANGE `margenArquitectura` `margenArquitectura` DECIMAL(9,4) NULL;
