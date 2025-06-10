@@ -64,3 +64,10 @@ ALTER TABLE `propuesta_lineas`
 
 ALTER TABLE `parametros`   
 	CHANGE `margenArquitectura` `margenArquitectura` DECIMAL(9,4) NULL;
+
+  ALTER TABLE `ofertas_lineas`   
+	ADD COLUMN `ofertaCosteLineaId` INT(11) NULL AFTER `esTarifa`, 
+  ADD  KEY `ofl_costeLinea` (`ofertaLineaId` , `ofertaCosteLineaId`);
+
+ALTER TABLE `propuesta_lineas`  
+  DROP FOREIGN KEY `prol_ofertaCosteLinea`;
