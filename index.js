@@ -106,6 +106,9 @@ var mensajes_router = require('./lib/mensajes/mensajes_controller');
 //DOCUMENTACION
 var documentacion_router = require('./lib/documentacion/documentacion_controller');
 
+//propuestas de ofertas
+var propuestas_router = require('./lib/propuestas/propuestas_controller');
+
 
 
 
@@ -274,6 +277,8 @@ app.use('/api/mensajes', mensajes_router);
 //DOCUMENTACION
 app.use('/api/documentacion', documentacion_router);
 
+//PROPUESTAS 
+app.use('/api/propuestas', propuestas_router);
 
 
 
