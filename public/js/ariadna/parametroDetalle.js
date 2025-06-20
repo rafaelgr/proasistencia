@@ -110,6 +110,7 @@ function admData() {
     self.parametroId = ko.observable();
     self.articuloMantenimiento = ko.observable();
     self.indiceCorrector = ko.observable();
+    self.limiteImpObra = ko.observable();
     self.margenMantenimiento = ko.observable();
     self.margenArquitectura = ko.observable()
     //
@@ -158,6 +159,7 @@ function loadData(data) {
     vm.articuloMantenimiento(data.articuloMantenimiento);
     vm.margenMantenimiento(data.margenMantenimiento);
     vm.indiceCorrector(data.indiceCorrector);
+    vm.limiteImpObra(data.limiteImpObra);
     vm.margenArquitectura(data.margenArquitectura);
     vm.bucket(data.bucket);
     vm.bucketRegion(data.bucket_region);
@@ -221,6 +223,7 @@ function aceptar() {
                 "margenMantenimiento": vm.margenMantenimiento(),
                 "margenArquitectura": vm.margenArquitectura(),
                 "indiceCorrector": vm.indiceCorrector(),
+                "limiteImpObra": vm.limiteImpObra(),
                 "articuloMantenimientoParaGastos": vm.sdefectId(),
                 "formaPagoGarantiasId": vm.sformaPagoId(),
                 "cuentaretencion": vm.cuentaretencion(),
