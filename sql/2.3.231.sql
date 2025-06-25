@@ -1,0 +1,17 @@
+CREATE TABLE`profesiones_departamentos` (  
+  `profesionDepartamentoId` INT(11) NOT NULL AUTO_INCREMENT,
+  `tipoProfesionId` INT(11),
+  `departamentoId` INT(11),
+  PRIMARY KEY (`profesionDepartamentoId`) ,
+  CONSTRAINT `profesionesDepartamentoProfesionFK` FOREIGN KEY (`tipoProfesionId`) REFERENCES`tipos_profesionales`(`tipoProfesionalId`),
+  CONSTRAINT `profesionesDepartamentosDepartamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES`departamentos`(`departamentoId`)
+);
+
+
+ALTER TABLE `profesiones_departamentos` DROP FOREIGN KEY `profesionesDepartamentoProfesionFK`;
+
+ALTER TABLE `profesiones_departamentos` ADD CONSTRAINT `profesionesDepartamentoProfesionFK` FOREIGN KEY (`tipoProfesionId`) REFERENCES `tipos_profesionales`(`tipoProfesionalId`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE `profesiones_departamentos` DROP FOREIGN KEY `profesionesDepartamentosDepartamentoFK`;
+
+ALTER TABLE `profesiones_departamentos` ADD CONSTRAINT `profesionesDepartamentosDepartamentoFK` FOREIGN KEY (`departamentoId`) REFERENCES `departamentos`(`departamentoId`) ON UPDATE CASCADE ON DELETE CASCADE;

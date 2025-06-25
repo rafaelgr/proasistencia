@@ -3,11 +3,12 @@ tipoProfesionalDetalle.js
 Funciones js par la página TipoProfesionalDetalle.html
 ---------------------------------------------------------------------------*/
 var empId = 0;
-
+let usuario;
 datePickerSpanish(); // see comun.js
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -20,6 +21,8 @@ function initForm() {
     $("#frmTipoProfesional").submit(function() {
         return false;
     });
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamentos();
 
     empId = gup('tipoProfesionalId');
     if (empId != 0) {
@@ -52,6 +55,14 @@ function admData() {
     var self = this;
     self.tipoProfesionalId = ko.observable();
     self.nombre = ko.observable();
+
+     //combo departamentos
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 }
 
 function loadData(data) {
@@ -64,13 +75,19 @@ function datosOK() {
         rules: {
             txtNombre: {
                 required: true
-            }
+            },
+            cmbDepartamentosTrabajo: {
+                required: true
+            },
         },
         // Messages for form validation
         messages: {
             txtNombre: {
                 required: "Debe dar un nombre"
-            }
+            },
+              cmbDepartamentosTrabajo: {
+                required: "Debe elegir al menos un departamento"
+            },
         },
         // Do not change code below
         errorPlacement: function(error, element) {
@@ -90,7 +107,10 @@ function aceptar() {
             tipoProfesional: {
                 "tipoProfesionalId": vm.tipoProfesionalId(),
                 "nombre": vm.nombre()
-            }
+            },
+             departamentos: {
+                "departamentos": vm.elegidosDepartamentos()
+            },
         };
         if (empId == 0) {
             $.ajax({
@@ -144,3 +164,19 @@ function salir() {
     return mf;
 }
 
+
+function loadDepartamentos(departamentosIds) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
+        var ids = [];
+        if (err) return;
+        var departamentos = data;
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentosIds) {
+            vm.elegidosDepartamentos(departamentosIds);
+            for ( var i = 0; i < departamentosIds.length; i++ ) {
+                ids.push(departamentosIds[i].departamentoId)
+            }
+            $("#cmbDepartamentosTrabajo").val(ids).trigger('change');
+        }
+    });
+}
