@@ -30,9 +30,10 @@ function initForm() {
                 tipoProfesionalId: empId
             }
             // hay que buscar ese elemento en concreto
+            let url =  myconfig.apiUrl + "/api/tipos_profesional/departamentos/" + empId;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/tipos_profesional/" + empId,
+            url: url,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -66,8 +67,13 @@ function admData() {
 }
 
 function loadData(data) {
-    vm.tipoProfesionalId(data.tipoProfesionalId);
-    vm.nombre(data.nombre);
+    var ids = [];
+    vm.tipoProfesionalId(data[0].tipoProfesionalId);
+    vm.nombre(data[0].nombre);
+    for(let d of data) {
+        ids.push(d.departamentoId)
+    }
+    loadDepartamentos(ids)
 }
 
 function datosOK() {
@@ -121,7 +127,7 @@ function aceptar() {
                 data: JSON.stringify(data),
                 success: function(data, status) {
                     // hay que mostrarlo en la zona de datos
-                    loadData(data);
+                    //loadData(data);
                     // Nos volvemos al general
                     var url = "TipoProfesionalGeneral.html?TipoProfesionalId=" + vm.tipoProfesionalId();
                     window.open(url, '_self');
@@ -140,7 +146,7 @@ function aceptar() {
                 data: JSON.stringify(data),
                 success: function(data, status) {
                     // hay que mostrarlo en la zona de datos
-                    loadData(data);
+                    //loadData(data);
                     // Nos volvemos al general
                     var url = "TipoProfesionalGeneral.html?TipoProfesionalId=" + vm.tipoProfesionalId();
                     window.open(url, '_self');
@@ -167,16 +173,14 @@ function salir() {
 
 function loadDepartamentos(departamentosIds) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
-        var ids = [];
         if (err) return;
         var departamentos = data;
         vm.posiblesDepartamentos(departamentos);
         if(departamentosIds) {
             vm.elegidosDepartamentos(departamentosIds);
-            for ( var i = 0; i < departamentosIds.length; i++ ) {
-                ids.push(departamentosIds[i].departamentoId)
-            }
-            $("#cmbDepartamentosTrabajo").val(ids).trigger('change');
+            $("#cmbDepartamentosTrabajo").val(departamentosIds).trigger('change');
+        } else {
+             $("#cmbDepartamentosTrabajo").val([]).trigger('change');
         }
     });
 }

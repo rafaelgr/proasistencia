@@ -1889,7 +1889,7 @@ function initTablaContratosLineas() {
 
             }
         }, {
-            data: "importe",
+            data: "coste",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -1901,7 +1901,7 @@ function initTablaContratosLineas() {
                 return numeral(data).format('0,0.00');
             }
         }, {
-            data: "coste",
+            data: "importe",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
