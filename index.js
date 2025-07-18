@@ -182,6 +182,45 @@ app.get('/config', (req, res) => {
     });
 });
 
+app.get('/abrir-app', (req, res) => {
+  const parteId = req.query.parteId;
+  const proveedorId = req.query.proveedorId;
+  const mensajeId = req.query.mensajeId;
+
+  let deepLink = '';
+
+  if (parteId && proveedorId) {
+    deepLink = `comercializa2://open/tabs-parte/info-parte-tab/${parteId}/${proveedorId}`;
+  } else if (mensajeId) {
+    deepLink = `comercializa2://open/notificacion-detalle/${mensajeId}`;
+  } else {
+    deepLink = 'https://tu-web-fallback.com';
+  }
+
+  const fallbackUrl = 'https://tu-web-de-fallback.com';
+
+  res.send(`
+    <html>
+      <head>
+        <title>Abriendo la app...</title>
+        <script>
+          function openApp() {
+            window.location = "${deepLink}";
+            setTimeout(function() {
+              window.location = "${fallbackUrl}";
+            }, 2000);
+          }
+          window.onload = openApp;
+        </script>
+      </head>
+      <body>
+        <p>Intentando abrir la aplicación...</p>
+      </body>
+    </html>
+  `);
+});
+
+
 
 
 // -- general GET (to know if the server is up and runnig)
