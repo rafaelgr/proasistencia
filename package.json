@@ -38,7 +38,7 @@
     "moment": "^2.24.0",
     "multer": "^1.1.0",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3",
+    "mysql2": "^3.9.8",
     "nodemailer": "^6.6.3",
     "numeral": "^1.5.3",
     "request": "^2.88.2",
