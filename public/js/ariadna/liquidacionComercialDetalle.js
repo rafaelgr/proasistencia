@@ -123,9 +123,16 @@ function initTablaliquidaciones() {
         }, {
             data: "porComer"
         }, {
+            data: "porComer2",
+            render: function(data, type, row) {
+                var d = row.comision2
+                if(d == 0) return 0;
+                return data;
+            }
+        },  {
             data: "anticipo"
         }, {
-            data: "comision"
+            data: "totComision"
         }]
     });
 }

@@ -105,54 +105,69 @@ function admData() {
 
 
 function initTablaPrefacturas() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaPrefacturas = $('#dt_prefactura').DataTable({
-        bSort: false,
-        /* "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>", */
-        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
+        bSort: true,
+        "aoColumnDefs": [
+            { "sType": "date-uk", "aTargets": [5] },
+        ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, {
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
         ],
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-       /*  "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Prefacturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        }, */
+
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -165,6 +180,47 @@ function initTablaPrefacturas() {
         drawCallback: function (oSettings) {
             responsiveHelper_dt_basic.respond();
         },
+        footerCallback: function ( row, data, start, end, display ) {
+
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+           
+            // Total over all pages
+            total6 = api
+            .column( 6, {filter:'applied'} )
+            .data()
+            .reduce( function (a, b) {
+                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+            }, 0 );
+
+        
+
+         // Total over all pages
+         total7 = api
+         .column( 7, {filter:'applied'} )
+         .data()
+         .reduce( function (a, b) {
+             return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+         }, 0 );
+
+         // Update footer
+         $( api.columns(6).footer() ).html(
+            numeral(total6).format('0,0.00')
+            
+        );
+        $( api.columns(7).footer() ).html(
+            numeral(total7).format('0,0.00')
+            
+        );
+
+     },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -240,6 +296,23 @@ function initTablaPrefacturas() {
             }
         }]
     });
+
+     //function sort by date
+     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
+    });
+
 
     // Apply the filter
     $("#dt_prefactura thead th input[type=text]").on('keyup change', function () {

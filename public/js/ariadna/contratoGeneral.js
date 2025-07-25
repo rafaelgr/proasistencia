@@ -12,6 +12,14 @@ var dataContratos;
 var contratoId;
 var usuario;
 var departamento;
+var filtros = {
+    cerrados: null,
+    preaviso: null
+    
+};
+var tablaContratos;
+var val = null;
+var c = '';
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -25,26 +33,34 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
+    initTablaContratos();
+    //
+    var f = getCookie('filtro_contratos');
+    if(f != undefined) {
+        filtros = JSON.parse(f);
+    }
     
+    var conservaFiltro = gup("ConservaFiltro");
+    var cleaned = gup("cleaned");
+    if(conservaFiltro != 'true' && cleaned != 'true') limpiarFiltros();
+
     recuperaDepartamento(function(err, data) {
         if(err) return;
-        initTablaContratos();
-
         contratoId = gup('ContratoId');
-        if (contratoId !== '') {
-            cargarContratos()(contratoId);
-
-        } else {
-            cargarContratos()();
-        }
+    
+        compruebaFiltros(contratoId);
     });
 
      //Evento asociado al cambio de departamento
-     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        cambioDepartamento(this.value);
-        vm.sdepartamentoId(this.value);
-        cargarContratos()();
+     $("#cmbDepartamentosTrabajo").on('change', function (e, a) {
+            cambioDepartamento(this.value);
+            vm.sdepartamentoId(this.value);
+            if(val) {
+                //val = this.value;
+                compruebaFiltros(null);
+            } else {
+                val = this.value;
+            }
     });
 
     // de smart admin
@@ -53,6 +69,8 @@ function initForm() {
     //
     $('#btnBuscar').click(buscarContratos());
     $('#btnAlta').click(crearContrato());
+    $('#btnLimpiar').click(limpiarFiltros);
+    $('#btnPrint').click(imprimirInforme);
     $('#frmBuscar').submit(function () {
         return false
     });
@@ -102,6 +120,31 @@ function initForm() {
     })
 }
 
+function compruebaFiltros(id) {
+    if(filtros) {
+            $('#chkCerrados').prop('checked', filtros.cerrados);
+            $('#chkPreaviso').prop('checked', filtros.preaviso);
+            if(id > 0) {
+                setTimeout(function() {
+                    cargarContratos()(id);
+                }, 1000);
+               
+            } else {
+                cargarContratos()(id,  filtros);
+            }
+    } else {
+        cargarContratos()(id, filtros);
+    }
+}
+
+var limpiarFiltros = function() {
+    var returnUrl = "ContratoGeneral.html?cleaned=true"
+    deleteCookie('filtro_contratos');
+    tablaContratos.state.clear();
+    window.open(returnUrl, '_self');
+}
+
+
 function admData() {
     var self = this;
     
@@ -115,6 +158,23 @@ function admData() {
 
 
 function initTablaContratos() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 7) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        return data;
+                    }
+                }
+            }
+        }
+    };
     tablaContratos = $('#dt_contrato').DataTable({
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
@@ -134,61 +194,47 @@ function initTablaContratos() {
                 $(nRow).attr('style', 'background: #99DACF'); 
             }
         },
+        "stateSave": true,
+        "stateLoaded": function (settings, state) {
+            state.columns.forEach(function (column, index) {
+                $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
+             });
+        },
         bSort: true,
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [3,4] },
         ],
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Contratos Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Contratos filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Contratos filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Contratos filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Contratos filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contrato'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+         
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
+           
         },
         language: {
             processing: "Procesando...",
@@ -286,7 +332,7 @@ function initTablaContratos() {
     // Hide some columns by default
     tablaContratos.columns(7).visible(false);
     tablaContratos.columns(8).visible(false);
-    tablaContratos.columns(9).visible(false);
+    //tablaContratos.columns(9).visible(false);
 }
 
 function datosOK() {
@@ -320,7 +366,7 @@ function loadTablaContratos(data) {
 
 function buscarContratos() {
     var mf = function () {
-        cargarContratos()();
+        compruebaFiltros(null);
     };
     return mf;
 }
@@ -368,12 +414,21 @@ function deleteContrato(id) {
 }
 
 function editContrato(id) {
+    var cerrados = $('#chkCerrados').prop('checked');
+    var preaviso = $('#chkPreaviso').prop('checked');
+    filtros = 
+        {
+            cerrados: cerrados,
+            preaviso: preaviso
+        }
+    setCookie("filtro_contratos", JSON.stringify(filtros), 1);
     var url = "ContratoDetalle.html?ContratoId=" + id;
     window.open(url, '_new');
 }
 
 function cargarContratos() {
-    var mf = function (id) {
+    var mf = function (id, filtros) {
+        var url = myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
         if (id) {
             var data = {
                 id: contratoId
@@ -399,13 +454,10 @@ function cargarContratos() {
                 }
             });
         } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/contratos/usuario/departamento/activos/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
+            if(filtros.cerrados) {
+                url =  myconfig.apiUrl + "/api/contratos/todos/usuario/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
+                llamadaAjax("GET", url, null, function(err, data){
+                    if (err) return;
                     data.forEach(function(d) {
                         if(d.preaviso == null) {
                             d.preaviso = 0;
@@ -413,14 +465,36 @@ function cargarContratos() {
                         d.plazo = restarDias(d.fechaFinal, d.preaviso);
                         d.plazo = moment(d.plazo).format('YYYY-MM-DD');
                     }, this);
-                    
                     loadTablaContratos(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+                });
+
+            } 
+            else if(filtros.preaviso){
+                url =  myconfig.apiUrl + "/api/contratos/preaviso/usuario/departamento/todos/" + usuario.usuarioId + "/" + vm.sdepartamentoId();
+                llamadaAjax("GET", url, null, function(err, data){
+                    if (err) return;
+                    data.forEach(function(d) {
+                        if(d.preaviso == null) {
+                            d.preaviso = 0;
+                        }
+                        d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                        d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                    }, this);
+                    loadTablaContratos(data);
+                });
+            } else {
+                llamadaAjax("GET", url, null, function(err, data){
+                    if (err) return;
+                    data.forEach(function(d) {
+                        if(d.preaviso == null) {
+                            d.preaviso = 0;
+                        }
+                        d.plazo = restarDias(d.fechaFinal, d.preaviso);
+                        d.plazo = moment(d.plazo).format('YYYY-MM-DD');
+                    }, this);
+                    loadTablaContratos(data);
+                });
+            }
         }
     };
     return mf;
@@ -481,34 +555,8 @@ function restarDias(fecha, dias){
     form.submit();
 }; */
 
-function cargarContratos2() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaContratos(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
-}
 
-function cargarContratos2All() {
-    $.ajax({
-        type: "GET",
-        url: myconfig.apiUrl + "/api/contratos/all",
-        dataType: "json",
-        contentType: "application/json",
-        success: function (data, status) {
-            loadTablaContratos(data);
-        },
-        error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
-    });
+imprimirInforme = function () {
+    var url = "InfContratos.html";
+    window.open(url, '_blank');
 }

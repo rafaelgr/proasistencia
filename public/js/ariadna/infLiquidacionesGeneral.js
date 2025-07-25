@@ -342,18 +342,14 @@ var rptLiquidacionGeneralParametros = function () {
     var hFecha = vm.hFecha();
     var contratoId = vm.contratoId();
     var departamentoId = vm.sdepartamentoId();
-    sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,"
+    var sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) + sum(lf.comision2) AS totComision,"
     sql += "'" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha, '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha";
     sql += " FROM liquidacion_comercial AS lf";
     sql += " LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId";
     sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
     sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
     sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = lf.contratoId";
-    if(tipoComercialId == 1) {
-        sql += " WHERE f.fecha >= '" + dFecha +  "' AND f.fecha <= '" + hFecha + "'";
-    } else {
-        sql += " WHERE cnt.fechaInicio >= '" + dFecha + "' AND cnt.fechaInicio <= '" + hFecha + "'";
-    }
+    sql += " WHERE lf.dFecha >= '" + dFecha + "' AND lf.hFecha <= '" + hFecha + "'";
     if (comercialId) {
         sql += " AND lf.comercialId IN (" + comercialId + ")";
     }    

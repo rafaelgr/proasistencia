@@ -438,6 +438,7 @@ function loadSeriesFact(empresaId) {
 var rptFacturaParametros = function () {
     if(!datosOK()) return;
     var clienteId = vm.sclienteId();
+    var clienteNombre = $('#txtCliente').val();
     var empresaId = vm.sempresaId();
     var departamentoId = vm.sdepartamentoId();
     var dFecha = moment(vm.dFecha(), "DD/MM/YYYY").format('YYYY-MM-DD');
@@ -449,6 +450,7 @@ var rptFacturaParametros = function () {
     if(serie.length == 0) serie = 100;
     if(!tipoIvaId) tipoIvaId = 0;
     if(!clienteId) clienteId = 0;
+    if(clienteNombre == '') clienteId = 0
     var url = myconfig.apiUrl + "/api/facturas/facturas/crea/json/" + dFecha +"/" + hFecha +  "/" + clienteId + "/" + empresaId + "/" + tipoIvaId + "/" + conta +"/" + orden + "/" + serie + "/" + departamentoId + "/" + usuario.usuarioId
 
     llamadaAjax("POST", url, null, function (err, data) {

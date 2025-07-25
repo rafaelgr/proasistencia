@@ -279,13 +279,40 @@ function buscarFacturas() {
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
-                loadTablaFacturas(data);
-                // mostramos el botén de alta
-                $("#btnAlta").show();
-                $('#checkMain').prop('checked', false);
                 //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
                 if(data) {
+                    if (data.error) {
+                        var cuentas = JSON.stringify(data.error);
+
+                        // Insertar salto de línea antes de cada "cuentacontable" y reemplazar los caracteres innecesarios
+                        cuentas = cuentas.replace(/cuentacontable/g, "\r\ncuentacontable")
+                                        .replace(/cuentaVentas/g, "\r\ncuentaVentas")
+                                        .replace(/[\]\[{()}"]/g, '')  // Eliminar los corchetes y comillas
+                                        //.replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
+
+                        // Mensaje de error
+                        mensError("Falta la cuenta contable en las siguientes facturas " + cuentas + ". Se ha generado un archivo de texto con esta información.");
+
+                        // Crear un archivo de texto con el contenido formateado
+                        var blob = new Blob([cuentas], { type: "text/plain;charset=utf-8" });
+
+                        // Crear un enlace para descargar el archivo
+                        var enlace = document.createElement("a");
+                        enlace.href = URL.createObjectURL(blob);
+                        enlace.download = "archivo_generado.txt";
+
+                        // Agregar el enlace al DOM, hacer clic y luego eliminarlo
+                        document.body.appendChild(enlace);
+                        enlace.click();
+                        document.body.removeChild(enlace);
+                        return;
+
+                    }             
                     if(data.length > 0) {
+                        loadTablaFacturas(data);
+                        // mostramos el botón de alta
+                        $("#btnAlta").show();
+                        $('#checkMain').prop('checked', false);
                         for(var i = 0; i < data.length; i++) {
                             if(data[i].total == 0) {
                                 facturasCero.push(data[i].vNum);

@@ -3,19 +3,10 @@ preantturaGeneral.js
 Funciones js par la página PreantturaGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
 var dataAnticipos;
 var antproveId;
 var usuario;
 
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
 
 
 function initForm() {
@@ -85,60 +76,79 @@ function admData() {
 } 
 
 function initTablaAnticipos() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7 || column === 8) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 10) {
+                            return "";
+                        } else {
+                            return data;
+                        };
+                    }
+                }
+            }
+        }
+    };
     tablaAnticipos = $('#dt_anticipo').DataTable({
         bSort: true,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        responsive: true,
+        paging: true,
+        "pageLength": 100,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Anticipos Seleccionados",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_anticipo'), breakpointDefinition);
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
+        columnDefs: [
+            {
+                targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [5],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -178,10 +188,7 @@ function initTablaAnticipos() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
         },{
             data: "importeServiciado",
             render: function (data, type, row) {
@@ -215,13 +222,13 @@ function initTablaAnticipos() {
         }]
     });
 
-    // Apply the filter
-    $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
-        tablaAnticipos
-            .column($(this).parent().index() + ':visible')
-            .search(this.value)
-            .draw();
-    });
+   // Apply the filter
+   $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
+    tablaAnticipos
+        .column($(this).parent().index() + ':visible')
+        .search(this.value)
+        .draw();
+});
 
     
 }
@@ -279,19 +286,20 @@ function deleteAnticipo(id) {
         contentType: "application/json",
         data: null,
         success: function (data, status) {
+            var mens = "¿Qué desea hacer con este registro?";
+            mens += "<ul>"
+            mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizado, con lo que puede ser contabilizado de nuevo</li>";
+            mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo.</li>";
+            mens += "</ul>"
             if(data.facproveId) {
-                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
-            } else {
-                 mens = "¿Realmente desea borrar este registro?";
-            }
-            // mensaje de confirmación
-    
+                mens += " ¡¡¡¡ATENCION!!! Este registro tiene facturas asociadas.";
+            } 
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Aceptar][Cancelar]'
+        buttons: '[Cancelar][Descontabilizar anticipo][Borrar anticipo]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
+        if (ButtonPressed === "Borrar anticipo") {
             var data = {
                 id: antproveId
             }
@@ -328,6 +336,19 @@ function deleteAnticipo(id) {
                 }
             });
         }
+        if (ButtonPressed === "Descontabilizar anticipo") {
+            var data = { facturaId: id };
+            llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposProveedores/descontabilizar/" + id, null, function (err, data) {
+                if (err) return;
+                $('#chkTodos').prop('checked',false);
+                if(data.changedRows > 0) {
+                    mostrarMensajeAnticipoDescontabilizado();
+                } else {
+                    mostrarMensajeAnticipoNoCambiado();
+                }
+                buscarFacturas()();
+            });
+        }
         if (ButtonPressed === "Cancelar") {
             // no hacemos nada (no quiere borrar)
         }
@@ -356,7 +377,7 @@ function cargarAnticipos() {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/" + antproveId,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/serviciado/" + antproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -483,3 +504,15 @@ imprimirAnticipo = function () {
     var url = "InfAnticiposProveedores.html";
     window.open(url, '_blank');
 }
+
+var mostrarMensajeAnticipoDescontabilizado = function () {
+    var mens = "El anticipo se ha descontabilizado correctamente.";
+    mensNormal(mens);
+}
+
+
+
+var mostrarMensajeAnticipoNoCambiado = function () {
+    var mens = "El anticipo NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}   

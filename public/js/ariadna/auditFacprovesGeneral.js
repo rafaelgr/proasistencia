@@ -70,7 +70,8 @@ function admData() {
 function initTablaFacturas() {
     tablaFacturas = $('#dt_facturas').DataTable({
         bSort: true,
-       
+        paging: true,
+        "pageLength": 100,
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.

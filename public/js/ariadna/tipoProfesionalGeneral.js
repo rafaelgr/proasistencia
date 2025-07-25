@@ -34,6 +34,8 @@ function initForm() {
     //});
     //
     initTablaTiposProfesional();
+
+    
     // comprobamos parámetros
     tipoProfesionalId = gup('tipoProfesionalId');
     if (tipoProfesionalId !== '') {
@@ -63,8 +65,10 @@ function initForm() {
 }
 
 function initTablaTiposProfesional() {
-    tablaCarro = $('#dt_tipoProfesional').dataTable({
+    tablaCarro = $('#dt_tipoProfesional').DataTable({
         autoWidth: true,
+        paging: true,
+        "pageLength": 100,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -98,9 +102,18 @@ function initTablaTiposProfesional() {
             }
         },
         data: dataTiposProfesional,
-        columns: [{
+        columns: [
+            {
             data: "nombre"
-        }, {
+        },  
+        {
+            data: 'departamentos',
+            render: function(data, type, row) {
+                var departamentosData = data.map(i => `${i.nombreDepartamento}`).join(", ");
+                return departamentosData;
+            }
+        },
+                {
             data: "tipoProfesionalId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteTipoProfesional(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -155,7 +168,7 @@ function buscarTiposProfesional() {
         // enProfesionalr la consulta por la red (AJAX)
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/tipos_Profesional/?nombre=" + aBuscar,
+            url: myconfig.apiUrl + "/api/tipos_Profesional//departamentos/muestra/todos/?nombre=" + aBuscar,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -223,9 +236,11 @@ function editTipoProfesional(id) {
 
 
 buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/tipos_Profesional/?nombre=*";
+    var url = myconfig.apiUrl + "/api/tipos_Profesional/departamentos/muestra/todos/?nombre=*";
     llamadaAjax("GET", url, null, function(err,data){
         if (err) return;
         loadTablaTiposProfesional(data);
     })
 }
+
+ 

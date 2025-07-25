@@ -85,6 +85,7 @@ function initForm() {
     });
     loadArtMan();
     loadArtManGas();
+    loadFormasPago();
 
     $.ajax({
         type: "GET",
@@ -100,13 +101,18 @@ function initForm() {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+
+    $("#cmbFormasPago").select2(select2Spanish());
 }
 
 function admData() {
     var self = this;
     self.parametroId = ko.observable();
     self.articuloMantenimiento = ko.observable();
+    self.indiceCorrector = ko.observable();
+    self.limiteImpObra = ko.observable();
     self.margenMantenimiento = ko.observable();
+    self.margenArquitectura = ko.observable()
     //
     self.sartManId = ko.observable();
     self.sdefectId = ko.observable();
@@ -125,6 +131,12 @@ function admData() {
     self.bucketFolder = ko.observable();
     self.identityPool = ko.observable();
     self.raizUrl = ko.observable();
+    //
+    self.bucketDocum = ko.observable();
+    self.bucketRegionDocum = ko.observable();
+    self.bucketFolderDocum = ko.observable();
+    self.identityPoolDocum = ko.observable();
+    self.raizUrlDocum = ko.observable();
 
     //oneSignal
     self.tituloPush = ko.observable();
@@ -132,17 +144,34 @@ function admData() {
     self.restApi = ko.observable();
     self.gcm = ko.observable();
 
+    //garantias
+     //
+     self.formaPagoId = ko.observable();
+     self.sformaPagoId = ko.observable();
+     //
+     self.posiblesFormasPago = ko.observableArray([]);
+     self.elegidosFormasPago = ko.observableArray([]);
+
 }
 
 function loadData(data) {
     vm.parametroId(data.parametroId);
     vm.articuloMantenimiento(data.articuloMantenimiento);
     vm.margenMantenimiento(data.margenMantenimiento);
+    vm.indiceCorrector(data.indiceCorrector);
+    vm.limiteImpObra(data.limiteImpObra);
+    vm.margenArquitectura(data.margenArquitectura);
     vm.bucket(data.bucket);
     vm.bucketRegion(data.bucket_region);
     vm.bucketFolder(data.bucket_folder);
     vm.identityPool(data.identity_pool);
     vm.raizUrl(data.raiz_url);
+    //
+    vm.bucketDocum(data.bucket_docum);
+    vm.bucketRegionDocum(data.bucket_region_docum);
+    vm.bucketFolderDocum(data.bucket_folder_docum);
+    vm.identityPoolDocum(data.identity_pool_docum);
+    vm.raizUrlDocum(data.raiz_url_docum);
     //
     vm.tituloPush(data.tituloPush);
     vm.appId(data.appId);
@@ -153,6 +182,7 @@ function loadData(data) {
     loadArtManGas(data.articuloMantenimientoParaGastos);
 
     vm.cuentaretencion(data.cuentaretencion);
+    loadFormasPago(data.formaPagoGarantiasId);
 }
 
 function datosOK() {
@@ -191,13 +221,22 @@ function aceptar() {
                 "parametroId": 0,
                 "articuloMantenimiento": vm.sartManId(),
                 "margenMantenimiento": vm.margenMantenimiento(),
+                "margenArquitectura": vm.margenArquitectura(),
+                "indiceCorrector": vm.indiceCorrector(),
+                "limiteImpObra": vm.limiteImpObra(),
                 "articuloMantenimientoParaGastos": vm.sdefectId(),
+                "formaPagoGarantiasId": vm.sformaPagoId(),
                 "cuentaretencion": vm.cuentaretencion(),
                 "bucket":  vm.bucket(),
                 "bucket_region":  vm.bucketRegion(),
                 "bucket_folder":  vm.bucketFolder(),
                 "identity_pool": vm.identityPool(),
                 "raiz_url": vm.raizUrl(),
+                "bucket_docum":  vm.bucketDocum(),
+                "bucket_region_docum":  vm.bucketRegionDocum(),
+                "bucket_folder_docum":  vm.bucketFolderDocum(),
+                "identity_pool_docum": vm.identityPoolDocum(),
+                "raiz_url_docum": vm.raizUrlDocum(),
                 "appId": vm.appId(),
                 "gcm": vm.gcm(),
                 "tituloPush": vm.tituloPush(),
@@ -269,5 +308,14 @@ function loadArtManGas(id) {
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
+    });
+}
+
+function loadFormasPago(formaPagoId) {
+    llamadaAjax("GET", "/api/formas_pago", null, function (err, data) {
+        if (err) return;
+        var formasPago = [{ formaPagoId: 0, nombre: "" }].concat(data);
+        vm.posiblesFormasPago(formasPago);
+        $("#cmbFormasPago").val([formaPagoId]).trigger('change');
     });
 }

@@ -11,6 +11,7 @@ var dataContratosComerciales;
 var dataClientes;
 var contratoComercialId;
 var dataProveedorAsc;
+var dataComercialCorreos;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -23,6 +24,7 @@ var datosCambioColaborador;
 var dataAgentesColaboradores;
 var nifGuardado;
 var firmanteValido = true;
+var lineaEnEdicion = false;
 
 datePickerSpanish(); // see comun.js
 
@@ -45,20 +47,29 @@ function initForm() {
 
     $('#frmCambioAgente').submit(function () {
         return false;
-    });frmProveedorAsc
+    });
 
     
     $('#frmProveedorAsc').submit(function () {
         return false;
-    });ProveedorAsc_form
+    });
 
     $('#ProveedorAsc_form').submit(function () {
+        return false;
+    });
+
+    $('#frmComercialCorreos').submit(function () {
+        return false;
+    });
+
+    $('#linea-form').submit(function () {
         return false;
     });
 
     initTablaContratosComerciales();
     initTablaClientes();
     initTablaProveedorAsc();
+    initTablaComercialCorreos();
 
     // select2 things
     $("#cmbTiposComerciales").select2(select2Spanish());
@@ -74,20 +85,27 @@ function initForm() {
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
+    $("#cmbTiposViaRp").select2(select2Spanish());
+    loadTiposViaRp();
+    $("#cmbTiposViaRepresentante").select2(select2Spanish());
+    loadTiposViaRepresentante();
     // select2 things
     $("#cmbTarifas").select2(select2Spanish());
     loadTarifas();
     // select2 things
     $('#cmbProveedores').select2(select2Spanish());
 
+    $('#cmbEmpresas').select2();
+    loadEmpresas(null);
+
     $("#cmbAscComerciales").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioAscColaborador(e.added);
     });
 
-    $("#txtNif").on('blur', function () {
+   /*  $("#txtNif").on('blur', function () {
        vm.dniFirmante(vm.nif());
-    });
+    }); */
 
     $("#txtNombre").on('blur', function () {
         vm.firmante(vm.nombre());
@@ -139,7 +157,7 @@ function initForm() {
 
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtNif').val(nif);
+            vm.nif(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
@@ -147,7 +165,7 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-                //no hacemos nada
+                vm.dniFirmante(nif);
             } else {
                 mensError('El nif introducido no tiene un formato valido');
                 $('#txtNif').val('');
@@ -161,7 +179,7 @@ function initForm() {
 
         if(nif != "") {
             nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtDniFirmante').val(nif);
+            vm.dniFirmante(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
@@ -169,7 +187,6 @@ function initForm() {
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
             if(esNif || esCif) {
-              
                 firmanteValido = true;
             } else {
                 mensError('El DNI del firmante habitual introducido no tiene un formato valido');
@@ -177,6 +194,65 @@ function initForm() {
                 //$('#txtDniFirmante').val('');
             }
         }
+    });
+
+    $("#txtDniRp").on('change', function (e) {
+        var nif = $("#txtDniRp").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            vm.dniRp(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+               
+            } else {
+                mensError('El DNI del recurso preventivo introducido no tiene un formato valido');
+                //$('#txtNif').val('');
+            }
+        }
+    });
+
+    $("#txtDniRepresentante").on('change', function (e) {
+        var nif = $("#txtDniRepresentante").val();
+        if(!nif || nif == "") return;
+
+        if(nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+            vm.dniRepresentante(nif);
+
+            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
+            var esNif = patron.test(nif);
+
+            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
+            var esCif = patron2.test(nif);
+            if(esNif || esCif) {
+               
+            } else {
+                mensError('El DNI del representante introducido no tiene un formato valido');
+                //$('#txtNif').val('');
+            }
+        }
+    });
+
+    
+
+    $("#cmbTiposComerciales").on('change', function (e) {
+        //SI EL TIPO COMERCIAL ELEGIDO ES DIFERENTE DE 
+        //JEFE DE OBRAS OCUYLTAMOS LOS CAMPOS DE RECURSO PREVENTIVO
+         //alert(JSON.stringify(e.added));
+         if (e.added)  {
+            if(e.added.id != 5) {
+                $('#esJObras').hide();
+            } else {
+                $('#esJObras').show();
+            }
+         }
     });
 
     empId = gup('ComercialId');
@@ -221,6 +297,21 @@ function initForm() {
                     success: function (data, status) {
                         // hay que mostrarlo en la zona de datos
                         loadTablaClientes(data);
+                    },
+                                    error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+                });
+                $.ajax({
+                    type: "GET",
+                    url: myconfig.apiUrl +  "/api/comerciales/obten/correos/empresa/" + empId,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: null,
+                    success: function (data, status) {
+                        // hay que mostrarlo en la zona de datos
+                        loadTablaComercialCorreos(data);
                     },
                                     error: function (err) {
                     mensErrorAjax(err);
@@ -326,6 +417,46 @@ function admData() {
      //
      self.posiblesProveedores = ko.observableArray([]);
      self.elegidosProveedores = ko.observableArray([]);
+
+     //RECURSO PRVENTIVO
+    self.nombreRp = ko.observable();
+    self.dniRp = ko.observable();
+    self.direccionRp = ko.observable();
+    self.poblacionRp = ko.observable();
+    self.categoriaProfesional = ko.observable();
+    self.codPostalRp = ko.observable();
+    self.provinciaRp = ko.observable();
+    //
+    self.tipoViaRpId = ko.observable();
+    self.stipoViaRpId = ko.observable();
+    //
+    self.posiblesTiposViaRp = ko.observableArray([]);
+    self.elegidosTiposViaRp = ko.observableArray([]);
+    self.nivelFormativoSalud = ko.observable();
+
+    //REPRESENTANTE
+    self.nombreRepresentante = ko.observable();
+    self.dniRepresentante = ko.observable();
+    self.direccionRepresentante = ko.observable();
+    self.poblacionRepresentante = ko.observable();
+    self.codPostalRepresentante = ko.observable();
+    self.provinciaRepresentante = ko.observable();
+    //
+    self.stipoViaRepresentanteId = ko.observable();
+    //
+    self.posiblesTiposViaRepresentante = ko.observableArray([]);
+    self.elegidosTiposViaRepresentante = ko.observableArray([]);
+
+     //
+     self.empresaId = ko.observable();
+     self.sempresaId = ko.observable();
+     //
+     self.posiblesEmpresas = ko.observableArray([]);
+     self.elegidosEmpresas = ko.observableArray([]);
+     //
+     self.comercialCorreoId = ko.observable()
+     self.correo = ko.observable();
+     self.password = ko.observable()
 }
 
 function loadData(data, desdeLoad) {
@@ -360,7 +491,31 @@ function loadData(data, desdeLoad) {
     vm.antiguoColaboradorNombre(data.colaborador);
 
     loadTiposComerciales(data.tipoComercialId);
+    //si el tipo comercial es diferente de jefe de obras ocultamos los campos de recurso preventivo
+    $('#esJObras').show();
+    if(data.tipoComercialId != 5) $('#esJObras').hide();
     loadAscComerciales(data.ascComercialId);
+    //recurso preventivo
+    vm.nombreRp(data.nombreRp);
+    vm.dniRp(data.dniRp);
+    vm.direccionRp(data.direccionRp);
+    vm.poblacionRp(data.poblacionRp);
+    vm.codPostalRp(data.codPostalRp);
+    vm.provinciaRp(data.provinciaRp);
+    vm.categoriaProfesional(data.categoriaProfesional);
+    vm.nivelFormativoSalud(data.nivelFormativoSalud);
+    loadTiposViaRp(data.tipoViaRpId);
+    loadTiposViaRepresentante(data.tipoViaRepresentanteId);
+
+    //representante
+    vm.nombreRepresentante(data.nombreRepresentante);;
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.nombreRepresentante(data.nombreRepresentante);
+    vm.dniRepresentante(data.dniRepresentante);
+    vm.direccionRepresentante(data.direccionRepresentante);
+    vm.poblacionRepresentante(data.poblacionRepresentante);
+    vm.codPostalRepresentante(data.codPostalRepresentante);
+    vm.provinciaRepresentante(data.provinciaRepresentante);
 
     vm.iban(data.iban);
     loadMotivosBaja(data.motivoBajaId);    
@@ -380,6 +535,9 @@ function loadData(data, desdeLoad) {
     loadTarifas(data.tarifaId);
     cambioAscColaborador(data, desdeLoad);
     loadProveedorAsc(data.proveedorId);
+
+    //PESTAÑA CORREOS SOLO VISIBLE PARA LOS JEFES DE OBRA
+    if(data.tipoComercialId != 5) $('#tabCorreo').hide();
 }
 
 function datosOK() {
@@ -501,6 +659,24 @@ function aceptar() {
                 "loginWeb": vm.loginWeb(),
                 "passWeb": vm.passWeb(),
                 "tarifaId": vm.starifaClienteId(),
+                "nombreRp": vm.nombreRp(),
+                "dniRp": vm.dniRp(),
+                "tipoViaRpId": vm.stipoViaRpId(),
+                "direccionRp": vm.direccionRp(),
+                "poblacionRp": vm.poblacionRp(),
+                "codPostalRp": vm.codPostalRp(),
+                "provinciaRp": vm.provinciaRp(),
+                "categoriaProfesional": vm.categoriaProfesional(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "nombreRepresentante": vm.nombreRepresentante(),
+                "dniRepresentante": vm.dniRepresentante(),
+                "direccionRepresentante": vm.direccionRepresentante(),
+                "poblacionRepresentante": vm.poblacionRepresentante(),
+                "codPostalRepresentante": vm.codPostalRepresentante(),
+                "provinciaRepresentante": vm.provinciaRepresentante(),
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId(),
+                "nivelFormativoSalud": vm.nivelFormativoSalud()
             }
         };
         if (empId == 0) {
@@ -893,6 +1069,43 @@ function loadTiposVia(id) {
                 }
     });
 }
+
+function loadTiposViaRp(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRp(tiposVia);
+            $("#cmbTiposViaRp").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposViaRepresentante(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_via",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var tiposVia = [{ tipoViaId: 0, nombre: "" }].concat(data);
+            vm.posiblesTiposViaRepresentante(tiposVia);
+            $("#cmbTiposViaRepresentante").val([id]).trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
 
 function loadMotivosBaja(id) {
     $.ajax({
@@ -1411,6 +1624,25 @@ function preparaObjProveedor (codigo, codmacta) {
             "observaciones": vm.observaciones(),
             "paisId": 66,
             "emitirFacturas": 0,
+            //
+            "nombreRp": vm.nombreRp(),
+            "dniRp": vm.dniRp(),
+            "tipoViaRpId": vm.stipoViaRpId(),
+            "direccionRp": vm.direccionRp(),
+            "poblacionRp": vm.poblacionRp(),
+            "codPostalRp": vm.codPostalRp(),
+            "provinciaRp": vm.provinciaRp(),
+            "categoriaProfesional": vm.categoriaProfesional(),
+            "nombreRepresentante": vm.nombreRepresentante(),
+            "dniRepresentante": vm.dniRepresentante(),
+            "nombreRepresentante": vm.nombreRepresentante(),
+            "dniRepresentante": vm.dniRepresentante(),
+            "direccionRepresentante": vm.direccionRepresentante(),
+            "poblacionRepresentante": vm.poblacionRepresentante(),
+            "codPostalRepresentante": vm.codPostalRepresentante(),
+            "provinciaRepresentante": vm.provinciaRepresentante(),
+            "tipoViaRepresentanteId": vm.stipoViaRepresentanteId(),
+            "nivelFormativoSalud": vm.nivelFormativoSalud()
         },
         departamentos: {
             "departamentos": [1,2,3,4,5,6,7,8]
@@ -1554,3 +1786,216 @@ function desvinculaProveedorAsc(proveedorId) {
     });
 }
 
+// TAB CORREOS
+function initTablaComercialCorreos() {
+    tablaCarro = $('#dt_comercialCorreos').dataTable({
+        autoWidth: true,
+        preDrawCallback: function () {
+            // Initialize the responsive datatables helper once.
+            if (!responsiveHelper_dt_basic) {
+                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comercialCorreos'), breakpointDefinition);
+            }
+        },
+        rowCallback: function (nRow) {
+            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        },
+        drawCallback: function (oSettings) {
+            responsiveHelper_dt_basic.respond();
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataComercialCorreos,
+        columns: [{
+            data: "empresaNombre"
+        }, {
+            data: "correo",
+        }, {
+            data: "password",
+           
+        }, {
+            data: "comercialCorreoId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteComercialCorreos(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLineaCorreo' onclick='editComercialCorreos(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt2  + bt1  +"</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function loadTablaComercialCorreos(data) {
+    var dt = $('#dt_comercialCorreos').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function editComercialCorreos(id) {
+    lineaEnEdicion = true;
+    
+    llamadaAjax("GET", "/api/comerciales/obten/un-correo/empresa/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataLinea(data[0]);
+    });
+}
+
+function deleteComercialCorreos(id) {
+    lineaEnEdicion = true;
+    
+    llamadaAjax("DELETE", "/api/comerciales/lineas/delete-correo/" + id, null, function (err, data) {
+        if (err) return;
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl +  "/api/comerciales/obten/correos/empresa/" + empId,
+            dataType: "json",
+            contentType: "application/json",
+            data: null,
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaComercialCorreos(data);
+            },
+                            error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+        });
+    });
+}
+
+function loadDataLinea(data) {
+    vm.comercialCorreoId(data.comercialCorreoId)
+    vm.correo(data.correo);
+    vm.password(data.password);
+    //
+    loadEmpresas(data.empresaId)
+}
+
+function nuevaLinea() {
+    limpiaDataLinea();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLinea(data) {
+    lineaEnEdicion = false
+    vm.comercialCorreoId(0)
+    vm.correo(null);
+    vm.password(null);
+    //
+    loadEmpresas(null)
+}
+
+
+function loadEmpresas(id){
+    llamadaAjax('GET', "/api/empresas", null, function (err, data) {
+        if (err) return
+        var empresas = [{
+            empresaId: null,
+            nombre: ""
+        }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        if(id) {
+            vm.empresaId(id);
+            vm.sempresaId(id);
+        }
+        $("#cmbEmpresas").val([id]).trigger('change');
+        
+    });
+}
+
+
+function aceptarLinea() {
+    if (!datosOKLineas()) {
+        return;
+    }
+    var data = {
+        comercialCorreo: {
+            comercialCorreoId: vm.comercialCorreoId(),
+            comercialId: vm.comercialId(),
+            empresaId: vm.sempresaId(),
+            departamentoId: 8,
+            correo: vm.correo(),
+            password: vm.password()
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/comerciales/lineas/nuevo-correo";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/comerciales/lineas/edita-correo";
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalLineaCorreo').modal('hide');
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl +  "/api/comerciales/obten/correos/empresa/" + empId,
+            dataType: "json",
+            contentType: "application/json",
+            data: null,
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadTablaComercialCorreos(data);
+            },
+                            error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+        });
+    });
+}
+
+function datosOKLineas() {
+    $('#linea-form').validate({
+        rules: {
+            txtCorreo: {
+                required: true
+            },
+            txtPassword: {
+                required: true
+            },
+            cmbEmpresas: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtCorreo: {
+                required: "Necesita un correo"
+            },
+            txtPassword: {
+                required: "Necesita una contraseña"
+            },
+            cmbEmpresas: {
+                required: 'Debe elegir una empresa'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#linea-form").validate().settings;
+    return $('#linea-form').valid();
+}

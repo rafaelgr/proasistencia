@@ -32,7 +32,7 @@ function initForm() {
     $("#cmbMantenedores").select2().on('change', function (e) {
         cambioMantenedor(e.added);
     }); 
-    loadMantenedores();
+   
 
     $("#cmbTiposPagos").select2({
         allowClear: true,
@@ -93,6 +93,7 @@ function initForm() {
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
         vm.contratoMantenedorId(0);
+        loadMantenedores();
     }
 }
 
@@ -279,20 +280,41 @@ function loadEmpresas(id) {
 }
 
 function loadMantenedores(id) {
+    var url = "/api/clientes/mantenedores_activos";
     $.ajax({
         type: "GET",
-        url: "/api/clientes/mantenedores",
+        url: url,
         dataType: "json",
         contentType: "application/json",
         success: function(data, status) {
-            var mantenedores = [{ comercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesMantenedores(mantenedores);
-            $("#cmbMantenedores").val([id]).trigger('change');
+            if(id) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/clientes/" + id,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function(data2, status) {
+                        data.push(data2)
+                        var mantenedores = [{ comercialId: 0, nombre: "" }].concat(data);
+                        vm.posiblesMantenedores(mantenedores);
+                        $("#cmbMantenedores").val([id]).trigger('change');
+                    },
+                                    error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                });
+
+            } else {
+                var mantenedores = [{ comercialId: 0, nombre: "" }].concat(data);
+                vm.posiblesMantenedores(mantenedores);
+                $("#cmbMantenedores").val([id]).trigger('change');
+            }
+           
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+            mensErrorAjax(err);
+        }
     });
 }
 

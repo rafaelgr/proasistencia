@@ -3,10 +3,7 @@ documentpagoGeneral.js
 Funciones js par la página DocumentPagoGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
+
 
 var dataDocumentospago;
 var documentoPagoId;
@@ -119,22 +116,18 @@ function admData() {
 
 
 
+
 function initTablaExportar() {
     tablaFacturas = $('#dt_fExportar').DataTable({
         autoWidth: true,
         paging: false,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_fExportar'), breakpointDefinition);
+        responsive: true,
+        columnDefs: [
+            {
+                targets: [10,11,12], // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -157,6 +150,9 @@ function initTablaExportar() {
         },
         data: dataDocumentospago,
         columns: [{
+           data: "empty",
+         
+        },{
             data: "facproveId",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -361,6 +357,7 @@ function exportarFacturasDocpago() {
         }
         $("#mensajeExportacion").hide();
         $("#mensajeEspera").show();
+        $('#btnAceptarExportar').prop('disabled', true);
         var proveedorId = 0;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -385,6 +382,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                     var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
                     mensNormal("Exportación realizada con éxito.");
                     loadTablaFacturasExp(null);
@@ -393,6 +391,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                 }
             },
             error: function (err) {
@@ -400,6 +399,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                     // si hay algo más que hacer lo haremos aquí.
             }
         });

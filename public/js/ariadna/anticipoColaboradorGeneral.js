@@ -3,19 +3,12 @@ preantturaGeneral.js
 Funciones js par la página PreantturaGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
+
 
 var dataAnticipos;
 var antproveId;
 var usuario;
 
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
 
 
 function initForm() {
@@ -85,60 +78,79 @@ function admData() {
 } 
 
 function initTablaAnticipos() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7 || column === 8) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 10) {
+                            return "";
+                        } else {
+                            return data;
+                        };
+                    }
+                }
+            }
+        }
+    };
     tablaAnticipos = $('#dt_anticipo').DataTable({
         bSort: true,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        responsive: true,
+        autoWidth: true,
+        paging: true,
+        "pageLength": 100,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Anticipos Seleccionados",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Anticipos filtrados <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
+        columnDefs: [
+            {
+                targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [5],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
                 }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
-        autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_anticipo'), breakpointDefinition);
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -178,10 +190,7 @@ function initTablaAnticipos() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
         },{
             data: "importeServiciado",
             render: function (data, type, row) {
@@ -356,7 +365,7 @@ function cargarAnticipos() {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/" + antproveId,
+                url: myconfig.apiUrl + "/api/anticiposProveedores/serviciado/" + antproveId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

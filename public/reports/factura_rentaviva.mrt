@@ -1,8 +1,8 @@
 {
   "ReportVersion": "2021.3.6.0",
   "ReportGuid": "ddadf37195994feb938b5cfe666663b1",
-  "ReportName": "factura_fondogar",
-  "ReportAlias": "factura_fondogar",
+  "ReportName": "facturaRentaviva",
+  "ReportAlias": "facturaRentaviva",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-7200000+0100)/",
   "ReportChanged": "/Date(1629873701140+0200)/",

@@ -70,7 +70,14 @@ function initForm() {
     
     
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptarAnticipo);
+    $("#btnAceptar").click(function() {
+        aceptarAnticipo(true);
+    });
+
+    $("#btnAceptar2").click(function() {
+        aceptarAnticipo(false);
+    });
+
     $("#btnSalir").click(salir());
     
     //$("#btnImprimir").click(imprimir);
@@ -276,6 +283,7 @@ function initForm() {
         // caso edicion
         llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
+            $('#btnAceptar2').show();
             loadData(data);
             loadServiciadasAntprove(antproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
@@ -333,6 +341,7 @@ function initForm() {
         })
     } else {
         // caso alta
+        $('#btnAceptar2').hide();
         vm.generada(0); // por defecto manual
         vm.porcentajeRetencion(0);
         vm.importeServiciada(0);
@@ -411,6 +420,9 @@ function admData() {
     self.receptorCodPostal = ko.observable();
     self.receptorPoblacion = ko.observable();
     self.receptorProvincia = ko.observable();
+    self.tipoComercialNombre = ko.observable();
+    self.tipoComercialId = ko.observable();
+    self.comercialId = ko.observable();
     //
     self.total = ko.observable();
     self.antTotal = ko.observable();
@@ -557,6 +569,9 @@ function loadData(data) {
     vm.receptorPoblacion(data.receptorPoblacion);
     vm.receptorProvincia(data.receptorProvincia);
     vm.receptorDireccion(data.receptorDireccion);
+    vm.tipoComercialNombre(data.tipoComercialNombre);
+    vm.tipoComercialId(data.tipoComercialId);
+    vm.comercialId(data.comercialId);
     //
     vm.emisorNif(data.emisorNif);
     vm.emisorNombre(data.emisorNombre);
@@ -697,10 +712,11 @@ function datosOK() {
     return $('#frmAnticipo').valid();
 }
 
-var aceptarAnticipo = function () {
+var aceptarAnticipo = function (salir) {
     if (!datosOK()) return;
 
     eventSalir = false;
+
     if (!vm.total() && vm.completo()) {
         vm.total('0');
         vm.totalCuota('0');
@@ -725,20 +741,39 @@ var aceptarAnticipo = function () {
     }
     var datosArray = [];
     datosArray.push(data)
-    llamadaAjax(verb, url, datosArray, function (err, data) {
-        loadData(data);
-        returnUrl = returnUrl + vm.antproveId();
+    llamadaAjax(verb, url, datosArray, function (err, result) {
+        //loadData(data);
         if(desdeContrato == "true" && antproveId != 0){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
+            if(salir) {
+                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
+            } else {
+                loadData(result);
+                mensNormal('Anticipo guardado.')
+            }
         }
         else{
-            window.open(returnUrl, '_self');
+            if(salir) {
+                if(verb == 'POST') {
+                    returnUrl = returnUrl + result.antproveId;
+                    window.open(returnUrl, '_self');
+
+
+                } else {
+                    returnUrl = returnUrl + vm.antproveId();
+                    window.open(returnUrl, '_self');
+                }
+               
+            } else {
+                loadData(result);
+                mensNormal('Anticipo guardado.')
+            }
         }
        
     });
 }
-var totConIva;
+
 var generarAnticipoDb = function () {
+    var totConIva;
     if($('#chkNoContabilizar').prop("checked")) {
         vm.noContabilizar(true);
     } else {
@@ -796,7 +831,10 @@ var generarAnticipoDb = function () {
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "completo": vm.completo(),
             "servicioId": vm.servicioId(),
-            "esColaborador": 1
+            "esColaborador": 1,
+            "comercialId": vm.comercialId(),
+            "tipoComercialId": vm.tipoComercialId(),
+            "tipoComercialNombre": vm.tipoComercialNombre()
 
         }
     };
@@ -979,8 +1017,10 @@ function compruebaRepetido(numeroAnt, proveedorId) {
                 if(data) {
                     data.forEach( (f) => {
                         var num = f.numeroAnticipoProveedor;
+                        var ano = moment(spanishDbDate(vm.fecha())).year();
+                        var antAno = moment(f.fecha).year();
                         
-                        if(num == numeroAnt && f.antproveId != vm.antproveId()) {
+                        if(num == numeroAnt && f.antproveId != vm.antproveId() && ano == antAno) {
                             mensError('Ya existe una anticipo con este numero para este proveedor');
                             $('#txtNumero').val(antNumAnt);
                             return;
@@ -1077,10 +1117,10 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url =  "/api/anticiposProveedores/lineas";
+    var url =  "/api/anticiposProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url =  "/api/anticiposProveedores/lineas/" + vm.antproveLineaId();
+        url =  "/api/anticiposProveedores/lineas-nuevo/" + vm.antproveLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
@@ -1482,7 +1522,7 @@ function cambioTiposRetencion(codigo) {
             }
         }
         if(acumulado == 2) {
-            mostratMnesajeTipoNoPermitido();
+            mostrarMensajeTipoNoPermitido();
             vm.codigo(vm.antCodigo());
             vm.scodigo(vm.antCodigo());
             vm.cuentaRetencion(vm.antCuentaRetencion());
@@ -1491,8 +1531,18 @@ function cambioTiposRetencion(codigo) {
             return;
         }
         if(datos.length == 1 &&  vm.scodigo() != 0) {
-            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo()) {
-                mostratMnesajeTipoNoPermitido();
+            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && !lineaEnEdicion) {
+                mostrarMensajeTipoNoPermitido();
+                vm.codigo(0);
+                vm.scodigo(0);
+                vm.cuentaRetencion(null);
+                vm.porcentajeRetencionLinea(0);
+                vm.importeRetencionLinea(0);
+                $("#cmbTiposRetencion").val([0]).trigger('change');
+                //loadTiposRetencion(codigo);
+                return;
+            } else if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && lineaEnEdicion){
+                mostrarMensajeTipoNoPermitido();
                 vm.codigo(vm.antCodigo());
                 vm.scodigo(vm.antCodigo());
                 vm.cuentaRetencion(vm.antCuentaRetencion());
@@ -1505,6 +1555,7 @@ function cambioTiposRetencion(codigo) {
         llamadaAjax("GET", "/api/anticiposProveedores/retenciones/tiposreten/antprove/" + codigo, null, function (err, data) {
             if (err) return;
             vm.codigo(data.codigo);
+            vm.antCodigo(data.codigo);
             if(vm.codigo() != 0) {
                 vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
                 vm.cuentaRetencion(data.cuentaPorDefecto);
@@ -1522,14 +1573,14 @@ function cambioTiposRetencion(codigo) {
 
 
 function establecerTotal() {
-    if(vm.antTotal()) {
+   /*  if(vm.antTotal()) {
         vm.total(vm.antTotal());
-    }
+    } */
 }
 
 var cambioPrecioCantidad = function () {
     
-        vm.antTotal(vm.total()); //guardamos el total
+        //vm.antTotal(vm.total()); //guardamos el total
     
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
@@ -1561,7 +1612,7 @@ function deleteAnticipoLinea(antproveLineaId) {
                 antproveId: vm.antproveId()
             }
         };
-        llamadaAjax("DELETE",  "/api/anticiposProveedores/lineas/" + antproveLineaId, data, function (err, data) {
+        llamadaAjax("DELETE",  "/api/anticiposProveedores/lineas-nuevo/" + antproveLineaId, data, function (err, data) {
             if (err) return;
             llamadaAjax("GET",  "/api/anticiposProveedores/" + vm.antproveId(), null, function (err, data) {
                 if (err) return;
@@ -1785,13 +1836,16 @@ var initAutoProveedor = function () {
     $("#txtProveedor").autocomplete({
         source: function (request, response) {
             // call ajax
-            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/comerciales/?nombre=" + request.term, datosPro, function (err, data) {
+            llamadaAjax("POST", "/api/proveedores/activos/proveedores/todos/comerciales/con/tipo/?nombre=" + request.term, datosPro, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
                     var v = {
                         value: d.nomconcat,
-                        id: d.proveedorId
+                        id: d.proveedorId,
+                        comercialId: d.comercialId,
+                        tipoComercialId: d.tipoComercialId,
+                        tipoComercialNombre: d.tipoComercialNombre
                     };
                     r.push(v);
                 });
@@ -1801,6 +1855,9 @@ var initAutoProveedor = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.sproveedorId(ui.item.id);
+            vm.tipoComercialNombre(ui.item.tipoComercialNombre);
+            vm.comercialId(ui.item.comercialId);
+            vm.tipoComercialId(ui.item.tipoComercialId);
             cambioProveedor(ui.item.id);
         }
     });
@@ -1911,7 +1968,7 @@ var mostrarMensajeAnticipoNueva = function () {
     mensNormal(mens);
 }
 
-var mostratMnesajeTipoNoPermitido = function() {
+var mostrarMensajeTipoNoPermitido = function() {
     var mens = "Solo se permiten tipos de retencion exentos y otro tipo en una misma anticipo";
     mensNormal(mens);
 }
@@ -2160,66 +2217,102 @@ function loadDataServiciadas(data) {
 }
 
 function nuevaServiciada() {
-    var imp;
-    var tot;
-    acumulado = 0;
+    //primero comprobamos que el colaborador no exceda el límite de lo que tiene anticipado
+    var verb = "POST";
+    var url =  '/api/anticiposProveedores/nueva/serviciada';
+    
+    // caso modificación
+    if (vm.antproveServiciadoId() != 0) {
+       
 
-    //recalculamos el acumulado de todas las empresas serviciadas de la anticipo
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
-        if (err) return;
-        for(var i = 0; i < data.length; i++){
-            acumulado += parseFloat(data[i].importe);
-        }
-        acumulado = roundToTwo(acumulado);
-        if(vm.antproveServiciadoId() != 0) {
-            imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
-            
-        } else {
-            imp = acumulado + parseFloat(vm.importeServiciada());
-            if($('#chkCompleto').prop("checked")) {
-                tot = parseFloat(numeroDbf(vm.total()));
-            } else {
-                tot = parseFloat(vm.totalConIva());
-            }
-        }
-    
-        if( imp > tot){
-            mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la anticipo');
-            return;
-        }
-        else if(!datosOKServiciada()){
-            vm.importeServiciada(0);
-            return;
-        }
-        var verb = "POST";
-        var url =  '/api/anticiposProveedores/nueva/serviciada';
+        verb = "PUT";
+        url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
+        returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
         
-        // caso modificación
-        if (vm.antproveServiciadoId() != 0) {
-           
+    }
+    compruebaAnticiposColaborador(verb, function(err, result) {
+        if(err) return mensError(err);
+        var imp;
+        var tot;
+        acumulado = 0;
     
-            verb = "PUT";
-            url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
-            returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
-            
-        }
-        var data = {
-            antproveServiciada: {
-                antproveId: vm.antproveId(),
-                empresaId: vm.sempresaServiciadaId(),
-                contratoId: vm.scontratoId(),
-                importe: vm.importeServiciada()
-            }
-        }
-        llamadaAjax(verb, url, data, function (err, data) {
+        //recalculamos el acumulado de todas las empresas serviciadas de del anticipo
+        llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
             if (err) return;
-            loadServiciadasAntprove(antproveId);
-            $('#modalServiciado').modal('hide');
-        });
+            for(var i = 0; i < data.length; i++){
+                acumulado += data[i].importe;
+            }
+           
+            if(vm.antproveServiciadoId() != 0) {
+                imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
+                imp = Math.trunc(imp * 100) / 100;
+                
+            } else {
+                imp = acumulado + parseFloat(vm.importeServiciada());
+                imp = Math.trunc(imp * 100) / 100;
+                if($('#chkCompleto').prop("checked")) {
+                    tot = parseFloat(numeroDbf(vm.total()));
+                } else {
+                    tot = parseFloat(vm.totalConIva());
+                }
+            }
         
+            if( imp > tot){
+                mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la anticipo');
+                return;
+            }
+            else if(!datosOKServiciada()){
+                vm.importeServiciada(0);
+                return;
+            }
+            var data = {
+                antproveServiciada: {
+                    antproveId: vm.antproveId(),
+                    empresaId: vm.sempresaServiciadaId(),
+                    contratoId: vm.scontratoId(),
+                    importe: vm.importeServiciada()
+                }
+            }
+            llamadaAjax(verb, url, data, function (err, data) {
+                if (err) return;
+                loadServiciadasAntprove(antproveId);
+                $('#modalServiciado').modal('hide');
+            });
+            
+        });
     });
 }
 
+function compruebaAnticiposColaborador(verb, callback) {
+    llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId() + "/" + vm.comercialId(), null, function (err, data) {
+        if (err) return callback(err);
+        if(Object.keys(data).length === 0 && data.constructor === Object) {
+            var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato o dicho colaborador no tiene contrato de colaborador creado.";
+            return callback(err); 
+        } else {
+            var imp = 0;
+            var totAnt = 0;
+            //comprobamos si se ha superado el límite
+            // si el limite es null no se hace nada
+            if(data.limite == null) return callback(null, null);
+            //sumamos lo que le estamos anticipando a lo ya anticipado y vemos si supera el límite
+            //caso post 
+            if(verb == "POST") {
+                imp = parseFloat(vm.importeServiciada());
+                totAnt = parseFloat(data.totAnticipado) + imp;
+            } else {
+                imp = parseFloat(vm.importeServiciada());
+                totAnt = (parseFloat(data.totAnticipado) - importeModificar) + imp;
+            }
+            if(totAnt > data.limite) {
+                var err = "Limite para este colaborador sobrepasado en este contrato.<br>" + " Limite: " + numeral(data.limite).format('0,0.00') + ".<br>" + "Total que se intenta anticipar: " + numeral(totAnt).format('0,0.00');
+                return callback(err); 
+            }
+            callback(null, null);
+        }
+
+    });
+}
 function datosOKServiciada() {
     if(vm.importeServiciada() == "") {
         vm.porcentaje(null);

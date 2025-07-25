@@ -183,6 +183,7 @@ function admData() {
 var obtainReport = function (carga) {
     if (!datosOK()) return;
 
+    var ids = [];
     var file = "../reports/factura_general.mrt";
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
@@ -194,7 +195,9 @@ var obtainReport = function (carga) {
             infFacturas = data.infFacCliRep + "_sin_imagen";
         }else if (vm.sdepartamentoId() == 8) {
             infFacturas = data.infFacCliObr;
-         } else {
+         } else if (vm.sdepartamentoId() == 3) {
+            infFacturas = data.infFacCliAlq;
+         }else {
                 infFacturas = data.infFacturas;
             }
     
@@ -210,20 +213,38 @@ var obtainReport = function (carga) {
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.facturaId')
         var pos = 0;
+        var pos1 = 0;
+        var pos2 = 0;
         for (var i = 0; i < report.dataSources.items.length; i++) {
             var str = report.dataSources.items[i].sqlCommand;
             if (str.indexOf("pf.facturaId") > -1) pos = i;
+            if (str.indexOf("facturas_lineas") > -1) pos1 = i;
+            if (str.indexOf("facturas_bases") > -1) pos2 = i;
         }
         var sql = report.dataSources.items[pos].sqlCommand;
+        var sql3 = report.dataSources.items[pos1].sqlCommand;
+        var sql4 = report.dataSources.items[pos2].sqlCommand;
+
         var sql2 = rptFacturaParametros(sql);
         verb = "POST"; 
-        url = myconfig.apiUrl + "/api/informes/sql";
+        url = myconfig.apiUrl + "/api/informes/sql/nuevo";
         llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
             if (err) return;
             if (data) {
-                report.dataSources.items[pos].sqlCommand = sql2;
-                // Assign report to the viewer, the report will be built automatically after rendering the viewer
-                viewer.report = report;
+                if(data.length > 0) {
+                    for( var i = 0; i < data.length; i++) {
+                        ids.push(data[i].facturaId);
+                    }
+                    sql3 = sql3 + ' WHERE pfl.facturaId IN ( ' + ids + ' )';
+                    sql4 = sql4 + ' WHERE pfb.facturaId IN ( ' + ids + ' )';
+                    report.dataSources.items[pos].sqlCommand = sql2;
+                    report.dataSources.items[pos1].sqlCommand = sql3;
+                    report.dataSources.items[pos2].sqlCommand = sql4;
+                    // Assign report to the viewer, the report will be built automatically after rendering the viewer
+                    viewer.report = report;
+                } else {
+                    alert("No hay registros con estas condiciones");
+                }
             } else {
                 alert("No hay registros con estas condiciones");
             }
@@ -428,7 +449,11 @@ var rptFacturaParametros = function (sql) {
             sql += " AND pf.empresaId IN (" + empresaId + ")";
         }
         if(agenteId) {
-            sql += " AND cnt.agenteId IN (" + agenteId + ")";
+            if(departamentoId && departamentoId == 7) {
+                sql += " AND s.agenteId IN (" + agenteId + ")";
+            } else {
+                sql += " AND cnt.agenteId IN (" + agenteId + ")";
+            }
         }
         if (dFecha) {
             sql += " AND pf.fecha >= '" + dFecha + " 00:00:00'";
@@ -441,6 +466,7 @@ var rptFacturaParametros = function (sql) {
         } else {
             sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
         }
+        sql += " ORDER BY  pf.serie, pf.fecha, pf.numero ASC"
 
     }
     return sql;
@@ -485,9 +511,11 @@ var exportarPDF = function () {
     $("#mensajeEspera").show();
     var clienteId = vm.sclienteId();
     var empresaId = vm.sempresaId();
+    var departamentoId = vm.sdepartamentoId();
 
     if (!empresaId) empresaId = 0;
     if (!clienteId) clienteId = 0;
+    if(!departamentoId) departamentoId = 0;
 
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
@@ -497,6 +525,7 @@ var exportarPDF = function () {
     var url = "/api/facturas/facpdf/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
     url += "/" + clienteId;
+    url += "/" + departamentoId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) {
             // hay que informar de error durante la exportación

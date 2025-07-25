@@ -59,6 +59,8 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if (e.added) loadContratosActivos(e.added.id);
+        vm.sdepartamentoId(this.value);
+        vm.departamentoId(this.value);
     });
    
     //
@@ -79,6 +81,7 @@ function initForm() {
      //Recuperamos el departamento de trabajo
      recuperaDepartamento(function(err, data) {
         if(err) return;
+        ajustaDepartamentos(data)
         
     });
     //
@@ -518,6 +521,25 @@ function buscarFacturas() {
     return mf;
 }
 
+function ajustaDepartamentos(data) {
+    //ELIMINAMOS EL DEEPARTAMENTO DE REPARACIONES DEL COMBO
+    //var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
+     for (var i = 0; i < data.length; i++) {
+            if (data[i].departamentoId == 7) {
+                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
+                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
+            }
+    }
+    console.log(data);
+    var departamentos = [{
+        departamentoId: null,
+        nombre: ""
+    }].concat(data);
+    vm.posiblesDepartamentos(departamentos);
+ 
+    $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
+}
+
 function buscarFicheros() {
     var mf = function () {
         var url = "ficheros/contabilidad";
@@ -565,6 +587,7 @@ function enviarCorreos() {
             url = myconfig.apiUrl + "/api/facturas/enviar-correos/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha());
             llamadaAjax("POST", url, data, function (err, data) {
                 if (err) {
+                    
                     $('#progress').hide();
                     return;
                 }
@@ -573,6 +596,12 @@ function enviarCorreos() {
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
                 // mensNormal('Las facturas se han enviado por correo');
+                llamadaAjax("PUT", '/api/facturas/borrar-directorio', null, function (err, data2) {
+                    if (err) {
+                        $('#progress').hide();
+                        return;
+                    }
+                });
             });
 
         });

@@ -2,15 +2,11 @@
 contratoDetalle.js
 Funciones js par la página ContratoDetalle.html
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
 var contratoId = 0;
 var lineaEnEdicion = false;
 
 var dataContratosLineas;
+var dataContratosTasas;
 var dataBases;
 var dataComisionistas;
 var dataGenerarPrefacturas;
@@ -24,6 +20,7 @@ var dataFactCol;
 var dataAntCol;
 var ContratoId = 0;
 var cmd;
+var dep;
 var usuario;
 var dataConceptosLineas;
 var dataPlanificacionLineas;
@@ -43,14 +40,11 @@ var antClienteNombre = "";
 var RegPlanificacion = null;
 var tablaPrefacturas;
 var a = null;
-var _recepcionGestion
-//var numAscContratos = 0;
-
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
+var _recepcionGestion;
+var dataDocumentacion;
+var subCarpeta = '';
+var carpetaTipo = null;
+var parent = null;
 
 datePickerSpanish(); // see comun.js
 
@@ -73,11 +67,26 @@ function initForm() {
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
+
+    $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
+    $("#btnAceptarResumen").click(function() {
+        guardarContratoResumen();
+    });
+
     $("#btnSalir").click(salir());
     //$("#btnImprimir").click(imprimir);
     $('#txtPrecio').focus( function () {
         $('#txtPrecio').val(null);
-    })
+    });
+
+     //Evento dfel modal de la documentación
+     $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
+        vm.files([]);
+      });
+      
     $("#frmContrato").submit(function () {
         return false;
     });
@@ -111,6 +120,15 @@ function initForm() {
     $("#renovarContratos-form").submit(function () {
         return false;
     });
+
+    $("#lineaVisado-form").submit(function () {
+        return false;
+    });
+
+    $("#frmLineaVisado").submit(function () {
+        return false;
+    });
+
     $("#concepto-form").submit(function () {
         return false;
     });
@@ -150,6 +168,27 @@ function initForm() {
         return false;
     });
 
+    $("#creacionCarpetas-form").submit(function () {
+        return false;
+    });
+
+    $("#creacionSubcarpetas-form").submit(function () {
+        return false;
+    });
+
+
+    $("#frmDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmloadDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmResumen").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -181,6 +220,17 @@ function initForm() {
 
     $("#cmbTiposContrato").select2(select2Spanish());
     loadTiposContrato(null);
+
+
+    $("#cmbJefesObra").select2(select2Spanish());
+    loadJefesObra(null);
+
+    $("#cmbTecnicos").select2(select2Spanish());
+    loadTecnicos(null);
+
+
+
+
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
         if(e.added) {
@@ -196,10 +246,34 @@ function initForm() {
         }
     });
 
+    $("#chkContratoCerrado").change(function() {
+        if($('#chkContratoCerrado').prop('checked')) {
+           compruebaAnticiposVinculados()
+        } else {
+            vm.fechaCierreContrato(null);
+        }
+      });
+
+    $("#txtFechaInicio").change(function (e) {
+        if( vm.contratoId() == 0) vm.fechaOriginal(this.value);
+    });
+
+    $("#txtCertificacionFinal").change(function (e) {
+        vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
+       
+        if(vm.importePrefacturado() && vm.certificacionFinal()) {
+            let ip = numeroDbf(vm.importePrefacturado());
+            let dif2 =  ip - vm.certificacionFinal();
+            vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
+        }
+    });
+
+    
+
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
         var dt = $('#dt_prefactura').DataTable(); 
         if (e.target.hash == '#s3'){
-            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+                a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
         } else {
             $('.fixedHeader').remove();
             a = null;
@@ -328,6 +402,110 @@ function initForm() {
         cambioTextosPredeterminados2(e.added);
     });
 
+    $('#dt_documentacion').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaDocumentacion.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(formatData(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
+    $('#dt_contratosCobros').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaContratoCobros.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(formatDataCobros(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
+   /*  $('#upload-input').on('change', function () {
+        if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+        var encontrado = false;
+        var id = 0;
+        var files = $(this).get(0).files;
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        var blob = file.slice(0, file.size, file.type); 
+        var newFile = new File([blob], {type: file.type});
+        var nom = vm.documNombre() + "." + ext;
+        nom = nom.replace(/\//g, "-");
+        var fileKey =  carpeta + "/" + nom
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    if(n[1] == nom) {
+                        encontrado = true;
+                        id = d.documentoId
+                        break;
+                    }
+                }
+                if(encontrado) {
+
+                    var mens = "Ya existe un documento con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(newFile, fileKey, id);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(newFile, fileKey, id);
+                }
+            } else {
+                uploadDocum(newFile, fileKey, id);
+            }
+        }); 
+    }); */
+
+   
+
+    // 7 bind to events triggered on the tree
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
+            var node = $(e.target).closest('.jstree-node');
+            var selectedNodeId = node.attr('id');
+            if (e.which === 1) {
+                var jsTree = $.jstree.reference(e.target);
+                var originalNode = jsTree.get_node(node);
+                if(!originalNode.data.folder)  {
+                    var url = originalNode.original.location;
+                    window.open(url, '_blank');
+                }
+            }
+    });
+    // 8 interact with the tree - either way is OK
+    $('#demo').on('click', function () {
+      $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+      $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+      $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+    });
+  
+
 
     initAutoCliente();
     initAutoMantenedor();
@@ -365,6 +543,7 @@ function initForm() {
     $("#txtPrecio").blur(cambioPrecioCantidad);
 
     initTablaContratosLineas();
+    initTablaContratosLineasTasas();
     initTablaBases();
     initTablaComisionistas();
     initTablaGenerarPrefacturas();
@@ -380,6 +559,9 @@ function initForm() {
     initTablaFactcol();
     initTablaConceptosLineas();
     initTablaPlanificacionLineasObras();
+    //initTablaDocumentacion();
+    initArbolDocumentacion();
+
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
     $("#cmbComerciales").select2().on('change', function (e) {
@@ -400,29 +582,83 @@ function initForm() {
     reglasDeValidacionAdicionales();
 
     cmd = gup('CMD');
+    dep = gup('dep');
     ContratoId = gup('ContratoId');
     DesdeContrato = gup('DesdeContrato');
     AscContratoId = gup('AscContratoId')
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
-    //$('#sinUso').hide();//ocultamos campo sin uso
+    $('#btnNuevaCarpeta').show();
+    if(!usuario.puedeEditar) {
+        $('#btnNuevaCarpeta').hide();
+    } 
    
 
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
 
+    //abrir en pestaña de facturas de proveedores
+    if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s5"]').tab('show');
+    } 
+    //abrir en pestaña  de prefacturas
+    if (gup('docPre') != "") {
+        $('.nav-tabs a[href="#s3"]').tab('show');
+    } 
+
+    if (gup('docFac') != "") {
+        $('.nav-tabs a[href="#s4"]').tab('show');
+    } 
+
+    //abrir en pestaña de contratos vinculados
+    if (gup('docAsc') != "") {
+        $('.nav-tabs a[href="#s7"]').tab('show');
+    } 
+
+    //abrir en pestaña de anticipos de gastos
+    if (gup('docAnt') != "") {
+        $('.nav-tabs a[href="#s8"]').tab('show');
+    } 
+
+     //abrir en pestaña de anticipos de ventas
+     /* if (gup('docAntCli') != "") {
+        $('.nav-tabs a[href="#s8"]').tab('show');
+    }  */
+    
+    //abrir en pestaña de anticipos de colaboradores
+    if (gup('docAntcol') != "") {
+        $('.nav-tabs a[href="#s9"]').tab('show');
+    } 
+
+    //abrir en pestaña de anticipos de colaboradores
+    if (gup('docFactcol') != "") {
+        $('.nav-tabs a[href="#s10"]').tab('show');
+    } 
+
 
     contratoId = gup('ContratoId');
+    vm.beneficioLineal(0);
+    $('#chkBeneficioLineal').prop('disabled', true);
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
-            
 
             loadData(data);
-            initTablaPrefacturas(data.tipoContratoId);
+          
+                initTablaPrefacturas(data.tipoContratoId);
+            
+            
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
+            try {
+                loadContratoTasasVisado(data.contratoId);
+
+            }catch(e) {
+                //no hacemos nada
+            }
+           
+           
            
             //loadComisionistas(data.contratoId);
             if(data.tipoContratoId != 8) {
@@ -450,6 +686,7 @@ function initForm() {
         vm.firmaActa("0");
         vm.contratoId(0);
         vm.porcentajeRetencion(0);
+       
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -466,38 +703,7 @@ function initForm() {
     }
 
 
-     //abrir en pestaña de facturas de proveedores
-     if (gup('doc') != "") {
-        $('.nav-tabs a[href="#s5"]').tab('show');
-    } 
-    //abrir en pestaña  de prefacturas
-    if (gup('docPre') != "") {
-        $('.nav-tabs a[href="#s3"]').tab('show');
-    } 
-
-    if (gup('docFac') != "") {
-        $('.nav-tabs a[href="#s4"]').tab('show');
-    } 
-
-    //abrir en pestaña de contratos vinculados
-    if (gup('docAsc') != "") {
-        $('.nav-tabs a[href="#s7"]').tab('show');
-    } 
-
-    //abrir en pestaña de anticipos de gastos
-    if (gup('docAnt') != "") {
-        $('.nav-tabs a[href="#s8"]').tab('show');
-    } 
-    
-    //abrir en pestaña de anticipos de colaboradores
-    if (gup('docAntcol') != "") {
-        $('.nav-tabs a[href="#s9"]').tab('show');
-    } 
-
-    //abrir en pestaña de anticipos de colaboradores
-    if (gup('docFactcol') != "") {
-        $('.nav-tabs a[href="#s10"]').tab('show');
-    } 
+     
     
     //metodo de validacion de fechas
     $.validator.addMethod("greaterThan",
@@ -545,11 +751,16 @@ function admData() {
     self.referencia = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
+    self.nombreComercial = ko.observable();
+    self.nombreCliente = ko.observable();
     self.mantenedorId = ko.observable();
     self.agenteId = ko.observable();
     self.fechaContrato = ko.observable();
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
+    self.ofertaId = ko.observable();
+    self.beneficioLineal = ko.observable();
+    self.fechaCierreContrato = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -632,9 +843,11 @@ function admData() {
     self.totalConIva = ko.observable();
     //radio buttons
     self.firmaActa = ko.observable();
+    //
+    self.porRetenGarantias = ko.observable();
     
 
-    //-- Valores para la generación de prefacturs
+    //-- Valores para la generación de prefacturas
     self.posiblesPeriodosPagos = ko.observableArray([]);
     self.elegidosPeriodosPagos = ko.observableArray([]);
     self.speriodoPagoId = ko.observableArray([]);
@@ -761,11 +974,64 @@ function admData() {
     self.difGestionCobroLetras = ko.observable();
     self.difNumGestionCobroLetras = ko.observable();
 
+    //CARPETAS  Y DOCUMENTOS
+    self.carpetaNombre = ko.observable();
+    self.subCarpetaNombre = ko.observable();
+    self.documNombre = ko.observable();
+    //
+    self.files = ko.observable();
+
+    //IPC
+    self.fechaRenovacionIpc = ko.observable();
+    self.ipc = ko.observable();
+    //
+    self.renovar = ko.observable();
+    self.importeAnualRenovacion = ko.observable();
+    self.importeAnualRenovacionFormat = ko.observable();
+    self.fechaFinAlquiler = ko.observable();
+
+    //PESTAÑA RESUMEN
+    self.resumenExp = ko.observable();
+    self.resumenDistrito = ko.observable();
+    self.resumenPtoAceptado = ko.observable();
+    self.resumenAutorizacion = ko.observable();
+    self.resumenActa = ko.observable();
+    self.resumenDni = ko.observable();
+    self.resumenCif = ko.observable();
+    self.resumenTasas = ko.observable();
+    self.resumenIcio = ko.observable();
+    self.resumenFormulario = ko.observable();
+    self.resumenDr = ko.observable();
+    self.resumenTasasVisado = ko.observable();
+    self.resumenDiario = ko.observable();
+    self.tituloTasa = ko.observable();
+    self.contenidoTasa = ko.observable();
+    self.tasaVisadoId = ko.observable();
+    // combo jefe de obras
+    self.jefeObraId = ko.observable();
+    self.sjefeObraId = ko.observable();
+    //
+    self.posiblesJefesObra = ko.observableArray([]);
+    self.elegidosJefesObra = ko.observableArray([]);
+    //combo tecnicos
+    self.tecnicoId = ko.observable();
+    self.stecnicoId = ko.observable();
+    //
+    self.posiblesTecnicos = ko.observableArray([]);
+    self.elegidosTecnicos = ko.observableArray([]);
+
 }
 
 function loadData(data) {  
+    if(data.beneficioLineal) {
+        var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId;
+        if(dep == 'arquitectura')   url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId + "&dep=arquitectura";
+        window.open(url, '_self');
+       //return;
+    }
     $('#btnNuevaLinea').show(); 
     vm.contratoId(data.contratoId);
+    vm.ofertaId(data.ofertaId);
     vm.tipoContratoId(data.tipoContratoId);
     loadTiposContrato(data.tipoContratoId);
     vm.stipoContratoId(data.tipoContratoId);    
@@ -780,10 +1046,19 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
+    //
     vm.importeCliente(data.importeCliente);
     vm.importeClienteFormat(data.importeCliente);
+    vm.importeAnualRenovacion(data.importeAnualRenovacion);
+    vm.importeAnualRenovacionFormat(numeral(data.importeAnualRenovacion).format('0,0.00'));
+
     vm.certificacionFinal(data.certificacionFinal);
     loadTipoProyecto(data.tipoProyectoId);
+    vm.fechaRenovacionIpc(spanishDate(data.fechaRenovacionIpc));
+    vm.ipc(data.ipc);
+    vm.renovar(data.renovar);
+    vm.fechaFinAlquiler(spanishDate(data.fechaFinAlquiler));
+    
     
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);
@@ -797,6 +1072,7 @@ function loadData(data) {
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
 
+   
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
     //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
@@ -804,6 +1080,13 @@ function loadData(data) {
     vm.fechaOriginal(spanishDate(data.fechaOriginal));
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
+    vm.fechaCierreContrato(spanishDate(data.fechaCierreContrato))
+    if(data.contratoCerrado) {
+        $('#btnNuevaCarpeta').hide()
+    } else {
+        $('#btnNuevaCarpeta').show()
+    }
+    vm.beneficioLineal(data.beneficioLineal);
     vm.contratoIntereses(data.contratoIntereses);
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
@@ -816,6 +1099,30 @@ function loadData(data) {
     document.title = "CONTRATO: " + vm.referencia();
     vm.porcentajeRetencion(data.porcentajeRetencion);
     vm.servicioId(data.servicioId);
+
+    //DATOS DE LA PESTAÑA RESUMEN
+    vm.resumenExp(data.resumenExp);
+    loadJefesObra(data.resumenJefeObraId);
+    vm.jefeObraId(data.resumenJefeObraId);
+    buscarTecnicos();
+    //loadTecnicos(data.resumenTecnicoId);
+    vm.tecnicoId(data.resumenTecnicoId);
+    vm.resumenDistrito(data.resumenDistrito);
+    vm.resumenPtoAceptado(data.resumenPtoAceptado);
+    vm.resumenAutorizacion(data.resumenAutorizacion);
+    vm.resumenActa(data.resumenActa);
+    vm.resumenDni(data.resumenDni);
+    vm.resumenCif(data.resumenCif);
+    vm.resumenTasas(data.resumenTasas);
+    vm.resumenIcio(data.resumenIcio);
+    vm.resumenFormulario(data.resumenFormulario);
+    vm.resumenDr(data.resumenDr);
+    vm.resumenTasasVisado(data.resumenTasasVisado);
+    vm.resumenDiario(data.resumenDiario);
+
+    //src del iframe con los datos del cliente
+    var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
+    $('#frCliente').attr('src', url)
    
 
     if(data.tipoContratoId != 8) {
@@ -835,7 +1142,8 @@ function loadData(data) {
         $('#btnAltaPrefactura').hide();
     }
     loadDepartamento(data.tipoContratoId);
-    recalcularCostesImportesDesdeCoste();
+    recalcularCostesImportesDesdeCoste(true);
+    cargaTablaDocumentacion();
     
     if(data.tipoContratoId == 8) {
         $('#txtNumPagos').prop('disabled', false);
@@ -956,7 +1264,8 @@ function datosOK() {
 
 function salir() {
     var mf = function () {
-        var url = "ContratoGeneral.html";
+        var url = "ContratoGeneral.html?ConservaFiltro=true";
+        if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html";
         if(DesdeContrato == "true" && AscContratoId != 0){
             url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true', '_self';
             window.open(url, '_self');
@@ -966,21 +1275,37 @@ function salir() {
     return mf;
 }
 
-var clicAceptar = function () {
-    guardarContrato(function (err, tipo) {
-        if (err) return mensError(err);
-        var url;
-        if(DesdeContrato == "true" && AscContratoId != 0){
-            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-        } else {
-            url = "ContratoGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
-        }
-        if (tipo == 'POST') {
-            url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-        }
-        window.open(url, '_self');
-    })
+var clicAceptar = function (salir) {
+        guardarContrato(function (err, tipo) {
+            if (err) return mensError(err);
+            var url;
+            if(DesdeContrato == "true" && AscContratoId != 0){
+                url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
+                if(dep == 'arquitectura')  url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true&dep=arquitectura';
+            } else {
+                url = "ContratoGeneral.html?ConservaFiltro=true&ContratoId=" + vm.contratoId(); // default PUT
+                if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+            }
+            if (tipo == 'POST') {
+                if(vm.beneficioLineal() == 0) {
+                    url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    if(dep == 'arquitectura') url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
+                    
+                } else {
+                    url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                    if(dep == 'arquitectura')  url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
+                }
+               
+            }
+            if(salir) {
+                window.open(url, '_self');
+            } else {
+                mensNormal('Contrato guardado.')
+            }
+        })
+    
 }
+
 
 var guardarContrato = function (done) {
     var firma = parseInt(vm.firmaActa());
@@ -1046,6 +1371,7 @@ var guardarContrato = function (done) {
 
 
 var generarContratoDb = function () {
+    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1057,6 +1383,7 @@ var generarContratoDb = function () {
             "clienteId": vm.clienteId(),
             "mantenedorId": vm.mantenedorId(),
             "fechaContrato": spanishDbDate(vm.fechaContrato()),
+            "fechaCierreContrato": spanishDbDate(vm.fechaCierreContrato()),
             "coste": vm.coste(),
             "porcentajeBeneficio": vm.porcentajeBeneficio(),
             "importeBeneficio": vm.importeBeneficio(),
@@ -1085,12 +1412,43 @@ var generarContratoDb = function () {
             "provincia": vm.provincia(),
             "porcentajeRetencion": vm.porcentajeRetencion(),
             "contratoCerrado": vm.contratoCerrado(),
+            "beneficioLineal": vm.beneficioLineal(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
-            "liquidarBasePrefactura": vm.liquidarBase()
+            "liquidarBasePrefactura": vm.liquidarBase(),
+            "fechaRenovacionIpc": spanishDbDate(vm.fechaRenovacionIpc()),
+            "ipc": vm.ipc(),
+            "renovar": vm.renovar(),
+            "fechaFinAlquiler": spanishDbDate(vm.fechaFinAlquiler()),
+            "importeAnualRenovacion": vm.importeAnualRenovacion()
         }
     };
+    if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
     return data;
+}
+
+
+function compruebaAnticiposVinculados() {
+    llamadaAjax('GET', "/api/contratos/anticipos/no-vinculados/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        if(data.length > 0) {
+            var a = [];
+            data.forEach( f => {
+                a.push(f.numeroAnticipoProveedor);
+            });
+            var ab = JSON.stringify(a);
+            const expresionRegular = /[\[\]"]/g;
+            var c = ab.replace(expresionRegular, '');
+            var str = "los sigientes anticipos están sin vincular:<br> " + c
+            mensError(str);
+            $('#chkContratoCerrado').prop('checked', false);
+            vm.contratoCerrado(false);
+        } else {
+            var f = new Date();
+            f = spanishDate(f)
+            vm.fechaCierreContrato(f);
+        }
+    });
 }
 
 function loadEmpresas(id) {
@@ -1240,6 +1598,7 @@ var cambioCliente = function (datos) {
         vm.poblacion(data.poblacion2);
         vm.provincia(data.provincia2);
         vm.iban(data.iban);
+        vm.nombreComercial(data.nombreComercial)
         antClienteId = datos.id;
         antClienteNombre = datos.value;
     });
@@ -1514,17 +1873,8 @@ function datosOKLineas() {
 function initTablaContratosLineas() {
     tablaContratosLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
+        responsive: true,
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({
                 page: 'current'
@@ -1860,18 +2210,7 @@ var recargaLineasBases = function () {
 function initTablaBases() {
     tablaCarro = $('#dt_bases').dataTable({
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_bases'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1954,6 +2293,8 @@ var cargaCliente = function (id) {
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
+        vm.nombreCliente(data.nombre);
+        vm.nombreComercial(data.nombreComercial);
         vm.iban(data.iban);
         antClienteId = data.clienteId;
         antClienteNombre = data.nombre;
@@ -1988,7 +2329,7 @@ var cargaAgente = function (id, encarga) {
         if(contratoId != 0) {
                     
         } else {
-            recalcularCostesImportesDesdeCoste();
+            recalcularCostesImportesDesdeCoste(encarga);
         }
     });
 };
@@ -2013,7 +2354,7 @@ var initAutoCliente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.clienteId(ui.item.id);
-           
+         
             cambioCliente(ui.item);
         }
     });
@@ -2109,7 +2450,7 @@ var cambioCampoConRecalculoDesdeCoste = function () {
 };
 
 
-var recalcularCostesImportesDesdeCoste = function () {
+var recalcularCostesImportesDesdeCoste = function (encarga) {
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
@@ -2127,10 +2468,12 @@ var recalcularCostesImportesDesdeCoste = function () {
     //if(!usaCalculadora) vm.porcentajeAgente(0);
     if  (vm.porcentajeAgente() != null) {
         vm.importeCliente(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100));
+        if(vm.tipoContratoId() == 3) { if(!encarga) vm.importeAnualRenovacion(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)); }
         vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
     }
     //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
+    if(vm.tipoContratoId() == 3) { if(!encarga) vm.importeAnualRenovacion(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1)); }
     if (vm.mantenedorId()) {
         vm.importeMantenedor(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio());
         vm.importeMantenedor(roundToTwo(vm.importeMantenedor()));
@@ -2139,6 +2482,13 @@ var recalcularCostesImportesDesdeCoste = function () {
      
     vm.importeCliente(roundToTwo(vm.importeCliente()));
     vm.importeClienteFormat(numeral(vm.importeCliente()).format('0,0.00'));
+    if(vm.tipoContratoId() == 3) {
+        if(!encarga) {
+            vm.importeAnualRenovacion(roundToTwo(vm.importeCliente()));
+            vm.importeAnualRenovacionFormat(numeral(vm.importeCliente()).format('0,0.00'));
+        }
+    }
+    //
     vm.importeBeneficio(roundToTwo(vm.importeBeneficio()));
     vm.ventaNeta(roundToTwo(vm.ventaNeta()));
     vm.importeAgente(roundToTwo(vm.importeAgente()));
@@ -2147,7 +2497,9 @@ var recalcularCostesImportesDesdeCoste = function () {
 
 var calcularInverso = function(carga) {
     if(!carga) {
-        if(!vm.importeCliente()) vm.importeCliente(0)
+        if(!vm.importeCliente()) { 
+            vm.importeCliente(0); 
+        }
         if(!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     
         if(!vm.porcentajeBeneficio()) {
@@ -2360,7 +2712,7 @@ function aceptarComisionista() {
     }
     if (!lineaEnEdicion) {
         data.contratoComisionista.contratoComisionistaId = 0;
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista", data, function (err, data) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista/comprueba/tipo", data, function (err, data) {
             if (err) return;
             $('#modalComisionista').modal('hide');
             loadComisionistas(vm.clienteId());
@@ -2407,18 +2759,7 @@ function datosOKComisionistas() {
 function initTablaComisionistas() {
     tablaCarro = $('#dt_comisiones').dataTable({
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_comisiones'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2540,7 +2881,7 @@ function buscaComisionistas(id) {
     llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data1) {
         if (err) return;
         if(data1) {
-            llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId(), null, function (err, data2) {
+            llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId() + "/" + vm.sempresaId() + "/" + vm.tipoContratoId(), null, function (err, data2) {
                 if (err) return;
                 if(data2.length  > 0) {
                     for(var i = 0; i< data1.length; i++){
@@ -2692,7 +3033,8 @@ var generarPrefacturasPlanificacion = function (data) {
      $("#cmbPeriodosPagos2").select2().on('change', function (e) {
          cambioPeriodosPagosPlanificacion(e.added);
      });
-    
+
+   
     
      if(vm.fechaPlanificacionObras2()) {
         vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
@@ -2742,12 +3084,16 @@ var obtenerDivisor = function () {
 
 var verPrefacturasAGenerar = function () {
     if (!generarPrefacturasOK()) return;
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
     
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeCliente(); // importe real de la factura;
     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
     var clienteId = vm.clienteId();
-    var cliente = $("#txtCliente").val();
+    var cliente = vm.nombreComercial();
     var empresa = $("#cmbEmpresas").select2('data').text;
     // si es un mantenedor su importe de factura es el calculado para él.
     if (vm.mantenedorId()) {
@@ -2768,12 +3114,16 @@ var verPrefacturasAGenerar = function () {
 
 var verPrefacturasAGenerarPlanificacion = function () {
     if (!generarPrefacturasOK()) return;
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
     
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeAFacturar(); // importe real de la factura;
     var importeAlCliente = vm.importeAFacturar(); // importe al cliente final;
     var clienteId = vm.clienteId();
-    var cliente = $("#txtCliente").val();
+    var cliente = vm.nombreComercial();
     var empresa = $("#cmbEmpresas").select2('data').text;
     // si es un mantenedor su importe de factura es el calculado para él.
     if (vm.mantenedorId()) {
@@ -2783,7 +3133,8 @@ var verPrefacturasAGenerarPlanificacion = function () {
     }
     var divisor = importe / vm.importeCliente();
     var coste = vm.coste() * divisor;
-    var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), spanishDbDate(vm.fechaSiguientesFacturas()), $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+    var porRetenGarantias = RegPlanificacion[0].porRetenGarantias;
+    var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
     
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturasPlanificacion(prefacturas);
@@ -3048,6 +3399,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
+            retenGarantias: 0,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
@@ -3070,6 +3422,7 @@ function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaS
             importeCliente: import21,
             importeCoste: import22,
             empresaId: empresaId,
+            retenGarantias: 0,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
@@ -3099,18 +3452,7 @@ function initTablaGenerarPrefacturas() {
     tablaGenerarPrefcaturas = $('#dt_generar_prefacturas').dataTable({
         bSort: false,
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3178,18 +3520,7 @@ function initTablaGenerarPrefacturasPlanificacion() {
     tablaGenerarPrefcaturas = $('#dt_generar_prefacturas2').dataTable({
         bSort: false,
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_generar_prefacturas2'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -3274,7 +3605,6 @@ var comprobarSiHayMantenedor = function () {
 var obtenerPorcentajeDelAgenteColaborador = function (comercialId, clienteId, empresaId, tipoContratoId, done) {
     var url = myconfig.apiUrl + "/api/comerciales/comision";
     url += "/" + comercialId;
-    url += "/" + clienteId;
     url += "/" + empresaId;
     url += "/" + tipoContratoId;
     llamadaAjax('GET', url, null, function (err, data) {
@@ -3298,9 +3628,73 @@ var reglasDeValidacionAdicionales = function () {
 
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas(departamentoId) {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14 ) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 18) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 ) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 7) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        },
+        
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 18) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 ) {
+                        return data;
+                    } else {
+                       if(row === 7) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+
+    }
     tablaPrefacturas = $('#dt_prefactura').DataTable({
-        responsive: true,
         paging: false,
+        responsive: true,
+        "bDestroy": true,
         fnCreatedRow : 
         function (nRow, aData, iDataIndex) {
             //registro facturado
@@ -3318,74 +3712,34 @@ function initTablaPrefacturas(departamentoId) {
             }
             
         },
+        
        
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+       
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [{
-                "sExtends": "pdf",
-                "sTitle": "Prefacturas Seleccionadas",
-                "sPdfMessage": "proasistencia PDF Export",
-                "sPdfSize": "A4",
-                "sPdfOrientation": "landscape",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "copy",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "csv",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "xls",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "print",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2, {
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
         autoWidth: false,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_prefactura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -3411,16 +3765,6 @@ function initTablaPrefacturas(departamentoId) {
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0 );
-
-              
-            
-
-            ///////
-            if(vm.tipoContratoId() == 8) {
-                var c = api.data();
-                calculaImportesInformativosPrefacturas(c)
-            }
-           
           
              // Total over all pages
              total10 = api
@@ -3447,6 +3791,22 @@ function initTablaPrefacturas(departamentoId) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+              // Total over all pages
+              total13 = api
+              .column( 13 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+               // Total over all pages
+               total14 = api
+               .column( 14 )
+               .data()
+               .reduce( function (a, b) {
+                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+               }, 0 );
+
 
             // Update footer
             $( api.columns(8).footer() ).html(
@@ -3467,9 +3827,20 @@ function initTablaPrefacturas(departamentoId) {
             $( api.columns(12).footer() ).html(
                 numeral(total12).format('0,0.00')
             );
+            $( api.columns(13).footer() ).html(
+                numeral(total13).format('0,0.00')
+            );
+            $( api.columns(14).footer() ).html(
+                numeral(total14).format('0,0.00')
+            );
 
             //////
 
+             //importes informaticos de las letras
+             if(vm.tipoContratoId() == 8) {
+                var c = api.data();
+                calculaImportesInformativosPrefacturas(c)
+            }
             
         },
         language: {
@@ -3495,6 +3866,7 @@ function initTablaPrefacturas(departamentoId) {
         data: dataPrefacturas,
         columns: [{
             data: "prefacturaId",
+            width: "5%",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
                 if(row.esLetra != 1) {
@@ -3568,7 +3940,17 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 return  numeral(data).format('0,0.00')
             }
-        },  {
+        }, {
+            data: "retenGarantias",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "restoCobrar",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -3579,8 +3961,12 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 var bt1 = "";
                 if(!row.contratoPorcenId) {
-                    if(row.departamentoId != 8)
-                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    if(row.departamentoId != 8) {
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    }
+                    else if(row.departamentoId == 8 && !row.facturaId) {
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    }
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
@@ -3604,11 +3990,13 @@ function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas.columns(1).visible(false);
     tablaPrefacturas.columns(8).visible(false);
     tablaPrefacturas.columns(13).visible(false);
+    tablaPrefacturas.columns(14).visible(false);
     tablaPrefacturas.columns(15).visible(false);
-    if(departamentoId != 8) {
+    tablaPrefacturas.columns(17).visible(false);
+   /*  if(departamentoId != 8) {
         tablaPrefacturas.columns(6).visible(false);
         tablaPrefacturas.columns(7).visible(false);
-    }
+    } */
     
 }
 
@@ -3674,6 +4062,14 @@ function calculaImportesInformativosPrefacturas(c) {
 
             vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
             vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
+        } else {
+            var a =  0
+            var na = 0
+            var totLetrasPlanificadas = vm.totLetrasPlanificadas();
+            var numLetrasPlanificadas = vm.numLetrasPlanificadas();
+
+            vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
+            vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
         }
         
        
@@ -3681,6 +4077,11 @@ function calculaImportesInformativosPrefacturas(c) {
         if(vm.totRecibidas()) {
             var b = numeroDbf(vm.totRecibidas());
             var nb = vm.numRecibidas();
+            vm.difRecibidasLetras(numeral(Math.round((b - a) * 100)/100).format('0,0.00'));
+            vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100)/100).format('0'));
+        } else {
+            var b = 0;
+            var nb = 0;
             vm.difRecibidasLetras(numeral(Math.round((b - a) * 100)/100).format('0,0.00'));
             vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100)/100).format('0'));
         }
@@ -3733,6 +4134,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', false);
             $('#txtCliente').prop('disabled', false);
             $('#txtAgente').prop('disabled', false);
+           
         }
     } else {
         importePrefacturas = 0;
@@ -3867,29 +4269,94 @@ function updateAllPreFacturas(opcion) {
 
 //---- Solapa facturas
 function initTablaFacturas() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7 || column === 8 || column === 9 || column === 10) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 14) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 14) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
+                        return data;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -3930,6 +4397,23 @@ function initTablaFacturas() {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
              }, 0 );
 
+              // Total over all pages
+              total9 = api
+              .column( 9 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+               // Total over all pages
+               total10 = api
+               .column( 10 )
+               .data()
+               .reduce( function (a, b) {
+                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+               }, 0 );
+ 
+
            
 
 
@@ -3943,6 +4427,14 @@ function initTablaFacturas() {
 
             $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
+            );
+
+            $( api.columns(9).footer() ).html(
+                numeral(total9).format('0,0.00')
+            );
+
+            $( api.columns(10).footer() ).html(
+                numeral(total10).format('0,0.00')
             );
 
             //////
@@ -4008,6 +4500,16 @@ function initTablaFacturas() {
                 return  numeral(data).format('0,0.00')
             }
         }, {
+            data: "retenGarantias",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "restoCobrar",
+            render: function (data, type, row) {
+                return  numeral(data).format('0,0.00')
+            }
+        }, {
             data: "vFac"
         }, {
             data: "vFPago"
@@ -4036,7 +4538,10 @@ function initTablaFacturas() {
 
     // Hide some columns by default
     tablaFacturas.columns(9).visible(false);
+    tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
+   
+    tablaFacturas.columns(13).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }
@@ -4103,61 +4608,119 @@ printFactura = function(id){
 
 //---- Solapa facturas de gastos
 function initTablaFacproves() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 7 || column === 8 || column === 9) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 11) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 7 || row === 8 || row === 9) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 11) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 7 || row === 8 || row === 9) {
+                        return data;
+                    } else {
+                       if(row === 5) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaFacproves = $('#dt_facprove').DataTable({
-        bSort: false,
+        bSort: true,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
+        
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_facprove'), breakpointDefinition);
+        columnDefs: [
+           
+            { 
+                "type": "datetime-moment",
+                "targets": [5, 6],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        ],
+        
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -4171,7 +4734,7 @@ function initTablaFacproves() {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4184,7 +4747,7 @@ function initTablaFacproves() {
 
              // Total over all pages
              total2 = api
-             .column( 7 )
+             .column( 8 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4192,7 +4755,7 @@ function initTablaFacproves() {
 
              // Total over all pages
               total3 = api
-              .column( 8 )
+              .column( 9 )
               .data()
               .reduce( function (a, b) {
                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4203,15 +4766,15 @@ function initTablaFacproves() {
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(8).footer() ).html(
+            $( api.columns(9).footer() ).html(
                 numeral(total3).format('0,0.00')
             ); 
 
@@ -4259,10 +4822,9 @@ function initTablaFacproves() {
         }, {
             data: "emisorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
+        },  {
+            data: "fecha_recepcion"
         }, 
         {
             data: "importeServiciado",
@@ -4414,61 +4976,95 @@ function buscarFacproves() {
 
 //---- Solapa anticipos de gastos
 function initTablaAntproves() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 8) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        return data;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaAntproves = $('#dt_antprove').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
+       
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antprove'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -4542,12 +5138,13 @@ function initTablaAntproves() {
         },
         data: dataAntProves,
         columns: [{
-            data: "antproveId",
+            data: "vinculado",
+            width: "5%",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
-                }
+                var html = '<label class="input">';
+                html += '<input type="checkbox" disabled ' + (data === 1 ? 'checked' : '') + '>'
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
                 return html;
             }
         }, {
@@ -4678,61 +5275,95 @@ function buscarAntprocves() {
 //---- Solapa anticipos de colaboradores
 
 function initTablaAntcols() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 8) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 5 || row === 6) {
+                        return data;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaAntproves = $('#dt_antcol').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
+
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antprove'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -4806,12 +5437,13 @@ function initTablaAntcols() {
         },
         data: dataAntCol,
         columns: [{
-            data: "antproveId",
+            data: "vinculado",
+            width: "5%",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (data) {
-                    html = "<i class='fa fa-files-o'></i>";
-                }
+                var html = '<label class="input">';
+                html += '<input type="checkbox" disabled ' + (data === 1 ? 'checked' : '') + '>'
+                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                html += '</label>';
                 return html;
             }
         }, {
@@ -4936,61 +5568,94 @@ function buscarAntCols() {
 
 //---- Solapa facturas de colaboradores
 function initTablaFactcol() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 6 || column === 7 || column === 8) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column === 10) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
+    var buttonCommon2 = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    if(column === 0 || column === 10) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(row === 6 || row === 7 || row === 8) {
+                        return data;
+                    } else {
+                       if(row === 4) {
+                            return data
+                       } else {
+                            return "";
+                       }
+                    }
+                },
+            }
+        }
+    };
     tablaFacproves = $('#dt_factcol').DataTable({
         bSort: false,
+        responsive: true,
         "paging": false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            },{footer: true} ), 
+            $.extend( true, {}, buttonCommon2,{
+                extend: 'pdf'
+            },{
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                footer: true
+                } ), 
+            
+            'print'
+        ],
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factcol'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -5004,7 +5669,7 @@ function initTablaFactcol() {
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column( 6 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5017,7 +5682,7 @@ function initTablaFactcol() {
 
              // Total over all pages
              total2 = api
-             .column( 6 )
+             .column( 7 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5025,7 +5690,7 @@ function initTablaFactcol() {
 
              // Total over all pages
               total3 = api
-              .column( 7 )
+              .column( 8 )
               .data()
               .reduce( function (a, b) {
                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5036,15 +5701,15 @@ function initTablaFactcol() {
 
 
             // Update footer
-            $( api.columns(5).footer() ).html(
+            $( api.columns(6).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total3).format('0,0.00')
             ); 
 
@@ -5091,6 +5756,11 @@ function initTablaFactcol() {
             data: "emisorNombre"
         }, {
             data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        },{
+            data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
@@ -5263,7 +5933,8 @@ var prepararRecepcionGestion = function(opcion) {
 } 
 
 var aceptarGenerarRecepcionGestion = function() {
-    if(!datosOKRecepcionGestion()) return;
+    //if(!datosOKRecepcionGestion()) return;
+    var data = {};
     var url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
     //recuperamos primero las fechas de recepción y gestión de cobros de las prefcaturas seleccionadas
     llamadaAjax("GET", url, null, function (err, datos) {
@@ -5273,9 +5944,16 @@ var aceptarGenerarRecepcionGestion = function() {
            return mensError("No se han seleccionado registros");
             
         }
-        var data = {
+        data = {
             recepcionGestion:{
-                fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+                fechaRecibida:  null
+            }
+        }
+        if(vm.fechaRecepcionGestion() != '') {
+            data = {
+                recepcionGestion:{
+                    fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+                }
             }
         }
        if(!_recepcionGestion) {
@@ -5309,11 +5987,9 @@ var compruebaFechaGestionCobros = function(datos, fecha) {
         var f = datos[i];
         if(f.fechaRecibida) {
             opcion = fecha < f.fechaRecibida;
-            if(opcion) break
             
         } else {
             opcion = true;
-            break;
         }
 
     }
@@ -5324,10 +6000,18 @@ var compruebaFechaRecepcion = function(datos, fecha) {
     var opcion = false;
     for(var i = 0; i < datos.length; i++) {
         var f = datos[i];
-        if(f.fechaGestionCobros) {
+        if(f.fechaGestionCobros && fecha) {
             opcion = fecha > f.fechaGestionCobros;
-            if(opcion) break
-            
+            if(opcion) {
+                break;
+            }
+        } else if(!f.fechaGestionCobros && !fecha) {
+            opcion = false;
+        } else if(!f.fechaGestionCobros && fecha) {
+            opcion = false;
+        }  else {
+            opcion = true;
+            break;
         }
     }
     return opcion;
@@ -5350,6 +6034,40 @@ var proponerFechasRenovacion = function () {
 
 var aceptarNuevoContrato = function () {
     if (!nuevoContratoOK()) return;
+    //primero comprobamos que los implicados en los contratos estén de alta
+    llamadaAjax('GET', "/api/contratos/comprueba/alta/implicados-contrato/" + vm.contratoId(), null, function (err, data) {
+        if (err) {
+            return mensErrorAjax(err);
+        }
+        if(data) { //si no se encuentra activo
+            // mensaje de confirmación
+            //procesamos el mansaje
+            var mens = "Los siguientes implicados en el contrato no se encuantran activos.<br>"
+            for(let d of data) {
+                mens += JSON.stringify(d) + "<br>";
+            }
+            mens = mens.replace(/["{}]/g, '');
+            mens += "¿Realmente desea renovar el contrato?.";
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    renovarContrato();
+                }
+                if (ButtonPressed === "Cancelar") {
+                    // no hacemos nada (no quiere borrar)
+                    return;
+                }
+            });
+        } else {
+            renovarContrato();
+        }
+    });
+};
+
+var renovarContrato = function() {
     var url = myconfig.apiUrl + "/api/contratos/renovar/" + vm.contratoId();
     url += "/" + spanishDbDate(vm.nuevaFechaInicio());
     url += "/" + spanishDbDate(vm.nuevaFechaFinal());
@@ -5358,7 +6076,7 @@ var aceptarNuevoContrato = function () {
         if (err) return;
         window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
     })
-};
+}
 
 var nuevoContratoOK = function () {
     $('#frmRenovarContratos').validate({
@@ -5370,9 +6088,9 @@ var nuevoContratoOK = function () {
                 required: true,
                 fechaFinalSuperiorAInicial: true
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: true
-            }
+            } */
         },
         // Messages for form validation
         messages: {
@@ -5382,9 +6100,9 @@ var nuevoContratoOK = function () {
             txtNFechaFinal: {
                 required: "Debe elegir una fecha"
             },
-            txtNFechaNuevoContrato: {
+           /*  txtNFechaNuevoContrato: {
                 required: "Debe elegir una fecha"
-            }
+            } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -5396,6 +6114,7 @@ var nuevoContratoOK = function () {
 }
 
 var editPrefactura = function (id) {
+    $('#dt_prefactura').dataTable().fnDestroy();
     var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=" + id + "&ContratoId="+ contratoId;
     window.open(url, '_new');
 }
@@ -5464,8 +6183,9 @@ function deletePrefactura(id) {
         }
     });
 }
-function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
+function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura, porRetenGarantias, numPagos, empresaId, clienteId, empresa, cliente) {
     var divisor = obtenerDivisor();
+    var numLetra = '';
 
 
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
@@ -5482,6 +6202,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var importePago = roundToTwo(importe / numPagos);
     var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
     var importeCoste = roundToTwo(coste / numPagos);
+    porRetenGarantias = parseFloat(porRetenGarantias);
+    
+   
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -5516,11 +6239,15 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
        /*  if (i == (nPagos - 1)) {
             f2 = moment(fFactura).format('DD/MM/YYYY');
         } */
+        var n =  i+1 
+            numLetra = n + "/" + nPagos
+        
         var p = {
             fecha: f,
             importe: importePago,
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
+            retenGarantias: 0,
             empresaId: empresaId,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
@@ -5529,8 +6256,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             cliente: cliente,
             periodo: f0 + "-" + f2,
             contPlanificacionId: RegPlanificacion[0].contPlanificacionId,
-            formaPagoId: RegPlanificacion[0].formaPagoId
-
+            formaPagoId: RegPlanificacion[0].formaPagoId,
+            numLetra: numLetra
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -5542,6 +6269,13 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             p.importeCliente = import21;
             p.importeCoste = import22;
         }
+        //calculamos la retención de garantia si existe
+        if(porRetenGarantias) {
+            var por = roundToTwo(porRetenGarantias / 100)
+            p.retenGarantias = roundToTwo(p.importe * por);
+        } 
+        
+
         pagos.push(p);
     }
     if (pagos.length > 1) {
@@ -5549,6 +6283,9 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        if(porRetenGarantias) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo( pagos[pagos.length - 1].importe * por);
+        }
         /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
         pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
         pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
@@ -5590,6 +6327,8 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
         nPagos++
     }
     for (var i = 0; i < nPagos; i++) {
+        var n =  i+1 
+        numLetra = n + "/" + nPagos
         // sucesivas fechas de factura
         var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
         // inicio de periodo
@@ -5611,12 +6350,14 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
             importeCliente: importePagoCliente,
             importeCoste: importeCoste,
             empresaId: empresaId,
+            retenGarantias: 0,
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
             cliente: cliente,
-            periodo: f0 + "-" + f2
+            periodo: f0 + "-" + f2,
+            numLetra: numLetra
         };
         if (vm.facturaParcial() && i == 0) {
             p.importe = import1;
@@ -5700,6 +6441,7 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
+            retenGarantias: 0,
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
@@ -5736,6 +6478,8 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
     var fecha = new Date(spanishDbDate(data[0].fecha));
     var pagos = [];
     var nPagos = numPagos;
+    var porRetenGarantias = 0
+    var retenGarantias = 0
     var copiadata = data.slice();
   
     for (var i = 0; i < nPagos; i++) {
@@ -5757,6 +6501,11 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
         var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
         var cabOtrosConceptos = '\nOTROS CONCEPTOS';
         var otrosConceptos = ''
+         //calculamos la retención de garantia si existe
+         if(copiadata[i].porRetenGarantias) {
+            porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
+            retenGarantias = roundToTwo(importePago * porRetenGarantias);
+        } 
         copiadata.splice(i, 1);
         for( var k  = 0; k < copiadata.length; k++ ) {
             otrosConceptos += "\n"+copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
@@ -5769,6 +6518,7 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             importeCoste: importeCoste,
             empresaId: empresaId,
             clienteId: clienteId,
+            retenGarantias: retenGarantias,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
             empresa: empresa,
@@ -5779,6 +6529,8 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             contPlanificacionId: contPlanificacionId,
             formaPagoId: formaPagoId
         };
+
+       
         pagos.push(p);
         copiadata = [];
         copiadata = data.slice();
@@ -5834,25 +6586,17 @@ var calcularNumPagosPlanificacion = function () {
 /* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COBROS */
 
 function initTablaContratosCobros() {
-    tablaCarro = $('#dt_contratosCobros').dataTable({
+    tablaContratoCobros = $('#dt_contratosCobros').DataTable({
         sort: false,
+        responsive: true,
         "paging": false,
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contratosCobros'), breakpointDefinition);
-            }
-        },
         rowCallback: function (nRow, aData) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+           
             if ( !aData.seguro )
             {
                 $('td', nRow).css('background-color', 'Orange');
             }
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
         },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -5867,7 +6611,7 @@ function initTablaContratosCobros() {
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column( 7 )
                 .data()
                 .reduce( function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5880,7 +6624,7 @@ function initTablaContratosCobros() {
 
              // Total over all pages
              total2 = api
-             .column( 7 )
+             .column( 8 )
              .data()
              .reduce( function (a, b) {
                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -5890,11 +6634,11 @@ function initTablaContratosCobros() {
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
+            $( api.columns(7).footer() ).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $( api.columns(8).footer() ).html(
                 numeral(total2).format('0,0.00')
             );
 
@@ -5923,7 +6667,15 @@ function initTablaContratosCobros() {
             }
         },
         data: dataContratosCobros,
-        columns: [{
+        columns: [
+            {
+                
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+                //data:"carpetaId",
+            },{
             data: "numorden"
         }, {
             data: "numserie"
@@ -5985,6 +6737,7 @@ function loadContratosCobros(id) {
 function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
+        responsive: true,
         "order": [[ 0, "asc" ]],
         "columnDefs": [
             {
@@ -5993,17 +6746,7 @@ function initTablaConceptosLineas() {
                 "searchable": false
             }
         ],
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
@@ -6163,6 +6906,11 @@ function aceptarLineaConceptoPrefactura() {
     if (!datosOKLineasConceptos()) {
         return;
     }
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
    var  impCli = parseFloat(vm.importeCliente());
    var imp = parseFloat(vm.importeCalculado());
     if(importePrefacturasConcepto > impCli) {
@@ -6211,7 +6959,7 @@ function aceptarLineaConceptoPrefactura() {
                                     var importe = vm.importeCliente(); // importe real de la factura;
                                     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
                                     var clienteId = vm.clienteId();
-                                    var cliente = $("#txtCliente").val();
+                                    var cliente = vm.nombreComercial();
                                     var empresa = $("#cmbEmpresas").select2('data').text;
                                     // si es un mantenedor su importe de factura es el calculado para él.
                                     if (vm.mantenedorId()) {
@@ -6241,7 +6989,7 @@ function aceptarLineaConceptoPrefactura() {
                             var importe = vm.importeCliente(); // importe real de la factura;
                             var importeAlCliente = vm.importeCliente(); // importe al cliente final;
                             var clienteId = vm.clienteId();
-                            var cliente = $("#txtCliente").val();
+                            var cliente = vm.nombreComercial();
                             var empresa = $("#cmbEmpresas").select2('data').text;
                             // si es un mantenedor su importe de factura es el calculado para él.
                             if (vm.mantenedorId()) {
@@ -6365,8 +7113,10 @@ function datosOKRecepcionGestion() {
 //FUNCIONES PLANIFICACION OBRAS
 
 function initTablaPlanificacionLineasObras() {
-    tablaCarro = $('#dt_lineasPlanificacionObras').DataTable({
+    tablaLineasPlanificacion = $('#dt_lineasPlanificacionObras').DataTable({
         autoWidth: true,
+        paging: false,
+        responsive: true,
         "order": [[ 0, "asc" ]],
         "columnDefs": [
             {
@@ -6375,6 +7125,11 @@ function initTablaPlanificacionLineasObras() {
                 "searchable": false
             }
         ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -6529,22 +7284,6 @@ function initTablaPlanificacionLineasObras() {
              );
             
         },
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasPlanificacionObras'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-            var api = this.api();
-            var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
-            
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -6637,6 +7376,9 @@ function initTablaPlanificacionLineasObras() {
             }
             
         },{
+            data: "porRetenGarantias",
+            
+        },{
             data: "formaPagoNombre",
             
         }, {
@@ -6662,6 +7404,7 @@ function initTablaPlanificacionLineasObras() {
             }
         }]
     });
+    tablaLineasPlanificacion.columns(11).visible(false);
 }
 
 function calculaImportesInformativosPlanificacion(c) {
@@ -6724,18 +7467,23 @@ function loadTablaPlanificacionLineasObras(data) {
         $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
-    if(a) {
-        if(vm.diferenciaPrefacturado()) a =  numeroDbf(vm.diferenciaPrefacturado());
-    
-        if(a == 0 || a < 0 ) {
+  
+        if(vm.diferenciaPrefacturado()) {
+            a =  parseFloat(numeroDbf(vm.diferenciaPrefacturado()));
+        } else {
+            a = null;
+        }
+   /*  if(a) {
+        if(a >= -1 && vm.certificacionFinal()) {
             $('#chkContratoCerrado').prop('disabled', false);
         } else {
             $('#chkContratoCerrado').prop('disabled', true);
         }
     } else {
         $('#chkContratoCerrado').prop('disabled', true);
-    }
-}
+    } */
+} 
+
 
 
 function nuevaLineaPlanificacionObras() {
@@ -6748,6 +7496,7 @@ function limpiaDataLineaPlanificacionObras() {
     vm.porcentajeCobro(0);
     vm.fechaPlanificacionObras(vm.fechaInicio());
     vm.importeCalculado(0);
+    vm.porRetenGarantias(0);
     loadFormasPagoLinea(vm.formaPagoId())
 
 }
@@ -6765,7 +7514,8 @@ function aceptarLineaPlanificacionObras() {
             porcentaje: vm.porcentajePlanificacion(),
             fecha: spanishDbDate(vm.fechaPlanificacionObras()),
             importe: vm.importeCalculadoPlanificacion(),
-            formaPagoId: vm.sformaPagoIdLinea(),
+            porRetenGarantias: vm.porRetenGarantias(),
+            formaPagoId: vm.sformaPagoIdLinea()
         }
     }
                 var verbo = "POST";
@@ -6813,9 +7563,12 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
         generarPrefacturasPlanificacion(RegPlanificacion);
 
     } else {
-        // comprobamos si es de mantenedor o cliente final.
+         //comprobamos que le cliente tenga un nombre comercial
+        var d = vm.nombreComercial();
+        if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
         var clienteId = vm.clienteId();
-        var cliente = $("#txtCliente").val();
+        var cliente = vm.nombreComercial();
         var empresa = $("#cmbEmpresas").select2('data').text;
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
         var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
@@ -6839,6 +7592,7 @@ function loadDataLineaPlanificacionObras(data) {
     vm.importeCalculadoPlanificacion(data.importe);
     vm.importeFacturado(data.importeFacturado);
     vm.importeCobrado(data.importeCobrado);
+    vm.porRetenGarantias(data.porRetenGarantias);
     loadFormasPagoLinea(data.formaPagoId);
     
 }
@@ -6920,6 +7674,7 @@ function limpiarModalLineasPlanificacion() {
     vm.porcentajePlanificacion(null);
     vm.fechaPlanificacionObras(null);
     vm.importeCalculadoPlanificacion(null);
+    vm.porRetenGarantias(null);
     loadFormasPagoLinea(null);
 }
 
@@ -6998,18 +7753,7 @@ function initTablaAscContratos() {
     tablaCarro = $('#dt_AscContratos').dataTable({
         autoWidth: true,
         "paging": false,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_AscContratos'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+        responsive: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -7140,7 +7884,8 @@ function loadAscContratos(id) {
 
 function ocualtaBotonesContratoCerrado() {
     $('#btnAceptar').hide();
-    if(usuario.puedeAbrir)   $('#btnAceptar').show();
+    $('#btnAceptar2').hide();
+    if(usuario.puedeAbrir)  { $('#btnAceptar').show();  $('#btnAceptar2').show() }
     $('#btnNuevoComisionista').hide();
     $('#btnAltaPrefactura').hide();
     $('#btnAltaFacprove').hide();
@@ -7153,4 +7898,921 @@ function ocualtaBotonesContratoCerrado() {
     $('#btnNuevaLineaConcepto').hide();
     $('#btnNuevaLineaPlanificacionObras').hide();
 
+}
+
+// FUNCIONES RELACIONADAS CON LA DOCUMENTACIÓN
+
+/* function initTablaDocumentacion() {
+    tablaDocumentacion = $('#dt_documentacion').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: false,
+        "bDestroy": true,
+        "columnDefs": [
+            { "width": "5%", "targets": 0 },
+            { "width": "8%", "targets": 2 },
+            { "width": "5%", "targets": 3 },
+            { "width": "13%", "targets": 4 },
+
+          ],
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataDocumentacion,
+        columns: [
+            {
+                
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: '',
+                //data:"carpetaId",
+            },
+            {
+                data: "carpetaNombre",
+            },
+            {
+                data: "tipo",
+            },
+            {
+                data: "documentos",
+                render: function (data, type, row) {
+                    if(!row.documentos) return 0;
+                    return row.documentos.length; ;
+                }
+            },
+            {
+            data: "carpetaId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt = "";
+                var bt2 = "";
+                var bt3 = "";
+                if(usuario.puedeEditar) {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-info' data-toggle='modal' data-target='#modalpostSubcarpeta' onclick='nuevaSubcarpeta(" + JSON.stringify(row) + ");' title='Crear subcarpeta'> <i class='fa fa-folder fa-fw'></i> </button>";
+                    var bt3 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    //if(!usuario.borrarCarpeta) bt3 = "";
+                } else {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                  
+                }
+               
+                return html = "<div class='pull-right'>" + bt + " " + bt2 + " " + bt3 +"</div>";
+            }
+        }]
+    });
+} */
+function initArbolDocumentacion() {
+    $('#jstreeDocumentacion').jstree({ 'core' : 
+    {
+        'data' : [],
+    },
+    'check_callback' : true,
+    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+    "select_node": true,
+    'contextmenu': {
+        'items': function(node) {
+            if(vm.contratoCerrado()) return;
+            var menuItems = {
+            // Define las opciones del menú contextual para cada nodo
+         
+            'Option 1': {
+                'label': 'Subir documento',
+                'action': function(a, b , c) {
+                  console.log(node.type);
+                  $('#modalUploadDoc').modal('show');
+                  preparaDatosArchivo(node.original);
+                }
+              },
+              'Option 2': {
+                'label': 'Crear Subcarpeta',
+                'action': function() {
+                   $('#modalpostSubcarpeta').modal('show');
+                   nuevaSubcarpeta(node.original);
+                }
+              },
+              'Option 3': {
+                  'label': 'Eliminar',
+                  'action': function() {
+                    if(!node.data.folder) {
+                        deleteDocumento(node.id);
+                    } else {
+                        deleteCarpeta(node.id);
+                    }
+                  }
+                }
+         
+            }
+            if (!node.data.folder) {
+                delete menuItems['Option 1'];
+                delete menuItems['Option 2'];
+            }
+            if(!usuario.puedeEditar) {
+                delete menuItems['Option 2'];
+                delete menuItems['Option 3'];
+            }
+            return menuItems;
+        }
+    }
+});
+
+}
+function cargaTablaDocumentacion(){
+    //miramos primero si es contrato renovado en la nueva tabla
+    llamadaAjax("GET",  "/api/contratos/renovado/registro/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        var ids = []
+        if(data.length > 0) {
+            ids.push(data[0].contratoOriginalId);
+            data.forEach( function(e){
+                ids.push(e.renovadoId);
+            });
+            var data = {
+                ids: ids
+            }
+            llamadaAjax("POST",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId(), data, function (err, data) {
+                if (err) return;
+                if(data) loadDocumentacionTree(data);
+                 //if(data) loadTablaDocumentacion(data);
+            });
+        } else {
+            llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId()  + "/" + vm.contratoId(), null, function (err, data) {
+                if (err) return;
+                if(data) loadDocumentacionTree(data);
+                 //if(data) loadTablaDocumentacion(data);
+            });
+        }
+    });
+}
+   
+
+function loadDocumentacionTree(data) {
+    if(data.length == 0) return;
+    var obj = data;
+    
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    $('#jstreeDocumentacion').jstree(true).refresh();
+
+    //$('#jstreeDocumentacion').jstree(true).redraw();
+
+    
+}
+
+function loadTablaDocumentacion(data) {
+    var dt = $('#dt_documentacion').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function formatData(d) {
+    if(!d.documentos) d.documentos = [];
+    var doc = d.documentos;
+    var html = "";
+        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+        var a;
+        doc.forEach(e => {
+            var l = e.key.split('/');
+            var index = l.length - 1;
+             a = '<div class="row" style="margin-bottom: 10px">' +
+                        '<section class="col col-md-5">' + 
+                            '<a href="' + e.location  + '" target="_blank">' +  l[index] +'</a>' +
+                        '</section>' +
+                        '<section class="col col-md-3 text-left">' +
+                            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                        '</section>' +
+                        '<section class="col col-md-4">' + '</section>' +
+                    '</div>' 
+            html += a;
+        });
+    if(!d.subcarpetas) d.subcarpetas = [];
+    var subC = d.subcarpetas;
+    html += '<h6 style="padding-left: 5px"> Subcarpetas</h6>'
+    var b;
+    subC.forEach(e => {
+         b = '<div class="row" style="margin-bottom: 10px">' +
+         '<section class="col col-md-3 text-left">' +
+                        '<button  class="dt-control"></button>' +
+                    '</section>' +
+                    '<section class="col col-md-5">' + 
+                        '<a href="" target="_blank">' + e.carpetaNombre +'</a>' +
+                    '</section>' +
+                    '<section class="col col-md-3 text-left">' +
+                        '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                    '</section>' +
+                    '<section class="col col-md-2">' + '</section>' +
+                '</div>' 
+        html += b;
+    });
+    return html;
+}
+
+
+function formatDataCobros(d) {
+    if(!d.lin) d.lin = [];
+    var lin = d.lin;
+    var html = "";
+    html = '<h5> APUNTES DEL COBRO</h5>'
+    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    lin.forEach(e => {
+        var d = e.timporteH - e.timporteD
+         html += 
+         '<tr>' +
+            '<th>Fecha de entrada:</th>' +
+            '<th>Asiento:</th>' +
+            '<th>Num. linea:</th>' +
+            '<th>Num. documento:</th>' +
+            '<th>Nom. documento:</th>' +
+            '<th>IMPORTE:</th>' +
+            '<th>ES DEVOLUCION:</th>' +
+         '</tr>' +
+         
+         '<tr>' +
+            
+            '<td>' +
+                formatFecha(e.fechaent)  +
+            '</td>' +
+            
+            '<td>' +
+                e.numasien +
+            '</td>' +
+            
+            '<td>' +
+                e.linliapu +
+            '</td>' +
+            
+            '<td>' +
+                e.numdocum +
+            '</td>' +
+            
+            '<td>' +
+                e.ampconce +
+            '</td>' +
+
+            '<td>' +
+                numeral(d).format('0,0.00');+
+            '</td>' +
+            
+            '<td>'  +
+           
+                e.esdevolucion +
+            '</td>' +
+        '</tr>'
+       
+    });
+    html +=  '</table>'
+    return html
+}
+
+ function formatFecha(f) {
+    if(f) return spanishDate(f);
+    return ' ';
+ }
+
+function preparaDatosArchivo(r) {
+    docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
+    carpetaId = r.carpetaId;
+    docName = docName.replace(/[\/]/g, "-");
+    console.log(docName);
+    carpeta = r.carpetaNombre;
+    key = r.carpetaNombre   + "/" +  docName;
+    carpetaTipo = r.tipo;
+    vm.documNombre(docName);
+}
+
+function limpiaDatosArchivo(r) {
+    docName = null
+    carpetaId = null
+    docName = null
+    carpeta = null
+    $('.progress-bar').text(parseInt((0)+'%'));
+    $('.progress-bar').width(parseInt((0)+'%'));
+}
+
+function nuevaCarpeta() {
+    vm.carpetaNombre(null);
+}
+
+
+function aceptarNuevaCarpeta() {
+        //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+        var a = vm.carpetaNombre();
+        a = a.trim();
+        a = a.replace(/[\/]/g, "-");
+        var data = 
+        {
+            carpeta: {
+                carpetaId: 0,
+                nombre: a,
+                tipo: "contrato",
+                departamentoId: vm.tipoContratoId()
+            }
+        }
+
+        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+            if (err) return
+            $('#modalNuevaCarpeta').modal('hide');
+            mensNormal('Carpeta creada con exito');
+            cargaTablaDocumentacion();
+        });
+}
+
+function aceptarNuevaSubCarpeta() {
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a =  vm.subCarpetaNombre();
+    a = a.trim();
+    a = a.replace(/\//g, "-");
+    var n = subCarpeta + "/" + a;
+    var data = 
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: n,
+            tipo: carpetaTipo,
+            departamentoId: vm.tipoContratoId(),
+        }
+    }
+
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta/" + parent, data, function (err, data) {
+        if (err) return
+        $('#modalpostSubcarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
+}
+
+
+function nuevaSubcarpeta(r) {
+    vm.subCarpetaNombre(null);
+    subCarpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo
+    parent = r.carpetaId
+}
+
+
+function deleteDocumento(id) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var parametros = data;
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                var params = {
+                    Bucket: parametros.bucket_docum,
+                    Key: data.key
+            }
+    
+            //borramos el documento en s3
+            var s3 = new AWS.S3({ params });
+    
+            s3.deleteObject({}, (err, result) => {
+                if (err) mensError('Error al borrar el docuemnto');
+                //Actualizamos la tabla documentacion
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
+                    if (err) return;
+                    cargaTablaDocumentacion();
+                });
+            }); 
+            
+            }
+        });
+    })
+}
+
+function deleteCarpeta(id) {
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos y carpetas que contiene y no se podrá recuperar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            
+            llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+                if (err) return;
+                var parametros = data;
+                llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
+                    if (err) return mensError('Fallo al borrar la documentación en la base de datos');
+                    if(data2) {
+                        
+                    AWS.config.region = parametros.bucket_region_docum; // Región
+                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: parametros.identity_pool_docum,
+                    });
+                    var prefix = data2.nombre;
+                    var params = {
+                        Bucket: parametros.bucket_docum,
+                        Prefix: prefix,
+                        Delimeter: "/"
+                    }
+        
+                    var s3 = new AWS.S3({ params });
+                    s3.listObjectsV2({}, (err, result) => {
+                        if (err) mensError('Error de lectura en la nube');
+                        console.log(result);
+                        if(result.Contents.length > 0) {
+
+
+
+                    var objectKeys = []
+                    result.Contents.forEach(e => {
+                        objectKeys.push(e.Key);
+                    });
+
+                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                    const objects = objectKeys.map(key => ({ Key: key }));
+                    const deleteParams = {
+                    Bucket: parametros.bucket_docum,
+                    Delete: { Objects: objects }
+                    };
+
+                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                    s3.deleteObjects(deleteParams, function(err, data) {
+                        if (err) {
+                            mensError('Fallo al borrar la carpeta en la nube');
+                        } else {
+                            mensNormal('Carpeta eliminada con éxito');
+                            cargaTablaDocumentacion();
+                        }
+}                   );
+
+                        } else {
+                            mensAlerta('No se han encontrado archivos en la nube para borrar');
+                            cargaTablaDocumentacion();
+                        }
+                       
+                    }); 
+            
+                  
+                    
+                    } else {
+                        mensError('No se han encontrado carpetas para borrar');
+                        cargaTablaDocumentacion();
+                    }
+                }); 
+            })
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function aceptarSubirDocumentos() {
+    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    //buscamos los parámetros
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        parametros = data;
+        var files = $("#upload-input").get(0).files;
+        var arr = [];
+        if (!files.length) {
+            mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
+            return;
+        }
+        for(var i = 0; i< files.length; i++) {
+            var e = files[i];
+            var encontrado = false;
+            var id = 0;
+            var file = e;
+            var ext = file.name.split('.').pop().toLowerCase();
+            var blob = file.slice(0, file.size, file.type); 
+            var newFile = new File([blob], {type: file.type});
+            var nom = "";
+            nom = vm.documNombre()
+            if(files.length > 1) {
+                var s = parseInt(i)
+                s++
+                nom = nom + "-" + s + "." + ext;
+            } else {
+                nom = nom + "." + ext;
+            }
+            nom = nom.replace(/\//g, "-");
+            newFile.nom = nom;
+            var fileKey =  carpeta + "/" + nom
+            newFile.fileKey = fileKey;
+            newFile.repetido = false;
+            arr.push(newFile);
+        }
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    
+                    for(var j = 0; j < arr.length; j++) {
+                        if(n[index] == arr[j].nom) {
+                            encontrado = true;
+                            arr[j].repetido = true;
+                            arr[j].documentoId = d.documentoId;
+                            arr[j].repetido = true;
+                            break;
+                        } 
+                    }
+                }
+
+                if(encontrado) {
+                    var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(arr);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(arr);
+                }
+            } else {
+                uploadDocum(arr);
+            }
+        }); 
+
+    });
+    
+}
+
+function uploadDocum(arr) {
+    var index = 0;
+      
+        arr.forEach(e => {
+            var repetido = e.repetido;
+            var documentoId = e.documentoId;
+            var filekey = e.fileKey;
+            delete e.fileKey
+            delete e.documentoId;
+            delete e.repetido;
+            var nom = e.nom;
+            delete e.nom;
+
+            AWS.config.region = parametros.bucket_region_docum; // Región
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: parametros.identity_pool_docum,
+            });
+            var bucket = parametros.bucket_docum;
+            var params = {
+                Bucket: bucket,
+                Key: filekey,
+                IdentityPoolId: parametros.identity_pool_docum,
+                Body: e,
+                ACL: "public-read"
+            }
+            var ext = nom.split('.').pop().toLowerCase();
+            if(ext == "pdf") params.ContentType = 'application/pdf'
+            // Use S3 ManagedUpload class as it supports multipart uploads
+            var upload = new AWS.S3.ManagedUpload({
+                params: params
+            });
+            var promise = upload.on('httpUploadProgress', function(evt) {
+                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+              })
+              .promise();
+            promise.
+            then (
+                data => {
+                    if(data) {
+                        //CREAMOS EL REGISTRO EN LA TABLA documentacion
+                        var data = 
+                        {
+                            documentacion: {
+                                documentoId: 0,
+                                ofertaId: null,
+                                contratoId: null,
+                                parteId: null,
+                                carpetaId: carpetaId,
+                                location: data.Location,
+                                key: filekey
+                            }
+                        }
+                        if(carpetaTipo == "oferta") {
+                            data.documentacion.ofertaId =  vm.ofertaId();
+                        }else if(carpetaTipo == "contrato") {
+                            data.documentacion.contratoId = vm.contratoId();
+                        }
+    
+                        if(!repetido) {
+                            method = 'POST';
+                            url = "/api/documentacion";
+                        } else {
+                            data.documentacion.documentoId = e.documentoId;
+                            method = 'PUT';
+                            url = "/api/documentacion/" + documentoId;
+                        }
+        
+                        llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
+                            if (err) return mensError(err);
+                            index++
+                            if(index == arr.length) {
+                                $('#modalUploadDoc').modal('hide');
+                                mensNormal('Archivo subido con exito');
+                                limpiaDatosArchivo();
+                                cargaTablaDocumentacion();
+                            }
+                        });
+                    }
+                },
+                err =>{
+                    if (err) return mensError(err);
+                }
+            );        
+            });       
+}
+
+//FUNCIONES RELACIONADAS CON LA PESTAÑA RESUMEN
+
+
+function loadJefesObra(id) {
+    llamadaAjax('GET', "/api/comerciales/colaboradores/activos/por/tipo/" + 5, null, function (err, data) {
+        if (err) return;
+        var jefesObra = [{
+            jefeObraId: null,
+            nombre: ""
+        }].concat(data.map(function(item) {
+            return {
+                jefeObraId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                nombre: item.nombre
+            };
+        }));
+        vm.posiblesJefesObra(jefesObra);
+        $("#cmbJefesObra").val([id]).trigger('change');
+        vm.sjefeObraId(id);
+    });
+}
+
+function buscaTecnicos() {
+    llamadaAjax("GET", "/api/comerciales/tecnicos/contrato/" + contratoId + proId, null, function (err, data) {
+        if (err) return;
+        loadTecnicos(data);
+    });
+}
+
+
+function loadTecnicos(tecnicosId) {
+    var data = {
+        tiposComercialesId: [6, 7]
+    }
+    var ids = [];
+    llamadaAjax('POST', "/api/comerciales/colaboradores/por/tipos/", data, function (err, data) {
+        if (err) return;
+        if(data) {
+            var tecnicos = data.map(function(item) {
+                return {
+                    tecnicoId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
+                    nombre: item.nombre
+                };
+            });
+            vm.posiblesTecnicos(tecnicos);
+            if(tecnicosId) {
+                vm.elegidosTecnicos(tecnicosId);
+                for ( var i = 0; i < tecnicosId.length; i++ ) {
+                    ids.push(tecnicosId[i].comercialId)
+                }
+                $("#cmbTecnicos").val(ids).trigger('change');
+            }
+        }
+    });
+}
+
+
+var guardarContratoResumen = function () {
+    var data = generarResumenDb();
+    llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/resumen/" + contratoId, data, function (err, data2) {
+        if (err) return;
+        mensNormal("Resumen guardado.")
+    });
+}
+
+
+
+var generarResumenDb = function () {
+    var tec = vm.elegidosTecnicos();
+    var data = {
+        contrato: {
+            "contratoId": vm.contratoId(),
+            "resumenExp" : vm.resumenExp(),
+            "resumenJefeObraId": vm.sjefeObraId(),
+            "resumenDistrito": vm.resumenDistrito(),
+            "resumenPtoAceptado": vm.resumenPtoAceptado(),
+            "resumenAutorizacion": vm.resumenAutorizacion(),
+            "resumenActa": vm.resumenActa(),
+            "resumenDni": vm.resumenDni(),
+            "resumenCif": vm.resumenCif(),
+            "resumenTasas": vm.resumenTasas(),
+            "resumenIcio": vm.resumenIcio(),
+            "resumenFormulario": vm.resumenFormulario(),
+            "resumenDr": vm.resumenDr(),
+            "resumenDiario": vm.resumenDiario(),
+
+        },
+        tecnicos: [
+            vm.elegidosTecnicos()
+        ]
+    };
+    return data;
+}
+
+function buscarTecnicos() {
+    llamadaAjax("GET", "/api/contratos/tecnicos/asociados/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTecnicos(data);
+    });
+}
+
+var guardarLineaTasa = function () {
+    if (!datosOKLineasTasa()) {
+        return;
+    }
+    var data = {
+        contratoLineaTasa: {
+            tasaVisadoId: vm.tasaVisadoId(),
+            titulo: vm.tituloTasa(),
+            contenido: vm.contenidoTasa(),
+            contratoId: vm.contratoId(),
+        }
+    }
+    var verboAjax = '';
+    var urlAjax = '';
+    if (!lineaEnEdicion) {
+        verbo = 'POST';
+        urlAjax = myconfig.apiUrl + "/api/contratos/lineas/visado/tasas";
+    } else {
+        verbo = 'PUT';
+        urlAjax = myconfig.apiUrl + "/api/contratos/lineas/visado/tasas/" + vm.tasaVisadoId();
+    }
+    llamadaAjax(verbo, urlAjax, data, function (err, data) {
+        if (err) return;
+        $('#modalLineaVisado').modal('hide');
+        loadContratoTasasVisado(vm.contratoId());
+    });
+}
+
+
+function datosOKLineasTasa() {
+    $('#lineaVisado-form').validate({
+        rules: {
+            txtTituloTasa: {
+                required: true
+            },
+            txtContenidoTasa: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtTituloTasa: {
+                required: "Debe dar un texto al título"
+            },
+            txtContenidoTasa: {
+                required: 'Necesita un contenido'
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    var opciones = $("#lineaVisado-form").validate().settings;
+    return $('#lineaVisado-form').valid();
+}
+
+
+
+function nuevaLineaTasa() {
+    limpiaDataLineaTasa(); // es un alta
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLineaTasa(data) {
+    vm.tasaVisadoId(0);
+    vm.tituloTasa(null);
+    vm.contenidoTasa(null)
+}
+
+function loadDataLineaTasa(data) {
+    vm.tasaVisadoId(data.tasaVisadoId);
+    vm.tituloTasa(data.titulo);
+    vm.contenidoTasa(data.contenido);
+}
+
+
+function editContratoLineaTasa(id) {
+    lineaEnEdicion = true;
+    llamadaAjax('GET', "/api/contratos/linea/visado/tasas/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) {
+            loadDataLineaTasa(data[0]);
+        }
+    });
+}
+
+function deleteContratoLineaTasa(id) {
+    // mensaje de confirmación
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/lineas/visado/tasas/" + id, null, function (err, data) {
+            if (err) return;
+            loadContratoTasasVisado(vm.contratoId());
+            mensNormal("registro borrado correctamente.");
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadContratoTasasVisado(id) {
+    llamadaAjax('GET', "/api/contratos/lineas/visado/tasas/" + id, null, function (err, data) {
+        loadTablaContratoTasasVisado(data);
+    });
+}
+
+function loadTablaContratoTasasVisado(data) {
+    var dt = $('#dt_lineasVisado').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+
+function initTablaContratosLineasTasas() {
+    tablaContratosLineas = $('#dt_lineasVisado').DataTable({
+        autoWidth: true,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataContratosTasas,
+        columns: [{
+            data: "titulo"
+        }, {
+            data: "contenido"
+        }, {
+            data: "tasaVisadoId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "";
+                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLineaTasa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLineaVisado' onclick='editContratoLineaTasa(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
 }

@@ -1238,13 +1238,13 @@ AGENTE</Text>
     <value>Stimulsoft.Base.Dll</value>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
-  <ReportAlias>LiquidacionAgente</ReportAlias>
+  <ReportAlias>LiquidacionComercial</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
   <ReportChanged>6/21/2022 10:54:11 AM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_comercial.mrt</ReportFile>
   <ReportGuid>ccd7881b6a064d5a9795d5c7745cedb7</ReportGuid>
-  <ReportName>LiquidacionAgente</ReportName>
+  <ReportName>LiquidacionComercial</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
   <Script>using System;

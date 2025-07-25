@@ -7,6 +7,7 @@
       <PROA_REPORT Ref="2" type="Stimulsoft.Report.Dictionary.StiMySqlDatabase" isKey="true">
         <Alias>PROA_REPORT</Alias>
         <ConnectionStringEncrypted>41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410</ConnectionStringEncrypted>
+        <Key>1a9993dc4a34423eb0d23e1ca1456935</Key>
         <Name>PROA_REPORT</Name>
       </PROA_REPORT>
     </Databases>
@@ -15,26 +16,27 @@
         <Alias>liqgen</Alias>
         <Columns isList="true" count="8">
           <value>comercialId,System.Int32</value>
-          <value>dFecha,System.String</value>
-          <value>hFecha,System.String</value>
           <value>nombre,System.String</value>
           <value>tipo,System.String</value>
+          <value>totFactura,System.Decimal</value>
           <value>totBase,System.Decimal</value>
           <value>totComision,System.Decimal</value>
-          <value>totFactura,System.Decimal</value>
+          <value>dFecha,System.String</value>
+          <value>hFecha,System.String</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
+        <Key>533da59ccc4344ba86d1c98769021c38</Key>
         <Name>liqgen</Name>
         <NameInSource>PROA_REPORT</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase, SUM(lf.comision) AS totComision,
+        <SqlCommand>SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, SUM(lf.base) AS totBase,  SUM(lf.comision) + sum(lf.comision2) AS totComision,
 '01/01/2017' as dFecha, '31/12/2017' as hFecha
 FROM liquidacion_comercial AS lf
 LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId
 LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId
 LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId
-WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'
+WHERE lf.dFecha &gt;= '2017-01-01' AND AND lf.hFecha &lt;= '2017-12-31'
 GROUP BY lf.comercialId</SqlCommand>
       </liqgen>
     </DataSources>
@@ -47,6 +49,7 @@ GROUP BY lf.comercialId</SqlCommand>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
   <GlobalizationStrings isList="true" count="0" />
+  <Key>331701c13c664fef88da256dcebe0379</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
     <Page1 Ref="4" type="Page" isKey="true">
@@ -61,6 +64,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>4.4,0,14.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,20</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -75,6 +79,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>4.4,0.8,14.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,16</Font>
               <Guid>6b7389c3a9a23c70505f26ba10138e1f</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -88,6 +93,7 @@ GROUP BY lf.comercialId</SqlCommand>
             </Text4>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PageHeaderBand1</Name>
           <Page isRef="4" />
           <Parent isRef="4" />
@@ -100,6 +106,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.6,0.1,17.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -112,6 +119,7 @@ GROUP BY lf.comercialId</SqlCommand>
             </Text5>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>PageFooterBand1</Name>
           <Page isRef="4" />
           <Parent isRef="4" />
@@ -125,6 +133,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,7.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_nombre</Name>
@@ -141,6 +150,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>7.8,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Headerliqgen_tipo</Name>
@@ -157,6 +167,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>13.8,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -174,6 +185,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>16.4,0,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -191,6 +203,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Brush>Transparent</Brush>
               <ClientRectangle>11,0,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
               <Guid>5f9d8395047710e9b5d2c08fdc1a698b</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -206,6 +219,7 @@ GROUP BY lf.comercialId</SqlCommand>
             </Text2>
           </Components>
           <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
           <Name>Headerliqgen</Name>
           <Page isRef="4" />
           <Parent isRef="4" />
@@ -221,6 +235,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <CanGrow>True</CanGrow>
               <ClientRectangle>0,0,7.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_nombre</Name>
@@ -236,6 +251,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <CanGrow>True</CanGrow>
               <ClientRectangle>7.8,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Dataliqgen_tipo</Name>
@@ -244,6 +260,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Text>{liqgen.tipo}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="19" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -259,6 +276,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <CanGrow>True</CanGrow>
               <ClientRectangle>13.8,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -268,6 +286,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Text>{liqgen.totBase}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="21" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -283,6 +302,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <CanGrow>True</CanGrow>
               <ClientRectangle>16.4,0,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
@@ -292,6 +312,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Text>{liqgen.totComision}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="23" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -307,6 +328,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <CanGrow>True</CanGrow>
               <ClientRectangle>11,0,2.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
               <Font>Arial,8</Font>
               <Guid>c438af3ec48d29f8624ab2f3eb14fdf1</Guid>
               <HorAlignment>Right</HorAlignment>
@@ -317,6 +339,7 @@ GROUP BY lf.comercialId</SqlCommand>
               <Text>{liqgen.totFactura}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="25" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>8</NegativePattern>
@@ -331,6 +354,7 @@ GROUP BY lf.comercialId</SqlCommand>
           </Components>
           <Conditions isList="true" count="0" />
           <DataSourceName>liqgen</DataSourceName>
+          <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>Dataliqgen</Name>
           <Page isRef="4" />
@@ -339,19 +363,15 @@ GROUP BY lf.comercialId</SqlCommand>
         </Dataliqgen>
       </Components>
       <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
       <Guid>7f7989b68a2aca6d444ff67b30b21651</Guid>
       <Margins>1,1,1,1</Margins>
       <Name>Page1</Name>
       <PageHeight>29.7</PageHeight>
       <PageWidth>21</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="26" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
-        <Font>Arial,100</Font>
-        <TextBrush>[50:0:0:0]</TextBrush>
-      </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="27" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -364,14 +384,13 @@ GROUP BY lf.comercialId</SqlCommand>
   </ReferencedAssemblies>
   <ReportAlias>LiquidacionGeneral</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>5/10/2017 8:59:06 AM</ReportChanged>
+  <ReportChanged>4/19/2023 12:09:52 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\PROYECTOS\proasistencia\public\reports\liquidacion_general.mrt</ReportFile>
-  <ReportGuid>ed499b911d724f5d866a0319ba3c6821</ReportGuid>
-  <ReportImage isNull="true" />
+  <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_general.mrt</ReportFile>
+  <ReportGuid>140f624315e64dbb92ef0e087de39c27</ReportGuid>
   <ReportName>LiquidacionGeneral</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2017.1.1.0</ReportVersion>
+  <ReportVersion>2021.3.6.0</ReportVersion>
   <Script>using System;
 using System.Drawing;
 using System.Windows.Forms;

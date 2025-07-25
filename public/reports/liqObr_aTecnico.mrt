@@ -1135,13 +1135,13 @@ OBR.</Text>
     <value>Stimulsoft.Base.Dll</value>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
-  <ReportAlias>LiquidacionAgente</ReportAlias>
+  <ReportAlias>LiquidacionATecnico</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
   <ReportChanged>6/20/2022 1:28:13 PM</ReportChanged>
   <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
   <ReportFile>C:\node_apps\proasistencia\public\reports\liqObr_aTecnico.mrt</ReportFile>
   <ReportGuid>b478ea79e6d34c648661d3a61269a2f1</ReportGuid>
-  <ReportName>LiquidacionAgente</ReportName>
+  <ReportName>LiquidacionATecnico</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
   <Script>using System;

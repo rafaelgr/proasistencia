@@ -258,7 +258,7 @@
                         <li id="ofertas">
                             <a href="OfertaGeneral.html"><i class="fa fa-fw fa-file-o"></i> Ofertas</a>
                         </li>
-                        <li id="contratos">
+                        <li id="contratos-terceros">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
@@ -269,11 +269,20 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="contratos">
+                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
+                                </li>
+                                <li>
+                                    <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos solo arquitectura</a>
+                                </li>
+                                <li>
+                                    <a href="ActualizacionIpcContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Actualización IPC contratos de alquileres</a>
+                                </li>
+                                <li>
+                                    <a href="RenovacionContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Renovación contratos de alquileres</a>
                                 </li>
                             </ul>
                         </li>
@@ -282,6 +291,9 @@
                             <ul>
                                 <li>
                                     <a href="PrefacturaGeneral.html"><i class="fa fa-fw fa-th"></i> Prefacturas</a>
+                                </li>
+                                <li>
+                                    <a href="BorrarPrefacturaGeneral.html"><i  class="fa fa-fw fa-trash"></i> Borrar Prefacturas</a>
                                 </li>
                                 <li>
                                     <a href="SelectPrefacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Emitir facturas</a>
@@ -308,12 +320,6 @@
                                 <li>
                                     <a href="AnticipoColaboradorGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         colaboradores</a>
-                                </li>
-                               <li>
-                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
-                                </li>
-                                <li>
-                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -360,6 +366,20 @@
                                 </li>
                                 <li>
                                     <a href="LiquidacionEColaboradores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar liquidaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="correos">
+                            <a href="#"><i class="fa fa-fw fa-envelope-o"></i> Correos</a>
+                            <ul>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos general</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEReparaciones.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos reparaciones</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -490,7 +510,13 @@
                                 </li>
                                 <li>
                                     <a data-toggle="tab" href="#s2"><i class="fa fa-user"></i> <span class="hidden-mobile hidden-tablet">Anticipos</span></a>
-                                </li>                                                                                 
+                                </li> 
+                                <li>
+                                    <a data-toggle="tab" href="#s3">
+                                        <i class="fa fa-file-text-o"></i>
+                                        <span class="hidden-mobile hidden-tablet">PDF factura</span>
+                                    </a>
+                                </li>                                                                                
                             </ul>
                         </header>
             <!-- widget grid CABECERA-->
@@ -523,7 +549,6 @@
                                     <form id="frmFactura" class="smart-form">
                                         <fieldset>
                                             <div class="row">
-                                                
                                                 <section class="col col-md-2">
                                                     <label class="label">Serie</label>
                                                     <label style="width:100%; height:50px;">
@@ -555,13 +580,10 @@
                                                         <input id="txtPeriodo" name="txtPeriodo" type="text" data-bind="value: periodo" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-2">
-                                                    <label class="checkbox">
-                                                        <input id="chkMantenedorDesactivado" type="checkbox" name="chkMantenedorDesactivado" data-bind="checked: mantenedorDesactivado">
-                                                        <i></i>Desactivar el cliente como mantenedor
-                                                    </label>
+                                                <section class="col col-md-2" style="padding-top: 2%">
+                                                        <input id="chkMantenedorDesactivado" type="checkbox" name="chkMantenedorDesactivado" data-bind="checked: mantenedorDesactivado"/> Desactivar el cliente como mantenedor
                                                 </section>
-                                                <section class="col col-md-1">
+                                                <section class="col col-md-2">
                                                     <label class="label">Coste</label>
                                                     <label class="input">
                                                         <input id="txtTotalCoste" name="txtTotalCoste" type="text" data-bind="value: coste" disabled/>
@@ -569,9 +591,6 @@
                                                 </section>
                                             </div>
                                             <div class="row">
-                                                <section class="col col-md-2">
-                                                    <input id="chkEnviadaCorreo" type="checkbox" data-bind="checked: enviadaCorreo" /> Enviada por correo
-                                                </section>
                                                 <section class="col col-md-2">
                                                     <label class="label">Total Bases</label>
                                                     <label class="input">
@@ -596,6 +615,12 @@
                                                         <input id="txtImporteRetencion" name="txtImporteRetencion" type="text" data-bind="value: importeRetencion" disabled/>
                                                     </label>
                                                 </section>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Retención de garantía</label>
+                                                    <label class="input">
+                                                        <input id="txtRetenGarantias" name="txtRetenGarantias" type="text" data-bind="value: retenGarantias" disabled/>
+                                                    </label>
+                                                </section>
                                                
                                                 <section class="col col-md-2">
                                                     <label class="label">Total</label>
@@ -606,9 +631,12 @@
                                             </div>
                                             <div class="row">
                                                 <section class="col col-md-2" style="padding-top: 2%">
+                                                    <input id="chkEnviadaCorreo" type="checkbox" data-bind="checked: enviadaCorreo" /> Enviada por correo
+                                                </section>
+                                                <section class="col col-md-2" style="padding-top: 2%">
                                                         <input id="chkNoContabilizar" type="checkbox" name="chkNoContabilizar"> No contabilizar
                                                 </section>
-                                                <section class="col col-md-4">
+                                                <section class="col col-md-3">
                                                     <label class="label">Concepto anticipo</label>
                                                     <label class="input">
                                                         <input id="txtConceptoAnticipo" name="txtConceptoAnticipo" type="text" data-bind="value: conceptoAnticipo" disabled/>
@@ -620,14 +648,22 @@
                                                         <input id="txtImporteAnticipo" name="txtImporteAnticipo" type="text" data-bind="value: importeAnticipo" disabled/>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-3">
-                                                    <label class="label">Resto a pagar</label>
+                                                <section class="col col-md-2">
+                                                    <label class="label">Resto a cobrar</label>
                                                     <label class="input">
-                                                        <input id="txtRestoPagar" name="txtRestoPagar" type="text" data-bind="value: restoCobrar" disabled/>
+                                                        <input id="txtRestoCobrar" name="txtRestoCobrar" type="text" data-bind="value: restoCobrar" disabled/>
                                                     </label>
                                                 </section>
                                             </div>
-                                            
+                                            <div class="row">
+                                                <section class="col col-md-2">
+                                                    <div style="margin-top: 15%;">
+                                                        <input id="chkBeneficioLineal" type="checkbox" name="chkBeneficioLineal" data-bind="checked: beneficioLineal"> Beneficio lineal
+                                                    </div>
+                                                </section>
+                                                <section class="col col-md-10">
+                                                </section>
+                                            </div>
                                             <div class="row">
                                                 <section class="col col-md-6">
                                                     <div class="row">
@@ -1213,6 +1249,63 @@
                     </div>
             </div>
             <!--FIN SEGUNDO TAB-->
+            <!--TERCER TAB PDF-->
+            <div class="tab-pane fade" id="s3">
+                <section id="widget-grid" class="">
+                        <div class="row">
+                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!-- Widget ID (each widget will need unique ID)-->
+                                <div class="jarviswidget" id="wid-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                    <header>
+                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                        <h2>Factura PDF</h2>
+                                    </header>
+                                    <div class="widget-body">
+                                        <form id="docDetail-form" class="smart-form">
+                                            <fieldset>
+                                                <div class="row">
+                                                    <!-- DOCUMENT -->
+                                                    <section class="col col-md-12">
+                                                        <div id="P1Title" class="row">
+                                                            <section class="col col-md-12">
+                                                                <h3>Escoja el documento a subir</h3>
+                                                            </section>
+                                                        </div>
+                                                        <div id="P1Loader" class="row">
+                                                            <section class="col col-md-6">
+                                                                <div class="progress">
+                                                                    <div class="progress-bar" role="progressbar"></div>
+                                                                </div>
+                                                            </section>
+                                                            <section class="col col-md-6">
+                                                                <input id="upload-input" type="file" name="uploads[]"></br>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <div id="msgContainer" style="color:blue">
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <div id="docContainer"></div>
+                                                            </section>
+                                                        </div>
+                                                    </section>
+                                                    <!-- END DOCUMENT -->
+                                                    
+                                                </div>
+                                            </fieldset>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                </section>
+            </div>
+            <!--FIN TERCER TAB-->
             </div>
             </div>
             </article>
@@ -1224,7 +1317,7 @@
     </div>
     <!-- END MAIN PANEL -->
     <!-- Modal -->
-    <div class="modal fade" id="modalLinea" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalLinea" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1337,7 +1430,7 @@
     <!-- /.modal -->
 
     <!-- Modal-->
-    <div class="modal fade" id="modalAnticipo" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalAnticipo" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">

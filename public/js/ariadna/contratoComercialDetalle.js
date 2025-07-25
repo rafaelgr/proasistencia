@@ -148,6 +148,23 @@ function admData() {
     self.obrAsesorTecnico = ko.observable();
     self.obrComercial = ko.observable();
     self.obrComision = ko.observable();    
+    self.obrComisionAdicional = ko.observable();    
+    self.obrPorBi = ko.observable();
+    //
+    //PAGOS A CUENTA
+    self.manPagoAcuenta = ko.observable();
+    self.manPorPagoAcuenta = ko.observable();
+    self.segPagoAcuenta = ko.observable();
+    self.segPorPagoAcuenta = ko.observable();
+    self.finPagoAcuenta = ko.observable();
+    self.finPorPagoAcuenta = ko.observable();
+    self.arqPagoAcuenta = ko.observable();
+    self.arqPorPagoAcuenta = ko.observable();
+    self.repPagoAcuenta = ko.observable();
+    self.repPorPagoAcuenta = ko.observable();
+    self.obrPagoAcuenta = ko.observable();
+    self.obrPorPagoAcuenta = ko.observable();
+
     //
     self.sempresaId = ko.observable();
     //
@@ -247,6 +264,21 @@ function loadData(data) {
      vm.obrAsesorTecnico(data.obrAsesorTecnico);
      vm.obrComercial(data.obrComercial);
      vm.obrComision(data.obrComision);
+     vm.obrComisionAdicional(data.obrComisionAdicional);
+     vm.obrPorBi(data.obrPorBi);
+     //PAGOS A CUENTA
+     vm.manPagoAcuenta(data.manPagoAcuenta);
+     vm.manPorPagoAcuenta(data.manPorPagoAcuenta);
+     vm.segPagoAcuenta(data.segPagoAcuenta);
+     vm.segPorPagoAcuenta(data.segPorPagoAcuenta);
+     vm.finPagoAcuenta(data.finPagoAcuenta);
+     vm.finPorPagoAcuenta(data.finPorPagoAcuenta);
+     vm.arqPagoAcuenta(data.arqPagoAcuenta);
+     vm.arqPorPagoAcuenta(data.arqPorPagoAcuenta);
+     vm.repPagoAcuenta(data.repPagoAcuenta);
+     vm.repPorPagoAcuenta(data.repPorPagoAcuenta);
+     vm.obrPagoAcuenta(data.obrPagoAcuenta);
+     vm.obrPorPagoAcuenta(data.obrPorPagoAcuenta);
 
     vm.comision(data.comision);
 
@@ -414,7 +446,23 @@ function aceptar() {
                 "obrOficinaTecnica": vm.obrOficinaTecnica(),
                 "obrAsesorTecnico": vm.obrAsesorTecnico(),
                 "obrComercial": vm.obrComercial(),
-                "obrComision": vm.obrComision()
+                "obrComision": vm.obrComision(),
+                "obrComisionAdicional": vm.obrComisionAdicional(),
+                "obrPorBi": vm.obrPorBi(),
+                //limite pagos a cuenta
+
+                "manPagoAcuenta": vm.manPagoAcuenta(),
+                "manPorPagoAcuenta": vm.manPorPagoAcuenta(),
+                "segPagoAcuenta": vm.segPagoAcuenta(),
+                "segPorPagoAcuenta": vm.segPorPagoAcuenta(),
+                "finPagoAcuenta": vm.finPagoAcuenta(),
+                "finPorPagoAcuenta": vm.finPorPagoAcuenta(),
+                "arqPagoAcuenta": vm.arqPagoAcuenta(),
+                "arqPorPagoAcuenta": vm.arqPorPagoAcuenta(),
+                "repPagoAcuenta": vm.repPagoAcuenta(),
+                "repPorPagoAcuenta": vm.repPorPagoAcuenta(),
+                "obrPagoAcuenta": vm.obrPagoAcuenta(),
+                "obrPorPagoAcuenta": vm.obrPorPagoAcuenta(),
             }
         };
         var url = "";

@@ -3,21 +3,9 @@ anticipoClienteGeneral.js
 Funciones js par la página AntclienGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
 var dataAntcliens;
 var antClienId;
 var usuario;
-
-
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
 
 function initForm() {
     comprobarLogin();
@@ -104,7 +92,11 @@ function initTablaAntcliens() {
                         console.log(dato);
                         return dato;
                     } else {
-                        return data;
+                        if(column === 0 || column === 8) {
+                            return "";
+                        } else {
+                            return data;
+                        };
                     }
                 }
             }
@@ -112,15 +104,15 @@ function initTablaAntcliens() {
     };
     tablaAntcliens = $('#dt_antclien').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        responsive: true,
+        paging: true,
+        "pageLength": 100,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        dom:  "<'dt-toolbar'<'col-sm-12 col-xs-12'<'col-sm-9 col-xs-9' Br> <'col-sm-3 col-xs-3'Cl>>>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
             'copy', 
             'csv', 
@@ -136,18 +128,6 @@ function initTablaAntcliens() {
             'print'
         ],
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_antclien'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -263,7 +243,6 @@ function crearAntclien() {
 }
 
 function deleteAntclien(id, noCalculadora) {
-    var mens;
     $.ajax({//buscamos la factura asociada para extraer su facproveId
         type: "GET",
         url: myconfig.apiUrl + "/api/anticiposClientes/factura/asociada/" + id,
@@ -271,19 +250,21 @@ function deleteAntclien(id, noCalculadora) {
         contentType: "application/json",
         data: null,
         success: function (data, status) {
+            var mens = "¿Qué desea hacer con este registro?";
+            mens += "<ul>"
+            mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizado, con lo que puede ser contabilizado de nuevo</li>";
+            mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo.</li>";
+            mens += "</ul>"
             if(data.length > 0) {
-                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
-            } else {
-                 mens = "¿Realmente desea borrar este registro?";
-            }
+                mens += " ¡¡¡¡ATENCION!!! Este registro tiene facturas asociadas.";
+            } 
             // mensaje de confirmación
-    
             $.SmartMessageBox({
                 title: "<i class='fa fa-info'></i> Mensaje",
                 content: mens,
-                buttons: '[Aceptar][Cancelar]'
+                buttons: '[Cancelar][Descontabilizar anticipo][Borrar anticipo]'
             }, function (ButtonPressed) {
-                if (ButtonPressed === "Aceptar") {
+                if (ButtonPressed === "Borrar anticipo") {
                     $.ajax({
                         type: "DELETE",
                         url: myconfig.apiUrl + "/api/anticiposClientes/" + id,
@@ -301,6 +282,19 @@ function deleteAntclien(id, noCalculadora) {
                     });
                     
                 }
+                if (ButtonPressed === "Descontabilizar anticipo") {
+                    var data = { facturaId: id };
+                    llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposClientes/descontabilizar/" + id, null, function (err, data) {
+                        if (err) return;
+                        $('#chkTodos').prop('checked',false);
+                        if(data.changedRows > 0) {
+                            mostrarMensajeAntclienDescontabilizada();
+                        } else {
+                            mostrarMensajeAnticipoNoCambiado();
+                        }
+                        buscarFacturas()();
+                    });
+                }
                 if (ButtonPressed === "Cancelar") {
                     // no hacemos nada (no quiere borrar)
                 }
@@ -313,10 +307,17 @@ function deleteAntclien(id, noCalculadora) {
     });
 }
 
+
+
 var mostrarMensajeAntclienDescontabilizada = function () {
     var mens = "El anticipo se ha descontabilizado correctamente.";
     mensNormal(mens);
 }
+
+var mostrarMensajeAnticipoNoCambiado = function () {
+    var mens = "El anticipo NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}   
 
 var mostrarMensajeAntclienBorrada = function () {
     var mens = "El anticipo se ha borrado correctamente.";

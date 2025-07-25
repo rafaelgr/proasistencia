@@ -205,6 +205,12 @@ function initTablaFacproves() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
+        }, 
+        {
+            data: "fecha_recepcion",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
         }, {
             data: "total",
             render: function (data, type, row) {
@@ -507,6 +513,13 @@ function enviarCorreos() {
                 $("#resEnvio").html(data);
                 $("#modalResultado").modal('show');
                 // mensNormal('Las facturasProveedores se han enviado por correo');
+                llamadaAjax("PUT", '/api/facturasProveedores/borrar-directorio/facturas', null, function (err, data2) {
+                    if (err) {
+                        $('#progress').hide();
+                        return;
+                    }
+                    
+                });
             });
 
         });
