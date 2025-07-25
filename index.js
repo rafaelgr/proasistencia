@@ -43,11 +43,13 @@ var contratos_cliente_mantenimiento_router = require('./lib/contratos-cliente-ma
 var clientes_comisionistas_router = require('./lib/clientes-comisionistas/clientes_comisionistas_controller');
 var contrato_mantenimiento_comisionistas_router = require('./lib/contrato-mantenimiento-comisionistas/contrato_mantenimiento_comisionistas_controller');
 var grupo_articulos_router = require('./lib/grupos-articulos/grupo_articulo_controller');
+var grupo_articulos_tecnico_router = require('./lib/grupos-articulos_tecnicos/grupo_articulo_tecnico_controller');
 var tarifas_cliente_router = require('./lib/tarifas_cliente/tarifa_cliente_controller');
 var tarifas_proveedor_router = require('./lib/tarifas_proveedor/tarifa_proveedor_controller');
 var contabilidad_router = require('./lib/contabilidad/contabilidad_controller');
 var unidades_router = require('./lib/unidades/unidades_controller');
 var tipos_via_router = require('./lib/tipos_via/tipos_via_controller');
+var tipos_texto_router = require('./lib/tipos_texto/tipos_texto_controller');
 var tipos_proveedor_router = require('./lib/tipos_proveedor/tipos_proveedor_controller');
 var tipos_profesional_router = require('./lib/tipos_profesional/tipos_profesional_controller')
 var motivos_baja_router = require('./lib/motivos_baja/motivos_baja_controller');
@@ -63,6 +65,7 @@ var cuentas_router = require('./lib/cuentas/cuentas_controller');
 var liquidaciones_router = require('./lib/liquidaciones/liquidaciones_controller');
 var ofertas_router = require('./lib/ofertas/ofertas_controller');
 var contratos_router = require('./lib/contratos/contratos_controller');
+var expedientes_router = require('./lib/expedientes/expedientes_controller');
 var tipos_proyectos_router = require('./lib/tipos_proyectos/tipos_proyectos_controller');
 var textos_predeterminados_router = require('./lib/textos_predeterminados/textos_predeterminados_controller');
 var correoElectronico = require('./lib/correoElectronico/correoElectronico.controller');
@@ -89,6 +92,7 @@ var anticipos_clientes = require('./lib/anticipos_clientes/anticiposClientes_con
 //SERVICIOS
 var servicios_router = require('./lib/servicios/servicios_controller');
 var estados_parte_router = require('./lib/estados_parte/estados_parte_controller');
+var estados_expediente_router = require('./lib/estados_expediente/estados_expediente_controller');
 var estados_parte_profesional_router = require('./lib/estados_parte_profesional/estados_parte_profesional_controller');
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
@@ -97,11 +101,14 @@ var report_router = require('./lib/report-controller/reportdb')
 var tipos_garantia_router = require('./lib/tipos_garantia/tipos_garantia_controller');
 
 //MENSAJES
-
 var mensajes_router = require('./lib/mensajes/mensajes_controller');
 
-//DEMONIOS
-//var cuentaAtras_router = require('./lib/demonios/cuenta_atras/cuentaAtras');
+//DOCUMENTACION
+var documentacion_router = require('./lib/documentacion/documentacion_controller');
+
+//propuestas de ofertas
+var propuestas_router = require('./lib/propuestas/propuestas_controller');
+
 
 
 
@@ -168,6 +175,53 @@ app.use((error, req, res, next) => {
     });
 });
 
+app.get('/config', (req, res) => {
+    res.json({
+        host: process.env.SERVER,
+        protocol: process.env.PROTOCOL,
+    });
+});
+
+app.get('/abrir-app', (req, res) => {
+  const parteId = req.query.parteId;
+  const proveedorId = req.query.proveedorId;
+  const mensajeId = req.query.mensajeId;
+
+  let deepLink = '';
+
+  if (parteId && proveedorId) {
+    deepLink = `comercializa2://open/tabs-parte/info-parte-tab/${parteId}/${proveedorId}`;
+  } else if (mensajeId) {
+    deepLink = `comercializa2://open/notificacion-detalle/${mensajeId}`;
+  } else {
+    deepLink = 'https://tu-web-fallback.com';
+  }
+
+  const fallbackUrl = 'https://tu-web-de-fallback.com';
+
+  res.send(`
+    <html>
+      <head>
+        <title>Abriendo la app...</title>
+        <script>
+          function openApp() {
+            window.location = "${deepLink}";
+            setTimeout(function() {
+              window.location = "${fallbackUrl}";
+            }, 2000);
+          }
+          window.onload = openApp;
+        </script>
+      </head>
+      <body>
+        <p>Intentando abrir la aplicación...</p>
+      </body>
+    </html>
+  `);
+});
+
+
+
 
 // -- general GET (to know if the server is up and runnig)
 router.get('/', function (req, res) {
@@ -194,6 +248,7 @@ app.use('/api/contratos_mantenedores', contratos_mantenedores_router);
 app.use('/api/tipos_forma_pago', tipos_forma_pago_router);
 app.use('/api/formas_pago', formas_pago_router);
 app.use('/api/tipos_iva', tipos_iva_router);
+app.use('/api/tipos_texto', tipos_texto_router);
 app.use('/api/articulos', articulos_router);
 app.use('/api/parametros', parametros_router);
 app.use('/api/prefacturas', prefacturas_router);
@@ -203,6 +258,7 @@ app.use('/api/contratos_cliente_mantenimiento', contratos_cliente_mantenimiento_
 app.use('/api/clientes_comisionistas', clientes_comisionistas_router);
 app.use('/api/contrato_mantenimiento_comisionistas', contrato_mantenimiento_comisionistas_router);
 app.use('/api/grupo_articulo', grupo_articulos_router);
+app.use('/api/grupo_articulo_tecnico', grupo_articulos_tecnico_router);
 app.use('/api/tarifas_cliente', tarifas_cliente_router);
 app.use('/api/tarifas_proveedor', tarifas_proveedor_router);
 app.use('/api/contabilidad', contabilidad_router);
@@ -216,6 +272,7 @@ app.use('/api/facturasProveedores', facturasProveedores_router);
 app.use('/api/liquidaciones', liquidaciones_router);
 app.use('/api/ofertas', ofertas_router);
 app.use('/api/contratos', contratos_router);
+app.use('/api/expedientes', expedientes_router);
 app.use('/api/tipos_proyectos', tipos_proyectos_router);
 app.use('/api/tipos_profesional', tipos_profesional_router);
 app.use('/api/textos_predeterminados', textos_predeterminados_router);
@@ -246,6 +303,7 @@ app.use('/api/anticiposClientes/', anticipos_clientes);
 
 //servicios
 app.use('/api/servicios', servicios_router);
+app.use('/api/estados_expediente', estados_expediente_router);
 app.use('/api/estados_parte', estados_parte_router);
 app.use('/api/estados_parte_profesional', estados_parte_profesional_router);
 app.use('/api/partes', partes_router);
@@ -255,10 +313,11 @@ app.use('/api/tipos_garantia', tipos_garantia_router);
 //MENSAJES
 app.use('/api/mensajes', mensajes_router);
 
-//CUENTA ATRAS DAEMON
-//app.use('/api/cuenta_atras', cuentaAtras_router);
+//DOCUMENTACION
+app.use('/api/documentacion', documentacion_router);
 
-
+//PROPUESTAS 
+app.use('/api/propuestas', propuestas_router);
 
 
 
@@ -278,7 +337,7 @@ setInterval(daemonApi.run,  process.env.COMERCIALIZA_DELAY || 900000);
 
 // -- console message
 console.log("-------------------------------------------");
-console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYYY HH:mm:ss'));
+console.log(" PROASISTENCIA RUNNING ", moment(new Date()).format('DD/MM/YYYY HH:mm:ss'));
 console.log("-------------------------------------------");
 console.log(' VERSION: ' + pack.version);
 console.log(' PORT: ' + process.env.API_PORT);

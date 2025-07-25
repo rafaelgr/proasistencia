@@ -34,6 +34,9 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamento();
 
+    $("#cmbTiposProfesional").select2(select2Spanish());
+    loadTiposProfesionales();
+
     adminId = gup('TipoProyectoId');
     if (adminId != 0) {
         var data = {
@@ -68,24 +71,30 @@ function admData() {
     self.nombre = ko.observable();
     self.abrev = ko.observable();
     self.activo = ko.observable();
+    self.visibleApp = ko.observable();
     //
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    //
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+    //
+    self.posiblesTiposProfesional = ko.observableArray([]);
+    self.elegidosTiposProfesional = ko.observableArray([]);
 }
 
 function loadData(data) {
     vm.tipoProyectoId(data.tipoProyectoId);
     vm.nombre(data.nombre);
     vm.abrev(data.abrev);
+    vm.visibleApp(data.visibleApp);
+    vm.activo(data.activo);
     loadDepartamento(data.tipoMantenimientoId);
-    if(data.activo == 1){
-        $('#chkActivo').prop("checked", true);
-    } else {
-        $('#chkActivo').prop("checked", false);
-    }
+    loadTiposProfesionales(data.tiposProfesionales);
 }
 
 function datosOK() {
@@ -131,21 +140,18 @@ function datosOK() {
 
 function aceptar() {
     var mf = function () {
-        if (!datosOK())
-            return;
-
-        if($('#chkActivo').prop("checked")) {
-            vm.activo(true);
-        } else {
-            vm.activo(false);
-        }
+        if (!datosOK()) return;
         var data = {
             tipoProyecto: {
                 "tipoProyectoId": vm.tipoProyectoId(),
                 "nombre": vm.nombre(),
                 "abrev": vm.abrev(),
                 "tipoMantenimientoId": vm.sdepartamentoId(),
-                "activo": vm.activo()
+                "activo": vm.activo(),
+                "visibleApp": vm.visibleApp(),
+                "profesiones": {
+                    "profesiones": vm.elegidosTiposProfesional()
+                }
             }
         };
         if (adminId == 0) {
@@ -175,9 +181,6 @@ function aceptar() {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
                     var url = "TiposProyectoGeneral.html?TipoProyectoId=" + vm.tipoProyectoId();
                     window.open(url, '_self');
                 },
@@ -210,4 +213,30 @@ function loadDepartamento(departamentoId) {
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }
+
+function loadTiposProfesionales(tiposProfesionalesIds) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var ids = [];
+            var tiposProfesionales  = data
+            vm.posiblesTiposProfesional(tiposProfesionales);
+            if(tiposProfesionalesIds) {
+                vm.elegidosTiposProfesional(tiposProfesionalesIds);
+                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                    ids.push(tiposProfesionalesIds[i])
+                }
+                $("#cmbTiposProfesional").val(ids).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
     

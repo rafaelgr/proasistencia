@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "8a9d0eadf39c42619d040d5235052ecf",
+  "ReportGuid": "b2389079a87042bbbc399c47b28ff567",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1674202621360+0100)/",
+  "ReportChanged": "/Date(1741608993966+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -741,8 +741,7 @@
             },
             "2": {
               "Ident": "StiImage",
-              "Name": "Image1",
-              "Guid": "12ea2afcfe2b48fda0c253b0dafaafab",
+              "Name": "Image2",
               "ClientRectangle": "0.4,0.2,3.8,1.4",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -751,7 +750,7 @@
               "Brush": "solid:",
               "Stretch": true,
               "ImageURL": {
-                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_proasistencia.png"
+                "Value": "https://comercializa-server.s3.eu-west-3.amazonaws.com/logos/logo_proasistencia_nuevo.jpg"
               }
             }
           }
@@ -970,9 +969,6 @@
               "ClientRectangle": "3,1.4,2.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{cabecera.proId}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",

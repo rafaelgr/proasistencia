@@ -154,10 +154,67 @@ function initForm() {
     desdeContrato = gup("desdeContrato");
     ContratoId = gup("ContratoId");
 
+    //evento asociado a la carga de un archivo
+    $('#upload-input').on('change', function () {
+        var files = $(this).get(0).files;
+        
+        // create a FormData object which will be sent as the data payload in the
+        // AJAX request
+        var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
+        
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        if(ext != "pdf") return mensError("No se permiten formatos diferentes a pdf");
+        // add the files to formData object for the data payload
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+        var name =  vm.serie() + "-" + vm.ano() + "-" + vm.numero().toString().padStart(6, '0') + "_" + vm.empresaId() + "." +ext;
+            
+            $.ajax({
+                url: '/api/upload/s3/factura/' + name + "/" + vm.facturaId(),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    filename = data;
+                    vm.file(filename);
+                    checkVisibility(filename);
+                },
+                xhr: function () {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            // calculate the percentage of upload completed
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            // update the Bootstrap progress bar with the new percentage
+                            $('.progress-bar').text(percentComplete + '%');
+                            $('.progress-bar').width(percentComplete + '%');
+                            // once the upload reaches 100%, set the progress bar text to done
+                            if (percentComplete === 100) {
+                                $('.progress-bar').html('Fichero subido');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                error: function (xhr, textStatus, errorThrwon) {
+                    var m = xhr.responseText;
+                    if (!m) m = "Error al cargar";
+                    mensError(m);
+                    return;
+                }
+            });
+    });
+
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
     $('#noCobro').hide();
-
+    vm.beneficioLineal(0);
+    $('#chkBeneficioLineal').prop('disabled', true);
     if (facturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/" + facturaId, null, function (err, data) {
@@ -171,6 +228,11 @@ function initForm() {
             var clienteId = data.clienteId;
             var empresaId = data.empresaId;
             var fecha = moment(data.fecha).format('YYYY-MM-DD');
+
+            //se carga el pdf de la factura si existe
+            if(vm.nombreFacturaPdf()) {
+                loadDoc(vm.nombreFacturaPdf());
+            }
             $('#chkEnviadaCorreo').click(
                 function(e){
                     var enviadaCorreo = $('#chkEnviadaCorreo').prop('checked');
@@ -224,7 +286,8 @@ function initForm() {
         vm.importeRetencion(0);
         vm.sempresaId(0);
         vm.sclienteId(0);
-        vm.sdepartamentoId(0)
+        vm.sdepartamentoId(0);
+    
         $("#btnImprimir").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
@@ -248,6 +311,7 @@ function admData() {
     self.tipoProyectoId = ko.observable();
     self.contabilizada = ko.observable();
     self.retenGarantias = ko.observable();
+    self.beneficioLineal = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -370,9 +434,21 @@ function admData() {
     self.noCobro = ko.observable();
     // 
     self.enviadaCorreo = ko.observable();
+    //
+
+    self.file = ko.observable();
+    self.nombreFacturaPdf = ko.observable();
 }
 
 function loadData(data, desdeLinea) {
+    if(data.beneficioLineal) {
+        var url = "FacturaLinealDetalle.html?FacturaId=" + data.facturaId;
+        if(desdeContrato == "true" && facturaId != 0){
+            url = "FacturaLinealDetalle.html?desdeContrato=true&FacturaId=" + data.facturaId + "&ContratoId="+ data.contratoId;
+        }
+        window.open(url, '_self');
+       //return;
+    }
     vm.facturaId(data.facturaId);
     vm.ano(data.ano);
     vm.numero(data.numero);
@@ -394,7 +470,9 @@ function loadData(data, desdeLinea) {
     vm.sdepartamentoId(data.departamentoId);
     vm.importeAnticipo(numeral(data.importeAnticipo).format('0,0.00'));
     vm.conceptoAnticipo(data.conceptoAnticipo);
-    vm.contabilizada(data.contabilizada)
+    vm.contabilizada(data.contabilizada);
+    vm.beneficioLineal(data.beneficioLineal);
+    vm.nombreFacturaPdf(data.nombreFacturaPdf)
     recalcularCostesImportesDesdeCoste();
     //
     vm.emisorNif(data.emisorNif);
@@ -657,7 +735,8 @@ var generarFacturaDb = function () {
             "departamentoId": vm.departamentoId(),
             "observacionesPago": vm.observacionesPago(),
             "conceptoAnticipo": vm.conceptoAnticipo(),
-            "tipoProyectoId": vm.tipoProyectoId()
+            "tipoProyectoId": vm.tipoProyectoId(),
+            "beneficioLineal": vm.beneficioLineal()
         }
     };
     return data;
@@ -1026,10 +1105,10 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url = myconfig.apiUrl + "/api/facturas/lineas";
+    var url = myconfig.apiUrl + "/api/facturas/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url = myconfig.apiUrl + "/api/facturas/lineas/" + vm.facturaLineaId();
+        url = myconfig.apiUrl + "/api/facturas/lineas-nuevo/" + vm.facturaLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
@@ -1400,7 +1479,7 @@ function editFacturaLinea(id) {
 
 function deleteFacturaLinea(facturaId) {
     // mensaje de confirmación
-    var url = myconfig.apiUrl + "/api/facturas/lineas/" + facturaId;
+    var url = myconfig.apiUrl + "/api/facturas/lineas-nuevo/" + facturaId;
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
         var data = {
@@ -1714,6 +1793,8 @@ var cambioPorcentajeRetencion = function () {
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
+    if (!vm.coste()) vm.coste(0);
+    if (!vm.porcentajeAgente() || vm.porcentajeAgente() == undefined) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
@@ -1722,7 +1803,7 @@ var recalcularCostesImportesDesdeCoste = function () {
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeAlCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
-        vm.importeAgente(roundToTwo(vm.importeAlCliente() - vm.ventaNeta()));
+        vm.importeAgente(vm.importeAlCliente() - roundToTwo(vm.ventaNeta()));
     }
     vm.importeAlCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
     vm.total(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
@@ -2229,6 +2310,53 @@ function bloqueaEdicionCampos() {
 }
     
 
+//CARGA DE PDF
 
+function checkVisibility(filename) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var p = data
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+            // see it in container
+            var url = p.raiz_url_server + "facturas/" + filename;
+            if (ext == "pdf") {
+                // <iframe src="" width="100%" height="600px"></iframe>
+                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+            } else {
+                // .html("<img src=' + this.href + '>");
+                $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            }
+            $("#msgContainer").html('');
+        } else {
+            $("#msgContainer").html('Vista previa no dispònible');
+            $("#docContainer").html('');
+        }
+    });
+   
+}
 
-
+//funciones de la pestaña de facturas en PDF
+function loadDoc(filename) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var p = data
+        var ext = filename.split('.').pop().toLowerCase();
+        if (ext == "pdf" || ext == "jpg" || ext == "png" || ext == "gif") {
+            // see it in container
+            var url = p.raiz_url_server + "facturas/" + filename;
+            if (ext == "pdf") {
+                // <iframe src="" width="100%" height="600px"></iframe>
+                $("#docContainer").html('<iframe src="' + url + '"frameborder="0" width="100%" height="600px"></iframe>');
+            } else {
+                // .html("<img src=' + this.href + '>");
+                $("#docContainer").html('<img src="' + url + '" width="100%">');;
+            }
+            $("#msgContainer").html('');
+        } else {
+            $("#msgContainer").html('Vista previa no dispònible');
+            $("#docContainer").html('');
+        }
+    });
+   
+}

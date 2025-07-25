@@ -1,0 +1,1147 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>436886612240409485bc93fe50738958</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="2" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="3">
+        <PageHeaderBand1 Ref="3" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,41.6,1</ClientRectangle>
+          <Components isList="true" count="26">
+            <Text36 Ref="4" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17.6,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>8928ba88f22148848af449f78a634b63</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text36</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>COSTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text36>
+            <Text2 Ref="5" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>d19ca6c41acb4729a733029051bfdd07</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>TOTAL</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text2>
+            <Text34 Ref="6" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>21.8,0,1.8,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>ff3ffdfd559a457fbeaee240220e66dd</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>AGENTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text34>
+            <Text7 Ref="7" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.6,0,1.8,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>3036b3a9000d4a0f98d62a773b504c68</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>INICIO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text7>
+            <Text10 Ref="8" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>13.4,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>73a9085398f64f22aea60c8c0a83395e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>FINAL</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text10>
+            <Text12 Ref="9" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15,0,1,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>22b06502034f4269b076a74dcbdfc95d</Guid>
+              <Margins>5,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>EMP.</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text12>
+            <Text1 Ref="10" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>23.6,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>6e8a24fda5ca47ceb382d7b110c57310</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>IMPORTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text1>
+            <Text11 Ref="11" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.2,0,2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>a1321db2a2644359bdf8b65cad3c6500</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>COMERCIAL</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text11>
+            <Text38 Ref="12" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>27.2,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>2664c92b07784bc895b3df1d965bf27f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text38</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>IMPORTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text38>
+            <Text21 Ref="13" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>28.8,0,1.2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>c1a1ad3dae9340019a5a026c628ff8f1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>JEFE
+OBRAS</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text21>
+            <Text25 Ref="14" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>30,0,1.4,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>05a69fc05e734ab9a78c2468d2849cc1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>IMPORTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text25>
+            <Text4 Ref="15" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>34.6,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>bc5ffe293e7f45a38fe9828d61ccc28d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>ARQITECTO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text4>
+            <Text19 Ref="16" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>36.2,0,1.4,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>29858104e4ef4899a0caf5b14fc00999</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>IMPORTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text19>
+            <Text24 Ref="17" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>39.4,0,0.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Margins>0,2,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>ACTA</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,,Angle=90</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text24>
+            <Text29 Ref="18" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>37.6,0,1.8,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>f6e099e1766f47bc8e082e50de47fd98</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>BI
+NETO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text29>
+            <Text31 Ref="19" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>40,0,1,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>CERT.
+FINAL</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,,Angle=90</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text31>
+            <Text32 Ref="20" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>41,0,0.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>CERR.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,,Angle=90</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text32>
+            <Text16 Ref="21" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>31.4,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>ea7c1293f20043acaab7c19cc4261645</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>JEFE
+GRUPO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text16>
+            <Text40 Ref="22" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>33,0,1.6,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>7f8e0fec497348df943b66c2f163a694</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text40</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>IMPORTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text40>
+            <Text52 Ref="23" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,2.2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>3f31ac366ed84860be11efc0c958c31c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text52</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>REF.
+CONTRATO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text52>
+            <Text43 Ref="24" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4.2,0,2.2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>0cd14c13d5bf41578cb7358fbc96ec5e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text43</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>%
+CONSOLIDADO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text43>
+            <Text46 Ref="25" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.4,0,5.2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>9fcbedd80d4146708a6d3c17ff496ad0</Guid>
+              <Margins>5,0,0,0</Margins>
+              <Name>Text46</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>CLIENTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text46>
+            <Text37 Ref="26" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>19.2,0.6,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>15dd04ea5a644dd19d15276f53770c3d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>7,0,0,0</Margins>
+              <Name>Text37</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>%</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text37>
+            <Text14 Ref="27" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>19.2,0,2.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>B.I.</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text14>
+            <Text48 Ref="28" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>20.2,0.6,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>ca857f1412274a3b83f73a015661db1a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>IMPORTE</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text48>
+            <Text42 Ref="29" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,0,2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>330eadf9d4054330ac2d01c42730bd34</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text42</Name>
+              <Page isRef="2" />
+              <Parent isRef="3" />
+              <Text>%
+GESTIONADO</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text42>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="2" />
+          <Parent isRef="2" />
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="30" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,18.2,41.6,0.8</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text22 Ref="31" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4,0.1,18.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="2" />
+              <Parent isRef="30" />
+              <Text>Página {PageNumber} de {TotalPageCount}</Text>
+              <TextBrush>[0:0:0]</TextBrush>
+              <Type>Expression</Type>
+            </Text22>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="2" />
+          <Parent isRef="2" />
+        </PageFooterBand1>
+        <Datacontratos Ref="32" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,2.2,41.6,0.2</ClientRectangle>
+          <Components isList="true" count="25">
+            <Text3 Ref="33" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>16,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>b0b49f9dbb994bb3b269d02397220bd7</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.total}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="34" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text3>
+            <Text6 Ref="35" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>11.6,0,1.8,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.fechaInicio}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text6>
+            <Text8 Ref="36" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>15,0,1,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Margins>5,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{Left(contratos.nombreEmpresa, 3)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text8>
+            <Text13 Ref="37" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>17.6,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>86fab0968c424483874cd65ec91d2673</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.coste}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="38" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text13>
+            <Text15 Ref="39" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>20.2,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>dff53e0f35f8438b86b1b3662693df9b</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.BI}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="40" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text15>
+            <Text17 Ref="41" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>19.2,0,1,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>468b25b89f174bf98d54fcdcee514169</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.porBI}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="42" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text17>
+            <Text18 Ref="43" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>21.8,0,1.8,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>cd0c711a1efe41109a83dbcc9ddc0e0f</Guid>
+              <Margins>10,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.agenteNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text18>
+            <Text20 Ref="44" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>23.6,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>b82c6b96d36543029fc6c1b753cd89e2</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,7,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.importeAgente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="45" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text20>
+            <Text69 Ref="46" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>13.4,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text69</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.fecFin}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text69>
+            <Text35 Ref="47" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>25.2,0,2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>866d80615b984f3cb36e935da831ba54</Guid>
+              <Margins>10,0,0,0</Margins>
+              <Name>Text35</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.comercialNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text35>
+            <Text55 Ref="48" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>27.2,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>0789bcf9321f488b8c937d8afcc72705</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,7,0,0</Margins>
+              <Name>Text55</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.importeComercial}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="49" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text55>
+            <Text23 Ref="50" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>28.8,0,1.2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>751a8b4755a648a09e686f112a6c8da4</Guid>
+              <Margins>10,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.jObrasNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text23>
+            <Text26 Ref="51" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>30,0,1.4,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>95d22d4c994f49afb164ecf0a30951e9</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.importejefeObras}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="52" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text26>
+            <Text9 Ref="53" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>34.6,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>8b905020f970428e8ecaf1751bb46def</Guid>
+              <Margins>10,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.arquitectoNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text9>
+            <Text27 Ref="54" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>36.2,0,1.4,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>1fa3b583358948079fdb5cddb4b6299a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.importeArquitecto}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="55" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text27>
+            <Text28 Ref="56" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>37.6,0,1.8,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>dbc12184b3ac42a78fc9217cd9da5ad9</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,15,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.BINeto}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="57" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text28>
+            <Text30 Ref="58" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>39.4,0,0.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>9bb850ec39d94323ba78bd7aaf5e5cc1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.recepcionActa}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text30>
+            <Text33 Ref="59" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>40,0,1,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>bde569ac07e44219a91e655dad97291b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text33</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.tieneCertFinal}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text33>
+            <Text41 Ref="60" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>41,0,0.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>393e387a9f0748ff84606343543a8ced</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.contratoCerrado}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text41>
+            <Text39 Ref="61" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>31.4,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>a9dc7f819e6a421d9acdc1e6e51ba61c</Guid>
+              <Margins>10,0,0,0</Margins>
+              <Name>Text39</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.jGrupoNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text39>
+            <Text50 Ref="62" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>33,0,1.6,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>7e299505cc9848078947fb04595a9319</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,7,0,0</Margins>
+              <Name>Text50</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.importejefeGrupo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="63" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text50>
+            <Text5 Ref="64" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,2.2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Margins>10,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.referencia}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text5>
+            <Text44 Ref="65" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>2.2,0,2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text44</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.gestionado}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="66" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text44>
+            <Text47 Ref="67" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>6.4,0,5.2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Margins>5,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.clienteNombre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text47>
+            <Text45 Ref="68" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>4.2,0,2.2,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text45</Name>
+              <Page isRef="2" />
+              <Parent isRef="32" />
+              <Text>{contratos.repercutido}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="69" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text45>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>contratos</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>Datacontratos</Name>
+          <Page isRef="2" />
+          <Parent isRef="2" />
+          <Sort isList="true" count="4">
+            <value>ASC</value>
+            <value>nomComercial</value>
+            <value>ASC</value>
+            <value>fecha</value>
+          </Sort>
+        </Datacontratos>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>e3096213613f42ffbf0a0a4954ad2ea4</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>43.6</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>InfContratos</ReportAlias>
+  <ReportAuthor>rafa@myariadna.com</ReportAuthor>
+  <ReportChanged>5/29/2023 9:47:59 AM</ReportChanged>
+  <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
+  <ReportFile>C:\node_apps\proasistencia\public\reports\inf_cobros.mrt</ReportFile>
+  <ReportGuid>4fc81c04ae8b44228ada75cc86be766d</ReportGuid>
+  <ReportName>InfContratos</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2021.3.6.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

@@ -21,8 +21,16 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/fixedheader2.1.1/dataTables.fixedHeader.css">
 
     <!--DATATABLES-->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="js/plugin/datatables/new/Buttons-1.6.5/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="js/plugin/datatables/new/responsive-2.4.0/css/responsive.dataTables.min.css">
+
+    <!--PERSONALIZADO-->
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/ariadna-style.css">
+
+    <!--jsTree DOCUMENTACIÖN-->
+    <link rel="stylesheet" href="js/plugin/jsTree-3.2.1/style.min.css" />
 
 
 
@@ -163,11 +171,66 @@
                         <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">INICIO</span>
                     </a>
                 </li>
-                <li id="administracion">
+                 <li id="administracion">
                     <a href="#">
                         <i class="fa fa-lg fa-fw fa-bank"></i> <span class="menu-item-parent">ADMINISTRACIÓN</span>
                     </a>
                     <ul>
+                        <li id="tipos">
+                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Tipos</a>
+                            <ul>
+                                <li id="tipos_proyecto">
+                                    <a href="TiposProyectoGeneral.html">
+                                        <i class="fa fa-asterisk"></i> Tipos de proyecto
+                                    </a>
+                                </li>
+                                <li id="tiposvia">
+                                    <a href="TipoViaGeneral.html">
+                                        <i class="fa fa-map-marker"></i> Tipos de via
+                                    </a>
+                                </li>
+                                <li id="tiposProveedor">
+                                    <a href="TipoProveedorGeneral.html">
+                                        <i class="fa fa-address-card"></i> Tipos proveedores
+                                    </a>
+                                </li>
+                                <li id="tiposProfesional">
+                                    <a href="TipoProfesionalGeneral.html">
+                                        <i class="fa fa-wrench"></i> Tipos profesionales
+                                    </a>
+                                </li>
+                                <li id="tiposGarantia">
+                                    <a href="TipoGarantiaGeneral.html">
+                                        <i class="fa fa-wrench"></i> Tipos garantia
+                                    </a>
+                                </li>
+                                <li id="tiposiva">
+                                    <a href="TipoIvaGeneral.html">
+                                        <i class="fa fa-money"></i> Tipos de IVA
+                                    </a>
+                                </li>
+                                <li id="tiposTexto">
+                                    <a href="TipoTextoGeneral.html">
+                                        <i class="fa fa-asterisk"></i> Tipos de textos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="tarifas">
+                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Tarifas</a>
+                            <ul>
+                                <li id="tarifas_ciente">
+                                    <a href="TarifaClienteGeneral.html">
+                                        <i class="fa fa-object-ungroup"></i> Tarifas cliente
+                                    </a>
+                                </li>
+                                <li id="tarifas_proveedor">
+                                    <a href="TarifaProveedorGeneral.html">
+                                        <i class="fa fa-object-group"></i> Tarifas proveedor
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li id="parametros">
                             <!--<a href="ParametroDetalle.html">
                                         <i class="fa fa-cog"></i> Parámetros
@@ -184,63 +247,6 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>-->
                         </li>
-                        <li id="departamentos">
-                            <a href="DepartamentosGeneral.html">
-                                <i class="fa fa-building"></i> Departamentos
-                            </a>
-                        </li>
-  
-  
-                        <li id="unidades">
-                            <a href="UnidadesGeneral.html">
-                                <i class="fa fa-asterisk"></i> Unidades
-                            </a>
-                        </li>
-                        <li id="tipos_proyecto">
-                            <a href="TiposProyectoGeneral.html">
-                                <i class="fa fa-asterisk"></i> Tipos de proyecto
-                            </a>
-                        </li>
-                        <li id="textos_predeterminados">
-                            <a href="TextosPredeterminadosGeneral.html">
-                                <i class="fa fa-asterisk"></i> Textos predeterminados
-                            </a>
-                        </li>
-                        <li id="tiposvia">
-                            <a href="TipoViaGeneral.html">
-                                <i class="fa fa-map-marker"></i> Tipos de via
-                            </a>
-                        </li>
-                        <li id="tiposProveedor">
-                            <a href="TipoProveedorGeneral.html">
-                                <i class="fa fa-address-card"></i> Tipos proveedores
-                            </a>
-                        </li>
-                        <li id="tiposProfesional">
-                            <a href="TipoProfesionalGeneral.html">
-                                <i class="fa fa-wrench"></i> Tipos profesionales
-                            </a>
-                        </li>
-                        <li id="tiposGarantia">
-                            <a href="TipoGarantiaGeneral.html">
-                                <i class="fa fa-wrench"></i> Tipos garantia
-                            </a>
-                        </li>
-                        <li id="formaspago">
-                            <a href="FormaPagoGeneral.html">
-                                <i class="fa fa-money"></i> Formas de pago
-                            </a>
-                        </li>
-                        <li id="tiposiva">
-                            <a href="TipoIvaGeneral.html">
-                                <i class="fa fa-money"></i> Tipos de IVA
-                            </a>
-                        </li>
-                        <li id="empresas">
-                            <a href="EmpresasGeneral.html">
-                                <i class="fa fa-building-o"></i> Emp. Propias
-                            </a>
-                        </li>
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -256,6 +262,34 @@
                                 <i class="fa fa-user"></i> Agentes / Colaboradores.
                             </a>
                         </li>
+                        <li id="departamentos">
+                            <a href="DepartamentosGeneral.html">
+                                <i class="fa fa-building"></i> Departamentos
+                            </a>
+                        </li>
+                        <li id="unidades">
+                            <a href="UnidadesGeneral.html">
+                                <i class="fa fa-asterisk"></i> Unidades
+                            </a>
+                        </li>
+                       
+                        <li id="textos_predeterminados">
+                            <a href="TextosPredeterminadosGeneral.html">
+                                <i class="fa fa-asterisk"></i> Textos predeterminados
+                            </a>
+                        </li>
+                        
+                        <li id="formaspago">
+                            <a href="FormaPagoGeneral.html">
+                                <i class="fa fa-money"></i> Formas de pago
+                            </a>
+                        </li>
+                       
+                        <li id="empresas">
+                            <a href="EmpresasGeneral.html">
+                                <i class="fa fa-building-o"></i> Emp. Propias
+                            </a>
+                        </li>
                         <li id="grupoArticulos">
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
@@ -266,16 +300,7 @@
                                 <i class="fa fa-square-o"></i> Unidades obra
                             </a>
                         </li>
-                        <li id="tarifas_ciente">
-                            <a href="TarifaClienteGeneral.html">
-                                <i class="fa fa-object-ungroup"></i> Tarifas cliente
-                            </a>
-                        </li>
-                        <li id="tarifas_proveedor">
-                            <a href="TarifaProveedorGeneral.html">
-                                <i class="fa fa-object-group"></i> Tarifas proveedor
-                            </a>
-                        </li>
+                       
                         <li id="estados_actuacion">
                             <a href="EstadoActuacionGeneral.html">
                                 <i class="fa fa-spinner"></i> Estados de actuación
@@ -284,6 +309,11 @@
                         <li id="estados_presupuesto">
                             <a href="EstadoPresupuestoGeneral.html">
                                 <i class="fa fa-tasks"></i> Estados de presupuesto
+                            </a>
+                        </li>
+                        <li id="rechazos_presupuesto">
+                            <a href="RechazoPresupuestoGeneral.html">
+                                <i class="fa fa-stop-circle"></i> Motivos rechazo de presupuesto
                             </a>
                         </li>
                         <li id="motivosbaja">
@@ -306,7 +336,7 @@
                         <li id="ofertas">
                             <a href="OfertaGeneral.html"><i class="fa fa-fw fa-file-o"></i> Ofertas</a>
                         </li>
-                        <li id="contratos">
+                        <li id="contratos-terceros">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
@@ -317,11 +347,20 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="contratos">
+                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
+                                </li>
+                                <li>
+                                    <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos solo arquitectura</a>
+                                </li>
+                                <li>
+                                    <a href="ActualizacionIpcContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Actualización IPC contratos de alquileres</a>
+                                </li>
+                                <li>
+                                    <a href="RenovacionContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Renovación contratos de alquileres</a>
                                 </li>
                             </ul>
                         </li>
@@ -330,6 +369,9 @@
                             <ul>
                                 <li>
                                     <a href="PrefacturaGeneral.html"><i class="fa fa-fw fa-th"></i> Prefacturas</a>
+                                </li>
+                                <li>
+                                    <a href="BorrarPrefacturaGeneral.html"><i  class="fa fa-fw fa-trash"></i> Borrar Prefacturas</a>
                                 </li>
                                 <li>
                                     <a href="SelectPrefacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Emitir facturas</a>
@@ -356,12 +398,6 @@
                                 <li>
                                     <a href="AnticipoColaboradorGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         colaboradores</a>
-                                </li>
-                               <li>
-                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
-                                </li>
-                                <li>
-                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -408,6 +444,20 @@
                                 </li>
                                 <li>
                                     <a href="LiquidacionEColaboradores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar liquidaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="correos">
+                            <a href="#"><i class="fa fa-fw fa-envelope-o"></i> Correos</a>
+                            <ul>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos general</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEReparaciones.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos reparaciones</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -499,7 +549,7 @@
             <section>
                 <div class="row">
                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                        <div class="jarviswidget" id="wid-id-new-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                 <h2>Info</h2>
@@ -508,6 +558,9 @@
                                 <ul class="nav nav-tabs pull-right in" id="myTab">
                                     <li class="active">
                                         <a data-toggle="tab" href="#s1"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Datos</span></a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#s13"><i class="fa  fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Resumen</span></a>
                                     </li>
                                     <li>
                                         <a data-toggle="tab" href="#s2"><i class="fa fa-user"></i> <span class="hidden-mobile hidden-tablet">Colaboradores</span></a>
@@ -535,7 +588,13 @@
                                     </li>    
                                     <li id="tabAscContratos">
                                         <a data-toggle="tab" href="#s7"><i class="fa fa-th-list"></i> <span class="hidden-mobile hidden-tablet">Vinculados</span></a>
-                                    </li>                                                                                       
+                                    </li>
+                                    <li id="tabDocumentacion">
+                                        <a data-toggle="tab" href="#s11"><i class="fa fa-file-text-o"></i> <span class="hidden-mobile hidden-tablet">Documentación</span></a>
+                                    </li>    
+                                    <li id="tabDatosCliente">
+                                        <a data-toggle="tab" href="#s12"><i class="fa fa-user"></i> <span class="hidden-mobile hidden-tablet">Datos cliente</span></a>
+                                    </li>                                                                                                      
                                 </ul>
                                 <ul class="nav nav-tabs pull-left in" id="myTab">
                                     
@@ -553,7 +612,7 @@
                                                 <div class="row">
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- WIDGET DE LA CABECERA -->
-                                                        <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                 <h2>CABECERA</h2>
@@ -567,9 +626,48 @@
                                                                     <form id="frmContrato" class="smart-form">
                                                                         <fieldset>
                                                                                 <div class="row" style="margin-bottom: 2%">
-                                                                                        <section class="col col-md-3">
-                                                                                            <div style="margin-top: 10%;">
-                                                                                                <input id="chkContratoCerrado" type="checkbox" name="chkContratoCerrado" data-bind="checked: contratoCerrado"/> Contrato cerrado
+                                                                                    <section class="col col-md-2">
+                                                                                        <div style="margin-top: 10%;">
+                                                                                            <input id="chkContratoCerrado" type="checkbox" name="chkContratoCerrado" data-bind="checked: contratoCerrado"/> Contrato cerrado
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    
+                                                                                    <section class="col col-md-2">
+                                                                                        <label class="label">Fecha cierre contrato</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtFechaCierreContrato" name="txtFechaCierreContrato" data-bind="value: fechaCierreContrato" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                        </label>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <label class="label">Fecha renovación IPC</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtFechaRenovacionIpc" name="txtFechaRenovacionIpc" data-bind="value: fechaRenovacionIpc" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                        </label>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <label class="label">IPC</label>
+                                                                                        <label class="input">
+                                                                                            <input id="txtIpc" name="txtIpc" data-bind="value: ipc" disabled/>
+                                                                                        </label>
+                                                                                    </section>
+                                                                                    <section class="col col-md-2">
+                                                                                        <div style="margin-top: 10%;">
+                                                                                            <input id="chkRenovar" type="checkbox" name="chkRenovar" data-bind="checked: renovar"/> Renovar (Alquileres)
+                                                                                        </div>
+                                                                                    </section>
+                                                                                    
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                        <section class="col col-md-2">
+                                                                                            <div style="margin-top: 15%;">
+                                                                                                <input id="chkBeneficioLineal" type="checkbox" name="chkBeneficioLineal" data-bind="checked: beneficioLineal"> Beneficio lineal
+                                                                                            </div>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <div style="margin-top: 15%;">
+                                                                                                <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial"> Facturación parcial
                                                                                             </div>
                                                                                         </section>
                                                                                         <section class="col col-md-3">
@@ -578,20 +676,15 @@
                                                                                             </div>
                                                                                         </section>
                                                                                         <section class="col col-md-2">
-                                                                                            <div style="margin-top: 15%;">
-                                                                                                <input id="chkFacturaParcial2" type="checkbox" name="chkFacturaParcial2" data-bind="checked: facturaParcial"> Facturación parcial
-                                                                                            </div>
-                                                                                        </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <label  class="label"> Firma del acta</label>
+                                                                                            <label  class="label" style="margin-top: 15%;"> Firma del acta</label>
                                                                                             <div id= "radioActa">
                                                                                                 <div><input type='radio' id='radioFirmaActa1' name='firmaActaGroup' value='0' data-bind="checked: firmaActa"/> No </div>
                                                                                                 <div><input type='radio' id='radioFirmaActa2' name='firmaActaGroup' value='1' data-bind="checked: firmaActa"/> Si</div>
                                                                                                 <div><input type='radio' id='radioFirmaActa3' name='firmaActaGroup' value='2' data-bind="checked: firmaActa"/> ¿Si?</div>
                                                                                             </div>
                                                                                         </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <label class="label">Fecha de firma del acta</label>
+                                                                                        <section class="col col-md-3">
+                                                                                            <label class="label" style="margin-top: 10%;">Fecha de firma del acta</label>
                                                                                             <label class="input">
                                                                                                 <input id="txtFechaFirmaActa" name="txtFechaFirmaActa" data-bind="value: fechaFirmaActa" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                             </label>
@@ -651,13 +744,13 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <section class="col col-md-2">
+                                                                                <section class="col col-md-6">
                                                                                     <label class="label">Forma de pago</label>
                                                                                     <label style="width:100%; height:50px;">
                                                                                         <select style="width:100%" id="cmbFormasPago" name="cmbFormasPago" data-bind="options: posiblesFormasPago, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoId, valueAllowUnset: true, selectedOptions: elegidosFormasPago, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-4">
                                                                                     <label class="label">IBAN del cliente</label>
                                                                                     <label class="input">
                                                                                         <input id="txtIban" name="txtIban" data-bind="value: iban" disabled/>
@@ -669,10 +762,18 @@
                                                                                         <input id="txtImporteCliente" name="txtImporteCliente" data-bind="value: importeClienteFormat" disabled/>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-2">
-                                                                                    <label class="label">Certificación final</label>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Certificación final (Obras)</label>
                                                                                     <label class="input">
                                                                                         <input id="txtCertificacionFinal" name="txtCertificacionFinal" data-bind="value: certificacionFinal"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-4">
+                                                                                    <label class="label">Importe anual para la renovación (Alquileres)</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtImporteAnualRenovacion" name="txtImporteAnualRenovacion" data-bind="value: importeAnualRenovacionFormat" disabled/>
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
@@ -681,13 +782,12 @@
                                                                                         <input id="txtImporteMantenedor" name="txtImporteMantenedor" data-bind="value: importeMantenedor" disabled/>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-1">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">% Reten</label>
                                                                                     <label class="input">
                                                                                         <input id="txtPorcentajeRetencion" name="txtPorcentajeRetencion" data-bind="value: porcentajeRetencion"/>
                                                                                     </label>
                                                                                 </section>
-                                                                                
                                                                             </div>
                                                                             <div class="row">
 
@@ -703,13 +803,13 @@
                                                                                         <input id="txtFechaFinal" name="txtFechaFinal" data-bind="value: fechaFinal" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Preaviso</label>
                                                                                     <label class="input">
                                                                                         <input id="txtPreaviso" name="txtPreaviso" type="text" data-bind="value: preaviso" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label" id="labObras">Fecha inicio fact.</label>
                                                                                     <label class="label" id="labNoObras">Fecha primera factura</label>
                                                                                     <label class="input">
@@ -720,6 +820,12 @@
                                                                                     <label class="label">Fecha original</label>
                                                                                     <label class="input">
                                                                                         <input id="txtFechaOriginal" name="txtFechaOriginal" data-bind="value: fechaOriginal" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
+                                                                                    <label class="label">Fecha fin alquiler</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtFechaFinAlquiler" name="txtFechaFinAlquiler" data-bind="value: fechaFinAlquiler" class="datepicker" data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
                                                                             </div>
@@ -891,7 +997,7 @@
                                                 <div class="row" id="lineasfactura">
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- WIDGET LINEAS CONTRATO -->
-                                                        <div class="jarviswidget" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                 <h2>LINEAS DEL CONTRATO</h2>
@@ -958,7 +1064,7 @@
                                                     <!-- NEW WIDGET START -->
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- Widget ID (each widget will need unique ID)-->
-                                                        <div class="jarviswidget" id="wid-id-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-3" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon">
                                                                     <i class="fa fa-edit"></i>
@@ -1029,7 +1135,7 @@
                                                     <!-- NEW WIDGET START -->
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- Widget ID (each widget will need unique ID)-->
-                                                        <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon">
                                                                     <i class="fa fa-edit"></i>
@@ -1191,7 +1297,7 @@
                                                 <div class="row" id="basesycuotas">
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- WIDGET BASES Y CUOTAS -->
-                                                        <div class="jarviswidget" id="wid-id-4" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                 <h2>BASES Y CUOTAS</h2>
@@ -1238,7 +1344,7 @@
                                             <div class="row" id="colaboradores">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-5" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>COLABORADORES</h2>
@@ -1298,7 +1404,7 @@
                                             <div class="row" id="prefacturas">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-6" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>PREFACTURAS</h2>
@@ -1492,7 +1598,7 @@
                                             <div class="row" id="facturas">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-7" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>FACTURAS</h2>
@@ -1640,7 +1746,7 @@
                                                 <div class="row" id="facprove">
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- Widget ID (each widget will need unique ID)-->
-                                                        <div class="jarviswidget" id="wid-id-8" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                 <h2>FACTURAS DE GASTOS</h2>
@@ -1705,6 +1811,9 @@
                                                                                         <th class="hasinput">
                                                                                             <input type="text" class="form-control" placeholder="" />
                                                                                         </th>
+                                                                                        <th class="hasinput">
+                                                                                            <input type="text" class="form-control" placeholder="" />
+                                                                                        </th>
                                                                                         
                                                                                                                                         
                                                                                         <th style="width:10%">
@@ -1727,7 +1836,10 @@
                                                                                             <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
                                                                                         </th>
                                                                                         <th data-hide="phone">
-                                                                                            fecha
+                                                                                            fecha factura
+                                                                                        </th>
+                                                                                        <th data-hide="phone">
+                                                                                            fecha recepcion
                                                                                         </th>
                                                                                         <th data-hide="phone">
                                                                                             importe serviciado
@@ -1750,7 +1862,7 @@
                                                                                 </thead>
                                                                                 <tfoot>
                                                                                     <tr>
-                                                                                        <th colspan="6" style="text-align:right">Total:</th>
+                                                                                        <th colspan="7" style="text-align:right">Total:</th>
                                                                                         <th></th>
                                                                                         <th></th>
                                                                                         <th></th>
@@ -1775,7 +1887,7 @@
                                                 <div class="row" id="cobros">
                                                     <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                         <!-- Widget ID (each widget will need unique ID)-->
-                                                        <div class="jarviswidget" id="wid-id-9" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <div class="jarviswidget" id="wid-id-new-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                             <header>
                                                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                                 <h2>COBROS</h2>
@@ -1794,6 +1906,9 @@
                                                                 <table id="dt_contratosCobros" class="table table-striped table-bordered table-hover" width="100%">
                                                                     <thead>
                                                                         <tr>
+                                                                            <th>
+                                                                                
+                                                                            </th>
                                                                             <th>
                                                                                 <i class="fa fa-fw fa-search"></i>
                                                                             </th>
@@ -1818,12 +1933,15 @@
                                                                             <th class="hasinput">
                                                                                 <input type="text" class="form-control" placeholder="" />
                                                                             </th>
-
-                                                                            <th style="width:10%">
+                                                                            <th class="hasinput">
+                                                                                <input type="text" class="form-control" placeholder="" />
                                                                             </th>
                                                                                                     
                                                                         </tr>
                                                                         <tr>
+                                                                            <th data-class="expand">
+                                                                                
+                                                                            </th>
                                                                             <th data-class="expand">
                                                                                 <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Orden
                                                                             </th>
@@ -1855,7 +1973,7 @@
                                                                     </thead>
                                                                     <tfoot>
                                                                         <tr>
-                                                                            <th colspan="6" style="text-align:right">Total:</th>
+                                                                            <th colspan="7" style="text-align:right">Total:</th>
                                                                             <th></th>
                                                                             <th></th>
                                                                             <th></th>
@@ -1877,7 +1995,7 @@
                                             <div class="row" id="ascContratos">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-10" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-11" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>CONTRATOS ASOCIADOS</h2>
@@ -1962,7 +2080,7 @@
                                             <div class="row" id="anticipos">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-11" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-12" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>ANTICIPOS DE GASTOS</h2>
@@ -2028,7 +2146,7 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>
-                                                                                        <i class="fa fa-fw fa-clipboard">
+                                                                                        Facturado
                                                                                     </th>
                                                                                     <th data-class="phone">
                                                                                         Referencia
@@ -2085,7 +2203,7 @@
                                             <div class="row" id="anticiposcolaboradores">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-12" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>ANTICIPOS DE COLABORADORES</h2>
@@ -2148,10 +2266,11 @@
                                                                                                                                     
                                                                                     <th style="width:10%">
                                                                                     </th>
+                                                                                    
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>
-                                                                                        <i class="fa fa-fw fa-clipboard">
+                                                                                        Facturado
                                                                                     </th>
                                                                                     <th data-class="phone">
                                                                                         Referencia
@@ -2208,7 +2327,7 @@
                                             <div class="row" id="facprove">
                                                 <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <!-- Widget ID (each widget will need unique ID)-->
-                                                    <div class="jarviswidget" id="wid-id-13" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <div class="jarviswidget" id="wid-id-new-14" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
                                                         <header>
                                                             <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
                                                             <h2>FACTURAS DE COLABORADORES</h2>
@@ -2270,6 +2389,9 @@
                                                                                     <th class="hasinput">
                                                                                         <input type="text" class="form-control" placeholder="" />
                                                                                     </th>
+                                                                                    <th class="hasinput">
+                                                                                        <input type="text" class="form-control" placeholder="" />
+                                                                                    </th>
                                                                                     
                                                                                                                                     
                                                                                     <th style="width:10%">
@@ -2289,7 +2411,10 @@
                                                                                         <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
                                                                                     </th>
                                                                                     <th data-hide="phone">
-                                                                                        fecha
+                                                                                        fecha factura
+                                                                                    </th>
+                                                                                    <th data-hide="phone">
+                                                                                        fecha recepcion
                                                                                     </th>
                                                                                     <th data-hide="phone">
                                                                                         importe serviciado
@@ -2312,7 +2437,7 @@
                                                                             </thead>
                                                                             <tfoot>
                                                                                 <tr>
-                                                                                    <th colspan="5" style="text-align:right">Total:</th>
+                                                                                    <th colspan="6" style="text-align:right">Total:</th>
                                                                                     <th></th>
                                                                                     <th></th>
                                                                                     <th></th>
@@ -2331,8 +2456,306 @@
                                                 </article>
                                                 <!-- WIDGET END -->
                                             </div>                                        
+                                        </div>
+                                        <!-- 11º TAB (DOCUMENTACIÓN) -->
+                                    <div class="tab-pane fade" id="s11">
+                                        
+                                        <div class="row" id="documentacion">
+                                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <!-- Widget ID (each widget will need unique ID)-->
+                                                <div class="jarviswidget" id="wid-id-new-15" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                    <header>
+                                                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                        <h2>Carpetas</h2>
+                                                    </header>
+                                                    <!-- widget div-->
+                                                    <div>
+                                                        <!-- widget edit box -->
+                                                        <div class="jarviswidget-editbox">
+                                                            <!-- This area used as dropdown edit box -->
+                                                            <input class="form-control" type="text">
+                                                        </div>
+                                                        <!-- end widget edit box -->
+                                                        <!-- widget content -->
+                                                        <div class="widget-body">
+                                                            <!-- this is what the user will see -->
+                                                            <form id="frmDoc">
+                                                                <fieldset>
+                                                                    
+                                                                    <div class="pull-right">
+                                                                        <button id="btnNuevaCarpeta" title="Nueva carpeta" data-toggle="modal" data-target="#modalNuevaCarpeta" onclick="nuevaCarpeta()" class="btn btn-success btn-circle btn-lg">
+                                                                            <i class="fa fa-lg fa-plus"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </form>
+
+                                                            <!-- <div id="tbDocumentacion" class="table-responsive">
+                                                                    <table id="dt_documentacion" class="table table-striped table-bordered table-hover responsive" width="100%">
+                                                                        <thead>
+                                                                            
+                                                                            <tr>
+                                                                                <th>
+                                                        
+                                                                                </th>
+                                                                                <th data-class="phone">
+                                                                                    Nombre carpeta
+                                                                                </th>
+                                                                                <th data-class="phone">
+                                                                                    Tipo
+                                                                                </th>
+                                                                                <th>
+                                                                                    Documentos
+                                                                                </th>
+                                                                                <th style="width:10%; text-align: center;">
+                                                                                    <i class="fa fa-fw fa-gears">
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                            </div> -->
+                                                            <div id="jstreeDocumentacion"></div>
+                                                        </div>
+                                                        <!-- end widget content -->
+                                                    </div>
+                                                    <!-- end widget div -->
+                                                </div>
+                                                <!-- end widget -->
+                                            </article>
+                                            <!-- WIDGET END -->
+                                        </div>
                                     </div>
+                                    <!-- 12º TAB (DATOS CLIENTE) -->
+                                    <div class="tab-pane fade" id="s12">
+                                        <div id="datosCliente">
+                                            <div class="container">
+                                                <iframe id="frCliente" class="responsive-iframe" src="about:blank"></iframe>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <!--FIN 11º TAB-->
+                                    <!-- TAB resumen-->
+                                    <div class="tab-pane fade" id="s13">
+                                        <section id="widget-grid" class="">
+                                            <div class="row">
+                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                  
+                                                    <div class="jarviswidget" id="wid-id-new-16" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <header>
+                                                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                            <h2>RESUMEN</h2>
+                                                        </header>
+                                                        <div>
+                                                            <div class="jarviswidget-editbox">
+                                                                <input class="form-control" type="text">
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <!-- FORMULARIO DEL RESUMEN -->
+                                                                <form id="frmResumen" class="smart-form">
+                                                                    <fieldset>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-3">
+                                                                                <div style="margin-top: 2%;margin-bottom: 15%;">
+                                                                                    <input id="chkResumenPtoAceptado" type="checkbox" name="chkResumenPtoAceptado" data-bind="checked: resumenPtoAceptado"> Pto. contrata aceptado
+                                                                                </div>
+                                                                            </section>
+                                                                            <section class="col col-md-9"></section>           
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-2">
+                                                                                <label class="label">EXP. O.E. / D.R</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenExp" name="txtResumenExp" type="text" data-bind="value: resumenExp" />
+                                                                                </label>
+                                                                            </section> 
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Jefe de obra</label>
+                                                                                <label style="width:100%; height:50px;">
+                                                                                    <select style="width:100%" id="cmbJefesObra" name="cmbJefesObra" data-bind="options: posiblesJefesObra, optionsText: 'nombre', optionsValue: 'jefeObraId', value: sjefeObraId, valueAllowUnset: true, selectedOptions: elegidosJefesObra, selected2:{}"></select><i></i>
+                                                                                </label>
+                                                                            </section>                                                                                
+                                                                            <section class="col col-md-7">
+                                                                                <label class="label">Distrito</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenDistrito" name="txtResumenDistrito" type="text" data-bind="value: resumenDistrito" />
+                                                                                </label>
+                                                                            </section>                               
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Tecnicos</label>
+                                                                                <label style="width:100%;">
+                                                                                    <select style="width:100%" id="cmbTecnicos" name="cmbTecnicos"  multiple="multiple"  data-bind="options: posiblesTecnicos, optionsText: 'nombre', optionsValue: 'tecnicoId', value: stecnicoId, valueAllowUnset: true, selectedOptions: elegidosTecnicos, selected2:{}"></select><i></i>
+                                                                                </label>
+                                                                            </section>    
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                            </section>
+                                                                        </div>
+                                                                        <section class="col col-md-12" style="border:solid; border-width:1px;">
+                                                                            <header>Representación</header>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Autorización</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenAutorizacion" name="txtResumenAutorizacion" data-bind="value: resumenAutorizacion"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">Acta</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenActa" name="txtResumenActa" data-bind="value: resumenActa"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">DNI</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenDni" name="txtResumenDni" data-bind="value: resumenDni"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-3">
+                                                                                    <label class="label">CIF</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtResumenCif" name="txtResumenCif" data-bind="value: resumenCif"/>
+                                                                                    </label>
+                                                                                </section>
+                                                                            </div>    
+                                                                        </section> 
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Tasas</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenTasas" name="txtResumenTasas" data-bind="value: resumenTasas"/>
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-2">
+                                                                                <label class="label">ICIO</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenIcio" name="txtResumenIcio" data-bind="value: resumenIcio"/>
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Formulario DR jefe de obra</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenFormulario" name="txtResumenFormulario" data-bind="value: resumenFormulario"/>
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-2">
+                                                                                <label class="label">DR</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenDr" name="txtResumenDr" data-bind="value: resumenDr"/>
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-2">
+                                                                                <label class="label">Tasas visado</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtResumenTasasVisado" name="txtResumenTasasVisado" data-bind="value: resumenTasasVisado"/>
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <section class="col col-md-12">
+                                                                                <label class="label">Diario</label>
+                                                                                <label class="textarea textarea-resizable">
+                                                                                    <textarea id="txtResumenDiario" rows="5" class="custom-scroll" data-bind="value: resumenDiario"></textarea>
+                                                                                </label>
+                                                                            </section>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                    <fieldset>
+                                                                        <div class="pull-right">
+                                                                            <button id="btnAceptarResumen" title="Guardar resumen" class="btn btn-success btn-circle btn-lg">
+                                                                                <i class="fa fa-lg fa-check"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </form>
+                                                                <!-- FIN FORMULARIO CABECERA DE CONTRATO -->
+                                                                <hr/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- FIN WIDGET CABECERA -->
+                                                </article>
+                                            </div>
+                                        </section>
+
+                                        <section id="widget-grid" class="">
+                                            <div class="row">
+                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                  
+                                                    <div class="jarviswidget" id="wid-id-new-17" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                        <header>
+                                                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                            <h2>TASAS VISADO</h2>
+                                                        </header>
+                                                        <div>
+                                                            <div class="jarviswidget-editbox">
+                                                                <input class="form-control" type="text">
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="row" id="lineasVisado">
+                                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                        <!-- WIDGET LINEAS CONTRATO -->
+                                                                        <div class="jarviswidget" id="wid-id-new-18" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                                                                            <header>
+                                                                                <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                                                                                <h2>LINEAS DE LAS TASAS</h2>
+                                                                            </header>
+                                                                            <div>
+                                                                                <div class="jarviswidget-editbox">
+                                                                                    <input class="form-control" type="text">
+                                                                                </div>
+                                                                                <div class="widget-body">
+                                                                                    <form id="frmLineaVisado">
+                                                                                        <fieldset>
+                                                                                            <div class="pull-right">
+                                                                                                <button id="btnNuevaLineaVisado" title="Nueva línea" data-toggle="modal" data-target="#modalLineaVisado" onclick="nuevaLineaTasa()" class="btn btn-success btn-circle btn-lg">
+                                                                                                    <i class="fa fa-lg fa-plus"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </fieldset>
+                                                                                    </form>
+                                                                                    <hr/>
+                                                                                    <div id="tbLineasVisado">
+                                                                                        <table id="dt_lineasVisado" class="table table-striped table-bordered table-hover" width="100%">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th data-class="expand">
+                                                                                                        <i class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>TITULO
+                                                                                                    </th>
+                                                                                                   
+                                                                                                    <th data-hide="phone">
+                                                                                                        TEXTO
+                                                                                                    </th>
+                                                                                                    <th>
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                    <hr/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- FIN WIDGET LINEAS CONTRATO -->
+                                                                    </article>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </section>
+                                        </div>
+                                        <!--FIN TAB RESUMEN-->
+                                    </div>
+                            </div>
                             </div>
                         </div>
                     </article>
@@ -2343,7 +2766,7 @@
     </div>
     <!-- END MAIN PANEL -->
     <!-- Modal -->
-    <div class="modal fade" id="modalLinea" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalLinea" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2450,7 +2873,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modalComisionista" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalComisionista" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2495,7 +2918,7 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    <div class="modal fade" id="modalGenerarPrefacturas" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalGenerarPrefacturas" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2613,7 +3036,7 @@
     </div>
     <!--End Modal-->
       <!-- /.modal -->
-      <div class="modal fade" id="modalGenerarPrefacturasPlanificacion" tabindex="-1" role="dialog"  style="overflow-y: scroll;">
+      <div class="modal fade" id="modalGenerarPrefacturasPlanificacion" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false"  style="overflow-y: scroll;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2720,7 +3143,8 @@
         <!-- /.modal-dialog -->
     </div>
     <!--End Modal-->
-    <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog">
+    <!-- Modal -->
+    <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2775,8 +3199,9 @@
         </div>
         <!-- /.modal-dialog -->
     </div>  
+    <!--End modal-->
     <!-- Modal -->
-    <div class="modal fade" id="modalConcepto" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalConcepto" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2841,7 +3266,7 @@
     </div>  
     <!--End modal-->
     <!-- Modal -->
-    <div class="modal fade" id="modalPlanificacionObras" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalPlanificacionObras" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2914,7 +3339,7 @@
     </div>  
     <!--End modal-->
      <!-- Modal -->
-     <div class="modal fade" id="modalGenerarPrefacturasObras" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+     <div class="modal fade" id="modalGenerarPrefacturasObras" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2961,7 +3386,7 @@
     </div>  
     <!--End modal-->
      <!-- Modal -->
-     <div class="modal fade" id="modalGenerarRecepcionGestion" tabindex="-1" role="dialog" style="overflow-y: scroll;">
+     <div class="modal fade" id="modalGenerarRecepcionGestion" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -3003,6 +3428,206 @@
         <!-- /.modal-dialog -->
     </div>  
     <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalNuevaCarpeta" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> CREACIÓN DE CARPETAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="creacionCarpetas-form" class="smart-form">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Nombre de la carpeta</label>
+                                        <label class="input">
+                                            <input id="txtCarpetaNombre" name="txtCarpetaNombre" data-bind="value: carpetaNombre" class="text" />
+                                        </label>
+                                    </section>
+                                   
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarNuevaCarpeta" class="btn btn-primary"  onclick="aceptarNuevaCarpeta()">
+                                Aceptar
+                            </button>
+                           <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarModalGenerarPrefacturasObras()">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  
+    <!--End modal-->
+      <!--MODAL-->
+      <div class="modal fade" id="modalUploadDoc" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog" style="width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Subir documento</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="frmloadDoc" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <form id="upload-form" class="smart-form">
+                                                <fieldset>
+                                                    <section>
+                                                        <!-- DOCUMENT -->
+                                                        <div class="row">
+                                                            <section class="col col-md-12">
+                                                                <label class="label">Nombre del documento</label>
+                                                                <label class="input">
+                                                                    <input id="txtDocumNombre" name="txtDocumNombre" type="text" data-bind="value: documNombre" />
+                                                                </label>
+                                                            </section>
+                                                        </div>
+                                                        
+                                                            <div class="row">
+                                                                <section class="col col-md-12">
+                                                                    <h3>Escoja el documento a subir</h3>
+                                                                </section>
+                                                            </div>
+                                                            <div class="row">
+                                                                <section class="col col-md-8">
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar" role="progressbar"></div>
+                                                                    </div>
+                                                                </section>
+                                                                <section class="col col-md-4">
+                                                                    <input id="upload-input" type="file" name="uploads[]" multiple  data-bind="value: files"></br>
+                                                                </section>
+                                                            </div>
+                                                        </section>
+                                                </fieldset>
+                                                <footer>
+                                                    <button id="btnSubirDocumentos" name="btnSubirDocumentos" class="btn btn-primary"  onclick="aceptarSubirDocumentos()">
+                                                        Subir documentos
+                                                    </button>
+                                                </footer>
+                                                
+                                            </form>
+                                        
+                                    
+                                </article>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--END MODAL-->
+     <!-- Modal -->
+     <div class="modal fade" id="modalpostSubcarpeta" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> CREACIÓN DE SUBCARPETAS</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="creacionSubcarpetas-form" class="smart-form">
+                        <fieldset>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Nombre de la carpeta</label>
+                                        <label class="input">
+                                            <input id="txtCarpetaNombre" name="txtCarpetaNombre" data-bind="value: subCarpetaNombre" class="text" />
+                                        </label>
+                                    </section>
+                                   
+                                </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarNuevaSubCarpeta" class="btn btn-primary"  onclick="aceptarNuevaSubCarpeta()">
+                                Aceptar
+                            </button>
+                           <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarModalGenerarPrefacturasObras()">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  
+    <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalLineaVisado" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog"  style="width: 1100px; height: 100%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> TASAS VISADO</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="lineaVisado-form" class="smart-form">
+                        <fieldset>
+                            <section>
+                                
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Titulo</label>
+                                        <label class="input">
+                                            <input id="txtTituloTasa" name="txtTituloTasa" type="text" data-bind="value: tituloTasa" />
+                                        </label>
+                                    </section>
+                                    
+                                </div>
+                                <div class="row">
+                                    <section class="col col-md-12">
+                                        <label class="label">Descripción </label>
+                                        <label class="textarea textarea-resizable">
+                                            <textarea id="txtContenidoTasa" rows="6" class="custom-scroll" data-bind="value: contenidoTasa">
+                                            </textarea>
+                                        </label>
+                                    </section>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarLineaVisado" class="btn btn-primary" onclick="guardarLineaTasa()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+     <!--End modal-->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">
@@ -3066,6 +3691,9 @@
     <script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
     <!-- FastClick: For mobile devices -->
     <script src="js/plugin/fastclick/fastclick.min.js"></script>
+
+    
+
     <!--[if IE 8]>
 
         <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -3104,6 +3732,12 @@
     <script src="js/plugin/datatables/new/pdfmake-0.1.36/vfs_fonts.js"></script>
     <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.html5.min.js"></script>
     <script src="js/plugin/datatables/new/Buttons-1.6.5/js/buttons.print.min.js"></script>
+
+    <!--AWS-->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+
+    <!--jstree DOCUMENTACIÓN-->
+    <script src="js/plugin/jsTree-3.2.1/jstree.min.js"></script>
 
     
     <script type="text/javascript">

@@ -3,19 +3,10 @@ clienteGeneral.js
 Funciones js par la página ClienteGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
+
 
 var dataClientes;
 var clienteId;
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
-
 
 function initForm() {
     var b;
@@ -99,61 +90,44 @@ function admData() {
 }
 
 function initTablaClientes() {
-    tablaCarro = $('#dt_cliente').dataTable({
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+    var buttonCommon = {
+        exportOptions: {
+            columns: ':visible'
+        }
+    };
+    tablaCarro = $('#dt_cliente').DataTable({
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {  }, buttonCommon, {
+                extend: 'excel',
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
+        columnDefs: [
+            {
+                targets: 19, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            }
+        ],
+       
         autoWidth: true,
         paging: true,
+        responsive: true,
         "pageLength": 100,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_cliente'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
+       
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -179,7 +153,7 @@ function initTablaClientes() {
             data: "activa",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-check'></i>";
-                if (data == 0) {
+                if (data == 0 || !data) {
                     html = "<i class='fa fa-ban'></i>";
                 }
                 return html;
@@ -202,16 +176,42 @@ function initTablaClientes() {
             data: "cuentaContable"
         },{
             data: "tipo"
-        }, {
+        },{
+            data: "nombreAgente"
+        },{
+            data: "tipoViaOfertasNombre"
+        },{
+            data: "direccionOfertas"
+            
+        },{
+              data: "codPostalOfertas"
+        },{
+             data: "poblacionOfertas"
+        },{
+             data: "provinciaOfertas"
+        },{
+            data: "numeroOfertas" 
+        },{
+            data: "puertaOfertas" 
+        },{
+            data: "emailOfertas" 
+        },
+         {
             data: "clienteId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteCliente(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' onclick='editCliente(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteCliente(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' onclick='editCliente(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
     });
+    //COLUMNAS NO VISIBLES POR DEFECTO
+    for( let i = 10; i <= 18;  i++) {
+        tablaCarro.column(i).visible(false);
+    }
+
+
 }
 
 function datosOK() {

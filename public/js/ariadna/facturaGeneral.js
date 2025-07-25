@@ -8,7 +8,7 @@ var facturaId;
 var usuario;
 var filtros = {};
 var cargaFacturas = false;
-var antDepartamentoId;
+var antDepartamentoId = 0;
 
 function initForm() {
     comprobarLogin();
@@ -71,7 +71,10 @@ function initForm() {
             if(this.value != antDepartamentoId) {
                 cargarFacturas2()();
             } else {
-                cargarFacturas2(f)();
+                setTimeout(function() {
+                    cargarFacturas2(f)();
+                }, 1000);
+                
             }
         } else {
             cargarFacturas2All()();
@@ -143,13 +146,18 @@ function compruebaFiltros(id) {
         if(filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
             if(id > 0) {
-                cargarFacturas2(id)();
+                setTimeout(function() {
+                    cargarFacturas2(id)();
+                }, 1000);
+               
             } else {
                 cargarFacturas2All()();
             }
         } else {
             $('#chkTodos').prop('checked', false);
-            cargarFacturas2(id)();
+            setTimeout(function() {
+                cargarFacturas2(id)();
+            }, 1000);
         }
        /*  if(id) {
             cargarFacturas2()(id);
@@ -159,7 +167,9 @@ function compruebaFiltros(id) {
         loadEmpresas(0);
         estableceFechaEjercicio();
         if(id) {
-            cargarFacturas2(id)();
+            setTimeout(function() {
+                cargarFacturas2(id)();
+            }, 1000);
         } else{
             cargarFacturas2()();
         }
@@ -173,7 +183,7 @@ function initTablaFacturas() {
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7) {
+                    if(column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -202,11 +212,17 @@ function initTablaFacturas() {
              });
         },
         "aoColumnDefs": [
-            { "sType": "date-uk", "aTargets": [5] },
+            { "sType": "date-uk", "aTargets": [6] },
         ],
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        columnDefs: [
+            {
+                targets: 13, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            }
+        ],
+        dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'f>>" +
+             "rt" +
+             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
         
         buttons: [
             'copy', 
@@ -267,6 +283,12 @@ function initTablaFacturas() {
         }, {
             data: "vNum"
         }, {
+            data: "nombreAgente",
+            render: function (data, type, row) {
+                if(!data || data =="") return "";
+                return data;
+            }
+        },{
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -332,8 +354,8 @@ function initTablaFacturas() {
     });
 
     // Hide some columns by default
-    tablaFacturas.columns(8).visible(false);
-    tablaFacturas.columns(10).visible(false);
+    tablaFacturas.columns(9).visible(false);
+    tablaFacturas.columns(11).visible(false);
 }
 
 function datosOK() {
@@ -440,10 +462,14 @@ function deleteFactura(id, departamentoId) {
         }
         if (ButtonPressed === "Descontabilizar factura") {
             var data = { facturaId: id };
-            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err) {
+            llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err, data) {
                 if (err) return;
                 $('#chkTodos').prop('checked',false);
-                mostrarMensajeFacturaDescontabilizada();
+                if(data.changedRows > 0) {
+                    mostrarMensajeFacturaDescontabilizada();
+                } else {
+                    mostrarMensajeFacturaNoCambiada();
+                }
                 buscarFacturas()();
             });
         }
@@ -475,6 +501,11 @@ var mostrarMensajeFacturaBorrada = function () {
     var mens = "La factura se ha borrado correctamente.";
     mensNormal(mens);
 }
+
+var mostrarMensajeFacturaNoCambiada = function () {
+    var mens = "La factura NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}  
 
 function editFactura(id) {
     // hay que abrir la página de detalle de factura
@@ -568,7 +599,7 @@ function cargarFacturas2(id) {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/" + id,
+                url: myconfig.apiUrl + "/api/facturas/agente/" + id,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),

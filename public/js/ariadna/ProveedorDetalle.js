@@ -3,6 +3,7 @@ proveedorDetalle.js
 Funciones js par la página ProveedorDetalle.html
 ---------------------------------------------------------------------------*/
 var proId = 0;
+var cmd = "";
 
 
 var numDigitos = 0; // número de digitos de cuenta contable
@@ -15,19 +16,10 @@ var antNif = ""//recoge el valor que tiene el nif al cargar la página
 var usuario;
 var numfactu = 0;
 var dataUsuarios;
+var dataindices;
 var usuarioEnEdicion = false;
-
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
-
-
+var indiceEnEdicion = false;
+var tablaFacturas;
 
 
 datePickerSpanish(); // see comun.js
@@ -42,8 +34,16 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
-    $("#btnAceptar").click(aceptar());
+    $("#btnAceptar").click(function() {
+        aceptar(true)();
+    });
+    
+    $("#btnAceptar2").click(function() {
+        aceptar(false)();
+    });
+    
     $("#btnSalir").click(salir());
+    $('#btnBuscar').click(buscarFacturasFecha());
    
 
     $('#frmProveedor').submit(function () {
@@ -54,6 +54,34 @@ function initForm() {
         return false;
     });
     $("#modalUsuariosPush-form").submit(function () {
+        return false;
+    });
+    $("#modalIndicesCorrectores-form").submit(function () {
+        return false;
+    });
+
+    $("#creacionCarpetas-form").submit(function () {
+        return false;
+    });
+
+    $("#creacionSubcarpetas-form").submit(function () {
+        return false;
+    });
+
+
+    $("#frmDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmloadDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmIndices").submit(function () {
+        return false;
+    });
+
+    $("#frmBuscar").submit(function () {
         return false;
     });
 
@@ -70,6 +98,8 @@ function initForm() {
     loadFormasPago();
     $("#cmbTiposProfesional").select2(select2Spanish());
     loadTiposProfesionales();
+    $("#cmbTiposProfesionalIndice").select2(select2Spanish());
+    //loadTiposProfesionalesIndice();
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
@@ -151,8 +181,34 @@ function initForm() {
         compruebaCodigoProveedor();
     });
 
+    $('#btnNuevaCarpeta').show();
+    if(!usuario.puedeEditar) {
+        $('#btnNuevaCarpeta').hide();
+    } 
+
     initTablaFacturas();
     initTablaUsuariosPush();
+    initArbolDocumentacion();
+    initTablaindicesCorrectores();
+
+      //abrir en pestaña de facturas de proveedores
+      if (gup('doc') != "") {
+        $('.nav-tabs a[href="#s2"]').tab('show');
+    } 
+
+       //validacion de fecha mayor que fecha
+       $.validator.addMethod("greaterThan2",
+       function (value, element, params) {
+           var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+           var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+           if (!/Invalid|NaN/.test(new Date(fv))) {
+               return new Date(fv) >= new Date(fp);
+           } else {
+               // esto es debido a que permitimos que la segunda fecha nula
+               return true;
+           }
+       }, 'La fecha final debe ser mayor que la inicial.');
+   
 
     // autosalto en IBAN
     $(function () {
@@ -218,7 +274,55 @@ function initForm() {
             return true;
         }
     }, 'La fecha de alta debe ser menor que la fecha de baja.');
-//
+    //
+
+    $.validator.addMethod("numberGreaterThan",
+    function (value, element, params) {
+        var fv = parseFloat(value);
+        var fp = parseFloat($(params).val());
+        if (!/Invalid|NaN/.test(new Date(fv))) {
+            return fv > fp;
+        } 
+    }, 'El máximo tiene que ser mayor que el mínimo.');
+
+    
+    // 7 bind to events triggered on the tree
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
+            var node = $(e.target).closest('.jstree-node');
+            var selectedNodeId = node.attr('id');
+            if (e.which === 1) {
+                var jsTree = $.jstree.reference(e.target);
+                var originalNode = jsTree.get_node(node);
+                if(!originalNode.data.folder)  {
+                    var url = originalNode.original.location;
+                    window.open(url, '_blank');
+                }
+            }
+    });
+    // 8 interact with the tree - either way is OK
+    $('#demo').on('click', function () {
+      $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+      $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+      $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+    });
+
+    //sublineas de la tabla indices_correctores
+    $('#dt_indices').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaIndices.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(formatDataIndices(row.data())).show();
+            tr.addClass('shown');
+        }
+    });
+
+  
 
     // obtener el número de digitos de la contabilidad
     // para controlar la cuenta contable.
@@ -246,36 +350,16 @@ function initForm() {
                     success: function (data, status) {
                         // hay que mostrarlo en la zona de datos
                         loadData(data);
+                        loadFacturasDelProveedor(proId);
+                        loadUsuariosPush(proId);
+                        compruebaAnticipos(proId);
+                        loadIndicesCorrectores(proId);
                     },
                     error: function (err) {
                         mensErrorAjax(err);
                         // si hay algo más que hacer lo haremos aquí.
                     }
                 });
-        
-                // contador de código
-               /*  $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor",
-                    dataType: "json",
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
-                        
-                        codigoSugerido = data.codigo;//guardamos el codigo sugerido para poder usarlo si se cambia 
-                                                    //el codigo y resulta que ya está asignado
-        
-                    
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                        // si hay algo más que hacer lo haremos aquí.
-                    }
-                }); */
-        
-                loadFacturasDelProveedor(proId);
-                loadUsuariosPush(proId);
-                compruebaAnticipos(proId);
             } else {
                 // se trata de un alta ponemos el id a cero para indicarlo.
                 vm.proveedorId(0);
@@ -360,6 +444,8 @@ function admData() {
     self.codigoOriginal = ko.observable();
     self.observaciones = ko.observable();
     self.emitirFacturas = ko.observable();
+    self.cerTitularidad = ko.observable();
+    self.cerFormativoSalud = ko.observable();
     self.activa = ko.observable();
     //DATOS DE LA FIANZA
     self.fianza = ko.observable('0.00');
@@ -446,6 +532,20 @@ function admData() {
     self.nombrePush = ko.observable();
     self.loginPush = ko.observable();
     self.passwordPush = ko.observable();
+
+    //INDICES CORRECTORES
+    self.indiceCorrectorId = ko.observable();
+    self.nombreIndice = ko.observable();
+    self.minimo = ko.observable();
+    self.maximo = ko.observable();
+    self.porcentajeDescuento = ko.observable();
+    //COMBO PROFESIONES INDICE CORRECTOR
+    //
+    self.stipoProfesionalIndiceId = ko.observable();
+    //
+    self.posiblesTiposProfesionalIndice = ko.observableArray([]);
+    self.elegidosTiposProfesionalIndice = ko.observableArray([]);
+
     
     //RECURSO PREVNTIVO
     self.nombreRp = ko.observable();
@@ -453,6 +553,7 @@ function admData() {
     self.direccionRp = ko.observable();
     self.poblacionRp = ko.observable();
     self.categoriaProfesional = ko.observable();
+    self.nivelFormativoSalud = ko.observable();
     self.codPostalRp = ko.observable();
     self.provinciaRp = ko.observable();
     //
@@ -474,8 +575,17 @@ function admData() {
     //
     self.posiblesTiposViaRepresentante = ko.observableArray([]);
     self.elegidosTiposViaRepresentante = ko.observableArray([]);
-    
-  
+
+    //CARPETAS  Y DOCUMENTOS
+    self.carpetaNombre = ko.observable();
+    self.subCarpetaNombre = ko.observable();
+    self.documNombre = ko.observable();
+    //
+    self.files = ko.observable();
+
+    //
+    self.desdeFecha = ko.observable();
+    self.hastaFecha = ko.observable();
 }
 
 function loadData(data) {
@@ -509,6 +619,8 @@ function loadData(data) {
     vm.observaciones(data.observaciones);
     vm.paisId(data.paisId);
     vm.emitirFacturas(data.emitirFacturas);
+    vm.cerTitularidad(data.cerTitularidad);
+    vm.cerFormativoSalud(data.cerFormativoSalud)
     vm.activa(data.activa);
     //recurso preventivo
     vm.nombreRp(data.nombreRp);
@@ -518,6 +630,7 @@ function loadData(data) {
     vm.codPostalRp(data.codPostalRp);
     vm.provinciaRp(data.provinciaRp);
     vm.categoriaProfesional(data.categoriaProfesional);
+    vm.nivelFormativoSalud(data.nivelFormativoSalud);
     //representante
     vm.nombreRepresentante(data.nombreRepresentante);;
     vm.dniRepresentante(data.dniRepresentante);
@@ -556,6 +669,8 @@ function loadData(data) {
     buscaDepartamentos();
     buscaProfesiones();
     //loadDepartamentos(data.departamentoId)
+
+    cargaTablaDocumentacion();
 }
 
 function obtenInicioCuenta() {
@@ -684,7 +799,7 @@ function datosOK() {
     return $('#frmProveedor').valid();
 }
 
-function aceptar() {
+function aceptar(salir) {
     var mf = function () {
         if (!datosOK()) return;
         if(!vm.fianza() || vm.fianza() == '') vm.fianza('0.00'); 
@@ -734,6 +849,8 @@ function aceptar() {
                 "observaciones": vm.observaciones(),
                 "paisId": vm.spaisId(),
                 "emitirFacturas": vm.emitirFacturas(),
+                "cerTitularidad": vm.cerTitularidad(),
+                "cerFormativoSalud": vm.cerFormativoSalud(),
                 "empresaId": vm.sempresaId(),
                 "nombreRp": vm.nombreRp(),
                 "dniRp": vm.dniRp(),
@@ -743,6 +860,7 @@ function aceptar() {
                 "codPostalRp": vm.codPostalRp(),
                 "provinciaRp": vm.provinciaRp(),
                 "categoriaProfesional": vm.categoriaProfesional(),
+                "nivelFormativoSalud": vm.nivelFormativoSalud(),
                 "nombreRepresentante": vm.nombreRepresentante(),
                 "dniRepresentante": vm.dniRepresentante(),
                 "nombreRepresentante": vm.nombreRepresentante(),
@@ -760,45 +878,40 @@ function aceptar() {
                 "profesiones": vm.elegidosTiposProfesional()
             }
         };
-        if (proId == 0) {
-            $.ajax({
-                type: "POST",
-                url: myconfig.apiUrl + "/api/proveedores",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "ProveedoresGeneral.html?ProveedorId=" + vm.proveedorId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        } else {
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/proveedores/" + proId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    // hay que mostrarlo en la zona de datos
-                    loadData(data);
-                    // Nos volvemos al general
-                    var url = "ProveedoresGeneral.html?ProveedorId=" + vm.proveedorId();
-                    window.open(url, '_self');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+
+        var verb = "POST";
+        var url =   myconfig.apiUrl + "/api/proveedores";
+        var returnUrl = "ProveedoresGeneral.html?cmd=nuevo&ProveedorId=";
+
+        // caso modificación
+        if (proId != 0) {
+            verb = "PUT";
+            url =  myconfig.apiUrl + "/api/proveedores/" + proId;
+            "ProveedoresGeneral.html?ProveedorId=" + proId;
         }
+        $.ajax({
+            type: verb,
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                if(salir) {
+                    window.open(returnUrl, '_self');
+                } else {
+                    if(verb == 'POST') {
+                        returnUrl =  "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
+                        window.open(returnUrl, '_self');
+                        mensNormal('Proveedor guardado.');
+                    }
+                   
+                }
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
     };
     return mf;
 }
@@ -1003,6 +1116,33 @@ function loadTiposProfesionales(tiposProfesionalesIds) {
 }
 
 
+function loadTiposProfesionalesIndice(tiposProfesionalesIds) {
+    $.ajax({
+        type: "GET",
+        url: "/api/proveedores/profesiones/asociadas/todas/" + vm.proveedorId(),//LAS PROFESIONES QUE TIENE ASIGNADAS EL PROVEEDOR SON LAS ELEGIBLES EN EL COMBO
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            var ids = [];
+            var tiposProfesionales  = data
+            vm.posiblesTiposProfesionalIndice(tiposProfesionales);
+            $("#cmbTiposProfesionalIndice").val([]).trigger('change');
+            if(tiposProfesionalesIds) {
+                vm.elegidosTiposProfesionalIndice(tiposProfesionalesIds);
+                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                    ids.push(tiposProfesionalesIds[i].tipoProfesionalId)
+                }
+                $("#cmbTiposProfesionalIndice").val(ids).trigger('change');
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
 
 function loadPaises(id) {
     llamadaAjax("GET", "/api/proveedores/recupera/cod/pais", null, function (err, data) {
@@ -1162,59 +1302,137 @@ function compruebaNifRepetido(nif) {
 
 //---- Solapa facturas
 function initTablaFacturas() {
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function ( data, row, column, node ) {
+                    // Strip $ from salary column to make it numeric
+                    if(column === 5 || column === 6 || column === 11) {
+                        //regresar = importe.toString().replace(/\./g,',');
+                        var dato = numeroDbf(data);
+                        console.log(dato);
+                        return dato;
+                    } else {
+                        if(column === 0 || column ===8) {
+                            return "";
+                        } else {
+                            return data;
+                        }
+                    }
+                }
+            }
+        }
+    };
     tablaFacturas = $('#dt_factura').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        bSort: true,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy', 
+            'csv', 
+            $.extend( true, {}, buttonCommon, {
+                extend: 'excel'
+            } ), 
+            {
+               
+                extend: 'pdf',
+                orientation: 'landscape',
+                pageSize: 'LEGAL'
+            }, 
+            'print'
+        ],
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [
-                {
-                    "sExtends": "pdf",
-                    "sTitle": "Facturas Seleccionadas",
-                    "sPdfMessage": "proasistencia PDF Export",
-                    "sPdfSize": "A4",
-                    "sPdfOrientation": "landscape",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "copy",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "csv",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "xls",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
-                },
-                {
-                    "sExtends": "print",
-                    "sMessage": "Facturas filtradas <i>(pulse Esc para cerrar)</i>",
-                    "oSelectorOpts": { filter: 'applied', order: 'current' }
+        columnDefs: [
+           
+            { 
+                "type": "datetime-moment",
+                "targets": [3, 4],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
                 }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
-        autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
             }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
+        ],
+        
+        autoWidth: true,
+        
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            // Total over all pages
+            total = api
+                .column( 5 )
+                .data()
+                .reduce( function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0 );
+
+              
+            
+
+            ///////
+
+             // Total over all pages
+             total2 = api
+             .column( 6 )
+             .data()
+             .reduce( function (a, b) {
+                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+             }, 0 );
+
+             // Total over all pages
+              total3 = api
+              .column( 7 )
+              .data()
+              .reduce( function (a, b) {
+                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+              }, 0 );
+
+
+           
+
+
+            // Update footer
+            $( api.columns(5).footer() ).html(
+                numeral(total).format('0,0.00')
+            );
+
+            $( api.columns(6).footer() ).html(
+                numeral(total2).format('0,0.00')
+            );
+
+            $( api.columns(7).footer() ).html(
+                numeral(total3).format('0,0.00')
+            ); 
+
+
+            //////
+
+            
         },
         language: {
             processing: "Procesando...",
@@ -1251,14 +1469,28 @@ function initTablaFacturas() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
+            data: "fecha"
+            
+        },  {
+            data: "fecha_recepcion"
+        }, {
+            data: "total",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
+                var string = numeral(data).format('0,0.00');
+                return string;
             }
         }, {
-            data: "total"
+            data: "totalConIva",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
         }, {
-            data: "totalConIva"
+            data: "importeRetencion",
+            render: function (data, type, row) {
+                var string = numeral(data).format('0,0.00');
+                return string;
+            }
         },  {
             data: "vFPago"
         }, {
@@ -1271,6 +1503,22 @@ function initTablaFacturas() {
                 return html;
             }
         }]
+    });
+
+     //function sort by date
+     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function ( a ) {
+            var ukDatea = a.split('/');
+            return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+        },
+        
+        "date-uk-asc": function ( a, b ) {
+            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+        },
+        
+        "date-uk-desc": function ( a, b ) {
+            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+        }
     });
 
     // Apply the filter
@@ -1306,9 +1554,7 @@ function loadTablaFacturas(data) {
 }
 
 function editFactura(id) {
-    // hay que abrir la página de detalle de prefactura
-    // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?facproveId=" + id;
+    var url = "FacturaProveedorDetalle.html?facproveId=" + id + '&desdeProveedor=true';
     window.open(url, '_new');
 }
 
@@ -1401,72 +1647,14 @@ function compruebaAnticipos(id) {
 function initTablaUsuariosPush() {
     tablaSeries = $('#dt_usuarios').DataTable({
         bSort: false,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
         "t" +
         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "oTableTools": {
-            "aButtons": [{
-                "sExtends": "pdf",
-                "sTitle": "Prefacturas Seleccionadas",
-                "sPdfMessage": "proasistencia PDF Export",
-                "sPdfSize": "A4",
-                "sPdfOrientation": "landscape",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "copy",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "csv",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "xls",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            },
-            {
-                "sExtends": "print",
-                "sMessage": "Prefacturas filtradas <i>(pulse Esc para cerrar)</i>",
-                "oSelectorOpts": {
-                    filter: 'applied',
-                    order: 'current'
-                }
-            }
-            ],
-            "sSwfPath": "js/plugin/datatables/swf/copy_csv_xls_pdf.swf"
-        },
+       
         autoWidth: true,
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_usuarios'), breakpointDefinition);
-            }
-        },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
-        },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -1508,7 +1696,6 @@ function initTablaUsuariosPush() {
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosPush(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editUsuariosPush(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -1747,5 +1934,819 @@ function datosOKUsuariosPush() {
     var opciones = $("#modalUsuariosPush-form").validate().settings;
     return $('#modalUsuariosPush-form').valid();
 }
+
+//FUNCIONES REALCIONADAS CON LA DOCUMENTACIÓN
+
+function initArbolDocumentacion() {
+    $('#jstreeDocumentacion').jstree({ 'core' : 
+    {
+        'data' : [],
+    },
+    'check_callback' : true,
+    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+    "select_node": true,
+    'contextmenu': {
+        'items': function(node) {
+            var menuItems = {
+            // Define las opciones del menú contextual para cada nodo
+         
+            'Option 1': {
+                'label': 'Subir documento',
+                'action': function(a, b , c) {
+                  console.log(node.type);
+                  $('#modalUploadDoc').modal('show');
+                  preparaDatosArchivo(node.original);
+                }
+              },
+              'Option 2': {
+                'label': 'Crear Subcarpeta',
+                'action': function() {
+                   $('#modalpostSubcarpeta').modal('show');
+                   nuevaSubcarpeta(node.original);
+                }
+              },
+              'Option 3': {
+                  'label': 'Eliminar',
+                  'action': function() {
+                    if(!node.data.folder) {
+                        deleteDocumento(node.id);
+                    } else {
+                        deleteCarpeta(node.id);
+                    }
+                  }
+                }
+         
+            }
+            if (!node.data.folder) {
+                delete menuItems['Option 1'];
+                delete menuItems['Option 2'];
+            }
+            if(!usuario.puedeEditar) {
+                delete menuItems['Option 2'];
+                delete menuItems['Option 3'];
+            }
+            return menuItems;
+        }
+    }
+});
+
+}
+function cargaTablaDocumentacion(){
+    llamadaAjax("GET",  "/api/documentacion/proveedor/"  + vm.proveedorId(), null, function (err, data) {
+        if (err) return;
+        loadDocumentacionTree(data);
+         //if(data) loadTablaDocumentacion(data);
+    });
+}
+
+function loadDocumentacionTree(data) {
+    //if(data.length == 0) return;
+    var obj = data;
+    
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    $('#jstreeDocumentacion').jstree(true).refresh();
+
+    //$('#jstreeDocumentacion').jstree(true).redraw();
+
+    
+}
+
+function loadTablaDocumentacion(data) {
+    var dt = $('#dt_documentacion').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function formatData(d) {
+    if(!d.documentos) d.documentos = [];
+    var doc = d.documentos;
+    var html = "";
+        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+        var a;
+        doc.forEach(e => {
+            var l = e.key.split('/');
+            var index = l.length - 1;
+             a = '<div class="row" style="margin-bottom: 10px">' +
+                        '<section class="col col-md-5">' + 
+                            '<a href="' + e.location  + '" target="_blank">' +  l[index] +'</a>' +
+                        '</section>' +
+                        '<section class="col col-md-3 text-left">' +
+                            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                        '</section>' +
+                        '<section class="col col-md-4">' + '</section>' +
+                    '</div>' 
+            html += a;
+        });
+    if(!d.subcarpetas) d.subcarpetas = [];
+    var subC = d.subcarpetas;
+    html += '<h6 style="padding-left: 5px"> Subcarpetas</h6>'
+    var b;
+    subC.forEach(e => {
+         b = '<div class="row" style="margin-bottom: 10px">' +
+         '<section class="col col-md-3 text-left">' +
+                        '<button  class="dt-control"></button>' +
+                    '</section>' +
+                    '<section class="col col-md-5">' + 
+                        '<a href="" target="_blank">' + e.carpetaNombre +'</a>' +
+                    '</section>' +
+                    '<section class="col col-md-3 text-left">' +
+                        '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                    '</section>' +
+                    '<section class="col col-md-2">' + '</section>' +
+                '</div>' 
+        html += b;
+    });
+    return html;
+}
+
+ function formatFecha(f) {
+    if(f) return spanishDate(f);
+    return ' ';
+ }
+
+function preparaDatosArchivo(r) {
+    vm.files(null);
+    docName = r.carpetaNombre + "_" + vm.proveedorId() + "_" + vm.nombre();
+    carpetaId = r.carpetaId;
+    docName = docName.replace(/[\/]/g, "-");
+    console.log(docName);
+    carpeta = r.carpetaNombre;
+    key = r.carpetaNombre   + "/" +  docName;
+    carpetaTipo = r.tipo;
+    vm.documNombre(docName);
+}
+
+function limpiaDatosArchivo(r) {
+    docName = null
+    carpetaId = null
+    docName = null
+    carpeta = null
+    $('.progress-bar').text(parseInt((0)+'%'));
+    $('.progress-bar').width(parseInt((0)+'%'));
+}
+
+function nuevaCarpeta() {
+    vm.carpetaNombre(null);
+}
+
+
+function aceptarNuevaCarpeta() {
+        //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+        var a = vm.carpetaNombre();
+        a = a.trim();
+        a = a.replace(/[\/]/g, "-");
+        var data = 
+        {
+            carpeta: {
+                carpetaId: 0,
+                nombre: a,
+                tipo: "proveedor",
+                departamentoId: null
+            }
+        }
+
+        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+            if (err) return
+            $('#modalNuevaCarpeta').modal('hide');
+            mensNormal('Carpeta creada con exito');
+            cargaTablaDocumentacion();
+        });
+}
+
+function aceptarNuevaSubCarpeta() {
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a =  vm.subCarpetaNombre();
+    a = a.trim();
+    a = a.replace(/\//g, "-");
+    var n = subCarpeta + "/" + a;
+    var data = 
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: n,
+            tipo: carpetaTipo,
+            departamentoId: null,
+        }
+    }
+
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta/" + parent, data, function (err, data) {
+        if (err) return
+        $('#modalpostSubcarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
+}
+
+
+function nuevaSubcarpeta(r) {
+    vm.subCarpetaNombre(null);
+    subCarpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo
+    parent = r.carpetaId
+}
+
+
+function deleteDocumento(id) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var parametros = data;
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                var params = {
+                    Bucket: parametros.bucket_docum,
+                    Key: data.key
+            }
+    
+            //borramos el documento en s3
+            var s3 = new AWS.S3({ params });
+    
+            s3.deleteObject({}, (err, result) => {
+                if (err) mensError('Error al borrar el docuemnto');
+                //Actualizamos la tabla documentacion
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
+                    if (err) return;
+                    cargaTablaDocumentacion();
+                });
+            }); 
+            
+            }
+        });
+    })
+}
+
+function deleteCarpeta(id) {
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos y carpetas que contiene y no se podrá recuperar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            
+            llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+                if (err) return;
+                var parametros = data;
+                llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
+                    if (err) return mensError('Fallo al borrar la documentación en la base de datos');
+                    if(data2) {
+                        
+                    AWS.config.region = parametros.bucket_region_docum; // Región
+                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: parametros.identity_pool_docum,
+                    });
+                    var prefix = data2.nombre;
+                    var params = {
+                        Bucket: parametros.bucket_docum,
+                        Prefix: prefix,
+                        Delimeter: "/"
+                    }
+        
+                    var s3 = new AWS.S3({ params });
+                    s3.listObjectsV2({}, (err, result) => {
+                        if (err) mensError('Error de lectura en la nube');
+                        console.log(result);
+                        if(result.Contents.length > 0) {
+
+
+
+                    var objectKeys = []
+                    result.Contents.forEach(e => {
+                        objectKeys.push(e.Key);
+                    });
+
+                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                    const objects = objectKeys.map(key => ({ Key: key }));
+                    const deleteParams = {
+                    Bucket: parametros.bucket_docum,
+                    Delete: { Objects: objects }
+                    };
+
+                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                    s3.deleteObjects(deleteParams, function(err, data) {
+                        if (err) {
+                            mensError('Fallo al borrar la carpeta en la nube');
+                        } else {
+                            mensNormal('Carpeta eliminada con éxito');
+                            cargaTablaDocumentacion();
+                        }
+}                   );
+
+                        } else {
+                            mensAlerta('No se han encontrado archivos en la nube para borrar');
+                            cargaTablaDocumentacion();
+                        }
+                       
+                    }); 
+            
+                  
+                    
+                    } else {
+                        mensError('No se han encontrado carpetas para borrar');
+                        cargaTablaDocumentacion();
+                    }
+                }); 
+            })
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function aceptarSubirDocumentos() {
+    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    //buscamos los parámetros
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        parametros = data;
+        var files = $("#upload-input").get(0).files;
+        var arr = [];
+        if (!files.length) {
+            mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
+            return;
+        }
+        for(var i = 0; i< files.length; i++) {
+            var e = files[i];
+            var encontrado = false;
+            var id = 0;
+            var file = e;
+            var ext = file.name.split('.').pop().toLowerCase();
+            var blob = file.slice(0, file.size, file.type); 
+            var newFile = new File([blob], {type: file.type});
+            var nom = "";
+            nom = vm.documNombre()
+            if(files.length > 1) {
+                var s = parseInt(i)
+                s++
+                nom = nom + "-" + s + "." + ext;
+            } else {
+                nom = nom + "." + ext;
+            }
+            nom = nom.replace(/\//g, "-");
+            newFile.nom = nom;
+            var fileKey =  carpeta + "/" + nom
+            newFile.fileKey = fileKey;
+            newFile.repetido = false;
+            arr.push(newFile);
+        }
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    
+                    for(var j = 0; j < arr.length; j++) {
+                        if(n[index] == arr[j].nom) {
+                            encontrado = true;
+                            arr[j].repetido = true;
+                            arr[j].documentoId = d.documentoId;
+                            arr[j].repetido = true;
+                            break;
+                        } 
+                    }
+                }
+
+                if(encontrado) {
+                    var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(arr);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(arr);
+                }
+            } else {
+                uploadDocum(arr);
+            }
+        }); 
+
+    });
+    
+}
+
+function uploadDocum(arr) {
+    var index = 0;
+      
+        arr.forEach(e => {
+            var repetido = e.repetido;
+            var documentoId = e.documentoId;
+            var filekey = e.fileKey;
+            delete e.fileKey
+            delete e.documentoId;
+            delete e.repetido;
+            var nom = e.nom;
+            delete e.nom;
+
+            AWS.config.region = parametros.bucket_region_docum; // Región
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: parametros.identity_pool_docum,
+            });
+            var bucket = parametros.bucket_docum;
+            var params = {
+                Bucket: bucket,
+                Key: filekey,
+                IdentityPoolId: parametros.identity_pool_docum,
+                Body: e,
+                ACL: "public-read"
+            }
+            var ext = nom.split('.').pop().toLowerCase();
+            if(ext == "pdf") params.ContentType = 'application/pdf'
+            // Use S3 ManagedUpload class as it supports multipart uploads
+            var upload = new AWS.S3.ManagedUpload({
+                params: params
+            });
+            var promise = upload.on('httpUploadProgress', function(evt) {
+                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+              })
+              .promise();
+            promise.
+            then (
+                data => {
+                    if(data) {
+                        //CREAMOS EL REGISTRO EN LA TABLA documentacion
+                        var data = 
+                        {
+                            documentacion: {
+                                documentoId: 0,
+                                proveedorId: null,
+                                contratoId: null,
+                                parteId: null,
+                                carpetaId: carpetaId,
+                                proveedorId: vm.proveedorId(),
+                                location: data.Location,
+                                key: filekey
+                            }
+                        }
+                       
+    
+                        if(!repetido) {
+                            method = 'POST';
+                            url = "/api/documentacion";
+                        } else {
+                            data.documentacion.documentoId = e.documentoId;
+                            method = 'PUT';
+                            url = "/api/documentacion/" + documentoId;
+                        }
+        
+                        llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
+                            if (err) return mensError(err);
+                            index++
+                            if(index == arr.length) {
+                                $('#modalUploadDoc').modal('hide');
+                                mensNormal('Archivo subido con exito');
+                                limpiaDatosArchivo();
+                                cargaTablaDocumentacion();
+                            }
+                        });
+                    }
+                },
+                err =>{
+                    if (err) return mensError(err);
+                }
+            );        
+            });       
+}
+
+function buscarFacturasFecha() {
+    var mf = function () {
+        if (!datosOKFechas()) return;
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/facturasProveedores/recupera/facturas/proveedor/por/fecha/" + vm.proveedorId() + "/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data, status) {
+                //comprobamos si hay facturas a cero para mostrar mensaje de advertencia
+                loadTablaFacturas(data);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    };
+    return mf;
+}
+
+function datosOKFechas() {
+    // Segun se incorporen criterios de filtrado
+    // habrá que controlarlos aquí
+    $('#frmBuscar').validate({
+        rules: {
+            txtHastaFecha: {
+                greaterThan2: "#txtDesdeFecha"
+            }
+        },
+        // Messages for form validation
+        messages: {
+
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmBuscar').valid();
+}
+
+
+
+// --------------- Solapa de Indices correctores
+function initTablaindicesCorrectores() {
+    tablaIndices = $('#dt_indices').DataTable({
+        bSort: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
+        "t" +
+        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+       
+        autoWidth: true,
+        
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataindices,
+        columns: [{
+                
+            className: 'dt-control',
+            orderable: false,
+            data: null,
+            defaultContent: '',
+            //data:"carpetaId",
+        },{
+            data: "indiceCorrectorId",
+            render: function (data, type, row) {
+                var html = "<i class='fa fa-file-o'></i>";
+                if (data) {
+                    html = "<i class='fa fa-files-o'></i>";
+                }
+                return html;
+            }
+        },{
+            data: "nombre"
+        }, {
+            data: "minimo"
+        }, {
+            data: "maximo"
+        }, {
+            data: "porcentajeDescuento"
+        },{
+            data: "indiceCorrectorId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteIndiceCorrector(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success' onclick='editIndiceCorrector(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+
+}
+
+
+function loadIndicesCorrectores(proveedorId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/" + proveedorId, null, function (err, data) {
+        if (err) return;
+        loadTablaIndicesCorrectores(data);
+    });
+}
+
+function loadTablaIndicesCorrectores(data) {
+    var dt = $('#dt_indices').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function guardarIndiceCorrector() {
+    var data = {
+        indiceCorrector: {
+            nombre: vm.nombreIndice(),
+            proveedorId: vm.proveedorId(),
+            minimo: vm.minimo(),
+            maximo: vm.maximo(),
+            porcentajeDescuento: vm.porcentajeDescuento(),
+            profesiones: vm.elegidosTiposProfesionalIndice()
+        }
+    }
+
+    if (!indiceEnEdicion) {
+        if(!datosOKIndicesCorrectores()) return;
+        $.ajax({
+            type: "POST",
+            url: myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                loadIndicesCorrectores(vm.proveedorId());
+                $('#modalIndicesCorrectores').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    } else {
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/" + vm.indiceCorrectorId(),
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                // hay que mostrarlo en la zona de datos
+                indiceEnEdicion = false;
+                empSerieId = 0;
+                loadIndicesCorrectores(vm.proveedorId());
+                $('#modalIndicesCorrectores').modal('hide');
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+    }
+}
+
+function deleteIndiceCorrector(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/proveedores/indices-correctores/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: null,
+                success: function (data, status) {
+                    loadIndicesCorrectores(vm.proveedorId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            limpiaModalIndicesCorrectores();
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function limpiaModalIndicesCorrectores() {
+   vm.indiceCorrectorId(null);
+   vm.nombreIndice(null);
+   vm.minimo(null);
+   vm.maximo(null);
+   vm.porcentajeDescuento(null);
+   vm.elegidosTiposProfesionalIndice([]);
+   //vm.posiblesTiposProfesionalIndice([]);
+}
+
+function editIndiceCorrector(id) {
+    indiceEnEdicion = true;
+    cargaModalIndicesCorrectores(id);
+}
+
+function cargaModalIndicesCorrectores(id) {
+    limpiaModalIndicesCorrectores();
+    if(id) {//ES UN PUT
+        llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/indices-correctores/" + id, null, function (err, data) {
+            if (err) return;
+           vm.indiceCorrectorId(data.indiceCorrectorId);
+           vm.nombreIndice(data.nombre);
+           vm.minimo(data.minimo);
+           vm.maximo(data.maximo);
+           vm.porcentajeDescuento(data.porcentajeDescuento);
+           loadTiposProfesionalesIndice(data.lin);
+           $('#modalIndicesCorrectores').modal('show');
+           //cargamos los tipos profesionales asociados al indice
+          /*  llamadaAjax("GET", myconfig.apiUrl + " /api/tipos_profesional/indice/" + id, null, function (err, data2) {
+            if (err) return;
+             loadTiposProfesionalesIndice(data2);
+            $('#modalIndicesCorrectores').modal('show');
+            }); */
+        });
+    } else {//ES UN POST
+        indiceEnEdicion = false;
+        loadTiposProfesionalesIndice(null);
+    }
+}
+
+function datosOKIndicesCorrectores() {
+    $('#modalIndicesCorrectores-form').validate({
+        rules: {
+            txtNombreIndice: {
+                required: true
+            },
+            txtMinimo: {
+                required:true,
+            },
+            txtMaximo: {
+                required: true,
+                numberGreaterThan: "#txtMinimo" 
+            },
+            txtPorcentajeDescuento: {
+                required:true,
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtNombreIndice: {
+                required: "Debe elegir un nombre"
+            },
+            txtMinimo: {
+                required: "Debe elegir un mínimo"
+            },
+            txtMaximo: {
+                required: "Debe elegir un máximo"
+            },
+            txtPorcentajeDescuento: {
+                required: "Debe elegir un porcentaje de descuento",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#modalIndicesCorrectores-form').valid();
+}
+
+
+function formatDataIndices(d) {
+    if(!d.lin) d.lin = [];
+    var lin = d.lin;
+    var html = "";
+    html = '<h5> PROFESIONES ASOCIADAS</h5>'
+    html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
+    lin.forEach(e => {
+         html += 
+         '<tr>' + 
+            '<td>'  +
+                e.nombreProfesion +
+            '</td>' +
+        '</tr>'
+       
+    });
+    html +=  '</table>'
+    return html
+}
+
 
 

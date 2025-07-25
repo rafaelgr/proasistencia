@@ -3,6 +3,7 @@ textoPredeterminadoDetalle.js
 Funciones js par la página TextoPredeterminadoDetalle.html
 ---------------------------------------------------------------------------*/
 var adminId = 0;
+var usuario;
 
 var posiblesNiveles = [{
     id: 0,
@@ -17,6 +18,7 @@ var posiblesNiveles = [{
 
 function initForm() {
     comprobarLogin();
+    usuario = recuperarUsuario();
     // de smart admin
     pageSetUp();
     // 
@@ -29,6 +31,15 @@ function initForm() {
     $("#frmTextoPredeterminado").submit(function() {
         return false;
     });
+
+    $("#cmbDepartamentos").select2(select2Spanish());
+    loadDep();
+     // select2 things
+     $("#cmbEmpresas").select2(select2Spanish());
+     loadEmpresas();
+
+     $("#cmbTipostexto").select2(select2Spanish());
+     loadTipos();
 
     adminId = gup('TextoPredeterminadoId');
     if (adminId != 0) {
@@ -62,12 +73,36 @@ function admData() {
     self.textoPredeterminadoId = ko.observable();
     self.texto = ko.observable();
     self.abrev = ko.observable();
+
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+
+     //
+     self.empresaId = ko.observable();
+     self.sempresaId = ko.observable();
+     //
+     self.posiblesEmpresas = ko.observableArray([]);
+     self.elegidosEmpresas = ko.observableArray([]);
+
+     //
+     self.tipoTextoId = ko.observable();
+     self.stipoTextoId = ko.observable();
+     //
+     self.posiblesTiposTexto = ko.observableArray([]);
+     self.elegidosTiposTexto = ko.observableArray([]);
 }
 
 function loadData(data) {
     vm.textoPredeterminadoId(data.textoPredeterminadoId);
     vm.texto(data.texto);
     vm.abrev(data.abrev);
+    loadDep(data.departamentoId);
+    loadEmpresas(data.empresaId);
+    loadTipos(data.tipoTextoId)
 }
 
 function datosOK() {
@@ -112,7 +147,11 @@ function aceptar() {
             textoPredeterminado: {
                 "textoPredeterminadoId": vm.textoPredeterminadoId(),
                 "texto": vm.texto(),
-                "abrev": vm.abrev()
+                "abrev": vm.abrev(),
+                "departamentoId": vm.sdepartamentoId(),
+                "empresaId": vm.sempresaId(),
+                "tipoTextoId": vm.stipoTextoId()
+
             }
         };
         if (adminId == 0) {
@@ -164,4 +203,45 @@ function salir() {
         window.open(url, '_self');
     }
     return mf;
+}
+
+
+function loadDep(departamentoId) {
+    llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
+        if (err) return;
+        var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
+        vm.posiblesDepartamentos(departamentos);
+        if(departamentoId) {
+            vm.departamentoId(departamentoId);
+            vm.sdepartamentoId(departamentoId);
+        }
+        $("#cmbDepartamentos").val([departamentoId]).trigger('change');
+    });
+}
+
+
+function loadEmpresas(empresaId) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        if(empresaId) {
+            vm.empresaId(empresaId);
+            vm.sempresaId(empresaId);
+        }
+        $("#cmbEmpresas").val([empresaId]).trigger('change');
+    });
+}
+
+function loadTipos(tipoTextoId) {
+    llamadaAjax("GET", "/api/tipos_texto", null, function (err, data) {
+        if (err) return;
+        var tipos_texto = [{ tipoTextoId: 0, nombre: "" }].concat(data);
+        vm.posiblesTiposTexto(tipos_texto);
+        if(tipoTextoId) {
+            vm.tipoTextoId(tipoTextoId);
+            vm.stipoTextoId(tipoTextoId);
+        }
+        $("#cmbTipostexto").val([tipoTextoId]).trigger('change');
+    });
 }

@@ -15,6 +15,7 @@ var init = 0;
 var visadas;
 var registros;
 var usuario;
+var anticipos;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -38,32 +39,53 @@ function initForm() {
     
   
     visadas = gup('visadas');
-
+    
     if(visadas == 1) {
         $("#chkVisadas").prop( "checked", true );
+        $('#btnAlta').hide();
+        $('#checkMain').hide();
       }else {
         $("#chkVisadas").prop( "checked", false );
+        $('#btnAlta').show();
+        $('#checkMain').show();
       }
-    $('#btnPrint').click(printGeneral);
+   
+    $('#btnAlta').click(visarAnticipos);
+    $('#btnBuscar').click(buscarVisadas)
    
     $('#frmBuscar').submit(function () {
         return false
     });
 
+        //Evento de marcar/desmarcar todos los checks
+        $('#checkMain').click(
+            function(e){
+                if($('#checkMain').prop('checked')) {
+                    $('.checkAll').prop('checked', true);
+                } else {
+                    $('.checkAll').prop('checked', false);
+                }
+            }
+        );
 
 
+
+    
     $('#chkVisadas').change(function () {
         var visada = 0;
-        checkCerrados =  this;
-        if (this.checked) {
+        $('#btnAlta').show();
+        $('#checkMain').show()
+        if(this.checked) { 
+            $('.ocultar').show();
             visada = 1;
-        } 
-        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
-        llamadaAjax("GET", url, null, function(err, data){
-            if (err) return;
-            registros = data.length;
-            loadTablaAnticipos(data);
-        });
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
+        }else {
+            estableceFecha();
+            loadProveedores()
+            $('.ocultar').hide();
+           buscarAnticipos()();
+        }
     });
 
     //Evento asociadpo al checkbox
@@ -75,12 +97,16 @@ function initForm() {
         }
     });
 
+    $("#cmbProveedores").select2(select2Spanish());
+
+    $('.ocultar').hide();
+
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        buscarAnticipos()();
+        if(!$('#chkVisadas').prop('checked')) buscarAnticipos()();
     });
 
     vm = new admData();
@@ -90,6 +116,8 @@ function initForm() {
         if(err) return;
         initTablaAnticipos();
         buscarAnticipos()();
+        loadProveedores();
+        estableceFecha();
         // comprobamos parámetros
         antproveId = gup('AnticipoId');
     });
@@ -103,6 +131,15 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+     //
+     self.dFecha = ko.observable();
+     self.hFecha = ko.observable();
+     //
+     self.proveedorId = ko.observable();
+     self.sproveedorId = ko.observable();
+     //
+     self.posiblesProveedores = ko.observableArray([]);
+     self.elegidosProveedores = ko.observableArray([]);
     
 } 
 
@@ -112,6 +149,39 @@ function initTablaAnticipos() {
         autoWidth: true,
         paging: false,
         "bDestroy": true,
+        "columnDefs": [ 
+            {
+                "targets": 0,
+                "width": "20%",
+                "orderable": false
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [6],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+         ],
+         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+         "t" +
+         "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+         "oColVis": {
+             "buttonText": "Mostrar / ocultar columnas"
+         },
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -150,7 +220,7 @@ function initTablaAnticipos() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -159,18 +229,25 @@ function initTablaAnticipos() {
             data: "emisorNombre"
         }, {
             data: "receptorNombre"
-        }, {
+        },
+        {
+            data: "ref",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+        },{
+            data: "direccionTrabajo",
+            render: function (data, type, row) {
+                if(row.num > 1) return "Consultar manualmente";
+                return data
+            }
+
+        },
+         {
             data: "vNum"
         }, {
             data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "fecha_recepcion",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
         },{
             data: "total",
             render: function (data, type, row) {
@@ -198,6 +275,17 @@ function initTablaAnticipos() {
     });
 }
 
+function loadProveedores() {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        vm.proveedorId(0);
+        vm.sproveedorId(0);
+        $("#cmbProveedores").val([0]).trigger('change');
+    });
+}
+
 function initModal(antproveId) {
     init++
 
@@ -215,7 +303,9 @@ function initModal(antproveId) {
 }
 
 function loadTablaAnticipos(data) {
+    anticipos = data;
     var dt = $('#dt_anticipo').dataTable();
+    $('#checkMain').prop('checked', false);//valor por defecto
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -227,8 +317,24 @@ function loadTablaAnticipos(data) {
         var field = "#chk" + v.antproveId;
         if (v.visada == 1) {
             $(field).attr('checked', true);
+            $(field).attr('disabled', true);
         }
+       /*  if(!$("#chkVisadas").prop( "checked" )) return;
         $(field).change(function () {
+            mensajeConfirmacion(this, v)
+        }); */
+    });
+}
+
+function mensajeConfirmacion(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa quitar la marca de visado?, el anticipo pasará a estar pendiente de visar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
             var quantity = 0;
             var data = {
                 antprove: {
@@ -239,7 +345,7 @@ function loadTablaAnticipos(data) {
                     visada: 0
                 }
             };
-            if (this.checked) {
+            if (t.checked) {
                 data.antprove.visada = 1;
             }
             var url = "", type = "";
@@ -266,7 +372,11 @@ function loadTablaAnticipos(data) {
                     mensErrorAjax(err);
                 }
             });
-        });
+                    
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
     });
 }
 
@@ -274,10 +384,10 @@ function buscarAnticipos() {
     var mf = function () {
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
           }
           else {
-            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+            url = "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + 0 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
           }
         $.ajax({
             type: "GET",
@@ -514,6 +624,8 @@ function informePDF(data) {
     f_open_post("POST", myconfig.reportUrl + "/api/report", data);
 }
 
+
+
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
     form.action = url;
@@ -555,4 +667,100 @@ var printGeneral = function () {
          var url = "InfVisadosGeneral.html?visadas=" + vis;
          window.open(url, '_blank');
     }
+}
+
+
+function visarAnticipos() {
+    mensajeConfirmacionVisar();
+    
+}
+
+function mensajeConfirmacionVisar(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa visar los anticipos seleccionados?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var contador = 0;
+            anticipos.forEach(function (v) {
+                contador++;
+                var field = "#chk" + v.antproveId;
+                if (!$(field).prop('checked'))  return;
+                    var data = {
+                        antprove: {
+                            antproveId: v.antproveId,
+                            empresaId: v.empresaId,
+                            proveedorId: v.proveedorId,
+                            fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                            visada: 1
+                        }
+                    };
+                   
+                    var url = "", type = "";
+                    // updating record
+                    var type = "PUT";
+                    var url = sprintf('%s/api/anticiposProveedores/visadas/modificar/%s', myconfig.apiUrl, v.antproveId);
+                    var data2 = [];
+                    data2.push(data);
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(data2),
+                        success: function (data, status) {
+                            if(contador == anticipos.length)     buscarAnticipos()();
+                            
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                        }
+                    });
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+function buscarVisadas() {
+    var visada = 0;
+    var dFecha = 0;
+    var hFecha = 0;
+    var proId = 0;
+        $('#btnAlta').show();
+        $('#checkMain').show()
+        if ($('#chkVisadas').prop('checked')) {
+            visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
+            dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if(vm.hFecha()) {
+                hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            } 
+            proId = vm.sproveedorId();
+        } 
+        var url = myconfig.apiUrl + "/api/anticiposProveedores/visadas/anticipos-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha +  "/" + proId;
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            registros = data.length;
+            loadTablaAnticipos(data);
+        });
+ }
+
+
+function estableceFecha() {
+    // Restar 1 año a la fecha actual
+    var fechaInicio;
+    var fActual = new Date();
+    var ano = fActual.getFullYear() - 1; // Resta 1 año a la fecha actual
+    var mes = fActual.getMonth();
+    var dia = fActual.getDay();
+
+    fechaInicio = moment(ano + "-" + mes + "-" + dia).format('DD/MM/YYYY');
+    vm.dFecha(fechaInicio);
+    vm.hFecha(null)
 }

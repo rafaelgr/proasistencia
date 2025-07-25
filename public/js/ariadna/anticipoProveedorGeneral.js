@@ -123,6 +123,32 @@ function initTablaAnticipos() {
             }, 
             'print'
         ],
+        columnDefs: [
+            {
+                targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [5],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -162,10 +188,7 @@ function initTablaAnticipos() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
+            data: "fecha"
         },{
             data: "importeServiciado",
             render: function (data, type, row) {
@@ -199,13 +222,13 @@ function initTablaAnticipos() {
         }]
     });
 
-    // Apply the filter
-    $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
-        tablaAnticipos
-            .column($(this).parent().index() + ':visible')
-            .search(this.value)
-            .draw();
-    });
+   // Apply the filter
+   $("#dt_anticipo thead th input[type=text]").on('keyup change', function () {
+    tablaAnticipos
+        .column($(this).parent().index() + ':visible')
+        .search(this.value)
+        .draw();
+});
 
     
 }
@@ -263,19 +286,20 @@ function deleteAnticipo(id) {
         contentType: "application/json",
         data: null,
         success: function (data, status) {
+            var mens = "¿Qué desea hacer con este registro?";
+            mens += "<ul>"
+            mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizado, con lo que puede ser contabilizado de nuevo</li>";
+            mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo.</li>";
+            mens += "</ul>"
             if(data.facproveId) {
-                mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
-            } else {
-                 mens = "¿Realmente desea borrar este registro?";
-            }
-            // mensaje de confirmación
-    
+                mens += " ¡¡¡¡ATENCION!!! Este registro tiene facturas asociadas.";
+            } 
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
-        buttons: '[Aceptar][Cancelar]'
+        buttons: '[Cancelar][Descontabilizar anticipo][Borrar anticipo]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
+        if (ButtonPressed === "Borrar anticipo") {
             var data = {
                 id: antproveId
             }
@@ -310,6 +334,19 @@ function deleteAnticipo(id) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
+            });
+        }
+        if (ButtonPressed === "Descontabilizar anticipo") {
+            var data = { facturaId: id };
+            llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposProveedores/descontabilizar/" + id, null, function (err, data) {
+                if (err) return;
+                $('#chkTodos').prop('checked',false);
+                if(data.changedRows > 0) {
+                    mostrarMensajeAnticipoDescontabilizado();
+                } else {
+                    mostrarMensajeAnticipoNoCambiado();
+                }
+                buscarFacturas()();
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -467,3 +504,15 @@ imprimirAnticipo = function () {
     var url = "InfAnticiposProveedores.html";
     window.open(url, '_blank');
 }
+
+var mostrarMensajeAnticipoDescontabilizado = function () {
+    var mens = "El anticipo se ha descontabilizado correctamente.";
+    mensNormal(mens);
+}
+
+
+
+var mostrarMensajeAnticipoNoCambiado = function () {
+    var mens = "El anticipo NO se ha descontabilizado, es posible que no estubise contabilizada.";
+    mensAlerta(mens);
+}   

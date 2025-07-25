@@ -1,4 +1,6 @@
 {
     "vsicons.presets.angular": false,
-    "debug.javascript.warnOnLongPrediction": false
+    "debug.javascript.warnOnLongPrediction": false,
+    "editor.cursorStyle": "line",
+    "editorCursor.foreground": "#FFFFFF"
 }

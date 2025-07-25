@@ -27,7 +27,7 @@
           <Components isList="true" count="2">
             <Text3 Ref="4" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.8,10,0.6</ClientRectangle>
+              <ClientRectangle>0,0.8,11,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,14.25,Regular,Point,False,0</Font>
@@ -130,7 +130,7 @@
             <Text10 Ref="11" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.4,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>23.6,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -148,7 +148,7 @@
             <Text14 Ref="12" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25,0,2.2,0.8</ClientRectangle>
+              <ClientRectangle>25.2,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -272,7 +272,7 @@
             <Text31 Ref="19" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;[0:0:0]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.6,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>21.6,0,1.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -322,7 +322,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -349,7 +349,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -376,7 +376,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -442,7 +442,6 @@
               <Name>Text1</Name>
               <Page isRef="2" />
               <Parent isRef="20" />
-              <ProcessingDuplicates>Hide</ProcessingDuplicates>
               <Text>{libPro.numeroFacturaProveedor}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
@@ -470,7 +469,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -518,7 +517,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -546,7 +545,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <Type>Expression</Type>
@@ -601,7 +600,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
@@ -620,33 +619,9 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text19>
-            <Text20 Ref="43" type="Text" isKey="true">
+            <Text21 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>20,0.2,1.6,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial Narrow,9,Bold,Point,False,0</Font>
-              <Guid>ed27cd7f96d04199b190ce6941e31493</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text20</Name>
-              <Page isRef="2" />
-              <Parent isRef="39" />
-              <Text>{Sum(DatalibPro,libPro.cuota)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="44" type="NumberFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text20>
-            <Text21 Ref="45" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>23.4,0.2,1.4,0.4</ClientRectangle>
+              <ClientRectangle>23.6,0.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
@@ -658,17 +633,17 @@
               <Parent isRef="39" />
               <Text>{Sum(DatalibPro,libPro.importeRetencion)}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="46" type="NumberFormat" isKey="true">
+              <TextFormat Ref="44" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
             </Text21>
-            <Text22 Ref="47" type="Text" isKey="true">
+            <Text22 Ref="45" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>25.2,0.2,2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -679,21 +654,21 @@
               <Name>Text22</Name>
               <Page isRef="2" />
               <Parent isRef="39" />
-              <Text>{(Sum(DatalibPro,libPro.basFact)+ Sum(DatalibPro, libPro.cuota)-Sum(DatalibPro,libPro.importeRetencion)+ Sum(DatalibPro, libPro.suplidos))}</Text>
+              <Text>{(Sum(DatalibPro,libPro.basFact)+ libPro.sumCuota-Sum(DatalibPro,libPro.importeRetencion)+ Sum(DatalibPro, libPro.suplidos))}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="48" type="NumberFormat" isKey="true">
+              <TextFormat Ref="46" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text22>
-            <Text34 Ref="49" type="Text" isKey="true">
+            <Text34 Ref="47" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>21.6,0.2,1.6,0.4</ClientRectangle>
+              <ClientRectangle>21.6,0.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial Narrow,9,Bold,Point,False,0</Font>
@@ -705,16 +680,39 @@
               <Parent isRef="39" />
               <Text>{Sum(DatalibPro,libPro.suplidos)}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="48" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
+              </TextFormat>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text34>
+            <Text36 Ref="49" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>19.8,0.2,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial Narrow,9,Bold,Point,False,0</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text36</Name>
+              <Page isRef="2" />
+              <Parent isRef="39" />
+              <Text>{libPro.sumCuota}</Text>
+              <TextBrush>Black</TextBrush>
               <TextFormat Ref="50" type="NumberFormat" isKey="true">
                 <DecimalDigits>2</DecimalDigits>
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
-              <Type>Totals</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Text34>
+            </Text36>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -868,7 +866,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
             </Text27>
@@ -892,7 +890,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Expression</Type>
             </Text28>
@@ -917,7 +915,7 @@
                 <DecimalSeparator>,</DecimalSeparator>
                 <GroupSeparator>.</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, NegativePattern</State>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
               </TextFormat>
               <Type>Totals</Type>
             </Text30>
@@ -985,10 +983,10 @@
   </ReferencedAssemblies>
   <ReportAlias>FacturasProveedores</ReportAlias>
   <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>2/1/2023 9:50:52 AM</ReportChanged>
+  <ReportChanged>7/15/2024 1:23:51 PM</ReportChanged>
   <ReportCreated>5/9/2017 1:29:38 PM</ReportCreated>
-  <ReportFile>C:\node_apps\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
-  <ReportGuid>514c4e07822d45ae87526875151e55df</ReportGuid>
+  <ReportFile>E:\node_apps\proasistencia\public\reports\libro_facturas_proveedores.mrt</ReportFile>
+  <ReportGuid>91ce0184b22a4520a9611e23754998a1</ReportGuid>
   <ReportName>FacturasProveedores</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

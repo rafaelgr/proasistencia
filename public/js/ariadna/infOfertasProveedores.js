@@ -4,7 +4,7 @@ var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
-
+var departamentoId = 0;
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
@@ -110,6 +110,7 @@ function initForm() {
         obtainReport();
         $('#selector').hide();
     }
+    departamentoId = gup('departamentoId');
 }
 
 function obtainKey() {
@@ -141,16 +142,21 @@ function admData() {
     self.elegidosClientes = ko.observableArray([]);
     //
     self.proveedorId = ko.observable();
+
+    
 };
 
 var obtainReport = function () {
     if (!datosOK()) return;
+
+    departamentoId = gup('departamentoId');
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
     //report.loadFile("../reports/SimpleList.mrt");
     var rpt = gup("report");
     var file = "../reports/oferta_general_proveedores.mrt";
+    if(departamentoId == 7) file =  "../reports/oferta_reparaciones_proveedor.mrt";
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
     //var connectionString = "Server=localhost; Database=proasistencia;UserId=root; Pwd=aritel;";

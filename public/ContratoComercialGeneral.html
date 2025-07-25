@@ -22,6 +22,9 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <!--<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">-->
+     <!--DATATABLES-->
+     <link rel="stylesheet" type="text/css" media="screen" href="js/plugin/datatables/new/Buttons-1.6.5/css/buttons.dataTables.min.css">
+     <link rel="stylesheet" type="text/css" media="screen" href="js/plugin/datatables/new/responsive-2.4.0/css/responsive.dataTables.min.css">
     <!-- #FAVICONS -->
     <link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
     <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">
@@ -152,11 +155,66 @@
                         <i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">INICIO</span>
                     </a>
                 </li>
-                <li id="administracion">
+                 <li id="administracion">
                     <a href="#">
                         <i class="fa fa-lg fa-fw fa-bank"></i> <span class="menu-item-parent">ADMINISTRACIÓN</span>
                     </a>
                     <ul>
+                        <li id="tipos">
+                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Tipos</a>
+                            <ul>
+                                <li id="tipos_proyecto">
+                                    <a href="TiposProyectoGeneral.html">
+                                        <i class="fa fa-asterisk"></i> Tipos de proyecto
+                                    </a>
+                                </li>
+                                <li id="tiposvia">
+                                    <a href="TipoViaGeneral.html">
+                                        <i class="fa fa-map-marker"></i> Tipos de via
+                                    </a>
+                                </li>
+                                <li id="tiposProveedor">
+                                    <a href="TipoProveedorGeneral.html">
+                                        <i class="fa fa-address-card"></i> Tipos proveedores
+                                    </a>
+                                </li>
+                                <li id="tiposProfesional">
+                                    <a href="TipoProfesionalGeneral.html">
+                                        <i class="fa fa-wrench"></i> Tipos profesionales
+                                    </a>
+                                </li>
+                                <li id="tiposGarantia">
+                                    <a href="TipoGarantiaGeneral.html">
+                                        <i class="fa fa-wrench"></i> Tipos garantia
+                                    </a>
+                                </li>
+                                <li id="tiposiva">
+                                    <a href="TipoIvaGeneral.html">
+                                        <i class="fa fa-money"></i> Tipos de IVA
+                                    </a>
+                                </li>
+                                <li id="tiposTexto">
+                                    <a href="TipoTextoGeneral.html">
+                                        <i class="fa fa-asterisk"></i> Tipos de textos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="tarifas">
+                            <a href="#"><i class="fa fa-fw fa-files-o"></i> Tarifas</a>
+                            <ul>
+                                <li id="tarifas_ciente">
+                                    <a href="TarifaClienteGeneral.html">
+                                        <i class="fa fa-object-ungroup"></i> Tarifas cliente
+                                    </a>
+                                </li>
+                                <li id="tarifas_proveedor">
+                                    <a href="TarifaProveedorGeneral.html">
+                                        <i class="fa fa-object-group"></i> Tarifas proveedor
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li id="parametros">
                             <!--<a href="ParametroDetalle.html">
                                         <i class="fa fa-cog"></i> Parámetros
@@ -173,63 +231,6 @@
                                 <i class="fa fa-mortar-board"></i> Usuarios
                             </a>-->
                         </li>
-                        <li id="departamentos">
-                            <a href="DepartamentosGeneral.html">
-                                <i class="fa fa-building"></i> Departamentos
-                            </a>
-                        </li>
-  
-  
-                        <li id="unidades">
-                            <a href="UnidadesGeneral.html">
-                                <i class="fa fa-asterisk"></i> Unidades
-                            </a>
-                        </li>
-                        <li id="tipos_proyecto">
-                            <a href="TiposProyectoGeneral.html">
-                                <i class="fa fa-asterisk"></i> Tipos de proyecto
-                            </a>
-                        </li>
-                        <li id="textos_predeterminados">
-                            <a href="TextosPredeterminadosGeneral.html">
-                                <i class="fa fa-asterisk"></i> Textos predeterminados
-                            </a>
-                        </li>
-                        <li id="tiposvia">
-                            <a href="TipoViaGeneral.html">
-                                <i class="fa fa-map-marker"></i> Tipos de via
-                            </a>
-                        </li>
-                        <li id="tiposProveedor">
-                            <a href="TipoProveedorGeneral.html">
-                                <i class="fa fa-address-card"></i> Tipos proveedores
-                            </a>
-                        </li>
-                        <li id="tiposProfesional">
-                            <a href="TipoProfesionalGeneral.html">
-                                <i class="fa fa-wrench"></i> Tipos profesionales
-                            </a>
-                        </li>
-                        <li id="tiposGarantia">
-                            <a href="TipoGarantiaGeneral.html">
-                                <i class="fa fa-wrench"></i> Tipos garantia
-                            </a>
-                        </li>
-                        <li id="formaspago">
-                            <a href="FormaPagoGeneral.html">
-                                <i class="fa fa-money"></i> Formas de pago
-                            </a>
-                        </li>
-                        <li id="tiposiva">
-                            <a href="TipoIvaGeneral.html">
-                                <i class="fa fa-money"></i> Tipos de IVA
-                            </a>
-                        </li>
-                        <li id="empresas">
-                            <a href="EmpresasGeneral.html">
-                                <i class="fa fa-building-o"></i> Emp. Propias
-                            </a>
-                        </li>
                         <li id="clientes">
                             <a href="ClientesGeneral.html">
                                 <i class="fa fa-building"></i> Clientes
@@ -245,6 +246,34 @@
                                 <i class="fa fa-user"></i> Agentes / Colaboradores.
                             </a>
                         </li>
+                        <li id="departamentos">
+                            <a href="DepartamentosGeneral.html">
+                                <i class="fa fa-building"></i> Departamentos
+                            </a>
+                        </li>
+                        <li id="unidades">
+                            <a href="UnidadesGeneral.html">
+                                <i class="fa fa-asterisk"></i> Unidades
+                            </a>
+                        </li>
+                       
+                        <li id="textos_predeterminados">
+                            <a href="TextosPredeterminadosGeneral.html">
+                                <i class="fa fa-asterisk"></i> Textos predeterminados
+                            </a>
+                        </li>
+                        
+                        <li id="formaspago">
+                            <a href="FormaPagoGeneral.html">
+                                <i class="fa fa-money"></i> Formas de pago
+                            </a>
+                        </li>
+                       
+                        <li id="empresas">
+                            <a href="EmpresasGeneral.html">
+                                <i class="fa fa-building-o"></i> Emp. Propias
+                            </a>
+                        </li>
                         <li id="grupoArticulos">
                             <a href="GrupoArticuloGeneral.html">
                                 <i class="fa fa-square"></i> Capitulos
@@ -255,16 +284,7 @@
                                 <i class="fa fa-square-o"></i> Unidades obra
                             </a>
                         </li>
-                        <li id="tarifas_ciente">
-                            <a href="TarifaClienteGeneral.html">
-                                <i class="fa fa-object-ungroup"></i> Tarifas cliente
-                            </a>
-                        </li>
-                        <li id="tarifas_proveedor">
-                            <a href="TarifaProveedorGeneral.html">
-                                <i class="fa fa-object-group"></i> Tarifas proveedor
-                            </a>
-                        </li>
+                       
                         <li id="estados_actuacion">
                             <a href="EstadoActuacionGeneral.html">
                                 <i class="fa fa-spinner"></i> Estados de actuación
@@ -273,6 +293,11 @@
                         <li id="estados_presupuesto">
                             <a href="EstadoPresupuestoGeneral.html">
                                 <i class="fa fa-tasks"></i> Estados de presupuesto
+                            </a>
+                        </li>
+                        <li id="rechazos_presupuesto">
+                            <a href="RechazoPresupuestoGeneral.html">
+                                <i class="fa fa-stop-circle"></i> Motivos rechazo de presupuesto
                             </a>
                         </li>
                         <li id="motivosbaja">
@@ -295,7 +320,7 @@
                         <li id="ofertas">
                             <a href="OfertaGeneral.html"><i class="fa fa-fw fa-file-o"></i> Ofertas</a>
                         </li>
-                        <li id="contratos">
+                        <li id="contratos-terceros">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos terceros</a>
                             <ul>
                                 <li>
@@ -306,11 +331,20 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="contratos">
+                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
                                 <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
+                                </li>
+                                <li>
+                                    <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos solo arquitectura</a>
+                                </li>
+                                <li>
+                                    <a href="ActualizacionIpcContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Actualización IPC contratos de alquileres</a>
+                                </li>
+                                <li>
+                                    <a href="RenovacionContratoGeneral.html"><i class="fa fa-fw fa-repeat"></i> Renovación contratos de alquileres</a>
                                 </li>
                             </ul>
                         </li>
@@ -319,6 +353,9 @@
                             <ul>
                                 <li>
                                     <a href="PrefacturaGeneral.html"><i class="fa fa-fw fa-th"></i> Prefacturas</a>
+                                </li>
+                                <li>
+                                    <a href="BorrarPrefacturaGeneral.html"><i  class="fa fa-fw fa-trash"></i> Borrar Prefacturas</a>
                                 </li>
                                 <li>
                                     <a href="SelectPrefacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Emitir facturas</a>
@@ -345,12 +382,6 @@
                                 <li>
                                     <a href="AnticipoColaboradorGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         colaboradores</a>
-                                </li>
-                               <li>
-                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos</a>
-                                </li>
-                                <li>
-                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -397,6 +428,20 @@
                                 </li>
                                 <li>
                                     <a href="LiquidacionEColaboradores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar liquidaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="correos">
+                            <a href="#"><i class="fa fa-fw fa-envelope-o"></i> Correos</a>
+                            <ul>
+                                <li>
+                                    <a href="ContaEGeneral.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos general</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEReparaciones.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos reparaciones</a>
+                                </li>
+                                <li>
+                                    <a href="ContaEProveedores.html"><i class="fa fa-fw fa-envelope-o"></i> Enviar correos proveedores</a>
                                 </li>
                             </ul>
                         </li>
@@ -565,6 +610,22 @@
                                         <table id="dt_contratoComercial" class="table table-striped table-bordered table-hover" width="100%">
                                             <thead>
                                                 <tr>
+                                                    <tr>
+                                                        <th class="hasinput">
+                                                            <input type="text" class="form-control" placeholder="" />
+                                                        </th>
+                                                        <th class="hasinput">
+                                                            <input type="text" class="form-control" placeholder="" />
+                                                        </th>
+                                                        <th class="hasinput">
+                                                            <input type="text" class="form-control" placeholder="" />
+                                                        </th>
+                                                        <th class="hasinput">
+                                                            <input type="text" class="form-control" placeholder="" />
+                                                        </th>                                                                        
+                                                        <th style="width:10%">
+                                                        </th>
+                                                    </tr>
                                                     <th data-class="expand">
                                                         <i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Agente / colborador
                                                     </th>
@@ -683,12 +744,12 @@
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
     <script src="js/ariadna/contratoComercialGeneral.js"></script>
-    <!-- PAGE RELATED PLUGIN(S) -->
-    <script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
-    <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+     <!-- PAGE RELATED PLUGIN(S) -->
+     <script src="js/plugin/datatables/new/jquery.dataTables.min.js"></script>
+     <script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+     <script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+     <script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+     <script src="js/plugin/datatables/new/responsive-2.4.0/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript">
     (function($) {
         $(document).ready(function() {

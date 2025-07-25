@@ -1,8 +1,9 @@
-﻿/*-------------------------------------------------------------------------- 
+﻿
+
+/*-------------------------------------------------------------------------- 
 ofertaDetalle.js
 Funciones js par la página OfertaDetalle.html
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
@@ -19,12 +20,22 @@ var dataConceptosLineas;
 var numConceptos = 0;
 var dataConceptos; 
 var dataProveedores;
+var dataDocumentacion
 var numLineas = 0;
+var parametros;
 
 var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
+var  docName = '';
+var carpeta = ''
+var subCarpeta = '';
+var carpetaId = null;
+var carpetaTipo = null;
+var num = 0;
+var parent = null;
+
 
 datePickerSpanish(); // see comun.js
 
@@ -75,11 +86,20 @@ function initForm() {
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
+    $("#btnAceptar2").click(function() {
+        clicAceptar(false);
+    });
+
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#frmOferta").submit(function () {
         return false;
     });
+
+    //Evento dfel modal de la documentación
+    $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
+        vm.files([]);
+      });
 
     $("#frmLinea").submit(function () {
         return false;
@@ -98,6 +118,22 @@ function initForm() {
     });
     
     $("#generar-contrato-form").submit(function () {
+        return false;
+    });
+
+    $("#creacionCarpetas-form").submit(function () {
+        return false;
+    });
+
+    $("#creacionSubcarpetas-form").submit(function () {
+        return false;
+    });
+
+    $("#frmDoc").submit(function () {
+        return false;
+    });
+
+    $("#frmloadDoc").submit(function () {
         return false;
     });
     validacionesAdicionalesDelContrato();
@@ -128,16 +164,101 @@ function initForm() {
         loadTipoProyecto();
     });
 
-    $("#cmbProveedores").select2(select2Spanish());
-    loadProveedores();
-    $("#cmbProveedores").select2().on('change', function (e) {
-        if(!e.added) return;
-        cambioProveedor(e.added.id);
-        var tipof =  vm.tipoOfertaId();
-        if(tipof == 7) {
-            buscaTarifaProveedor(e.added.id);
+    
+
+    $('#chkBeneficioLineal').change(function() {
+        if(vm.ofertaId()) cambioLineal();
+      });
+
+   $('#dt_documentacion').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = tablaDocumentacion.row(tr);
+ 
+        if (row.child.isShown()) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            // Open this row
+            row.child(format(row.data())).show();
+            tr.addClass('shown');
         }
     });
+
+
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
+        var node = $(e.target).closest('.jstree-node');
+        var selectedNodeId = node.attr('id');
+        if (e.which === 1) {
+            var jsTree = $.jstree.reference(e.target);
+            var originalNode = jsTree.get_node(node);
+            if(!originalNode.data.folder)  {
+                var url = originalNode.original.location;
+                window.open(url, '_blank');
+            }
+        }
+    });
+          // 8 interact with the tree - either way is OK
+          $('#demo').on('click', function () {
+            $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+            $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+            $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+          });
+
+
+   /*  $('#upload-input').on('change', function () {
+        if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+        var encontrado = false;
+        var id = 0;
+        var files = $(this).get(0).files;
+        var file = files[0];
+        var ext = file.name.split('.').pop().toLowerCase();
+        var blob = file.slice(0, file.size, file.type); 
+        var newFile = new File([blob], {type: file.type});
+        var nom = vm.documNombre() + "." + ext;
+        nom = nom.replace(/\//g, "-");
+        var fileKey =  carpeta + "/" + nom
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    if(n[index] == nom) {
+                        encontrado = true;
+                        id = d.documentoId
+                        break;
+                    }
+                }
+                if(encontrado) {
+
+                    var mens = "Ya existe un documento con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(newFile, fileKey, id);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(newFile, fileKey, id);
+                }
+            } else {
+                uploadDocum(newFile, fileKey, id);
+            }
+        }); 
+    });
+ */
+      
 
     initAutoCliente();
     initAutoMantenedor();
@@ -162,13 +283,50 @@ function initForm() {
 
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
+
     $("#cmbArticulos").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        cambioArticulo(e.added);
+        if(!e.added) return;
         var tipof =  vm.tipoOfertaId();
         if(tipof == 7) {
-            buscaTarifaCliente(e.added);
-            if(vm.proveedorId()) buscaTarifaProveedor(vm.proveedorId())
+            //CASO REPARACIONES
+            cambioArticuloClienteRep(e.added);
+            if(vm.proveedorId()) {
+                if(vm.esTarifa()) {
+                    buscaTarifaProveedor(vm.proveedorId()); //SI YA HAY PROVEEDOR BUSCAMOS SU TARIFA TAMBIÉN
+                    //loadTiposIvaProveedor(vm.proveedorId());
+                } else {
+                    var data = {};
+                    data.id = vm.sarticuloId()
+                    cambioArticuloProveedor(data)
+                }
+               
+            }
+        } else {
+            //RESTO DEPARTAMENTOS
+            //buscaTarifaCliente(e.added);
+            cambioArticulo(e.added);
+        }
+    });
+
+    $("#cmbProveedores").select2(select2Spanish());
+    loadProveedores();
+
+    $("#cmbProveedores").select2().on('change', function (e) {
+        if(!e.added) return;
+        cambioProveedor(e.added.id);
+        var tipof =  vm.tipoOfertaId();
+        if(tipof == 7) {
+            if(vm.esTarifa()) {
+                buscaTarifaProveedor(e.added.id);
+                cambioTiposIvaProveedor(e.added.id);
+            } else {
+                var data = {};
+                data.id = vm.sarticuloId();
+                cambioArticuloProveedor(data);
+                cambioTiposIvaProveedor(e.added.id);
+            }
+            
         }
     });
 
@@ -188,7 +346,14 @@ function initForm() {
     });
 
     $('#btnNuevaLinea').prop('disabled', false);
+    //$('#btnNuevaLineaRep').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
+
+    $('#btnNuevaCarpeta').show();
+    if(!usuario.puedeEditar) {
+        $('#btnNuevaCarpeta').hide();
+    } 
+   
 
 
     $("#txtCantidad").blur(cambioPrecioCantidad);
@@ -200,25 +365,43 @@ function initForm() {
         var val =  $("#txtRappelAgente").val();
         nuevaRefReparaciones(vm.stipoOfertaId(), val);
       });
-    $("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
-    $("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
+    //$("#txtPorDescuento").focus( function () { $('#txtPorDescuento').val(null);});
+    //$("#txtPorDescuentoProveedor").focus( function () { $('#txtPorDescuentoProveedor').val(null);});
 
     initTablaOfertasLineas();
     initTablaBases();
     initTablaConceptosLineas();
     initTablaProveedores();
+    //initTablaDocumentacion();
+    initArbolDocumentacion();
 
     ofertaId = gup('OfertaId');
+    vm.beneficioLineal(0);
+    $('#chkBeneficioLineal').prop('disabled', true);
     if (ofertaId != 0) {
+        $('#btnAceptar2').show();
         llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + ofertaId, null, function (err, data) {
             if (err) return;
+           
+            //ocultamos el botón de cálculo de los indices correctores si el departamento no es de reparaciones.
+            if(data.tipoOfertaId != 7) {
+                $('#btnAplicaIndiceCorrector').hide();
+                //$('#btnNuevaLinea').show();
+                //$('#btnNuevaLineaRep').hide();
+            } else {
+                $('#btnAplicaIndiceCorrector').show();
+                //$('#btnNuevaLinea').hide();
+                //$('#btnNuevaLineaRep').show();
+            }
             loadData(data);
             loadLineasOferta(data.ofertaId);
             loadBasesOferta(data.ofertaId);
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
+        $('#btnAceptar2').hide();
         vm.ofertaId(0);
+        vm.beneficioLineal(0);
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -247,11 +430,13 @@ function admData() {
     self.referencia = ko.observable();
     self.empresaId = ko.observable();
     self.clienteId = ko.observable();
+    self.nombreCliente = ko.observable();
     self.mantenedorId = ko.observable();
     self.agenteId = ko.observable();
     self.fechaOferta = ko.observable();
     self.empresaId = ko.observable();
     self.servicioId = ko.observable();
+    self.beneficioLineal = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -271,6 +456,8 @@ function admData() {
     self.dto = ko.observable();
     self.precioProveedor = ko.observable();
     self.dtoProveedor = ko.observable();
+    self.importeDescCliente = ko.observable();
+    self.importeDescProveedor = ko.observable();
     //
     self.formaPagoId = ko.observable();
     //
@@ -309,6 +496,7 @@ function admData() {
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
     self.observaciones = ko.observable();
+    self.conceptosExcluidos = ko.observable();
     //
     self.total = ko.observable();
     self.totalConIva = ko.observable();
@@ -332,6 +520,7 @@ function admData() {
     self.totalLineaProveedor = ko.observable();
     self.totalLineaProveedorIva = ko.observable();
     self.porcentajeProveedor = ko.observable();
+    self.esTarifa = ko.observable();
     //
     self.sgrupoArticuloId = ko.observable();
     //
@@ -392,9 +581,21 @@ function admData() {
      self.sformaPagoIdLinea = ko.observable();
      self.posiblesFormasPagoLinea = ko.observableArray([]);
      self.elegidosFormasPagoLinea = ko.observableArray([]);
+
+     //CARPETAS  Y DOCUMENTOS
+     self.carpetaNombre = ko.observable();
+     self.subCarpetaNombre = ko.observable();
+     self.documNombre = ko.observable();
+     //
+     self.files = ko.observable();
 }
 
 function loadData(data) {
+    if(data.beneficioLineal) {
+        var url = "OfertaLinealDetalle.html?OfertaId=" + data.ofertaId;
+        window.open(url, '_self');
+       //return;
+    }
     vm.ofertaId(data.ofertaId);
     vm.servicioId(data.servicioId);
     vm.tipoOfertaId(data.tipoOfertaId);
@@ -417,10 +618,13 @@ function loadData(data) {
     recalcularCostesImportesDesdeCoste();
     vm.importeMantenedor(data.importeMantenedor);
     vm.observaciones(data.observaciones);
+    vm.conceptosExcluidos(data.conceptosExcluidos);
     vm.formaPagoId(data.formaPagoId);
     loadFormasPago(data.formaPagoId);
     vm.contratoId(data.contratoId);
+    vm.beneficioLineal(data.beneficioLineal);
     vm.fechaAceptacionOferta(spanishDate(data.fechaAceptacionOferta));
+  
     //
     //cambioDepartamento(data.tipoOfertaId);
     document.title = "OFERTA: " + vm.referencia();
@@ -428,7 +632,9 @@ function loadData(data) {
     loadConceptosLineas(data.ofertaId);
     loadGrupoArticulos();
 
-    cargaTablaProveedores()
+    cargaTablaProveedores();
+    cargaTablaDocumentacion();
+
 
     if(data.contratoId) {
         $('#cmbEmpresas').prop('disabled', true);
@@ -510,14 +716,19 @@ function salir() {
     return mf;
 }
 
-var clicAceptar = function () {
+var clicAceptar = function (salir) {
     guardarOferta(function (err, tipo) {
         if (err) return;
         var url = "OfertaGeneral.html?OfertaId=" + vm.ofertaId(); // default PUT
         if (tipo == 'POST') {
             url = "OfertaDetalle.html?OfertaId=" + vm.ofertaId(); // POST
         }
-        window.open(url, '_self');
+        if(salir) {
+            window.open(url, '_self');
+        } else {
+            mensNormal('Oferta guardada.');
+            //recargaCabeceraLineasBases();
+        }
     })
 }
 
@@ -590,9 +801,12 @@ var generarOfertaDb = function() {
             "importeCliente": vm.importeCliente(),
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
-            "formaPagoId": vm.sformaPagoId()
+            "conceptosExcluidos": vm.conceptosExcluidos(),
+            "formaPagoId": vm.sformaPagoId(),
+            "beneficioLineal": vm.beneficioLineal()
         }
     };
+    if(vm.beneficioLineal()) data.oferta.porcentajeBeneficio = 0;
     return data;
 }
 
@@ -732,6 +946,20 @@ function cambioDepartamento(departamentoId) {
     if(!departamentoId) return;
     llamadaAjax('GET', "/api/departamentos/" + departamentoId, null, function (err, data) {
         if (err) return;
+        if(departamentoId == 5) {
+            var excluidos = "Quedan excluidos explícitamente de la presente oferta los siguientes trabajos:\n"
+            + "* Tasas e Impuestos ocasionados por los Proyectos e Instalaciones que se comprenden en la presente oferta\n"
+           + " para sus respectivas legalizaciones ante los Organismos Oficiales.\n"	
+           + "* El Impuesto sobre el Valor Añadido (IVA).\n"	
+           + "* Apertura de calas, ensayos y/o estudio geotécnico.\n"	
+           + "* Cualquier trabajo no especificado en la presente oferta.";
+           vm.conceptosExcluidos(excluidos);
+           $('#chkBeneficioLineal').prop('disabled', false);
+        } else {
+            $('#chkBeneficioLineal').prop('disabled', true);
+            vm.beneficioLineal(0);
+            $('#chkBeneficioLineal').prop('checked', false);
+        }
         usaCalculadora = data.usaCalculadora;
         if(data.usaCalculadora == 0) {
             $('#calculadora').hide();
@@ -780,6 +1008,7 @@ var cambioCliente = function (data) {
         cargaAgente(data.comercialId, false);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
+        vm.tipoIvaId(data.tipoIvaId());
     });
 }
 
@@ -850,6 +1079,23 @@ function cambioTextosPredeterminados(data) {
     });
 }
 
+function cambioLineal() {
+    var mens = "Al cambiar esta propiedad se tienen que editar las lineas para ajustar los importes correctos. ¿Desea guardar y continuar con la edición?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            clicAceptar(false);
+        }
+        
+        if (ButtonPressed === "Cancelar") {
+            salir()();
+        }
+    });
+}
+
 /*------------------------------------------------------------------
     Funciones relacionadas con las líneas de ofertas
 --------------------------------------------------------------------*/
@@ -857,27 +1103,39 @@ function cambioTextosPredeterminados(data) {
 function nuevaLinea() {
     limpiaDataLinea(); // es un alta
     lineaEnEdicion = false;
-    llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
-        if (err) return;
-        vm.linea(data);
+    if(vm.tipoOfertaId() != 7) {// solo visible en caso de reparaciones
+        $('#chkEsTarifa').hide()
+    } else {
+        $('#chkEsTarifa').show();
+    } 
+    if(vm.tipoOfertaId() != 7) {
+        llamadaAjax('GET', "/api/ofertas/nextlinea/" + vm.ofertaId(), null, function (err, data) {
+            if (err) return;
+            vm.linea(data);
+            vm.total(0);
+            vm.totalConIva(0);
+            vm.esTarifa(0);
+        });
+    } else {
         vm.total(0);
         vm.totalConIva(0);
-    });
+        vm.esTarifa(1);
+    }
 }
 
 function limpiaDataLinea(data) {
     vm.ofertaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
-    vm.tipoIvaId(null);
+    if(vm.tipoOfertaId() != 7) vm.tipoIvaId(null);
     vm.porcentaje(null);
     vm.descripcion(null);
     vm.cantidad(null);
-    vm.importe(null);
+    vm.importe(0);
     vm.costeLinea(null);
     vm.totalLinea(null);
     vm.costeLineaProveedor(null);
-    vm.importeProveedor(null);
+    vm.importeProveedor(0);
     vm.totalLineaProveedor(null);
     vm.totalLineaProveedorIva(null);
     vm.porcentajeProveedor(null)
@@ -949,8 +1207,12 @@ var guardarLinea = function () {
             dto: vm.dto(),
             precioProveedor: vm.precioProveedor(),
             dtoProveedor: vm.dtoProveedor(),
-            totalLineaProveedorIva: vm.totalLineaProveedorIva()
-            //
+            totalLineaProveedorIva: vm.totalLineaProveedorIva(),
+            //Ponemos los campos de la oferta lineal a cero
+            importeBeneficioLinea: 0,
+            importeAgenteLinea: 0,
+            ventaNetaLinea: 0,
+            esTarifa: vm.esTarifa()
         }
     }
     var verboAjax = '';
@@ -1052,17 +1314,15 @@ function datosOKLineas() {
 function initTablaOfertasLineas() {
     tablaOfertasLineas = $('#dt_lineas').DataTable({
         autoWidth: true,
+        responsive: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineas'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+           
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
@@ -1158,8 +1418,15 @@ function initTablaOfertasLineas() {
             data: "ofertaLineaId",
             render: function (data, type, row) {
                 var html = "";
+                var bt2 = "";
+               /*  if(vm.tipoOfertaId() != 7) {
+                    bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                } else {
+                    bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLineaRep' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                } */
                 var bt1 = "<button class='btn btn-circle btn-danger btn-lg' onclick='deleteOfertaLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editOfertaLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+              
                 if (!vm.generada())
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -1182,6 +1449,7 @@ function loadDataLinea(data) {
     vm.costeLinea(data.coste);
     vm.capituloLinea(data.capituloLinea);
     vm.proveedorId(data.proveedorId);
+    vm.esTarifa(data.esTarifa);
     //
     //cantidades de proveedor
     vm.importeProveedor(data.importeProveedor);
@@ -1224,6 +1492,55 @@ function loadTablaOfertaLineas(data) {
 }
 
 
+function aplicaIndicesCorrectores() {
+    if(vm.tipoOfertaId() == 7) {//Solo se aplica en el departamento de reparaciones
+        var mens = "¿Realmente desea realizar esta acción?, Se aplicarán los indices correctores correspondientes a cada proveedor, cualquier descuento introducido manuelmente se borrará.";
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar][Cancelar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
+                llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, data) {
+                    if (err) return;
+                    var totalCoste = 0;
+                    let pros= [];
+                    data.forEach(function (linea) {
+                        totalCoste += (linea.coste * linea.cantidad);
+                        vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+                        //obtenemos los proveedores de la oferta
+                        let data = {
+                            proveedorId: linea.proveedorId,
+                            proveedorNombre: linea.proveedorNombre
+                        }
+                        pros.push(data);
+                        
+                    });
+                    // Usando un Set para almacenar las combinaciones únicas de proveedorId y proveedorNombre
+                    const seen = new Set();
+                    const uniqueArray = pros.filter(item => {
+                        const duplicate = seen.has(item.proveedorId + item.proveedorNombre);
+                        seen.add(item.proveedorId + item.proveedorNombre);
+                        return !duplicate;
+                    });
+                    //buscamos los indices correctores de cada proveedor
+                    for(let pro of uniqueArray) {
+                     buscarIndicesCorrectores(pro, data, function (err, result) {
+                         if(err) return mensError(err);
+                         let p = [];
+                         if(result) return mensAlerta("Al siguiente proveedor no se le ha calculado ningún indice corrector: " + result);
+                         loadLineasOferta(vm.ofertaId());
+                     });
+                    };
+                });
+            }
+            if (ButtonPressed === "Cancelar") {
+                // no hacemos nada (no quiere borrar)
+            }
+        });
+    } 
+}
+
 function loadLineasOferta(id) {
     llamadaAjax('GET', "/api/ofertas/lineas/" + id + "/" + false + "/" +  false, null, function (err, data) {
         if (err) return;
@@ -1233,6 +1550,106 @@ function loadLineasOferta(id) {
             vm.totalCoste(numeral(totalCoste).format('0,0.00'));
         })
         loadTablaOfertaLineas(data);
+    });
+}
+
+var buscarIndicesCorrectores =  function (pro, lineas, done) {
+    //BUSCAMOS PRIMERO EL PARTE ASOCIADO A LA OFERTA SI EXISTE
+    llamadaAjax('GET', "/api/ofertas/busca-parte/asociado/oferta/proveedor/" + vm.ofertaId() + "/" + pro.proveedorId, null, function(err, parte) {
+        if (err) return errorGeneral(err, done);
+        if(parte) {
+            // SI HAY PARTE ASOCIADO OBRTENEMOS EL TIPO PROFESIONAL DEL PROVEEDOR
+            let tipoProfesionalId = parte.tipoProfesionalId;
+            llamadaAjax('GET', "/api/proveedores/indices-correctores/proveedor/" + pro.proveedorId + "/" + tipoProfesionalId, null, function (err, indices) {
+                if (err) return errorGeneral(err, done);
+                let indice = 0;
+                let descuento = 0;
+                let descuentoUnitarioPro = 0
+                let importeproveedorDescuento = 0;
+                let totales = 0;
+                //
+                let descuentoCliente = 0;
+                let descuentoUnitarioCli = 0
+                let importeClienteDescuento = 0;
+                for(let l of lineas) {
+                    if(pro.proveedorId == l.proveedorId) totales += parseFloat(l.precioProveedor);
+                }
+                  totales = Math.round(totales * 100) / 100;
+        
+                //Ahora aplicamos el indice correspondiente
+                for(let i of indices) {
+                    if(totales >= i.minimo && totales <= i.maximo) {
+                      indice = parseFloat(i.porcentajeDescuento) / 100;
+                    }
+                }
+                //si hay indice se aplica el descuento
+            if(indice > 0) {
+                for(let l of lineas) {
+                  if(pro.proveedorId == l.proveedorId) {
+                    //primero lo calculamos por linea y actualizamos en la base de datos
+                    descuentoUnitarioPro = parseFloat(l.importeProveedor * indice);
+                    //
+                    importeproveedorDescuento = l.importeProveedor - descuentoUnitarioPro;
+                    importeproveedorDescuento = parseFloat(Math.round(importeproveedorDescuento * 100) / 100);
+                    importeproveedorDescuento = importeproveedorDescuento * l.cantidad
+                    importeproveedorDescuento = parseFloat(Math.round(importeproveedorDescuento * 100) / 100);
+
+                    descuento = (roundToTwo(l.precioProveedor - importeproveedorDescuento)); //cantidad de descuento
+
+                   
+                    
+                    //CLIENTE
+                    descuentoUnitarioCli = parseFloat(l.importe * indice);
+                    //
+                    importeClienteDescuento = l.importe - descuentoUnitarioCli;
+                    importeClienteDescuento = parseFloat(Math.round(importeClienteDescuento * 100) / 100);
+                    importeClienteDescuento = importeClienteDescuento * l.cantidad
+                    importeClienteDescuento = parseFloat(Math.round(importeClienteDescuento * 100) / 100);
+
+                    descuentoCliente = (roundToTwo(l.precio - importeClienteDescuento)); //cantidad de descuento
+                 
+                    let data = {
+                        ofertaLinea: {
+                          ofertaId: l.ofertaId,
+                          ofertaLineaId: l.ofertaLineaId,
+                          linea: l.linea,
+                          articuloId: l.articuloId,
+                          tipoIvaId: l.tipoIvaId,
+                          porcentaje: l.porcentaje,
+                          descripcion: l.descripcion,
+                          cantidad: l.cantidad,
+                          importe: l.importe,
+                          //totalLinea: l.totalLinea,
+                          //DESCUENTOS POVEEDOR
+                          perdtoProveedor: indice * 100,
+                          dtoProveedor: descuento,
+                          totalLineaProveedor: importeproveedorDescuento,
+                          costeLineaProveedor: importeproveedorDescuento,
+                          //DESCUENTOS CLIENTE
+                          perdto: indice * 100,
+                          dto: descuentoCliente,
+                          totalLinea: importeClienteDescuento,
+                          coste: importeClienteDescuento
+                        }
+                    }
+                    let verbo = 'PUT';
+                    let urlAjax = myconfig.apiUrl + "/api/ofertas/lineas/" + l.ofertaLineaId;
+                    llamadaAjax(verbo, urlAjax, data, function (err, data) {
+                        if (err) return errorGeneral(err, done);
+                        return done(null, null);
+                        
+                    });
+                    
+                  }
+                }
+                loadLineasOferta(vm.ofertaId());
+              } else {// SI NO HAY INDICE CORRECTOR, NO SE CALCULA NADA Y DEVOLVEMOS EL NOMBRE DEL PROFESIONAL
+                return done(null, pro.proveedorNombre);
+              } 
+            });
+        } else {// SI NO HAY PARTE ASOCIADO NO PODEMOS CALCULAR EL INDICE CORRECTOR, DEVOLVEMOS EL NOMBRE DEL PROFESIONAL
+            return done(null, pro.proveedorNombre);
+        }
     });
 }
 
@@ -1311,6 +1728,7 @@ function cambioArticulo(data) {
     if (!data) {
         return;
     }
+    var data2 = {};
     var articuloId = data.id;
     llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
         if (err) return;
@@ -1320,17 +1738,79 @@ function cambioArticulo(data) {
         } else {
             vm.descripcion(data.nombre + ':\n' + data.descripcion);
         }
+
         vm.cantidad(1);
         vm.importe(data.precioUnitario);
+        
         //valores para IVA por defecto a partir del  
-        // articulo seleccionado.
+        // articulo seleccionado si no es reparaciones
+        
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
-        var data2 = {
-            id: data.tipoIvaId
+            data2 = {
+                id: data.tipoIvaId
         };
+        
         // poner la unidades por defecto de ese artículo
         $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data2);
+        cambioPrecioCantidad();
+    });
+}
+function cambioArticuloClienteRep(datos) {
+    //
+    if (!datos) {
+        return;
+    }
+    var data2 = {};
+    var articuloId = datos.id;
+        llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+            if (err) return;
+            // cargamos los campos por defecto de receptor
+            if (data.descripcion == null) {
+                vm.descripcion(data.nombre);
+            } else {
+                vm.descripcion(data.nombre + ':\n' + data.descripcion);
+            }
+
+             //valores para IVA del cliente
+             //var id = vm.tipoIvaId();
+             //$("#cmbTiposIva").val([id]).trigger('change');
+             data2 = {
+                 id: data.tipoIvaId
+             };
+             vm.cantidad(1);
+             cambioTiposIva(data2);
+             // poner la unidades por defecto de ese artículo
+            $("#cmbUnidades").val([data.unidadId]).trigger('change');
+            cambioTiposIva(data2);
+
+            if(vm.esTarifa()) {
+                llamadaAjax('GET', "/api/clientes/tarifa/por/articuloId/" + vm.clienteId() + "/" + articuloId, null, function (err, datos) {
+                    if (err) return;
+                    if(datos.length > 0)  {
+                        vm.importe(datos[0].precioCliente);
+                        cambioPrecioCantidad();
+                    }
+                    
+                });
+            } else {
+                vm.importe(data.precioUnitario);
+                cambioPrecioCantidad();
+            }
+        });
+}
+
+
+
+function cambioArticuloProveedor(data) {
+    //
+    if (!data) {
+        return;
+    }
+    var articuloId = data.id;
+    llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+        if (err) return;
+        vm.importeProveedor(data.coste);
         cambioPrecioCantidad();
     });
 }
@@ -1367,8 +1847,9 @@ function buscaTarifaProveedor(proveedorId) {
 function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
+
     
-        crearTextoDeCapituloAutomatico(grupoArticuloId);
+    if( vm.tipoOfertaId() != 7) crearTextoDeCapituloAutomatico(grupoArticuloId);
     
     cargarArticulosRelacionadosDeUnGrupo(grupoArticuloId);
 }
@@ -1402,6 +1883,11 @@ function cambioTiposIva(data) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
+        if(tipoIvaId) {
+            $("#cmbTiposIva").val([tipoIvaId]).trigger('change');
+        } else {
+            $("#cmbTiposIva").val([null]).trigger('change');
+        }
     });
 }
 
@@ -1440,6 +1926,70 @@ function cambioProveedor(proveedorId) {
         loadTiposIvaProveedor(data.tipoIvaId);
         cambioTiposIvaProveedor(data.tipoIvaId);
         cambioPrecioCantidad();
+        asignaCapituloLinea();
+    });
+}
+
+function asignaCapituloLinea() {
+    if (vm.ofertaLineaId()) return;
+    //buscamos el resto de trabajos
+    let proId = vm.proveedorId();
+    let proIds = [];
+    llamadaAjax('GET', "/api/ofertas/lineas/" + vm.ofertaId() + "/" + false + "/" +  false, null, function (err, trabajos) {
+        if (err) return;
+        let obj = {};
+        let cont = 0;
+        let procesado = false;
+        let p = new Set;
+        let n = 0
+        if(trabajos.length > 0) {
+          //CAPIULO
+            //extraemos las ids de los proveedores de las lineas
+            for(let t of trabajos) {
+              obj = {
+                proveedorId: t.proveedorId,
+                capitulo: t.capituloLinea,
+                linea: t.linea 
+              }
+              proIds.push(obj);
+              p.add(t.proveedorId);  //miramos el numero de proveedores diferentes que hay en los tabajos
+            };
+           
+            //miramos si hay algún trabajo del proveedor
+            for(let i = 0; i < proIds.length; i++) {
+              if(proId == proIds[i].proveedorId) {
+                vm.capituloLinea(proIds[i].capitulo);
+                procesado = true;
+                break;
+              }   
+            } 
+            if(!procesado) { //creamos un nuevo capitulo y una nueva linea
+              n =  p.size + 1;
+              vm.capituloLinea("Capitulo " + n);
+              vm.linea(n + 0.1);
+            }
+            //LINEA
+            //contamos los trabajos del proveedor
+             let numero = 0
+            for (let p of proIds) {
+              if(proId == p.proveedorId) {
+                cont++;
+                let capi = p.capitulo
+                numero = parseInt(capi.match(/\d+/)?.[0] || '0');
+    
+              }
+            }
+            if(cont > 0) {
+              cont = (cont + 1) / 10;
+              vm.linea(numero + cont);
+    
+            }
+    
+        } else {
+          vm.capituloLinea("Capitulo 1");
+          vm.linea(1.1);
+        }
+        
     });
 }
 
@@ -1447,14 +1997,16 @@ var cambioPrecioCantidad = function () {
     var totalProIva;
     var porIva;
     var porPro = vm.porcentajeProveedor();
-    vm.precio(vm.cantidad() * vm.importe());
-    vm.costeLinea(vm.cantidad() * vm.importe());
+    var p = vm.cantidad() * vm.importe();
+    vm.precio(roundToTwo(p));
+    vm.costeLinea(roundToTwo(p));
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
 
      //CALCULO DE LAS CANTIDADES DEL PROVEEDOR
-     vm.precioProveedor(vm.cantidad() * vm.importeProveedor());
-     vm.costeLineaProveedor(vm.cantidad() * vm.importeProveedor());
+     var pp = vm.cantidad() * vm.importeProveedor();
+     vm.precioProveedor(roundToTwo(pp));
+     vm.costeLineaProveedor(roundToTwo(pp));
      vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
      vm.totalLineaProveedorIva(vm.totalLineaProveedor());
      if(porPro !== null) {
@@ -1463,48 +2015,99 @@ var cambioPrecioCantidad = function () {
         vm.totalLineaProveedorIva(roundToTwo(totalProIva));
      }
 
-     if(vm.perdtoProveedor() == 0 || !vm.perdtoProveedor()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
-                                                                                                 //descuennto en el proveedor cargamos el del cliente
-     //calculo en caso de descuento cliente
-    if(vm.perdto() > 0 || vm.perdto() != '') {
-        var precio = parseFloat(vm.precio());
-        var porcen = parseFloat(vm.perdto());
-        porcen = porcen / 100;
-        var descuento = precio * porcen;
-        //se calcula el descuento cliente
-        vm.dto(roundToTwo(descuento));
-        var resultado = parseFloat(precio-descuento);
-        vm.costeLinea(roundToTwo(resultado));
+     if(!vm.perdtoProveedor() && vm.proveedorId()) vm.perdtoProveedor(vm.perdto()); //si no hay porcentaje de 
+                                                                                                 //descuento en el proveedor cargamos el del cliente
+    
+    //CASO REPARACIONES
+    if(vm.tipoOfertaId() == 7) {
+         //calculo en caso de descuento cliente
+         if(vm.perdto() > 0 || vm.perdto() != '') {
+            var precio = parseFloat(vm.precio()); // precio unitario * cantiad
+            var importeUnitario = parseFloat(vm.importe()); // precio unitario
+            var porcen = parseFloat(vm.perdto()); // porcentaje descuento
+            porcen = porcen / 100;
+            var desc = importeUnitario * porcen; //importe de unitario con el descuento
+            var descuentoUnitario = importeUnitario - desc
+            //se calcula el descuento cliente
+            vm.importeDescCliente(roundToTwo(descuentoUnitario));
+            var d = vm.cantidad() * vm.importeDescCliente();
+            vm.costeLinea(roundToTwo(d));//precio final con el descuento
+            vm.dto(roundToTwo(precio - d)); //cantidad de descuento
         
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
-    }
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+        }
 
-    //calculo en caso de descuento proveedor
-    if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
-        var precioProveedor =  parseFloat(vm.precioProveedor());
-        var porcen = parseFloat(vm.perdtoProveedor());
-        porcen = porcen / 100;
-        var descuentoProveedor = precioProveedor * porcen;
+        //calculo en caso de descuento proveedor
+        if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
+            var precioProveedor = parseFloat(vm.precioProveedor()); // precio unitario * cantiad
+            var importeUnitarioProveedoor = parseFloat(vm.importeProveedor()); // precio unitario
+            var porcenProveedor = parseFloat(vm.perdtoProveedor()); // porcentaje descuento
+            porcenProveedor = porcenProveedor / 100;
+            var descProveedor = importeUnitarioProveedoor * porcenProveedor; //importe de unitario con el descuento
+            var descuentoUnitarioProveedor = importeUnitarioProveedoor - descProveedor
+            //se calcula el descuento cliente
+            vm.importeDescProveedor(roundToTwo(descuentoUnitarioProveedor));
+            var dp = vm.cantidad() * vm.importeDescProveedor();
+            vm.costeLineaProveedor(roundToTwo(dp));//precio final con el descuento
+            vm.dtoProveedor(roundToTwo(precioProveedor - dp)); //cantidad de descuento
         
-        //se calcula el descuento proveedor
-        vm.dtoProveedor(roundToTwo(descuentoProveedor));
-        var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
-        vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+    
+            if(porPro !== null) {
+                porIva = vm.porcentajeProveedor() / 100;
+                totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
+                vm.totalLineaProveedorIva(roundToTwo(totalProIva));
+             }
+        }
+    } else {// RESTO DE DEPARTAMENTOS
+         //calculo en caso de descuento cliente 
+         if(vm.perdto() > 0 || vm.perdto() != '') {
+            var precio = parseFloat(vm.precio()); // precio unitario * cantiad
+            var porcen = parseFloat(vm.perdto());
+            porcen = porcen / 100;
+            var descuento = precio * porcen;
+            //se calcula el descuento cliente
+            vm.dto(roundToTwo(descuento)); //descuento total
+            var resultado = parseFloat(precio-descuento);
+            vm.costeLinea(roundToTwo(resultado));
+            
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
+        }
 
-        recalcularCostesImportesDesdeCoste();
-        vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
-        if(porPro !== null) {
-            porIva = vm.porcentajeProveedor() / 100;
-            totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
-            vm.totalLineaProveedorIva(roundToTwo(totalProIva));
-         }
-
+        //calculo en caso de descuento proveedor 
+        if(vm.perdtoProveedor() > 0 || vm.perdtoProveedor() != '') {
+            var precioProveedor =  parseFloat(vm.precioProveedor()); // precio unitario * cantiad
+            var porcen = parseFloat(vm.perdtoProveedor());
+            porcen = porcen / 100;
+            var descuentoProveedor = precioProveedor * porcen;
+            
+            //se calcula el descuento proveedor
+            vm.dtoProveedor(roundToTwo(descuentoProveedor)); // descuento total
+            var resultadoProveedor = parseFloat(precioProveedor-descuentoProveedor);
+            vm.costeLineaProveedor(roundToTwo(resultadoProveedor));
+    
+            recalcularCostesImportesDesdeCoste();
+            vm.totalLineaProveedor(obtenerImporteAlClienteDesdeCoste(vm.costeLineaProveedor()));
+            if(porPro !== null) {
+                porIva = vm.porcentajeProveedor() / 100;
+                totalProIva = vm.totalLineaProveedor() + (vm.totalLineaProveedor() * porIva);
+                vm.totalLineaProveedorIva(roundToTwo(totalProIva));
+             }
+    
+        }
     }
 }
 
 function editOfertaLinea(id) {
     lineaEnEdicion = true;
+    if(vm.tipoOfertaId() != 7) {// solo visible en caso de reparaciones
+        $('#chkEsTarifa').hide()
+    } else {
+        $('#chkEsTarifa').show();
+    } 
     llamadaAjax('GET', "/api/ofertas/linea/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) {
@@ -1541,13 +2144,13 @@ var recargaCabeceraLineasBases = function () {
     });
 }
 
-var recargaLineasBases = function () {
+/* var recargaLineasBases = function () {
     llamadaAjax('GET', myconfig.apiUrl + "/api/ofertas/" + vm.ofertaId(), null, function (err, data) {
         if (err) return;
-        loadLineasOferta(data.ofertaId);
+        aplicaIndicesCorrectores(data.ofertaId);
         loadBasesOferta(data.ofertaId);
     });
-}
+} */
 
 /*
     Funciones relacionadas con la gestión de bases
@@ -1559,15 +2162,13 @@ function initTablaBases() {
         autoWidth: true,
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_bases'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
+           
         },
         language: {
             processing: "Procesando...",
@@ -1649,8 +2250,11 @@ var cargaCliente = function (id) {
     llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
         if (err) return;
         $('#txtCliente').val(data.nombre);
+        vm.nombreCliente(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
+        //SI ES REPARACIONES EL IVA SE CARGA DEL CLIENTE
+        if(vm.tipoOfertaId() == 7) vm.tipoIvaId(data.tipoIvaId);
     });
 };
 
@@ -1801,9 +2405,11 @@ var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
     if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
         $('#btnNuevaLinea').prop('disabled', true);
+        //$('#btnNuevaLineaRep').prop('disabled', true);
         $('#btnAceptarLinea').prop('disabled', true)
     } else {
         $('#btnNuevaLinea').prop('disabled', false);
+        //$('#btnNuevaLineaRep').prop('disabled', false);
         $('#btnAceptarLinea').prop('disabled', false)
     }
     
@@ -1816,13 +2422,17 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 var recalcularCostesImportesDesdeCoste = function () {
     if(usaCalculadora == 0) return;//SI NO USA CALCULADORA NO SE OBTINEN PORCENTAJES
     if (!vm.coste()) vm.coste(0);
-    if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
+    if (!vm.porcentajeAgente()) {
+        vm.porcentajeAgente(0);
+    } else {
+        vm.porcentajeAgente(roundToTwo(vm.porcentajeAgente()));
+    }
     if (!vm.porcentajeBeneficio()) vm.porcentajeBeneficio(0);
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
         }
-        vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+        vm.ventaNeta(roundToTwo(vm.coste() * 1 + vm.importeBeneficio() * 1));
     }
     if (vm.porcentajeAgente() != null) {
         vm.importeCliente(roundToTwo(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)));
@@ -1848,6 +2458,7 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 var ocultarCamposOfertasGeneradas = function () {
     $('#btnAceptar').hide();
     $('#btnNuevaLinea').hide();
+    //$('#btnNuevaLineaRep').hide();
     // los de input para evitar que se lance 'onblur'
     $('#txtCoste').prop('disabled', true);
     $('#txtPorcentajeBeneficio').prop('disabled', true);
@@ -1890,13 +2501,13 @@ var imprimirProveedor = function (id) {
 }
 
 function printOferta2(id) {
-    var url = "InfOfertas.html?ofertaId=" + id;
-    window.open(url, "_new");
+    var url = "InfOfertas.html?ofertaId=" + id  + "&departamentoId=" + vm.tipoOfertaId();
+    window.open(url, "_blank");
 }
 
 function printOfertaProveedor(id) {
-    var url = "InfOfertasProveedores.html?ofertaId=" + vm.ofertaId() + "&proveedorId=" + id;
-    window.open(url, "_new");
+    var url = "InfOfertasProveedores.html?ofertaId=" + vm.ofertaId() + "&proveedorId=" + id + "&departamentoId=" + vm.tipoOfertaId();
+    window.open(url, "_blank");
 }
 
 function printOferta(id) {
@@ -1998,16 +2609,16 @@ var generarContratoAPI = function () {
         preaviso: vm.preaviso(),
         facturaParcial: vm.facturaParcial()
     }
-    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId();
+    var url = myconfig.apiUrl + "/api/ofertas/generar-contrato/" + vm.ofertaId() + "/" + vm.beneficioLineal();
     llamadaAjax('POST', url, data, function (err, data) {
         if (err) return;
         var datos = {
             contratoId: data.contratoId,
             ofertaId: vm.ofertaId(),
         }
+        vm.contratoId(data.contratoId);
         generarLineasConceptos(datos);
-        var url = "ContratoDetalle.html?ContratoId=" + data.contratoId + "&CMD=GEN";
-        window.open(url, '_new');
+        $('#modalContrato').modal('hide');
     })
 }
 
@@ -2015,7 +2626,8 @@ var generarLineasConceptos = function(datos) {
     var url = myconfig.apiUrl + "/api/ofertas/generar-lineas/concepto";
     llamadaAjax('POST', url, datos, function (err, data) {
         if (err) return;
-        
+        var returnUrl = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=GEN";
+        window.open(returnUrl, '_blank');
     })
 }
 
@@ -2105,15 +2717,12 @@ function initTablaConceptosLineas() {
        
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_lineasConcepto'), breakpointDefinition);
-            }
+           
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+            
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
@@ -2405,4 +3014,553 @@ function loadTablaProveedores(data) {
 }
 
 
+// FUNCIONES RELACIONADAS CON LA DOCUMENTACIÓN
 
+/* function initTablaDocumentacion() {
+    tablaDocumentacion = $('#dt_documentacion').DataTable({
+        autoWidth: true,
+        paging: true,
+        responsive: false,
+        "bDestroy": true,
+        "columnDefs": [
+            { "width": "5%", "targets": 0 },
+            { "width": "8%", "targets": 2 },
+            { "width": "5%", "targets": 3 },
+            { "width": "13%", "targets": 4 },
+
+          ],
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataDocumentacion,
+        columns: [
+            {
+                
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: ''
+            },{
+                data: "carpetaNombre",
+            },{
+                data: "tipo",
+            },{
+                data: "documentos",
+                render: function (data, type, row) {
+                    if(!row.documentos) return 0;
+                    return row.documentos.length; ;
+                }
+            },{
+            data: "carpetaId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt = "";
+                var bt2 = "";
+                var bt3 = "";
+                if(usuario.puedeEditar) {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-info' data-toggle='modal' data-target='#modalpostSubcarpeta' onclick='nuevaSubcarpeta(" + JSON.stringify(row) + ");' title='Crear subcarpeta'> <i class='fa fa-folder fa-fw'></i> </button>";
+                    var bt3 = "<button class='btn btn-circle btn-danger' onclick='deleteCarpeta(" + data +");' title='Eliminar carpeta'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    //if(!usuario.borrarCarpeta) bt3 = "";
+                } else {
+                    var bt = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalUploadDoc' onClick='preparaDatosArchivo(" + JSON.stringify(row) + ")' title='Subir documernto'> <i class='fa fa-arrow-up fa-fw'></i> </button>";
+                }
+               
+                return html = "<div class='pull-right'>" + bt + " " + bt2 + " " + bt3 +"</div>";
+                
+            }
+            }]
+    });
+}
+ */
+
+function initArbolDocumentacion() {
+    $('#jstreeDocumentacion').jstree({ 'core' : 
+    {
+        'data' : [],
+    },
+    'check_callback' : true,
+    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
+    "select_node": true,
+    'contextmenu': {
+        'items': function(node) {
+            var menuItems = {
+            // Define las opciones del menú contextual para cada nodo
+         
+            'Option 1': {
+                'label': 'Subir documento',
+                'action': function(a, b , c) {
+                  console.log(node.type);
+                  $('#modalUploadDoc').modal('show');
+                  preparaDatosArchivo(node.original);
+                }
+              },
+              'Option 2': {
+                'label': 'Crear Subcarpeta',
+                'action': function() {
+                   $('#modalpostSubcarpeta').modal('show');
+                   nuevaSubcarpeta(node.original);
+                }
+              },
+              'Option 3': {
+                  'label': 'Eliminar',
+                  'action': function() {
+                    if(!node.data.folder) {
+                        deleteDocumento(node.id);
+                    } else {
+                        deleteCarpeta(node.id);
+                    }
+                  }
+                }
+         
+            }
+            if (!node.data.folder) {
+                delete menuItems['Option 1'];
+                delete menuItems['Option 2'];
+            }
+
+            if(!usuario.puedeEditar) {
+                delete menuItems['Option 2'];
+                delete menuItems['Option 3'];
+            }
+            return menuItems;
+        }
+    }
+});
+
+}
+function cargaTablaDocumentacion(){
+    llamadaAjax("GET",  "/api/documentacion/"  + vm.ofertaId() + "/" + vm.tipoOfertaId() + "/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        if(data) loadDocumentacionTree(data);
+    });
+}
+
+function loadDocumentacionTree(data) {
+    if(data.length == 0) return;
+    var obj = data;
+    
+    $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
+    $('#jstreeDocumentacion').jstree(true).refresh();
+
+    //$('#jstreeDocumentacion').jstree(true).redraw();
+
+    
+}
+
+function loadTablaDocumentacion(data) {
+    var dt = $('#dt_documentacion').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function format(d) {
+    if(!d.documentos) d.documentos = [];
+    var doc = d.documentos;
+    var html = "";
+        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+        doc.forEach(e => {
+            var l = e.key.split('/');
+            var index = l.length - 1;
+            html += '<div class="row" style="margin-bottom: 10px">' +
+                        '<section class="col col-md-5">' + 
+                            '<a href="' + e.location  + '" target="_blank">' + l[index] +'</a>' +
+                        '</section>' +
+                        '<section class="col col-md-3 text-left">' +
+                            '<button class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+                        '</section>' +
+                        '<section class="col col-md-4">' + '</section>' +
+                    '</div>' 
+        });
+    return html;
+}
+
+function preparaDatosArchivo(r) {
+    uploads = [] //limpiamos las cargas que se hayan podido quedar
+    docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
+    carpetaId = r.carpetaId;
+    docName = docName.replace(/[\/]/g, "-");
+    carpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo;
+    key = r.carpetaNombre   + "/" +  docName;
+    vm.documNombre(docName);
+}
+
+function limpiaDatosArchivo(r) {
+    docName = null
+    carpetaId = null
+    docName = null
+    carpeta = null
+    $('.progress-bar').text(parseInt((0)+'%'));
+    $('.progress-bar').width(parseInt((0)+'%'));
+}
+
+function nuevaCarpeta() {
+    vm.carpetaNombre(null);
+}
+
+
+function aceptarNuevaCarpeta() {
+        //CREAMOS EL REGISTRO EN LA TABLA carpetas
+        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+        var a = vm.carpetaNombre();
+        a = a.trim();
+        a = a.replace(/[\/]/g, "-");
+        var data = 
+        {
+            carpeta: {
+                carpetaId: 0,
+                nombre: a,
+                tipo: "oferta",
+                departamentoId: vm.tipoOfertaId()
+            }
+        }
+
+        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+            if (err) return
+            $('#modalNuevaCarpeta').modal('hide');
+            mensNormal('Carpeta creada con exito');
+            cargaTablaDocumentacion();
+        });
+}
+
+function aceptarNuevaSubCarpeta() {
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a =  vm.subCarpetaNombre();
+    a = a.trim();
+    a = a.replace(/\//g, "-");
+    var n = subCarpeta + "/" + a;
+    var data = 
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: n,
+            tipo: carpetaTipo,
+            departamentoId: vm.tipoOfertaId()
+        }
+    }
+
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta/" + parent, data, function (err, data) {
+        if (err) return
+        $('#modalpostSubcarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
+}
+
+
+function nuevaSubcarpeta(r) {
+    vm.subCarpetaNombre(null);
+    subCarpeta = r.carpetaNombre;
+    carpetaTipo = r.tipo;
+    parent = r.carpetaId;
+
+}
+
+function deleteDocumento(id) {
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var parametros = data;
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
+            if (err) return;
+            if(data) {
+                var params = {
+                    Bucket: parametros.bucket_docum,
+                    Key: data.key
+            }
+    
+            //borramos el documento en s3
+            var s3 = new AWS.S3({ params });
+    
+            s3.deleteObject({}, (err, result) => {
+                if (err) mensError('Error al borrar el docuemnto');
+                //Actualizamos la tabla documentacion
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
+                    if (err) return;
+                    cargaTablaDocumentacion();
+                });
+            }); 
+            
+            }
+        });
+    })
+}
+
+function deleteCarpeta(id) {
+    var mens = "¿Realmente desea borrar esta carpeta, se borrarán todos los archivos y carpetas que contiene y no se podrá recuperar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            
+            llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+                if (err) return;
+                var parametros = data;
+                llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
+                    if (err) return mensError('Fallo al borrar la documentación en la base de datos');
+                    if(data2) {
+                        
+                    AWS.config.region = parametros.bucket_region_docum; // Región
+                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        IdentityPoolId: parametros.identity_pool_docum,
+                    });
+                    var prefix = data2.nombre;
+                    var params = {
+                        Bucket: parametros.bucket_docum,
+                        Prefix: prefix,
+                        Delimeter: "/"
+                    }
+        
+                    var s3 = new AWS.S3({ params });
+                    s3.listObjectsV2({}, (err, result) => {
+                        if (err) mensError('Error de lectura en la nube');
+                        console.log(result);
+                        if(result.Contents.length > 0) {
+
+
+
+                    var objectKeys = []
+                    result.Contents.forEach(e => {
+                        objectKeys.push(e.Key);
+                    });
+
+                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                    const objects = objectKeys.map(key => ({ Key: key }));
+                    const deleteParams = {
+                    Bucket: parametros.bucket_docum,
+                    Delete: { Objects: objects }
+                    };
+
+                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                    s3.deleteObjects(deleteParams, function(err, data) {
+                        if (err) {
+                            mensError('Fallo al borrar la carpeta en la nube');
+                        } else {
+                            mensNormal('Carpeta eliminada con éxito');
+                            cargaTablaDocumentacion();
+                        }
+}                   );
+
+                        } else {
+                            mensAlerta('No se han encontrado archivos en la nube para borrar');
+                            cargaTablaDocumentacion();
+                        }
+                       
+                    }); 
+            
+                  
+                    
+                    } else {
+                        mensError('No se han encontrado carpetas para borrar');
+                        cargaTablaDocumentacion();
+                    }
+                }); 
+            })
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+
+
+function uploadDocum(arr) {
+    var index = 0;
+      
+        arr.forEach(e => {
+            var repetido = e.repetido;
+            var documentoId = e.documentoId;
+            var filekey = e.fileKey;
+            delete e.fileKey
+            delete e.documentoId;
+            delete e.repetido;
+            var nom = e.nom;
+            delete e.nom;
+
+            AWS.config.region = parametros.bucket_region_docum; // Región
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: parametros.identity_pool_docum,
+            });
+            var bucket = parametros.bucket_docum;
+            var params = {
+                Bucket: bucket,
+                Key: filekey,
+                IdentityPoolId: parametros.identity_pool_docum,
+                Body: e,
+                ACL: "public-read"
+            }
+            var ext = nom.split('.').pop().toLowerCase();
+            if(ext == "pdf") params.ContentType = 'application/pdf'
+            // Use S3 ManagedUpload class as it supports multipart uploads
+            var upload = new AWS.S3.ManagedUpload({
+                params: params
+            });
+            var promise = upload.on('httpUploadProgress', function(evt) {
+                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
+                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
+              })
+              .promise();
+            promise.
+            then (
+                data => {
+                    if(data) {
+                        //CREAMOS EL REGISTRO EN LA TABLA ofertaDocumantacion
+                        var data = 
+                        {
+                            documentacion: {
+                                documentoId: 0,
+                                ofertaId: null,
+                                contratoId: null,
+                                parteId: null,
+                                carpetaId: carpetaId,
+                                location: data.Location,
+                                key: filekey
+                            }
+                        }
+                        if(carpetaTipo == "oferta") {
+                            data.documentacion.ofertaId =  vm.ofertaId();
+                        }else if(carpetaTipo == "contrato") {
+                            data.documentacion.contratoId = vm.contratoId();
+                        }
+    
+                        if(!repetido) {
+                            method = 'POST';
+                            url = "/api/documentacion";
+                        } else {
+                            data.documentacion.documentoId = e.documentoId;
+                            method = 'PUT';
+                            url = "/api/documentacion/" + documentoId;
+                        }
+        
+                        llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
+                            if (err) return mensError(err);
+                            index++
+                            if(index == arr.length) {
+                                $('#modalUploadDoc').modal('hide');
+                                mensNormal('Archivo subido con exito');
+                                limpiaDatosArchivo();
+                                cargaTablaDocumentacion();
+                            }
+                        });
+                    }
+                },
+                err =>{
+                    if (err) return mensError(err);
+                }
+            );        
+            });       
+}
+
+
+function aceptarSubirDocumentos() {
+    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    //buscamos los parámetros
+    llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        parametros = data;
+        var files = $("#upload-input").get(0).files;
+        var arr = [];
+        if (!files.length) {
+            mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
+            return;
+        }
+        for(var i = 0; i< files.length; i++) {
+            var e = files[i];
+            var encontrado = false;
+            var id = 0;
+            var file = e;
+            var ext = file.name.split('.').pop().toLowerCase();
+            var blob = file.slice(0, file.size, file.type); 
+            var newFile = new File([blob], {type: file.type});
+            var nom = "";
+            nom = vm.documNombre()
+            if(files.length > 1) {
+                var s = parseInt(i)
+                s++
+                nom = nom + "-" + s + "." + ext;
+            } else {
+                nom = nom + "." + ext;
+            }
+            nom = nom.replace(/\//g, "-");
+            newFile.nom = nom;
+            var fileKey =  carpeta + "/" + nom
+            newFile.fileKey = fileKey;
+            newFile.repetido = false;
+            arr.push(newFile);
+        }
+        //buscamos si el documento ya existe en la carpeta de destino
+        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+            if (err) return;
+            if(docums && docums.length > 0) {
+                for(var i = 0; i < docums.length; i++) {
+                    var d = docums[i];
+                    var n = d.key.split('/');
+                    var index = n.length - 1
+                    
+                    for(var j = 0; j < arr.length; j++) {
+                        if(n[index] == arr[j].nom) {
+                            encontrado = true;
+                            arr[j].repetido = true;
+                            arr[j].documentoId = d.documentoId;
+                            arr[j].repetido = true;
+                            break;
+                        } 
+                    }
+                }
+
+                if(encontrado) {
+                    var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            method = 'PUT';
+                            uploadDocum(arr);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+
+                } else {
+                    uploadDocum(arr);
+                }
+            } else {
+                uploadDocum(arr);
+            }
+        }); 
+
+    });
+    
+}

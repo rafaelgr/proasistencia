@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "e19ea21b1fe645a4b88bfb258828eba6",
+  "ReportGuid": "4aff602721944e60a9277f2b41077d78",
   "ReportName": "FacturaIquebana",
   "ReportAlias": "FacturaIquebana",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(3600000+0100)/",
-  "ReportChanged": "/Date(1676281727490+0100)/",
+  "ReportChanged": "/Date(1732877889481+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProyecta : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProyecta()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -752,7 +752,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Realizar pago mediante  {cabecera.formaPago} a la cuenta ES0300491828212810297625"
+                "Value": "Realizar pago mediante  {cabecera.formaPago} a la cuenta  ES58 2080 0611 0330 4006 5603"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",

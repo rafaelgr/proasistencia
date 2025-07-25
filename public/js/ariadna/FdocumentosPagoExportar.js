@@ -116,11 +116,18 @@ function admData() {
 
 
 
+
 function initTablaExportar() {
     tablaFacturas = $('#dt_fExportar').DataTable({
         autoWidth: true,
         paging: false,
         responsive: true,
+        columnDefs: [
+            {
+                targets: [10,11,12], // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            }
+        ],
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -143,6 +150,9 @@ function initTablaExportar() {
         },
         data: dataDocumentospago,
         columns: [{
+           data: "empty",
+         
+        },{
             data: "facproveId",
             render: function (data, type, row) {
                 var html = '<label class="input">';
@@ -347,6 +357,7 @@ function exportarFacturasDocpago() {
         }
         $("#mensajeExportacion").hide();
         $("#mensajeEspera").show();
+        $('#btnAceptarExportar').prop('disabled', true);
         var proveedorId = 0;
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -371,6 +382,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                     var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
                     mensNormal("Exportación realizada con éxito.");
                     loadTablaFacturasExp(null);
@@ -379,6 +391,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                 }
             },
             error: function (err) {
@@ -386,6 +399,7 @@ function exportarFacturasDocpago() {
                     $("#mensajeEspera").hide();
                     $("#mensajeExportacion").show();
                     $('#modalExportar').modal('hide');
+                    $('#btnAceptarExportar').prop('disabled', false);
                     // si hay algo más que hacer lo haremos aquí.
             }
         });

@@ -3,19 +3,9 @@ comercialGeneral.js
 Funciones js par la página ComercialGeneral.html
 
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_basic = undefined;
-var responsiveHelper_datatable_fixed_column = undefined;
-var responsiveHelper_datatable_col_reorder = undefined;
-var responsiveHelper_datatable_tabletools = undefined;
-
 var dataContratosComerciales;
 var contratoComercialId;
 var usuario;
-
-var breakpointDefinition = {
-    tablet: 1024,
-    phone: 480
-};
 
 
 function initForm() {
@@ -79,21 +69,45 @@ function initForm() {
 }
 
 function initTablaContratosComerciales() {
-    tablaCarro = $('#dt_contratoComercial').dataTable({
+    tablaCarro = $('#dt_contratoComercial').DataTable({
         autoWidth: true,
         paging: true,
+        responsive: true,
         "pageLength": 100,
-        preDrawCallback: function() {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_contratoComercial'), breakpointDefinition);
+        columnDefs: [
+            {
+                targets: 4, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [2, 3],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
             }
+        ],
+        preDrawCallback: function() {
+            
         },
         rowCallback: function(nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+           
         },
         drawCallback: function(oSettings) {
-            responsiveHelper_dt_basic.respond();
+           
         },
         language: {
             processing: "Procesando...",
@@ -146,6 +160,14 @@ function initTablaContratosComerciales() {
                 return html;
             }
         }]
+    });
+
+      // Apply the filter
+      $("#dt_contratoComercial thead th input[type=text]").on('keyup change', function () {
+        tablaCarro
+            .column($(this).parent().index() + ':visible')
+            .search(this.value)
+            .draw();
     });
 }
 

@@ -21,10 +21,6 @@ var breakpointDefinition = {
     tablet: 1024,
     phone: 480
 };
-
-
-
-datePickerSpanish(); // see comun.js
 var url;
 var vm = null;
 
@@ -34,6 +30,7 @@ function initForm() {
     // de smart admin
     pageSetUp();
     getVersionFooter();
+    datePickerSpanish(); // see comun.js
     //
     
 
@@ -50,6 +47,7 @@ function initForm() {
       }
     $('#btnPrint').click(printGeneral);
     $('#btnAlta').click(visarFacturas);
+    $('#btnBuscar').click(buscarVisadas)
    
     $('#frmBuscar').submit(function () {
         return false
@@ -72,35 +70,45 @@ function initForm() {
         var visada = 0;
         $('#btnAlta').show();
         $('#checkMain').show()
-        checkCerrados =  this;
-        if (this.checked) {
+        if(this.checked) { 
+            $('.ocultar').show();
             visada = 1;
             $('#btnAlta').hide();
             $('#checkMain').hide();
-        } 
-        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId+ "/" + vm.sdepartamentoId();
-        llamadaAjax("GET", url, null, function(err, data){
-            if (err) return;
-            registros = data.length;
-            loadTablaFacturas(data);
-        });
+        }else {
+            estableceFecha();
+            loadProveedores()
+            $('.ocultar').hide();
+           buscarFacturas()();
+        }
+             
     });
+
 
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        buscarFacturas()();
+        if(!$('#chkVisadas').prop('checked'))   buscarFacturas()();
     });
 
     vm = new admData();
+
     ko.applyBindings(vm);
+
+       
+    $("#cmbProveedores").select2(select2Spanish());
+
+    $('.ocultar').hide();
+   
 
     recuperaDepartamento(function(err, data) {
         if(err) return;
         initTablaFacturas();
         buscarFacturas()();
+        loadProveedores();
+        estableceFecha();
         // comprobamos parámetros
         facproveId = gup('FacturaId');
     });
@@ -114,41 +122,86 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.dFecha = ko.observable();
+    self.hFecha = ko.observable();
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
     
 } 
 
 function initTablaFacturas() { 
     tablaCarro = $('#dt_factura').DataTable({
         paging: false,
-        autoWidth: true,
-        "bDestroy": true,
-        "columnDefs": [ {
-            "targets": 0,
-            "width": "20%",
-            "orderable": false
-            } ],
-            "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>",
-            "oColVis": {
-                "buttonText": "Mostrar / ocultar columnas"
-            },
-        preDrawCallback: function () {
-            // Initialize the responsive datatables helper once.
-            if (!responsiveHelper_dt_basic) {
-                responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_factura'), breakpointDefinition);
+        autoWidth: false,
+        responsive: {
+            details: {
+                type: 'column', // Muestra el botón de "+" en una columna específica
+                target: 0, // Columna donde aparece el icono "+" (primera columna)
+                renderer: function(api, rowIdx, columns) {
+                    // Renderiza las columnas ocultas en modo responsive
+                    var data = $.map(columns, function(col, i) {
+                        return col.hidden ? 
+                            '<tr data-dt-row="' + col.rowIndex + '" data-dt-column="' + col.columnIndex + '">' +
+                                '<td>' + col.title + ':</td> ' +
+                                '<td>' + col.data + '</td>' +
+                            '</tr>' :
+                            '';
+                    }).join('');
+
+                    return data ? $('<table/>').append(data) : false;
+                }
             }
         },
-        rowCallback: function (nRow) {
-            responsiveHelper_dt_basic.createExpandIcon(nRow);
+        "bDestroy": true,
+        "columnDefs": [ 
+            {
+                "targets": 0, 
+                "orderable": false,
+                "responsivePriority": 1,
+                "className": "control", // Clase para el botón "+"
+                "width": "5%"
+            },
+            {
+                "targets": 15, 
+                className: 'all', 
+            },
+            { 
+                "type": "datetime-moment",
+                "targets": [7],
+                "render": function (data, type, row) {
+                    if (type === 'display' || type === 'filter') {
+                        if(!data) return null;
+                        return moment(data).format('DD/MM/YYYY');
+                    }
+                    // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
+                    else if (type === 'sort') {
+                        if(!data) return null;
+                        return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                    }
+                    // En otros casos, solo devuelve los datos sin cambios
+                    else {
+                        if(!data) return null;
+                        return data;
+                    }
+                }
+            }
+        ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>>" + 
+                "t" + 
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
         },
-        drawCallback: function (oSettings) {
-            responsiveHelper_dt_basic.respond();
-        },
-        language: {
+        "language": {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
             infoFiltered: "(filtrado de un total de _MAX_ registros)",
-            infoPostFix: "",
             loadingRecords: "Cargando...",
             zeroRecords: "No se encontraron resultados",
             emptyTable: "Ningún dato disponible en esta tabla",
@@ -164,95 +217,102 @@ function initTablaFacturas() {
             }
         },
         data: dataFacturas,
-        columns: [{
-            data: "facproveId",
-            width: '10%',
-            render: function (data, type, row) {
-                var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
-                //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
-                html += '</label>';
-                return html;
+        columns: [   
+            {
+                data: "facproveId",
+                render: function (data, type, row) {
+                    return '';
+                }
+            },
+            {
+                data: "facproveId",
+                render: function (data, type, row) {
+                    return '<label class="input"><input id="chk' + data + '" type="checkbox" name="chk' + data + '" class="checkAll"></label>';
+                }
+            }, 
+            { data: "emisorNombre" },
+            { 
+                data: "ref",
+                render: function (data, type, row) {
+                    if(row.num > 1) return "Consultar manualmente";
+                    return data;
+                }
+            },
+            { 
+                data: "direccionTrabajo",
+                render: function (data, type, row) {
+                    if(row.num > 1) return "Consultar manualmente";
+                    return data;
+                }
+            },
+            { data: "receptorNombre" },
+            { data: "vNum" },
+            { data: "fecha_recepcion" },
+            {
+                data: "total",
+                render: function (data) {
+                    return numeral(data).format('0,0.00');
+                }
+            },
+            {
+                data: "totalConIva",
+                render: function (data) {
+                    return numeral(data).format('0,0.00');
+                }
+            },
+            { data: "formaPago" },
+            {
+                data: "impPorcen",
+                render: function (data, type, row) {
+                    if(row.num > 1) return "Consultar manualmente";
+                    return numeral(data).format('0,0.00');
+                }
+            },
+            {
+                data: "costePorcen",
+                render: function (data, type, row) {
+                    if(row.num > 1) return "Consultar manualmente";
+                    return numeral(data).format('0,0.00');
+                }
+            },
+            {
+                data: "benPorcen",
+                render: function (data, type, row) {
+                    if(row.num > 1) return "Consultar manualmente";
+                    return numeral(data).format('0,0.00');
+                }
+            },
+            { data: "numAnticipo" },
+            {
+                data: "facproveId",
+                render: function (data, type, row) {
+                    var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initModal(" + data + ");'> <i class='fa fa-fw fa-files-o'></i> </button>";
+                    var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                    return html;
+                }
             }
-        }, {
-            data: "emisorNombre"
-        },{
-            data: "ref",
-            render: function (data, type, row) {
-                if(row.num > 1) return "Consultar manualmente";
-                return data
-            }
-        },{
-            data: "direccionTrabajo",
-            render: function (data, type, row) {
-                if(row.num > 1) return "Consultar manualmente";
-                return data
-            }
-
-        }, {
-            data: "receptorNombre"
-        }, {
-            data: "vNum"
-        }, {
-            data: "fecha_recepcion",
-            render: function (data, type, row) {
-                if(!data) return "";
-                return moment(data).format('DD/MM/YYYY');
-            }
-        },{
-            data: "total",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0,0.00');
-                return string;
-            }
-        }, {
-            data: "totalConIva",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0,0.00');
-                return string;
-            }
-        }, {
-            data: "formaPago"
-        },{
-            data: "impPorcen",
-            render: function (data, type, row) {
-                if(row.num > 1) return "Consultar manualmente";
-                return numeral(data).format('0,0.00');
-            }
-
-        },{
-            data: "costePorcen",
-            render: function (data, type, row) {
-                if(row.num > 1) return "Consultar manualmente";
-                return numeral(data).format('0,0.00');
-            }
-
-        },{
-            data: "benPorcen",
-            render: function (data, type, row) {
-                if(row.num > 1) return "Consultar manualmente";
-                return numeral(data).format('0,0.00');
-            }
-
-        },{
-            data: "numAnticipo"
-        }, {
-            data: "facproveId",
-            render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-info' title='Contrato asociado' data-toggle='modal' data-target='#modalContrato' onclick='initModal(" + data + ");' title='Consulta de resultados de contrato'> <i class='fa fa-fw fa-files-o'></i> </button>";
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
-                return html;
-            }
-        }]
+        ]
     });
 
-    tablaCarro.column(9).visible(false);
     tablaCarro.column(10).visible(false);
     tablaCarro.column(11).visible(false);
     tablaCarro.column(12).visible(false);
+    tablaCarro.column(13).visible(false);
 }
+
+
+function loadProveedores() {
+    llamadaAjax("GET", "/api/proveedores", null, function (err, data) {
+        if (err) return;
+        var proveedores = [{ proveedorId: 0, nombre: "" }].concat(data);
+        vm.posiblesProveedores(proveedores);
+        vm.proveedorId(0);
+        vm.sproveedorId(0);
+        $("#cmbProveedores").val([0]).trigger('change');
+    });
+}
+
 
 function initModal(facproveId) {
     init++
@@ -284,11 +344,26 @@ function loadTablaFacturas(data) {
         var field = "#chk" + v.facproveId;
         if (v.visada == 1) {
             $(field).attr('checked', true);
+            $(field).attr('disabled', true);
         }
-        $(field).change(function () {
-            if(!$("#chkVisadas").prop( "checked" )) return;
-            $('#btnAlta').hide();
-            $('#checkMain').hide();
+        //if(!$("#chkVisadas").prop( "checked" )) return;
+        //$('#btnAlta').hide();
+        //$('#checkMain').hide();
+       /*  $(field).change(function () {
+          mensajeConfirmacion(this, v);
+        }); */
+    });
+}
+
+function mensajeConfirmacion(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa quitar la marca de visada?, la factura pasará a estar pendiente de visar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
             var quantity = 0;
             var data = {
                 facprove: {
@@ -314,32 +389,32 @@ function loadTablaFacturas(data) {
                 contentType: "application/json",
                 data: JSON.stringify(data2),
                 success: function (data, status) {
-                    if($("#chkVisadas").prop( "checked" )) {
-                        vis = 1;
-                      }else {
-                          vis = 0;
-                      }
-                    var url = "VisadoFacproveGeneral.html?visadas="+ vis;
-                    window.open(url, '_self');
+                    buscarVisadas()();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
                 }
             });
-        });
+                    
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
     });
 }
 
 function buscarFacturas() {
     var mf = function () {
+        
         var url;
         if($("#chkVisadas").prop( "checked" )) {
-            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 +"/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
+            url = "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + 1 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
           }
           else {
             $('#checkMain').prop('checked', false);
-              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId();
-          }
+              url =  "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/"  + 0 + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + 0 + "/" + 0 +  "/" + 0;
+            }
+          
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + url,
@@ -369,7 +444,7 @@ function initTablaContratos(facproveId) {
         
         autoWidth: true,
         paging: true,
-        responsive: true,
+        
         "bDestroy": true,
         language: {
             processing: "Procesando...",
@@ -577,40 +652,58 @@ function informePDF(data) {
 }
 
 function visarFacturas() {
-    var contador = 0;
-    facturas.forEach(function (v) {
-        contador++;
-        var field = "#chk" + v.facproveId;
-        if (!$(field).prop('checked'))  return;
-            var data = {
-                facprove: {
-                    facproveId: v.facproveId,
-                    empresaId: v.empresaId,
-                    proveedorId: v.proveedorId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    visada: 1
-                }
-            };
-           
-            var url = "", type = "";
-            // updating record
-            var type = "PUT";
-            var url = sprintf('%s/api/facturasProveedores/visadas/modificar/%s', myconfig.apiUrl, v.facproveId);
-            var data2 = [];
-            data2.push(data);
-            $.ajax({
-                type: type,
-                url: url,
-                contentType: "application/json",
-                data: JSON.stringify(data2),
-                success: function (data, status) {
-                    if(contador == facturas.length)     buscarFacturas()();
-                    
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                }
+    mensajeConfirmacionVisar();
+}
+
+function mensajeConfirmacionVisar(t, v) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desa visar las facturas seleccionadas?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var contador = 0;
+            facturas.forEach(function (v) {
+                contador++;
+                var field = "#chk" + v.facproveId;
+                if (!$(field).prop('checked'))  return;
+                    var data = {
+                        facprove: {
+                            facproveId: v.facproveId,
+                            empresaId: v.empresaId,
+                            proveedorId: v.proveedorId,
+                            fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                            visada: 1
+                        }
+                    };
+                   
+                    var url = "", type = "";
+                    // updating record
+                    var type = "PUT";
+                    var url = sprintf('%s/api/facturasProveedores/visadas/modificar/%s', myconfig.apiUrl, v.facproveId);
+                    var data2 = [];
+                    data2.push(data);
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(data2),
+                        success: function (data, status) {
+                            if(contador == facturas.length)     buscarFacturas()();
+                            
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                        }
+                    });
             });
+                    
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
     });
 }
 
@@ -657,4 +750,41 @@ var printGeneral = function () {
          var url = "InfVisadosGeneral.html?visadas=" + vis + '&departamentoId='+vm.sdepartamentoId();
          window.open(url, '_blank');
     }
+}
+ function buscarVisadas() {
+    var visada = 0;
+    var dFecha = 0;
+    var hFecha = 0;
+    var proId = 0;
+        $('#btnAlta').show();
+        $('#checkMain').show()
+        if ($('#chkVisadas').prop('checked')) {
+            visada = 1;
+            $('#btnAlta').hide();
+            $('#checkMain').hide();
+            dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if(vm.hFecha()) {
+                hFecha = moment(vm.hFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            } 
+            proId = vm.sproveedorId();
+        } 
+        var url = myconfig.apiUrl + "/api/facturasProveedores/visadas/facturas-proveedor/todas/usuario/logado/departamento/" + visada + "/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha +  "/" + proId;
+        llamadaAjax("GET", url, null, function(err, data){
+            if (err) return;
+            registros = data.length;
+            loadTablaFacturas(data);
+        });
+ }
+
+ function estableceFecha() {
+    // Restar 1 año a la fecha actual
+    var fechaInicio;
+    var fActual = new Date();
+    var ano = fActual.getFullYear() - 1; // Resta 1 año a la fecha actual
+    var mes = fActual.getMonth();
+    var dia = fActual.getDay();
+
+    fechaInicio = moment(ano + "-" + mes + "-" + dia).format('DD/MM/YYYY');
+    vm.dFecha(fechaInicio);
+    vm.hFecha(null)
 }

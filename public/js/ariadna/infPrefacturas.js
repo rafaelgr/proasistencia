@@ -165,6 +165,7 @@ var obtainReport = function (carga) {
     if(!carga) {
         if (!datosOK()) return;
     }
+    var ids = [];
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
@@ -191,20 +192,39 @@ var obtainReport = function (carga) {
         // obtener el indice de los sql que contiene el informe que trata 
         // la cabecera ('pf.prefacturaId')
         var pos = 0;
+        var pos1 = 0;
+        var pos2 = 0;
         for (var i = 0; i < report.dataSources.items.length; i++) {
             var str = report.dataSources.items[i].sqlCommand;
             if (str.indexOf("pf.prefacturaId") > -1) pos = i;
+            if (str.indexOf("prefacturas_lineas") > -1) pos1 = i;
+            if (str.indexOf("prefacturas_bases") > -1) pos2 = i;
         }
         var sql = report.dataSources.items[pos].sqlCommand;
+        var sql3 = report.dataSources.items[pos1].sqlCommand;
+        var sql4 = report.dataSources.items[pos2].sqlCommand;
+
         var sql2 = rptPrefacturaParametros(sql);
         verb = "POST"; 
-        url = myconfig.apiUrl + "/api/informes/sql";
+        url = myconfig.apiUrl + "/api/informes/sql/nuevo";
         llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
             if (err) return;
             if (data) {
-                report.dataSources.items[pos].sqlCommand = sql2;
-                // Assign report to the viewer, the report will be built automatically after rendering the viewer
-                viewer.report = report;
+                if(data.length > 0) {
+                    for( var i = 0; i < data.length; i++) {
+                        ids.push(data[i].prefacturaId);
+                    }
+                    sql3 = sql3 + ' WHERE pfl.prefacturaId IN ( ' + ids + ' )';
+                    sql4 = sql4 + ' WHERE pfb.prefacturaId IN ( ' + ids + ' )';
+                    report.dataSources.items[pos].sqlCommand = sql2;
+                    report.dataSources.items[pos1].sqlCommand = sql3;
+                    report.dataSources.items[pos2].sqlCommand = sql4;
+                    // Assign report to the viewer, the report will be built automatically after rendering the viewer
+                    viewer.report = report;
+                } else {
+                    alert("No hay registros con estas condiciones");
+                }
+                
             } else {
                 alert("No hay registros con estas condiciones");
             }
