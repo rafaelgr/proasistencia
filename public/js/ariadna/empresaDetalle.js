@@ -43,11 +43,11 @@ function initForm() {
     $("#frmSeries").submit(function () {
         return false;
     });
-    
+
     $("#series-form").submit(function () {
         return false;
     });
-    
+
     $("#frmLinea").submit(function () {
         return false;
     });
@@ -56,7 +56,7 @@ function initForm() {
         return false;
     });
 
-    
+
 
 
     //comprobamos si el puerto 465 está configurado con correo seguro
@@ -74,18 +74,18 @@ function initForm() {
         }
       });*/
 
-      /*$('#txtPort').blur(function(){
-        if(!$('#chkSecure').is(':checked') && vm.portCorreo() == 465) {
-            var mens = 'No se permite correo no seguro por el puerto 465';
-            mensNormal(mens);
-            vm.portCorreo(25);
-          }
-          if($('#chkSecure').is(':checked') && vm.portCorreo() != 465) {
-            var mens = 'No se permite correo seguro por un puerto diferente al 465';
-            mensNormal(mens);
-            vm.portCorreo(465);
+    /*$('#txtPort').blur(function(){
+      if(!$('#chkSecure').is(':checked') && vm.portCorreo() == 465) {
+          var mens = 'No se permite correo no seguro por el puerto 465';
+          mensNormal(mens);
+          vm.portCorreo(25);
         }
-      });*/
+        if($('#chkSecure').is(':checked') && vm.portCorreo() != 465) {
+          var mens = 'No se permite correo seguro por un puerto diferente al 465';
+          mensNormal(mens);
+          vm.portCorreo(465);
+      }
+    });*/
 
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
@@ -99,7 +99,7 @@ function initForm() {
     $('#cmbTiposFormaPago').select2(select2Spanish());
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-     loadDepartamentos();
+    loadDepartamentos();
 
     $("#cmbTipoProyecto").select2(select2Spanish());
     loadTipoProyecto();
@@ -108,11 +108,12 @@ function initForm() {
 
     initTablaSeries();
     initTablaCuentasLineas();
-    
-    
+
+
     // carga del editor de plantillas
     CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
     CKEDITOR.replace('ckeditorRep', { height: '380px', startupFocus: true });
+    CKEDITOR.replace('ckeditorArq', { height: '380px', startupFocus: true });
 
     empId = gup('EmpresaId');
     if (empId != 0) {
@@ -212,17 +213,19 @@ function admData() {
     self.posiblesTiposRegisRec = ko.observableArray([]);
     self.elegidosTiposRegisRec = ko.observableArray([]);
 
-     //
-     self.tiporegi = ko.observable();
-     self.stiporegiRep = ko.observable();
-     //
-     self.posiblesTiposRegisRep = ko.observableArray([]);
-     self.elegidosTiposRegisRep = ko.observableArray([]);
- 
+    //
+    self.tiporegi = ko.observable();
+    self.stiporegiRep = ko.observable();
+    //
+    self.posiblesTiposRegisRep = ko.observableArray([]);
+    self.elegidosTiposRegisRep = ko.observableArray([]);
+
 
     //
     self.plantillaCorreoFacturas = ko.observable();
     self.plantillaCorreoFacturasRep = ko.observable();
+    self.plantillaCorreoFacturas = ko.observable();
+    self.plantillaCorreoArq = ko.observable();
 
 
     //MODAL
@@ -241,7 +244,7 @@ function admData() {
     //LINEAS FORSMAS PAGO/CUENTAS CONTABLES
 
     self.empresaCuentapagoId = ko.observable(),
-    self.cuentapago = ko.observable();
+        self.cuentapago = ko.observable();
     self.cuentacobro = ko.observable();
     //
     self.tipoFormaPagoId = ko.observable();
@@ -292,8 +295,10 @@ function loadData(data) {
     // 
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
     vm.plantillaCorreoFacturasRep(data.plantillaCorreoFacturasRep);
+    vm.plantillaCorreoArq(data.plantillaCorreoArq);
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
     CKEDITOR.instances.plantillaRep.setData(vm.plantillaCorreoFacturasRep());
+    CKEDITOR.instances.plantillaArq.setData(vm.plantillaCorreoArq());
 
     //
     loadSerieRectificativas(data.serieFacR);
@@ -315,8 +320,8 @@ function datosOK() {
             txtContabilidad: {
                 required: true
             },
-            
-            
+
+
         },
         // Messages for form validation
         messages: {
@@ -332,8 +337,8 @@ function datosOK() {
             txtContabilidad: {
                 required: 'Indique la contabilidad'
             },
-           
-           
+
+
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -372,6 +377,7 @@ function aceptar() {
         if (!datosOK()) return;
         vm.plantillaCorreoFacturas(CKEDITOR.instances.plantilla.getData());
         vm.plantillaCorreoFacturasRep(CKEDITOR.instances.plantillaRep.getData());
+        vm.plantillaCorreoArq(CKEDITOR.instances.plantillaArq.getData());
         var data = {
             empresa: {
                 "empresaId": vm.empresaId(),
@@ -407,6 +413,7 @@ function aceptar() {
                 "infPreFacturas": vm.infPreFacturas(),
                 "plantillaCorreoFacturas": vm.plantillaCorreoFacturas(),
                 "plantillaCorreoFacturasRep": vm.plantillaCorreoFacturasRep(),
+                "plantillaCorreoArq": vm.plantillaCorreoArq(),
                 "asuntoCorreo": vm.asunto(),
                 "hostCorreo": vm.hostCorreo(),
                 "portCorreo": vm.portCorreo(),
@@ -562,7 +569,7 @@ function loadSeriesFact(id) {
         dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
-            var series = [{tiporegi: 100, nomregis: null}].concat(data);
+            var series = [{ tiporegi: 100, nomregis: null }].concat(data);
             vm.posiblesTiposRegis(series);
             $("#cmbSerieFac").val([id]).trigger('change');
             return;
@@ -616,19 +623,19 @@ function loadTipoProyecto(id) {
     });
 }
 
-function comprobarVacios(){
-        if(/^\s+|\s+$/.test(vm.passCorreo()) || vm.passCorreo() == "") {
-            vm.passCorreo(null);
-        }
-        if(/^\s+|\s+$/.test(vm.hostCorreo()) || vm.hostCorreo() == "") {
-            vm.hostCorreo(null);
-        }
-        if(/^\s+|\s+$/.test(vm.usuCorreo()) || vm.usuCorreo() == "") {
-            vm.usuCorreo(null);
-        }
-        if(/^\s+|\s+$/.test(vm.portCorreo()) || vm.portCorreo() == "") {
-            vm.portCorreo(null);
-        }
+function comprobarVacios() {
+    if (/^\s+|\s+$/.test(vm.passCorreo()) || vm.passCorreo() == "") {
+        vm.passCorreo(null);
+    }
+    if (/^\s+|\s+$/.test(vm.hostCorreo()) || vm.hostCorreo() == "") {
+        vm.hostCorreo(null);
+    }
+    if (/^\s+|\s+$/.test(vm.usuCorreo()) || vm.usuCorreo() == "") {
+        vm.usuCorreo(null);
+    }
+    if (/^\s+|\s+$/.test(vm.portCorreo()) || vm.portCorreo() == "") {
+        vm.portCorreo(null);
+    }
 }
 
 // --------------- Solapa de Series
@@ -636,8 +643,8 @@ function initTablaSeries() {
     tablaSeries = $('#dt_series').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
@@ -774,11 +781,11 @@ function guardarSeries() {
     var departamentoId = vm.sdepartamentoId();
     var tipoProyectoId = vm.stipoProyectoId();
     var tiporegi = vm.stiporegi();
-    var seriepre =  vm.seriePre();
-    if(departamentoId == 0) vm.sdepartamentoId(null);
-    if(tipoProyectoId == 0) vm.stipoProyectoId(null);
-    if(tiporegi == 100) vm.stiporegi(null);
-    if(seriepre = '') vm.seriePre(null);
+    var seriepre = vm.seriePre();
+    if (departamentoId == 0) vm.sdepartamentoId(null);
+    if (tipoProyectoId == 0) vm.stipoProyectoId(null);
+    if (tiporegi == 100) vm.stiporegi(null);
+    if (seriepre = '') vm.seriePre(null);
     var data = {
         empresaSerie: {
             empresaId: vm.empresaId(),
@@ -873,7 +880,7 @@ function editSeries(id) {
 
 function cargaModalSeries(id) {
     limpiaModal();
-    if(id) {
+    if (id) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/empresaSerie/un/registro/" + id, null, function (err, data) {
             if (err) return;
             //loadTablaSeries(data);
@@ -895,7 +902,7 @@ function nuevaLinea() {
 }
 
 function limpiaDataLinea(data) {
-    vm.empresaCuentapagoId (0);
+    vm.empresaCuentapagoId(0);
     vm.cuentapago(null);
     vm.cuentacobro(null);
     //
@@ -911,7 +918,7 @@ function comprobarCuenta() {
     var data = [];
     data.push(codmacta);
     data.push(codmacta2);
-    
+
     llamadaAjax("POST", "/api/empresas/empresaCuentas/cuenta/pago/comprueba/existe/" + vm.contabilidad(), data, function (err, data) {
         if (err) return;
         if (data.length > 0) {
@@ -967,7 +974,7 @@ function deleteCuentaLinea(id) {
     var url = myconfig.apiUrl + "/api/empresas/empresaCuentas/" + id;
     var mens = "¿Realmente desea borrar este registro?";
     mensajeAceptarCancelar(mens, function () {
-        
+
         llamadaAjax("DELETE", url, null, function (err, data) {
             if (err) return;
             loadLineasCuenta(empId);
@@ -1078,14 +1085,14 @@ function initTablaCuentasLineas() {
             }
         },
         data: dataCuentasLineas,
-        columns: [ {
+        columns: [{
             data: "TipoFormaPagoNombre"
         }, {
             data: "cuentapago",
-           
+
         }, {
             data: "cuentacobro",
-           
+
         }, {
             data: "empresaCuentapagoId",
             render: function (data, type, row) {
@@ -1103,8 +1110,8 @@ function initTablaCuentasLineas() {
 
 function loadDataLinea(data) {
     vm.empresaCuentapagoId(data.empresaCuentapagoId),
-    vm.cuentapago(data.cuentapago),
-    vm.cuentacobro(data.cuentacobro);
+        vm.cuentapago(data.cuentapago),
+        vm.cuentacobro(data.cuentacobro);
     loadTiposFormaPago(data.tipoFormaPagoId);
 }
 
