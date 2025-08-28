@@ -19,52 +19,60 @@ var breakpointDefinition = {
 
 function initForm() {
     comprobarLogin();
+    datePickerSpanish(); // see comun.js
     // de smart admin
     pageSetUp();
     getVersionFooter();
     directorio = gup('dir');
 
-    if(directorio != "facturas_proveedores/") $('#frmBuscarFacproves').hide();
-    if(directorio != "facturas/") $('#frmBuscarFacturas').hide()
+    if (directorio != "facturas_proveedores/") $('#frmBuscarFacproves').hide();
+    if (directorio != "facturas/") $('#frmBuscarFacturas').hide()
 
     vm = new admData();
     ko.applyBindings(vm);
 
     $('#btndescargarFacproves').click(descargarRenombrarFacproves2);
+    $('#btnBuscarFacproves').click(getObjectsdocumentacion2);
 
-  
-    
+
+
     $('#btndescargarFacturas').click(descargarRenombrarFacturas);
-    
-     // 7 bind to events triggered on the tree
-     $('#jstreeDocumentacion').on("click.jstree", function (e) {
+
+    // 7 bind to events triggered on the tree
+    $('#jstreeDocumentacion').on("click.jstree", function (e) {
         var node = $(e.target).closest('.jstree-node');
         var selectedNodeId = node.attr('id');
         if (e.which === 1) {
             var jsTree = $.jstree.reference(e.target);
             var originalNode = jsTree.get_node(node);
-            if(!originalNode.data.folder)  {
+            if (!originalNode.data.folder) {
                 var url = originalNode.original.location;
                 window.open(url, '_blank');
             }
         }
-});
+    });
 
-// 8 interact with the tree - either way is OK
-$('#demo').on('click', function () {
-  $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
-  $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
-  $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
-});
+    // 8 interact with the tree - either way is OK
+    $('#demo').on('click', function () {
+        $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+        $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+        $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+    });
 
-/* var to = false;
-    $('#search-input').keyup(function () {
-      if(to) { clearTimeout(to); }
-      to = setTimeout(function () {
-        var v = $('#search-input').val();
-        $('#jstreeDocumentacion').jstree(true).search(v);
-      }, 250);
-    }); */
+    //validacion de fecha mayor que fecha
+    $.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha final debe ser mayor que la inicial.');
+
+
     $("#frmBuscarFacproves").submit(function () {
         return false;
     });
@@ -88,11 +96,13 @@ $('#demo').on('click', function () {
     $("#cmbProveedores").select2(select2Spanish());
     loadProveedores(0);
 
+    estableceFechaEjercicio();
+
     //initAutoProveedor();
 
 
     initArbolDocumentacion();
-    getObjectsdocumentacion() 
+    if (directorio != "facturas_proveedores/") getObjectsdocumentacion()
 }
 
 function admData() {
@@ -104,23 +114,27 @@ function admData() {
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
-    
+
     //COMBO AÑOS
     self.optionsAnos = ko.observableArray([]);
-    self.ano = ko.observable(); 
+    self.ano = ko.observable();
     self.sano = ko.observable();
     self.selectedAnos = ko.observableArray([]);
-    
+
+    //COMBO DFECHA A FECHA
+    self.dFecha = ko.observable();
+    self.hFecha = ko.observable();
+
     //COMBO EMPRESA 2
     self.empresaId2 = ko.observable();
     self.sempresaId2 = ko.observable();
     //
     self.posiblesEmpresas2 = ko.observableArray([]);
     self.elegidosEmpresas2 = ko.observableArray([]);
-    
+
     //COMBO AÑOS 2
     self.optionsAnos2 = ko.observableArray([]);
-    self.ano2 = ko.observable(); 
+    self.ano2 = ko.observable();
     self.sano2 = ko.observable();
     self.selectedAnos2 = ko.observableArray([]);
 
@@ -130,10 +144,10 @@ function admData() {
     //
     self.posiblesProveedores = ko.observableArray([]);
     self.elegidosProveedores = ko.observableArray([]);
-    
-} 
 
-function   loadAnyos(){
+}
+
+function loadAnyos() {
     //recuperamos los años que hay en las facturas de proveedores en la base de datos
     llamadaAjax("GET", "/api/facturasProveedores/get-anyos/facprove", null, function (err, data) {
         console.log(data);
@@ -145,21 +159,21 @@ function   loadAnyos(){
         var n = d.getFullYear();//estableceremos el año actual por defecto en el desplegable
         var t = data[0].ano.toString();
         vm.sano(t);
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             var s = data[i];
             anoText = s.ano.toString();
-          ano = {
-            nombreAno: anoText,
-            ano: s.ano
-          };
-          anos.push(ano);
+            ano = {
+                nombreAno: anoText,
+                ano: s.ano
+            };
+            anos.push(ano);
         }
         vm.optionsAnos(anos);
         $("#cmbAnos").val([n]).trigger('change');
     });
 }
 
-function   loadAnyos2(){
+function loadAnyos2() {
     //recuperamos los años que hay en las facturas de proveedores en la base de datos
     llamadaAjax("GET", "/api/facturasProveedores/get-anyos/facprove", null, function (err, data) {
         console.log(data);
@@ -171,14 +185,14 @@ function   loadAnyos2(){
         var n = d.getFullYear();//estableceremos el año actual por defecto en el desplegable
         var t = data[0].ano.toString();
         vm.sano2(t);
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             var s = data[i];
             anoText = s.ano.toString();
-          ano = {
-            nombreAno: anoText,
-            ano: s.ano
-          };
-          anos.push(ano);
+            ano = {
+                nombreAno: anoText,
+                ano: s.ano
+            };
+            anos.push(ano);
         }
         vm.optionsAnos2(anos);
         $("#cmbAnos2").val([n]).trigger('change');
@@ -252,92 +266,101 @@ var initAutoProveedor = function () {
 };
 //FUNCIONES DE DESCARGAR Y RENOMBRAR FACTURAS DE GASTOS
 
-var descargarRenombrarFacproves = function() {
-    if(objectsS3.length == 0) return;
+var descargarRenombrarFacproves = function () {
+    if (objectsS3.length == 0) return;
     //
     var a = vm.sempresaId2().toString();
     var b = vm.sano2().toString();
     var patronTexto = b + "-" + a;
     //patronTexto = patronTexto.toString();
     selectObjectsFacprove(patronTexto)
-    .then(objetosFiltrados => {
-        renombrarObjetosFacprove(objetosFiltrados)
-        .then((objetosRenombrados) => {
-            descargarObjetosFacprove(objetosRenombrados)
-            .then(() => {
-                console.log('Descarga completa');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        .then(objetosFiltrados => {
+            renombrarObjetosFacprove(objetosFiltrados)
+                .then((objetosRenombrados) => {
+                    descargarObjetosFacprove(objetosRenombrados)
+                        .then(() => {
+                            console.log('Descarga completa');
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         })
         .catch(error => {
             console.error('Error:', error);
         });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
 }
 
-var descargarRenombrarFacproves2 = function() {
-    if(objectsS3.length == 0) return;
+
+var descargarRenombrarFacproves2 = function () {
+    if (objectsS3.length == 0) return;
     //
     var arr = [];
-    var obj = {}
+    var obj = {};
     var a = vm.sempresaId2().toString();
-    var b = vm.sano2().toString();
-    var patronTexto = b + "-" + a;
+    var dFecha = null;
+    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = vm.hFecha();
+    if (hFecha == '' || hFecha == undefined) hFecha = null;
+    if (hFecha != null) {
+        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if (!datosOKFacproves()) return;
+    }
 
-    llamadaAjax("GET", "/api/facturasProveedores/anyo/empresa/proveedor/" + a + "/" + b + "/" + vm.sproveedorId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha + "/" + hFecha + "/" + vm.sproveedorId(), null, function (err, data) {
         if (err) return;
-        if(data.length == 0) return;
-        for(let i = 0; i < data.length; i++) {
+        if (data.length == 0) return;
+        for (let i = 0; i < data.length; i++) {
             obj = {
                 Key: "facturas_proveedores/" + data[i].nombreFacprovePdf
             }
             arr.push(obj);
         }
         renombrarObjetosFacprove(arr)
-        .then((objetosRenombrados) => {
-            descargarObjetosFacprove(objetosRenombrados)
-            .then(() => {
-                console.log('Descarga completa');
+            .then((objetosRenombrados) => {
+                descargarObjetosFacprove(objetosRenombrados)
+                    .then(() => {
+                        console.log('Descarga completa');
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        
+
     });
     //patronTexto = patronTexto.toString();
-    
+
 }
 
 
+
+
 async function selectObjectsFacprove(patronTexto) {
-     // Filtrar los objetos según el patrón de texto
-     let objetosFiltrados = objectsS3.filter(objeto => {
+    // Filtrar los objetos según el patrón de texto
+    let objetosFiltrados = objectsS3.filter(objeto => {
         return objeto.Key.includes(patronTexto); // Puedes ajustar aquí tu criterio de filtrado
     });
     return objetosFiltrados;
 }
 
 async function renombrarObjetosFacprove(obj) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/api/facturasProveedores/recupera/numregis",
             method: 'PUT',
             contentType: 'application/json', // Establece el tipo de contenido a JSON
             data: JSON.stringify(obj), // Convierte el array a formato JSON
-            success: function(response) {
+            success: function (response) {
                 // Resuelve la promesa con la respuesta recibida
                 resolve(response);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 // Rechaza la promesa con el error
                 mensError("Fallo al renombrar los archivos.");
                 reject(error);
@@ -373,22 +396,22 @@ async function descargarObjetosFacprove(objetos) {
 
 
 //FUNCIONES DE DESCARGAR Y RENOMBRER FACTURAS
-var descargarRenombrarFacturas = function() {
+var descargarRenombrarFacturas = function () {
     var a = vm.sempresaId().toString();
     var b = vm.sano().toString();
     llamadaAjax("GET", "/api/facturas/busca/key/documentacion/" + a + "/" + b, null, function (err, data) {
-       if(data) {
-        descargarObjetosFacturas(data)
-        .then(() => {
-            console.log('Descarga completa');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        
-       }
+        if (data) {
+            descargarObjetosFacturas(data)
+                .then(() => {
+                    console.log('Descarga completa');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        }
     });
-    
+
 
 }
 
@@ -422,29 +445,29 @@ var descargarRenombrarFacturas = function() {
 async function selectObjectsFacturas(patronTexto) {
     // Filtrar los objetos según el patrón de texto
     let objetosFiltrados = objectsS3.filter(objeto => {
-       return objeto.Key.includes(patronTexto); // Puedes ajustar aquí tu criterio de filtrado
-   });
-   return objetosFiltrados;
+        return objeto.Key.includes(patronTexto); // Puedes ajustar aquí tu criterio de filtrado
+    });
+    return objetosFiltrados;
 }
 
 async function renombrarObjetosFacturas(obj) {
-   return new Promise(function(resolve, reject) {
-       $.ajax({
-           url: "/api/facturasProveedores/recupera/numregis",
-           method: 'PUT',
-           contentType: 'application/json', // Establece el tipo de contenido a JSON
-           data: JSON.stringify(obj), // Convierte el array a formato JSON
-           success: function(response) {
-               // Resuelve la promesa con la respuesta recibida
-               resolve(response);
-           },
-           error: function(xhr, status, error) {
-               // Rechaza la promesa con el error
-               mensError("Fallo al renombrar los archivos.");
-               reject(error);
-           }
-       });
-   });
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/api/facturasProveedores/recupera/numregis",
+            method: 'PUT',
+            contentType: 'application/json', // Establece el tipo de contenido a JSON
+            data: JSON.stringify(obj), // Convierte el array a formato JSON
+            success: function (response) {
+                // Resuelve la promesa con la respuesta recibida
+                resolve(response);
+            },
+            error: function (xhr, status, error) {
+                // Rechaza la promesa con el error
+                mensError("Fallo al renombrar los archivos.");
+                reject(error);
+            }
+        });
+    });
 }
 
 async function descargarObjetosFacturas(objetos) {
@@ -475,118 +498,237 @@ async function descargarObjetosFacturas(objetos) {
 
 ///
 function initArbolDocumentacion() {
-    $('#jstreeDocumentacion').jstree({ 'core' : 
-    {
-        'data' : [],
-    },
-    'check_callback' : true,
-    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu", "search" ],
-    "select_node": true,
-    'multiple': true, // Habilita la selección múltiple
-    'contextmenu': {
-        'items': function(node) {
-            var menuItems = {
-            // Define las opciones del menú contextual para cada nodo
-         
-            'Option 1': {
-                'label': 'Descargar',
-                'action': function(a, b , c) {
-                    const selectedNodes = $('#jstreeDocumentacion').jstree('get_selected', true);
-                    for (let i = 0; i < selectedNodes.length; i++) {
-                        descargaObjectdocumentacion(selectedNodes[i].original);
+    $('#jstreeDocumentacion').jstree({
+        'core':
+        {
+            'data': [],
+        },
+        'check_callback': true,
+        "plugins": ["themes", "html_data", "ui", "crrm", "contextmenu", "search"],
+        "select_node": true,
+        'multiple': true, // Habilita la selección múltiple
+        'contextmenu': {
+            'items': function (node) {
+                var menuItems = {
+                    // Define las opciones del menú contextual para cada nodo
+
+                    'Option 1': {
+                        'label': 'Descargar',
+                        'action': function (a, b, c) {
+                            const selectedNodes = $('#jstreeDocumentacion').jstree('get_selected', true);
+                            for (let i = 0; i < selectedNodes.length; i++) {
+                                descargaObjectdocumentacion(selectedNodes[i].original);
+                            }
+                        }
                     }
                 }
-              } 
-            } 
-            return menuItems;
+                return menuItems;
+            }
         }
-    }
-});
+    });
 
 }
 async function listAllObjectsWithSignedUrls(parametros) {
     AWS.config.region = parametros.bucket_region_server;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: parametros.identity_pool_server,
+        IdentityPoolId: parametros.identity_pool_server,
     });
     var s3 = new AWS.S3();
-  
+
     let objects = [];
     let continuationToken = null;
-  
+
     do {
-      const params = {
-        Bucket: parametros.bucket_server,
-        Prefix: directorio,
-        ContinuationToken: continuationToken,
-      };
-  
-      const response = await s3.listObjectsV2(params).promise();
-      objects = objects.concat(response.Contents);
-      continuationToken = response.NextContinuationToken;
+        const params = {
+            Bucket: parametros.bucket_server,
+            Prefix: directorio,
+            ContinuationToken: continuationToken,
+        };
+
+        const response = await s3.listObjectsV2(params).promise();
+        objects = objects.concat(response.Contents);
+        continuationToken = response.NextContinuationToken;
     } while (continuationToken);
-  
+
     // Ahora genero URL firmadas para cada objeto
     for (const obj of objects) {
-      obj.signedUrl = s3.getSignedUrl('getObject', {
-        Bucket: parametros.bucket_server,
-        Key: obj.Key,
-        Expires: 300 // duración en segundos (5 minutos)
-      });
+        obj.Key
+        obj.signedUrl = s3.getSignedUrl('getObject', {
+            Bucket: parametros.bucket_server,
+            Key: obj.Key,
+            Expires: 300 // duración en segundos (5 minutos)
+        });
     }
-  
+
     objectsS3 = objects;
     return objects;
-  }
-  
+}
 
-  async function getObjectsdocumentacion() {
-    llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      const parametros = data;
-  
-      try {
-        const objetos = await listAllObjectsWithSignedUrls(parametros);
-  
-        let carpetas = [];
-        let archivos = [];
-        let id = 1;
-        let documentoId = 1;
-        let antCarpeta = null;
-  
-        objetos.forEach(e => {
-          // Extraer nombre carpeta por el prefijo antes de "/"
-          const indexSlash = e.Key.indexOf("/");
-          const carpetaNombre = indexSlash > -1 ? e.Key.substring(0, indexSlash) : "SinCarpeta";
-  
-          if (!antCarpeta) {
-            carpetas.push({ carpetaNombre, carpetaId: id });
-            archivos.push({ data: e, carpetaId: id, documentoId });
-            antCarpeta = carpetaNombre;
-          } else {
-            if (carpetaNombre !== antCarpeta) {
-              id++;
-              carpetas.push({ carpetaNombre, carpetaId: id });
-              archivos.push({ data: e, carpetaId: id, documentoId });
-              antCarpeta = carpetaNombre;
-            } else {
-              archivos.push({ data: e, carpetaId: id, documentoId });
-            }
-          }
-          documentoId++;
-        });
-  
-        const regs = ProcesaDocumObjTree(archivos, carpetas);
-        loadDocumentacionTree(regs);
-  
-      } catch (error) {
-        console.error("Error al listar o generar URLs firmadas:", error);
-      }
+
+async function listObjectsFilteredWithSignedUrls(parametros, keysArray, concurrency = 5) {
+    AWS.config.region = parametros.bucket_region_server;
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: parametros.identity_pool_server,
     });
-  }
+
+    // Espera a que Cognito configure las credenciales
+    await AWS.config.credentials.getPromise();
+
+    const s3 = new AWS.S3();
+    const objects = [];
+
+    // Función para procesar un key
+    const processKey = async (Key) => {
+        try {
+            await s3.headObject({ Bucket: parametros.bucket_server, Key }).promise();
+            return {
+                Key,
+                signedUrl: s3.getSignedUrl("getObject", {
+                    Bucket: parametros.bucket_server,
+                    Key,
+                    Expires: 300
+                })
+            };
+        } catch (err) {
+            console.warn(`Objeto no encontrado: ${Key}`);
+            return null;
+        }
+    };
+
+    $("#spinner-overlay").show();
+
+    // Procesa los keys en bloques de 'concurrency' elementos
+    for (let i = 0; i < keysArray.length; i += concurrency) {
+        const chunk = keysArray.slice(i, i + concurrency);
+        const results = await Promise.all(chunk.map(processKey));
+        objects.push(...results.filter(r => r !== null));
+    }
+
+    $("#spinner-overlay").hide();
+
+    objectsS3 = objects;
+
+    return objects;
+}
+
+
+
+async function getObjectsdocumentacion() {
+    llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        const parametros = data;
+
+        try {
+            const objetos = await listAllObjectsWithSignedUrls(parametros);
+
+            let carpetas = [];
+            let archivos = [];
+            let id = 1;
+            let documentoId = 1;
+            let antCarpeta = null;
+
+            objetos.forEach(e => {
+                // Extraer nombre carpeta por el prefijo antes de "/"
+                const indexSlash = e.Key.indexOf("/");
+                const carpetaNombre = indexSlash > -1 ? e.Key.substring(0, indexSlash) : "SinCarpeta";
+
+                if (!antCarpeta) {
+                    carpetas.push({ carpetaNombre, carpetaId: id });
+                    archivos.push({ data: e, carpetaId: id, documentoId });
+                    antCarpeta = carpetaNombre;
+                } else {
+                    if (carpetaNombre !== antCarpeta) {
+                        id++;
+                        carpetas.push({ carpetaNombre, carpetaId: id });
+                        archivos.push({ data: e, carpetaId: id, documentoId });
+                        antCarpeta = carpetaNombre;
+                    } else {
+                        archivos.push({ data: e, carpetaId: id, documentoId });
+                    }
+                }
+                documentoId++;
+            });
+
+            const regs = ProcesaDocumObjTree(archivos, carpetas);
+            loadDocumentacionTree(regs);
+
+        } catch (error) {
+            console.error("Error al listar o generar URLs firmadas:", error);
+        }
+    });
+}
+
+async function getObjectsdocumentacion2() {
+    var dFecha = null;
+    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = vm.hFecha();
+    if (hFecha == '' || hFecha == undefined) hFecha = null;
+    if (hFecha != null) {
+        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if (!datosOKFacproves()) return;
+    }
+    llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        parametros = data;
+        var a = vm.sempresaId2().toString();
+        var arr = []
+
+
+        llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha + "/" + hFecha + "/" + vm.sproveedorId(), null, async function (err, data2) {
+            if (err) return;
+            if (data2.length == 0) return;
+            for (let i = 0; i < data2.length; i++) {
+
+                arr.push(directorio + data2[i].nombreFacprovePdf);
+            }
+            try {
+                const objetos = await listObjectsFilteredWithSignedUrls(parametros, arr);
+
+                let carpetas = [];
+                let archivos = [];
+                let id = 1;
+                let documentoId = 1;
+                let antCarpeta = null;
+
+                objetos.forEach(e => {
+                    // Extraer nombre carpeta por el prefijo antes de "/"
+                    const indexSlash = e.Key.indexOf("/");
+                    const carpetaNombre = indexSlash > -1 ? e.Key.substring(0, indexSlash) : "SinCarpeta";
+
+                    if (!antCarpeta) {
+                        carpetas.push({ carpetaNombre, carpetaId: id });
+                        archivos.push({ data: e, carpetaId: id, documentoId });
+                        antCarpeta = carpetaNombre;
+                    } else {
+                        if (carpetaNombre !== antCarpeta) {
+                            id++;
+                            carpetas.push({ carpetaNombre, carpetaId: id });
+                            archivos.push({ data: e, carpetaId: id, documentoId });
+                            antCarpeta = carpetaNombre;
+                        } else {
+                            archivos.push({ data: e, carpetaId: id, documentoId });
+                        }
+                    }
+                    documentoId++;
+                });
+
+                const regs = ProcesaDocumObjTree(archivos, carpetas);
+                loadDocumentacionTree(regs);
+
+            } catch (error) {
+                console.error("Error al listar o generar URLs firmadas:", error);
+            }
+
+
+        });
+    });
+}
 
 
 
@@ -602,16 +744,16 @@ function descargarArchivo(url, nombreArchivo) {
 async function getSignedUrlForObject(bucket, key) {
     const s3 = new AWS.S3();
     const params = { Bucket: bucket, Key: key, Expires: 300 }; // 5 minutos
-  
+
     return s3.getSignedUrlPromise('getObject', params);
-  }
+}
 
 
 function descargaObjectdocumentacion(obj) {
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
         var parametros = data;
-       
+
         // Reemplaza con la URL de tu objeto S3
         const s3Url = parametros.raiz_url_server + obj.key;
 
@@ -626,60 +768,60 @@ function descargaObjectdocumentacion(obj) {
 
 function downloadS3Object(s3Url, fileName) {
 
-// Función para descargar el archivo desde S3
-  fetch(s3Url, {
-    method: 'GET',
-  })
-    .then((response) => {
-        return response.blob();
+    // Función para descargar el archivo desde S3
+    fetch(s3Url, {
+        method: 'GET',
     })
-    .then((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = s3Url.split('/').pop(); // Nombre del archivo basado en la URL
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    })
-    .catch((error) => {
-      console.error('Error al descargar el objeto S3:', error);
-    });
+        .then((response) => {
+            return response.blob();
+        })
+        .then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = s3Url.split('/').pop(); // Nombre del archivo basado en la URL
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch((error) => {
+            console.error('Error al descargar el objeto S3:', error);
+        });
 }
 
 
 function loadDocumentacionTree(data) {
-   /*  var cont = 50
-    var d = [];
-    for(i=0; i < cont; i++) {
-        d.push(data[i]);
-    } */
-    if(data.length == 0) return;
-   /*  var obj = d;
-    console.log(d); */
+    /*  var cont = 50
+     var d = [];
+     for(i=0; i < cont; i++) {
+         d.push(data[i]);
+     } */
+    if (data.length == 0) return;
+    /*  var obj = d;
+     console.log(d); */
     $('#jstreeDocumentacion').jstree(true).settings.core.data = data;
     $('#jstreeDocumentacion').jstree(true).refresh();
 }
 
 function ProcesaDocumObjTree(doc, carpeta) {
-	//if((doc.length == 1 && !doc[0].facproveId) || (doc.length == 1 && !doc[0].antproveId)) return doc;
-	var antdir = null;
-	var cont = 1;
-	var regs = [];
-	var docObj = {
-		
-	};
-	var dirObj = {
-		
-	};
+    //if((doc.length == 1 && !doc[0].facproveId) || (doc.length == 1 && !doc[0].antproveId)) return doc;
+    var antdir = null;
+    var cont = 1;
+    var regs = [];
+    var docObj = {
+
+    };
+    var dirObj = {
+
+    };
     var l = [];
     var index;
 
-	carpeta.forEach(d => {
+    carpeta.forEach(d => {
         doc.forEach(e => {
-		if(antdir) {
-			if(antdir == d.carpetaId ) {
+            if (antdir) {
+                if (antdir == d.carpetaId) {
                     l = e.data.Key.split('/');
                     index = l.length - 1;
                     var s = parseInt(e.data.Size);
@@ -687,120 +829,160 @@ function ProcesaDocumObjTree(doc, carpeta) {
                     r = roundToTwo(r).toString()
                     //var html = '<div style="width: 100%"><span style="width: 20%;text-align: left;">' + l[index] + '</span><span  style="width: 20%;text-align: left;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="width: 20%;text-align: left;">' + r + ' KB ' + '</span></div>'
                     //var html = '<ul style="list-style-type: none; color: black"><li style="display: inline; margin-right: 10px;">' + l[index] + '</li><li style="display: inline; margin-right: 10px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</li><li style="display: inline; margin-right: 10px;">' + r + ' KB ' + '</li></ul>'
-					docObj = {
+                    docObj = {
                         documentoId: e.documentoId,
-						location: e.data.signedUrl,
+                        location: e.data.signedUrl,
                         key: e.data.Key,
                         text: l[index],
                         id: e.documentoId,
-                        data: { "folder" : false },
-                        parent:  'c' + d.carpetaId,
+                        data: { "folder": false },
+                        parent: 'c' + d.carpetaId,
                         icon: "glyphicon glyphicon-file"
-					};
-                    if(d.carpetaId == e.carpetaId) {
+                    };
+                    if (d.carpetaId == e.carpetaId) {
                         regs.push(docObj);
                     }
-					docObj = {}; //una vez incluida la factura en el documento se limpian los datos
-				
-                antdir = d.carpetaId;
-				
-			} else  {
-				//si es otro documento de pago guardamos el anterior y creamos otro
-				
-                l = d.carpetaNombre.split('/');
-                index = l.length - 1;
-				dirObj = {
-					carpetaNombre: d.carpetaNombre,
-                    carpetaId: d.carpetaId,
-                    text:  l[index],
-                    id:  'c' + d.carpetaId,
-                    data: { "folder" : true },
-                    parent: '#',
-				    documentos: [],
-				};
-                regs.push(dirObj);
-                //if(!d.carpetaPadreId) dirObj.parent = '#';
-				
+                    docObj = {}; //una vez incluida la factura en el documento se limpian los datos
+
+                    antdir = d.carpetaId;
+
+                } else {
+                    //si es otro documento de pago guardamos el anterior y creamos otro
+
+                    l = d.carpetaNombre.split('/');
+                    index = l.length - 1;
+                    dirObj = {
+                        carpetaNombre: d.carpetaNombre,
+                        carpetaId: d.carpetaId,
+                        text: l[index],
+                        id: 'c' + d.carpetaId,
+                        data: { "folder": true },
+                        parent: '#',
+                        documentos: [],
+                    };
+                    regs.push(dirObj);
+                    //if(!d.carpetaPadreId) dirObj.parent = '#';
+
                     l = e.data.Key.split('/');
                     index = l.length - 1;
                     var s = parseInt(e.data.Size);
                     var r = s / 1024;
                     r = roundToTwo(r).toString()
                     //var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
-					docObj = {
+                    docObj = {
                         documentoId: e.documentoId,
                         location: e.data.signedUrl,
                         key: e.data.Key,
                         text: l[index],
                         id: e.documentoId,
-                        data: { "folder" : false },
-                        parent:  'c100',
+                        data: { "folder": false },
+                        parent: 'c100',
                         icon: "glyphicon glyphicon-file"
-						
-					};
-					
-                    if(d.carpetaId == e.carpetaId) {
+
+                    };
+
+                    if (d.carpetaId == e.carpetaId) {
                         regs.push(docObj);
                     }
-					docObj = {}; //una vez incluida la factura en el documento se limpian los datos
-				
+                    docObj = {}; //una vez incluida la factura en el documento se limpian los datos
 
-				
-				antdir = d.carpetaId;
-			} 
 
-		}
-		if(!antdir) {
-            l = d.carpetaNombre.split('/');
-            index = l.length - 1;
-			dirObj = {
-				carpetaNombre: d.carpetaNombre,
-                carpetaId: d.carpetaId,
-                text: l[index],
-                state: { "opened": true },
-                id:  'c' + d.carpetaId,
-                data: { "folder" : true },
-                parent: '#',
-				documentos: [],
-			};
-            //if(!d.carpetaPadreId) dirObj.parent = '#';
-            regs.push(dirObj);
-			if(e.documentoId) {
-                l = e.data.Key.split('/');
-                index = l.length - 1;
-                var s = parseInt(e.data.Size);
-                var r = s / 1024;
-                r = roundToTwo(r).toString()
-                //var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
-				docObj = {
-                    documentoId: e.documentoId,
-                    location: e.data.signedUrl,
-                    key: e.data.Key,
-                    text: l[index],
-                    id: e.documentoId,
-                    data: { "folder" : false },
-                    parent:   'c' + d.carpetaId,
-                    icon: "glyphicon glyphicon-file"
-                };
-                
-				if(d.carpetaId == e.carpetaId) {
-                    regs.push(docObj);
+
+                    antdir = d.carpetaId;
                 }
-				docObj = {};
-			}
-            antdir = d.carpetaId;
-		}
+
+            }
+            if (!antdir) {
+                l = d.carpetaNombre.split('/');
+                index = l.length - 1;
+                dirObj = {
+                    carpetaNombre: d.carpetaNombre,
+                    carpetaId: d.carpetaId,
+                    text: l[index],
+                    state: { "opened": true },
+                    id: 'c' + d.carpetaId,
+                    data: { "folder": true },
+                    parent: '#',
+                    documentos: [],
+                };
+                //if(!d.carpetaPadreId) dirObj.parent = '#';
+                regs.push(dirObj);
+                if (e.documentoId) {
+                    l = e.data.Key.split('/');
+                    index = l.length - 1;
+                    var s = parseInt(e.data.Size);
+                    var r = s / 1024;
+                    r = roundToTwo(r).toString()
+                    //var html = '<span style="margin-right: 30px;">' + l[index] + '</span><span  style="margin-right: 30px;">' + moment(e.data.LastModified).format('DD/MM/YYYY')  + '</span><span style="margin-right: 30px;">' + r + ' KB ' + '</span>'
+                    docObj = {
+                        documentoId: e.documentoId,
+                        location: e.data.signedUrl,
+                        key: e.data.Key,
+                        text: l[index],
+                        id: e.documentoId,
+                        data: { "folder": false },
+                        parent: 'c' + d.carpetaId,
+                        icon: "glyphicon glyphicon-file"
+                    };
+
+                    if (d.carpetaId == e.carpetaId) {
+                        regs.push(docObj);
+                    }
+                    docObj = {};
+                }
+                antdir = d.carpetaId;
+            }
         });
         //si se trata del ultimo registro lo guardamos
-		/* if(cont == carpeta.length) {
-			regs.push(dirObj);
-		} */
-		cont++;
+        /* if(cont == carpeta.length) {
+            regs.push(dirObj);
+        } */
+        cont++;
 
-	});
-    
+    });
 
-	return regs;
+
+    return regs;
+}
+
+function estableceFechaEjercicio() {
+    //SI EL DIA ACTUAL ES MAYOR QUE EL 15 DE ENERO SE ESTABLECE EL CAMPO
+    //DFECHA DE LA BUSQUEDA COMO EL PRIMER DIA DEL EJERCICIO ANTERIOR.
+    //SI ES MAYOR SE ESTABLECE EL CAMPO DFECHA COMO EL PRIMER DIA DEL EJERCICIO ACTUAL.
+    var fechaInicio;
+    var fActual = new Date();
+    var ano = fActual.getFullYear();
+
+    var InicioEjercicio = new Date(ano + '-01-15');
+    if (fActual > InicioEjercicio) {
+        fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
+        vm.dFecha(fechaInicio);
+    } else {
+        ano = ano - 1
+        fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
+        vm.dFecha(fechaInicio);
+    }
+}
+
+function datosOKFacproves() {
+    // Segun se incorporen criterios de filtrado
+    // habrá que controlarlos aquí
+    $('#frmBuscarFacproves').validate({
+        rules: {
+            txtHastaFecha: {
+                greaterThan: "#txtDesdeFecha"
+            }
+        },
+        // Messages for form validation
+        messages: {
+
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmBuscarFacproves').valid();
 }
 
 

@@ -126,14 +126,14 @@ var app = express();
 
 // to parse body content
 app.use(bodyParser.urlencoded({
-    extended: true,
-    limit: '100mb'
+  extended: true,
+  limit: '100mb'
 }));
 
 app.use(bodyParser.json(
-    {
-        limit: '100mb'
-    }
+  {
+    limit: '100mb'
+  }
 ));
 
 // using cors for cross class
@@ -145,41 +145,42 @@ app.use('/ficheros', serveIndex(__dirname + '/public/ficheros', { 'icons': true,
 
 
 
+
 // mounting routes
 var router = express.Router();
 
 // -- common to all routes
 router.use(function (req, res, next) {
-    // go on (by now)
-    next();
+  // go on (by now)
+  next();
 });
 
 router.post('/', function (req, res) {
-    console.log("POST :" ,req.body);
-    response = res;
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Cache-Control", "no-cache");
-    var data = "";
-    req.on('data', function (buffer) {
-        data += buffer;
-    });
+  console.log("POST :", req.body);
+  response = res;
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Cache-Control", "no-cache");
+  var data = "";
+  req.on('data', function (buffer) {
+    data += buffer;
+  });
 });
 
 //función de tratamiento de errores
 app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.json({
-        error: {
-            message: error.message
-        }
-    });
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  });
 });
 
 app.get('/config', (req, res) => {
-    res.json({
-        host: process.env.SERVER,
-        protocol: process.env.PROTOCOL,
-    });
+  res.json({
+    host: process.env.SERVER,
+    protocol: process.env.PROTOCOL,
+  });
 });
 
 app.get('/abrir-app', (req, res) => {
@@ -225,7 +226,7 @@ app.get('/abrir-app', (req, res) => {
 
 // -- general GET (to know if the server is up and runnig)
 router.get('/', function (req, res) {
-    res.json('PROASISTENCIA API / SERVER -- runnig');
+  res.json('PROASISTENCIA API / SERVER -- runnig');
 });
 
 // -- registering routes
@@ -332,7 +333,7 @@ var ioAPI = require('./lib/ioapi/ioapi');
 ioAPI.init(io);
 
 //starting daemon
-setInterval(daemonApi.run,  process.env.COMERCIALIZA_DELAY || 900000);
+setInterval(daemonApi.run, process.env.COMERCIALIZA_DELAY || 900000);
 
 
 // -- console message
