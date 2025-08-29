@@ -31,12 +31,11 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
 
-    $('#btndescargarFacproves').click(descargarRenombrarFacproves2);
-    $('#btnBuscarFacproves').click(getObjectsdocumentacion2);
-
-
-
     $('#btndescargarFacturas').click(descargarRenombrarFacturas);
+    $('#btndescargarFacproves').click(descargarRenombrarFacproves2);
+    $('#btnBuscarFacproves').click(getObjectsdocumentacionFacproves);
+    $('#btnBuscarFacturas').click(getObjectsdocumentacionFacturas);
+
 
     // 7 bind to events triggered on the tree
     $('#jstreeDocumentacion').on("click.jstree", function (e) {
@@ -81,11 +80,11 @@ function initForm() {
         return false;
     });
 
-    $('#cmbAnos').select2(select2Spanish());
-    loadAnyos();
-
-    $('#cmbAnos2').select2(select2Spanish());
-    loadAnyos2();
+    /*  $('#cmbAnos').select2(select2Spanish());
+     loadAnyos();
+ 
+     $('#cmbAnos2').select2(select2Spanish());
+     loadAnyos2(); */
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas(2);
@@ -102,7 +101,13 @@ function initForm() {
 
 
     initArbolDocumentacion();
-    if (directorio != "facturas_proveedores/") getObjectsdocumentacion()
+    if (directorio == "facturas_proveedores/") {
+
+    } else if (directorio == "facturas/") {
+
+    } else {
+        getObjectsdocumentacion();
+    }
 }
 
 function admData() {
@@ -120,10 +125,10 @@ function admData() {
     self.ano = ko.observable();
     self.sano = ko.observable();
     self.selectedAnos = ko.observableArray([]);
-
-    //COMBO DFECHA A FECHA
+    //COMBO dFecha2 A hFecha22
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
+
 
     //COMBO EMPRESA 2
     self.empresaId2 = ko.observable();
@@ -144,9 +149,13 @@ function admData() {
     //
     self.posiblesProveedores = ko.observableArray([]);
     self.elegidosProveedores = ko.observableArray([]);
+    //COMBO dFecha2 A hFecha22
+    self.dFecha2 = ko.observable();
+    self.hFecha2 = ko.observable();
+
 
 }
-
+/* 
 function loadAnyos() {
     //recuperamos los años que hay en las facturas de proveedores en la base de datos
     llamadaAjax("GET", "/api/facturasProveedores/get-anyos/facprove", null, function (err, data) {
@@ -198,7 +207,7 @@ function loadAnyos2() {
         $("#cmbAnos2").val([n]).trigger('change');
     });
 }
-
+ */
 
 function loadEmpresas(id) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
@@ -301,16 +310,16 @@ var descargarRenombrarFacproves2 = function () {
     var arr = [];
     var obj = {};
     var a = vm.sempresaId2().toString();
-    var dFecha = null;
-    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-    var hFecha = vm.hFecha();
-    if (hFecha == '' || hFecha == undefined) hFecha = null;
-    if (hFecha != null) {
-        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var dFecha2 = null;
+    if (vm.dFecha2()) dFecha2 = moment(vm.dFecha2(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha2 = vm.hFecha2();
+    if (hFecha2 == '' || hFecha2 == undefined) hFecha2 = null;
+    if (hFecha2 != null) {
+        if (hFecha2 != null) hFecha2 = moment(hFecha2, 'DD/MM/YYYY').format('YYYY-MM-DD');
         if (!datosOKFacproves()) return;
     }
 
-    llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha + "/" + hFecha + "/" + vm.sproveedorId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha2 + "/" + hFecha2 + "/" + vm.sproveedorId(), null, function (err, data) {
         if (err) return;
         if (data.length == 0) return;
         for (let i = 0; i < data.length; i++) {
@@ -398,8 +407,15 @@ async function descargarObjetosFacprove(objetos) {
 //FUNCIONES DE DESCARGAR Y RENOMBRER FACTURAS
 var descargarRenombrarFacturas = function () {
     var a = vm.sempresaId().toString();
-    var b = vm.sano().toString();
-    llamadaAjax("GET", "/api/facturas/busca/key/documentacion/" + a + "/" + b, null, function (err, data) {
+    var dFecha = null;
+    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = vm.hFecha();
+    if (hFecha == '' || hFecha == undefined) hFecha = null;
+    if (hFecha != null) {
+        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if (!datosOKFacturas()) return;
+    }
+    llamadaAjax("GET", "/api/facturas/entre-fechas/empresa/" + a + "/" + dFecha + "/" + hFecha, null, function (err, data) {
         if (data) {
             descargarObjetosFacturas(data)
                 .then(() => {
@@ -480,13 +496,13 @@ async function descargarObjetosFacturas(objetos) {
     for (const objeto of objetos) {
         const params = {
             Bucket: parametros.bucket_server,
-            Key: objeto.vFact,
+            Key: directorio + objeto.nombreFacturaPdf,
         };
 
         try {
             const { Body } = await s3.getObject(params).promise();
             const url = URL.createObjectURL(new Blob([Body]));
-            const nombreDescarga = objeto.vFact; // Usa el nombre de descarga alternativo si está definido
+            const nombreDescarga = objeto.nombreFacturaPdf; // Usa el nombre de descarga alternativo si está definido
             descargarArchivo(url, nombreDescarga);
         } catch (error) {
             console.error(`Error al descargar el objeto ${objeto.Key}: ${error}`);
@@ -661,13 +677,13 @@ async function getObjectsdocumentacion() {
     });
 }
 
-async function getObjectsdocumentacion2() {
-    var dFecha = null;
-    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-    var hFecha = vm.hFecha();
-    if (hFecha == '' || hFecha == undefined) hFecha = null;
-    if (hFecha != null) {
-        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+async function getObjectsdocumentacionFacproves() {
+    var dFecha2 = null;
+    if (vm.dFecha2()) dFecha2 = moment(vm.dFecha2(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha2 = vm.hFecha2();
+    if (hFecha2 == '' || hFecha2 == undefined) hFecha2 = null;
+    if (hFecha2 != null) {
+        if (hFecha2 != null) hFecha2 = moment(hFecha2, 'DD/MM/YYYY').format('YYYY-MM-DD');
         if (!datosOKFacproves()) return;
     }
     llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
@@ -680,12 +696,80 @@ async function getObjectsdocumentacion2() {
         var arr = []
 
 
-        llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha + "/" + hFecha + "/" + vm.sproveedorId(), null, async function (err, data2) {
+        llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha2 + "/" + hFecha2 + "/" + vm.sproveedorId(), null, async function (err, data2) {
             if (err) return;
             if (data2.length == 0) return;
             for (let i = 0; i < data2.length; i++) {
 
                 arr.push(directorio + data2[i].nombreFacprovePdf);
+            }
+            try {
+                const objetos = await listObjectsFilteredWithSignedUrls(parametros, arr);
+
+                let carpetas = [];
+                let archivos = [];
+                let id = 1;
+                let documentoId = 1;
+                let antCarpeta = null;
+
+                objetos.forEach(e => {
+                    // Extraer nombre carpeta por el prefijo antes de "/"
+                    const indexSlash = e.Key.indexOf("/");
+                    const carpetaNombre = indexSlash > -1 ? e.Key.substring(0, indexSlash) : "SinCarpeta";
+
+                    if (!antCarpeta) {
+                        carpetas.push({ carpetaNombre, carpetaId: id });
+                        archivos.push({ data: e, carpetaId: id, documentoId });
+                        antCarpeta = carpetaNombre;
+                    } else {
+                        if (carpetaNombre !== antCarpeta) {
+                            id++;
+                            carpetas.push({ carpetaNombre, carpetaId: id });
+                            archivos.push({ data: e, carpetaId: id, documentoId });
+                            antCarpeta = carpetaNombre;
+                        } else {
+                            archivos.push({ data: e, carpetaId: id, documentoId });
+                        }
+                    }
+                    documentoId++;
+                });
+
+                const regs = ProcesaDocumObjTree(archivos, carpetas);
+                loadDocumentacionTree(regs);
+
+            } catch (error) {
+                console.error("Error al listar o generar URLs firmadas:", error);
+            }
+
+
+        });
+    });
+}
+
+async function getObjectsdocumentacionFacturas() {
+    var dFecha = null;
+    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    var hFecha = vm.hFecha();
+    if (hFecha == '' || hFecha == undefined) hFecha = null;
+    if (hFecha != null) {
+        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if (!datosOKFacturas()) return;
+    }
+    llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        parametros = data;
+        var arr = []
+        var a = vm.sempresaId().toString();
+
+        llamadaAjax("GET", "/api/facturas/entre-fechas/empresa/" + a + "/" + dFecha + "/" + hFecha, null, async function (err, data2) {
+            if (err) return;
+            if (data2.length == 0) return;
+            for (let i = 0; i < data2.length; i++) {
+
+                arr.push(directorio + data2[i].nombreFacturaPdf);
             }
             try {
                 const objetos = await listObjectsFilteredWithSignedUrls(parametros, arr);
@@ -947,8 +1031,8 @@ function ProcesaDocumObjTree(doc, carpeta) {
 
 function estableceFechaEjercicio() {
     //SI EL DIA ACTUAL ES MAYOR QUE EL 15 DE ENERO SE ESTABLECE EL CAMPO
-    //DFECHA DE LA BUSQUEDA COMO EL PRIMER DIA DEL EJERCICIO ANTERIOR.
-    //SI ES MAYOR SE ESTABLECE EL CAMPO DFECHA COMO EL PRIMER DIA DEL EJERCICIO ACTUAL.
+    //dFecha2 DE LA BUSQUEDA COMO EL PRIMER DIA DEL EJERCICIO ANTERIOR.
+    //SI ES MAYOR SE ESTABLECE EL CAMPO dFecha2 COMO EL PRIMER DIA DEL EJERCICIO ACTUAL.
     var fechaInicio;
     var fActual = new Date();
     var ano = fActual.getFullYear();
@@ -956,10 +1040,12 @@ function estableceFechaEjercicio() {
     var InicioEjercicio = new Date(ano + '-01-15');
     if (fActual > InicioEjercicio) {
         fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
+        vm.dFecha2(fechaInicio);
         vm.dFecha(fechaInicio);
     } else {
         ano = ano - 1
         fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
+        vm.dFecha2(fechaInicio);
         vm.dFecha(fechaInicio);
     }
 }
@@ -969,8 +1055,8 @@ function datosOKFacproves() {
     // habrá que controlarlos aquí
     $('#frmBuscarFacproves').validate({
         rules: {
-            txtHastaFecha: {
-                greaterThan: "#txtDesdeFecha"
+            txtHastaFecha2: {
+                greaterThan: "#txtDesdeFecha2"
             }
         },
         // Messages for form validation
@@ -983,6 +1069,29 @@ function datosOKFacproves() {
         }
     });
     return $('#frmBuscarFacproves').valid();
+}
+
+
+
+function datosOKFacturas() {
+    // Segun se incorporen criterios de filtrado
+    // habrá que controlarlos aquí
+    $('#frmBuscarFacturas').validate({
+        rules: {
+            txtHastaFecha2: {
+                greaterThan: "#txtDesdeFecha"
+            }
+        },
+        // Messages for form validation
+        messages: {
+
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#frmBuscarFacturas').valid();
 }
 
 

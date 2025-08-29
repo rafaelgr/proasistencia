@@ -698,40 +698,44 @@
                                         </header>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-md-8">
+
+                                                <section class="col col-md-4">
+                                                    <label class="label">De fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtDesdeFecha" name="txtDesdeFecha"
+                                                            data-bind="value: dFecha" class="datepicker"
+                                                            data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-md-4">
+                                                    <label class="label">A fecha</label>
+                                                    <label class="input">
+                                                        <input id="txtHastaFecha" name="txtHastaFecha"
+                                                            data-bind="value: hFecha" class="datepicker"
+                                                            data-dateformat="dd/mm/yy" />
+                                                    </label>
+                                                </section>
+
+                                                <section class="col col-md-4">
                                                     <label class="label">Empresa</label>
                                                     <label style="width:100%; height:50px;">
                                                         <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas"
                                                             data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-4">
-                                                    <label class="label">Años</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%;" id="cmbAnos" name="cmbAnos"
-                                                            data-bind="options: optionsAnos, optionsText: 'nombreAno', optionsValue: 'ano', 
-                                                        value: sano, valueAllowUnset: true, selectedOptions: selectedAnos, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section>
-                                                <!--  <section class="col col-md-6">
-                                                    <label class="label">Proveedor</label>
-                                                    <label class="input">
-                                                        <input id="txtProveedor" name="txtProveedor" />
-                                                    </label>
-                                                </section> -->
                                             </div>
                                         </fieldset>
 
                                         <fieldset>
-                                            <!-- <div class="pull-right">
+                                            <div class="pull-right">
                                                 <button id="btnBuscarFacturas" title="Buscar registros" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-search"></i>
                                                 </button>
-                                            </div> -->
+                                            </div>
                                             <div class="pull-right">
                                                 <button id="btndescargarFacturas"
                                                     title="Descargar y renombrar registros"
-                                                    class="btn btn-primary btn-circle btn-lg">
+                                                    class="btn btn-info btn-circle btn-lg">
                                                     <i class="fa fa-lg fa-download"></i>
                                                 </button>
                                             </div>
@@ -742,17 +746,21 @@
                                             Descargar y renombrar.
                                         </header>
                                         <fieldset>
-                                             <div class="row">
+                                            <div class="row">
                                                 <section class="col col-md-6">
                                                     <label class="label">De fecha recepción</label>
                                                     <label class="input">
-                                                        <input id="txtDesdeFecha" name="txtDesdeFecha" data-bind="value: dFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                        <input id="txtDesdeFecha2" name="txtDesdeFecha2"
+                                                            data-bind="value: dFecha2" class="datepicker"
+                                                            data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                                 <section class="col col-md-6">
                                                     <label class="label">A fecha recepción</label>
                                                     <label class="input">
-                                                        <input id="txtHastaFecha" name="txtHastaFecha" data-bind="value: hFecha" class="datepicker" data-dateformat="dd/mm/yy" />
+                                                        <input id="txtHastaFecha2" name="txtHastaFecha2"
+                                                            data-bind="value: hFecha2" class="datepicker"
+                                                            data-dateformat="dd/mm/yy" />
                                                     </label>
                                                 </section>
                                             </div>
@@ -764,14 +772,7 @@
                                                             data-bind="options: posiblesEmpresas2, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId2, valueAllowUnset: true, selectedOptions: elegidosEmpresas2, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
-                                                <!-- <section class="col col-md-4">
-                                                    <label class="label">Años</label>
-                                                    <label style="width:100%; height:50px;">
-                                                        <select style="width:100%;" id="cmbAnos2" name="cmbAnos2"
-                                                            data-bind="options: optionsAnos2, optionsText: 'nombreAno', optionsValue: 'ano', 
-                                                        value: sano2, valueAllowUnset: true, selectedOptions: selectedAnos2, selected2:{}"></select><i></i>
-                                                    </label>
-                                                </section> -->
+                                              
                                                 <section class="col col-md-6">
                                                     <label class="label">Proveedor</label>
                                                     <label style="width:100%; height:50px;">
