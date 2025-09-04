@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "187ad107587c492185638ac91f2fa660",
+  "ReportGuid": "5b07d10444bb4b0c80cc4ac01349f217",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1753957047239+0200)/",
+  "ReportChanged": "/Date(1756976770297+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -64,21 +64,24 @@
             "Index": -1,
             "NameInSource": "ofertaId",
             "Alias": "ofertaId",
-            "Type": "System.Int32"
+            "Type": "System.Int32",
+            "Key": "a063977e28f4497e8bf3c900fe73cbf6"
           },
           "2": {
             "Name": "referencia",
             "Index": -1,
             "NameInSource": "referencia",
             "Alias": "referencia",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "56488eeeb4b14c2498eace44018a7e25"
           },
           "3": {
             "Name": "fechaOferta",
             "Index": -1,
             "NameInSource": "fechaOferta",
             "Alias": "fechaOferta",
-            "Type": "System.Byte[]"
+            "Type": "System.String",
+            "Key": "19902b63eb5b479cbc611c7542130478"
           },
           "4": {
             "Name": "nombreEmpresa",
@@ -464,7 +467,7 @@
               "Ident": "StiText",
               "Name": "Text59",
               "Guid": "ec1bc8485a89420887d13d0afff34467",
-              "ClientRectangle": "15,0.6,3.8,0.4",
+              "ClientRectangle": "11.4,0.6,7.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
