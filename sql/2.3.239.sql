@@ -8,3 +8,5 @@ ALTER TABLE `empresas`
 	ADD COLUMN `prevalorada` TINYINT(1) DEFAULT 0 NULL AFTER `fechaInicio`;
 
 
+ALTER TABLE `propuesta_lineas`   
+	ADD COLUMN `ofertaSubcontratalineaId` INT(11) NULL AFTER `ofertaCostelineaId`;
