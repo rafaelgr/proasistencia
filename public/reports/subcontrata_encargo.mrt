@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "2ce00449f1244874b14764728e012e08",
+  "ReportGuid": "ee316bf9831c4f998a126c19b42ab657",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1757588843967+0200)/",
+  "ReportChanged": "/Date(1758014935866+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -900,7 +900,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand2",
-          "ClientRectangle": "0,52,19,0.8",
+          "ClientRectangle": "0,50.6,19,2.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -909,13 +909,49 @@
           "Components": {
             "0": {
               "Ident": "StiText",
+              "Name": "Text9",
+              "ClientRectangle": "0.2,0.7,18.5,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ToProperCase(ofertas.empresaDireccion)} {ofertas.empresaCodPostal} {ToProperCase(ofertas.empresaPoblacion)} | Telf:  91 290 50 30 | email: info@proyectarquitectos.es "
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Bottom",
+              "Font": "Calibri Light;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
               "Name": "Text18",
-              "ClientRectangle": "7.8,0.04,2.3,0.5",
+              "ClientRectangle": "7.8,1.24,2.3,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Pag.{PageNumberThrough} de {TotalPageCountThrough}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Bottom",
+              "Font": "Calibri Light;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text25",
+              "ClientRectangle": "0.2,0.24,18.5,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{ToProperCase(ofertas.nombreEmpresa)} - CIF: {ofertas.nifEmpresa}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Bottom",
@@ -1219,49 +1255,19 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "COMUNIDAD DE PROPIETARIOS:\r\nCONTACTO EN LA FINCA:"
+                "Value": "COMUNIDAD DE PROPIETARIOS:\r\n{propuesta.clienteNombre}\r\nCIF: {propuesta.clienteNif}\r\n"
               },
               "VertAlignment": "Center",
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "LineSpacing": 1.5,
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text25",
-              "ClientRectangle": "10.4,0,8.4,1.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 10.0,
+                "Bottom": 0.0
               },
-              "Text": {
-                "Value": "CIF: {propuesta.clienteNif}\r\nTELF1: {propuesta.telefono1} TELF2: {propuesta.telefono2}"
-              },
-              "VertAlignment": "Center",
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "LineSpacing": 1.5,
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text9",
-              "ClientRectangle": "5.4,0,5,1.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{propuesta.clienteNombre}\r\n{propuesta.contacto}"
-              },
-              "VertAlignment": "Center",
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
               "LineSpacing": 1.5,
               "Type": "Expression"
             }
@@ -1880,7 +1886,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,31.04,19,2.2",
+          "ClientRectangle": "0,25.5,19,2.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -2367,93 +2373,6 @@
             }
           },
           "PrintIfEmpty": true
-        },
-        "12": {
-          "Ident": "StiHeaderBand",
-          "Name": "HeaderBandFormaPago",
-          "ClientRectangle": "0,17.6,19,1.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text48",
-              "ClientRectangle": "1,0.4,9.6,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Estos honorarios se distribuirán de la siguiente manera:"
-              },
-              "Font": "Calibri Light;11;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextQuality": "Wysiwyg",
-              "AllowHtmlTags": true,
-              "LineSpacing": 1.1499999761581421,
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text49",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "1.05,1,17.4,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{ofertas.sistemaPago}"
-              },
-              "Font": "Calibri Light;11;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "LineSpacing": 1.1499999761581421,
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text50",
-              "ClientRectangle": "1,0,4.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "FORMA DE PAGO:"
-              },
-              "Font": "Calibri Light;11;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          },
-          "PrintAtBottom": true,
-          "KeepHeaderTogether": false,
-          "PrintIfEmpty": true
-        },
-        "13": {
-          "Ident": "StiDataBand",
-          "Name": "DataFormaPago",
-          "Guid": "896710be40f5441f828b74198896c345",
-          "ClientRectangle": "0,20,19,0",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "PrintAtBottom": true,
-          "PrintIfDetailEmpty": true,
-          "DataSourceName": "ofertas",
-          "DataRelationName": "RelOfertasBases"
         }
       },
       "PageWidth": 21.0,
