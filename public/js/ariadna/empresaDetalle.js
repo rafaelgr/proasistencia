@@ -114,6 +114,7 @@ function initForm() {
     CKEDITOR.replace('ckeditor', { height: '380px', startupFocus: true });
     CKEDITOR.replace('ckeditorRep', { height: '380px', startupFocus: true });
     CKEDITOR.replace('ckeditorArq', { height: '380px', startupFocus: true });
+    CKEDITOR.replace('ckeditorArqEncargo', { height: '380px', startupFocus: true });
 
     empId = gup('EmpresaId');
     if (empId != 0) {
@@ -226,6 +227,7 @@ function admData() {
     self.plantillaCorreoFacturasRep = ko.observable();
     self.plantillaCorreoFacturas = ko.observable();
     self.plantillaCorreoArq = ko.observable();
+    self.plantillaCorreoArqEncargo = ko.observable();
 
 
     //MODAL
@@ -296,9 +298,11 @@ function loadData(data) {
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
     vm.plantillaCorreoFacturasRep(data.plantillaCorreoFacturasRep);
     vm.plantillaCorreoArq(data.plantillaCorreoArq);
+    vm.plantillaCorreoArqEncargo(data.plantillaCorreoArqEncargo);
     CKEDITOR.instances.plantilla.setData(vm.plantillaCorreoFacturas());
     CKEDITOR.instances.plantillaRep.setData(vm.plantillaCorreoFacturasRep());
     CKEDITOR.instances.plantillaArq.setData(vm.plantillaCorreoArq());
+    CKEDITOR.instances.plantillaArqEncargo.setData(vm.plantillaCorreoArqEncargo());
 
     //
     loadSerieRectificativas(data.serieFacR);
@@ -378,6 +382,7 @@ function aceptar() {
         vm.plantillaCorreoFacturas(CKEDITOR.instances.plantilla.getData());
         vm.plantillaCorreoFacturasRep(CKEDITOR.instances.plantillaRep.getData());
         vm.plantillaCorreoArq(CKEDITOR.instances.plantillaArq.getData());
+        vm.plantillaCorreoArqEncargo(CKEDITOR.instances.plantillaArqEncargo.getData());
         var data = {
             empresa: {
                 "empresaId": vm.empresaId(),
@@ -414,6 +419,7 @@ function aceptar() {
                 "plantillaCorreoFacturas": vm.plantillaCorreoFacturas(),
                 "plantillaCorreoFacturasRep": vm.plantillaCorreoFacturasRep(),
                 "plantillaCorreoArq": vm.plantillaCorreoArq(),
+                "plantillaCorreoArqEncargo": vm.plantillaCorreoArqEncargo(),
                 "asuntoCorreo": vm.asunto(),
                 "hostCorreo": vm.hostCorreo(),
                 "portCorreo": vm.portCorreo(),
