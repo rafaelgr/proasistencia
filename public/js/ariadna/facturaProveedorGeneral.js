@@ -250,9 +250,10 @@ function initTablaFacturas() {
         responsive: true,
         columnDefs: [
             {
-                targets: 13, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
+                targets: [13, 14], // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
                 className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             },
+            { targets: 13, 'width': '200px'},
             { 
                 "type": "datetime-moment",
                 "targets": [5, 6],
@@ -319,7 +320,7 @@ function initTablaFacturas() {
             "buttonText": "Mostrar / ocultar columnas"
         },
         
-        autoWidth: true,
+        autoWidth: false,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -391,7 +392,9 @@ function initTablaFacturas() {
                 var string = numeral(data).format('0');
                 return string;
             }
-        },   {
+        }, {
+            data: "observaciones"
+        },  {
             data: "facproveId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -428,6 +431,7 @@ function initTablaFacturas() {
             .draw();
     });
     tablaFacturas.column(10).visible(false);
+    tablaFacturas.column(13).visible(false);
 
 }
 
