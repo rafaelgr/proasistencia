@@ -96,6 +96,7 @@ var estados_expediente_router = require('./lib/estados_expediente/estados_expedi
 var estados_parte_profesional_router = require('./lib/estados_parte_profesional/estados_parte_profesional_controller');
 var estados_presupuesto = require('./lib/estados_presupuesto/estados_presupuesto_controller');
 var locales_afectados_router = require('./lib/locales-afectados/locales_afectados_controller');
+var contactos_expedientes_router = require('./lib/contactos-expedientes/contactos_expedientes_controller');
 var partes_router = require('./lib/partes/partes_controller');
 var report_router = require('./lib/report-controller/reportdb')
 var tipos_garantia_router = require('./lib/tipos_garantia/tipos_garantia_controller');
@@ -283,6 +284,7 @@ app.use('/api/plantillas_correo_facturas', plantillas_correo);
 app.use('/api/upload', upload);
 app.use('/api/cobros', cobros);
 app.use('/api/locales_afectados', locales_afectados_router);
+app.use('/api/contactos_expedientes', contactos_expedientes_router);
 app.use('/api/configuracion', config_router)
 app.use('/api/documentos_pago', documentos_pago_router)
 

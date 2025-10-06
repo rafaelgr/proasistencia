@@ -174,6 +174,9 @@ function initTablaClientes() {
             data: "emailFacturas"
         }, {
             data: "cuentaContable"
+        },
+        {
+            data: "iban"
         },{
             data: "tipo"
         },{
@@ -207,7 +210,7 @@ function initTablaClientes() {
         }]
     });
     //COLUMNAS NO VISIBLES POR DEFECTO
-    for( let i = 10; i <= 18;  i++) {
+    for( let i = 11; i <= 19;  i++) {
         tablaCarro.column(i).visible(false);
     }
 
