@@ -193,7 +193,7 @@ var obtainReport = function () {
     else if( departamentoId == 7)  {
         file = "../reports/oferta_reparaciones.mrt";
         if(empresaId == 7) file = "../reports/oferta_reparaciones_reabita.mrt";
-
+         if(empresaId == 3) file = "../reports/oferta_reparaciones_fondogar.mrt";
     }
     report.loadFile(file);
     //report.setVariable("vTest", "11,16,18");
