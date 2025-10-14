@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "04b7972cf93547e7a6dbc910ef2131e9",
+  "ReportGuid": "88b66f637afa48c1873b25470fada299",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1759936440532+0200)/",
+  "ReportChanged": "/Date(1760429197082+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -974,7 +974,6 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
-          "CanShrink": true,
           "ClientRectangle": "0,11.5,19,3",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -1077,10 +1076,9 @@
               "Ident": "StiText",
               "Name": "Text46",
               "Guid": "4cf76a70ac0b4421a5f16a7266c28030",
-              "CanShrink": true,
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0.2,2.1,18.6,0.4",
+              "ClientRectangle": "0.2,2.1,18.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1093,6 +1091,12 @@
               "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
+              },
+              "Margins": {
+                "Left": 0.0,
+                "Right": 0.0,
+                "Top": 0.0,
+                "Bottom": 4.0
               },
               "Type": "Expression"
             }
