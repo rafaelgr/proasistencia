@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "dd3c55d0cfa24760a489a77fece695f3",
+  "ReportGuid": "1c248cd500e4417d9fcf3450c02baa89",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1760436764081+0200)/",
+  "ReportChanged": "/Date(1760446989764+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -749,13 +749,14 @@
               "Ident": "StiText",
               "Name": "Text30",
               "CanGrow": true,
-              "ClientRectangle": "0.2,0.2,1.2,0.4",
+              "ClientRectangle": "0.2,0.2,0.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{LineThrough}"
               },
+              "HorAlignment": "Right",
               "Font": "Courier New;;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
@@ -803,7 +804,7 @@
               "Name": "Text5",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.2,0.2,11.2,0.4",
+              "ClientRectangle": "1.2,0.2,12.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -827,7 +828,7 @@
               "CanShrink": true,
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.4,0.6,11,0.2",
+              "ClientRectangle": "1.4,0.6,12,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
