@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "d03b7f2ea3f74dfb8b21efa795865816",
+  "ReportGuid": "2c80c44e36f14283909588e53a8c53a2",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1760531046697+0200)/",
+  "ReportChanged": "/Date(1760705704836+0200)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -473,7 +473,7 @@
               "Text": {
                 "Value": "{ofertas.clienteNombre}"
               },
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -492,7 +492,7 @@
               "Text": {
                 "Value": "{ofertas.referencia}"
               },
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -508,7 +508,7 @@
               "Text": {
                 "Value": "{ofertas.fechaOfertaFormat}"
               },
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black"
@@ -556,7 +556,7 @@
               "Text": {
                 "Value": "{ofertas.clienteDireccion} {ofertas.clientePoblacion}"
               },
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -586,7 +586,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -618,7 +618,7 @@
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -636,7 +636,7 @@
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -654,7 +654,7 @@
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -715,7 +715,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -739,7 +739,7 @@
                 "Value": "{ofertas_lineas.tituloCapitulo}"
               },
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -757,7 +757,7 @@
                 "Value": "{GroupLine}"
               },
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -792,7 +792,7 @@
               "Ident": "StiText",
               "Name": "Text21",
               "Guid": "98b81a84251649c6872d2eaf32037c93",
-              "ClientRectangle": "0.2,0.4,17.2,0.4",
+              "ClientRectangle": "0.2,0.2,17.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -800,7 +800,7 @@
                 "Value": "CAPÍTULO"
               },
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -810,7 +810,7 @@
               "Ident": "StiText",
               "Name": "Text24",
               "Guid": "405104dd101d45f3955685afdf38ddb5",
-              "ClientRectangle": "17.4,0.4,1.4,0.4",
+              "ClientRectangle": "17.4,0.2,1.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -819,7 +819,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -866,7 +866,7 @@
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -885,7 +885,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": "Top;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -911,7 +911,7 @@
               "Text": {
                 "Value": "{ofertas.observaciones}"
               },
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -950,7 +950,7 @@
               "Text": {
                 "Value": "{ofertas_lineas.numCapitulo}"
               },
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -967,7 +967,7 @@
                 "Value": "{ofertas_lineas.tituloCapitulo}"
               },
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1002,7 +1002,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1012,7 +1012,7 @@
               "Ident": "StiText",
               "Name": "Text26",
               "Guid": "04288d0701a72bb3616bd3d99ebab435",
-              "ClientRectangle": "2.4,0.6,11,0.4",
+              "ClientRectangle": "2.4,0.6,12,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1020,7 +1020,7 @@
                 "Value": "Concepto"
               },
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1030,7 +1030,7 @@
               "Ident": "StiText",
               "Name": "Text27",
               "Guid": "aa7558e953c485ddc9180af60bf3a47e",
-              "ClientRectangle": "13.4,0.6,1.6,0.4",
+              "ClientRectangle": "14.6,0.6,1,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1039,7 +1039,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1049,7 +1049,7 @@
               "Ident": "StiText",
               "Name": "Text29",
               "Guid": "30ca34cfaaaf946b9294110feff09c16",
-              "ClientRectangle": "16.8,0.6,2,0.4",
+              "ClientRectangle": "17.2,0.6,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1058,7 +1058,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1068,7 +1068,7 @@
               "Ident": "StiText",
               "Name": "Text43",
               "Guid": "054544c960f74b6db81813ba244c8972",
-              "ClientRectangle": "15,0.6,1.8,0.4",
+              "ClientRectangle": "15.6,0.6,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1077,7 +1077,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1086,7 +1086,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text32",
-              "ClientRectangle": "1.4,0.5,0.8,0.6",
+              "ClientRectangle": "1.2,0.5,1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1095,7 +1095,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1114,7 +1114,7 @@
               },
               "HorAlignment": "Center",
               "VertAlignment": "Bottom",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1154,7 +1154,7 @@
               "Ident": "StiText",
               "Name": "Text8",
               "CanGrow": true,
-              "ClientRectangle": "17,0.8,1.8,0.4",
+              "ClientRectangle": "17.2,0.8,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1162,7 +1162,7 @@
                 "Value": "{ofertas_lineas.totalLinea}"
               },
               "HorAlignment": "Right",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1178,7 +1178,7 @@
               "Ident": "StiText",
               "Name": "Text6",
               "CanGrow": true,
-              "ClientRectangle": "13.6,0.8,1.4,0.4",
+              "ClientRectangle": "14.6,0.8,1,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1186,7 +1186,7 @@
                 "Value": "{ofertas_lineas.cantidad}"
               },
               "HorAlignment": "Right",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1210,7 +1210,7 @@
                 "Value": "{ofertas_lineas.linea}"
               },
               "HorAlignment": "Right",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1226,7 +1226,7 @@
               "Ident": "StiText",
               "Name": "Text44",
               "CanGrow": true,
-              "ClientRectangle": "15.2,0.8,1.6,0.4",
+              "ClientRectangle": "15.6,0.8,1.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1234,7 +1234,7 @@
                 "Value": "{ofertas_lineas.impDescUni}"
               },
               "HorAlignment": "Right",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1252,14 +1252,14 @@
               "Name": "Text5",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.4,0,11,0.4",
+              "ClientRectangle": "2.4,0,12,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{ofertas_lineas.primera_linea}"
               },
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1275,7 +1275,7 @@
               "CanShrink": true,
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.6,0.4,10.8,0.4",
+              "ClientRectangle": "2.6,0.4,11.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1283,7 +1283,7 @@
                 "Value": "{ofertas_lineas.resto_lineas}"
               },
               "HorAlignment": "Width",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1312,7 +1312,7 @@
                 "Value": "{ofertas_lineas.abrev}"
               },
               "HorAlignment": "Right",
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -1341,7 +1341,7 @@
               "Ident": "StiText",
               "Name": "Text4",
               "Guid": "325389aac89c4f778298e199d08b88e0",
-              "ClientRectangle": "16.4,0.2,2.4,0.4",
+              "ClientRectangle": "16.8,0.2,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1350,7 +1350,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": "Top;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1367,7 +1367,7 @@
               "Ident": "StiText",
               "Name": "Text39",
               "Guid": "128b43d144314e10b2ec0b7f1f362cbd",
-              "ClientRectangle": "9.8,0.2,6.2,0.4",
+              "ClientRectangle": "10.4,0.2,6.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1376,7 +1376,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1400,7 +1400,7 @@
               "Ident": "StiText",
               "Name": "Text15",
               "Guid": "e519b3187c5f4690b1af521b6dbf675d",
-              "ClientRectangle": "14.8,0,1.2,0.4",
+              "ClientRectangle": "15.4,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1409,7 +1409,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1419,7 +1419,7 @@
               "Ident": "StiText",
               "Name": "Text36",
               "Guid": "173b99e55e324860a609b4cefc73d394",
-              "ClientRectangle": "16.4,0,2.4,0.4",
+              "ClientRectangle": "16.8,0,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1428,7 +1428,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "Font": "Calibri;11;Bold;",
               "Border": "Top;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1464,7 +1464,7 @@
               "Text": {
                 "Value": "ACEPTADO CLIENTE"
               },
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1481,7 +1481,7 @@
               "Text": {
                 "Value": "ACEPTADO CONTRATA"
               },
-              "Font": "Tahoma;9;;",
+              "Font": "Calibri;10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1512,7 +1512,7 @@
               "Text": {
                 "Value": "Nombre y Apellidos"
               },
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1529,7 +1529,7 @@
               "Text": {
                 "Value": "DNI"
               },
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1546,7 +1546,7 @@
               "Text": {
                 "Value": "Domicilio"
               },
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -1562,7 +1562,7 @@
               "Text": {
                 "Value": "Presidente o vicepresidente."
               },
-              "Font": "Tahoma;;;",
+              "Font": "Calibri;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
