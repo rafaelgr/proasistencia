@@ -191,7 +191,7 @@ var obtainReport = function () {
     if(empresaId == 10 && departamentoId == 5 && !ofertaId) file = "../reports/oferta_proyecta_visor.mrt";
     else if(empresaId == 10 && departamentoId == 5  && ofertaId) file = "../reports/oferta_proyecta.mrt";
     else if( departamentoId == 7)  {
-        file = "../reports/oferta_reparaciones_reabita.mrt";
+        file = "../reports/oferta_reparaciones.mrt";
         if(empresaId == 7) file = "../reports/oferta_reparaciones_reabita.mrt";
          if(empresaId == 3) file = "../reports/oferta_reparaciones_fondogar.mrt";
     }
