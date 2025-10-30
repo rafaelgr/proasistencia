@@ -25,7 +25,7 @@ var usuario;
 var dataConceptosLineas;
 var dataPlanificacionLineas;
 var numConceptos = 0;
-var dataConceptos; 
+var dataConceptos;
 var numPrefacturas = 0;
 var importePrefacturas = 0;
 var importePrefacturasPlanificacion = 0;
@@ -68,25 +68,25 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
 
-    $("#btnAceptar2").click(function() {
+    $("#btnAceptar2").click(function () {
         clicAceptar(false);
     });
 
-    $("#btnAceptarResumen").click(function() {
+    $("#btnAceptarResumen").click(function () {
         guardarContratoResumen();
     });
 
     $("#btnSalir").click(salir());
     //$("#btnImprimir").click(imprimir);
-    $('#txtPrecio').focus( function () {
+    $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
     });
 
-     //Evento dfel modal de la documentación
-     $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
+    //Evento dfel modal de la documentación
+    $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
         vm.files([]);
-      });
-      
+    });
+
     $("#frmContrato").submit(function () {
         return false;
     });
@@ -136,7 +136,7 @@ function initForm() {
     $("#conceptoObras-form").submit(function () {
         return false;
     });
-    
+
     $("#frmLineaConceptos").submit(function () {
         return false;
     });
@@ -189,6 +189,11 @@ function initForm() {
         return false;
     });
 
+
+    $("#facturarNoFacturar-form").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -200,8 +205,8 @@ function initForm() {
         $('#txtPorcentajeCobro').val(null);
     });
     $("#txtImporteCalculado").focus(function () {
-        var imp =  $('#txtImporteCalculado').val();
-        if(imp == 0) $('#txtImporteCalculado').val(null);
+        var imp = $('#txtImporteCalculado').val();
+        if (imp == 0) $('#txtImporteCalculado').val(null);
     });
 
     $("#cmbFormasPago").select2(select2Spanish());
@@ -233,70 +238,70 @@ function initForm() {
 
     $("#cmbTiposContrato").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
-        if(e.added) {
+        if (e.added) {
             cambioTipoContrato(e.added);
             loadDepartamento(e.added.id);
-            if(e.added.id == 8) {
+            if (e.added.id == 8) {
                 $('#labObras').show();
                 $('#labNoObras').hide();
-            } else{
+            } else {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
         }
     });
 
-    $("#chkContratoCerrado").change(function() {
-        if($('#chkContratoCerrado').prop('checked')) {
-           compruebaAnticiposVinculados()
+    $("#chkContratoCerrado").change(function () {
+        if ($('#chkContratoCerrado').prop('checked')) {
+            compruebaAnticiposVinculados()
         } else {
             vm.fechaCierreContrato(null);
         }
-      });
+    });
 
     $("#txtFechaInicio").change(function (e) {
-        if( vm.contratoId() == 0) vm.fechaOriginal(this.value);
+        if (vm.contratoId() == 0) vm.fechaOriginal(this.value);
     });
 
     $("#txtCertificacionFinal").change(function (e) {
         vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
-       
-        if(vm.importePrefacturado() && vm.certificacionFinal()) {
+
+        if (vm.importePrefacturado() && vm.certificacionFinal()) {
             let ip = numeroDbf(vm.importePrefacturado());
-            let dif2 =  ip - vm.certificacionFinal();
+            let dif2 = ip - vm.certificacionFinal();
             vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
         }
     });
 
-    
 
-    $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {  
-        var dt = $('#dt_prefactura').DataTable(); 
-        if (e.target.hash == '#s3'){
-                a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+
+    $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+        var dt = $('#dt_prefactura').DataTable();
+        if (e.target.hash == '#s3') {
+            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
         } else {
             $('.fixedHeader').remove();
             a = null;
         }
 
-    /* if (e.target.hash == '#tab1'){
-        table1.fixedHeader.enable().fixedHeader.adjust();
-      table2.fixedHeader.enable().fixedHeader.adjust();  
-    }
-    else if (e.target.hash == '#tab2'){  	  
-        table3.fixedHeader.enable().fixedHeader.adjust();
-      table4.fixedHeader.enable().fixedHeader.adjust(); 
-    }]]*/
-});
+        /* if (e.target.hash == '#tab1'){
+            table1.fixedHeader.enable().fixedHeader.adjust();
+          table2.fixedHeader.enable().fixedHeader.adjust();  
+        }
+        else if (e.target.hash == '#tab2'){  	  
+            table3.fixedHeader.enable().fixedHeader.adjust();
+          table4.fixedHeader.enable().fixedHeader.adjust(); 
+        }]]*/
+    });
 
- $(window).resize(function(){
-    //aqui el codigo que se ejecutara cuando se redimencione la ventana
-    if(a) {
-        $('.fixedHeader').remove();
-        var dt = $('#dt_prefactura').DataTable(); 
-        a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
-    }
-})
+    $(window).resize(function () {
+        //aqui el codigo que se ejecutara cuando se redimencione la ventana
+        if (a) {
+            $('.fixedHeader').remove();
+            var dt = $('#dt_prefactura').DataTable();
+            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+        }
+    })
 
     $("#txtPorcentajeCobro").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
@@ -304,13 +309,13 @@ function initForm() {
         var restoPorcentaje = 0;
         var restoContraro = 0;
         var importePorcentaje = 0;
-        if(isNaN(porcentaje)) return;
+        if (isNaN(porcentaje)) return;
 
-        if(importePrefacturasConcepto > 0) {
+        if (importePrefacturasConcepto > 0) {
             restoContraro = totalContrato - importePrefacturasConcepto
             restoPorcentaje = restoContraro / totalContrato * 100//nuevo porcentaje sobre el resto
-            porcentaje = ((porcentaje/100)/(restoPorcentaje/100)) * 100
-             
+            porcentaje = ((porcentaje / 100) / (restoPorcentaje / 100)) * 100
+
         } else {
             restoContraro = totalContrato;
         }
@@ -318,12 +323,12 @@ function initForm() {
         porcentaje = porcentaje / 100;
         importePorcentaje = porcentaje * restoContraro;
 
-        if(restoContraro == 0 || restoContraro < 0) {
+        if (restoContraro == 0 || restoContraro < 0) {
             mensError("Se ha superado el total del contrato");
-           //vm.importeCalculado(null);
+            //vm.importeCalculado(null);
         }
         vm.importeCalculado(roundToSix(importePorcentaje));
-        if((importePrefacturasConcepto +  vm.importeCalculado()) > totalContrato) {
+        if ((importePrefacturasConcepto + vm.importeCalculado()) > totalContrato) {
             mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
             vm.importeCalculado(totalContrato - importePrefacturasConcepto);
             var porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
@@ -340,10 +345,10 @@ function initForm() {
         var restoPorcentaje = 0;
         var restoContraro = 0;
         var importePorcentaje = 0;
-        if(isNaN(porcentaje)) return;
+        if (isNaN(porcentaje)) return;
         restoContraro = totalContrato;
         porcentaje = porcentaje / 100;
-        importePorcentaje = porcentaje * restoContraro;        
+        importePorcentaje = porcentaje * restoContraro;
         vm.importeCalculadoPlanificacion(roundToSix(importePorcentaje));
     });
 
@@ -351,8 +356,8 @@ function initForm() {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculado").val());
         var porcentaje = 0;
-        if(isNaN(importeCalculado)) return;
-        if(importeCalculado+importePrefacturasConcepto > totalContrato) {
+        if (isNaN(importeCalculado)) return;
+        if (importeCalculado + importePrefacturasConcepto > totalContrato) {
             mensError("Se ha superado el total del contrato, se ha asignado la cantidad que queda a repartir");
             vm.importeCalculado(totalContrato - importePrefacturasConcepto);
             porcentaje = ((totalContrato - importePrefacturasConcepto) * 100) / totalContrato;
@@ -367,21 +372,21 @@ function initForm() {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculadoPlanificacion").val());
         var porcentaje = 0;
-        if(isNaN(importeCalculado)) return;
+        if (isNaN(importeCalculado)) return;
         porcentaje = (importeCalculado * 100) / totalContrato;
         vm.porcentajePlanificacion(roundToSix(porcentaje));
-        
+
     });
 
-     //Evento de marcar/desmarcar todos los checks
-     $('#checkMain').click(
-        function(e){
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function (e) {
             var e = $('#checkMain').prop('checked');
             console.log(e);
-            if($('#checkMain').prop('checked')) {
+            if ($('#checkMain').prop('checked')) {
                 $('.checkAll').prop('checked', true);
                 updateAllPreFacturas(true);
-              
+
             } else {
                 $('.checkAll').prop('checked', false);
                 updateAllPreFacturas(false);
@@ -405,7 +410,7 @@ function initForm() {
     $('#dt_documentacion').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = tablaDocumentacion.row(tr);
- 
+
         if (row.child.isShown()) {
             // This row is already open - close it
             row.child.hide();
@@ -420,7 +425,7 @@ function initForm() {
     $('#dt_contratosCobros').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = tablaContratoCobros.row(tr);
- 
+
         if (row.child.isShown()) {
             // This row is already open - close it
             row.child.hide();
@@ -432,79 +437,79 @@ function initForm() {
         }
     });
 
-   /*  $('#upload-input').on('change', function () {
-        if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
-        var encontrado = false;
-        var id = 0;
-        var files = $(this).get(0).files;
-        var file = files[0];
-        var ext = file.name.split('.').pop().toLowerCase();
-        var blob = file.slice(0, file.size, file.type); 
-        var newFile = new File([blob], {type: file.type});
-        var nom = vm.documNombre() + "." + ext;
-        nom = nom.replace(/\//g, "-");
-        var fileKey =  carpeta + "/" + nom
-        //buscamos si el documento ya existe en la carpeta de destino
-        llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
-            if (err) return;
-            if(docums && docums.length > 0) {
-                for(var i = 0; i < docums.length; i++) {
-                    var d = docums[i];
-                    var n = d.key.split('/');
-                    if(n[1] == nom) {
-                        encontrado = true;
-                        id = d.documentoId
-                        break;
-                    }
-                }
-                if(encontrado) {
+    /*  $('#upload-input').on('change', function () {
+         if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+         var encontrado = false;
+         var id = 0;
+         var files = $(this).get(0).files;
+         var file = files[0];
+         var ext = file.name.split('.').pop().toLowerCase();
+         var blob = file.slice(0, file.size, file.type); 
+         var newFile = new File([blob], {type: file.type});
+         var nom = vm.documNombre() + "." + ext;
+         nom = nom.replace(/\//g, "-");
+         var fileKey =  carpeta + "/" + nom
+         //buscamos si el documento ya existe en la carpeta de destino
+         llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
+             if (err) return;
+             if(docums && docums.length > 0) {
+                 for(var i = 0; i < docums.length; i++) {
+                     var d = docums[i];
+                     var n = d.key.split('/');
+                     if(n[1] == nom) {
+                         encontrado = true;
+                         id = d.documentoId
+                         break;
+                     }
+                 }
+                 if(encontrado) {
+ 
+                     var mens = "Ya existe un documento con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
+                     $.SmartMessageBox({
+                         title: "<i class='fa fa-info'></i> Mensaje",
+                         content: mens,
+                         buttons: '[Aceptar][Cancelar]'
+                     }, function (ButtonPressed) {
+                         if (ButtonPressed === "Aceptar") {
+                             method = 'PUT';
+                             uploadDocum(newFile, fileKey, id);
+                         }
+                         if (ButtonPressed === "Cancelar") {
+                             $('#upload-input').val([]);
+                         }
+                     });
+ 
+                 } else {
+                     uploadDocum(newFile, fileKey, id);
+                 }
+             } else {
+                 uploadDocum(newFile, fileKey, id);
+             }
+         }); 
+     }); */
 
-                    var mens = "Ya existe un documento con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
-                    $.SmartMessageBox({
-                        title: "<i class='fa fa-info'></i> Mensaje",
-                        content: mens,
-                        buttons: '[Aceptar][Cancelar]'
-                    }, function (ButtonPressed) {
-                        if (ButtonPressed === "Aceptar") {
-                            method = 'PUT';
-                            uploadDocum(newFile, fileKey, id);
-                        }
-                        if (ButtonPressed === "Cancelar") {
-                            $('#upload-input').val([]);
-                        }
-                    });
 
-                } else {
-                    uploadDocum(newFile, fileKey, id);
-                }
-            } else {
-                uploadDocum(newFile, fileKey, id);
-            }
-        }); 
-    }); */
-
-   
 
     // 7 bind to events triggered on the tree
     $('#jstreeDocumentacion').on("click.jstree", function (e) {
-            var node = $(e.target).closest('.jstree-node');
-            var selectedNodeId = node.attr('id');
-            if (e.which === 1) {
-                var jsTree = $.jstree.reference(e.target);
-                var originalNode = jsTree.get_node(node);
-                if(!originalNode.data.folder)  {
-                    var url = originalNode.original.location;
-                    window.open(url, '_blank');
-                }
+        var node = $(e.target).closest('.jstree-node');
+        var selectedNodeId = node.attr('id');
+        if (e.which === 1) {
+            var jsTree = $.jstree.reference(e.target);
+            var originalNode = jsTree.get_node(node);
+            if (!originalNode.data.folder) {
+                var url = originalNode.original.location;
+                window.open(url, '_blank');
             }
+        }
     });
     // 8 interact with the tree - either way is OK
     $('#demo').on('click', function () {
-      $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
-      $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
-      $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+        $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+        $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+        $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
     });
-  
+
 
 
     initAutoCliente();
@@ -549,7 +554,7 @@ function initForm() {
     initTablaGenerarPrefacturas();
     initTablaGenerarPrefacturasPlanificacion();
 
-    
+
     initTablaFacturas();
     initTablaFacproves();
     initTablaAntproves();
@@ -590,10 +595,10 @@ function initForm() {
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
     $('#btnNuevaCarpeta').show();
-    if(!usuario.puedeEditar) {
+    if (!usuario.puedeEditar) {
         $('#btnNuevaCarpeta').hide();
-    } 
-   
+    }
+
 
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
@@ -601,40 +606,40 @@ function initForm() {
     //abrir en pestaña de facturas de proveedores
     if (gup('doc') != "") {
         $('.nav-tabs a[href="#s5"]').tab('show');
-    } 
+    }
     //abrir en pestaña  de prefacturas
     if (gup('docPre') != "") {
         $('.nav-tabs a[href="#s3"]').tab('show');
-    } 
+    }
 
     if (gup('docFac') != "") {
         $('.nav-tabs a[href="#s4"]').tab('show');
-    } 
+    }
 
     //abrir en pestaña de contratos vinculados
     if (gup('docAsc') != "") {
         $('.nav-tabs a[href="#s7"]').tab('show');
-    } 
+    }
 
     //abrir en pestaña de anticipos de gastos
     if (gup('docAnt') != "") {
         $('.nav-tabs a[href="#s8"]').tab('show');
-    } 
+    }
 
-     //abrir en pestaña de anticipos de ventas
-     /* if (gup('docAntCli') != "") {
-        $('.nav-tabs a[href="#s8"]').tab('show');
-    }  */
-    
+    //abrir en pestaña de anticipos de ventas
+    /* if (gup('docAntCli') != "") {
+       $('.nav-tabs a[href="#s8"]').tab('show');
+   }  */
+
     //abrir en pestaña de anticipos de colaboradores
     if (gup('docAntcol') != "") {
         $('.nav-tabs a[href="#s9"]').tab('show');
-    } 
+    }
 
     //abrir en pestaña de anticipos de colaboradores
     if (gup('docFactcol') != "") {
         $('.nav-tabs a[href="#s10"]').tab('show');
-    } 
+    }
 
 
     contratoId = gup('ContratoId');
@@ -645,23 +650,23 @@ function initForm() {
             if (err) return;
 
             loadData(data);
-          
-                initTablaPrefacturas(data.tipoContratoId);
-            
-            
+
+            initTablaPrefacturas(data.tipoContratoId);
+
+
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
             try {
                 loadContratoTasasVisado(data.contratoId);
 
-            }catch(e) {
+            } catch (e) {
                 //no hacemos nada
             }
-           
-           
-           
+
+
+
             //loadComisionistas(data.contratoId);
-            if(data.tipoContratoId != 8) {
+            if (data.tipoContratoId != 8) {
                 loadPrefacturasDelContrato(data.contratoId);
             }
             loadFacturasDelContrato(data.contratoId);
@@ -672,10 +677,10 @@ function initForm() {
             buscaComisionistas(data.contratoId);
             loadAscContratos(data.contratoId);
             loadFactcolDelContrato(contratoId);
-            if(data.tipoContratoId == 8) {
+            if (data.tipoContratoId == 8) {
                 $('#labObras').show();
                 $('#labNoObras').hide();
-            } else{
+            } else {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
@@ -686,7 +691,7 @@ function initForm() {
         vm.firmaActa("0");
         vm.contratoId(0);
         vm.porcentajeRetencion(0);
-       
+
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
@@ -697,14 +702,14 @@ function initForm() {
         $('#btnAltaAntcol').hide();
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
-        
+
         //
         document.title = "NUEVO CONTRATO";
     }
 
 
-     
-    
+
+
     //metodo de validacion de fechas
     $.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -712,16 +717,16 @@ function initForm() {
             var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
             if (!/Invalid|NaN/.test(new Date(fv))) {
                 return new Date(fv) >= new Date(fp);
-            } 
+            }
         }, 'La fecha de la factura debe ser mayor o igual que la fecha de inicio de contrato.');
 
-        $.validator.addMethod("lessThan",
+    $.validator.addMethod("lessThan",
         function (value, element, params) {
             var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
             var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
             if (!/Invalid|NaN/.test(new Date(fv))) {
                 return new Date(fv) <= new Date(fp);
-            } 
+            }
         }, 'La fecha de la factura debe ser menor o igual que la fecha de fin de contrato.');
 }
 
@@ -785,6 +790,7 @@ function admData() {
     self.facturaParcial = ko.observable();
     self.liquidarBase = ko.observable();
     self.contratoCerrado = ko.observable();
+    self.facturarNoFacturar = ko.observable();
     self.contratoIntereses = ko.observable();
     self.firmaActa = ko.observable();
     self.preaviso = ko.observable();
@@ -845,7 +851,7 @@ function admData() {
     self.firmaActa = ko.observable();
     //
     self.porRetenGarantias = ko.observable();
-    
+
 
     //-- Valores para la generación de prefacturas
     self.posiblesPeriodosPagos = ko.observableArray([]);
@@ -1022,19 +1028,19 @@ function admData() {
 
 }
 
-function loadData(data) {  
-    if(data.beneficioLineal) {
+function loadData(data) {
+    if (data.beneficioLineal) {
         var url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId;
-        if(dep == 'arquitectura')   url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId + "&dep=arquitectura";
+        if (dep == 'arquitectura') url = "ContratoLinealDetalle.html?ContratoId=" + data.contratoId + "&dep=arquitectura";
         window.open(url, '_self');
-       //return;
+        //return;
     }
-    $('#btnNuevaLinea').show(); 
+    $('#btnNuevaLinea').show();
     vm.contratoId(data.contratoId);
     vm.ofertaId(data.ofertaId);
     vm.tipoContratoId(data.tipoContratoId);
     loadTiposContrato(data.tipoContratoId);
-    vm.stipoContratoId(data.tipoContratoId);    
+    vm.stipoContratoId(data.tipoContratoId);
     vm.referencia(data.referencia);
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
@@ -1058,8 +1064,8 @@ function loadData(data) {
     vm.ipc(data.ipc);
     vm.renovar(data.renovar);
     vm.fechaFinAlquiler(spanishDate(data.fechaFinAlquiler));
-    
-    
+
+
     vm.importeMantenedor(data.importeMantenedor);
     vm.importeBeneficio(data.importeBeneficio);
     vm.observaciones(data.observaciones);
@@ -1072,7 +1078,7 @@ function loadData(data) {
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
 
-   
+
     vm.fechaFinal(spanishDate(data.fechaFinal));
     vm.fechaPrimeraFactura(spanishDate(data.fechaPrimeraFactura));
     //vm.fechaUltimaFactura(spanishDate(data.fechaUltimaFactura));
@@ -1081,7 +1087,7 @@ function loadData(data) {
     vm.facturaParcial(data.facturaParcial);
     vm.contratoCerrado(data.contratoCerrado);
     vm.fechaCierreContrato(spanishDate(data.fechaCierreContrato))
-    if(data.contratoCerrado) {
+    if (data.contratoCerrado) {
         $('#btnNuevaCarpeta').hide()
     } else {
         $('#btnNuevaCarpeta').show()
@@ -1123,9 +1129,9 @@ function loadData(data) {
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
     $('#frCliente').attr('src', url)
-   
 
-    if(data.tipoContratoId != 8) {
+
+    if (data.tipoContratoId != 8) {
         $('.obras').hide()
         loadConceptosLineas(data.contratoId);
         $('#lineasPagoObras').hide();
@@ -1144,16 +1150,16 @@ function loadData(data) {
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);
     cargaTablaDocumentacion();
-    
-    if(data.tipoContratoId == 8) {
+
+    if (data.tipoContratoId == 8) {
         $('#txtNumPagos').prop('disabled', false);
         //$('#txtGFechaInicio').datepicker('disabled', true);
     } else {
         $('#txtNumPagos').prop('disabled', true);
         //$('#txtGFechaInicio').datepicker('disabled', false);
-        
+
     }
-    if(data.ascContratoId) {
+    if (data.ascContratoId) {
         $("#tabAscContratos").hide();
         $("#radioFirmaActa1").prop('disabled', true);
         $("#radioFirmaActa2").prop('disabled', true);
@@ -1168,24 +1174,24 @@ function loadData(data) {
         $('#txtFechaFirmaActa').prop('disabled', false);
         esVinculado = false;
     }
-    if(data.tipoContratoId != 8) {
+    if (data.tipoContratoId != 8) {
         $("#tabAscContratos").hide();
     }
 
-    if(data.contratoCerrado && usuario.puedeAbrir) {
-       $('#chkContratoCerrado').prop('disabled' , false)
+    if (data.contratoCerrado && usuario.puedeAbrir) {
+        $('#chkContratoCerrado').prop('disabled', false)
     } else if (!data.contratoCerrado) {
-        $('#chkContratoCerrado').prop('disabled' , false);
-    }else if (data.contratoCerrado && !usuario.puedeAbrir) {
-        $('#chkContratoCerrado').prop('disabled' , true);
+        $('#chkContratoCerrado').prop('disabled', false);
+    } else if (data.contratoCerrado && !usuario.puedeAbrir) {
+        $('#chkContratoCerrado').prop('disabled', true);
     }
 
-    
 
-   if(data.contratoCerrado){
+
+    if (data.contratoCerrado) {
         ocualtaBotonesContratoCerrado();
     }
-   
+
 }
 
 
@@ -1265,59 +1271,59 @@ function datosOK() {
 function salir() {
     var mf = function () {
         var url = "ContratoGeneral.html?ConservaFiltro=true";
-        if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html";
-        if(DesdeContrato == "true" && AscContratoId != 0){
-            url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true', '_self';
+        if (dep == 'arquitectura') url = "ContratoArquitecturaGeneral.html";
+        if (DesdeContrato == "true" && AscContratoId != 0) {
+            url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true', '_self';
             window.open(url, '_self');
-        } 
+        }
         window.open(url, '_self');
     }
     return mf;
 }
 
 var clicAceptar = function (salir) {
-        guardarContrato(function (err, tipo) {
-            if (err) return mensError(err);
-            var url;
-            if(DesdeContrato == "true" && AscContratoId != 0){
-                url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true';
-                if(dep == 'arquitectura')  url = 'ContratoDetalle.html?ContratoId='+ AscContratoId +'&docAsc=true&dep=arquitectura';
+    guardarContrato(function (err, tipo) {
+        if (err) return mensError(err);
+        var url;
+        if (DesdeContrato == "true" && AscContratoId != 0) {
+            url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true';
+            if (dep == 'arquitectura') url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true&dep=arquitectura';
+        } else {
+            url = "ContratoGeneral.html?ConservaFiltro=true&ContratoId=" + vm.contratoId(); // default PUT
+            if (dep == 'arquitectura') url = "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+        }
+        if (tipo == 'POST') {
+            if (vm.beneficioLineal() == 0) {
+                url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                if (dep == 'arquitectura') url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
+
             } else {
-                url = "ContratoGeneral.html?ConservaFiltro=true&ContratoId=" + vm.contratoId(); // default PUT
-                if(dep == 'arquitectura') url =  "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
+                url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
+                if (dep == 'arquitectura') url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
             }
-            if (tipo == 'POST') {
-                if(vm.beneficioLineal() == 0) {
-                    url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-                    if(dep == 'arquitectura') url = "ContratoDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
-                    
-                } else {
-                    url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW"; // POST
-                    if(dep == 'arquitectura')  url = "ContratoLinealDetalle.html?ContratoId=" + vm.contratoId() + "&CMD=NEW&dep=arquitectura"; // POST
-                }
-               
-            }
-            if(salir) {
-                window.open(url, '_self');
-            } else {
-                mensNormal('Contrato guardado.')
-            }
-        })
-    
+
+        }
+        if (salir) {
+            window.open(url, '_self');
+        } else {
+            mensNormal('Contrato guardado.')
+        }
+    })
+
 }
 
 
 var guardarContrato = function (done) {
     var firma = parseInt(vm.firmaActa());
     if (!datosOK()) return errorGeneral(new Error('Datos del formulario incorrectos'), done);
-    if(firma) {
-        if(!vm.fechaFirmaActa() || vm.fechaFirmaActa() == '') {
+    if (firma) {
+        if (!vm.fechaFirmaActa() || vm.fechaFirmaActa() == '') {
             return errorGeneral(new Error('Se requiere una fecha para la firma del acta'), done);
         }
     }
     comprobarSiHayMantenedor();
     vm.porcentajeBeneficio((vm.porcentajeBeneficio()));
-   
+
     var data = generarContratoDb();
 
     if (contratoId == 0) {
@@ -1327,51 +1333,51 @@ var guardarContrato = function (done) {
             done(null, 'POST');
         });
     } else {
-        if( (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() ||  vm.porcentajeAgente() !=  vm.antPorcentajeAgente()) && numLineas > 0) {
-                // mensaje de confirmación
-                var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
-                $.SmartMessageBox({
-                    title: "<i class='fa fa-info'></i> Mensaje",
-                    content: mens,
-                    buttons: '[Aceptar][Cancelar]'
-                }, function (ButtonPressed) {
-                    if (ButtonPressed === "Aceptar") {
-                        actualizarLineasDeLaContratoTrasCambioCostes(function(err, result) {
+        if ((vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) && numLineas > 0) {
+            // mensaje de confirmación
+            var mens = "Al cambiar los porcentajes con lineas creadas se modificarán los importes de estas en arreglo a los nuevos porcentajes introducidos, ¿ Desea continuar ?.";
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    actualizarLineasDeLaContratoTrasCambioCostes(function (err, result) {
+                        if (err) return errorGeneral(err, done);
+                        recalcularImportesGuardar(function (err, result) {
                             if (err) return errorGeneral(err, done);
-                            recalcularImportesGuardar(function(err, result) {
+                            var data = generarContratoDb();
+                            llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
                                 if (err) return errorGeneral(err, done);
-                                var data  = generarContratoDb();
-                                llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
+                                actualizaAsociados(vm.firmaActa(), function (err, result) {
                                     if (err) return errorGeneral(err, done);
-                                    actualizaAsociados(vm.firmaActa(), function(err, result) {
-                                        if (err) return errorGeneral(err, done);
-                                        done(null, 'PUT');
-                                    });
+                                    done(null, 'PUT');
                                 });
                             });
                         });
-                    }
-                    
-                    if (ButtonPressed === "Cancelar") {
-                        salir()();
-                    }
-                });
+                    });
+                }
+
+                if (ButtonPressed === "Cancelar") {
+                    salir()();
+                }
+            });
         } else {
             llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/" + contratoId, data, function (err, data) {
                 if (err) return errorGeneral(err, done);
-                actualizaAsociados(vm.firmaActa(), function(err, result) {
+                actualizaAsociados(vm.firmaActa(), function (err, result) {
                     if (err) return errorGeneral(err, done);
                     done(null, 'PUT');
                 });
             });
         }
-        
+
     }
 }
 
 
 var generarContratoDb = function () {
-    if(!vm.contratoCerrado()) vm.fechaCierreContrato(null);
+    if (!vm.contratoCerrado()) vm.fechaCierreContrato(null);
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
@@ -1423,7 +1429,7 @@ var generarContratoDb = function () {
             "importeAnualRenovacion": vm.importeAnualRenovacion()
         }
     };
-    if(data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
+    if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
     return data;
 }
 
@@ -1431,9 +1437,9 @@ var generarContratoDb = function () {
 function compruebaAnticiposVinculados() {
     llamadaAjax('GET', "/api/contratos/anticipos/no-vinculados/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        if(data.length > 0) {
+        if (data.length > 0) {
             var a = [];
-            data.forEach( f => {
+            data.forEach(f => {
                 a.push(f.numeroAnticipoProveedor);
             });
             var ab = JSON.stringify(a);
@@ -1473,7 +1479,7 @@ function loadTiposContrato(id) {
         }].concat(data);
         vm.posiblesTiposContrato(tipos);
 
-        if(id) {
+        if (id) {
             $("#cmbTiposContrato").val([id]).trigger('change');
             vm.stipoContratoId(id);
         }
@@ -1481,8 +1487,8 @@ function loadTiposContrato(id) {
 }
 
 function loadTipoProyecto(id) {
-    if(id == undefined) id = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId()  + "/" + id;
+    if (id == undefined) id = 0;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId() + "/" + id;
     llamadaAjax('GET', url, null, function (err, data) {
         if (err) return;
         var tipos = [{
@@ -1623,20 +1629,20 @@ function cambioTipoProyecto(data) {
     }
     var tipoProyectoId = data.id;
     var arquitectura = false;
-    if(vm.stipoContratoId() == 5) arquitectura = true;
+    if (vm.stipoContratoId() == 5) arquitectura = true;
     llamadaAjax('GET', myconfig.apiUrl + "/api/tipos_proyectos/" + tipoProyectoId, null, function (err, data) {
         if (err) return;
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/siguiente_referencia/" + data.abrev + "/" + arquitectura, null, function (err, nuevaReferencia) {
             if (err) return;
-           
-            if(vm.stipoContratoId() == 5) {
+
+            if (vm.stipoContratoId() == 5) {
                 var a = spanishDbDate(vm.fechaContrato());
-                var y =  moment(a).year().toString();
+                var y = moment(a).year().toString();
                 y = y.substring(2);
                 nuevaReferencia = nuevaReferencia + "-0/" + y
                 vm.referencia(nuevaReferencia);
-                
-                if(vm.porcentajeAgente()) {
+
+                if (vm.porcentajeAgente()) {
                     cargaPorcenRef(vm.porcentajeAgente());
                     return;
                 }
@@ -1650,8 +1656,8 @@ function cambioTipoContrato(data) {
     //
     if (!data) return;
     var tipoContratoId = data.id;
-    if(tipoContratoId == undefined) tipoContratoId = 0;
-    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId()  + "/" + tipoContratoId;
+    if (tipoContratoId == undefined) tipoContratoId = 0;
+    var url = "/api/tipos_proyectos/departamento/activos/" + usuario.usuarioId + "/" + vm.stipoContratoId() + "/" + tipoContratoId;
     llamadaAjax('GET', myconfig.apiUrl + url, null, function (err, data) {
         if (err) return;
         var tipos = [{
@@ -1664,24 +1670,24 @@ function cambioTipoContrato(data) {
 }
 
 function loadDepartamento(departamentoId) {
-    if(!departamentoId) return;
-        llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
-            if (err) return;
-            if(data) {
-                vm.stipoContratoId(departamentoId);
-                usaCalculadora = data.usaCalculadora;
-                if(!data.usaCalculadora) {
-                    $('#calculadora').hide();
-                    vm.porcentajeAgente(0);
-                    vm.porcentajeBeneficio(0);
-                    vm.importeAgente(0);
-                    vm.importeBeneficio(0);
-                } else {
-                    $('#calculadora').show();
-                }
+    if (!departamentoId) return;
+    llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
+        if (err) return;
+        if (data) {
+            vm.stipoContratoId(departamentoId);
+            usaCalculadora = data.usaCalculadora;
+            if (!data.usaCalculadora) {
+                $('#calculadora').hide();
+                vm.porcentajeAgente(0);
+                vm.porcentajeBeneficio(0);
+                vm.importeAgente(0);
+                vm.importeBeneficio(0);
+            } else {
+                $('#calculadora').show();
             }
+        }
 
-        });
+    });
 }
 
 
@@ -1953,7 +1959,7 @@ function initTablaContratosLineas() {
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "";
-                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLinea' onclick='editContratoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 if (!vm.generada())
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
@@ -1992,7 +1998,7 @@ function loadTablaContratoLineas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
-    if(!data) numLineas = 0
+    if (!data) numLineas = 0
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -2188,9 +2194,9 @@ var recargaCabeceraLineasBases = function () {
         loadData(data);
         loadLineasContrato(data.contratoId);
         loadBasesContrato(data.contratoId);
-        
+
         recalcularCostesImportesDesdeCoste();
-        
+
     });
 }
 
@@ -2315,19 +2321,19 @@ var cargaAgente = function (id, encarga) {
         if (err) return;
         $('#txtAgente').val(data.nombre);
         vm.agenteId(data.comercialId);
-        if(!encarga) {
+        if (!encarga) {
             obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
                 if (err) return;
                 //var por = vm.porcentajeAgente()
-                if(!comision) comision = 0;
+                if (!comision) comision = 0;
                 vm.porcentajeAgente(comision);
                 //if(por == 0 && contratoId != 0) { vm.porcentajeAgente(0)}
-                if(!usaCalculadora) vm.porcentajeAgente(0);
-                if(vm.stipoContratoId() == 5) cargaPorcenRef(comision);
+                if (!usaCalculadora) vm.porcentajeAgente(0);
+                if (vm.stipoContratoId() == 5) cargaPorcenRef(comision);
             });
         }
-        if(contratoId != 0) {
-                    
+        if (contratoId != 0) {
+
         } else {
             recalcularCostesImportesDesdeCoste(encarga);
         }
@@ -2354,7 +2360,7 @@ var initAutoCliente = function () {
         minLength: 2,
         select: function (event, ui) {
             vm.clienteId(ui.item.id);
-         
+
             cambioCliente(ui.item);
         }
     });
@@ -2418,14 +2424,14 @@ var initAutoAgente = function () {
             vm.agenteId(ui.item.id);
             obtenerPorcentajeDelAgenteColaborador(vm.agenteId(), vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
                 if (err) return;
-                if(!comision) comision = 0;
+                if (!comision) comision = 0;
                 vm.porcentajeAgente(comision);
-                if(!usaCalculadora) vm.porcentajeAgente(0);
+                if (!usaCalculadora) vm.porcentajeAgente(0);
                 recalcularCostesImportesDesdeCoste();
 
-                if(vm.stipoContratoId() == 5) {
+                if (vm.stipoContratoId() == 5) {
                     cargaPorcenRef(comision);
-                 }
+                }
             });
         }
     });
@@ -2439,14 +2445,14 @@ var initAutoAgente = function () {
 
 var cambioCampoConRecalculoDesdeCoste = function () {
     recalcularCostesImportesDesdeCoste();
-    if(vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
+    if (vm.porcentajeBeneficio() != vm.antPorcentajeBeneficio() || vm.porcentajeAgente() != vm.antPorcentajeAgente()) {
         $('#btnNuevaLinea').prop('disabled', true);
         $('#btnAceptarLinea').prop('disabled', true)
     } else {
         $('#btnNuevaLinea').prop('disabled', false);
         $('#btnAceptarLinea').prop('disabled', false)
     }
-    
+
 };
 
 
@@ -2454,36 +2460,36 @@ var recalcularCostesImportesDesdeCoste = function (encarga) {
     if (!vm.coste()) vm.coste(0);
     if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
     if (vm.coste() != null) {
-        if (vm.porcentajeBeneficio())  {
+        if (vm.porcentajeBeneficio()) {
             vm.importeBeneficio(vm.porcentajeBeneficio() * vm.coste() / 100);
         }
-        if(!vm.porcentajeBeneficio()) {
+        if (!vm.porcentajeBeneficio()) {
             vm.porcentajeBeneficio(0);
             vm.importeBeneficio(0);
         }
         var imp = vm.importeBeneficio();
-        if(imp == undefined) vm.importeBeneficio(0);
+        if (imp == undefined) vm.importeBeneficio(0);
         vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
     }
     //if(!usaCalculadora) vm.porcentajeAgente(0);
-    if  (vm.porcentajeAgente() != null) {
+    if (vm.porcentajeAgente() != null) {
         vm.importeCliente(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100));
-        if(vm.tipoContratoId() == 3) { if(!encarga) vm.importeAnualRenovacion(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)); }
+        if (vm.tipoContratoId() == 3) { if (!encarga) vm.importeAnualRenovacion(vm.ventaNeta() / ((100 - vm.porcentajeAgente()) / 100)); }
         vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
     }
     //if (!usaCalculadora) vm.importeAgente(0);//si no se usa calculadora el imporrte del agente es 0
     vm.importeCliente(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1));
-    if(vm.tipoContratoId() == 3) { if(!encarga) vm.importeAnualRenovacion(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1)); }
+    if (vm.tipoContratoId() == 3) { if (!encarga) vm.importeAnualRenovacion(roundToTwo(vm.ventaNeta() * 1 + vm.importeAgente() * 1)); }
     if (vm.mantenedorId()) {
         vm.importeMantenedor(vm.importeCliente() - vm.ventaNeta() + vm.importeBeneficio());
         vm.importeMantenedor(roundToTwo(vm.importeMantenedor()));
     }
 
-     
+
     vm.importeCliente(roundToTwo(vm.importeCliente()));
     vm.importeClienteFormat(numeral(vm.importeCliente()).format('0,0.00'));
-    if(vm.tipoContratoId() == 3) {
-        if(!encarga) {
+    if (vm.tipoContratoId() == 3) {
+        if (!encarga) {
             vm.importeAnualRenovacion(roundToTwo(vm.importeCliente()));
             vm.importeAnualRenovacionFormat(numeral(vm.importeCliente()).format('0,0.00'));
         }
@@ -2495,27 +2501,27 @@ var recalcularCostesImportesDesdeCoste = function (encarga) {
     vm.porcentajeBeneficio(roundToSix(vm.porcentajeBeneficio()));
 };
 
-var calcularInverso = function(carga) {
-    if(!carga) {
-        if(!vm.importeCliente()) { 
-            vm.importeCliente(0); 
+var calcularInverso = function (carga) {
+    if (!carga) {
+        if (!vm.importeCliente()) {
+            vm.importeCliente(0);
         }
-        if(!vm.porcentajeAgente()) vm.porcentajeAgente(0);
-    
-        if(!vm.porcentajeBeneficio()) {
+        if (!vm.porcentajeAgente()) vm.porcentajeAgente(0);
+
+        if (!vm.porcentajeBeneficio()) {
             vm.importeBeneficio(0);
             vm.porcentajeBeneficio(0);
         }
-    
+
     }
-   
-    if  (vm.porcentajeAgente() != null) {
+
+    if (vm.porcentajeAgente() != null) {
         vm.importeAgente(vm.importeCliente() * (vm.porcentajeAgente() / 100));
-        vm.ventaNeta(vm.importeCliente()-vm.importeAgente());
+        vm.ventaNeta(vm.importeCliente() - vm.importeAgente());
     }
-    if (vm.porcentajeBeneficio() != null)  {
-        vm.coste(vm.ventaNeta()/((vm.porcentajeBeneficio()/100)+1));
-        vm.importeBeneficio(vm.ventaNeta()-vm.coste());
+    if (vm.porcentajeBeneficio() != null) {
+        vm.coste(vm.ventaNeta() / ((vm.porcentajeBeneficio() / 100) + 1));
+        vm.importeBeneficio(vm.ventaNeta() - vm.coste());
     }
 
     if (vm.mantenedorId()) {
@@ -2550,29 +2556,29 @@ var actualizarLineasDeLaContratoTrasCambioCostes = function (done) {
         });
 };
 
-var recalcularImportesGuardar = function(done) {
-        llamadaAjax('GET', "/api/contratos/lineas/" + vm.contratoId(), null, function (err, data) {
+var recalcularImportesGuardar = function (done) {
+    llamadaAjax('GET', "/api/contratos/lineas/" + vm.contratoId(), null, function (err, data) {
+        if (err) return errorGeneral(err, done);
+        var totalCoste = 0;
+        data.forEach(function (linea) {
+            totalCoste += (linea.coste * linea.cantidad);
+            vm.totalCoste(numeral(totalCoste).format('0,0.00'));
+        })
+        llamadaAjax('GET', "/api/contratos/bases/" + vm.contratoId(), null, function (err, data) {
             if (err) return errorGeneral(err, done);
-            var totalCoste = 0;
-            data.forEach(function (linea) {
-                totalCoste += (linea.coste * linea.cantidad);
-                vm.totalCoste(numeral(totalCoste).format('0,0.00'));
-            })
-            llamadaAjax('GET', "/api/contratos/bases/" + vm.contratoId(), null, function (err, data) {
-                if (err) return errorGeneral(err, done);
-                // actualizamos los totales
-                var t1 = 0; // total sin iva
-                var t2 = 0; // total con iva
-                for (var i = 0; i < data.length; i++) {
-                    t1 += data[i].base;
-                    t2 += data[i].base + data[i].cuota;
-                }
-                vm.total(numeral(t1).format('0,0.00'));
-                vm.totalConIva(numeral(t2).format('0,0.00'));
-                vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
-                done(null, 'OK')
-            })
-        });
+            // actualizamos los totales
+            var t1 = 0; // total sin iva
+            var t2 = 0; // total con iva
+            for (var i = 0; i < data.length; i++) {
+                t1 += data[i].base;
+                t2 += data[i].base + data[i].cuota;
+            }
+            vm.total(numeral(t1).format('0,0.00'));
+            vm.totalConIva(numeral(t2).format('0,0.00'));
+            vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
+            done(null, 'OK')
+        })
+    });
 }
 
 var ocultarCamposContratosGeneradas = function () {
@@ -2585,7 +2591,7 @@ var ocultarCamposContratosGeneradas = function () {
     $('#txtPorcentajeAgente').prop('disabled', true);
 }
 var obtenerImporteAlClienteDesdeCoste = function (coste) {
-    if(usaCalculadora == 0) return coste;
+    if (usaCalculadora == 0) return coste;
     var importeBeneficio = 0;
     var ventaNeta = 0;
     var importeCliente = 0;
@@ -2599,15 +2605,15 @@ var obtenerImporteAlClienteDesdeCoste = function (coste) {
     if (vm.porcentajeAgente()) {
         importeCliente = roundToTwo(ventaNeta / ((100 - vm.porcentajeAgente()) / 100));
         importeAgente = importeCliente * (vm.porcentajeAgente() / 100);
-    } 
+    }
     importeCliente = roundToTwo((ventaNeta * 1) + (importeAgente * 1));
 
     return importeCliente;
 }
-var cargaPorcenRef = function(comision) {
-    if(!comision) comision = 0;
+var cargaPorcenRef = function (comision) {
+    if (!comision) comision = 0;
     var ref = vm.referencia();
-    if(ref && ref != '') {
+    if (ref && ref != '') {
         ref = ref.toString();
         var com = comision.toString();
         ref = ref.replace(/-[0-9]*\//, "-" + com + "/");
@@ -2697,7 +2703,7 @@ function aceptarComisionista() {
     if (!datosOKComisionistas()) {
         return;
     }
-   
+
     if (!vm.contratoComisionistaId()) {
         // es alta
         vm.contratoComisionistaId(0);
@@ -2733,7 +2739,7 @@ function datosOKComisionistas() {
                 required: true
             },
             txtPorComer: {
-                required:true,
+                required: true,
                 number: true
             }
         },
@@ -2797,7 +2803,7 @@ function initTablaComisionistas() {
             data: "contratoComisionistaId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!vm.contratoCerrado())  bt1 = "<button  class='btn btn-circle btn-danger btn-sm' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button  class='btn btn-circle btn-danger btn-sm' onclick='deleteComisionista(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalComisionista' onclick='editComisionista(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
@@ -2880,18 +2886,18 @@ function buscaComisionistas(id) {
     var encontrado = false;
     llamadaAjax('GET', "/api/contratos/comisionistas/" + vm.contratoId(), null, function (err, data1) {
         if (err) return;
-        if(data1) {
+        if (data1) {
             llamadaAjax('GET', "/api/contratos/colaborador/asociado/defecto/" + vm.agenteId() + "/" + vm.sempresaId() + "/" + vm.tipoContratoId(), null, function (err, data2) {
                 if (err) return;
-                if(data2.length  > 0) {
-                    for(var i = 0; i< data1.length; i++){
-                        if(data1[i].comercialId == data2[0].ascComercialId){
+                if (data2.length > 0) {
+                    for (var i = 0; i < data1.length; i++) {
+                        if (data1[i].comercialId == data2[0].ascComercialId) {
                             encontrado = true;
                         }
                     }
-                    
-                    if(!encontrado && cmd == "NEW" && data2[0]){
-                        if(data2[0].ascComercialId) {
+
+                    if (!encontrado && cmd == "NEW" && data2[0]) {
+                        if (data2[0].ascComercialId) {
                             var data = {
                                 contratoComisionista: {
                                     contratoId: vm.contratoId(),
@@ -2899,12 +2905,12 @@ function buscaComisionistas(id) {
                                     porcentajeComision: data2[0].porcomer,
                                 }
                             }
-                            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista" , data, function (err, data) {
+                            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/comisionista", data, function (err, data) {
                                 if (err) return;
                                 loadComisionistas(vm.contratoId());
                             });
                         }
-                    }else {
+                    } else {
                         loadComisionistas(vm.contratoId());
                     }
                 } else {
@@ -2936,10 +2942,10 @@ function cambioComercial(data) {
     // hay que buscar el porcentaje
     obtenerPorcentajeDelAgenteColaborador(comercialId, vm.clienteId(), vm.sempresaId(), vm.stipoContratoId(), function (err, comision) {
         if (err) return;
-        if(!comision) {
+        if (!comision) {
             mensError('El colaborador asociado no tiene una comision por defecto');
             comision = 0
-        } 
+        }
         vm.porcentajeComision(comision);
         recalcularCostesImportesDesdeCoste();
         //recalcularCostesImportesDesdeCoste();
@@ -2986,12 +2992,12 @@ var loadPeriodosPagos = function (periodoPagoId) {
 }
 
 var generarPrefacturas = function () {
-   /*  if(importePrefacturas > vm.importeCliente()) {
-        mensError("Ya se ha prefacturado el total del contrato");
-        setTimeout(function(){ $('#modalGenerarPrefacturas').modal('hide');; }, 100);
-        return;
-    }
- */
+    /*  if(importePrefacturas > vm.importeCliente()) {
+         mensError("Ya se ha prefacturado el total del contrato");
+         setTimeout(function(){ $('#modalGenerarPrefacturas').modal('hide');; }, 100);
+         return;
+     }
+  */
     var resto = 0;
     $("#cmbPeriodosPagos").select2(select2Spanish());
     $("#cmbPeriodosPagos2").select2(select2Spanish());
@@ -3012,7 +3018,7 @@ var generarPrefacturas = function () {
         vm.importeAFacturar(roundToSix(resto));
     }
     //si no hay fecha de primera factura establecemos la del día de hoy
-    if(!vm.fechaPrimeraFactura()) {
+    if (!vm.fechaPrimeraFactura()) {
         var f = new Date();
         f = moment(f).format('DD/MM/YYYY');
         vm.fechaPrimeraFactura(f);
@@ -3026,28 +3032,28 @@ var generarPrefacturas = function () {
 }
 
 var generarPrefacturasPlanificacion = function (data) {
-     var resto = data[0].importe;
-     vm.importeAFacturar(roundToSix(resto));
-     $("#cmbPeriodosPagos2").select2(select2Spanish());
-     loadPeriodosPagos(vm.speriodoPagoId());
-     $("#cmbPeriodosPagos2").select2().on('change', function (e) {
-         cambioPeriodosPagosPlanificacion(e.added);
-     });
+    var resto = data[0].importe;
+    vm.importeAFacturar(roundToSix(resto));
+    $("#cmbPeriodosPagos2").select2(select2Spanish());
+    loadPeriodosPagos(vm.speriodoPagoId());
+    $("#cmbPeriodosPagos2").select2().on('change', function (e) {
+        cambioPeriodosPagosPlanificacion(e.added);
+    });
 
-   
-    
-     if(vm.fechaPlanificacionObras2()) {
+
+
+    if (vm.fechaPlanificacionObras2()) {
         vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
-     }
-     else if(!vm.fechaPrimeraFactura()) {
-         var f = new Date();
-         f = moment(f).format('DD/MM/YYYY');
-         vm.fechaPrimeraFactura(f);
-     }
-     $("#generar-prefacturas-form-planificacion").submit(function () {
-         return false;
-     });
- }
+    }
+    else if (!vm.fechaPrimeraFactura()) {
+        var f = new Date();
+        f = moment(f).format('DD/MM/YYYY');
+        vm.fechaPrimeraFactura(f);
+    }
+    $("#generar-prefacturas-form-planificacion").submit(function () {
+        return false;
+    });
+}
 
 var cambioPeriodosPagos = function (data) {
     vm.numPagos(calcularNumPagos());
@@ -3087,8 +3093,8 @@ var verPrefacturasAGenerar = function () {
 
     //comprobamos que le cliente tenga un nombre comercial
     var d = vm.nombreComercial();
-    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
-    
+    if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeCliente(); // importe real de la factura;
     var importeAlCliente = vm.importeCliente(); // importe al cliente final;
@@ -3101,7 +3107,7 @@ var verPrefacturasAGenerar = function () {
         clienteId = vm.mantenedorId();
         cliente = $("#txtMantenedor").val();
     }
-    if(numConceptos > 0 && importePrefacturas == 0) {
+    if (numConceptos > 0 && importePrefacturas == 0) {
         var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), spanishDbDate(dataConceptos[0].fecha), spanishDbDate(vm.fechaSiguientesFacturas()), numConceptos, vm.sempresaId(), clienteId, empresa, cliente, null);
     } else {
         var divisor = (importe - importePrefacturasConcepto) / importe;
@@ -3117,8 +3123,8 @@ var verPrefacturasAGenerarPlanificacion = function () {
 
     //comprobamos que le cliente tenga un nombre comercial
     var d = vm.nombreComercial();
-    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
-    
+    if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
     // comprobamos si es de mantenedor o cliente final.
     var importe = vm.importeAFacturar(); // importe real de la factura;
     var importeAlCliente = vm.importeAFacturar(); // importe al cliente final;
@@ -3135,7 +3141,7 @@ var verPrefacturasAGenerarPlanificacion = function () {
     var coste = vm.coste() * divisor;
     var porRetenGarantias = RegPlanificacion[0].porRetenGarantias;
     var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
-    
+
     vm.prefacturasAGenerar(prefacturas);
     loadTablaGenerarPrefacturasPlanificacion(prefacturas);
 }
@@ -3149,25 +3155,25 @@ var aceptarGenerarPrefacturas = function () {
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
     };
-  
-        controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
-            if (err) return;
-            if (!result) {
-                $('#modalGenerarPrefacturas').modal('hide');
+
+    controlDePrefacturasYaGeneradas(vm.contratoId(), function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturas').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
                 return;
             }
-            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
-                if (err){
-                    $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
-                    return;
-                }
-                $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
-                mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-                $('#modalGenerarPrefacturas').modal('hide');
-                loadPrefacturasDelContrato(vm.contratoId());
-            });
+            $('#btnAceptarGenerarPrefacturas').prop('disabled', false);
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturas').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
         });
-    
+    });
+
 }
 
 var aceptarGenerarPrefacturaPlanificacion = function () {
@@ -3177,25 +3183,25 @@ var aceptarGenerarPrefacturaPlanificacion = function () {
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
     };
-  
-    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(),  RegPlanificacion[0].contPlanificacionId, function (err, result) {
-            if (err) return;
-            if (!result) {
-                $('#modalGenerarPrefacturas').modal('hide');
+
+    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturas').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                mensError('Error al crear la prefactura');
                 return;
             }
-            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
-                if (err){
-                    mensError('Error al crear la prefactura');
-                    return;
-                }
-                mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-                $('#modalGenerarPrefacturas').modal('hide');
-                loadPrefacturasDelContrato(vm.contratoId());
-                actualizaCobrosPlanificacion(vm.contratoId());
-            });
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturas').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
+            actualizaCobrosPlanificacion(vm.contratoId());
+        });
     });
-    
+
 }
 
 var aceptarGenerarPrefacturasPlanificacion = function () {
@@ -3207,25 +3213,25 @@ var aceptarGenerarPrefacturasPlanificacion = function () {
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
     };
-        controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
-            if (err) return;
-            if (!result) {
-                $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', false);
                 return;
             }
-            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
-                if (err){
-                    $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', false);
-                    return;
-                }
-                $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', false);
-                mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-                $('#modalGenerarPrefacturasPlanificacion').modal('hide');
-                loadPrefacturasDelContrato(vm.contratoId());
-                actualizaCobrosPlanificacion(vm.contratoId());
-                limpiarModalGenerarPrefacturasObras();
-            });
+            $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', false);
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
+            actualizaCobrosPlanificacion(vm.contratoId());
+            limpiarModalGenerarPrefacturasObras();
         });
+    });
 }
 
 var aceptarModificarPrefacturas = function () {
@@ -3257,9 +3263,9 @@ var generarPrefacturasOK = function () {
             txtGFechaPrimeraFactura: {
                 required: true
             },
-           /*  txtGFechaUltimaFactura: {
-                required: true
-            } */
+            /*  txtGFechaUltimaFactura: {
+                 required: true
+             } */
         },
         // Messages for form validation
         messages: {
@@ -3297,9 +3303,9 @@ var generarPrefacturasPlanificacionOK = function () {
             txtGFechaPrimeraFactura2: {
                 required: true
             },
-           /*  txtGFechaUltimaFactura: {
-                required: true
-            } */
+            /*  txtGFechaUltimaFactura: {
+                 required: true
+             } */
         },
         // Messages for form validation
         messages: {
@@ -3363,7 +3369,7 @@ var controlDePrefacturasYaGeneradasPlanificacion = function (contratoId, contPla
 }
 
 function crearPrefacturas(importe, importeAlCliente, coste, fechaInicial, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente) {
-   
+
     var divisor = obtenerDivisor();
     // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y el final
     // de mes 
@@ -3480,7 +3486,7 @@ function initTablaGenerarPrefacturas() {
         }],
         columns: [{
             data: "fecha"
-        },{
+        }, {
             data: "importeCoste",
             className: "text-right",
             render: function (data, type, row) {
@@ -3548,7 +3554,7 @@ function initTablaGenerarPrefacturasPlanificacion() {
         }],
         columns: [{
             data: "fecha"
-        },{
+        }, {
             data: "importeCoste",
             className: "text-right",
             render: function (data, type, row) {
@@ -3631,60 +3637,60 @@ function initTablaPrefacturas(departamentoId) {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14 ) {
+                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 18) {
+                        if (column === 0 || column === 18) {
                             return "";
                         } else {
                             return data;
                         }
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 ) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                       if(row === 7) {
+                        if (row === 7) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
         },
-        
+
     };
     var buttonCommon2 = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 18) {
+                body: function (data, row, column, node) {
+                    if (column === 0 || column === 18) {
                         return "";
                     } else {
                         return data;
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 ) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14) {
                         return data;
                     } else {
-                       if(row === 7) {
+                        if (row === 7) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -3695,153 +3701,157 @@ function initTablaPrefacturas(departamentoId) {
         paging: false,
         responsive: true,
         "bDestroy": true,
-        fnCreatedRow : 
-        function (nRow, aData, iDataIndex) {
-            //registro facturado
-            if(aData.facturaId) {
-                $(nRow).attr('style', 'background: #81F889'); 
-            }
-             //letra recibida
-             if(aData.fechaRecibida) {
-                $(nRow).attr('style', 'background: #68ACCD'); 
-            }
+        fnCreatedRow:
+            function (nRow, aData, iDataIndex) {
+                //registro facturado
+                if (aData.facturaId) {
+                    $(nRow).attr('style', 'background: #81F889');
+                }
+                //letra recibida
+                if (aData.fechaRecibida) {
+                    $(nRow).attr('style', 'background: #68ACCD');
+                }
 
-            //letra en gestión de cobros
-            if(aData.fechaGestionCobros) {
-                $(nRow).attr('style', 'background: #FFC281'); 
-            }
-            
-        },
-        
-       
+                //letra en gestión de cobros
+                if (aData.fechaGestionCobros) {
+                    $(nRow).attr('style', 'background: #FFC281');
+                }
+                //prefactura no facturable
+                if (aData.noFacturar) {
+                    $(nRow).attr('style', 'background: #cc6c69ff');
+                }
+
+            },
+
+
         bSort: false,
-       
+
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            },{footer: true} ), 
-            $.extend( true, {}, buttonCommon2, {
+            }, { footer: true }),
+            $.extend(true, {}, buttonCommon2, {
                 extend: 'pdf'
-            },{
+            }, {
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 footer: true
-                } ), 
-            
+            }),
+
             'print'
         ],
         autoWidth: false,
-        
-        "footerCallback": function ( row, data, start, end, display ) {
+
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
-           
+
             // Total over all pages
             total8 = api
-            .column( 8 )
-            .data()
-            .reduce( function (a, b) {
-                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-            }, 0 );
+                .column(8)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
             total9 = api
-                .column( 9 )
+                .column(9)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
-          
-             // Total over all pages
-             total10 = api
-             .column( 10 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+                }, 0);
 
-             // Total over all pages
-             total11 = api
-             .column( 11 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total10 = api
+                .column(10)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-           
-             // Total over all pages
-             total12 = api
-             .column( 12 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total11 = api
+                .column(11)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-              // Total over all pages
-              total13 = api
-              .column( 13 )
-              .data()
-              .reduce( function (a, b) {
-                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-              }, 0 );
 
-               // Total over all pages
-               total14 = api
-               .column( 14 )
-               .data()
-               .reduce( function (a, b) {
-                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-               }, 0 );
+            // Total over all pages
+            total12 = api
+                .column(12)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Total over all pages
+            total13 = api
+                .column(13)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Total over all pages
+            total14 = api
+                .column(14)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
 
             // Update footer
-            $( api.columns(8).footer() ).html(
+            $(api.columns(8).footer()).html(
                 numeral(total8).format('0,0.00')
-                
+
             );
-            $( api.columns(9).footer() ).html(
+            $(api.columns(9).footer()).html(
                 numeral(total9).format('0,0.00')
-                
+
             );
 
-            $( api.columns(10).footer() ).html(
+            $(api.columns(10).footer()).html(
                 numeral(total10).format('0,0.00')
             );
-            $( api.columns(11).footer() ).html(
+            $(api.columns(11).footer()).html(
                 numeral(total11).format('0,0.00')
             );
-            $( api.columns(12).footer() ).html(
+            $(api.columns(12).footer()).html(
                 numeral(total12).format('0,0.00')
             );
-            $( api.columns(13).footer() ).html(
+            $(api.columns(13).footer()).html(
                 numeral(total13).format('0,0.00')
             );
-            $( api.columns(14).footer() ).html(
+            $(api.columns(14).footer()).html(
                 numeral(total14).format('0,0.00')
             );
 
             //////
 
-             //importes informaticos de las letras
-             if(vm.tipoContratoId() == 8) {
+            //importes informaticos de las letras
+            if (vm.tipoContratoId() == 8) {
                 var c = api.data();
                 calculaImportesInformativosPrefacturas(c)
             }
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -3869,7 +3879,7 @@ function initTablaPrefacturas(departamentoId) {
             width: "5%",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
-                if(row.esLetra != 1) {
+                if (row.esLetra != 1) {
                     html = "<i class='fa fa-file-o'></i>";
                     if (row.facturaId) {
                         html = "<i class='fa fa-files-o'></i>";
@@ -3882,7 +3892,7 @@ function initTablaPrefacturas(departamentoId) {
                 }
                 return html;
             }
-        },{
+        }, {
             data: "referencia"
         }, {
             data: "emisorNombre"
@@ -3899,7 +3909,7 @@ function initTablaPrefacturas(departamentoId) {
         {
             data: "fechaRecibida",
             render: function (data, type, row) {
-                if(data) {
+                if (data) {
                     return moment(data).format('DD/MM/YYYY');
                 } else {
                     return null
@@ -3909,7 +3919,7 @@ function initTablaPrefacturas(departamentoId) {
         {
             data: "fechaGestionCobros",
             render: function (data, type, row) {
-                if(data) {
+                if (data) {
                     return moment(data).format('DD/MM/YYYY');
                 } else {
                     return null
@@ -3918,37 +3928,37 @@ function initTablaPrefacturas(departamentoId) {
         }, {
             data: "coste",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "total",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
-        },{
+        }, {
             data: "noFacturado",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
-        },{
+        }, {
             data: "facturado",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "vFac"
@@ -3960,11 +3970,11 @@ function initTablaPrefacturas(departamentoId) {
             data: "prefacturaId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!row.contratoPorcenId) {
-                    if(row.departamentoId != 8) {
+                if (!row.contratoPorcenId) {
+                    if (row.departamentoId != 8) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     }
-                    else if(row.departamentoId == 8 && !row.facturaId) {
+                    else if (row.departamentoId == 8 && !row.facturaId) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     }
                 }
@@ -3974,10 +3984,10 @@ function initTablaPrefacturas(departamentoId) {
                 return html;
             }
         }]
-       
+
     });
 
-   
+
     // Apply the filter
     $("#dt_prefactura thead th input[type=text]").on('keyup change', function () {
         tablaPrefacturas
@@ -3993,106 +4003,106 @@ function initTablaPrefacturas(departamentoId) {
     tablaPrefacturas.columns(14).visible(false);
     tablaPrefacturas.columns(15).visible(false);
     tablaPrefacturas.columns(17).visible(false);
-   /*  if(departamentoId != 8) {
-        tablaPrefacturas.columns(6).visible(false);
-        tablaPrefacturas.columns(7).visible(false);
-    } */
-    
+    /*  if(departamentoId != 8) {
+         tablaPrefacturas.columns(6).visible(false);
+         tablaPrefacturas.columns(7).visible(false);
+     } */
+
 }
 
 function calculaImportesInformativosPrefacturas(c) {
-    if(!c) return;
-    if(c.length > 0 && vm.tipoContratoId() == 8) {
+    if (!c) return;
+    if (c.length > 0 && vm.tipoContratoId() == 8) {
         var totEmitidas = 0;
-         var numEmitidas = 0;
-         var totRecibidas = 0;
-         var numRecibidas = 0;
-         var totGestionCobros = 0;
-         var numGestionCobros = 0;
-         for(var i = 0; i < c.length; i++) {
-             var s = c[i];
-             if(s.esLetra == 1) {
-                 //LETRAS EMITIDAS
-                 totEmitidas = totEmitidas + s.total;
-                 numEmitidas++
-                 //LETRAS RECIBIDAS
-                 if(s.fechaRecibida) {
-                     totRecibidas = totRecibidas + s.total;
-                     numRecibidas++
-                 }
-                  //LETRAS EN GESTION DE COBROS
-                  if(s.fechaGestionCobros) {
-                     totGestionCobros = totGestionCobros + s.total;
-                     numGestionCobros++
-                 }
-             }
-         }
-         if(totEmitidas) {
-            vm.totEmitidas(numeral(Math.round(totEmitidas * 100)/100).format('0,0.00'));
+        var numEmitidas = 0;
+        var totRecibidas = 0;
+        var numRecibidas = 0;
+        var totGestionCobros = 0;
+        var numGestionCobros = 0;
+        for (var i = 0; i < c.length; i++) {
+            var s = c[i];
+            if (s.esLetra == 1) {
+                //LETRAS EMITIDAS
+                totEmitidas = totEmitidas + s.total;
+                numEmitidas++
+                //LETRAS RECIBIDAS
+                if (s.fechaRecibida) {
+                    totRecibidas = totRecibidas + s.total;
+                    numRecibidas++
+                }
+                //LETRAS EN GESTION DE COBROS
+                if (s.fechaGestionCobros) {
+                    totGestionCobros = totGestionCobros + s.total;
+                    numGestionCobros++
+                }
+            }
+        }
+        if (totEmitidas) {
+            vm.totEmitidas(numeral(Math.round(totEmitidas * 100) / 100).format('0,0.00'));
             vm.numEmitidas(numEmitidas);
-         } else {
+        } else {
             vm.totEmitidas(0);
             vm.numEmitidas(0);
-         }
-         //
-         if(totRecibidas) {
-            vm.totRecibidas(numeral(Math.round(totRecibidas * 100)/100).format('0,0.00'));
+        }
+        //
+        if (totRecibidas) {
+            vm.totRecibidas(numeral(Math.round(totRecibidas * 100) / 100).format('0,0.00'));
             vm.numRecibidas(numRecibidas);
-         } else {
+        } else {
             vm.totRecibidas(0);
             vm.numRecibidas(0);
-         }
-         
-         //
-         if(totGestionCobros) {
-            vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100)/100).format('0,0.00'));
+        }
+
+        //
+        if (totGestionCobros) {
+            vm.totGestionCobros(numeral(Math.round(totGestionCobros * 100) / 100).format('0,0.00'));
             vm.numGestionCobros(numGestionCobros);
-         } else {
+        } else {
             vm.totGestionCobros(0);
             vm.numGestionCobros(0);
-         }
-         
-         //calculo de las diferencias
+        }
 
-         if(vm.totEmitidas()) {
-            var a =  numeroDbf(vm.totEmitidas());
+        //calculo de las diferencias
+
+        if (vm.totEmitidas()) {
+            var a = numeroDbf(vm.totEmitidas());
             var na = vm.numEmitidas();
             var totLetrasPlanificadas = vm.totLetrasPlanificadas();
             var numLetrasPlanificadas = vm.numLetrasPlanificadas();
 
-            vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
-            vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
+            vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100) / 100).format('0,0.00'));
+            vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100) / 100).format('0'));
         } else {
-            var a =  0
+            var a = 0
             var na = 0
             var totLetrasPlanificadas = vm.totLetrasPlanificadas();
             var numLetrasPlanificadas = vm.numLetrasPlanificadas();
 
-            vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100)/100).format('0,0.00'));
-            vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100)/100).format('0'));
+            vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100) / 100).format('0,0.00'));
+            vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100) / 100).format('0'));
         }
-        
-       
+
+
         //diferencia entre letras prefacturadas y recibidas
-        if(vm.totRecibidas()) {
+        if (vm.totRecibidas()) {
             var b = numeroDbf(vm.totRecibidas());
             var nb = vm.numRecibidas();
-            vm.difRecibidasLetras(numeral(Math.round((b - a) * 100)/100).format('0,0.00'));
-            vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100)/100).format('0'));
+            vm.difRecibidasLetras(numeral(Math.round((b - a) * 100) / 100).format('0,0.00'));
+            vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100) / 100).format('0'));
         } else {
             var b = 0;
             var nb = 0;
-            vm.difRecibidasLetras(numeral(Math.round((b - a) * 100)/100).format('0,0.00'));
-            vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100)/100).format('0'));
+            vm.difRecibidasLetras(numeral(Math.round((b - a) * 100) / 100).format('0,0.00'));
+            vm.difNumRecibidasLetras(numeral(Math.round((nb - na) * 100) / 100).format('0'));
         }
         //diferencia entre recibidas y en gestión de cobros
-        if(vm.totGestionCobros()) {
+        if (vm.totGestionCobros()) {
             var c = numeroDbf(vm.totGestionCobros());
             var nc = vm.numGestionCobros();
-            vm.difGestionCobroLetras(numeral(Math.round((c - b) * 100)/100).format('0,0.00'));
-            vm.difNumGestionCobroLetras(numeral(Math.round((nc - nb) * 100)/100).format('0'));
+            vm.difGestionCobroLetras(numeral(Math.round((c - b) * 100) / 100).format('0,0.00'));
+            vm.difNumGestionCobroLetras(numeral(Math.round((nc - nb) * 100) / 100).format('0'));
         }
-     }
+    }
 }
 
 function loadPrefacturasDelContrato(contratoId) {
@@ -4105,8 +4115,8 @@ function loadPrefacturasDelContrato(contratoId) {
 function loadTablaPrefacturas(data) {
     var dt = $('#dt_prefactura').dataTable();
     //new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
-    
-   
+
+
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -4116,11 +4126,11 @@ function loadTablaPrefacturas(data) {
         numPrefacturas = data.length;
         importePrefacturas = 0;
         importePrefacturasConcepto = 0
-        for( var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
             importePrefacturas = importePrefacturas + data[i].total;
-            if(data[i].contratoPorcenId) importePrefacturasConcepto = importePrefacturasConcepto + data[i].total;
+            if (data[i].contratoPorcenId) importePrefacturasConcepto = importePrefacturasConcepto + data[i].total;
         }
-        if(numPrefacturas > 0) {
+        if (numPrefacturas > 0) {
             $('#cmbEmpresas').prop('disabled', true);
             $('#cmbTiposContrato').prop('disabled', true);
             $('#cmbTipoProyecto').prop('disabled', true);
@@ -4134,7 +4144,7 @@ function loadTablaPrefacturas(data) {
             $('#txtReferencia').prop('disabled', false);
             $('#txtCliente').prop('disabled', false);
             $('#txtAgente').prop('disabled', false);
-           
+
         }
     } else {
         importePrefacturas = 0;
@@ -4148,7 +4158,7 @@ function loadTablaPrefacturas(data) {
         $('#txtAgente').prop('disabled', false);
     }
     dt.fnDraw();
-    if(data) {
+    if (data) {
         data.forEach(function (v) {
             var field = "#chk" + v.prefacturaId;
             if (v.sel == 1) {
@@ -4178,7 +4188,7 @@ function loadTablaPrefacturas(data) {
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function (data, status) {
-    
+
                     },
                     error: function (err) {
                         mensErrorAjax(err);
@@ -4191,7 +4201,7 @@ function loadTablaPrefacturas(data) {
 
 
 
-printPrefactura = function(id){
+printPrefactura = function (id) {
     var url = "InfPrefacturas.html?prefacturaId=" + id;
     window.open(url, '_blank');
 }
@@ -4231,12 +4241,12 @@ function updateAllPreFacturas(opcion) {
     var datos = null;
     var sel = 0;
     var tb = $('#dt_prefactura').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(opcion)  sel = 1
-    
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
-            if(datos[i].esLetra == 1) {
+    var datos = tb.rows({ page: 'current' }).data();
+    if (opcion) sel = 1
+
+    if (datos) {
+        for (var i = 0; i < datos.length; i++) {
+            if (datos[i].esLetra == 1) {
                 var data = {
                     prefactura: {
                         prefacturaId: datos[i].prefacturaId,
@@ -4250,18 +4260,18 @@ function updateAllPreFacturas(opcion) {
                 // updating record
                 var type = "PUT";
                 var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, datos[i].prefacturaId);
-                   $.ajax({
-                       type: type,
-                       url: url,
-                       contentType: "application/json",
-                       data: JSON.stringify(data),
-                       success: function (data, status) {
-       
-                       },
-                       error: function (err) {
-                           mensErrorAjax(err);
-                       }
-                   });
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
             }
         }
     }
@@ -4272,34 +4282,34 @@ function initTablaFacturas() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7 || column === 8 || column === 9 || column === 10) {
+                    if (column === 6 || column === 7 || column === 8 || column === 9 || column === 10) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 14) {
+                        if (column === 0 || column === 14) {
                             return "";
                         } else {
                             return data;
                         }
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
+                    if (row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                       if(row === 5) {
+                        if (row === 5) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -4308,23 +4318,23 @@ function initTablaFacturas() {
     var buttonCommon2 = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 14) {
+                body: function (data, row, column, node) {
+                    if (column === 0 || column === 14) {
                         return "";
                     } else {
                         return data;
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
+                    if (row === 6 || row === 7 || row === 8 || row === 9 || row === 10) {
                         return data;
                     } else {
-                       if(row === 5) {
+                        if (row === 5) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -4335,111 +4345,111 @@ function initTablaFacturas() {
         responsive: true,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         autoWidth: true,
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            },{footer: true} ), 
-            $.extend( true, {}, buttonCommon2,{
+            }, { footer: true }),
+            $.extend(true, {}, buttonCommon2, {
                 extend: 'pdf'
-            },{
+            }, {
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 footer: true
-                } ), 
-            
+            }),
+
             'print'
         ],
-        "footerCallback": function ( row, data, start, end, display ) {
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total1 = api
-            .column( 6 )
-            .data()
-            .reduce( function (a, b) {
-                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-            }, 0 );
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
             //
             total = api
-                .column( 7 )
+                .column(7)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 8 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(8)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-              // Total over all pages
-              total9 = api
-              .column( 9 )
-              .data()
-              .reduce( function (a, b) {
-                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-              }, 0 );
+            // Total over all pages
+            total9 = api
+                .column(9)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-               // Total over all pages
-               total10 = api
-               .column( 10 )
-               .data()
-               .reduce( function (a, b) {
-                   return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-               }, 0 );
- 
+            // Total over all pages
+            total10 = api
+                .column(10)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-           
+
+
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
+            $(api.columns(6).footer()).html(
                 numeral(total1).format('0,0.00')
             );
-            $( api.columns(7).footer() ).html(
+            $(api.columns(7).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(8).footer() ).html(
+            $(api.columns(8).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(9).footer() ).html(
+            $(api.columns(9).footer()).html(
                 numeral(total9).format('0,0.00')
             );
 
-            $( api.columns(10).footer() ).html(
+            $(api.columns(10).footer()).html(
                 numeral(total10).format('0,0.00')
             );
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -4487,27 +4497,27 @@ function initTablaFacturas() {
         }, {
             data: "coste",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
-        },  {
+        }, {
             data: "total",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
             render: function (data, type, row) {
-                return  numeral(data).format('0,0.00')
+                return numeral(data).format('0,0.00')
             }
         }, {
             data: "vFac"
@@ -4519,7 +4529,7 @@ function initTablaFacturas() {
             data: "facturaId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
@@ -4540,7 +4550,7 @@ function initTablaFacturas() {
     tablaFacturas.columns(9).visible(false);
     tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
-   
+
     tablaFacturas.columns(13).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
@@ -4597,11 +4607,11 @@ function deleteFactura(id) {
 }
 
 function editFactura(id) {
-    var url = "facturaDetalle.html?desdeContrato=true&FacturaId=" + id + "&ContratoId="+ contratoId;
+    var url = "facturaDetalle.html?desdeContrato=true&FacturaId=" + id + "&ContratoId=" + contratoId;
     window.open(url, '_new');
 }
 
-printFactura = function(id){
+printFactura = function (id) {
     var url = "InfFacturas.html?facturaId=" + id;
     window.open(url, '_blank');
 }
@@ -4611,34 +4621,34 @@ function initTablaFacproves() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 7 || column === 8 || column === 9) {
+                    if (column === 7 || column === 8 || column === 9) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 11) {
+                        if (column === 0 || column === 11) {
                             return "";
                         } else {
                             return data;
                         }
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 7 || row === 8 || row === 9) {
+                    if (row === 7 || row === 8 || row === 9) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                       if(row === 5) {
+                        if (row === 5) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -4647,23 +4657,23 @@ function initTablaFacproves() {
     var buttonCommon2 = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 11) {
+                body: function (data, row, column, node) {
+                    if (column === 0 || column === 11) {
                         return "";
                     } else {
                         return data;
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 7 || row === 8 || row === 9) {
+                    if (row === 7 || row === 8 || row === 9) {
                         return data;
                     } else {
-                       if(row === 5) {
+                        if (row === 5) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -4674,114 +4684,114 @@ function initTablaFacproves() {
         responsive: true,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            },{footer: true} ), 
-            $.extend( true, {}, buttonCommon2,{
+            }, { footer: true }),
+            $.extend(true, {}, buttonCommon2, {
                 extend: 'pdf'
-            },{
+            }, {
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 footer: true
-                } ), 
-            
+            }),
+
             'print'
         ],
-        
+
         autoWidth: true,
         columnDefs: [
-           
-            { 
+
+            {
                 "type": "datetime-moment",
                 "targets": [5, 6],
                 "render": function (data, type, row) {
                     if (type === 'display' || type === 'filter') {
-                        if(!data) return null;
+                        if (!data) return null;
                         return moment(data).format('DD/MM/YYYY');
                     }
                     // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
                     else if (type === 'sort') {
-                        if(!data) return null;
+                        if (!data) return null;
                         return moment(data).format('YYYY-MM-DD HH:mm:ss');
                     }
                     // En otros casos, solo devuelve los datos sin cambios
                     else {
-                        if(!data) return null;
+                        if (!data) return null;
                         return data;
                     }
                 }
             }
         ],
-        
-        "footerCallback": function ( row, data, start, end, display ) {
+
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total = api
-                .column( 7 )
+                .column(7)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 8 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(8)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             // Total over all pages
-              total3 = api
-              .column( 9 )
-              .data()
-              .reduce( function (a, b) {
-                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-              }, 0 );
+            // Total over all pages
+            total3 = api
+                .column(9)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
 
-           
+
 
 
             // Update footer
-            $( api.columns(7).footer() ).html(
+            $(api.columns(7).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(8).footer() ).html(
+            $(api.columns(8).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(9).footer() ).html(
+            $(api.columns(9).footer()).html(
                 numeral(total3).format('0,0.00')
-            ); 
+            );
 
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -4813,44 +4823,44 @@ function initTablaFacproves() {
                 }
                 return html;
             }
-        },  {
+        }, {
             data: "referencia"
-        },{
+        }, {
             data: "ref"
-        },{
+        }, {
             data: "numeroFacturaProveedor"
         }, {
             data: "emisorNombre"
         }, {
             data: "fecha"
-        },  {
+        }, {
             data: "fecha_recepcion"
-        }, 
+        },
         {
             data: "importeServiciado",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
-        },{
+        }, {
             data: "total",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "facproveId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFacprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFacprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -4867,13 +4877,13 @@ function initTablaFacproves() {
             .draw();
     });
 
-    
+
 }
 
 
 function loadFacproveDelContrato(contratoId) {
     var esColaborador = 0
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
         if (err) return;
         loadTablaFacproves(data);
     });
@@ -4892,7 +4902,7 @@ function loadTablaFacproves(data) {
 function editFacprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=" + id + "&ContratoId=" +ContratoId;
+    var url = "FacturaProveedorDetalle.html?desdeContrato=true&facproveId=" + id + "&ContratoId=" + ContratoId;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
@@ -4920,28 +4930,28 @@ function deleteFacprove(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                   if(data.nombreFacprovePdf){
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                   }
+                    if (data.nombreFacprovePdf) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    }
                 },
                 error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-           
+
             var data = {
                 facproveId: id
             };
@@ -4979,34 +4989,34 @@ function initTablaAntproves() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 5 || column === 6) {
+                    if (column === 5 || column === 6) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 8) {
+                        if (column === 0 || column === 8) {
                             return "";
                         } else {
                             return data;
                         }
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 5 || row === 6) {
+                    if (row === 5 || row === 6) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                       if(row === 4) {
+                        if (row === 4) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -5015,23 +5025,23 @@ function initTablaAntproves() {
     var buttonCommon2 = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 8) {
+                body: function (data, row, column, node) {
+                    if (column === 0 || column === 8) {
                         return "";
                     } else {
                         return data;
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 5 || row === 6) {
+                    if (row === 5 || row === 6) {
                         return data;
                     } else {
-                       if(row === 4) {
+                        if (row === 4) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -5042,79 +5052,79 @@ function initTablaAntproves() {
         responsive: true,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            },{footer: true} ), 
-            $.extend( true, {}, buttonCommon2,{
+            }, { footer: true }),
+            $.extend(true, {}, buttonCommon2, {
                 extend: 'pdf'
-            },{
+            }, {
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 footer: true
-                } ), 
-            
+            }),
+
             'print'
         ],
-       
+
         autoWidth: true,
-        "footerCallback": function ( row, data, start, end, display ) {
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column(5)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 6 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             
-           
+
+
 
 
             // Update footer
-            $( api.columns(5).footer() ).html(
+            $(api.columns(5).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(6).footer() ).html(
+            $(api.columns(6).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
-      
+
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -5149,7 +5159,7 @@ function initTablaAntproves() {
             }
         }, {
             data: "ref"
-        },{
+        }, {
             data: "numeroAnticipoProveedor"
         }, {
             data: "emisorNombre"
@@ -5158,26 +5168,26 @@ function initTablaAntproves() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        }, 
+        },
         {
             data: "importeServiciado",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "antproveId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntprove(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntprove(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -5194,13 +5204,13 @@ function initTablaAntproves() {
             .draw();
     });
 
-    
+
 }
 
 
 function loadAntproveDelContrato(contratoId) {
     var esColaborador = 0
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/anticiposProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
         if (err) return;
         loadTablaAntproves(data);
     });
@@ -5219,7 +5229,7 @@ function loadTablaAntproves(data) {
 function editAntprove(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "AnticipoProveedorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" +ContratoId;
+    var url = "AnticipoProveedorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" + ContratoId;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
@@ -5278,34 +5288,34 @@ function initTablaAntcols() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 5 || column === 6) {
+                    if (column === 5 || column === 6) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 8) {
+                        if (column === 0 || column === 8) {
                             return "";
                         } else {
                             return data;
                         }
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 5 || row === 6) {
+                    if (row === 5 || row === 6) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                       if(row === 4) {
+                        if (row === 4) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -5314,23 +5324,23 @@ function initTablaAntcols() {
     var buttonCommon2 = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 8) {
+                body: function (data, row, column, node) {
+                    if (column === 0 || column === 8) {
                         return "";
                     } else {
                         return data;
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 5 || row === 6) {
+                    if (row === 5 || row === 6) {
                         return data;
                     } else {
-                       if(row === 4) {
+                        if (row === 4) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -5341,79 +5351,79 @@ function initTablaAntcols() {
         responsive: true,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            },{footer: true} ), 
-            $.extend( true, {}, buttonCommon2,{
+            }, { footer: true }),
+            $.extend(true, {}, buttonCommon2, {
                 extend: 'pdf'
-            },{
+            }, {
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 footer: true
-                } ), 
-            
+            }),
+
             'print'
         ],
 
         autoWidth: true,
-        "footerCallback": function ( row, data, start, end, display ) {
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column(5)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 6 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             
-           
+
+
 
 
             // Update footer
-            $( api.columns(5).footer() ).html(
+            $(api.columns(5).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(6).footer() ).html(
+            $(api.columns(6).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
-      
+
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -5448,7 +5458,7 @@ function initTablaAntcols() {
             }
         }, {
             data: "ref"
-        },{
+        }, {
             data: "numeroAnticipoProveedor"
         }, {
             data: "emisorNombre"
@@ -5457,26 +5467,26 @@ function initTablaAntcols() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        }, 
+        },
         {
             data: "importeServiciado",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "antproveId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!vm.contratoCerrado())  bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntcol(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -5493,11 +5503,11 @@ function initTablaAntcols() {
             .draw();
     });
 
-    
+
 }
 function loadAntcolDelContrato(contratoId) {
     var esColaborador = 1
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/anticiposProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
         if (err) return;
         loadTablaAntcols(data);
     });
@@ -5516,7 +5526,7 @@ function loadTablaAntcols(data) {
 function editAntcol(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "AnticipoColaboradorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" +ContratoId;
+    var url = "AnticipoColaboradorDetalle.html?desdeContrato=true&antproveId=" + id + "&ContratoId=" + ContratoId;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
@@ -5571,34 +5581,34 @@ function initTablaFactcol() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7 || column === 8) {
+                    if (column === 6 || column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 10) {
+                        if (column === 0 || column === 10) {
                             return "";
                         } else {
                             return data;
                         }
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 6 || row === 7 || row === 8) {
+                    if (row === 6 || row === 7 || row === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                       if(row === 4) {
+                        if (row === 4) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -5607,23 +5617,23 @@ function initTablaFactcol() {
     var buttonCommon2 = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
-                    if(column === 0 || column === 10) {
+                body: function (data, row, column, node) {
+                    if (column === 0 || column === 10) {
                         return "";
                     } else {
                         return data;
                     }
                 },
-                footer: function ( data, row, column, node ) {
+                footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(row === 6 || row === 7 || row === 8) {
+                    if (row === 6 || row === 7 || row === 8) {
                         return data;
                     } else {
-                       if(row === 4) {
+                        if (row === 4) {
                             return data
-                       } else {
+                        } else {
                             return "";
-                       }
+                        }
                     }
                 },
             }
@@ -5634,89 +5644,89 @@ function initTablaFactcol() {
         responsive: true,
         "paging": false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            },{footer: true} ), 
-            $.extend( true, {}, buttonCommon2,{
+            }, { footer: true }),
+            $.extend(true, {}, buttonCommon2, {
                 extend: 'pdf'
-            },{
+            }, {
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 footer: true
-                } ), 
-            
+            }),
+
             'print'
         ],
         autoWidth: true,
-        "footerCallback": function ( row, data, start, end, display ) {
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total = api
-                .column( 6 )
+                .column(6)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 7 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(7)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             // Total over all pages
-              total3 = api
-              .column( 8 )
-              .data()
-              .reduce( function (a, b) {
-                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-              }, 0 );
+            // Total over all pages
+            total3 = api
+                .column(8)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
 
-           
+
 
 
             // Update footer
-            $( api.columns(6).footer() ).html(
+            $(api.columns(6).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $(api.columns(7).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(8).footer() ).html(
+            $(api.columns(8).footer()).html(
                 numeral(total3).format('0,0.00')
-            ); 
+            );
 
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -5750,7 +5760,7 @@ function initTablaFactcol() {
             }
         }, {
             data: "ref"
-        },{
+        }, {
             data: "numeroFacturaProveedor"
         }, {
             data: "emisorNombre"
@@ -5759,37 +5769,37 @@ function initTablaFactcol() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        },{
+        }, {
             data: "fecha_recepcion",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        }, 
+        },
         {
             data: "importeServiciado",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
-        },{
+        }, {
             data: "total",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
         }, {
             data: "totalConIva",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
-                
+
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "facproveId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteFactcol(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactcol(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
@@ -5806,13 +5816,13 @@ function initTablaFactcol() {
             .draw();
     });
 
-    
+
 }
 
 
 function loadFactcolDelContrato(contratoId) {
     var esColaborador = 1;
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/contrato/" + contratoId + "/" + esColaborador, null, function (err, data) {
         if (err) return;
         loadTablaFactcol(data);
     });
@@ -5831,7 +5841,7 @@ function loadTablaFactcol(data) {
 function editFactcol(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
-    var url = "FacturaColaboradorDetalle.html?desdeContrato=true&facproveId=" + id + "&ContratoId=" +ContratoId;
+    var url = "FacturaColaboradorDetalle.html?desdeContrato=true&facproveId=" + id + "&ContratoId=" + ContratoId;
     url += "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
@@ -5859,28 +5869,28 @@ function deleteFactcol(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                   if(data.nombreFacprovePdf){
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                   }
+                    if (data.nombreFacprovePdf) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    }
                 },
                 error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-           
+
             var data = {
                 facproveId: id
             };
@@ -5919,75 +5929,79 @@ var prepararRenovacion = function () {
     proponerFechasRenovacion();
 };
 
-var prepararRecepcionGestion = function(opcion) {
+var prepararRecepcionGestion = function (opcion) {
     f = moment(new Date()).format('DD/MM/YYYY');
     _recepcionGestion = opcion;
     vm.fechaRecepcionGestion(f);
     $('#recepcion').show();
     $('#gestionCobros').show();
-    if(!opcion) {
+    if (!opcion) {
         $('#recepcion').hide();
     } else {
         $('#gestionCobros').hide()
     }
-} 
+}
 
-var aceptarGenerarRecepcionGestion = function() {
+function loadModalFacturarNoFacturar() {
+    $('#chkFacturarNofacturar').prop('checked', true);
+}
+
+function aceptarGenerarRecepcionGestion() {
     //if(!datosOKRecepcionGestion()) return;
     var data = {};
     var url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
     //recuperamos primero las fechas de recepción y gestión de cobros de las prefcaturas seleccionadas
     llamadaAjax("GET", url, null, function (err, datos) {
         if (err) return;
-        if(datos.length == 0) {
+        if (datos.length == 0) {
             $('#modalGenerarRecepcionGestion').modal('hide');
-           return mensError("No se han seleccionado registros");
-            
+            return mensError("No se han seleccionado registros");
+
         }
         data = {
-            recepcionGestion:{
-                fechaRecibida:  null
+            recepcionGestion: {
+                fechaRecibida: null
             }
         }
-        if(vm.fechaRecepcionGestion() != '') {
+        if (vm.fechaRecepcionGestion() != '') {
             data = {
-                recepcionGestion:{
-                    fechaRecibida:  spanishDbDate(vm.fechaRecepcionGestion())
+                recepcionGestion: {
+                    fechaRecibida: spanishDbDate(vm.fechaRecepcionGestion())
                 }
             }
         }
-       if(!_recepcionGestion) {
+        if (!_recepcionGestion) {
             //comprobamos que la fecha seleccionada para gestión de cobros no sea inferior que la fecha de recepción
             delete data.recepcionGestion.fechaRecibida
-            data.recepcionGestion.fechaGestionCobros =  spanishDbDate(vm.fechaRecepcionGestion())
-            var resultado = compruebaFechaGestionCobros(datos,  data.recepcionGestion.fechaGestionCobros);
-            if(resultado) {
+            data.recepcionGestion.fechaGestionCobros = spanishDbDate(vm.fechaRecepcionGestion())
+            var resultado = compruebaFechaGestionCobros(datos, data.recepcionGestion.fechaGestionCobros);
+            if (resultado) {
                 mensError("La fecha de gestión de cobros no puede ser menor que la de recepción");
                 return;
-            } 
-       } else {
-            var resultado = compruebaFechaRecepcion(datos,  data.recepcionGestion.fechaRecibida);
-            if(resultado) {
+            }
+        } else {
+            var resultado = compruebaFechaRecepcion(datos, data.recepcionGestion.fechaRecibida);
+            if (resultado) {
                 mensError("La fecha recepción no puede ser mayor que la de gestión de cobros");
                 return;
             }
-    }
-       llamadaAjax("PUT", url, data, function (err, data) {
+        }
+        llamadaAjax("PUT", url, data, function (err, data) {
             if (err) return;
             $('#modalGenerarRecepcionGestion').modal('hide');
             loadPrefacturasDelContrato(vm.contratoId());
             actualizaCobrosPlanificacion(vm.contratoId());
-        }); 
+        });
     });
-} 
+}
 
-var compruebaFechaGestionCobros = function(datos, fecha) {
+var compruebaFechaGestionCobros = function (datos, fecha) {
     var opcion = false;
-    for(var i = 0; i < datos.length; i++) {
+    for (var i = 0; i < datos.length; i++) {
         var f = datos[i];
-        if(f.fechaRecibida) {
+        if (f.fechaRecibida) {
             opcion = fecha < f.fechaRecibida;
-            
+
         } else {
             opcion = true;
         }
@@ -5996,20 +6010,59 @@ var compruebaFechaGestionCobros = function(datos, fecha) {
     return opcion;
 }
 
-var compruebaFechaRecepcion = function(datos, fecha) {
+function confirmarNoFacturar() {
+    var data = {};
+    var url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
+    //recuperamos los registros marcados
+    llamadaAjax("GET", url, null, function (err, datos) {
+        if (err) return;
+        if (datos.length == 0) {
+            return mensError("No se han seleccionado registros");
+
+        }
+        var m = $('#chkFacturarNofacturar').prop('checked') ? 'no facturable' : 'facturable';
+        let mens = "¿Realmente desea marcar las prefacturas seleccionadas como " + m +  " ?.";
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar][Cancelar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
+                data = {
+                    recepcionGestion: {
+                        noFacturar:  $('#chkFacturarNofacturar').prop('checked')
+                    }
+                }
+                url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
+                llamadaAjax("PUT", url, data, function (err, data) {
+                    if (err) return;
+                    $('#modalFacturarNoFacturar').modal('hide');
+                    loadPrefacturasDelContrato(vm.contratoId());
+                });
+            }
+            if (ButtonPressed === "Cancelar") {
+                // no hacemos nada (no quiere borrar)
+                return;
+            }
+        });
+    });
+}
+
+
+var compruebaFechaRecepcion = function (datos, fecha) {
     var opcion = false;
-    for(var i = 0; i < datos.length; i++) {
+    for (var i = 0; i < datos.length; i++) {
         var f = datos[i];
-        if(f.fechaGestionCobros && fecha) {
+        if (f.fechaGestionCobros && fecha) {
             opcion = fecha > f.fechaGestionCobros;
-            if(opcion) {
+            if (opcion) {
                 break;
             }
-        } else if(!f.fechaGestionCobros && !fecha) {
+        } else if (!f.fechaGestionCobros && !fecha) {
             opcion = false;
-        } else if(!f.fechaGestionCobros && fecha) {
+        } else if (!f.fechaGestionCobros && fecha) {
             opcion = false;
-        }  else {
+        } else {
             opcion = true;
             break;
         }
@@ -6039,11 +6092,11 @@ var aceptarNuevoContrato = function () {
         if (err) {
             return mensErrorAjax(err);
         }
-        if(data) { //si no se encuentra activo
+        if (data) { //si no se encuentra activo
             // mensaje de confirmación
             //procesamos el mansaje
             var mens = "Los siguientes implicados en el contrato no se encuantran activos.<br>"
-            for(let d of data) {
+            for (let d of data) {
                 mens += JSON.stringify(d) + "<br>";
             }
             mens = mens.replace(/["{}]/g, '');
@@ -6067,7 +6120,7 @@ var aceptarNuevoContrato = function () {
     });
 };
 
-var renovarContrato = function() {
+var renovarContrato = function () {
     var url = myconfig.apiUrl + "/api/contratos/renovar/" + vm.contratoId();
     url += "/" + spanishDbDate(vm.nuevaFechaInicio());
     url += "/" + spanishDbDate(vm.nuevaFechaFinal());
@@ -6088,9 +6141,9 @@ var nuevoContratoOK = function () {
                 required: true,
                 fechaFinalSuperiorAInicial: true
             },
-           /*  txtNFechaNuevoContrato: {
-                required: true
-            } */
+            /*  txtNFechaNuevoContrato: {
+                 required: true
+             } */
         },
         // Messages for form validation
         messages: {
@@ -6100,9 +6153,9 @@ var nuevoContratoOK = function () {
             txtNFechaFinal: {
                 required: "Debe elegir una fecha"
             },
-           /*  txtNFechaNuevoContrato: {
-                required: "Debe elegir una fecha"
-            } */
+            /*  txtNFechaNuevoContrato: {
+                 required: "Debe elegir una fecha"
+             } */
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -6115,7 +6168,7 @@ var nuevoContratoOK = function () {
 
 var editPrefactura = function (id) {
     $('#dt_prefactura').dataTable().fnDestroy();
-    var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=" + id + "&ContratoId="+ contratoId;
+    var url = "PrefacturaDetalle.html?desdeContrato=true&PrefacturaId=" + id + "&ContratoId=" + contratoId;
     window.open(url, '_new');
 }
 
@@ -6203,8 +6256,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
     var importeCoste = roundToTwo(coste / numPagos);
     porRetenGarantias = parseFloat(porRetenGarantias);
-    
-   
+
+
 
     // como la división puede no dar las cifras hay que calcular los restos.
     var restoImportePago = importe - (importePago * numPagos);
@@ -6219,7 +6272,7 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
     var import22 = importeCoste - import12;
     var pagos = [];
     var nPagos = numPagos;
-    if(importe == 0 || importe < 0) return pagos;
+    if (importe == 0 || importe < 0) return pagos;
     if (vm.facturaParcial()) {
         nPagos++
     }
@@ -6236,12 +6289,12 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             }
             f2 = moment(inicioMesinicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         }
-       /*  if (i == (nPagos - 1)) {
-            f2 = moment(fFactura).format('DD/MM/YYYY');
-        } */
-        var n =  i+1 
-            numLetra = n + "/" + nPagos
-        
+        /*  if (i == (nPagos - 1)) {
+             f2 = moment(fFactura).format('DD/MM/YYYY');
+         } */
+        var n = i + 1
+        numLetra = n + "/" + nPagos
+
         var p = {
             fecha: f,
             importe: importePago,
@@ -6270,11 +6323,11 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
             p.importeCoste = import22;
         }
         //calculamos la retención de garantia si existe
-        if(porRetenGarantias) {
+        if (porRetenGarantias) {
             var por = roundToTwo(porRetenGarantias / 100)
             p.retenGarantias = roundToTwo(p.importe * por);
-        } 
-        
+        }
+
 
         pagos.push(p);
     }
@@ -6283,8 +6336,8 @@ function crearPrefacturas2(importe, importeAlCliente, coste, fechaPrimeraFactura
         pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
         pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
         pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
-        if(porRetenGarantias) {
-            pagos[pagos.length - 1].retenGarantias = roundToTwo( pagos[pagos.length - 1].importe * por);
+        if (porRetenGarantias) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo(pagos[pagos.length - 1].importe * por);
         }
         /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
         pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
@@ -6322,12 +6375,12 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
     var import22 = importeCoste - import12;
     var pagos = [];
     var nPagos = numPagos;
-    if(importe == 0 || importe < 0) return pagos;
+    if (importe == 0 || importe < 0) return pagos;
     if (vm.facturaParcial()) {
         nPagos++
     }
     for (var i = 0; i < nPagos; i++) {
-        var n =  i+1 
+        var n = i + 1
         numLetra = n + "/" + nPagos
         // sucesivas fechas de factura
         var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
@@ -6384,7 +6437,7 @@ function crearPrefacturasRestoDepartamentos(importe, importeAlCliente, coste, fe
 }
 function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimeraFactura, fechaSiguientesFacturas, numPagos, empresaId, clienteId, empresa, cliente, data) {
     var divisor = dataConceptos.length
-    if(data) {
+    if (data) {
         dataConceptos = [];
         dataConceptos.push(data);
         divisor = 1;
@@ -6398,8 +6451,8 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
     var nPagos = numPagos;
     var acumulado = 0;
     var copiaDataConceptos = dataConceptos.slice();
-    for (var j =0; j< nPagos; j++) {
-        acumulado += roundToSix((importe * dataConceptos[j].porcentaje) / 100) ;
+    for (var j = 0; j < nPagos; j++) {
+        acumulado += roundToSix((importe * dataConceptos[j].porcentaje) / 100);
     }
     for (var i = 0; i < nPagos; i++) {
         var importePago = roundToSix(dataConceptos[i].importe);
@@ -6410,15 +6463,15 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         // sucesivas fechas de factura
         var f = moment(dataConceptos[i].fecha).format('DD/MM/YYYY');
         // inicio de periodo
-        if(i == 0) {
+        if (i == 0) {
             var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
         } else {
             var f0 = moment(dataConceptos[i].fecha).format('DD/MM/YYYY');
         }
-       
+
         // fin de periodo
-        if(dataConceptos[i+1]) {
-            var f2 = moment(dataConceptos[i+1].fecha).format('DD/MM/YYYY');
+        if (dataConceptos[i + 1]) {
+            var f2 = moment(dataConceptos[i + 1].fecha).format('DD/MM/YYYY');
         } else {
             var f2 = moment(finContrato).format('DD/MM/YYYY');
         }
@@ -6428,8 +6481,8 @@ function crearPrefacturasConceptos(importe, importeAlCliente, coste, fechaPrimer
         var cabOtrosConceptos = '\nOTROS CONCEPTOS';
         var otrosConceptos = ''
         copiaDataConceptos.splice(i, 1);
-        for( var k  = 0; k < copiaDataConceptos.length; k++ ) {
-            otrosConceptos += "\n"+copiaDataConceptos[k].concepto + " " + Math.round((copiaDataConceptos[i].porcentaje * 100) / 100);
+        for (var k = 0; k < copiaDataConceptos.length; k++) {
+            otrosConceptos += "\n" + copiaDataConceptos[k].concepto + " " + Math.round((copiaDataConceptos[i].porcentaje * 100) / 100);
         }
 
         var p = {
@@ -6481,34 +6534,34 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
     var porRetenGarantias = 0
     var retenGarantias = 0
     var copiadata = data.slice();
-  
+
     for (var i = 0; i < nPagos; i++) {
         var importePago = roundToSix(data[i].importe);
         var importePagoCliente = roundToSix(data[i].importe);
         var importeCoste = roundToSix(data[i].importe);
-        var  contPlanificacionId = data[i].contPlanificacionId;
+        var contPlanificacionId = data[i].contPlanificacionId;
         var formaPagoId = data[i].formaPagoId;
         // sucesivas fechas de factura
         var f = moment(fecha).format('DD/MM/YYYY');
         // inicio de periodo
-        if(i == 0) {
+        if (i == 0) {
             var f0 = moment(fecha).add(i * divisor, 'month').format('DD/MM/YYYY');
-        } 
-       
+        }
+
         var f2 = moment(fecha).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
         //completamos el compo observacionesPago
         var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
         var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
         var cabOtrosConceptos = '\nOTROS CONCEPTOS';
         var otrosConceptos = ''
-         //calculamos la retención de garantia si existe
-         if(copiadata[i].porRetenGarantias) {
+        //calculamos la retención de garantia si existe
+        if (copiadata[i].porRetenGarantias) {
             porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
             retenGarantias = roundToTwo(importePago * porRetenGarantias);
-        } 
+        }
         copiadata.splice(i, 1);
-        for( var k  = 0; k < copiadata.length; k++ ) {
-            otrosConceptos += "\n"+copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
+        for (var k = 0; k < copiadata.length; k++) {
+            otrosConceptos += "\n" + copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
         }
 
         var p = {
@@ -6530,12 +6583,12 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
             formaPagoId: formaPagoId
         };
 
-       
+
         pagos.push(p);
         copiadata = [];
         copiadata = data.slice();
     }
-    
+
     return pagos;
 }
 
@@ -6592,59 +6645,58 @@ function initTablaContratosCobros() {
         "paging": false,
         autoWidth: true,
         rowCallback: function (nRow, aData) {
-           
-            if ( !aData.seguro )
-            {
+
+            if (!aData.seguro) {
                 $('td', nRow).css('background-color', 'Orange');
             }
         },
-        "footerCallback": function ( row, data, start, end, display ) {
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total = api
-                .column( 7 )
+                .column(7)
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 8 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(8)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-           
+
 
 
             // Update footer
-            $( api.columns(7).footer() ).html(
+            $(api.columns(7).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(8).footer() ).html(
+            $(api.columns(8).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -6669,48 +6721,48 @@ function initTablaContratosCobros() {
         data: dataContratosCobros,
         columns: [
             {
-                
+
                 className: 'dt-control',
                 orderable: false,
                 data: null,
                 defaultContent: '',
                 //data:"carpetaId",
-            },{
-            data: "numorden"
-        }, {
-            data: "numserie"
-        }, {
-            data: "numfactu"
-        }, {
-            data: "fecfactu",
-            render: function (data, type, row) {
-                return spanishDate(data);
-            }
-        }, {
-            data: "fecvenci",
-            render: function (data, type, row) {
-                return spanishDate(data);
-            }
-        },  {
-            data: "fecultco",
-            render: function (data, type, row) {
-                return spanishDate(data);
-            }
-        }, {
-            data: "impvenci",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        },{
-            data: "impcobro",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00');
-            }
-        }, {
-            data: "nomforpa"
-        }]
+            }, {
+                data: "numorden"
+            }, {
+                data: "numserie"
+            }, {
+                data: "numfactu"
+            }, {
+                data: "fecfactu",
+                render: function (data, type, row) {
+                    return spanishDate(data);
+                }
+            }, {
+                data: "fecvenci",
+                render: function (data, type, row) {
+                    return spanishDate(data);
+                }
+            }, {
+                data: "fecultco",
+                render: function (data, type, row) {
+                    return spanishDate(data);
+                }
+            }, {
+                data: "impvenci",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "impcobro",
+                className: "text-right",
+                render: function (data, type, row) {
+                    return numeral(data).format('0,0.00');
+                }
+            }, {
+                data: "nomforpa"
+            }]
     });
 }
 
@@ -6738,10 +6790,10 @@ function initTablaConceptosLineas() {
     tablaCarro = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
         responsive: true,
-        "order": [[ 0, "asc" ]],
+        "order": [[0, "asc"]],
         "columnDefs": [
             {
-                "targets": [ 0 ],
+                "targets": [0],
                 "visible": false,
                 "searchable": false
             }
@@ -6750,7 +6802,7 @@ function initTablaConceptosLineas() {
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -6773,24 +6825,24 @@ function initTablaConceptosLineas() {
             }
         },
         data: dataConceptosLineas,
-        columns: [  {
+        columns: [{
             data: "fecha",
-            
-        },{
+
+        }, {
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        },{
+        }, {
             data: "concepto",
-            
+
         }, {
             data: "porcentaje",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        },{
+        }, {
             data: "importe",
             className: "text-left",
             render: function (data, type, row) {
@@ -6798,30 +6850,30 @@ function initTablaConceptosLineas() {
             }
         }, {
             data: "formaPagoNombre",
-            
+
         }, {
             data: "contratoPorcenId",
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "";
                 var bt2 = "";
-                if(!vm.contratoCerrado()) {
+                if (!vm.contratoCerrado()) {
                     bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteConceptosLinea(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalConcepto' onclick='editFprmaPagoLineaConcepto(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(row.prefacturaId) html = "<div class='pull-right'></div>";
+                if (row.prefacturaId) html = "<div class='pull-right'></div>";
                 return html;
             }
         }]
     });
 }
 
-function  loadConceptosLineas(id) {
+function loadConceptosLineas(id) {
     llamadaAjax("GET", "/api/contratos/conceptos/porcentaje/" + id, null, function (err, data) {
         if (err) return;
         loadTablaConceptosLineas(data);
-        
+
     });
 }
 
@@ -6848,7 +6900,7 @@ function loadTablaConceptosLineas(data) {
         $('#btnDeleteTipo').hide();
     }
     dt.fnClearTable();
-    if (data != null){
+    if (data != null) {
         dt.fnAddData(data);
         $('#btnCopiar').show();
         $('#btnPorcentaje').show();
@@ -6887,19 +6939,19 @@ function aceptarLineaConcepto() {
             formaPagoId: vm.sformaPagoIdLinea(),
         }
     }
-                var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/contratos/concepto";
-                if (lineaEnEdicion) {
-                    verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
-                }
-                llamadaAjax(verbo, url, data, function (err, data) {
-                    if (err) return;
-                    $('#modalConcepto').modal('hide');
-                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
-                        loadTablaConceptosLineas(data);
-                    });
-                });
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/concepto";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/concepto/" + vm.contratoPorcenId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalConcepto').modal('hide');
+        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data) {
+            loadTablaConceptosLineas(data);
+        });
+    });
 }
 
 function aceptarLineaConceptoPrefactura() {
@@ -6909,17 +6961,17 @@ function aceptarLineaConceptoPrefactura() {
 
     //comprobamos que le cliente tenga un nombre comercial
     var d = vm.nombreComercial();
-    if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+    if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
 
-   var  impCli = parseFloat(vm.importeCliente());
-   var imp = parseFloat(vm.importeCalculado());
-    if(importePrefacturasConcepto > impCli) {
+    var impCli = parseFloat(vm.importeCliente());
+    var imp = parseFloat(vm.importeCalculado());
+    if (importePrefacturasConcepto > impCli) {
         mensError("Se está sobrepasando el total del contrato");
         return;
-    } else if(importePrefacturasConcepto + imp > impCli) {
+    } else if (importePrefacturasConcepto + imp > impCli) {
         mensError("Se está sobrepasando el total del contrato");
         return;
-    } 
+    }
     var data = {
         cobroPorcen: {
             contratoId: vm.contratoId(),
@@ -6931,78 +6983,78 @@ function aceptarLineaConceptoPrefactura() {
             contratoPorcenId: null
         }
     }
-                var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/contratos/concepto";
-                if (lineaEnEdicion) {
-                    data.cobroPorcen.contratoPorcenId = vm.contratoPorcenId();
-                    verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/contratos/concepto/" +  vm.contratoPorcenId();
-                }
-                if(verbo == "PUT") {
-                    mens = "<ul>"
-                    mens += "<li><strong>¡¡ Atención !! Al modificar El concepto se borrarán las prefacturas  que no se hayan generado mediante conceptos / porcentajes, las puede volver a generar</strong></li>";
-                    mens += "<li>¿Desea continuar?</li>";
-                    mens += "</ul>"
-                    $.SmartMessageBox({
-                        title: "<i class='fa fa-info'></i> Mensaje",
-                        content: mens,
-                        buttons: '[Cancelar][Modificar]'
-                    }, function (ButtonPressed) {
-                        if (ButtonPressed === "Modificar") {
-                            llamadaAjax(verbo, url, data, function (err, dato) {
-                                if (err) return;
-                    
-                                $('#modalConcepto').modal('hide');
-                                llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
-                                    loadTablaConceptosLineas(data2);
-                                    // comprobamos si es de mantenedor o cliente final.
-                                    var importe = vm.importeCliente(); // importe real de la factura;
-                                    var importeAlCliente = vm.importeCliente(); // importe al cliente final;
-                                    var clienteId = vm.clienteId();
-                                    var cliente = vm.nombreComercial();
-                                    var empresa = $("#cmbEmpresas").select2('data').text;
-                                    // si es un mantenedor su importe de factura es el calculado para él.
-                                    if (vm.mantenedorId()) {
-                                        importe = vm.importeMantenedor();
-                                        clienteId = vm.mantenedorId();
-                                        cliente = $("#txtMantenedor").val();
-                                    }
-                                    var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente,  dato);
-                                    vm.prefacturasAGenerar(prefacturas);
-                                    aceptarModificarPrefacturas();
-                                });
-                            });
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/concepto";
+    if (lineaEnEdicion) {
+        data.cobroPorcen.contratoPorcenId = vm.contratoPorcenId();
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/concepto/" + vm.contratoPorcenId();
+    }
+    if (verbo == "PUT") {
+        mens = "<ul>"
+        mens += "<li><strong>¡¡ Atención !! Al modificar El concepto se borrarán las prefacturas  que no se hayan generado mediante conceptos / porcentajes, las puede volver a generar</strong></li>";
+        mens += "<li>¿Desea continuar?</li>";
+        mens += "</ul>"
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Cancelar][Modificar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Modificar") {
+                llamadaAjax(verbo, url, data, function (err, dato) {
+                    if (err) return;
+
+                    $('#modalConcepto').modal('hide');
+                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
+                        loadTablaConceptosLineas(data2);
+                        // comprobamos si es de mantenedor o cliente final.
+                        var importe = vm.importeCliente(); // importe real de la factura;
+                        var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+                        var clienteId = vm.clienteId();
+                        var cliente = vm.nombreComercial();
+                        var empresa = $("#cmbEmpresas").select2('data').text;
+                        // si es un mantenedor su importe de factura es el calculado para él.
+                        if (vm.mantenedorId()) {
+                            importe = vm.importeMantenedor();
+                            clienteId = vm.mantenedorId();
+                            cliente = $("#txtMantenedor").val();
                         }
-                        if (ButtonPressed === "Cancelar") {
-                            // no hacemos nada (no quiere borrar)
-                            return;
-                        }
+                        var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente, dato);
+                        vm.prefacturasAGenerar(prefacturas);
+                        aceptarModificarPrefacturas();
                     });
-                } else {
-                    llamadaAjax(verbo, url, data, function (err, dato) {
-                        if (err) return;
-            
-                        $('#modalConcepto').modal('hide');
-                        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
-                            loadTablaConceptosLineas(data2);
-                            // comprobamos si es de mantenedor o cliente final.
-                            var importe = vm.importeCliente(); // importe real de la factura;
-                            var importeAlCliente = vm.importeCliente(); // importe al cliente final;
-                            var clienteId = vm.clienteId();
-                            var cliente = vm.nombreComercial();
-                            var empresa = $("#cmbEmpresas").select2('data').text;
-                            // si es un mantenedor su importe de factura es el calculado para él.
-                            if (vm.mantenedorId()) {
-                                importe = vm.importeMantenedor();
-                                clienteId = vm.mantenedorId();
-                                cliente = $("#txtMantenedor").val();
-                            }
-                            var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente,  dato);
-                            vm.prefacturasAGenerar(prefacturas);
-                            aceptarGenerarPrefacturas();
-                        });
-                    });
+                });
+            }
+            if (ButtonPressed === "Cancelar") {
+                // no hacemos nada (no quiere borrar)
+                return;
+            }
+        });
+    } else {
+        llamadaAjax(verbo, url, data, function (err, dato) {
+            if (err) return;
+
+            $('#modalConcepto').modal('hide');
+            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/conceptos/porcentaje/" + vm.contratoId(), null, function (err, data2) {
+                loadTablaConceptosLineas(data2);
+                // comprobamos si es de mantenedor o cliente final.
+                var importe = vm.importeCliente(); // importe real de la factura;
+                var importeAlCliente = vm.importeCliente(); // importe al cliente final;
+                var clienteId = vm.clienteId();
+                var cliente = vm.nombreComercial();
+                var empresa = $("#cmbEmpresas").select2('data').text;
+                // si es un mantenedor su importe de factura es el calculado para él.
+                if (vm.mantenedorId()) {
+                    importe = vm.importeMantenedor();
+                    clienteId = vm.mantenedorId();
+                    cliente = $("#txtMantenedor").val();
                 }
+                var prefacturas = crearPrefacturasConceptos(importe, importeAlCliente, vm.coste(), null, null, 1, vm.sempresaId(), clienteId, empresa, cliente, dato);
+                vm.prefacturasAGenerar(prefacturas);
+                aceptarGenerarPrefacturas();
+            });
+        });
+    }
 }
 
 function editFprmaPagoLineaConcepto(id) {
@@ -7019,7 +7071,7 @@ function loadDataLineaConcepto(data) {
     vm.fechaConcepto(spanishDate(data.fecha));
     vm.importeCalculado(data.importe);
     loadFormasPagoLinea(data.formaPagoId);
-    
+
 }
 
 function deleteConceptosLinea(contratoPorcenId) {
@@ -7036,7 +7088,7 @@ function deleteConceptosLinea(contratoPorcenId) {
                     loadTablaConceptosLineas(data);
                     loadPrefacturasDelContrato(vm.contratoId());
                 });
-                
+
             });
         });
     }, function () {
@@ -7052,11 +7104,11 @@ function datosOKLineasConceptos() {
             },
             txtPorcentajeCobro: {
                 required: true,
-                number:true
+                number: true
             },
             txtImporteCalculado: {
                 required: true,
-                number:true
+                number: true
             },
             txtFechaConcepto: {
                 required: true,
@@ -7075,7 +7127,7 @@ function datosOKLineasConceptos() {
             },
             txtImporteCalculado: {
                 required: true,
-                number:true
+                number: true
             },
             txtFechaConcepto: {
                 required: "Debe proporcionar una fecha de factura",
@@ -7117,172 +7169,172 @@ function initTablaPlanificacionLineasObras() {
         autoWidth: true,
         paging: false,
         responsive: true,
-        "order": [[ 0, "asc" ]],
+        "order": [[0, "asc"]],
         "columnDefs": [
             {
-                "targets": [ 0 ],
+                "targets": [0],
                 "visible": false,
                 "searchable": false
             }
         ],
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        "footerCallback": function ( row, data, start, end, display ) {
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
-            if(vm.tipoContratoId() == 8) {
+            if (vm.tipoContratoId() == 8) {
                 var c = api.data();
                 calculaImportesInformativosPlanificacion(c)
-             }
-           
-                
+            }
+
+
             // Total over all pages
             total4 = api
-            .column( 3 )
-            .data()
-            .reduce( function (a, b) {
-                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-            }, 0 );
+                .column(3)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
             // Update footer
-            $( api.columns(3).footer() ).html(
+            $(api.columns(3).footer()).html(
                 numeral(total4).format('0,0.00')
             );
 
             // Total over all pages
             total = api
-            .column( 4 )
-            .data()
-            .reduce( function (a, b) {
-                var dif = 0
-                vm.importePlanificado(numeral(total).format('0,0.00'));
-               
-                dif = total -  vm.importeCliente();
-                vm.diferencia(numeral(dif).format('0,0.00'));
-                return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-            }, 0 );
+                .column(4)
+                .data()
+                .reduce(function (a, b) {
+                    var dif = 0
+                    vm.importePlanificado(numeral(total).format('0,0.00'));
+
+                    dif = total - vm.importeCliente();
+                    vm.diferencia(numeral(dif).format('0,0.00'));
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
             // Update footer
-            $( api.columns(4).footer() ).html(
+            $(api.columns(4).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-              //////
-             // Total over all pages
-             total5 = api
-             .column( 5 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(5).footer() ).html(
-                 numeral(total5).format('0')
-             );
+            //////
+            // Total over all pages
+            total5 = api
+                .column(5)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(5).footer()).html(
+                numeral(total5).format('0')
+            );
 
             //////
-             // Total over all pages
-             total2 = api
-             .column( 6 )
-             .data()
-             .reduce( function (a, b) {
-                vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
-                //
-                var dif2 = 0
-                var tot2 = numeral(total2).format('0,0.00')
-                vm.importePrefacturado(tot2);
-                //
-                dif2 = total2 - vm.certificacionFinal();
-                vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(6).footer() ).html(
-                 numeral(total2).format('0,0.00')
-             );
+            // Total over all pages
+            total2 = api
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
+                    //
+                    var dif2 = 0
+                    var tot2 = numeral(total2).format('0,0.00')
+                    vm.importePrefacturado(tot2);
+                    //
+                    dif2 = total2 - vm.certificacionFinal();
+                    vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             //////
-             // Total over all pages
-             total7 = api
-             .column( 7 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(7).footer() ).html(
-                 numeral(total7).format('0')
-             );
+            // Update footer
+            $(api.columns(6).footer()).html(
+                numeral(total2).format('0,0.00')
+            );
 
             //////
-             // Total over all pages
-             total3 = api
-             .column( 8 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(8).footer() ).html(
-                 numeral(total3).format('0,0.00')
-             );
+            // Total over all pages
+            total7 = api
+                .column(7)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             /////
-             // Total over all pages
-             total9 = api
-             .column( 9 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(9).footer() ).html(
-                 numeral(total9).format('0,0.00')
-             );
+            // Update footer
+            $(api.columns(7).footer()).html(
+                numeral(total7).format('0')
+            );
 
-             /////
-             // Total over all pages
-             total10 = api
-             .column( 10 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(10).footer() ).html(
-                 numeral(total10).format('0')
-             );
+            //////
+            // Total over all pages
+            total3 = api
+                .column(8)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-              /////
-             // Total over all pages
-             total11 = api
-             .column( 11 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
- 
-             // Update footer
-             $( api.columns(11).footer() ).html(
-                 numeral(total11).format('0,0.00')
-             );
-            
+            // Update footer
+            $(api.columns(8).footer()).html(
+                numeral(total3).format('0,0.00')
+            );
+
+            /////
+            // Total over all pages
+            total9 = api
+                .column(9)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(9).footer()).html(
+                numeral(total9).format('0,0.00')
+            );
+
+            /////
+            // Total over all pages
+            total10 = api
+                .column(10)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(10).footer()).html(
+                numeral(total10).format('0')
+            );
+
+            /////
+            // Total over all pages
+            total11 = api
+                .column(11)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(11).footer()).html(
+                numeral(total11).format('0,0.00')
+            );
+
         },
         language: {
             processing: "Procesando...",
@@ -7305,24 +7357,24 @@ function initTablaPlanificacionLineasObras() {
             }
         },
         data: dataPlanificacionLineas,
-        columns: [  {
+        columns: [{
             data: "fecha",
-            
-        },{
+
+        }, {
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        },{
+        }, {
             data: "concepto",
-            
+
         }, {
             data: "porcentaje",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        },{
+        }, {
             data: "importe",
             className: "text-left",
             render: function (data, type, row) {
@@ -7334,34 +7386,34 @@ function initTablaPlanificacionLineasObras() {
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
-        },{
+        }, {
             data: "importePrefacturado",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-            
-        },{
+
+        }, {
             data: "numFacturas",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
-        },{
+        }, {
             data: "importeFacturado",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-            
-        },{
+
+        }, {
             data: "importeFacturadoIva",
             className: "text-left",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-            
-        },{
+
+        }, {
             data: "numCobros",
             className: "text-left",
             render: function (data, type, row) {
@@ -7374,13 +7426,13 @@ function initTablaPlanificacionLineasObras() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-            
-        },{
+
+        }, {
             data: "porRetenGarantias",
-            
-        },{
+
+        }, {
             data: "formaPagoNombre",
-            
+
         }, {
             data: "contPlanificacionId",
             render: function (data, type, row) {
@@ -7388,16 +7440,16 @@ function initTablaPlanificacionLineasObras() {
                 var bt1 = "";
                 var bt2 = "";
                 var bt3 = "";
-                if(!vm.contratoCerrado()) {
-                    if(row.importeFacturado == '0.00') {
+                if (!vm.contratoCerrado()) {
+                    if (row.importeFacturado == '0.00') {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                         bt3 = "<button class='btn btn-circle btn-primary'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
                     }
-                   
-                    if(row.importePrefacturado == '0.00') {
+
+                    if (row.importePrefacturado == '0.00') {
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                     }
-                   
+
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
                 return html;
@@ -7408,38 +7460,38 @@ function initTablaPlanificacionLineasObras() {
 }
 
 function calculaImportesInformativosPlanificacion(c) {
-    if(!c) return;
-    if(c.length > 0) {
+    if (!c) return;
+    if (c.length > 0) {
         var totLetrasPlanificadas = 0;
         var numLetrasPlanificadas = 0;
-         for(var i = 0; i < c.length; i++) {
-             var s = c[i];
-             if(s.esLetra == 1) {
-                 //LETRAS PLANIFICADAS
-                 totLetrasPlanificadas = totLetrasPlanificadas + parseFloat(s.importe);
-                 numLetrasPlanificadas = numLetrasPlanificadas + parseInt(s.numPrefacturas);
- 
-                
-             }
-         }
-         //diferencia entre letras planificadas y prefacturadas
-         vm.totLetrasPlanificadas(Math.round(totLetrasPlanificadas * 100)/100);
-         vm.numLetrasPlanificadas(Math.round((numLetrasPlanificadas) * 100)/100);
-     }
+        for (var i = 0; i < c.length; i++) {
+            var s = c[i];
+            if (s.esLetra == 1) {
+                //LETRAS PLANIFICADAS
+                totLetrasPlanificadas = totLetrasPlanificadas + parseFloat(s.importe);
+                numLetrasPlanificadas = numLetrasPlanificadas + parseInt(s.numPrefacturas);
+
+
+            }
+        }
+        //diferencia entre letras planificadas y prefacturadas
+        vm.totLetrasPlanificadas(Math.round(totLetrasPlanificadas * 100) / 100);
+        vm.numLetrasPlanificadas(Math.round((numLetrasPlanificadas) * 100) / 100);
+    }
 }
 
-function  loadPlanificacionLineasObras(id, numCobros) {
+function loadPlanificacionLineasObras(id, numCobros) {
     var data = {
         numCobros: {
             numCobros
         }
     }
-    llamadaAjax("POST", "/api/contratos/lineas/planificacion/" + id , data, function (err, data) {
+    llamadaAjax("POST", "/api/contratos/lineas/planificacion/" + id, data, function (err, data) {
         if (err) return;
-        
+
         loadTablaPlanificacionLineasObras(data);
         loadPrefacturasDelContrato(id);
-        
+
     });
 }
 
@@ -7460,29 +7512,29 @@ function loadTablaPlanificacionLineasObras(data) {
         $('#btnDeleteTipo').hide();
     }
     dt.fnClearTable();
-    if (data != null){
+    if (data != null) {
         dt.fnAddData(data);
         $('#btnCopiar').show();
         $('#btnPorcentaje').show();
         $('#btnDeleteTipo').show();
     }
     dt.fnDraw();
-  
-        if(vm.diferenciaPrefacturado()) {
-            a =  parseFloat(numeroDbf(vm.diferenciaPrefacturado()));
-        } else {
-            a = null;
-        }
-   /*  if(a) {
-        if(a >= -1 && vm.certificacionFinal()) {
-            $('#chkContratoCerrado').prop('disabled', false);
-        } else {
-            $('#chkContratoCerrado').prop('disabled', true);
-        }
+
+    if (vm.diferenciaPrefacturado()) {
+        a = parseFloat(numeroDbf(vm.diferenciaPrefacturado()));
     } else {
-        $('#chkContratoCerrado').prop('disabled', true);
-    } */
-} 
+        a = null;
+    }
+    /*  if(a) {
+         if(a >= -1 && vm.certificacionFinal()) {
+             $('#chkContratoCerrado').prop('disabled', false);
+         } else {
+             $('#chkContratoCerrado').prop('disabled', true);
+         }
+     } else {
+         $('#chkContratoCerrado').prop('disabled', true);
+     } */
+}
 
 
 
@@ -7518,34 +7570,34 @@ function aceptarLineaPlanificacionObras() {
             formaPagoId: vm.sformaPagoIdLinea()
         }
     }
-                var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/contratos/planificacion";
-                if (lineaEnEdicion) {
-                    data.planificacion.contPlanificacionId = vm.contPlanificacionId();
-                    verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/contratos/planificacion/" +  vm.contPlanificacionId();
-                }
-                llamadaAjax(verbo, url, data, function (err, data) {
-                    if (err) return;
-                    $('#modalPlanificacionObras').modal('hide');
-                    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
-                        loadTablaPlanificacionLineasObras(data);
-                        limpiarModalLineasPlanificacion();
-                    });
-                });
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/planificacion";
+    if (lineaEnEdicion) {
+        data.planificacion.contPlanificacionId = vm.contPlanificacionId();
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/planificacion/" + vm.contPlanificacionId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalPlanificacionObras').modal('hide');
+        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
+            loadTablaPlanificacionLineasObras(data);
+            limpiarModalLineasPlanificacion();
+        });
+    });
 }
 
 
 
 function generarPrefacturaPlanificacionObras(id) {
     llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/" + id, null, function (err, data) {
-        if(err) return;
+        if (err) return;
         RegPlanificacion = data
         var f = moment(data[0].fecha).format('DD/MM/YYYY');
         vm.fechaPlanificacionObras2(f);
         $('#chkVarias').prop('checked', false);
     });
-                
+
 }
 function limpiarModalGenerarPrefacturasObras() {
     vm.fechaPlanificacionObras2(null);
@@ -7556,22 +7608,22 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
     $('#modalGenerarPrefacturasObras').modal('hide');
     var opcion = $('#chkVarias').prop('checked');
     //limpiarModalGenerarPrefacturasObras();
-    if(opcion) {
+    if (opcion) {
         $('#modalGenerarPrefacturasPlanificacion').modal({
             show: 'true'
-        }); 
+        });
         generarPrefacturasPlanificacion(RegPlanificacion);
 
     } else {
-         //comprobamos que le cliente tenga un nombre comercial
+        //comprobamos que le cliente tenga un nombre comercial
         var d = vm.nombreComercial();
-        if(!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+        if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
 
         var clienteId = vm.clienteId();
         var cliente = vm.nombreComercial();
         var empresa = $("#cmbEmpresas").select2('data').text;
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
-        var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente,  RegPlanificacion);
+        var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
         aceptarGenerarPrefacturaPlanificacion();
     }
@@ -7594,7 +7646,7 @@ function loadDataLineaPlanificacionObras(data) {
     vm.importeCobrado(data.importeCobrado);
     vm.porRetenGarantias(data.porRetenGarantias);
     loadFormasPagoLinea(data.formaPagoId);
-    
+
 }
 
 function deletePlanificacionLineaObras(contPlanificacionId) {
@@ -7631,11 +7683,11 @@ function datosOKLineasPlanificacionObras() {
             },
             txtPorcentajePlanificacion: {
                 required: true,
-                number:true
+                number: true
             },
             txtImporteCalculadoPlanificacion: {
                 required: true,
-                number:true
+                number: true
             },
             txtFechaPlanificacionObras: {
                 required: true,
@@ -7654,7 +7706,7 @@ function datosOKLineasPlanificacionObras() {
             },
             txtImporteCalculadoPlanificacion: {
                 required: true,
-                number:true
+                number: true
             },
             txtFechaPlanificacionObras: {
                 required: "Debe proporcionar una fecha de factura",
@@ -7681,7 +7733,7 @@ function limpiarModalLineasPlanificacion() {
 function actulizaCobroPlanificacion() {
 
     var impCobro = 0
-    data.forEach( function(d) {
+    data.forEach(function (d) {
         impCobro = impCobro + d.impCobro
     });
 
@@ -7691,25 +7743,25 @@ function actulizaCobroPlanificacion() {
 //contrato asociado
 function crearContratoAsociado() {
     var data = {
-        contrato:{
+        contrato: {
             contratoId: vm.contratoId()
         }
     }
     llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/crear/contrato/asociado", data, function (err, result) {
-        if(err) return;
+        if (err) return;
         window.open("ContratoDetalle.html?ContratoId=" + result.insertId + "&CMD=NEW&AscContratoId=" + vm.contratoId() + '&DesdeContrato=true', '_new');
     });
 }
 
-var actualizaAsociados = function(seleccionado, done) {
-    if(esVinculado) return done(null, 'OK');
+var actualizaAsociados = function (seleccionado, done) {
+    if (esVinculado) return done(null, 'OK');
     var data = {
         contrato: {
             firmaActa: seleccionado,
             contratoCerrado: vm.contratoCerrado()
         }
     };
-    if(vm.fechaFirmaActa() && vm.fechaFirmaActa() != "") data.contrato.fechaFirmaActa =  spanishDbDate(vm.fechaFirmaActa());
+    if (vm.fechaFirmaActa() && vm.fechaFirmaActa() != "") data.contrato.fechaFirmaActa = spanishDbDate(vm.fechaFirmaActa());
     llamadaAjax('PUT', myconfig.apiUrl + "/api/contratos/vinculados/actualiza/" + vm.contratoId(), data, function (err, result) {
         if (err) return errorGeneral(err, done);
         done(null, 'OK')
@@ -7795,7 +7847,7 @@ function initTablaAscContratos() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        },  {
+        }, {
             data: "empresa"
         }, {
             data: "cliente"
@@ -7809,7 +7861,7 @@ function initTablaAscContratos() {
             data: "mantenedor"
         }, {
             data: "agente"
-        },{
+        }, {
             data: "contratoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAscContrato(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -7858,7 +7910,7 @@ function deleteAscContrato(id) {
 }
 
 function loadAscContrato(data) {
-    var url = "ContratoDetalle.html?DesdeContrato=true&AscContratoId=" + vm.contratoId() + "&ContratoId=" +data.contratoId;
+    var url = "ContratoDetalle.html?DesdeContrato=true&AscContratoId=" + vm.contratoId() + "&ContratoId=" + data.contratoId;
     window.open(url, '_new');
 }
 
@@ -7885,7 +7937,7 @@ function loadAscContratos(id) {
 function ocualtaBotonesContratoCerrado() {
     $('#btnAceptar').hide();
     $('#btnAceptar2').hide();
-    if(usuario.puedeAbrir)  { $('#btnAceptar').show();  $('#btnAceptar2').show() }
+    if (usuario.puedeAbrir) { $('#btnAceptar').show(); $('#btnAceptar2').show() }
     $('#btnNuevoComisionista').hide();
     $('#btnAltaPrefactura').hide();
     $('#btnAltaFacprove').hide();
@@ -7981,99 +8033,100 @@ function ocualtaBotonesContratoCerrado() {
     });
 } */
 function initArbolDocumentacion() {
-    $('#jstreeDocumentacion').jstree({ 'core' : 
-    {
-        'data' : [],
-    },
-    'check_callback' : true,
-    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
-    "select_node": true,
-    'contextmenu': {
-        'items': function(node) {
-            if(vm.contratoCerrado()) return;
-            var menuItems = {
-            // Define las opciones del menú contextual para cada nodo
-         
-            'Option 1': {
-                'label': 'Subir documento',
-                'action': function(a, b , c) {
-                  console.log(node.type);
-                  $('#modalUploadDoc').modal('show');
-                  preparaDatosArchivo(node.original);
-                }
-              },
-              'Option 2': {
-                'label': 'Crear Subcarpeta',
-                'action': function() {
-                   $('#modalpostSubcarpeta').modal('show');
-                   nuevaSubcarpeta(node.original);
-                }
-              },
-              'Option 3': {
-                  'label': 'Eliminar',
-                  'action': function() {
-                    if(!node.data.folder) {
-                        deleteDocumento(node.id);
-                    } else {
-                        deleteCarpeta(node.id);
+    $('#jstreeDocumentacion').jstree({
+        'core':
+        {
+            'data': [],
+        },
+        'check_callback': true,
+        "plugins": ["themes", "html_data", "ui", "crrm", "contextmenu"],
+        "select_node": true,
+        'contextmenu': {
+            'items': function (node) {
+                if (vm.contratoCerrado()) return;
+                var menuItems = {
+                    // Define las opciones del menú contextual para cada nodo
+
+                    'Option 1': {
+                        'label': 'Subir documento',
+                        'action': function (a, b, c) {
+                            console.log(node.type);
+                            $('#modalUploadDoc').modal('show');
+                            preparaDatosArchivo(node.original);
+                        }
+                    },
+                    'Option 2': {
+                        'label': 'Crear Subcarpeta',
+                        'action': function () {
+                            $('#modalpostSubcarpeta').modal('show');
+                            nuevaSubcarpeta(node.original);
+                        }
+                    },
+                    'Option 3': {
+                        'label': 'Eliminar',
+                        'action': function () {
+                            if (!node.data.folder) {
+                                deleteDocumento(node.id);
+                            } else {
+                                deleteCarpeta(node.id);
+                            }
+                        }
                     }
-                  }
+
                 }
-         
+                if (!node.data.folder) {
+                    delete menuItems['Option 1'];
+                    delete menuItems['Option 2'];
+                }
+                if (!usuario.puedeEditar) {
+                    delete menuItems['Option 2'];
+                    delete menuItems['Option 3'];
+                }
+                return menuItems;
             }
-            if (!node.data.folder) {
-                delete menuItems['Option 1'];
-                delete menuItems['Option 2'];
-            }
-            if(!usuario.puedeEditar) {
-                delete menuItems['Option 2'];
-                delete menuItems['Option 3'];
-            }
-            return menuItems;
         }
-    }
-});
+    });
 
 }
-function cargaTablaDocumentacion(){
+function cargaTablaDocumentacion() {
     //miramos primero si es contrato renovado en la nueva tabla
-    llamadaAjax("GET",  "/api/contratos/renovado/registro/" + vm.contratoId(), null, function (err, data) {
+    llamadaAjax("GET", "/api/contratos/renovado/registro/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
         var ids = []
-        if(data.length > 0) {
+        if (data.length > 0) {
             ids.push(data[0].contratoOriginalId);
-            data.forEach( function(e){
+            data.forEach(function (e) {
                 ids.push(e.renovadoId);
             });
             var data = {
                 ids: ids
             }
-            llamadaAjax("POST",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId(), data, function (err, data) {
+            llamadaAjax("POST", "/api/documentacion/contrato/" + vm.ofertaId() + "/" + vm.tipoContratoId(), data, function (err, data) {
                 if (err) return;
-                if(data) loadDocumentacionTree(data);
-                 //if(data) loadTablaDocumentacion(data);
+                if (data) loadDocumentacionTree(data);
+                //if(data) loadTablaDocumentacion(data);
             });
         } else {
-            llamadaAjax("GET",  "/api/documentacion/contrato/"  +  vm.ofertaId()  + "/" + vm.tipoContratoId()  + "/" + vm.contratoId(), null, function (err, data) {
+            llamadaAjax("GET", "/api/documentacion/contrato/" + vm.ofertaId() + "/" + vm.tipoContratoId() + "/" + vm.contratoId(), null, function (err, data) {
                 if (err) return;
-                if(data) loadDocumentacionTree(data);
-                 //if(data) loadTablaDocumentacion(data);
+                if (data) loadDocumentacionTree(data);
+                //if(data) loadTablaDocumentacion(data);
             });
         }
     });
 }
-   
+
 
 function loadDocumentacionTree(data) {
-    if(data.length == 0) return;
+    if (data.length == 0) return;
     var obj = data;
-    
+
     $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
     $('#jstreeDocumentacion').jstree(true).refresh();
 
     //$('#jstreeDocumentacion').jstree(true).redraw();
 
-    
+
 }
 
 function loadTablaDocumentacion(data) {
@@ -8087,42 +8140,42 @@ function loadTablaDocumentacion(data) {
 }
 
 function formatData(d) {
-    if(!d.documentos) d.documentos = [];
+    if (!d.documentos) d.documentos = [];
     var doc = d.documentos;
     var html = "";
-        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
-        var a;
-        doc.forEach(e => {
-            var l = e.key.split('/');
-            var index = l.length - 1;
-             a = '<div class="row" style="margin-bottom: 10px">' +
-                        '<section class="col col-md-5">' + 
-                            '<a href="' + e.location  + '" target="_blank">' +  l[index] +'</a>' +
-                        '</section>' +
-                        '<section class="col col-md-3 text-left">' +
-                            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
-                        '</section>' +
-                        '<section class="col col-md-4">' + '</section>' +
-                    '</div>' 
-            html += a;
-        });
-    if(!d.subcarpetas) d.subcarpetas = [];
+    html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+    var a;
+    doc.forEach(e => {
+        var l = e.key.split('/');
+        var index = l.length - 1;
+        a = '<div class="row" style="margin-bottom: 10px">' +
+            '<section class="col col-md-5">' +
+            '<a href="' + e.location + '" target="_blank">' + l[index] + '</a>' +
+            '</section>' +
+            '<section class="col col-md-3 text-left">' +
+            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+            '</section>' +
+            '<section class="col col-md-4">' + '</section>' +
+            '</div>'
+        html += a;
+    });
+    if (!d.subcarpetas) d.subcarpetas = [];
     var subC = d.subcarpetas;
     html += '<h6 style="padding-left: 5px"> Subcarpetas</h6>'
     var b;
     subC.forEach(e => {
-         b = '<div class="row" style="margin-bottom: 10px">' +
-         '<section class="col col-md-3 text-left">' +
-                        '<button  class="dt-control"></button>' +
-                    '</section>' +
-                    '<section class="col col-md-5">' + 
-                        '<a href="" target="_blank">' + e.carpetaNombre +'</a>' +
-                    '</section>' +
-                    '<section class="col col-md-3 text-left">' +
-                        '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
-                    '</section>' +
-                    '<section class="col col-md-2">' + '</section>' +
-                '</div>' 
+        b = '<div class="row" style="margin-bottom: 10px">' +
+            '<section class="col col-md-3 text-left">' +
+            '<button  class="dt-control"></button>' +
+            '</section>' +
+            '<section class="col col-md-5">' +
+            '<a href="" target="_blank">' + e.carpetaNombre + '</a>' +
+            '</section>' +
+            '<section class="col col-md-3 text-left">' +
+            '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+            '</section>' +
+            '<section class="col col-md-2">' + '</section>' +
+            '</div>'
         html += b;
     });
     return html;
@@ -8130,15 +8183,15 @@ function formatData(d) {
 
 
 function formatDataCobros(d) {
-    if(!d.lin) d.lin = [];
+    if (!d.lin) d.lin = [];
     var lin = d.lin;
     var html = "";
     html = '<h5> APUNTES DEL COBRO</h5>'
     html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
     lin.forEach(e => {
         var d = e.timporteH - e.timporteD
-         html += 
-         '<tr>' +
+        html +=
+            '<tr>' +
             '<th>Fecha de entrada:</th>' +
             '<th>Asiento:</th>' +
             '<th>Num. linea:</th>' +
@@ -8146,49 +8199,49 @@ function formatDataCobros(d) {
             '<th>Nom. documento:</th>' +
             '<th>IMPORTE:</th>' +
             '<th>ES DEVOLUCION:</th>' +
-         '</tr>' +
-         
-         '<tr>' +
-            
+            '</tr>' +
+
+            '<tr>' +
+
             '<td>' +
-                formatFecha(e.fechaent)  +
-            '</td>' +
-            
-            '<td>' +
-                e.numasien +
-            '</td>' +
-            
-            '<td>' +
-                e.linliapu +
-            '</td>' +
-            
-            '<td>' +
-                e.numdocum +
-            '</td>' +
-            
-            '<td>' +
-                e.ampconce +
+            formatFecha(e.fechaent) +
             '</td>' +
 
             '<td>' +
-                numeral(d).format('0,0.00');+
+            e.numasien +
             '</td>' +
-            
-            '<td>'  +
-           
+
+            '<td>' +
+            e.linliapu +
+            '</td>' +
+
+            '<td>' +
+            e.numdocum +
+            '</td>' +
+
+            '<td>' +
+            e.ampconce +
+            '</td>' +
+
+            '<td>' +
+            numeral(d).format('0,0.00'); +
+                '</td>' +
+
+                '<td>' +
+
                 e.esdevolucion +
-            '</td>' +
-        '</tr>'
-       
+                '</td>' +
+                '</tr>'
+
     });
-    html +=  '</table>'
+    html += '</table>'
     return html
 }
 
- function formatFecha(f) {
-    if(f) return spanishDate(f);
+function formatFecha(f) {
+    if (f) return spanishDate(f);
     return ' ';
- }
+}
 
 function preparaDatosArchivo(r) {
     docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
@@ -8196,7 +8249,7 @@ function preparaDatosArchivo(r) {
     docName = docName.replace(/[\/]/g, "-");
     console.log(docName);
     carpeta = r.carpetaNombre;
-    key = r.carpetaNombre   + "/" +  docName;
+    key = r.carpetaNombre + "/" + docName;
     carpetaTipo = r.tipo;
     vm.documNombre(docName);
 }
@@ -8206,8 +8259,8 @@ function limpiaDatosArchivo(r) {
     carpetaId = null
     docName = null
     carpeta = null
-    $('.progress-bar').text(parseInt((0)+'%'));
-    $('.progress-bar').width(parseInt((0)+'%'));
+    $('.progress-bar').text(parseInt((0) + '%'));
+    $('.progress-bar').width(parseInt((0) + '%'));
 }
 
 function nuevaCarpeta() {
@@ -8216,37 +8269,37 @@ function nuevaCarpeta() {
 
 
 function aceptarNuevaCarpeta() {
-        //CREAMOS EL REGISTRO EN LA TABLA carpetas
-        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
-        var a = vm.carpetaNombre();
-        a = a.trim();
-        a = a.replace(/[\/]/g, "-");
-        var data = 
-        {
-            carpeta: {
-                carpetaId: 0,
-                nombre: a,
-                tipo: "contrato",
-                departamentoId: vm.tipoContratoId()
-            }
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if (vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a = vm.carpetaNombre();
+    a = a.trim();
+    a = a.replace(/[\/]/g, "-");
+    var data =
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: a,
+            tipo: "contrato",
+            departamentoId: vm.tipoContratoId()
         }
+    }
 
-        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
-            if (err) return
-            $('#modalNuevaCarpeta').modal('hide');
-            mensNormal('Carpeta creada con exito');
-            cargaTablaDocumentacion();
-        });
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+        if (err) return
+        $('#modalNuevaCarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
 }
 
 function aceptarNuevaSubCarpeta() {
     //CREAMOS EL REGISTRO EN LA TABLA carpetas
-    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
-    var a =  vm.subCarpetaNombre();
+    if (vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a = vm.subCarpetaNombre();
     a = a.trim();
     a = a.replace(/\//g, "-");
     var n = subCarpeta + "/" + a;
-    var data = 
+    var data =
     {
         carpeta: {
             carpetaId: 0,
@@ -8283,24 +8336,24 @@ function deleteDocumento(id) {
         });
         llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
             if (err) return;
-            if(data) {
+            if (data) {
                 var params = {
                     Bucket: parametros.bucket_docum,
                     Key: data.key
-            }
-    
-            //borramos el documento en s3
-            var s3 = new AWS.S3({ params });
-    
-            s3.deleteObject({}, (err, result) => {
-                if (err) mensError('Error al borrar el docuemnto');
-                //Actualizamos la tabla documentacion
-                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
-                    if (err) return;
-                    cargaTablaDocumentacion();
+                }
+
+                //borramos el documento en s3
+                var s3 = new AWS.S3({ params });
+
+                s3.deleteObject({}, (err, result) => {
+                    if (err) mensError('Error al borrar el docuemnto');
+                    //Actualizamos la tabla documentacion
+                    llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
+                        if (err) return;
+                        cargaTablaDocumentacion();
+                    });
                 });
-            }); 
-            
+
             }
         });
     })
@@ -8314,69 +8367,69 @@ function deleteCarpeta(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            
+
             llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
                 if (err) return;
                 var parametros = data;
                 llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
                     if (err) return mensError('Fallo al borrar la documentación en la base de datos');
-                    if(data2) {
-                        
-                    AWS.config.region = parametros.bucket_region_docum; // Región
-                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: parametros.identity_pool_docum,
-                    });
-                    var prefix = data2.nombre;
-                    var params = {
-                        Bucket: parametros.bucket_docum,
-                        Prefix: prefix,
-                        Delimeter: "/"
-                    }
-        
-                    var s3 = new AWS.S3({ params });
-                    s3.listObjectsV2({}, (err, result) => {
-                        if (err) mensError('Error de lectura en la nube');
-                        console.log(result);
-                        if(result.Contents.length > 0) {
+                    if (data2) {
 
-
-
-                    var objectKeys = []
-                    result.Contents.forEach(e => {
-                        objectKeys.push(e.Key);
-                    });
-
-                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
-                    const objects = objectKeys.map(key => ({ Key: key }));
-                    const deleteParams = {
-                    Bucket: parametros.bucket_docum,
-                    Delete: { Objects: objects }
-                    };
-
-                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
-                    s3.deleteObjects(deleteParams, function(err, data) {
-                        if (err) {
-                            mensError('Fallo al borrar la carpeta en la nube');
-                        } else {
-                            mensNormal('Carpeta eliminada con éxito');
-                            cargaTablaDocumentacion();
+                        AWS.config.region = parametros.bucket_region_docum; // Región
+                        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                            IdentityPoolId: parametros.identity_pool_docum,
+                        });
+                        var prefix = data2.nombre;
+                        var params = {
+                            Bucket: parametros.bucket_docum,
+                            Prefix: prefix,
+                            Delimeter: "/"
                         }
-}                   );
 
-                        } else {
-                            mensAlerta('No se han encontrado archivos en la nube para borrar');
-                            cargaTablaDocumentacion();
-                        }
-                       
-                    }); 
-            
-                  
-                    
+                        var s3 = new AWS.S3({ params });
+                        s3.listObjectsV2({}, (err, result) => {
+                            if (err) mensError('Error de lectura en la nube');
+                            console.log(result);
+                            if (result.Contents.length > 0) {
+
+
+
+                                var objectKeys = []
+                                result.Contents.forEach(e => {
+                                    objectKeys.push(e.Key);
+                                });
+
+                                // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                                const objects = objectKeys.map(key => ({ Key: key }));
+                                const deleteParams = {
+                                    Bucket: parametros.bucket_docum,
+                                    Delete: { Objects: objects }
+                                };
+
+                                // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                                s3.deleteObjects(deleteParams, function (err, data) {
+                                    if (err) {
+                                        mensError('Fallo al borrar la carpeta en la nube');
+                                    } else {
+                                        mensNormal('Carpeta eliminada con éxito');
+                                        cargaTablaDocumentacion();
+                                    }
+                                });
+
+                            } else {
+                                mensAlerta('No se han encontrado archivos en la nube para borrar');
+                                cargaTablaDocumentacion();
+                            }
+
+                        });
+
+
+
                     } else {
                         mensError('No se han encontrado carpetas para borrar');
                         cargaTablaDocumentacion();
                     }
-                }); 
+                });
             })
         }
         if (ButtonPressed === "Cancelar") {
@@ -8386,7 +8439,7 @@ function deleteCarpeta(id) {
 }
 
 function aceptarSubirDocumentos() {
-    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    if (vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
     //buscamos los parámetros
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
@@ -8397,17 +8450,17 @@ function aceptarSubirDocumentos() {
             mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
             return;
         }
-        for(var i = 0; i< files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
             var e = files[i];
             var encontrado = false;
             var id = 0;
             var file = e;
             var ext = file.name.split('.').pop().toLowerCase();
-            var blob = file.slice(0, file.size, file.type); 
-            var newFile = new File([blob], {type: file.type});
+            var blob = file.slice(0, file.size, file.type);
+            var newFile = new File([blob], { type: file.type });
             var nom = "";
             nom = vm.documNombre()
-            if(files.length > 1) {
+            if (files.length > 1) {
                 var s = parseInt(i)
                 s++
                 nom = nom + "-" + s + "." + ext;
@@ -8416,7 +8469,7 @@ function aceptarSubirDocumentos() {
             }
             nom = nom.replace(/\//g, "-");
             newFile.nom = nom;
-            var fileKey =  carpeta + "/" + nom
+            var fileKey = carpeta + "/" + nom
             newFile.fileKey = fileKey;
             newFile.repetido = false;
             arr.push(newFile);
@@ -8424,24 +8477,24 @@ function aceptarSubirDocumentos() {
         //buscamos si el documento ya existe en la carpeta de destino
         llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
             if (err) return;
-            if(docums && docums.length > 0) {
-                for(var i = 0; i < docums.length; i++) {
+            if (docums && docums.length > 0) {
+                for (var i = 0; i < docums.length; i++) {
                     var d = docums[i];
                     var n = d.key.split('/');
                     var index = n.length - 1
-                    
-                    for(var j = 0; j < arr.length; j++) {
-                        if(n[index] == arr[j].nom) {
+
+                    for (var j = 0; j < arr.length; j++) {
+                        if (n[index] == arr[j].nom) {
                             encontrado = true;
                             arr[j].repetido = true;
                             arr[j].documentoId = d.documentoId;
                             arr[j].repetido = true;
                             break;
-                        } 
+                        }
                     }
                 }
 
-                if(encontrado) {
+                if (encontrado) {
                     var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
                     $.SmartMessageBox({
                         title: "<i class='fa fa-info'></i> Mensaje",
@@ -8463,54 +8516,54 @@ function aceptarSubirDocumentos() {
             } else {
                 uploadDocum(arr);
             }
-        }); 
+        });
 
     });
-    
+
 }
 
 function uploadDocum(arr) {
     var index = 0;
-      
-        arr.forEach(e => {
-            var repetido = e.repetido;
-            var documentoId = e.documentoId;
-            var filekey = e.fileKey;
-            delete e.fileKey
-            delete e.documentoId;
-            delete e.repetido;
-            var nom = e.nom;
-            delete e.nom;
 
-            AWS.config.region = parametros.bucket_region_docum; // Región
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId: parametros.identity_pool_docum,
-            });
-            var bucket = parametros.bucket_docum;
-            var params = {
-                Bucket: bucket,
-                Key: filekey,
-                IdentityPoolId: parametros.identity_pool_docum,
-                Body: e,
-                ACL: "public-read"
-            }
-            var ext = nom.split('.').pop().toLowerCase();
-            if(ext == "pdf") params.ContentType = 'application/pdf'
-            // Use S3 ManagedUpload class as it supports multipart uploads
-            var upload = new AWS.S3.ManagedUpload({
-                params: params
-            });
-            var promise = upload.on('httpUploadProgress', function(evt) {
-                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
-                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
-              })
-              .promise();
-            promise.
-            then (
+    arr.forEach(e => {
+        var repetido = e.repetido;
+        var documentoId = e.documentoId;
+        var filekey = e.fileKey;
+        delete e.fileKey
+        delete e.documentoId;
+        delete e.repetido;
+        var nom = e.nom;
+        delete e.nom;
+
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        var bucket = parametros.bucket_docum;
+        var params = {
+            Bucket: bucket,
+            Key: filekey,
+            IdentityPoolId: parametros.identity_pool_docum,
+            Body: e,
+            ACL: "public-read"
+        }
+        var ext = nom.split('.').pop().toLowerCase();
+        if (ext == "pdf") params.ContentType = 'application/pdf'
+        // Use S3 ManagedUpload class as it supports multipart uploads
+        var upload = new AWS.S3.ManagedUpload({
+            params: params
+        });
+        var promise = upload.on('httpUploadProgress', function (evt) {
+            $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total) + '%');
+            $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total) + '%');
+        })
+            .promise();
+        promise.
+            then(
                 data => {
-                    if(data) {
+                    if (data) {
                         //CREAMOS EL REGISTRO EN LA TABLA documentacion
-                        var data = 
+                        var data =
                         {
                             documentacion: {
                                 documentoId: 0,
@@ -8522,13 +8575,13 @@ function uploadDocum(arr) {
                                 key: filekey
                             }
                         }
-                        if(carpetaTipo == "oferta") {
-                            data.documentacion.ofertaId =  vm.ofertaId();
-                        }else if(carpetaTipo == "contrato") {
+                        if (carpetaTipo == "oferta") {
+                            data.documentacion.ofertaId = vm.ofertaId();
+                        } else if (carpetaTipo == "contrato") {
                             data.documentacion.contratoId = vm.contratoId();
                         }
-    
-                        if(!repetido) {
+
+                        if (!repetido) {
                             method = 'POST';
                             url = "/api/documentacion";
                         } else {
@@ -8536,11 +8589,11 @@ function uploadDocum(arr) {
                             method = 'PUT';
                             url = "/api/documentacion/" + documentoId;
                         }
-        
+
                         llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
                             if (err) return mensError(err);
                             index++
-                            if(index == arr.length) {
+                            if (index == arr.length) {
                                 $('#modalUploadDoc').modal('hide');
                                 mensNormal('Archivo subido con exito');
                                 limpiaDatosArchivo();
@@ -8549,11 +8602,11 @@ function uploadDocum(arr) {
                         });
                     }
                 },
-                err =>{
+                err => {
                     if (err) return mensError(err);
                 }
-            );        
-            });       
+            );
+    });
 }
 
 //FUNCIONES RELACIONADAS CON LA PESTAÑA RESUMEN
@@ -8565,7 +8618,7 @@ function loadJefesObra(id) {
         var jefesObra = [{
             jefeObraId: null,
             nombre: ""
-        }].concat(data.map(function(item) {
+        }].concat(data.map(function (item) {
             return {
                 jefeObraId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
                 nombre: item.nombre
@@ -8592,17 +8645,17 @@ function loadTecnicos(tecnicosId) {
     var ids = [];
     llamadaAjax('POST', "/api/comerciales/colaboradores/por/tipos/", data, function (err, data) {
         if (err) return;
-        if(data) {
-            var tecnicos = data.map(function(item) {
+        if (data) {
+            var tecnicos = data.map(function (item) {
                 return {
                     tecnicoId: item.comercialId,  // Renombramos 'comercialId' a 'jefeObrasId'
                     nombre: item.nombre
                 };
             });
             vm.posiblesTecnicos(tecnicos);
-            if(tecnicosId) {
+            if (tecnicosId) {
                 vm.elegidosTecnicos(tecnicosId);
-                for ( var i = 0; i < tecnicosId.length; i++ ) {
+                for (var i = 0; i < tecnicosId.length; i++) {
                     ids.push(tecnicosId[i].comercialId)
                 }
                 $("#cmbTecnicos").val(ids).trigger('change');
@@ -8627,7 +8680,7 @@ var generarResumenDb = function () {
     var data = {
         contrato: {
             "contratoId": vm.contratoId(),
-            "resumenExp" : vm.resumenExp(),
+            "resumenExp": vm.resumenExp(),
             "resumenJefeObraId": vm.sjefeObraId(),
             "resumenDistrito": vm.resumenDistrito(),
             "resumenPtoAceptado": vm.resumenPtoAceptado(),
@@ -8808,7 +8861,7 @@ function initTablaContratosLineasTasas() {
             render: function (data, type, row) {
                 var html = "";
                 var bt1 = "";
-                if(!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLineaTasa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!vm.contratoCerrado()) bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteContratoLineaTasa(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLineaVisado' onclick='editContratoLineaTasa(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
