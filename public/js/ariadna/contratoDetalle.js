@@ -201,6 +201,16 @@ function initForm() {
         cambioEmpresa(e.added);
     });
 
+    $("#chkFacturarNofacturar").on('change', function (e) {
+        if( $('#chkFacturarNofacturar').prop('checked')){
+             $('#fechaPrefactura').hide();
+             vm.fechaPreFactura(null);
+        } else {
+             $('#fechaPrefactura').show();
+              vm.fechaPreFactura(moment(new Date()).format('DD/MM/YYYY'));
+        }
+    });
+
     $("#txtPorcentajeCobro").focus(function () {
         $('#txtPorcentajeCobro').val(null);
     });
@@ -791,6 +801,7 @@ function admData() {
     self.liquidarBase = ko.observable();
     self.contratoCerrado = ko.observable();
     self.facturarNoFacturar = ko.observable();
+    self.fechaPreFactura = ko.observable();
     self.contratoIntereses = ko.observable();
     self.firmaActa = ko.observable();
     self.preaviso = ko.observable();
@@ -5944,6 +5955,8 @@ var prepararRecepcionGestion = function (opcion) {
 
 function loadModalFacturarNoFacturar() {
     $('#chkFacturarNofacturar').prop('checked', true);
+    $('#fechaPrefactura').hide()
+
 }
 
 function aceptarGenerarRecepcionGestion() {
@@ -6020,8 +6033,8 @@ function confirmarNoFacturar() {
             return mensError("No se han seleccionado registros");
 
         }
-        var m = $('#chkFacturarNofacturar').prop('checked') ? 'no facturable' : 'facturable';
-        let mens = "¿Realmente desea marcar las prefacturas seleccionadas como " + m +  " ?.";
+        var m = $('#chkFacturarNofacturar').prop('checked') ? 'no facturable?' : 'facturable?. Se actualizará la fecha de las prefacturas seleccionadas';
+        let mens = "¿Realmente desea marcar las prefacturas seleccionadas como " + m + " ?.";
         $.SmartMessageBox({
             title: "<i class='fa fa-info'></i> Mensaje",
             content: mens,
@@ -6030,8 +6043,13 @@ function confirmarNoFacturar() {
             if (ButtonPressed === "Aceptar") {
                 data = {
                     recepcionGestion: {
-                        noFacturar:  $('#chkFacturarNofacturar').prop('checked')
+                        noFacturar: $('#chkFacturarNofacturar').prop('checked')
                     }
+                }
+                if(!$('#chkFacturarNofacturar').prop('checked')){
+                 if(vm.fechaPreFactura()) {
+                         data.recepcionGestion.fecha = spanishDbDate(vm.fechaPreFactura()) 
+                    } else { return mensError("Debe seleccionar una fecha de prefactura"); }
                 }
                 url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
                 llamadaAjax("PUT", url, data, function (err, data) {
