@@ -202,12 +202,12 @@ function initForm() {
     });
 
     $("#chkFacturarNofacturar").on('change', function (e) {
-        if( $('#chkFacturarNofacturar').prop('checked')){
-             $('#fechaPrefactura').hide();
-             vm.fechaPreFactura(null);
+        if ($('#chkFacturarNofacturar').prop('checked')) {
+            $('#fechaPrefactura').hide();
+            vm.fechaPreFactura(null);
         } else {
-             $('#fechaPrefactura').show();
-              vm.fechaPreFactura(moment(new Date()).format('DD/MM/YYYY'));
+            $('#fechaPrefactura').show();
+            vm.fechaPreFactura(moment(new Date()).format('DD/MM/YYYY'));
         }
     });
 
@@ -3889,19 +3889,31 @@ function initTablaPrefacturas(departamentoId) {
             data: "prefacturaId",
             width: "5%",
             render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (row.esLetra != 1) {
-                    html = "<i class='fa fa-file-o'></i>";
-                    if (row.facturaId) {
-                        html = "<i class='fa fa-files-o'></i>";
+                if (row.departamentoId == 8) {
+                    var html = "<i class='fa fa-file-o'></i>";
+                    if (row.esLetra != 1) {
+                        html = "<i class='fa fa-file-o'></i>";
+                        if (row.facturaId) {
+                            html = "<i class='fa fa-files-o'></i>";
+                        }
+                    } else {
+                        html = '<label class="input">';
+                        html += sprintf('<input id="chk%s" type="checkbox" class="checkAll" name="chk%s">', data, data);
+                        //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                        html += '</label>';
                     }
+                    return html;
                 } else {
-                    html = '<label class="input">';
-                    html += sprintf('<input id="chk%s" type="checkbox" class="checkAll" name="chk%s">', data, data);
-                    //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
-                    html += '</label>';
+                    var html = "<i class='fa fa-file-o'></i>";
+                    if (!row.facturaId) {
+                        html = '<label class="input">';
+                        html += sprintf('<input id="chk%s" type="checkbox" class="checkAll" name="chk%s">', data, data);
+                        //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
+                        html += '</label>';
+                    }
                 }
                 return html;
+
             }
         }, {
             data: "referencia"
@@ -4248,6 +4260,7 @@ function borrarPrefacturas() {
     });
 }
 
+
 function updateAllPreFacturas(opcion) {
     var datos = null;
     var sel = 0;
@@ -4256,33 +4269,66 @@ function updateAllPreFacturas(opcion) {
     if (opcion) sel = 1
 
     if (datos) {
-        for (var i = 0; i < datos.length; i++) {
-            if (datos[i].esLetra == 1) {
-                var data = {
-                    prefactura: {
-                        prefacturaId: datos[i].prefacturaId,
-                        empresaId: datos[i].empresaId,
-                        clienteId: datos[i].clienteId,
-                        fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
-                        sel: sel
-                    }
-                };
-                var url = "", type = "";
-                // updating record
-                var type = "PUT";
-                var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, datos[i].prefacturaId);
-                $.ajax({
-                    type: type,
-                    url: url,
-                    contentType: "application/json",
-                    data: JSON.stringify(data),
-                    success: function (data, status) {
+        if (vm.tipoContratoId() == 8) {
+            for (var i = 0; i < datos.length; i++) {
+                if (datos[i].esLetra == 1) {
+                    var data = {
+                        prefactura: {
+                            prefacturaId: datos[i].prefacturaId,
+                            empresaId: datos[i].empresaId,
+                            clienteId: datos[i].clienteId,
+                            fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                            sel: sel
+                        }
+                    };
+                    var url = "", type = "";
+                    // updating record
+                    var type = "PUT";
+                    var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, datos[i].prefacturaId);
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function (data, status) {
 
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                    }
-                });
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                        }
+                    });
+                }
+            }
+        } else {
+            for (var i = 0; i < datos.length; i++) {
+
+                if (!datos[i].facturaId) {
+                    var data = {
+                        prefactura: {
+                            prefacturaId: datos[i].prefacturaId,
+                            empresaId: datos[i].empresaId,
+                            clienteId: datos[i].clienteId,
+                            fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                            sel: sel
+                        }
+                    };
+                    var url = "", type = "";
+                    // updating record
+                    var type = "PUT";
+                    var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, datos[i].prefacturaId);
+                    $.ajax({
+                        type: type,
+                        url: url,
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function (data, status) {
+
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                        }
+                    });
+                }
             }
         }
     }
@@ -6025,6 +6071,7 @@ var compruebaFechaGestionCobros = function (datos, fecha) {
 
 function confirmarNoFacturar() {
     var data = {};
+    var hayFactura = false
     var url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
     //recuperamos los registros marcados
     llamadaAjax("GET", url, null, function (err, datos) {
@@ -6032,6 +6079,15 @@ function confirmarNoFacturar() {
         if (datos.length == 0) {
             return mensError("No se han seleccionado registros");
 
+        } 
+        for(let d of datos){
+            if(d.facturaId) {
+                hayFactura = true;
+                break;
+            }
+        }
+        if(hayFactura) {
+            return mensError("No se puede marcar como no facturable/no facturable porque alguna de las prefacturas seleccionadas ya tiene factura asociada");
         }
         var m = $('#chkFacturarNofacturar').prop('checked') ? 'no facturable?' : 'facturable?. Se actualizará la fecha de las prefacturas seleccionadas';
         let mens = "¿Realmente desea marcar las prefacturas seleccionadas como " + m + " ?.";
@@ -6046,9 +6102,9 @@ function confirmarNoFacturar() {
                         noFacturar: $('#chkFacturarNofacturar').prop('checked')
                     }
                 }
-                if(!$('#chkFacturarNofacturar').prop('checked')){
-                 if(vm.fechaPreFactura()) {
-                         data.recepcionGestion.fecha = spanishDbDate(vm.fechaPreFactura()) 
+                if (!$('#chkFacturarNofacturar').prop('checked')) {
+                    if (vm.fechaPreFactura()) {
+                        data.recepcionGestion.fecha = spanishDbDate(vm.fechaPreFactura())
                     } else { return mensError("Debe seleccionar una fecha de prefactura"); }
                 }
                 url = myconfig.apiUrl + "/api/prefacturas/recepcionGestion/planificacion/" + vm.contratoId();
