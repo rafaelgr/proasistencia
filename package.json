@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.3.247",
+  "version": "2.3.248",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,10 @@
     "proasistencia",
     "production"
   ],
-  "author": "'Rafael Garcia <'rafa@myariadna.com'>",
+  "author": "Rafael Garcia <rafa@myariadna.com>",
+  "contributors": [
+    "Vicent Ribera <vicent@myariadna.com>"
+  ],
   "license": "CC-BY-NC-4.0",
   "bugs": {
     "url": "https://github.com/rafaelgr/proasistencia/issues"
