@@ -101,7 +101,7 @@ function initForm() {
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
 
-        var empresaId =  vm.sempresaId(); 
+        var empresaId = vm.sempresaId();
         var departamentoId = vm.sdepartamentoId();
         var dFecha = vm.dFecha();
         var hFecha = vm.hFecha();
@@ -123,25 +123,25 @@ function initForm() {
     $("#cmbContratos").select2(select2Spanish());
 
 
-    $('#cmbTiposComerciales').change(function(e) {
-        if(!e.added) return;
+    $('#cmbTiposComerciales').change(function (e) {
+        if (!e.added) return;
         loadColaboradores(parseInt(e.added.id));
     });
 
 
-    $('#cmbDepartamentosTrabajo').change(function(e) {
-        if(!e.added) return;
+    $('#cmbDepartamentosTrabajo').change(function (e) {
+        if (!e.added) return;
         var empresaId = vm.sempresaId()
-        var departamentoId =  e.added.id;
+        var departamentoId = e.added.id;
         var dFecha = vm.dFecha();
         var hFecha = vm.hFecha();
         loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
     });
 
 
-    $('#cmbEmpresas').change(function(e) {
-        if(!e.added) return;
-        var empresaId =  e.added.id; 
+    $('#cmbEmpresas').change(function (e) {
+        if (!e.added) return;
+        var empresaId = e.added.id;
         var departamentoId = vm.sdepartamentoId();
         var dFecha = vm.dFecha();
         var hFecha = vm.hFecha();
@@ -149,38 +149,38 @@ function initForm() {
     });
 
 
-    
+
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        if(data) {
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+        if (data) {
             initAutoCliente();
-            vm.contratoId(gup('ContratoId'));
-                verb = "GET";
-                var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
-                llamadaAjax(verb, url, null, function (err, data) {
-                    obtainReportJson(data);
-                    $('#selector').hide();
-                });
+            vm.contratoId(gup('contratoId'));
+            verb = "GET";
+            var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
+            llamadaAjax(verb, url, null, function (err, data) {
+                obtainReportJson(data);
+                $('#selector').hide();
+            });
         }
     });
 
-    
-    
+
+
     //
-    $.validator.addMethod("notEqualTo", function(value, element, param){
-        if(value == "0") return false
+    $.validator.addMethod("notEqualTo", function (value, element, param) {
+        if (value == "0") return false
         return true;
     });
 }
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key
         }
     });
@@ -215,21 +215,21 @@ function admData() {
     //
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
-     //
-     self.scontratoId = ko.observable();
-     self.contratoId = ko.observable();
-     //
-     self.posiblesContratos = ko.observableArray([]);
-     self.elegidosContratos = ko.observableArray([]);
-     self.observaciones = ko.observable();
-     self.observacionesPago = ko.observable();
-     //
+    //
+    self.scontratoId = ko.observable();
+    self.contratoId = ko.observable();
+    //
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
+    self.observaciones = ko.observable();
+    self.observacionesPago = ko.observable();
+    //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
     self.elegidosTiposComerciales = ko.observableArray([]);
-     //
+    //
 };
 
 
@@ -287,10 +287,10 @@ function loadTiposComerciales() {
 function loadColaboradores(e) {
     var tipoComercialId = 0;
     var url = "/api/comerciales"
-   
-        var tipoComercialId = e;
-        url =  "/api/comerciales/colaboradores/por/tipo/" + tipoComercialId
-    
+
+    var tipoComercialId = e;
+    url = "/api/comerciales/colaboradores/por/tipo/" + tipoComercialId
+
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
@@ -300,9 +300,9 @@ function loadColaboradores(e) {
 }
 
 function loadContratos(dFecha, hFecha, departamentoId, empresaId) {
-   
-    var url = myconfig.apiUrl +"/api/contratos/recupera/todos/" + dFecha + "/" +hFecha + "/" + departamentoId + "/" + empresaId;
-    
+
+    var url = myconfig.apiUrl + "/api/contratos/recupera/todos/" + dFecha + "/" + hFecha + "/" + departamentoId + "/" + empresaId;
+
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
@@ -345,10 +345,10 @@ var initAutoCliente = function () {
 
 
 var rptContratosParametrosJson = function () {
-    if(!datosOK()) return;
+    if (!datosOK()) return;
     //si no hay cliente en el campo de texto el cliente es 0
     var c = $('#txtCliente').val();
-    if(c == '') {
+    if (c == '') {
         vm.sclienteId(null);
     }
     var tipoComercialId = vm.stipoComercialId();
@@ -359,18 +359,18 @@ var rptContratosParametrosJson = function () {
     var contratoId = vm.scontratoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    
-    
-
-    if(!clienteId) clienteId = 0;
-    if(!comercialId) comercialId = 0;
-    if(!tipoComercialId) tipoComercialId = 0;
-    if(!departamentoId) departamentoId = 0;
-    if(!empresaId) empresaId = 0;
-    if(!contratoId) contratoId = 0;
 
 
-    
+
+    if (!clienteId) clienteId = 0;
+    if (!comercialId) comercialId = 0;
+    if (!tipoComercialId) tipoComercialId = 0;
+    if (!departamentoId) departamentoId = 0;
+    if (!empresaId) empresaId = 0;
+    if (!contratoId) contratoId = 0;
+
+
+
     var url = "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
     url += "/" + empresaId;
     url += "/" + clienteId;
@@ -380,13 +380,13 @@ var rptContratosParametrosJson = function () {
     url += "/" + contratoId;
     url += "/" + usuario.usuarioId;
     llamadaAjax("GET", url, null, function (err, data) {
-        if (err)   return;
-        if(data) {
+        if (err) return;
+        if (data) {
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
         }
-        
+
     });
 }
 
@@ -394,17 +394,22 @@ var obtainReportJson = function (obj) {
     let file = ";"
     file = "../reports/contrato_reabita2.mrt";
     var report = new Stimulsoft.Report.StiReport();
-        
-        
+    // Antes de viewer.report = report;
+    report.exportSettings = report.exportSettings || {};
+    report.exportSettings.pdf = report.exportSettings.pdf || {};
+    report.exportSettings.pdf.useHtmlRendering = true; // <--- clave
+
+
+
     report.loadFile(file);
 
     var dataSet = new Stimulsoft.System.Data.DataSet("datos_contrato");
     dataSet.readJson(obj);
-    
-     // Remove all connections from the report template
-     report.dictionary.databases.clear();
 
-     //
+    // Remove all connections from the report template
+    report.dictionary.databases.clear();
+
+    //
     report.regData(dataSet.dataSetName, "", dataSet);
     report.dictionary.synchronize();
 
