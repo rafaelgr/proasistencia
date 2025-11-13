@@ -394,11 +394,7 @@ var obtainReportJson = function (obj) {
     let file = ";"
     file = "../reports/contrato_reabita2.mrt";
     var report = new Stimulsoft.Report.StiReport();
-    // Antes de viewer.report = report;
-    report.exportSettings = report.exportSettings || {};
-    report.exportSettings.pdf = report.exportSettings.pdf || {};
-    report.exportSettings.pdf.useHtmlRendering = true; // <--- clave
-
+    
 
 
     report.loadFile(file);
