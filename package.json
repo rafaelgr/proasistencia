@@ -28,7 +28,7 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^1.0.0-alpha.1",
     "archiver": "^5.3.1",
-    "async": "^2.0.0",
+    "async": "^2.6.4",
     "aws-sdk": "^2.1046.0",
     "body-parser": "^1.20.3",
     "connect": "^3.4.0",
