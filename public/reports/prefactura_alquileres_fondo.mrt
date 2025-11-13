@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "cb989709dbcd4b5694d051d8217c1e18",
+  "ReportGuid": "6c80ab4d3b6f4a30af1c18ebb845cdcb",
   "ReportName": "FacturaGrupo",
   "ReportAlias": "FacturaGrupo",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(-3600000+0100)/",
-  "ReportChanged": "/Date(1763028180844+0100)/",
+  "ReportChanged": "/Date(1763028906669+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -635,7 +635,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,37.3,19,1.2",
+          "ClientRectangle": "0,31.8,19,1.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1338,7 +1338,7 @@
               "Ident": "StiText",
               "Name": "Text41",
               "Guid": "327da162a0c9d9011b99f5f2daeb2614",
-              "ClientRectangle": "16.8,0.4,2,0.4",
+              "ClientRectangle": "17,0.4,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1455,7 +1455,7 @@
               "Ident": "StiText",
               "Name": "Text28",
               "Guid": "f5f1a35a05ad411cb9cf8127383932cc",
-              "ClientRectangle": "16.8,0,2,0.4",
+              "ClientRectangle": "17,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
