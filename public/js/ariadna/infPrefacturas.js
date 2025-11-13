@@ -180,7 +180,9 @@ var obtainReport = function (carga) {
         file = "../reports/" + infPreFacturas + ".mrt";
         if(vm.sdepartamentoId() == 7) {
             file = "../reports/prefactura_reparaciones.mrt";
-        } 
+        } else if(vm.sdepartamentoId() == 3) {
+            file = "../reports/prefactura_alquileres_fondo.mrt";
+        }
         var rpt = gup("report");
         report.loadFile(file);
         //report.setVariable("vTest", "11,16,18");
