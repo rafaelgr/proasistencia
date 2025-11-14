@@ -78,6 +78,7 @@ function initForm() {
 
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
+    $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus( function () {
         $('#txtPrecio').val(null);
     });
@@ -8952,4 +8953,11 @@ var imprimir = function () {
 function printContrato(id) {
     var url = "InfContratos2.html?contratoId=" + id;
     window.open(url, '_new');
+}
+//CREAR CONTRATO DE INTERESES
+function crearContratoIntereses() {
+    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId(), null, function (err, data) {
+            if (err) return errorGeneral(err, done);
+            //loadData(data);
+        });
 }

@@ -108,6 +108,23 @@
     * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
     -->
 
+<style>
+    .custom-btn {
+        background-color: #284dc9;
+        /* tu color */
+        border-color: #6967db;
+        /* opcional: cambiar borde */
+        color: white;
+        /* color del texto */
+    }
+
+    .custom-btn:hover {
+        background-color: #435099;
+        /* color al pasar el mouse */
+        border-color: #535879;
+    }
+</style>
+
 <body class="">
     <!-- #HEADER -->
     <header id="header" style="background-color:#FFFFFF; background-image:none;">
@@ -1263,10 +1280,22 @@
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
-                                                                                <button id="btnImprimir" title="Imprimir contrato" class="btn btn-success btn-circle btn-lg">
+                                                                                <button id="btnImprimir"
+                                                                                    title="Imprimir contrato"
+                                                                                    class="btn btn-success btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-print"></i>
                                                                                 </button>
-                                                                                <button id="btnRenovarContratos" title="Renovar contrato" data-toggle="modal" data-target="#modalRenovarContratos" onclick="prepararRenovacion()" class="btn btn-primary btn-circle btn-lg">
+                                                                                <button id="btnIntereses"
+                                                                                    title="Crear contrato de intereses"
+                                                                                    class="btn custom-btn btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-percent"></i>
+                                                                                </button>
+                                                                                <button id="btnRenovarContratos"
+                                                                                    title="Renovar contrato"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#modalRenovarContratos"
+                                                                                    onclick="prepararRenovacion()"
+                                                                                    class="btn btn-primary btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-repeat"></i>
                                                                                 </button>
                                                                                 <button id="btnGenerarPrefacturas"
@@ -1280,7 +1309,7 @@
                                                                                 </button>
                                                                                 <button id="btnSalir"
                                                                                     title="Salir sin guardar"
-                                                                                    class="btn btn-warning btn-circle btn-lg">
+                                                                                    class="btn btn-light btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                                                 </button>
                                                                                 <button id="btnAceptar2"
@@ -4460,8 +4489,9 @@
                                 <section class="col col-md-12" id="fechaPrefactura">
                                     <label class="label">Nueva Fecha</label>
                                     <label class="input">
-                                        <input id="txtFechaPreFactura" name="txtFechaPreFactura" data-bind="value: fechaPreFactura"
-                                            class="datepicker" data-dateformat="dd/mm/yy" />
+                                        <input id="txtFechaPreFactura" name="txtFechaPreFactura"
+                                            data-bind="value: fechaPreFactura" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
                                     </label>
                                 </section>
                             </div>
