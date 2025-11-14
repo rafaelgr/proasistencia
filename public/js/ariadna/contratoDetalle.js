@@ -77,8 +77,8 @@ function initForm() {
     });
 
     $("#btnSalir").click(salir());
-    //$("#btnImprimir").click(imprimir);
-    $('#txtPrecio').focus(function () {
+    $("#btnImprimir").click(imprimir);
+    $('#txtPrecio').focus( function () {
         $('#txtPrecio').val(null);
     });
 
@@ -8942,4 +8942,14 @@ function initTablaContratosLineasTasas() {
             }
         }]
     });
+}
+
+//IMPRESION DE CONTRATO
+var imprimir = function () {
+    printContrato(vm.contratoId());
+}
+
+function printContrato(id) {
+    var url = "InfContratos2.html?contratoId=" + id;
+    window.open(url, '_new');
 }

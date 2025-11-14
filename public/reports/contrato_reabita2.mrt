@@ -1,0 +1,923 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ejemplo_json Ref="2" type="Stimulsoft.Report.Dictionary.StiJsonDatabase" isKey="true">
+        <Alias>ejemplo_json</Alias>
+        <Key />
+        <Name>ejemplo_json</Name>
+        <PathData>E:\node_apps\proasistencia\public\reports\ejemplo_json.json</PathData>
+      </ejemplo_json>
+    </Databases>
+    <DataSources isList="true" count="3">
+      <datos_contrato Ref="3" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato</Alias>
+        <Columns isList="true" count="16">
+          <value>contratoId,System.Decimal</value>
+          <value>nombrePresidente,System.String</value>
+          <value>correoPresidente,System.String</value>
+          <value>dniPresidente,System.String</value>
+          <value>direccionTrabajo,System.String</value>
+          <value>codPostalTrabajo,System.Decimal</value>
+          <value>PoblacionTrabajo,System.String</value>
+          <value>provinciaTrabajo,System.String</value>
+          <value>tipoProyecto,System.String</value>
+          <value>referencia,System.String</value>
+          <value>cerFinal,System.String</value>
+          <value>fecha,System.String</value>
+          <value>iban,System.String</value>
+          <value>parrafo1,System.String</value>
+          <value>pagos,System.String</value>
+          <value>letras,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>7a9ea470c28a467f9ae1b69641bdc41e</Key>
+        <Name>datos_contrato</Name>
+        <NameInSource>ejemplo_json.datos_contrato</NameInSource>
+      </datos_contrato>
+      <datos_contrato_letras Ref="4" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato_letras</Alias>
+        <Columns isList="true" count="8">
+          <value>contratoId,System.Decimal</value>
+          <value>formaPagoId,System.Decimal</value>
+          <value>concepto,System.String</value>
+          <value>totalAlCliente,System.Decimal</value>
+          <value>sumTotalAlcliente,System.Decimal</value>
+          <value>totletras,System.Decimal</value>
+          <value>numletras,System.Decimal</value>
+          <value>relationId,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>f93145fb29f44f529271cc5e95d6a428</Key>
+        <Name>datos_contrato_letras</Name>
+        <NameInSource>ejemplo_json.datos_contrato_letras</NameInSource>
+      </datos_contrato_letras>
+      <datos_contrato_pagos Ref="5" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato_pagos</Alias>
+        <Columns isList="true" count="7">
+          <value>contratoId,System.Decimal</value>
+          <value>formaPagoId,System.Decimal</value>
+          <value>formaPagoNombre,System.String</value>
+          <value>importePrefacturadoIva,System.Decimal</value>
+          <value>concepto,System.String</value>
+          <value>porcentaje,System.Decimal</value>
+          <value>relationId,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>fe4b968c986349fdb841fe39b584abc2</Key>
+        <Name>datos_contrato_pagos</Name>
+        <NameInSource>ejemplo_json.datos_contrato_pagos</NameInSource>
+      </datos_contrato_pagos>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="2">
+      <value>,VariableContrato,VariableContrato,,System.String,del_x0020_contrato,False,False,False,False,,_x0031_aabf910c70d42019d27805026900b7b</value>
+      <value>,VariableObra,VariableObra,,System.String,de_x0020_la_x0020_obra,False,False,False,False,,_x0034_ff264f6a7094357906f362ae68f9ea4</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>7230e7358106451eb2cc815f8ce2229b</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="6" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="8">
+        <PageFooterBand1 Ref="7" type="PageFooterBand" isKey="true">
+          <Border>Top;Black;1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,32.04,19,1.2</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text3 Ref="8" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17.8,0.16,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="6" />
+              <Parent isRef="7" />
+              <Text>{PageNumberThrough}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text3>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </PageFooterBand1>
+        <PageFooterBand2 Ref="9" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,28.24,19,3</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text30 Ref="10" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,0.22,13.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="6" />
+              <Parent isRef="9" />
+              <Text>LA PROPIEDAD....................................................EL CONTRATISTA</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text30>
+            <Text32 Ref="11" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.4,2.42,5.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="6" />
+              <Parent isRef="9" />
+              <Text>FDO. {datos_contrato.nombrePresidente}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text32>
+            <Text33 Ref="12" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7,2.42,6.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text33</Name>
+              <Page isRef="6" />
+              <Parent isRef="9" />
+              <Text>FDO. Mª DOLORES GOMEZ MARTIN</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text33>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand2</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <PrintOn>OnlyLastPage</PrintOn>
+        </PageFooterBand2>
+        <DataBand1 Ref="13" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,0.4,19,10.6</ClientRectangle>
+          <Components isList="true" count="12">
+            <Text18 Ref="14" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,2,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>{datos_contrato.nombrePresidente}, mayor de edad, con domicilio a estos efectos de 	comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente} y correo electrónico {datos_contrato.correoPresidente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text18>
+            <Text19 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0.2,6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>En  Madrid, a 16 de octubre de 2024</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text19>
+            <Text20 Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8,1.4,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>REUNIDOS
+</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text20>
+            <Text21 Ref="17" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,2.8,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text21>
+            <Text22 Ref="18" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.8,3.8,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>INTERVIENEN
+</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text22>
+            <Text23 Ref="19" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,4.4,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>{datos_contrato.nombrePresidente}, en calidad de Presidenta de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-
+{datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente}, denominándose en lo sucesivo la &lt;b&gt;PROPIEDAD&lt;/b&gt;.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text23>
+            <Text24 Ref="20" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,5.2,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el &lt;b&gt;CONTRATISTA&lt;/b&gt;.</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text24>
+            <Text25 Ref="21" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,6.8,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>Ambas partes se reconocen mutua y recíprocamente capacidad legal suficiente para suscribir el presente &lt;b&gt;CONTRATO DE EJECUCIÓN DE OBRA&lt;/b&gt; y en su virtud,</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text25>
+            <Text26 Ref="22" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,7.6,18.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>&lt;p&gt;I.- la Propiedad desea llevar a cabo las Obras Obras de Reabilitación, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}- {datos_contrato.PoblacionTrabajo}), en base al Presupuesto que se adjunta de Ref.{datos_contrato.referencia} por importe {datos_contrato.cerFinal}€ más IVA , de fecha {datos_contrato.fecha}.&lt;/p&gt;
+&lt;p&gt; Y en base a todo lo anterior, acuerdan la realización de las referidas obras por parte de REABITA OBRAS DE REHABILITACIÓN, S.L. con arreglo a las siguientes&lt;/p&gt;</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text26>
+            <Text27 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8,6.2,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>EXPONEN</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text27>
+            <Text29 Ref="24" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.2,9.4,18.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <MaxSize>0,10</MaxSize>
+              <Name>Text29</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <ShiftMode>OnlyInWidthOfComponent</ShiftMode>
+              <Text>&lt;b&gt;Primera. - OBJETO DEL CONTRATO.&lt;/b&gt;&lt;/br&gt;
+&lt;p&gt;Constituye el objeto del presente contrato la ejecución total, con suministro de materiales, de las obras 
+necesarias para la realización del Presupuesto a que se hace referencia en el expositivo de este contrato.&lt;/p&gt;
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; no podrá variar ninguna dimensión ni calidad especificada en el Presupuesto sin la 
+aprobación escrita por parte de la &lt;b&gt;PROPIEDAD&lt;/b&gt;, quedando obligado a realizar los trabajos con sujeción 
+en todo momento a las órdenes e instrucciones dadas por la Dirección Facultativa. o en su defecto el representante
+ de la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt;
+
+&lt;b&gt;Segunda. - PRECIO.&lt;/b&gt;
+
+&lt;p&gt;El precio de la obra será el que resulte de multiplicar los precios unitarios que figuran en el presupuesto económico 
+ofertadopor el &lt;b&gt;CONTRATISTA&lt;/b&gt; y aceptado por la &lt;b&gt;PROPIEDAD&lt;/b&gt; por las unidades de obra realmente ejecutadas, según medición 
+aprobada por la Dirección Facultativa o en su defecto, el representante de la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p&gt;El precio comprende la ejecución material, los materiales, mano de obra, acabados, medios auxiliares y de elevación,
+ medidas de seguridad y salud, limpieza de los tajos, gastos generales, beneficio industrial, etc., así como cualquier gasto, medio o 
+prestación necesaria, inherente o complementaria para la correcta ejecución de la obra contratada conforme a las 
+prescripciones legales, técnicas, contractuales, o a las indicaciones de la Dirección de Obra.&lt;/p&gt;
+&lt;p&gt;En el presupuesto económico no está incluido el 10% del Impuesto sobre el Valor Añadido (IVA), el cual se facturará adicionalmente.&lt;/p&gt; 
+
+&lt;b&gt;Tercera. - CARGOS DE REPRESENTACION&lt;/b&gt;
+
+&lt;p&gt;La &lt;b&gt;PROPIEDAD&lt;/b&gt; nombrará una persona que le represente en todos los actos y en su relación con el &lt;b&gt;CONTRATISTA&lt;/b&gt;
+Asimismo, el &lt;b&gt;CONTRATISTA&lt;/b&gt;, antes del comienzo de la ejecución de las obras, designará a un Jefe de Obra que asumirá, 
+la representación técnica del constructor en la misma.&lt;/p&gt;
+
+&lt;b&gt;Cuarta. - MODIFICACIONES AL PROYECTO Y OBRAS ADICIONALES.&lt;/b&gt;
+
+&lt;p&gt; durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la &lt;b&gt;PROPIEDAD&lt;/b&gt;, 
+hubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras 
+adicionales que no estuviesen contempladas en el Presupuesto, la valoración de esta unidad de obra será objeto de precio 
+contradictorio en base a los precios ofertados por el &lt;b&gt;CONTRATISTA&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p&gt;Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente 
+Contrato a todos los efectos.&lt;/p&gt;
+
+&lt;b&gt;Quinta. - SEGURIDAD Y SALUD.&lt;/b&gt;
+
+&lt;p&gt;Si la obra requiriera la elaboración de un Proyecto, la &lt;b&gt;PROPIEDAD&lt;/b&gt;, deberá entregar al &lt;b&gt;CONTRATISTA&lt;/b&gt; el Estudio de 
+Seguridad y Salud, incluido en el mismo, antes del inicio de las obras.&lt;/p&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; una vez analizado el Estudio de Seguridad y Salud, presentará a la &lt;b&gt;PROPIEDAD&lt;/b&gt; el Plan de Seguridad de 
+las obras.&lt;/p&gt;
+
+&lt;p&gt;Si la obra no requiriera proyecto, el &lt;b&gt;CONTRATISTA&lt;/b&gt; elaborará directamente el Plan de Seguridad y Salud.&lt;/p&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y Salud nombrado 
+por la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt;
+
+&lt;b&gt;Sexta. - GASTOS ADICIONALES&lt;/b&gt; 
+
+&lt;p&gt;Serán por cuenta de la &lt;b&gt;PROPIEDAD&lt;/b&gt; los siguientes gastos:&lt;/p&gt;
+&lt;ol&gt;
+ &lt;li&gt;La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, 
+actuales o futuros, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.&lt;/li&gt;
+&lt;li&gt;Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de 
+que fueran necesarios.&lt;/li&gt;
+&lt;li&gt;Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.&lt;/li&gt;
+&lt;li&gt;El consumo de agua y energía eléctrica.&lt;/li&gt;
+&lt;li&gt;Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como 
+local para acopio de materiales y aseo de operarios.&lt;/li&gt;
+&lt;li&gt;Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares 
+(grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las 
+obras, serán por cuenta del &lt;b&gt;CONTRATISTA&lt;/b&gt;.&lt;/p&gt;
+
+
+&lt;b&gt;Séptima. - CERTIFICACIONES Y ABONO DE LAS OBRAS.&lt;/b&gt;
+
+&lt;p&gt;Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, 
+emitiéndose la correspondiente Certificación de Obra que será entregada a la &lt;b&gt;PROPIEDAD&lt;/b&gt;, quien dispondrá 
+de un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, 
+se entenderá aceptada.&lt;/p&gt;
+
+&lt;p&gt;El abono de las obras por importe de {datos_contrato.cerFinal}€ Incluido IVA e intereses, se realizará mediante recibo/letras 
+domiciliado en la cta. cte. número {datos_contrato.iban} se adjunta orden Sepa de domiciliación, y en los 
+siguientes plazos:&lt;/p&gt;</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text29>
+            <Text2 Ref="25" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.4,8.6,3,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="6" />
+              <Parent isRef="13" />
+              <Text>ESTIPULACIONES</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text2>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>datos_contrato</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+        <HeaderBand2 Ref="26" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <CanGrow>False</CanGrow>
+          <ClientRectangle>0,11.8,19,0.4</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text9 Ref="27" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="6" />
+              <Parent isRef="26" />
+              <Text>RECIBOS</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text9>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <KeepHeaderTogether>False</KeepHeaderTogether>
+          <Name>HeaderBand2</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </HeaderBand2>
+        <DataBand2 Ref="28" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <CanGrow>False</CanGrow>
+          <ClientRectangle>0,13,19,0.4</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text4 Ref="29" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0,3.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="6" />
+              <Parent isRef="28" />
+              <Text>{datos_contrato_pagos.concepto}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text4>
+            <Text6 Ref="30" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.8,0,6.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="6" />
+              <Parent isRef="28" />
+              <Text>{datos_contrato_pagos.porcentaje}% del importe total del presupuesto </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text6>
+            <Text7 Ref="31" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>10.6,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="6" />
+              <Parent isRef="28" />
+              <Text>{datos_contrato_pagos.importePrefacturadoIva}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text7>
+            <Text8 Ref="33" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12.8,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="6" />
+              <Parent isRef="28" />
+              <Text>IVA incluido</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text8>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName>pagos_contrato</DataRelationName>
+          <DataSourceName>datos_contrato_pagos</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand2</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand2>
+        <HeaderBand1 Ref="34" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <CanGrow>False</CanGrow>
+          <ClientRectangle>0,14.2,19,0.4</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text15 Ref="35" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="6" />
+              <Parent isRef="34" />
+              <Text>LETRAS</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text15>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <KeepHeaderTogether>False</KeepHeaderTogether>
+          <Name>HeaderBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </HeaderBand1>
+        <DataBand4 Ref="36" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <CanGrow>False</CanGrow>
+          <ClientRectangle>0,15.4,19,0.6</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text12 Ref="37" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0,0.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="6" />
+              <Parent isRef="36" />
+              <Text>{datos_contrato_letras.numletras}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text12>
+            <Text13 Ref="38" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.8,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="6" />
+              <Parent isRef="36" />
+              <Text>Con un total de </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text13>
+            <Text10 Ref="39" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.2,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="6" />
+              <Parent isRef="36" />
+              <Text>{datos_contrato_letras.sumTotalAlcliente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text10>
+            <Text11 Ref="41" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.8,0,6.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="6" />
+              <Parent isRef="36" />
+              <Text>Cada una de las cuales con un importe de </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text11>
+            <Text14 Ref="42" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>13.4,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="6" />
+              <Parent isRef="36" />
+              <Text>{datos_contrato_letras.totalAlCliente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text14>
+            <Text16 Ref="44" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.6,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="6" />
+              <Parent isRef="36" />
+              <Text>IVA incluido</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text16>
+          </Components>
+          <Conditions isList="true" count="1">
+            <value>datos_contrato_letras.totletras,IsNull,,,Numeric,[255:255:255],Transparent,Arial_x002C_8,False,False,,,None</value>
+          </Conditions>
+          <DataRelationName>letras_contrato</DataRelationName>
+          <DataSourceName>datos_contrato_letras</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand4</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand4>
+        <DataBand6 Ref="45" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <CanShrink>True</CanShrink>
+          <ClientRectangle>0,16.8,19,1.6</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text1 Ref="46" type="Text" isKey="true">
+              <AllowHtmlTags>True</AllowHtmlTags>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <ClientRectangle>0.2,0.2,18.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,9</Font>
+              <HorAlignment>Width</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <MaxSize>0,1</MaxSize>
+              <Name>Text1</Name>
+              <Page isRef="6" />
+              <Parent isRef="45" />
+              <ShiftMode>OnlyInWidthOfComponent</ShiftMode>
+              <Text>&lt;ul&gt;
+&lt;li&gt;las letras de cambio se entregarán en un plazo no superior a dos días de la fecha del inicio de los trabajos, 
+debidamente firmadas y domiciliadas en la cuenta de la Comunidad, con vencimientos mensuales y sucesivos, siendo el 
+primer vencimiento a los treinta días de la fecha de inicio de los trabajos.&lt;/li&gt;
+
+
+&lt;li&gt;El resto, 19.326,42 € incluido IVA mediante doce (12)  letras de cambio que se entregarán en un plazo no superior 
+a dos días de la fecha del inicio de los trabajos, debidamente firmadas y domiciliadas en la cuenta de la Comunidad, 
+por un importe cada una de las 11primeras de 1.601,53€ incluido IVA, y la número 12 por importe 1.610,59€  
+incluido IVA, con vencimientos mensuales y sucesivos, siendo el primer vencimiento a los treinta días de la fecha de 
+inicio de los trabajos.&lt;/li&gt;
+
+&lt;li&gt;En el supuesto de que exista diferencia entre el importe resultante de la Certificación Final de Obra y el 
+Presupuesto inicial, será abonado mediante un recibo/letra de cambio, que se entregará a La Contrata en un plazo no 
+superior a los cinco días desde la fecha de certificación final de obra, debidamente aceptada y domiciliada en la 
+misma cta. cte. de la Comunidad y con vencimiento a los 30 días desde el vencimiento de la ultima letra de cambio.&lt;/li&gt;
+
+&lt;/ul&gt;
+
+&lt;p&gt;El costo de los timbres de dichos efectos será por cuenta de la Propiedad&lt;/p&gt;
+
+&lt;p&gt;Tal y como indica el Certificado expedido por la Administración y que se adjunta al Contrato, los propietarios de 
+las fincas, conocen y aceptan de forma solidaria el abono de los importes indicados, así como las condiciones de  
+financiación de las obras y aplazamiento de los pagos recogidos en el Cuadro de Financiación que se adjunta al 
+Contrato.&lt;/p&gt;
+
+&lt;p&gt;La demora a su vencimiento o el impago de una de las cantidades aplazadas, dará derecho a la &lt;b&gt;CONTRATA&lt;/b&gt; a 
+resolver el presente Contrato, dando lugar a la pérdida de la garantía de los trabajos ejecutados, pudiendo exigir el 
+pago de todas las cantidades pendientes, incluso las cantidades aplazadas y no vencidas, así como el devengo de 
+intereses por demora al tipo del interés legal.&lt;/p&gt;
+
+&lt;b&gt;Octava. - Recepción de la obra.&lt;/b&gt; 
+
+&lt;p&gt;Dentro de los 10 días siguientes a la Certificación Final de Obra, se procederá a su recepción, la cual se consignará en un Acta que estará firmada por el &lt;b&gt;CONTRATISTA&lt;/b&gt; y la &lt;b&gt;PROPIEDAD&lt;/b&gt; y la Dirección Facultativa si existiera.&lt;/p&gt;
+
+&lt;p&gt;En el supuesto de que no se firmara el Acta de recepción y no hubiese reclamación expresa, la Obra se entenderá recibida de conformidad  transcurridos 30 días desde la fecha de la Certificación Final de Obra.&lt;/p&gt; 
+
+&lt;b&gt;Novena. - GARANTÍAS.&lt;/b&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; se obliga a suscribir antes del inicio de la ejecución de las obras, un Seguro de Responsabilidad Civil de explotación, que incluirá la responsabilidad civil por daños a terceros por todo el tiempo que duren las obras, con una cobertura mínima por siniestro de 600.000 € con una Compañía de Seguros de reconocida solvencia, si bien la suscripción de esta póliza no eximirá al &lt;b&gt;CONTRATISTA&lt;/b&gt; de las responsabilidades previstas en este contrato.&lt;/p&gt;
+
+&lt;p&gt;Asimismo, el &lt;b&gt;CONTRATISTA&lt;/b&gt; se obliga a concertar un seguro de responsabilidad civil patronal que cubra las indemnizaciones por daños y perjuicios que se puedan derivar de los accidentes de trabajo de los operarios de su plantilla y de la de sus subcontratistas que presten servicio en la obra, por un importe mínimo de 600.000 € por siniestro, debiendo facilitar a la &lt;b&gt;PROPIEDAD&lt;/b&gt; un ejemplar de la póliza y del documento acreditativo del pago de la prima del seguro antes del comienzo de la obra, así como de los sucesivos recibos acreditativos de estar al corriente en el pago de las primas durante la vigencia del contrato.&lt;/p&gt;
+
+&lt;p&gt;El &lt;b&gt;CONTRATISTA&lt;/b&gt; responderá asimismo de los daños materiales ocasionados por vicios y defectos de la construcción en los plazos establecidos en la Ley de Ordenación de la Edificación y que son:&lt;/p&gt;
+&lt;ol&gt;
+       &lt;li&gt;De los que afecten a elementos de terminación o acabado y que se manifiesten en el plazo de un año.&lt;/li&gt;
+
+       &lt;li&gt;Durante tres años, de los daños materiales causados en el edificio por vicios o defectos de los elementos constructivos o de las instalaciones que ocasionen el incumplimiento de los requisitos de habitabilidad establecidos en el artículo 3.1.c) de la Ley 38/1999, de 6 de noviembre, de Ordenación de la Edificación.&lt;/li&gt;
+
+       &lt;li&gt;Durante diez años, de los daños materiales causados en el edificio por vicios o defectos que afecten a la cimentación, los soportes, las vigas, los forjados, los muros de carga u otros elementos estructurales y que comprometan directamente la resistencia mecánica y estabilidad del edificio.&lt;/li&gt;
+
+&lt;/ol&gt;
+
+&lt;p&gt;Los plazos se computarán desde la fecha de la Certificación Final de Obra.&lt;/p&gt;
+
+&lt;b&gt;Décima- Resolución del contrato. &lt;/b&gt;
+&lt;p&gt;A. Sin perjuicio de los establecidos legalmente, la PROPIEDAD podrá resolver el presente contrato por los siguientes motivos:&lt;/p&gt;
+
+&lt;ol&gt;
+
+       &lt;li&gt;Por la disolución o extinción de la empresa que actúa como &lt;b&gt;CONTRATISTA&lt;/b&gt;.&lt;li&gt;
+
+       &lt;li&gt;Por la mala fe en la ejecución de los trabajos y la desobediencia o incumplimiento de las órdenes dadas por la Dirección Facultativa y el Coordinador de Seguridad.&lt;/li&gt;
+
+ &lt;li&gt;Por incumplimiento de las obligaciones del &lt;b&gt;CONTRATISTA&lt;/b&gt; en materia de Seguridad y Salud.&lt;/li&gt;
+
+&lt;/ol&gt;
+&lt;p&gt;B. Sin perjuicio de los establecidos legalmente, el &lt;b&gt;CONTRATISTA&lt;/b&gt; podrá resolver el presente contrato por los siguientes motivos:&lt;/p&gt;
+
+&lt;ol&gt;
+       &lt;li&gt;Por el incumplimiento de alguna o algunas de las estipulaciones establecidas en el presente contrato.&lt;/li&gt;
+
+       &lt;li&gt;Por el impago o demora en el pago del importe correspondiente a cualquiera de las Certificaciones de Obra, se considerará impago o demora cuando habiendo transcurridos 10 días naturales desde su presentación y sin que haya habido reclamación expresa de la Propiedad, no se haya producido el pago.&lt;/li&gt;
+
+       &lt;li&gt;Por el impago o demora en el pago del importe de cualquiera de las letras de cambio debidamente aceptadas que llegado su vencimiento no hayan sido abonadas.&lt;/li&gt;
+
+       &lt;li&gt;Por la disolución o extinción de la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/li&gt;
+
+       &lt;li&gt;Por la paralización de las obras durante más de un mes, por causas no  imputables al &lt;b&gt;CONTRATISTA&lt;/b&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Si la resolución del contrato es por causas no imputables a la CONSTRUCTORA se procederá a la liquidación de las obras realmente ejecutadas y acopio de materiales dentro del mes siguiente a la resolución&lt;/p&gt;
+
+&lt;p&gt;Si se produce la resolución del contrato por causas imputables al &lt;b&gt;CONTRATISTA&lt;/b&gt;, éste deberá dejar la obra libre en un plazo máximo de quince días, contando desde la comunicación por escrito de la resolución del presente contrato efectuada por la &lt;b&gt;PROPIEDAD&lt;/b&gt;.&lt;/p&gt; 
+
+&lt;b&gt;Decimoprimera. - CLÁSULA DE SUMISIÓN EXPRESA&lt;/b&gt;
+
+&lt;p&gt;Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a los Juzgados y Tribunales de Madrid, con renuncia expresa a cualquier otro fuero o competencia que pudiera corresponderles.&lt;/p&gt;
+
+&lt;p&gt;Y en prueba de conformidad, ambas partes contratantes firman el presente contrato por duplicado y a un solo efecto, junto con sus anexos que se unen al presente, en el lugar y fecha establecidos en el encabezamiento del mismo.&lt;p&gt;
+</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <TextQuality>Wysiwyg</TextQuality>
+              <Type>Expression</Type>
+            </Text1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>datos_contrato</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand6</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand6>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>c0ec49d34de049368e90985b1a5b90ae</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>11/13/2025 5:26:49 PM</ReportChanged>
+  <ReportCreated>2/6/2025 12:48:22 PM</ReportCreated>
+  <ReportFile>E:\node_apps\proasistencia\public\reports\contrato_reabita2.mrt</ReportFile>
+  <ReportGuid>b45e9abb9d214e5ebf94e03df6a8a3db</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2021.3.6.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

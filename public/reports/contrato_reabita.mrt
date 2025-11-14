@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ejemplo_json Ref="2" type="Stimulsoft.Report.Dictionary.StiJsonDatabase" isKey="true">
+        <Alias>ejemplo_json</Alias>
+        <Key />
+        <Name>ejemplo_json</Name>
+        <PathData>E:\node_apps\proasistencia\public\reports\ejemplo_json.json</PathData>
+      </ejemplo_json>
+    </Databases>
+    <DataSources isList="true" count="3">
+      <datos_contrato Ref="3" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato</Alias>
+        <Columns isList="true" count="15">
+          <value>contratoId,System.Decimal</value>
+          <value>nombrePresidente,System.String</value>
+          <value>correoPresidente,System.String</value>
+          <value>dniPresidente,System.String</value>
+          <value>direccionTrabajo,System.String</value>
+          <value>codPostalTrabajo,System.Decimal</value>
+          <value>PoblacionTrabajo,System.String</value>
+          <value>provinciaTrabajo,System.String</value>
+          <value>tipoProyecto,System.String</value>
+          <value>referencia,System.String</value>
+          <value>cerFinal,System.String</value>
+          <value>fecha,System.String</value>
+          <value>iban,System.String</value>
+          <value>pagos,System.String</value>
+          <value>letras,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>3da11891a5764ee2b5dbd03bcf5960b4</Key>
+        <Name>datos_contrato</Name>
+        <NameInSource>ejemplo_json.datos_contrato</NameInSource>
+      </datos_contrato>
+      <datos_contrato_letras Ref="4" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato_letras</Alias>
+        <Columns isList="true" count="8">
+          <value>contratoId,System.Decimal</value>
+          <value>formaPagoId,System.Decimal</value>
+          <value>concepto,System.String</value>
+          <value>totalAlCliente,System.Decimal</value>
+          <value>sumTotalAlcliente,System.Decimal</value>
+          <value>totletras,System.Decimal</value>
+          <value>numletras,System.Decimal</value>
+          <value>relationId,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>9d644235e2714a688729915e0e7ca09b</Key>
+        <Name>datos_contrato_letras</Name>
+        <NameInSource>ejemplo_json.datos_contrato_letras</NameInSource>
+      </datos_contrato_letras>
+      <datos_contrato_pagos Ref="5" type="DataTableSource" isKey="true">
+        <Alias>datos_contrato_pagos</Alias>
+        <Columns isList="true" count="7">
+          <value>contratoId,System.Decimal</value>
+          <value>formaPagoId,System.Decimal</value>
+          <value>formaPagoNombre,System.String</value>
+          <value>importePrefacturadoIva,System.Decimal</value>
+          <value>concepto,System.String</value>
+          <value>porcentaje,System.Decimal</value>
+          <value>relationId,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>741edcc5c5264e0291aadaca4b0d75bd</Key>
+        <Name>datos_contrato_pagos</Name>
+        <NameInSource>ejemplo_json.datos_contrato_pagos</NameInSource>
+      </datos_contrato_pagos>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="2">
+      <value>,VariableContrato,VariableContrato,,System.String,del_x0020_contrato,False,False,False,False,,_x0031_aabf910c70d42019d27805026900b7b</value>
+      <value>,VariableObra,VariableObra,,System.String,de_x0020_la_x0020_obra,False,False,False,False,,_x0034_ff264f6a7094357906f362ae68f9ea4</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>7230e7358106451eb2cc815f8ce2229b</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="6" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="8">
+        <PageFooterBand1 Ref="7" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,109.6,19,1.2</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text2 Ref="8" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17.2,0.62,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,8</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="6" />
+              <Parent isRef="7" />
+              <Text>pág. {PageNumber}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text2>
+            <Text17 Ref="9" type="Text" isKey="true">
+              <Border>Top;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.4,19,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="6" />
+              <Parent isRef="7" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text17>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </PageFooterBand1>
+        <DataBand1 Ref="10" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,0.4,19,46.8</ClientRectangle>
+          <Components isList="true" count="1">
+            <RichText1 Ref="11" type="Stimulsoft.Report.Components.StiRichText" isKey="true">
+              <BackColor>Transparent</BackColor>
+              <ClientRectangle>0.2,0,18.6,46.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DataColumn />
+              <Expressions isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>RichText1</Name>
+              <Page isRef="6" />
+              <Parent isRef="10" />
+              <Text>__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang3082_x005C_deflangfe3082_x005C_deftab708__LP___x005C_fonttbl__LP___x005C_f0_x005C_froman_x005C_fprq2_x005C_fcharset0_x0020_Times_x0020_New_x0020_Roman_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x0020_Tahoma_x003B___RP____RP___x000D__x000A___LP___x005C_colortbl_x0020__x003B__x005C_red0_x005C_green0_x005C_blue255_x003B__x005C_red5_x005C_green99_x005C_blue193_x003B___RP___x000D__x000A___LP___x005C_stylesheet__LP___x0020_Normal_x003B___RP____LP___x005C_s1_x0020_heading_x0020_1_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.19041__RP____LP___x005C__x002A__x005C_mmathPr_x005C_mdispDef1_x005C_mwrapIndent1440_x0020___RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_keepn_x005C_nowidctlpar_x005C_s1_x005C_qc_x005C_b_x005C_caps_x005C_f0_x005C_fs20_x005C_lang1034_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_b0_x005C_caps0_x005C_f1_x005C_lang3082_x005C_par_x000D__x000A_En_x0020__x0020_Madrid_x002C__x0020_a_x0020_16_x0020_de_x0020_octubre_x0020_de_x0020_2024_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_keepn_x005C_nowidctlpar_x005C_s1_x005C_qc_x005C_b_x005C_lang1034_x0020_REUNIDOS_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_b0_x005C_lang3082_x005C_par_x000D__x000A__x007B_datos_contrato.nombrePresidente_x007D__x002C__x0020_mayor_x0020_de_x0020_edad_x002C__x0020_con_x0020_domicilio_x0020_a_x0020_estos_x0020_efectos_x0020_de_x0020_comunicaciones_x0020_en_x0020__x007B_datos_contrato.direccionTrabajo_x007D__x0020__x0028__x007B_datos_contrato.codPostalTrabajo_x007D_-_x007B_datos_contrato.PoblacionTrabajo_x007D__x0029__x002C__x0020_con_x0020_DNI_x0020__x007B_datos_contrato.dniPresidente_x007D__x0020_y_x0020_correo_x0020_electr_x005C__x0027_f3nico_x0020__x0020__x0020__x007B_datos_contrato.correoPresidente_x007D_._x005C_par_x000D__x000A__x005C_par_x000D__x000A_D_x005C__x0027_aa._x0020_MAR_x005C__x0027_cdA_x0020_DOLORES_x0020_G_x005C__x0027_d3MEZ_x0020_MART_x005C__x0027_cdN_x002C__x0020_mayor_x0020_de_x0020_edad_x002C__x0020_con_x0020_domicilio_x0020_a_x0020_estos_x0020_efectos_x0020_en_x0020_Los_x0020_Molinos_x0020_-_x0020_Madrid_x002C__x0020_Calle_x0020__x0020_Real_x002C__x0020_n_x005C__x0027_ba_x0020__x0020_1_x002C__x0020_con_x0020_DNI._x0020_50700591N_x0020_y_x0020_correo_x0020_electr_x005C__x0027_f3nico_x0020___LP____LP___x005C_field__LP___x005C__x002A__x005C_fldinst__LP__HYPERLINK_x0020__x0022_mailto:administracion_x0040_reabita.es_x0022__x0020___RP____RP____LP___x005C_fldrslt__LP___x005C_ul_x005C_cf1_x005C_cf2_x005C_ul_x0020_administracion_x0040_reabita.es__RP____RP____RP____RP___x005C_f1_x005C_fs20_x0020_._x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_keepn_x005C_nowidctlpar_x005C_s1_x005C_qc_x005C_b_x005C_lang1034_x0020_INTERVIENEN_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_b0_x005C_lang3082_x005C_par_x000D__x000A__x007B_datos_contrato.nombrePresidente_x007D__x002C__x0020_en_x0020_calidad_x0020_de_x0020_Presidenta_x0020_de_x0020_la_x0020_Comunidad_x0020_de_x0020_Propietarios_x0020__x007B_datos_contrato.direccionTrabajo_x007D__x0020__x0028__x007B_datos_contrato.codPostalTrabajo_x007D_-_x007B_datos_contrato.PoblacionTrabajo_x007D__x0029__x002C__x0020_con_x0020_DNI_x0020__x007B_datos_contrato.dniPresidente_x007D__x002C__x0020_denomin_x005C__x0027_e1ndose_x0020_en_x0020_lo_x0020_sucesivo_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A_D_x005C__x0027_aa._x0020_MAR_x005C__x0027_cdA_x0020_DOLORES_x0020_G_x005C__x0027_d3MEZ_x0020_MART_x005C__x0027_cdN_x002C__x0020_en_x0020_representaci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_Sociedad_x0020_REABITA_x0020_OBRAS_x0020_DE_x0020_REHABILITACI_x005C__x0027_d3N_x002C__x0020_S.L._x002C__x0020_con_x0020_domicilio_x0020_en_x0020_la_x0020_C_x002F__x0020_Real_x0020_n_x005C__x0027_ba_x0020_1_x0020__x002F__x0020_28460-Los_x0020_Molinos_x0020__x0028_Madrid_x0029__x002C__x0020_con_x0020_NIF_x0020_B85983054_x002C__x0020_denomin_x005C__x0027_e1ndose_x0020_en_x0020_lo_x0020_sucesivo_x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020_._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A_Ambas_x0020_partes_x0020_se_x0020_reconocen_x0020_mutua_x0020_y_x0020_rec_x005C__x0027_edprocamente_x0020_capacidad_x0020_legal_x0020_suficiente_x0020_para_x0020_suscribir_x0020_el_x0020_presente_x0020__x005C_b_x0020_CONTRATO_x0020_DE_x0020_EJECUCI_x005C__x0027_d3N_x0020_DE_x0020_OBRA_x0020__x005C_b0_x0020_y_x0020_en_x0020_su_x0020_virtud_x002C__x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_keepn_x005C_nowidctlpar_x005C_s1_x005C_qc_x005C_b_x005C_lang1034_x005C_par_x000D__x000A_EXPONEN_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_b_x0020_I.-_x0020__x005C_b0_x0020_Que_x0020_la_x0020_Propiedad_x0020_desea_x0020_llevar_x0020_a_x0020_cabo_x0020_las_x0020_Obras_x0020__x007B_datos_contrato.tipoProyecto_x007D__x002C__x0020_en_x0020_la_x0020_Comunidad_x0020_de_x0020_Propietarios_x0020__x005C_expndtw0_x005C_lang3082_x007B_datos_contrato.direccionTrabajo_x007D__x0020__x007D__x0020__x0028__x007B_datos_contrato.codPostalTrabajo_x007D_-_x007B_datos_contrato.PoblacionTrabajo_x007D__x0029__x002C__x005C_expndtw-2_x005C_lang1034_x0020__x0020_en_x0020_base_x0020_al_x0020_Presupuesto_x0020_que_x0020_se_x0020_adjunta_x0020_de_x0020_Ref._x0020__x007B_datos_contrato.referencia_x007D__x0020__x0020_por_x0020_importe_x0020__x0020__x007B_datos_contrato.cerFinal_x007D__x0020__x0020_m_x005C__x0027_e1s_x0020_IVA_x0020__x002C__x0020_de_x0020_fecha_x0020__x007B_datos_contrato.fecha_x007D_._x0020__x005C_expndtw0_x005C_lang3082_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_lang1034_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x0020_Y_x0020_en_x0020_base_x0020_a_x0020_todo_x0020_lo_x0020_anterior_x002C__x0020_acuerdan_x0020_la_x0020_realizaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_referidas_x0020_obras_x0020_por_x0020_parte_x0020_de_x0020_REABITA_x0020_OBRAS_x0020_DE_x0020__x0020_REHABILITACI_x005C__x0027_d3N_x002C__x0020_S.L._x0020_con_x0020_arreglo_x0020__x0020_a_x0020_las_x0020_siguientes_x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_keepn_x005C_nowidctlpar_x005C_s1_x005C_qc_x005C_expndtw0_x005C_b_x005C_par_x000D__x000A_ESTIPULACIONES_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_lang3082_x005C_par_x000D__x000A_Primera._x0020_-_x0020__x005C_caps_x0020_Objeto_x0020_del_x0020_contrato_x005C_caps0_x0020_._x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Constituye_x0020_el_x0020_objeto_x0020_del_x0020_presente_x0020_contrato_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_total_x002C__x0020_con_x0020_suministro_x0020_de_x0020_materiales_x002C__x0020_de_x0020_las_x0020_obras_x0020_necesarias_x0020_para_x0020_la_x0020_realizaci_x005C__x0027_f3n_x0020_del_x0020_Presupuesto_x0020_a_x0020_que_x0020_se_x0020_hace_x0020_referencia_x0020_en_x0020_el_x0020_expositivo_x0020__x0020_de_x0020_este_x0020_contrato._x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_El_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_no_x0020_podr_x005C__x0027_e1_x0020_variar_x0020_ninguna_x0020_dimensi_x005C__x0027_f3n_x0020_ni_x0020_calidad_x0020_especificada_x0020_en_x0020_el_x0020_Presupuesto_x0020_sin_x0020_la_x0020_aprobaci_x005C__x0027_f3n_x0020_escrita_x0020_por_x0020_parte_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x002C__x0020_quedando_x0020_obligado_x0020_a_x0020_realizar_x0020_los_x0020_trabajos_x0020_con_x0020_sujeci_x005C__x0027_f3n_x0020_en_x0020_todo_x0020_momento_x0020_a_x0020_las_x0020__x005C__x0027_f3rdenes_x0020_e_x0020_instrucciones_x0020_dadas_x0020_por_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa._x0020_o_x0020_en_x0020_su_x0020_defecto_x0020_el_x0020_representante_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD._x005C_b0_x0020__x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_b_x0020_Segunda._x0020_-_x0020__x005C_caps_x0020_Precio._x005C_caps0_x0020__x0020__x005C_par_x000D__x000A__x005C_b0_x005C_par_x000D__x000A_El_x0020_precio_x0020_de_x0020_la_x0020_obra_x0020_ser_x005C__x0027_e1_x0020_el_x0020_que_x0020_resulte_x0020_de_x0020_multiplicar_x0020_los_x0020_precios_x0020_unitarios_x0020_que_x0020_figuran_x0020_en_x0020_el_x0020_presupuesto_x0020_econ_x005C__x0027_f3mico_x0020_ofertado_x0020_por_x0020_el_x0020_CONTRATISTA_x0020_y_x0020_aceptado_x0020_por_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x0020__x005C_b0_x0020_por_x0020_las_x0020_unidades_x0020_de_x0020_obra_x0020_realmente_x0020_ejecutadas_x002C__x0020_seg_x005C__x0027_fan_x0020_medici_x005C__x0027_f3n_x0020_aprobada_x0020_por_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_o_x0020_en_x0020_su_x0020_defecto_x002C__x0020_el_x0020_representante_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020_._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_El_x0020_precio_x0020_comprende_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_material_x002C__x0020_los_x0020_materiales_x002C__x0020_mano_x0020_de_x0020_obra_x002C__x0020_acabados_x002C__x0020_medios_x0020_auxiliares_x0020_y_x0020_de_x0020_elevaci_x005C__x0027_f3n_x002C__x0020_medidas_x0020_de_x0020_seguridad_x0020_y_x0020_salud_x002C__x0020_limpieza_x0020_de_x0020_los_x0020_tajos_x002C__x0020_gastos_x0020_generales_x002C__x0020_beneficio_x0020_industrial_x002C__x0020_etc._x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_cualquier_x0020_gasto_x002C__x0020_medio_x0020_o_x0020_prestaci_x005C__x0027_f3n_x0020_necesaria_x002C__x0020_inherente_x0020_o_x0020_complementaria_x0020_para_x0020_la_x0020_correcta_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_obra_x0020_contratada_x0020_conforme_x0020_a_x0020_las_x0020_prescripciones_x0020_legales_x002C__x0020_t_x005C__x0027_e9cnicas_x002C__x0020_contractuales_x002C__x0020_o_x0020_a_x0020_las_x0020_indicaciones_x0020_de_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_de_x0020_Obra._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_En_x0020_el_x0020_presupuesto_x0020_econ_x005C__x0027_f3mico_x0020_no_x0020_est_x005C__x0027_e1_x0020_incluido_x0020_el_x0020_10_x0025__x0020_del_x0020_Impuesto_x0020_sobre_x0020_el_x0020_Valor_x0020_A_x005C__x0027_f1adido_x0020__x0028_IVA_x0029__x002C__x0020_el_x0020_cual_x0020_se_x0020_facturar_x005C__x0027_e1_x0020_adicionalmente._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_b_x0020_Tercera._x0020_-_x0020_CARGOS_x0020_DE_x0020_REPRESENTACION_x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_La_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x0020_nombrar_x005C__x0027_e1_x0020_una_x0020_persona_x0020_que_x0020_le_x0020_represente_x0020_en_x0020_todos_x0020_los_x0020_actos_x0020_y_x0020_en_x0020_su_x0020_relaci_x005C__x0027_f3n_x0020_con_x0020_el_x0020_CONTRATISTA_x005C_par_x000D__x000A__x005C_par_x000D__x000A_Asimismo_x002C__x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x002C__x0020_antes_x0020_del_x0020_comienzo_x0020_de_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x002C__x0020_designar_x005C__x0027_e1_x0020_a_x0020_un_x0020_Jefe_x0020_de_x0020_Obra_x0020_que_x0020_asumir_x005C__x0027_e1_x002C__x0020_la_x0020_representaci_x005C__x0027_f3n_x0020_t_x005C__x0027_e9cnica_x0020_del_x0020_constructor_x0020_en_x0020_la_x0020_misma._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_b_x0020_Cuarta._x0020_-_x0020__x005C_caps_x0020_Modificaciones_x0020_al_x0020_proyecto_x0020_y_x0020_obras_x0020_adicionales_x005C_caps0_x0020_._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Si_x0020_durante_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x002C__x0020_a_x0020_juicio_x0020_de_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_y_x0020_con_x0020_la_x0020_conformidad_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x002C__x0020_hubieren_x0020_de_x0020_ejecutarse_x0020_modificaciones_x0020_necesarias_x0020_o_x0020_imprescindibles_x002C__x0020_utilizarse_x0020_nuevos_x0020_materiales_x0020_o_x0020_ejecutarse_x0020_obras_x0020_adicionales_x0020_que_x0020_no_x0020_estuviesen_x0020_contempladas_x0020_en_x0020_el_x0020_Presupuesto_x002C__x0020__x005C_expndtw-3_x0020__x0020_la_x0020_valoraci_x005C__x0027_f3n_x0020_de_x0020_esta_x0020_unidad_x0020_de_x0020_obra_x0020_ser_x005C__x0027_e1_x0020_objeto_x0020_de_x0020_precio_x0020_contradictorio_x0020_en_x0020_base_x0020_a_x0020_los_x0020_precios_x0020_ofertados_x0020_por_x0020__x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020_._x005C_par_x000D__x000A__x005C_expndtw0_x005C_par_x000D__x000A_Estas_x0020_nuevas_x0020_unidades_x0020_o_x0020_materiales_x002C__x0020_una_x0020_vez_x0020_aprobado_x0020_el_x0020_precio_x0020_y_x0020_medici_x005C__x0027_f3n_x002C__x0020_pasar_x005C__x0027_e1n_x0020_a_x0020_formar_x0020_parte_x0020_del_x0020_presente_x0020_Contrato_x0020_a_x0020_todos_x0020_los_x0020_efectos._x0020__x005C_par_x000D__x000A__x005C_expndtw-3_x005C_par_x000D__x000A__x005C_expndtw0_x005C_b_x0020_Quinta._x0020_-_x0020_SEGURIDAD_x0020_Y_x0020_SALUD._x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_nowidctlpar_x005C_qj_x005C_b0_x0020_Si_x0020_la_x0020_obra_x0020_requiriera_x0020_la_x0020_elaboraci_x005C__x0027_f3n_x0020__x0020_de_x0020_un_x0020_Proyecto_x002C__x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x002C__x0020__x005C_b0_x0020_deber_x005C__x0027_e1_x0020_entregar_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020__x0020_el_x0020_Estudio_x0020_de_x0020_Seguridad_x0020_y_x0020_Salud_x002C__x0020_incluido_x0020_en_x0020_el_x0020_mismo_x002C__x0020_antes_x0020_del_x0020_inicio_x0020_de_x0020_las_x0020_obras._x005C_par_x000D__x000A__x005C_par_x000D__x000A_El_x0020__x005C_b_x0020_CONTRATISTA_x0020__x005C_b0_x0020_una_x0020_vez_x0020_analizado_x0020_el_x0020_Estudio_x0020_de_x0020_Seguridad_x0020_y_x0020_Salud_x002C__x0020_presentar_x005C__x0027_e1_x0020_a_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x0020__x005C_b0_x0020__x0020_el_x0020_Plan_x0020_de_x0020_Seguridad_x0020_de_x0020_las_x0020_obras._x005C_par_x000D__x000A__x005C_par_x000D__x000A_Si_x0020_la_x0020_obra_x0020_no_x0020_requiriera_x0020_proyecto_x002C__x0020_el_x0020_CONTRATISTA_x0020_elaborar_x005C__x0027_e1_x0020_directamente_x0020_el_x0020_Plan_x0020_de_x0020_Seguridad_x0020_y_x0020_Salud._x005C_par_x000D__x000A__x005C_par_x000D__x000A_El_x0020__x005C_b_x0020_CONTRATISTA_x0020__x005C_b0_x0020_obedecer_x005C__x0027_e1_x0020_en_x0020_todo_x0020_momento_x0020_las_x0020_indicaciones_x0020_dadas_x0020_por_x0020_el_x0020_Coordinador_x0020_de_x0020_Seguridad_x0020_y_x0020__x0020_Salud_x0020_nombrado_x0020_por_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x002C__x005C_par_x000D__x000A__x005C_b0_x005C_lang1034_x0020__x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_b_x005C_lang3082_x0020_Sexta._x0020_-_x0020_GASTOS_x0020_ADICIONALES_x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi720_x005C_qj_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Ser_x005C__x0027_e1n_x0020_por_x0020_cuenta_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x0020__x005C_b0_x0020_los_x0020_siguientes_x0020_gastos:_x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi-414_x005C_li1134_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f1_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf1_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-360_x005C_li1068_x005C_qj_x0020_La_x0020_Licencia_x0020_Municipal_x0020_de_x0020_Obras_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_cualquier_x0020_clase_x0020_de_x0020_contribuci_x005C__x0027_f3n_x002C__x0020_impuesto_x002C__x0020_arbitrio_x0020_o_x0020_tasa_x002C__x0020_actuales_x0020_o_x0020_futuros_x002C__x0020_que_x0020_legalmente_x0020_le_x0020_correspondan_x0020_con_x0020_ocasi_x005C__x0027_f3n_x0020_de_x0020_este_x0020_contrato_x0020_o_x0020_de_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras._x005C_par_x000D__x000A___LP___x005C_pntext_x005C_f1_x0020_2._x005C_tab__RP__Los_x0020_honorarios_x0020_profesionales_x0020_de_x0020_los_x0020_T_x005C__x0027_e9cnicos_x0020_que_x0020_realicen_x0020_el_x0020_Proyecto_x0020_o_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_en_x0020_caso_x0020_de_x0020_que_x0020_fueran_x0020_necesarios._x005C_par_x000D__x000A___LP___x005C_pntext_x005C_f1_x0020_3._x005C_tab__RP__Los_x0020_honorarios_x0020_del_x0020_Coordinador_x0020_de_x0020_Seguridad_x0020_y_x0020_Salud_x0020_en_x0020_fase_x0020_de_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_obras._x005C_par_x000D__x000A___LP___x005C_pntext_x005C_f1_x0020_4._x005C_tab__RP__El_x0020_consumo_x0020_de_x0020_agua_x0020_y_x0020_energ_x005C__x0027_eda_x0020_el_x005C__x0027_e9ctrica._x005C_par_x000D__x000A___LP___x005C_pntext_x005C_f1_x0020_5._x005C_tab__RP__Se_x0020_facilitar_x005C__x0027_e1_x0020_acceso_x0020_a_x0020_toma_x0020_de_x0020_agua_x0020_y_x0020_conexi_x005C__x0027_f3n_x0020_el_x005C__x0027_e9ctrica_x0020_apropiada_x0020_para_x0020_los_x0020_trabajos_x0020_a_x0020_realizar_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_local_x0020_para_x0020_acopio_x0020_de_x0020_materiales_x0020_y_x0020_aseo_x0020_de_x0020_operarios._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f1_x0020_6._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf1_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-360_x005C_li1068_x005C_qj_x005C_tx1056_x0020_Gesti_x005C__x0027_f3n_x0020_y_x0020_tramitaci_x005C__x0027_f3n_x0020_de_x0020_autorizaci_x005C__x0027_f3n_x0020_de_x0020_acceso_x0020_a_x0020_zonas_x0020_de_x0020_circulaci_x005C__x0027_f3n_x0020_o_x0020_aparcamiento_x0020_restringido._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A_El_x0020_resto_x0020_de_x0020_los_x0020_gastos_x0020_que_x0020_pudieren_x0020_ocasionarse_x002C__x0020_tales_x0020_como_x0020_permisos_x0020_provisionales_x0020_para_x0020_medios_x0020_auxiliares_x0020__x0028_gr_x005C__x0027_faas_x002C__x0020_etc._x0029__x002C__x0020_o_x0020_cualesquiera_x0020_otros_x0020_que_x0020_pudieren_x0020_producirse_x0020_como_x0020_consecuencia_x0020_de_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_material_x0020_de_x0020_las_x0020_obras_x002C__x0020_ser_x005C__x0027_e1n_x0020_por_x0020_cuenta_x0020_del_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020_._x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_b_x0020_S_x005C__x0027_e9ptima._x0020_-_x0020__x005C_caps_x0020_Certificaciones_x0020_Y_x0020_ABONO_x0020_DE_x0020_LAS_x0020_obraS_x005C_caps0_x0020_._x0020__x005C_par_x000D__x000A__x005C_b0_x005C_par_x000D__x000A_Los_x0020_d_x005C__x0027_edas_x0020_15_x0020_y_x0020_30_x0020_de_x0020_cada_x0020_mes_x002C__x0020_se_x0020_realizar_x005C__x0027_e1_x0020_la_x0020_valoraci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_ejecutadas_x002C__x0020_m_x005C__x0027_e1s_x0020_los_x0020_acopios_x0020_de_x0020_material_x002C__x0020_emiti_x005C__x0027_e9ndose_x0020_la_x0020_correspondiente_x0020_Certificaci_x005C__x0027_f3n_x0020_de_x0020_Obra_x0020_que_x0020_ser_x005C__x0027_e1_x0020_entregada_x0020_a_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x002C__x0020__x005C_b0_x0020_quien_x0020_dispondr_x005C__x0027_e1_x0020_de_x0020_un_x0020_plazo_x0020_de_x0020_10_x0020_d_x005C__x0027_edas_x0020_naturales_x0020_para_x0020_su_x0020_aprobaci_x005C__x0027_f3n_x002C__x0020_transcurrido_x0020_dicho_x0020_plazo_x0020_y_x0020_si_x0020_no_x0020_hubiese_x0020_disconformidad_x0020_expresa_x002C__x0020_se_x0020_entender_x005C__x0027_e1_x0020_aceptada._x005C_par_x000D__x000A__x005C_par_x000D__x000A_El_x0020_abono_x0020_de_x0020_las_x0020_obras_x0020_por_x0020_importe_x0020_de_x0020__x007B_datos_contrato.cerFinal_x007D__x0020__x0020_Incluido_x0020_IVA_x0020_e_x0020_intereses_x002C__x0020_se_x0020_realizar_x005C__x0027_e1_x0020_mediante_x0020_recibo_x002F_letras_x0020_domiciliado_x0020_en_x0020_la_x0020_cta._x0020_cte._x0020_n_x005C__x0027_famero_x0020__x007B_datos_contrato.iban_x007D__x0020__x0020_se_x0020_adjunta_x0020_orden_x0020_Sepa_x0020_de_x0020_domiciliaci_x005C__x0027_f3n_x002C__x0020_y_x0020_en_x0020_los_x0020_siguientes_x0020_plazos:_x005C_expndtw-2_x005C_fs16_x005C_lang1034_x005C_par_x000D__x000A___RP___x000D__x000A_</Text>
+            </RichText1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>datos_contrato</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+        <HeaderBand2 Ref="12" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,48,19,0.8</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text9 Ref="13" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0.2,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="6" />
+              <Parent isRef="12" />
+              <Text>RECIBOS</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text9>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>HeaderBand2</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </HeaderBand2>
+        <DataBand2 Ref="14" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <CanShrink>True</CanShrink>
+          <ClientRectangle>0,49.6,19,1</ClientRectangle>
+          <Components isList="true" count="5">
+            <Text4 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0,1.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="6" />
+              <Parent isRef="14" />
+              <Text>{datos_contrato_pagos.concepto}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text4>
+            <Text5 Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.4,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="2">
+                <value>datos_contrato_pagos.concepto,Containing,FIRMA,,String,[0:0:0],Transparent,Tahoma_x002C_10,True,True,VariableContrato,,None</value>
+                <value>datos_contrato_pagos.concepto,Containing,INICIO,,String,[0:0:0],Transparent,Tahoma_x002C_10,True,True,VariableObra,,None</value>
+              </Conditions>
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="6" />
+              <Parent isRef="14" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text5>
+            <Text6 Ref="17" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.4,0,6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="6" />
+              <Parent isRef="14" />
+              <Text>{datos_contrato_pagos.porcentaje}% del importe total del presupuesto </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text6>
+            <Text7 Ref="18" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.4,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="6" />
+              <Parent isRef="14" />
+              <Text>{datos_contrato_pagos.importePrefacturadoIva}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="19" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text7>
+            <Text8 Ref="20" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.4,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="6" />
+              <Parent isRef="14" />
+              <Text>IVA incluido</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text8>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName>pagos_contrato</DataRelationName>
+          <DataSourceName>datos_contrato_pagos</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand2</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand2>
+        <HeaderBand1 Ref="21" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,51.4,19,0.8</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text15 Ref="22" type="Text" isKey="true">
+              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0.2,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="6" />
+              <Parent isRef="21" />
+              <Text>LETRAS</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text15>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>HeaderBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </HeaderBand1>
+        <DataBand4 Ref="23" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,53,19,0.4</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text12 Ref="24" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0,0.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="6" />
+              <Parent isRef="23" />
+              <Text>{datos_contrato_letras.numletras}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text12>
+            <Text13 Ref="25" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.8,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="6" />
+              <Parent isRef="23" />
+              <Text>Con un total de </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text13>
+            <Text10 Ref="26" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.2,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="6" />
+              <Parent isRef="23" />
+              <Text>{datos_contrato_letras.sumTotalAlcliente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="27" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text10>
+            <Text11 Ref="28" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.2,0,6.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="6" />
+              <Parent isRef="23" />
+              <Text>Cada una de las cuales con un importe de </Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text11>
+            <Text14 Ref="29" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.8,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="6" />
+              <Parent isRef="23" />
+              <Text>{datos_contrato_letras.totalAlCliente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>8</NegativePattern>
+                <PositivePattern>3</PositivePattern>
+                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
+                <Symbol>€</Symbol>
+              </TextFormat>
+              <Type>Expression</Type>
+            </Text14>
+            <Text16 Ref="31" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>13.8,0,2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="6" />
+              <Parent isRef="23" />
+              <Text>IVA incluido</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text16>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName>letras_contrato</DataRelationName>
+          <DataSourceName>datos_contrato_letras</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand4</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand4>
+        <FooterBand1 Ref="32" type="FooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,54.2,19,1.6</ClientRectangle>
+          <Components isList="true" count="1">
+            <RichText3 Ref="33" type="Stimulsoft.Report.Components.StiRichText" isKey="true">
+              <BackColor>Transparent</BackColor>
+              <ClientRectangle>0.2,0.2,18.6,1.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DataColumn />
+              <Expressions isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>RichText3</Name>
+              <Page isRef="6" />
+              <Parent isRef="32" />
+              <Text>__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang3082__LP___x005C_fonttbl__LP___x005C_f0_x005C_fnil_x005C_fcharset0_x0020_Tahoma_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.19041__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_f0_x005C_fs20_x005C_lang1034_x0020__x002A__x0020_las_x0020_letras_x0020_de_x0020_cambio_x0020_se_x0020_entregar_x005C__x0027_e1n_x0020_en_x0020_un_x0020_plazo_x0020_no_x0020_superior_x0020_a_x0020_dos_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_del_x0020_inicio_x0020_de_x0020_los_x0020_trabajos_x002C__x0020_debidamente_x0020_firmadas_x0020_y_x0020_domiciliadas_x0020_en_x0020_la_x0020_cuenta_x0020_de_x0020_la_x0020_Comunidad_x002C__x0020_con_x0020_vencimientos_x0020_mensuales_x0020_y_x0020_sucesivos_x002C__x0020_siendo_x0020_el_x0020_primer_x0020_vencimiento_x0020_a_x0020_los_x0020_treinta_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_de_x0020_inicio_x0020_de_x0020_los_x0020_trabajos._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_expndtw0_x005C_f1_x005C_fs17_x005C_lang3082_x005C_par_x000D__x000A___RP___x000D__x000A_</Text>
+            </RichText3>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>FooterBand1</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+        </FooterBand1>
+        <DataBand3 Ref="34" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,56.6,19,43.4</ClientRectangle>
+          <Components isList="true" count="3">
+            <RichText2 Ref="35" type="Stimulsoft.Report.Components.StiRichText" isKey="true">
+              <BackColor>Transparent</BackColor>
+              <ClientRectangle>0.2,0,18.6,41.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <DataColumn />
+              <Expressions isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>RichText2</Name>
+              <Page isRef="6" />
+              <Parent isRef="34" />
+              <Text>__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang3082__LP___x005C_fonttbl__LP___x005C_f0_x005C_fnil_x005C_fcharset0_x0020_Tahoma_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C_colortbl_x0020__x003B__x005C_red255_x005C_green0_x005C_blue0_x003B___RP___x000D__x000A___LP___x005C_stylesheet__LP___x0020_Normal_x003B___RP____LP___x005C_s1_x0020_heading_x0020_1_x003B___RP____LP___x005C_s2_x0020_heading_x0020_2_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.19041__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_f0_x005C_fs16_x005C_lang1034_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_fs20_x0020__x002A__x0020_El_x0020_resto_x002C__x0020_19.326_x002C_42_x0020__x005C__x0027_80_x0020_incluido_x0020_IVA_x0020_mediante_x0020_doce_x0020__x0028_12_x0029__x0020__x0020_letras_x0020_de_x0020_cambio_x0020_que_x0020_se_x0020_entregar_x005C__x0027_e1n_x0020_en_x0020_un_x0020_plazo_x0020_no_x0020_superior_x0020_a_x0020_dos_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_del_x0020_inicio_x0020_de_x0020_los_x0020_trabajos_x002C__x0020_debidamente_x0020_firmadas_x0020_y_x0020_domiciliadas_x0020_en_x0020_la_x0020_cuenta_x0020_de_x0020_la_x0020_Comunidad_x002C__x0020_por_x0020_un_x0020_importe_x0020_cada_x0020_una_x0020_de_x0020_las_x0020_11primeras_x0020_de_x0020_1.601_x002C_53_x005C__x0027_80_x0020_incluido_x0020_IVA_x002C__x0020_y_x0020_la_x0020_n_x005C__x0027_famero_x0020_12_x0020_por_x0020_importe_x0020_1.610_x002C_59_x005C__x0027_80_x0020__x0020_incluido_x0020_IVA_x002C__x0020_con_x0020_vencimientos_x0020_mensuales_x0020_y_x0020_sucesivos_x002C__x0020_siendo_x0020_el_x0020_primer_x0020_vencimiento_x0020_a_x0020_los_x0020_treinta_x0020_d_x005C__x0027_edas_x0020_de_x0020_la_x0020_fecha_x0020_de_x0020_inicio_x0020_de_x0020_los_x0020_trabajos._x005C_par_x000D__x000A__x005C_par_x000D__x000A__x002A__x0020_En_x0020_el_x0020_supuesto_x0020_de_x0020_que_x0020_exista_x0020_diferencia_x0020_entre_x0020_el_x0020_importe_x0020_resultante_x0020_de_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra_x0020_y_x0020_el_x0020_Presupuesto_x0020_inicial_x002C__x0020_ser_x005C__x0027_e1_x0020_abonado_x0020_mediante_x0020_un_x0020_recibo_x002F_letra_x0020_de_x0020_cambio_x002C__x0020_que_x0020_se_x0020_entregar_x005C__x0027_e1_x0020_a_x0020_La_x0020_Contrata_x0020_en_x0020_un_x0020_plazo_x0020_no_x0020_superior_x0020_a_x0020_los_x0020_cinco_x0020_d_x005C__x0027_edas_x0020_desde_x0020_la_x0020_fecha_x0020_de_x0020_certificaci_x005C__x0027_f3n_x0020_final_x0020_de_x0020_obra_x002C__x0020_debidamente_x0020_aceptada_x0020_y_x0020_domiciliada_x0020_en_x0020_la_x0020_misma_x0020_cta._x0020_cte._x0020_de_x0020_la_x0020_Comunidad_x0020_y_x0020_con_x0020_vencimiento_x0020_a_x0020_los_x0020_30_x0020_d_x005C__x0027_edas_x0020_desde_x0020_el_x0020_vencimiento_x0020_de_x0020_la_x0020_ultima_x0020_letra_x0020_de_x0020_cambio._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_expndtw0_x005C_lang3082_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_lang1034_x0020_El_x0020_costo_x0020_de_x0020_los_x0020_timbres_x0020_de_x0020_dichos_x0020_efectos_x0020_ser_x005C__x0027_e1_x0020_por_x0020_cuenta_x0020_de_x0020_la_x0020_Propiedad_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_expndtw0_x005C_lang3082_x005C_par_x000D__x000A_Tal_x0020_y_x0020_como_x0020_indica_x0020_el_x0020_Certificado_x0020_expedido_x0020_por_x0020_la_x0020_Administraci_x005C__x0027_f3n_x0020_y_x0020_que_x0020_se_x0020_adjunta_x0020_al_x0020_Contrato_x002C__x0020_los_x0020_propietarios_x0020_de_x0020_las_x0020_fincas_x002C__x0020_conocen_x0020_y_x0020_aceptan_x0020_de_x0020_forma_x0020_solidaria_x0020_el_x0020_abono_x0020_de_x0020_los_x0020_importes_x0020_indicados_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_las_x0020_condiciones_x0020_de_x0020__x0020_financiaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_y_x0020_aplazamiento_x0020_de_x0020_los_x0020_pagos_x0020_recogidos_x0020_en_x0020_el_x0020_Cuadro_x0020_de_x0020_Financiaci_x005C__x0027_f3n_x0020_que_x0020_se_x0020_adjunta_x0020_al_x0020_Contrato._x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_hyphpar0_x005C_widctlpar_x005C_qj_x005C_expndtw-2_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_expndtw0_x0020_La_x0020_demora_x0020_a_x0020_su_x0020_vencimiento_x0020_o_x0020_el_x0020_impago_x0020_de_x0020_una_x0020_de_x0020_las_x0020_cantidades_x0020_aplazadas_x002C__x0020_dar_x005C__x0027_e1_x0020_derecho_x0020_a_x0020_la_x0020__x005C_b_x0020_CONTRATA_x0020__x005C_b0_x0020_a_x0020_resolver_x0020_el_x0020_presente_x0020_Contrato_x002C__x0020_dando_x0020_lugar_x0020_a_x0020_la_x0020_p_x005C__x0027_e9rdida_x0020_de_x0020_la_x0020_garant_x005C__x0027_eda_x0020_de_x0020_los_x0020_trabajos_x0020_ejecutados_x002C__x0020_pudiendo_x0020_exigir_x0020_el_x0020_pago_x0020_de_x0020_todas_x0020_las_x0020_cantidades_x0020_pendientes_x002C__x0020_incluso_x0020_las_x0020_cantidades_x0020_aplazadas_x0020_y_x0020_no_x0020_vencidas_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_el_x0020_devengo_x0020_de_x0020_intereses_x0020_por_x0020_demora_x0020_al_x0020_tipo_x0020_del_x0020_inter_x005C__x0027_e9s_x0020_legal._x005C_cf1_x005C_par_x000D__x000A__x005C_cf0_x005C_par_x000D__x000A__x005C_b_x0020_Octava._x0020_-_x0020__x005C_caps_x0020_Recepci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_obra_x005C_caps0_x0020_._x0020__x005C_par_x000D__x000A__x005C_b0_x005C_par_x000D__x000A_Dentro_x0020_de_x0020_los_x0020_10_x0020_d_x005C__x0027_edas_x0020_siguientes_x0020_a_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra_x002C__x0020_se_x0020_proceder_x005C__x0027_e1_x0020_a_x0020_su_x0020_recepci_x005C__x0027_f3n_x002C__x0020_la_x0020_cual_x0020_se_x0020_consignar_x005C__x0027_e1_x0020_en_x0020_un_x0020_Acta_x0020_que_x0020_estar_x005C__x0027_e1_x0020_firmada_x0020_por_x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_y_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x0020_y_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_si_x0020_existiera._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A_En_x0020_el_x0020_supuesto_x0020_de_x0020_que_x0020_no_x0020_se_x0020_firmara_x0020_el_x0020_Acta_x0020_de_x0020_recepci_x005C__x0027_f3n_x0020_y_x0020_no_x0020_hubiese_x0020_reclamaci_x005C__x0027_f3n_x0020_expresa_x002C__x0020_la_x0020_Obra_x0020_se_x0020_entender_x005C__x0027_e1_x0020_recibida_x0020_de_x0020_conformidad_x0020__x0020_transcurridos_x0020_30_x0020_d_x005C__x0027_edas_x0020_desde_x0020_la_x0020_fecha_x0020_de_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_b_x0020_Novena._x0020_-_x0020_GARANT_x005C__x0027_cdAS._x005C_caps_x005C_par_x000D__x000A__x005C_b0_x005C_caps0_x005C_par_x000D__x000A_El_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_se_x0020_obliga_x0020_a_x0020_suscribir_x0020_antes_x0020_del_x0020_inicio_x0020_de_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x002C__x0020_un_x0020_Seguro_x0020_de_x0020_Responsabilidad_x0020_Civil_x0020_de_x0020_explotaci_x005C__x0027_f3n_x002C__x0020_que_x0020_incluir_x005C__x0027_e1_x0020_la_x0020_responsabilidad_x0020_civil_x0020_por_x0020_da_x005C__x0027_f1os_x0020_a_x0020_terceros_x0020_por_x0020_todo_x0020_el_x0020_tiempo_x0020_que_x0020_duren_x0020_las_x0020_obras_x002C__x0020_con_x0020_una_x0020_cobertura_x0020_m_x005C__x0027_ednima_x0020_por_x0020_siniestro_x0020_de_x0020_600.000_x0020__x005C__x0027_80_x0020_con_x0020_una_x0020_Compa_x005C__x0027_f1_x005C__x0027_eda_x0020_de_x0020_Seguros_x0020_de_x0020_reconocida_x0020_solvencia_x002C__x0020_si_x0020_bien_x0020_la_x0020_suscripci_x005C__x0027_f3n_x0020_de_x0020_esta_x0020_p_x005C__x0027_f3liza_x0020_no_x0020_eximir_x005C__x0027_e1_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_de_x0020_las_x0020_responsabilidades_x0020_previstas_x0020_en_x0020_este_x0020_contrato._x005C_par_x000D__x000A__x005C_par_x000D__x000A_Asimismo_x002C__x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_se_x0020_obliga_x0020_a_x0020_concertar_x0020_un_x0020_seguro_x0020_de_x0020_responsabilidad_x0020_civil_x0020_patronal_x0020_que_x0020_cubra_x0020_las_x0020_indemnizaciones_x0020_por_x0020_da_x005C__x0027_f1os_x0020_y_x0020_perjuicios_x0020_que_x0020_se_x0020_puedan_x0020_derivar_x0020_de_x0020_los_x0020_accidentes_x0020_de_x0020_trabajo_x0020_de_x0020_los_x0020_operarios_x0020_de_x0020_su_x0020_plantilla_x0020_y_x0020_de_x0020_la_x0020_de_x0020_sus_x0020_subcontratistas_x0020_que_x0020_presten_x0020_servicio_x0020_en_x0020_la_x0020_obra_x002C__x0020_por_x0020_un_x0020_importe_x0020_m_x005C__x0027_ednimo_x0020_de_x0020_600.000_x0020__x005C__x0027_80_x0020_por_x0020_siniestro_x002C__x0020_debiendo_x0020_facilitar_x0020_a_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x0020__x005C_b0_x0020_un_x0020_ejemplar_x0020_de_x0020_la_x0020_p_x005C__x0027_f3liza_x0020_y_x0020_del_x0020_documento_x0020_acreditativo_x0020_del_x0020_pago_x0020_de_x0020_la_x0020_prima_x0020_del_x0020_seguro_x0020_antes_x0020_del_x0020_comienzo_x0020_de_x0020_la_x0020_obra_x002C__x0020_as_x005C__x0027_ed_x0020_como_x0020_de_x0020_los_x0020_sucesivos_x0020_recibos_x0020_acreditativos_x0020_de_x0020_estar_x0020_al_x0020_corriente_x0020_en_x0020_el_x0020_pago_x0020_de_x0020_las_x0020_primas_x0020_durante_x0020_la_x0020_vigencia_x0020_del_x0020_contrato._x005C_par_x000D__x000A__x005C_par_x000D__x000A_El_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_responder_x005C__x0027_e1_x0020_asimismo_x0020_de_x0020_los_x0020_da_x005C__x0027_f1os_x0020_materiales_x0020_ocasionados_x0020_por_x0020_vicios_x0020_y_x0020_defectos_x0020_de_x0020_la_x0020_construcci_x005C__x0027_f3n_x0020_en_x0020_los_x0020_plazos_x0020_establecidos_x0020_en_x0020_la_x0020_Ley_x0020_de_x0020_Ordenaci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_Edificaci_x005C__x0027_f3n_x0020_y_x0020_que_x0020_son:_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1144_x005C_qj_x0020_De_x0020_los_x0020_que_x0020_afecten_x0020_a_x0020_elementos_x0020_de_x0020_terminaci_x005C__x0027_f3n_x0020_o_x0020_acabado_x0020_y_x0020_que_x0020_se_x0020_manifiesten_x0020_en_x0020_el_x0020_plazo_x0020_de_x0020_un_x0020_a_x005C__x0027_f1o._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li709_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_2._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1144_x005C_qj_x0020_Durante_x0020_tres_x0020_a_x005C__x0027_f1os_x002C__x0020_de_x0020_los_x0020_da_x005C__x0027_f1os_x0020_materiales_x0020_causados_x0020_en_x0020_el_x0020_edificio_x0020_por_x0020_vicios_x0020_o_x0020_defectos_x0020_de_x0020_los_x0020_elementos_x0020_constructivos_x0020_o_x0020_de_x0020_las_x0020_instalaciones_x0020_que_x0020_ocasionen_x0020_el_x0020_incumplimiento_x0020_de_x0020_los_x0020_requisitos_x0020_de_x0020_habitabilidad_x0020_establecidos_x0020_en_x0020_el_x0020_art_x005C__x0027_edculo_x0020_3.1.c_x0029__x0020_de_x0020_la_x0020_Ley_x0020_38_x002F_1999_x002C__x0020_de_x0020_6_x0020_de_x0020_noviembre_x002C__x0020_de_x0020_Ordenaci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_Edificaci_x005C__x0027_f3n._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_3._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1144_x005C_qj_x0020_Durante_x0020_diez_x0020_a_x005C__x0027_f1os_x002C__x0020_de_x0020_los_x0020_da_x005C__x0027_f1os_x0020_materiales_x0020_causados_x0020_en_x0020_el_x0020_edificio_x0020_por_x0020_vicios_x0020_o_x0020_defectos_x0020_que_x0020_afecten_x0020_a_x0020_la_x0020_cimentaci_x005C__x0027_f3n_x002C__x0020_los_x0020_soportes_x002C__x0020_las_x0020_vigas_x002C__x0020_los_x0020_forjados_x002C__x0020_los_x0020_muros_x0020_de_x0020_carga_x0020_u_x0020_otros_x0020_elementos_x0020_estructurales_x0020_y_x0020_que_x0020_comprometan_x0020_directamente_x0020_la_x0020_resistencia_x0020_mec_x005C__x0027_e1nica_x0020_y_x0020_estabilidad_x0020_del_x0020_edificio._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A_Los_x0020_plazos_x0020_se_x0020_computar_x005C__x0027_e1n_x0020_desde_x0020_la_x0020_fecha_x0020_de_x0020_la_x0020_Certificaci_x005C__x0027_f3n_x0020_Final_x0020_de_x0020_Obra._x005C_b_x005C_par_x000D__x000A__x005C_par_x000D__x000A_D_x005C__x0027_e9cima-_x0020__x005C_caps_x0020_Resoluci_x005C__x0027_f3n_x0020_del_x0020_contrato_x005C_caps0_x0020_._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A_A._x005C_b0_x0020__x0020_Sin_x0020_perjuicio_x0020_de_x0020_los_x0020_establecidos_x0020_legalmente_x002C__x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020__x0020_podr_x005C__x0027_e1_x0020_resolver_x0020_el_x0020_presente_x0020_contrato_x0020_por_x0020_los_x0020_siguientes_x0020_motivos:_x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi-425_x005C_li1134_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_disoluci_x005C__x0027_f3n_x0020_o_x0020_extinci_x005C__x0027_f3n_x0020_de_x0020_la_x0020_empresa_x0020_que_x0020_act_x005C__x0027_faa_x0020_como_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020_._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_2._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_mala_x0020_fe_x0020_en_x0020_la_x0020_ejecuci_x005C__x0027_f3n_x0020_de_x0020_los_x0020_trabajos_x0020_y_x0020_la_x0020_desobediencia_x0020_o_x0020_incumplimiento_x0020_de_x0020_las_x0020__x005C__x0027_f3rdenes_x0020_dadas_x0020_por_x0020_la_x0020_Direcci_x005C__x0027_f3n_x0020_Facultativa_x0020_y_x0020_el_x0020_Coordinador_x0020_de_x0020_Seguridad._x0020__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_fi-425_x005C_li1134_x005C_qj_x0020__x0020_3._x0020__x0020__x0020_Por_x0020_incumplimiento_x0020_de_x0020_las_x0020_obligaciones_x0020_del_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_en_x0020_materia_x0020_de_x0020_Seguridad_x0020_y_x0020_Salud._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_li1134_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_b_x0020_B._x005C_b0_x0020__x0020_Sin_x0020_perjuicio_x0020_de_x0020_los_x0020_establecidos_x0020_legalmente_x002C__x0020_el_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x0020__x0020_podr_x005C__x0027_e1_x0020_resolver_x0020_el_x0020_presente_x0020_contrato_x0020_por_x0020_los_x0020_siguientes_x0020_motivos:_x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_1._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_el_x0020_incumplimiento_x0020_de_x0020_alguna_x0020_o_x0020_algunas_x0020_de_x0020_las_x0020_estipulaciones_x0020_establecidas_x0020_en_x0020_el_x0020_presente_x0020_contrato._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li1143_x005C_qj_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_2._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_el_x0020_impago_x0020_o_x0020_demora_x0020_en_x0020_el_x0020_pago_x0020_del_x0020_importe_x0020_correspondiente_x0020_a_x0020_cualquiera_x0020_de_x0020_las_x0020_Certificaciones_x0020_de_x0020_Obra_x002C__x0020_se_x0020_considerar_x005C__x0027_e1_x0020_impago_x0020_o_x0020_demora_x0020_cuando_x0020_habiendo_x0020_transcurridos_x0020_10_x0020_d_x005C__x0027_edas_x0020_naturales_x0020_desde_x0020_su_x0020_presentaci_x005C__x0027_f3n_x0020_y_x0020_sin_x0020_que_x0020_haya_x0020_habido_x0020_reclamaci_x005C__x0027_f3n_x0020_expresa_x0020_de_x0020_la_x0020_Propiedad_x002C__x0020_no_x0020_se_x0020_haya_x0020_producido_x0020_el_x0020_pago._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_3._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_el_x0020_impago_x0020_o_x0020_demora_x0020_en_x0020_el_x0020_pago_x0020_del_x0020_importe_x0020_de_x0020_cualquiera_x0020_de_x0020_las_x0020_letras_x0020_de_x0020_cambio_x0020_debidamente_x0020_aceptadas_x0020_que_x0020_llegado_x0020_su_x0020_vencimiento_x0020_no_x0020_hayan_x0020_sido_x0020_abonadas._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_4._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_disoluci_x005C__x0027_f3n_x0020_o_x0020_extinci_x005C__x0027_f3n_x0020_de_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020_._x005C_par_x000D__x000A__x000D__x000A__x005C_pard__LP___x005C__x002A__x005C_pn_x005C_pnlvlcont_x005C_pnf0_x005C_pnindent0_x005C_pnstart0_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_li708_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x0020__x000D__x000A___LP___x005C_pntext_x005C_f0_x0020_5._x005C_tab__RP____LP___x005C__x002A__x005C_pn_x005C_pnlvlbody_x005C_pnf0_x005C_pnindent360_x005C_pnstart1_x005C_pndec__LP___x005C_pntxta.__RP____RP___x000D__x000A__x005C_fi-435_x005C_li1143_x005C_qj_x0020_Por_x0020_la_x0020_paralizaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_durante_x0020_m_x005C__x0027_e1s_x0020_de_x0020_un_x0020_mes_x002C__x0020_por_x0020_causas_x0020_no_x0020__x0020_imputables_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x005C_b0_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x005C_par_x000D__x000A_Si_x0020_la_x0020_resoluci_x005C__x0027_f3n_x0020_del_x0020_contrato_x0020_es_x0020_por_x0020_causas_x0020_no_x0020_imputables_x0020_a_x0020_la_x0020_CONSTRUCTORA_x0020_se_x0020_proceder_x005C__x0027_e1_x0020_a_x0020_la_x0020_liquidaci_x005C__x0027_f3n_x0020_de_x0020_las_x0020_obras_x0020_realmente_x0020_ejecutadas_x0020_y_x0020_acopio_x0020_de_x0020_materiales_x0020_dentro_x0020_del_x0020_mes_x0020_siguiente_x0020_a_x0020_la_x0020_resoluci_x005C__x0027_f3n_x005C_par_x000D__x000A__x005C_par_x000D__x000A_Si_x0020_se_x0020_produce_x0020_la_x0020_resoluci_x005C__x0027_f3n_x0020_del_x0020_contrato_x0020_por_x0020_causas_x0020_imputables_x0020_al_x0020__x005C_b_x0020_CONTRATISTA_x002C__x0020__x005C_b0_x005C__x0027_e9ste_x0020_deber_x005C__x0027_e1_x0020_dejar_x0020_la_x0020_obra_x0020_libre_x0020_en_x0020_un_x0020_plazo_x0020_m_x005C__x0027_e1ximo_x0020_de_x0020_quince_x0020_d_x005C__x0027_edas_x002C__x0020_contando_x0020_desde_x0020_la_x0020_comunicaci_x005C__x0027_f3n_x0020_por_x0020_escrito_x0020_de_x0020_la_x0020_resoluci_x005C__x0027_f3n_x0020_del_x0020_presente_x0020_contrato_x0020_efectuada_x0020_por_x0020_la_x0020__x005C_b_x0020_PROPIEDAD_x005C_b0_x0020_._x0020__x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_b_x0020_Decimoprimera._x0020_-_x0020_CL_x005C__x0027_c1SULA_x0020_DE_x0020_SUMISI_x005C__x0027_d3N_x0020_EXPRESA_x005C_b0_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Para_x0020_la_x0020_interpretaci_x005C__x0027_f3n_x0020_y_x0020_cumplimiento_x0020_de_x0020_este_x0020_contrato_x002C__x0020_las_x0020_partes_x0020_se_x0020_someten_x0020_expresamente_x0020_a_x0020_los_x0020_Juzgados_x0020_y_x0020_Tribunales_x0020_de_x0020_Madrid_x002C__x0020_con_x0020_renuncia_x0020_expresa_x0020_a_x0020_cualquier_x0020_otro_x0020_fuero_x0020_o_x0020_competencia_x0020_que_x0020_pudiera_x0020_corresponderles._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_qj_x0020_Y_x0020_en_x0020_prueba_x0020_de_x0020_conformidad_x002C__x0020_ambas_x0020_partes_x0020_contratantes_x0020_firman_x0020_el_x0020_presente_x0020_contrato_x0020_por_x0020_duplicado_x0020_y_x0020_a_x0020_un_x0020_solo_x0020_efecto_x002C__x0020_junto_x0020_con_x0020_sus_x0020_anexos_x0020_que_x0020_se_x0020_unen_x0020_al_x0020_presente_x002C__x0020_en_x0020_el_x0020_lugar_x0020_y_x0020_fecha_x0020_establecidos_x0020_en_x0020_el_x0020_encabezamiento_x0020_del_x0020_mismo._x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_keepn_x005C_widctlpar_x005C_s2_x005C_fi696_x005C_li12_x005C_qj_x005C_par_x000D__x000A_LA_x0020_PROPIEDAD....................................................EL_x0020_CONTRATISTA_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_widctlpar_x005C_par_x000D__x000A__x005C_fs16_x005C_par_x000D__x000A__x005C_par_x000D__x000A__x005C_lang2070_x005C_tab_x005C_par_x000D__x000A__x000D__x000A__x005C_pard_x005C_f1_x005C_fs17_x005C_lang3082_x005C_par_x000D__x000A___RP___x000D__x000A_</Text>
+            </RichText2>
+            <Text1 Ref="36" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.4,42.82,6.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="6" />
+              <Parent isRef="34" />
+              <Text>FDO. {datos_contrato.nombrePresidente}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text1>
+            <Text3 Ref="37" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8.6,42.82,6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Tahoma,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="6" />
+              <Parent isRef="34" />
+              <Text>FDO. Mª DOLORES GOMEZ MARTIN</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text3>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>datos_contrato</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand3</Name>
+          <Page isRef="6" />
+          <Parent isRef="6" />
+          <Sort isList="true" count="0" />
+        </DataBand3>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>c0ec49d34de049368e90985b1a5b90ae</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/7/2025 2:45:16 PM</ReportChanged>
+  <ReportCreated>2/6/2025 12:48:22 PM</ReportCreated>
+  <ReportFile>E:\node_apps\proasistencia\public\reports\contrato_reabita.mrt</ReportFile>
+  <ReportGuid>b8f61c217063429097b4bbd277266fde</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2021.3.6.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>
