@@ -2,74 +2,8 @@
 <StiSerializer version="1.02" type="Net" application="StiReport">
   <Dictionary Ref="1" type="Dictionary" isKey="true">
     <BusinessObjects isList="true" count="0" />
-    <Databases isList="true" count="1">
-      <ejemplo_json Ref="2" type="Stimulsoft.Report.Dictionary.StiJsonDatabase" isKey="true">
-        <Alias>ejemplo_json</Alias>
-        <Key />
-        <Name>ejemplo_json</Name>
-        <PathData>E:\node_apps\proasistencia\public\reports\ejemplo_json.json</PathData>
-      </ejemplo_json>
-    </Databases>
-    <DataSources isList="true" count="3">
-      <datos_contrato Ref="3" type="DataTableSource" isKey="true">
-        <Alias>datos_contrato</Alias>
-        <Columns isList="true" count="16">
-          <value>contratoId,System.Decimal</value>
-          <value>nombrePresidente,System.String</value>
-          <value>correoPresidente,System.String</value>
-          <value>dniPresidente,System.String</value>
-          <value>direccionTrabajo,System.String</value>
-          <value>codPostalTrabajo,System.Decimal</value>
-          <value>PoblacionTrabajo,System.String</value>
-          <value>provinciaTrabajo,System.String</value>
-          <value>tipoProyecto,System.String</value>
-          <value>referencia,System.String</value>
-          <value>cerFinal,System.String</value>
-          <value>fecha,System.String</value>
-          <value>iban,System.String</value>
-          <value>parrafo1,System.String</value>
-          <value>pagos,System.String</value>
-          <value>letras,System.String</value>
-        </Columns>
-        <Dictionary isRef="1" />
-        <Key>7a9ea470c28a467f9ae1b69641bdc41e</Key>
-        <Name>datos_contrato</Name>
-        <NameInSource>ejemplo_json.datos_contrato</NameInSource>
-      </datos_contrato>
-      <datos_contrato_letras Ref="4" type="DataTableSource" isKey="true">
-        <Alias>datos_contrato_letras</Alias>
-        <Columns isList="true" count="8">
-          <value>contratoId,System.Decimal</value>
-          <value>formaPagoId,System.Decimal</value>
-          <value>concepto,System.String</value>
-          <value>totalAlCliente,System.Decimal</value>
-          <value>sumTotalAlcliente,System.Decimal</value>
-          <value>totletras,System.Decimal</value>
-          <value>numletras,System.Decimal</value>
-          <value>relationId,System.String</value>
-        </Columns>
-        <Dictionary isRef="1" />
-        <Key>f93145fb29f44f529271cc5e95d6a428</Key>
-        <Name>datos_contrato_letras</Name>
-        <NameInSource>ejemplo_json.datos_contrato_letras</NameInSource>
-      </datos_contrato_letras>
-      <datos_contrato_pagos Ref="5" type="DataTableSource" isKey="true">
-        <Alias>datos_contrato_pagos</Alias>
-        <Columns isList="true" count="7">
-          <value>contratoId,System.Decimal</value>
-          <value>formaPagoId,System.Decimal</value>
-          <value>formaPagoNombre,System.String</value>
-          <value>importePrefacturadoIva,System.Decimal</value>
-          <value>concepto,System.String</value>
-          <value>porcentaje,System.Decimal</value>
-          <value>relationId,System.String</value>
-        </Columns>
-        <Dictionary isRef="1" />
-        <Key>fe4b968c986349fdb841fe39b584abc2</Key>
-        <Name>datos_contrato_pagos</Name>
-        <NameInSource>ejemplo_json.datos_contrato_pagos</NameInSource>
-      </datos_contrato_pagos>
-    </DataSources>
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
@@ -83,16 +17,16 @@
   <Key>7230e7358106451eb2cc815f8ce2229b</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
-    <Page1 Ref="6" type="Page" isKey="true">
+    <Page1 Ref="2" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <Components isList="true" count="8">
-        <PageFooterBand1 Ref="7" type="PageFooterBand" isKey="true">
+        <PageFooterBand1 Ref="3" type="PageFooterBand" isKey="true">
           <Border>Top;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,32.04,19,1.2</ClientRectangle>
           <Components isList="true" count="1">
-            <Text3 Ref="8" type="Text" isKey="true">
+            <Text3 Ref="4" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>17.8,0.16,1,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -100,8 +34,8 @@
               <Font>Arial,8</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
-              <Page isRef="6" />
-              <Parent isRef="7" />
+              <Page isRef="2" />
+              <Parent isRef="3" />
               <Text>{PageNumberThrough}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -110,14 +44,14 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>PageFooterBand1</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </PageFooterBand1>
-        <PageFooterBand2 Ref="9" type="PageFooterBand" isKey="true">
+        <PageFooterBand2 Ref="5" type="PageFooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,28.24,19,3</ClientRectangle>
           <Components isList="true" count="3">
-            <Text30 Ref="10" type="Text" isKey="true">
+            <Text30 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,0.22,13.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -125,13 +59,13 @@
               <Font>Tahoma,9</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
-              <Page isRef="6" />
-              <Parent isRef="9" />
+              <Page isRef="2" />
+              <Parent isRef="5" />
               <Text>LA PROPIEDAD....................................................EL CONTRATISTA</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text30>
-            <Text32 Ref="11" type="Text" isKey="true">
+            <Text32 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.4,2.42,5.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -139,13 +73,13 @@
               <Font>Tahoma,9</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text32</Name>
-              <Page isRef="6" />
-              <Parent isRef="9" />
+              <Page isRef="2" />
+              <Parent isRef="5" />
               <Text>FDO. {datos_contrato.nombrePresidente}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text32>
-            <Text33 Ref="12" type="Text" isKey="true">
+            <Text33 Ref="8" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>7,2.42,6.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -153,8 +87,8 @@
               <Font>Tahoma,9</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text33</Name>
-              <Page isRef="6" />
-              <Parent isRef="9" />
+              <Page isRef="2" />
+              <Parent isRef="5" />
               <Text>FDO. Mª DOLORES GOMEZ MARTIN</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -163,16 +97,16 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>PageFooterBand2</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <PrintOn>OnlyLastPage</PrintOn>
         </PageFooterBand2>
-        <DataBand1 Ref="13" type="DataBand" isKey="true">
+        <DataBand1 Ref="9" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,0.4,19,10.6</ClientRectangle>
           <Components isList="true" count="12">
-            <Text18 Ref="14" type="Text" isKey="true">
+            <Text18 Ref="10" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -184,15 +118,15 @@
               <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>{datos_contrato.nombrePresidente}, mayor de edad, con domicilio a estos efectos de 	comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente} y correo electrónico {datos_contrato.correoPresidente}</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text18>
-            <Text19 Ref="15" type="Text" isKey="true">
+            <Text19 Ref="11" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0.2,6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -200,13 +134,13 @@
               <Font>Tahoma,9</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>En  Madrid, a 16 de octubre de 2024</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text19>
-            <Text20 Ref="16" type="Text" isKey="true">
+            <Text20 Ref="12" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>8,1.4,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -214,14 +148,14 @@
               <Font>Tahoma,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>REUNIDOS
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text20>
-            <Text21 Ref="17" type="Text" isKey="true">
+            <Text21 Ref="13" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -233,15 +167,15 @@
               <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text21</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text21>
-            <Text22 Ref="18" type="Text" isKey="true">
+            <Text22 Ref="14" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>7.8,3.8,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -249,14 +183,14 @@
               <Font>Tahoma,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text22</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>INTERVIENEN
 </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text22>
-            <Text23 Ref="19" type="Text" isKey="true">
+            <Text23 Ref="15" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -268,8 +202,8 @@
               <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text23</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>{datos_contrato.nombrePresidente}, en calidad de Presidenta de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-
 {datos_contrato.PoblacionTrabajo}), con DNI {datos_contrato.dniPresidente}, denominándose en lo sucesivo la &lt;b&gt;PROPIEDAD&lt;/b&gt;.</Text>
               <TextBrush>Black</TextBrush>
@@ -277,7 +211,7 @@
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text23>
-            <Text24 Ref="20" type="Text" isKey="true">
+            <Text24 Ref="16" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -289,15 +223,15 @@
               <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text24</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el &lt;b&gt;CONTRATISTA&lt;/b&gt;.</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text24>
-            <Text25 Ref="21" type="Text" isKey="true">
+            <Text25 Ref="17" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -309,15 +243,15 @@
               <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text25</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>Ambas partes se reconocen mutua y recíprocamente capacidad legal suficiente para suscribir el presente &lt;b&gt;CONTRATO DE EJECUCIÓN DE OBRA&lt;/b&gt; y en su virtud,</Text>
               <TextBrush>Black</TextBrush>
               <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text25>
-            <Text26 Ref="22" type="Text" isKey="true">
+            <Text26 Ref="18" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -329,8 +263,8 @@
               <HorAlignment>Width</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>&lt;p&gt;I.- la Propiedad desea llevar a cabo las Obras Obras de Reabilitación, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}- {datos_contrato.PoblacionTrabajo}), en base al Presupuesto que se adjunta de Ref.{datos_contrato.referencia} por importe {datos_contrato.cerFinal}€ más IVA , de fecha {datos_contrato.fecha}.&lt;/p&gt;
 &lt;p&gt; Y en base a todo lo anterior, acuerdan la realización de las referidas obras por parte de REABITA OBRAS DE REHABILITACIÓN, S.L. con arreglo a las siguientes&lt;/p&gt;</Text>
               <TextBrush>Black</TextBrush>
@@ -338,7 +272,7 @@
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text26>
-            <Text27 Ref="23" type="Text" isKey="true">
+            <Text27 Ref="19" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>8,6.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -346,13 +280,13 @@
               <Font>Tahoma,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>EXPONEN</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text27>
-            <Text29 Ref="24" type="Text" isKey="true">
+            <Text29 Ref="20" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -364,8 +298,8 @@
               <Margins>0,0,0,0</Margins>
               <MaxSize>0,10</MaxSize>
               <Name>Text29</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <ShiftMode>OnlyInWidthOfComponent</ShiftMode>
               <Text>&lt;b&gt;Primera. - OBJETO DEL CONTRATO.&lt;/b&gt;&lt;/br&gt;
 &lt;p&gt;Constituye el objeto del presente contrato la ejecución total, con suministro de materiales, de las obras 
@@ -451,7 +385,7 @@ siguientes plazos:&lt;/p&gt;</Text>
               <TextQuality>Wysiwyg</TextQuality>
               <Type>Expression</Type>
             </Text29>
-            <Text2 Ref="25" type="Text" isKey="true">
+            <Text2 Ref="21" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>7.4,8.6,3,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -459,8 +393,8 @@ siguientes plazos:&lt;/p&gt;</Text>
               <Font>Tahoma,10,Bold</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
-              <Page isRef="6" />
-              <Parent isRef="13" />
+              <Page isRef="2" />
+              <Parent isRef="9" />
               <Text>ESTIPULACIONES</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -472,16 +406,16 @@ siguientes plazos:&lt;/p&gt;</Text>
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand1</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DataBand1>
-        <HeaderBand2 Ref="26" type="HeaderBand" isKey="true">
+        <HeaderBand2 Ref="22" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <CanGrow>False</CanGrow>
-          <ClientRectangle>0,11.8,19,0.4</ClientRectangle>
+          <ClientRectangle>0,11.8,19,0.6</ClientRectangle>
           <Components isList="true" count="1">
-            <Text9 Ref="27" type="Text" isKey="true">
+            <Text9 Ref="23" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0,1.4,0.4</ClientRectangle>
@@ -490,8 +424,8 @@ siguientes plazos:&lt;/p&gt;</Text>
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
-              <Page isRef="6" />
-              <Parent isRef="26" />
+              <Page isRef="2" />
+              <Parent isRef="22" />
               <Text>RECIBOS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -501,81 +435,29 @@ siguientes plazos:&lt;/p&gt;</Text>
           <Expressions isList="true" count="0" />
           <KeepHeaderTogether>False</KeepHeaderTogether>
           <Name>HeaderBand2</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </HeaderBand2>
-        <DataBand2 Ref="28" type="DataBand" isKey="true">
+        <DataBand2 Ref="24" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <CanGrow>False</CanGrow>
-          <ClientRectangle>0,13,19,0.4</ClientRectangle>
-          <Components isList="true" count="4">
-            <Text4 Ref="29" type="Text" isKey="true">
+          <ClientRectangle>0,13.2,19,0.4</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text4 Ref="25" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,3.4,0.4</ClientRectangle>
+              <ClientRectangle>0.2,0,18.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
-              <Page isRef="6" />
-              <Parent isRef="28" />
-              <Text>{datos_contrato_pagos.concepto}</Text>
+              <Page isRef="2" />
+              <Parent isRef="24" />
+              <Text>{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto {datos_contrato_pagos.importePrefacturadoIva} € IVA incluido</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text4>
-            <Text6 Ref="30" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>3.8,0,6.6,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text6</Name>
-              <Page isRef="6" />
-              <Parent isRef="28" />
-              <Text>{datos_contrato_pagos.porcentaje}% del importe total del presupuesto </Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text6>
-            <Text7 Ref="31" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.6,0,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text7</Name>
-              <Page isRef="6" />
-              <Parent isRef="28" />
-              <Text>{datos_contrato_pagos.importePrefacturadoIva}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text7>
-            <Text8 Ref="33" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.8,0,2.4,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text8</Name>
-              <Page isRef="6" />
-              <Parent isRef="28" />
-              <Text>IVA incluido</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text8>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName>pagos_contrato</DataRelationName>
@@ -583,26 +465,26 @@ siguientes plazos:&lt;/p&gt;</Text>
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand2</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DataBand2>
-        <HeaderBand1 Ref="34" type="HeaderBand" isKey="true">
+        <HeaderBand1 Ref="26" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <CanGrow>False</CanGrow>
-          <ClientRectangle>0,14.2,19,0.4</ClientRectangle>
+          <ClientRectangle>0,14.4,19,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Text15 Ref="35" type="Text" isKey="true">
+            <Text15 Ref="27" type="Text" isKey="true">
               <Border>Bottom;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,1.4,0.4</ClientRectangle>
+              <ClientRectangle>0.2,0.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
-              <Page isRef="6" />
-              <Parent isRef="34" />
+              <Page isRef="2" />
+              <Parent isRef="26" />
               <Text>LETRAS</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -612,16 +494,16 @@ siguientes plazos:&lt;/p&gt;</Text>
           <Expressions isList="true" count="0" />
           <KeepHeaderTogether>False</KeepHeaderTogether>
           <Name>HeaderBand1</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </HeaderBand1>
-        <DataBand4 Ref="36" type="DataBand" isKey="true">
+        <DataBand4 Ref="28" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <CanGrow>False</CanGrow>
-          <ClientRectangle>0,15.4,19,0.6</ClientRectangle>
-          <Components isList="true" count="6">
-            <Text12 Ref="37" type="Text" isKey="true">
+          <ClientRectangle>0,16,19,0.4</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text12 Ref="29" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0.2,0,0.6,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -629,101 +511,26 @@ siguientes plazos:&lt;/p&gt;</Text>
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
-              <Page isRef="6" />
-              <Parent isRef="36" />
+              <Page isRef="2" />
+              <Parent isRef="28" />
               <Text>{datos_contrato_letras.numletras}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text12>
-            <Text13 Ref="38" type="Text" isKey="true">
+            <Text13 Ref="30" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.8,0,2.4,0.4</ClientRectangle>
+              <ClientRectangle>0.8,0,18,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,10</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
-              <Page isRef="6" />
-              <Parent isRef="36" />
-              <Text>Con un total de </Text>
+              <Page isRef="2" />
+              <Parent isRef="28" />
+              <Text>Con un total de {datos_contrato_letras.sumTotalAlcliente} € Cada una de las cuales con un importe de {datos_contrato_letras.totalAlCliente} € IVA incluido</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
             </Text13>
-            <Text10 Ref="39" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,0,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text10</Name>
-              <Page isRef="6" />
-              <Parent isRef="36" />
-              <Text>{datos_contrato_letras.sumTotalAlcliente}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="40" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text10>
-            <Text11 Ref="41" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>5.8,0,6.6,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text11</Name>
-              <Page isRef="6" />
-              <Parent isRef="36" />
-              <Text>Cada una de las cuales con un importe de </Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text11>
-            <Text14 Ref="42" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text14</Name>
-              <Page isRef="6" />
-              <Parent isRef="36" />
-              <Text>{datos_contrato_letras.totalAlCliente}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text14>
-            <Text16 Ref="44" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>15.6,0,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,10</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text16</Name>
-              <Page isRef="6" />
-              <Parent isRef="36" />
-              <Text>IVA incluido</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text16>
           </Components>
           <Conditions isList="true" count="1">
             <value>datos_contrato_letras.totletras,IsNull,,,Numeric,[255:255:255],Transparent,Arial_x002C_8,False,False,,,None</value>
@@ -733,17 +540,17 @@ siguientes plazos:&lt;/p&gt;</Text>
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand4</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DataBand4>
-        <DataBand6 Ref="45" type="DataBand" isKey="true">
+        <DataBand6 Ref="31" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <CanShrink>True</CanShrink>
-          <ClientRectangle>0,16.8,19,1.6</ClientRectangle>
+          <ClientRectangle>0,17.2,19,1.6</ClientRectangle>
           <Components isList="true" count="1">
-            <Text1 Ref="46" type="Text" isKey="true">
+            <Text1 Ref="32" type="Text" isKey="true">
               <AllowHtmlTags>True</AllowHtmlTags>
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
@@ -756,8 +563,8 @@ siguientes plazos:&lt;/p&gt;</Text>
               <Margins>0,0,0,0</Margins>
               <MaxSize>0,1</MaxSize>
               <Name>Text1</Name>
-              <Page isRef="6" />
-              <Parent isRef="45" />
+              <Page isRef="2" />
+              <Parent isRef="31" />
               <ShiftMode>OnlyInWidthOfComponent</ShiftMode>
               <Text>&lt;ul&gt;
 &lt;li&gt;las letras de cambio se entregarán en un plazo no superior a dos días de la fecha del inicio de los trabajos, 
@@ -862,8 +669,8 @@ intereses por demora al tipo del interés legal.&lt;/p&gt;
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Name>DataBand6</Name>
-          <Page isRef="6" />
-          <Parent isRef="6" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Sort isList="true" count="0" />
         </DataBand6>
       </Components>
@@ -888,10 +695,10 @@ intereses por demora al tipo del interés legal.&lt;/p&gt;
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>11/13/2025 5:26:49 PM</ReportChanged>
+  <ReportChanged>11/14/2025 12:18:55 PM</ReportChanged>
   <ReportCreated>2/6/2025 12:48:22 PM</ReportCreated>
   <ReportFile>E:\node_apps\proasistencia\public\reports\contrato_reabita2.mrt</ReportFile>
-  <ReportGuid>b45e9abb9d214e5ebf94e03df6a8a3db</ReportGuid>
+  <ReportGuid>696c6c53909b40ee8b183ba7571abd72</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>
