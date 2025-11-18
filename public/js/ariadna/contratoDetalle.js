@@ -1037,6 +1037,8 @@ function admData() {
     //
     self.posiblesTecnicos = ko.observableArray([]);
     self.elegidosTecnicos = ko.observableArray([]);
+    //DATOS CONTRATO
+    self.fechaFormalizacionContrato = ko.observable();
 
 }
 
@@ -1137,6 +1139,8 @@ function loadData(data) {
     vm.resumenDr(data.resumenDr);
     vm.resumenTasasVisado(data.resumenTasasVisado);
     vm.resumenDiario(data.resumenDiario);
+    //
+    vm.fechaFormalizacionContrato(spanishDate(data.fechaFormalizacionContrato));
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1438,7 +1442,9 @@ var generarContratoDb = function () {
             "ipc": vm.ipc(),
             "renovar": vm.renovar(),
             "fechaFinAlquiler": spanishDbDate(vm.fechaFinAlquiler()),
-            "importeAnualRenovacion": vm.importeAnualRenovacion()
+            "importeAnualRenovacion": vm.importeAnualRenovacion(),
+            //
+            "fechaFormalizacionContrato": spanishDbDate(vm.fechaFormalizacionContrato()),
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)

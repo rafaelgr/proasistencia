@@ -12,22 +12,25 @@ var breakpointDefinition = {
 var usuario;
 // License Key
 
-// Create the report viewer with default options
-//var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
+// Crear opciones
 var options = new Stimulsoft.Viewer.StiViewerOptions();
-StiOptions.WebServer.url = "/api/streport";
-//StiOptions.WebServer.url = "http://localhost:9615";
-Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
-
-obtainKey();//obtiene la clave de usuario de stimulsoft de la configuracion
-
 options.appearance.scrollbarsMode = true;
-//options.appearance.fullScreenMode = true;
 options.toolbar.showSendEmailButton = true;
-var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
+
+// Configurar servidor y localización
+StiOptions.WebServer.url = "/api/streport";
+Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../../Localization/es.xml", true);
+
+
+
+// Inicializar visor PASANDO SOLO EL OBJETO options con container
+options.container = "viewerContent";  // ID del div donde se mostrará
+const viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
+
+// Capturar eventos
 viewer.onEmailReport = function (event) {
     console.log('EMAIL REPORT');
-}
+};
 
 function initForm() {
     $('#StiViewerReportPanel').css("text-align", "left");
@@ -181,7 +184,7 @@ function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
         if (err) return;
         if (data) {
-            Stimulsoft.Base.StiLicense.key = data.sti_key
+            //Stimulsoft.Base.StiLicense.key = data.sti_key
         }
     });
 }
@@ -390,25 +393,32 @@ var rptContratosParametrosJson = function () {
     });
 }
 
-var obtainReportJson = function (obj) {
-    let file = ";"
-    file = "../reports/contrato_reabita2.mrt";
-    var report = new Stimulsoft.Report.StiReport();
-    
 
+function obtainReportJson(obj) {
+    const report = new Stimulsoft.Report.StiReport();
 
-    report.loadFile(file);
+    // Cargar el reporte desde archivo .mrt
+    report.loadFile("/reports/contrato_reabita2.mrt");
 
-    var dataSet = new Stimulsoft.System.Data.DataSet("datos_contrato");
+    // Crear DataSet y registrar
+    const dataSet = new Stimulsoft.System.Data.DataSet("datos_contrato");
     dataSet.readJson(obj);
 
-    // Remove all connections from the report template
     report.dictionary.databases.clear();
-
-    //
     report.regData(dataSet.dataSetName, "", dataSet);
     report.dictionary.synchronize();
 
-    viewer.report = report;
+    // Habilitar HTML en todos los textos
+    report.pages.list.forEach(page => {
+        page.components.list.forEach(component => {
+            if (component instanceof Stimulsoft.Report.Components.StiText) {
+                component.allowHtml = true;
+            }
+        });
+    });
 
-};
+    report.renderAsync();
+    // Asignar y renderizar
+    viewer.report = report;
+}
+
