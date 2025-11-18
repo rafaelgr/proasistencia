@@ -160,6 +160,7 @@ function admData() {
 function initTablaContratos() {
     var buttonCommon = {
         exportOptions: {
+            columns: ':visible', // Solo exporta columnas visibles
             format: {
                 body: function ( data, row, column, node ) {
                     // Strip $ from salary column to make it numeric
@@ -281,7 +282,15 @@ function initTablaContratos() {
             data: "empresa"
         }, {
             data: "cliente"
+        },{
+            data: "telefono1"
         }, {
+            data: "telefono2"
+        }, {
+            data: "email"
+        }, {
+            data: "emailFacturas"
+        },  {
             data: "total",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
@@ -330,8 +339,12 @@ function initTablaContratos() {
     });
 
     // Hide some columns by default
-    //tablaContratos.columns(7).visible(false);
+    //tablaContratos.columns(7).visible(false)
+    tablaContratos.columns(7).visible(false);
     tablaContratos.columns(8).visible(false);
+    tablaContratos.columns(9).visible(false);
+    tablaContratos.columns(10).visible(false);;
+    tablaContratos.columns(12).visible(false);
     //tablaContratos.columns(9).visible(false);
 }
 
