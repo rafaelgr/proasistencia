@@ -1762,6 +1762,207 @@
                                                         <!-- FIN WIDGET BASES Y CUOTAS -->
                                                     </article>
                                                 </div>
+                                                <div class="row" id="lineasPagoObrasTemp">
+                                                    <!-- NEW WIDGET START -->
+                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <!-- Widget ID (each widget will need unique ID)-->
+                                                        <div class="jarviswidget" id="wid-id-new-19"
+                                                            data-widget-editbutton="false"
+                                                            data-widget-colorbutton="false"
+                                                            data-widget-deletebutton="false">
+                                                            <header>
+                                                                <span class="widget-icon">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </span>
+                                                                <h2>PLANIFICACIÓN TEMPORAL</h2>
+                                                            </header>
+                                                            <!-- widget div-->
+                                                            <div>
+                                                                <!-- widget edit box -->
+                                                                <div class="jarviswidget-editbox">
+                                                                    <!-- This area used as dropdown edit box -->
+                                                                    <input class="form-control" type="text">
+                                                                </div>
+                                                                <!-- end widget edit box -->
+                                                                <!-- widget content -->
+                                                                <div class="widget-body">
+                                                                    <!-- this is what the user will see -->
+                                                                    <form id="frmLineaPlanificacionObrasTemp">
+                                                                        <fieldset>
+                                                                            <div
+                                                                                style="height: 20px; margin-bottom: 1%;">
+                                                                                <h5 style="text-decoration: underline;">
+                                                                                    GENERAL</h5>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col col-md-4">
+                                                                                    <strong>Importe contrato: </strong>
+                                                                                    <span
+                                                                                        data-bind="text: importeClienteFormat"></span>
+                                                                                    <br />
+                                                                                    <strong> Importe planificado:
+                                                                                    </strong>
+                                                                                    <span
+                                                                                        data-bind="text: importePlanificado"></span>
+                                                                                    <br />
+                                                                                    <strong style="color:red;">
+                                                                                        Diferencia: </strong>
+                                                                                    <span style="color:red;"
+                                                                                        data-bind="text: diferencia"></span>
+                                                                                </div>
+                                                                                <div class="col col-md-4">
+                                                                                    <strong>Certificación final:
+                                                                                    </strong>
+                                                                                    <span
+                                                                                        data-bind="text: certificacionFinalFormat"></span>
+                                                                                    <br />
+                                                                                    <strong> Importe Prefacturado:
+                                                                                    </strong>
+                                                                                    <span
+                                                                                        data-bind="text: importePrefacturado"></span>
+                                                                                    <br />
+                                                                                    <strong style="color:red;">
+                                                                                        Diferencia: </strong>
+                                                                                    <span style="color:red;"
+                                                                                        data-bind="text: diferenciaPrefacturado"></span>
+                                                                                </div>
+                                                                                <div class="pull-right"
+                                                                                    style="margin-right: 2%;">
+                                                                                    <button
+                                                                                        id="btnNuevaLineaPlanificacionObrasTemp"
+                                                                                        title="Nueva línea"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#modalPlanificacionObrasTemp"
+                                                                                        onclick="nuevaLineaPlanificacionObrasTemp()"
+                                                                                        class="btn btn-success btn-circle btn-lg">
+                                                                                        <i class="fa fa-lg fa-plus"></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </form>
+                                                                    <hr />
+                                                                    <div id="tbLineasPlanificacionObrasTemp">
+                                                                        <table id="dt_lineasPlanificacionObrastemp"
+                                                                            class="table table-striped table-bordered table-hover"
+                                                                            width="100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="text-left">
+                                                                                        Fecha
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Fecha registro
+                                                                                    </th>
+                                                                                    <th data-hide="phone"
+                                                                                        class="text-left">
+                                                                                        Concepto
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Porcentaje
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Importe
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Núm. pref.
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Importe pre facturado
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Núm fact
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Importe facturado
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Importe facturado IVA
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Núm. cobros
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Importe cobrado
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        % Ret. garantías
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Forma pago
+                                                                                    </th>
+                                                                                    <th>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="3"
+                                                                                        style="text-align:right !important">
+                                                                                        Totales:</th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                    <th colspan="3"></th>
+
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                        </table>
+                                                                    </div>
+                                                                    <fieldset>
+                                                                        <div style="height: 20px; margin-bottom: 1%;">
+                                                                            <h5 style="text-decoration: underline;">
+                                                                                GENERAL</h5>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col col-md-4">
+                                                                                <strong>Importe contrato: </strong>
+                                                                                <span
+                                                                                    data-bind="text: importeClienteFormat"></span>
+                                                                                <br />
+                                                                                <strong> Importe planificado: </strong>
+                                                                                <span
+                                                                                    data-bind="text: importePlanificado"></span>
+                                                                                <br />
+                                                                                <strong style="color:red;"> Diferencia:
+                                                                                </strong>
+                                                                                <span style="color:red;"
+                                                                                    data-bind="text: diferencia"></span>
+                                                                            </div>
+                                                                            <div class="col col-md-4">
+                                                                                <strong>Certificación final: </strong>
+                                                                                <span
+                                                                                    data-bind="text: certificacionFinalFormat"></span>
+                                                                                <br />
+                                                                                <strong> Importe importePrefacturado
+                                                                                </strong>
+                                                                                <span
+                                                                                    data-bind="text: importePrefacturado"></span>
+                                                                                <br />
+                                                                                <strong style="color:red;"> Diferencia:
+                                                                                </strong>
+                                                                                <span style="color:red;"
+                                                                                    data-bind="text: diferenciaPrefacturado"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                    <hr />
+                                                                </div>
+                                                                <!-- end widget content -->
+                                                            </div>
+                                                            <!-- end widget div -->
+                                                        </div>
+                                                        <!-- end widget -->
+                                                    </article>
+                                                    <!-- WIDGET END -->
+                                                </div>
+                                                <!-- end row -->
                                             </section>
                                         </div>
                                         <div class="tab-pane fade" id="s2">
@@ -4516,6 +4717,91 @@
                                 Aceptar
                             </button> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalPlanificacionObrasTemp" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LÍNEA PLANIFICACIÓN TEMPORAL</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="conceptoObrasTemp-form" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-md-12">
+                                    <label class="label">Planificación</label>
+                                    <label class="input">
+                                        <input id="txtConceptoPlanificacionTemp" name="txtConceptoPlanificacionTemp" type="text"
+                                            data-bind="value: conceptoPlanificacionTemp" />
+                                    </label>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-md-2">
+                                    <label class="label">Porcentaje</label>
+                                    <label class="input">
+                                        <input id="txtPorcentajePlanificacionTemp" name="txtPorcentajePlanificacionTemp"
+                                            type="text" data-bind="value: porcentajePlanificacionTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-3">
+                                    <label class="label">importe</label>
+                                    <label class="input">
+                                        <input id="txtImporteCalculadoPlanificacionTemp"
+                                            name="txtImporteCalculadoPlanificacionTemp" type="text"
+                                            data-bind="value: importeCalculadoPlanificacionTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Porcen. garantías</label>
+                                    <label class="input">
+                                        <input id="txtPorRetenGarantiasTemp" name="txtPorRetenGarantiasTemp" type="text"
+                                            data-bind="value: porRetenGarantiasTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Fecha concepto</label>
+                                    <label class="input">
+                                        <input id="txtFechaPlanificacionObras3" name="txtFechaPlanificacionObras3"
+                                            data-bind="value: fechaPlanificacionObras3" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-3">
+                                    <label class="label">Forma de pago</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbFormasPagoLineaObras"
+                                            name="cmbFormasPagoLineaObras"
+                                            data-bind="options: posiblesFormasPagoLinea, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoIdLinea, valueAllowUnset: true, selectedOptions: elegidosFormasPagoLinea, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarPlanificacionTemp" class="btn btn-primary"
+                                onclick="aceptarLineaPlanificacionObrasTemp()">
+                                Aceptar
+                            </button>
+                            <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="limpiarModalLineasPlanificacionTemp()">
                                 Cancelar
                             </button>
                         </footer>
