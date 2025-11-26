@@ -130,3 +130,8 @@ CREATE TABLE `prefacturas_temporal` (
   KEY `pref_conceptoPorcen` (`contratoPorcenId`),
   KEY `pref_contratoPlanicicacion` (`contPlanificacionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `prefacturas_temporal`   
+	CHANGE `contPlanificacionId` `contPlanificacionTempId` INT(11) NULL, 
+  DROP INDEX `pref_contratoPlanicicacion`,
+  ADD  KEY `pref_contratoPlanicicacion` (`contPlanificacionTempId`);
