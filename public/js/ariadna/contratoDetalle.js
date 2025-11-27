@@ -9131,11 +9131,9 @@ function initTablaPlanificacionLineasObrasTemp() {
                 data: "contPlanificacionTempId", render: function (data, type, row) {
                     var html = "", bt1 = "", bt2 = "", bt3 = "";
                     if (!vm.contratoCerrado()) {
-                        if (row.numPrefacturas == 0) {
-                            bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
-                            bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
-                            bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
-                        }
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
+                        bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
+                        bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                     }
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
                     return html;
