@@ -21,6 +21,8 @@ options.toolbar.showSendEmailButton = true;
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../../Localization/es.xml", true);
 
+obtainKeyNew();//obtiene la clave de usuario de stimulsoft de la configuracion
+
 
 
 // Inicializar visor PASANDO SOLO EL OBJETO options con container
@@ -185,6 +187,16 @@ function obtainKey() {
         if (err) return;
         if (data) {
             //Stimulsoft.Base.StiLicense.key = data.sti_key
+        }
+    });
+}
+
+
+function obtainKeyNew() {
+    llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
+        if(err) return;
+        if(data) {
+            Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
 }
@@ -420,5 +432,12 @@ function obtainReportJson(obj) {
     report.renderAsync();
     // Asignar y renderizar
     viewer.report = report;
+
+const jsonString = JSON.stringify(obj, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'datosReporte.json';
+  link.click();
 }
 
