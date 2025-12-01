@@ -135,3 +135,10 @@ ALTER TABLE `prefacturas_temporal`
 	CHANGE `contPlanificacionId` `contPlanificacionTempId` INT(11) NULL, 
   DROP INDEX `pref_contratoPlanicicacion`,
   ADD  KEY `pref_contratoPlanicicacion` (`contPlanificacionTempId`);
+
+
+ALTER TABLE `prefacturas_bases_temporal`  
+  ADD CONSTRAINT `prefb_prefacturas_temp` FOREIGN KEY (`prefacturaTempId`) REFERENCES `prefacturas_temporal`(`prefacturaTempId`) ON DELETE CASCADE;
+
+ALTER TABLE `prefacturas_lineas_temporal` 
+ADD CONSTRAINT `prefl_pref_temporal` FOREIGN KEY (`prefacturaTempId`)  REFERENCES  `prefacturas_temporal`(`prefacturaTempId`) ON DELETE CASCADE; 

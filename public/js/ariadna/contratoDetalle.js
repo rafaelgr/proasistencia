@@ -661,6 +661,8 @@ function initForm() {
 
             initTablaPrefacturas(data.tipoContratoId);
 
+            initTablaPrefacturasTemp(data.tipoContratoId);
+
 
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
@@ -1063,6 +1065,10 @@ function admData() {
     //
     self.difPlanificadoLetrasTemp = ko.observable();
     self.difNumPlanificadoLetrasTemp = ko.observable()
+    //DATOS DEL PRESIDENTE DE LA COMUNIDAD
+    self.nombrePresidente = ko.observable();
+    self.dniPresidente = ko.observable();
+    self.correoPresidente = ko.observable();
 }
 
 function loadData(data) {
@@ -1164,6 +1170,10 @@ function loadData(data) {
     vm.resumenDiario(data.resumenDiario);
     //
     vm.fechaFormalizacionContrato(spanishDate(data.fechaFormalizacionContrato));
+    //
+    vm.nombrePresidente(data.nombrePresidente);
+    vm.dniPresidente(data.dniPresidente);
+    vm.correoPresidente(data.correoPresidente);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1469,6 +1479,10 @@ var generarContratoDb = function () {
             "importeAnualRenovacion": vm.importeAnualRenovacion(),
             //
             "fechaFormalizacionContrato": spanishDbDate(vm.fechaFormalizacionContrato()),
+            //
+            "nombrePresidente": vm.nombrePresidente(),
+            "dniPresidente": vm.dniPresidente(),
+            "correoPresidente": vm.correoPresidente()
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -9007,9 +9021,14 @@ function printContrato(id) {
 }
 //CREAR CONTRATO DE INTERESES
 function crearContratoIntereses() {
-    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId(), null, function (err, data) {
-        if (err) return errorGeneral(err, done);
-        //loadData(data);
+    var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
+    mensajeAceptarCancelar(mensaje, function () {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId(), null, function (err, data) {
+            if (err) return errorGeneral(err, done);
+            window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
+        });
+    }, function () {
+        done(null, false);
     });
 }
 
@@ -9179,7 +9198,7 @@ function loadPlanificacionLineasObrasTemp(id, numCobros) {
         if (err) return;
 
         loadTablaPlanificacionLineasObrasTemp(data);
-        //loadPrefacturasDelContrato(id);
+        loadPrefacturasDelContratoTemp(id);
 
     });
 }
@@ -9298,7 +9317,7 @@ function loadDataLineaPlanificacionObrasTemp(data) {
 
 function deletePlanificacionLineaObrasTemp(contPlanificacionTempId) {
     // mensaje de confirmación
-    var mens = "¿Realmente desea borrar este registro, se borrarán además todas las prefacturas generadas que no se han generado atraves de conceptos / porcentajes ?";
+    var mens = "¿Realmente desea borrar este registro?, se borrarán además todas las prefacturas generadas.";
     mensajeAceptarCancelar(mens, function () {
         llamadaAjax("DELETE", myconfig.apiUrl + "/api/contratos/planificacion/temporal/" + contPlanificacionTempId, null, function (err, data) {
             if (err) return;
@@ -9744,5 +9763,229 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
             //actualizaCobrosPlanificacion(vm.contratoId());
             limpiarModalGenerarPrefacturasObrasTemp();
         });
+    });
+}
+
+function initTablaPrefacturasTemp(departamentoId) {
+
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function (data, row, column, node) {
+                    // Columnas numéricas: coste (6), total (7), totalConIva (8), retenGarantias (9)
+                    if ([6, 7, 8, 9].includes(column)) {
+                        return numeroDbf(data);
+                    } else if ([0, 11].includes(column)) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function (data, row, column, node) {
+                    if ([6, 7, 8, 9].includes(row)) {
+                        return numeroDbf(data);
+                    } else if (row === 10) {
+                        return data;
+                    } else {
+                        return "";
+                    }
+                }
+            }
+        }
+    };
+
+    tablaPrefacturas = $('#dt_prefacturaTemp').DataTable({
+        paging: false,
+        responsive: true,
+        "bDestroy": true,
+        bSort: false,
+        "oColVis": { "buttonText": "Mostrar / ocultar columnas" },
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, { extend: 'excel', footer: true }),
+            $.extend(true, {}, buttonCommon, { extend: 'pdf', orientation: 'landscape', pageSize: 'LEGAL', footer: true }),
+            'print'
+        ],
+        autoWidth: false,
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+
+            // Columnas numéricas
+            var columnasNumericas = [6, 7, 8, 9];
+
+            columnasNumericas.forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx)
+                    .data()
+                    .reduce(function (a, b) {
+                        return (parseFloat(a) || 0) + (parseFloat(b) || 0);
+                    }, 0);
+                $(api.column(colIdx).footer()).html(numeral(total).format('0,0.00'));
+            });
+        },
+        fnCreatedRow: function (nRow, aData) {
+            // Estilos por estado
+            if (aData.facturaId) $(nRow).css('background', '#81F889'); // registro facturado
+            else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
+            else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
+            else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: { first: "Primero", previous: "Anterior", next: "Siguiente", last: "Último" },
+            aria: { sortAscending: ": Activar para ordenar la columna de manera ascendente", sortDescending: ": Activar para ordenar la columna de manera descendente" }
+        },
+        data: dataPrefacturas,
+        columns: [
+            {
+                data: "prefacturaTempId", width: "5%", render: function (data, type, row) {
+                    if (row.departamentoId == 8) {
+                        if (row.esLetra != 1) {
+                            return row.facturaId ? "<i class='fa fa-files-o'></i>" : "<i class='fa fa-file-o'></i>";
+                        } else {
+                            return `<label class="input"><input id="chk${data}" type="checkbox" class="checkAll" name="chk${data}"></label>`;
+                        }
+                    } else {
+                        return row.facturaId ? "<i class='fa fa-file-o'></i>" : `<label class="input"><input id="chk${data}" type="checkbox" class="checkAll" name="chk${data}"></label>`;
+                    }
+                }
+            },
+            { data: "referencia" },
+            { data: "emisorNombre" },
+            { data: "receptorNombre" },
+            { data: "vNum" },
+            { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
+            { data: "coste", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "retenGarantias", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "vFPago" },
+            {
+                data: "prefacturaTempId", render: function (data, row) {
+                    var bt1 = "", bt2, bt3;
+                    if (!row.contratoPorcenId) {
+                        if (row.departamentoId != 8 || (row.departamentoId == 8 && !row.facturaId)) {
+                            bt1 = `<button class='btn btn-circle btn-danger' onclick='deletePrefactura(${data});' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>`;
+                        }
+                    }
+                    bt2 = `<button class='btn btn-circle btn-success' onclick='editPrefactura(${data});' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>`;
+                    bt3 = `<button class='btn btn-circle btn-success' onclick='printPrefactura(${data});' title='Imprimir PDF'><i class='fa fa-file-pdf-o fa-fw'></i></button>`;
+                    return `<div class='pull-right'>${bt1} ${bt2} ${bt3}</div>`;
+                }
+            }
+        ]
+    });
+
+    // Filtro en cabecera
+    $("#dt_prefacturaTemp thead th input[type=text]").on('keyup change', function () {
+        tablaPrefacturas.column($(this).parent().index() + ':visible').search(this.value).draw();
+    });
+
+    // Ocultar columnas por defecto
+    [1, 10].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
+}
+
+
+function loadTablaPrefacturasTemp(data) {
+    var dt = $('#dt_prefacturaTemp').dataTable();
+    //new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+
+
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) {
+        dt.fnAddData(data);
+        numPrefacturas = data.length;
+        importePrefacturas = 0;
+        importePrefacturasConcepto = 0
+        for (var i = 0; i < data.length; i++) {
+            importePrefacturas = importePrefacturas + data[i].total;
+            if (data[i].contratoPorcenId) importePrefacturasConcepto = importePrefacturasConcepto + data[i].total;
+        }
+        if (numPrefacturas > 0) {
+            $('#cmbEmpresas').prop('disabled', true);
+            $('#cmbTiposContrato').prop('disabled', true);
+            $('#cmbTipoProyecto').prop('disabled', true);
+            $('#txtReferencia').prop('disabled', true);
+            $('#txtCliente').prop('disabled', true);
+            $('#txtAgente').prop('disabled', true);
+        } else {
+            $('#cmbEmpresas').prop('disabled', false);
+            $('#cmbTiposContrato').prop('disabled', false);
+            $('#cmbTipoProyecto').prop('disabled', false);
+            $('#txtReferencia').prop('disabled', false);
+            $('#txtCliente').prop('disabled', false);
+            $('#txtAgente').prop('disabled', false);
+
+        }
+    } else {
+        importePrefacturas = 0;
+        numPrefacturas = 0;
+        importePrefacturasConcepto = 0
+        $('#cmbEmpresas').prop('disabled', false);
+        $('#cmbTiposContrato').prop('disabled', false);
+        $('#cmbTipoProyecto').prop('disabled', false);
+        $('#txtReferencia').prop('disabled', false);
+        $('#txtCliente').prop('disabled', false);
+        $('#txtAgente').prop('disabled', false);
+    }
+    dt.fnDraw();
+    if (data) {
+        data.forEach(function (v) {
+            var field = "#chk" + v.prefacturaId;
+            if (v.sel == 1) {
+                $(field).attr('checked', true);
+            }
+            $(field).change(function () {
+                var quantity = 0;
+                var data = {
+                    prefactura: {
+                        prefacturaId: v.prefacturaId,
+                        empresaId: v.empresaId,
+                        clienteId: v.clienteId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        sel: 0
+                    }
+                };
+                if (this.checked) {
+                    data.prefactura.sel = 1;
+                }
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
+            });
+        });
+    }
+}
+
+function loadPrefacturasDelContratoTemp(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/temporales/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaPrefacturasTemp(data);
     });
 }
