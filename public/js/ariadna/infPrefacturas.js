@@ -131,7 +131,7 @@ function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
         if(err) return;
         if(data) {
-            Stimulsoft.Base.StiLicense.key = data.sti_key
+            Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
 }
@@ -196,15 +196,21 @@ var obtainReport = function (carga) {
         var pos = 0;
         var pos1 = 0;
         var pos2 = 0;
-        for (var i = 0; i < report.dataSources.items.length; i++) {
-            var str = report.dataSources.items[i].sqlCommand;
-            if (str.indexOf("pf.prefacturaId") > -1) pos = i;
-            if (str.indexOf("prefacturas_lineas") > -1) pos1 = i;
-            if (str.indexOf("prefacturas_bases") > -1) pos2 = i;
+        for (var i = 0; i < report.dataSources.list.length; i++) {
+            var str = report.dataSources.list[i].sqlCommand;
+            if (str.indexOf("pf.prefacturaId") > -1) {
+                pos = i;
+            }
+            if (str.indexOf("prefacturas_lineas") > -1)  {
+                pos1 = i;
+            }
+            if (str.indexOf("prefacturas_bases") > -1) {
+                pos2 = i;
+            }
         }
-        var sql = report.dataSources.items[pos].sqlCommand;
-        var sql3 = report.dataSources.items[pos1].sqlCommand;
-        var sql4 = report.dataSources.items[pos2].sqlCommand;
+        var sql = report.dataSources.list[pos].sqlCommand;
+        var sql3 = report.dataSources.list[pos1].sqlCommand;
+        var sql4 = report.dataSources.list[pos2].sqlCommand;
 
         var sql2 = rptPrefacturaParametros(sql);
         verb = "POST"; 
@@ -218,9 +224,9 @@ var obtainReport = function (carga) {
                     }
                     sql3 = sql3 + ' WHERE pfl.prefacturaId IN ( ' + ids + ' )';
                     sql4 = sql4 + ' WHERE pfb.prefacturaId IN ( ' + ids + ' )';
-                    report.dataSources.items[pos].sqlCommand = sql2;
-                    report.dataSources.items[pos1].sqlCommand = sql3;
-                    report.dataSources.items[pos2].sqlCommand = sql4;
+                    report.dataSources.list[pos].sqlCommand = sql2;
+                    report.dataSources.list[pos1].sqlCommand = sql3;
+                    report.dataSources.list[pos2].sqlCommand = sql4;
                     // Assign report to the viewer, the report will be built automatically after rendering the viewer
                     viewer.report = report;
                 } else {

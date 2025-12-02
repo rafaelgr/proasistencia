@@ -1,295 +1,184 @@
 {
-  "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "8d7b07a8b35345508c12fae42442443d",
+  "ReportVersion": "2025.4.3",
+  "ReportGuid": "aa4c9a303b244169b4eeb3ca29a78f94",
   "ReportName": "Prefacturas_Proasistencia",
   "ReportAlias": "Prefacturas_Proasistencia",
+  "ReportFile": "prefactura_general.mrt",
   "ReportCreated": "/Date(1493224135000+0200)/",
-  "ReportChanged": "/Date(1737715989593+0100)/",
+  "ReportChanged": "/Date(1764689451000+0100)/",
   "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
   "CalculationMode": "Interpretation",
-  "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class factura_fondogar : Stimulsoft.Report.StiReport\r\n    {\r\n        public factura_fondogar()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
-  "ReferencedAssemblies": {
-    "0": "System.Dll",
-    "1": "System.Drawing.Dll",
-    "2": "System.Windows.Forms.Dll",
-    "3": "System.Data.Dll",
-    "4": "System.Xml.Dll",
-    "5": "Stimulsoft.Controls.Dll",
-    "6": "Stimulsoft.Base.Dll",
-    "7": "Stimulsoft.Report.Dll"
-  },
   "Dictionary": {
     "DataSources": {
       "0": {
-        "Ident": "StiMySqlSource",
-        "Name": "bases_prefactura",
-        "Alias": "bases_prefactura",
-        "Key": "dbe9d351574c452c9dcd3cc617bed3e8",
-        "Columns": {
-          "0": {
-            "Name": "base",
-            "Index": -1,
-            "NameInSource": "base",
-            "Alias": "base",
-            "Type": "System.Decimal",
-            "Key": "d6cfefbd29124fbeb166e1efa7dfd139"
-          },
-          "1": {
-            "Name": "cuota",
-            "Index": -1,
-            "NameInSource": "cuota",
-            "Alias": "cuota",
-            "Type": "System.Decimal",
-            "Key": "0f6592bc65fe46eba1e5ac5f877b2483"
-          },
-          "2": {
-            "Name": "porcentaje",
-            "Index": -1,
-            "NameInSource": "porcentaje",
-            "Alias": "porcentaje",
-            "Type": "System.Decimal",
-            "Key": "3add74fe78434062bdbcb1755f0ad344"
-          },
-          "3": {
-            "Name": "prefacturaBaseId",
-            "Index": -1,
-            "NameInSource": "prefacturaBaseId",
-            "Alias": "prefacturaBaseId",
-            "Type": "System.Int32",
-            "Key": "8b3fa222b84848df8061e0895be4a1f4"
-          },
-          "4": {
-            "Name": "prefacturaId",
-            "Index": -1,
-            "NameInSource": "prefacturaId",
-            "Alias": "prefacturaId",
-            "Type": "System.Int32",
-            "Key": "212937f83c394382b65ef0f0ad015797"
-          },
-          "5": {
-            "Name": "tipoIva",
-            "Index": -1,
-            "NameInSource": "tipoIva",
-            "Alias": "tipoIva",
-            "Type": "System.String",
-            "Key": "75e04a02731c49a89870557949148d6a"
-          },
-          "6": {
-            "Name": "tipoIvaId",
-            "Index": -1,
-            "NameInSource": "tipoIvaId",
-            "Alias": "tipoIvaId",
-            "Type": "System.Int32",
-            "Key": "af272dedea014c8cb5fed9820d9de7f6"
-          }
-        },
-        "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfb.*, t.nombre AS tipoIva\r\nFROM prefacturas_bases AS pfb\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId"
-      },
-      "1": {
         "Ident": "StiMySqlSource",
         "Name": "cabecera_prefactura",
         "Alias": "cabecera_prefactura",
         "Key": "d0de2cbf64df45c3bf224f2189999591",
         "Columns": {
           "0": {
-            "Name": "ano",
-            "Index": -1,
-            "NameInSource": "ano",
-            "Alias": "ano",
-            "Type": "System.Int32",
-            "Key": "4d3157ebcaa64bfe80acca650608dd0c"
-          },
-          "1": {
-            "Name": "clienteId",
-            "Index": -1,
-            "NameInSource": "clienteId",
-            "Alias": "clienteId",
-            "Type": "System.Int32",
-            "Key": "94ce578ef4e04b5eb6f7ebe3337098d5"
-          },
-          "2": {
-            "Name": "contratoClienteMantenimientoId",
-            "Index": -1,
-            "NameInSource": "contratoClienteMantenimientoId",
-            "Alias": "contratoClienteMantenimientoId",
-            "Type": "System.Int32",
-            "Key": "20595616e8b3489b888b6eb13f555f3e"
-          },
-          "3": {
-            "Name": "emisorCodPostal",
-            "Index": -1,
-            "NameInSource": "emisorCodPostal",
-            "Alias": "emisorCodPostal",
-            "Type": "System.String",
-            "Key": "48b8af1bc7cb46bf944561d127bcd8d0"
-          },
-          "4": {
-            "Name": "emisorDireccion",
-            "Index": -1,
-            "NameInSource": "emisorDireccion",
-            "Alias": "emisorDireccion",
-            "Type": "System.String",
-            "Key": "569f27fe54f840c09cf70c7ab912c927"
-          },
-          "5": {
-            "Name": "emisorNif",
-            "Index": -1,
-            "NameInSource": "emisorNif",
-            "Alias": "emisorNif",
-            "Type": "System.String",
-            "Key": "2f95a237fd00410c9e87ee0bc294ebba"
-          },
-          "6": {
-            "Name": "emisorNombre",
-            "Index": -1,
-            "NameInSource": "emisorNombre",
-            "Alias": "emisorNombre",
-            "Type": "System.String",
-            "Key": "a4450c471fa045b5a5303b715c900b90"
-          },
-          "7": {
-            "Name": "emisorPoblacion",
-            "Index": -1,
-            "NameInSource": "emisorPoblacion",
-            "Alias": "emisorPoblacion",
-            "Type": "System.String",
-            "Key": "245f4e96ec9447569327999af63eb3d3"
-          },
-          "8": {
-            "Name": "emisorProvincia",
-            "Index": -1,
-            "NameInSource": "emisorProvincia",
-            "Alias": "emisorProvincia",
-            "Type": "System.String",
-            "Key": "7ce5d5a4b7ff413ca20dcc8ca953a77b"
-          },
-          "9": {
-            "Name": "empresaId",
-            "Index": -1,
-            "NameInSource": "empresaId",
-            "Alias": "empresaId",
-            "Type": "System.Int32",
-            "Key": "3aaeea42479a476098d57ac97c479764"
-          },
-          "10": {
-            "Name": "fecha",
-            "Index": -1,
-            "NameInSource": "fecha",
-            "Alias": "fecha",
-            "Type": "System.String",
-            "Key": "a482001f1c534b63ae7c4f2f67305a92"
-          },
-          "11": {
-            "Name": "formaPago",
-            "Index": -1,
-            "NameInSource": "formaPago",
-            "Alias": "formaPago",
-            "Type": "System.String"
-          },
-          "12": {
-            "Name": "importeRetencion",
-            "Index": -1,
-            "NameInSource": "importeRetencion",
-            "Alias": "importeRetencion",
-            "Type": "System.Decimal"
-          },
-          "13": {
-            "Name": "numero",
-            "Index": -1,
-            "NameInSource": "numero",
-            "Alias": "numero",
-            "Type": "System.Int32"
-          },
-          "14": {
-            "Name": "observaciones",
-            "Index": -1,
-            "NameInSource": "observaciones",
-            "Alias": "observaciones",
-            "Type": "System.String"
-          },
-          "15": {
-            "Name": "porcentajeRetencion",
-            "Index": -1,
-            "NameInSource": "porcentajeRetencion",
-            "Alias": "porcentajeRetencion",
-            "Type": "System.Decimal"
-          },
-          "16": {
             "Name": "prefacturaId",
-            "Index": -1,
             "NameInSource": "prefacturaId",
             "Alias": "prefacturaId",
             "Type": "System.Int32"
           },
+          "1": {
+            "Name": "ano",
+            "NameInSource": "ano",
+            "Alias": "ano",
+            "Type": "System.Int32"
+          },
+          "2": {
+            "Name": "numero",
+            "NameInSource": "numero",
+            "Alias": "numero",
+            "Type": "System.Int32"
+          },
+          "3": {
+            "Name": "serie",
+            "NameInSource": "serie",
+            "Alias": "serie",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.Byte[]"
+          },
+          "5": {
+            "Name": "empresaId",
+            "NameInSource": "empresaId",
+            "Alias": "empresaId",
+            "Type": "System.Int32"
+          },
+          "6": {
+            "Name": "clienteId",
+            "NameInSource": "clienteId",
+            "Alias": "clienteId",
+            "Type": "System.Int32"
+          },
+          "7": {
+            "Name": "contratoClienteMantenimientoId",
+            "NameInSource": "contratoClienteMantenimientoId",
+            "Alias": "contratoClienteMantenimientoId",
+            "Type": "System.Int32"
+          },
+          "8": {
+            "Name": "emisorNif",
+            "NameInSource": "emisorNif",
+            "Alias": "emisorNif",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "emisorNombre",
+            "NameInSource": "emisorNombre",
+            "Alias": "emisorNombre",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "emisorDireccion",
+            "NameInSource": "emisorDireccion",
+            "Alias": "emisorDireccion",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "emisorCodPostal",
+            "NameInSource": "emisorCodPostal",
+            "Alias": "emisorCodPostal",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "emisorPoblacion",
+            "NameInSource": "emisorPoblacion",
+            "Alias": "emisorPoblacion",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "emisorProvincia",
+            "NameInSource": "emisorProvincia",
+            "Alias": "emisorProvincia",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "receptorNif",
+            "NameInSource": "receptorNif",
+            "Alias": "receptorNif",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "receptorNombre",
+            "NameInSource": "receptorNombre",
+            "Alias": "receptorNombre",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "receptorDireccion",
+            "NameInSource": "receptorDireccion",
+            "Alias": "receptorDireccion",
+            "Type": "System.String"
+          },
           "17": {
             "Name": "receptorCodPostal",
-            "Index": -1,
             "NameInSource": "receptorCodPostal",
             "Alias": "receptorCodPostal",
             "Type": "System.String"
           },
           "18": {
-            "Name": "receptorDireccion",
-            "Index": -1,
-            "NameInSource": "receptorDireccion",
-            "Alias": "receptorDireccion",
-            "Type": "System.String"
-          },
-          "19": {
-            "Name": "receptorNif",
-            "Index": -1,
-            "NameInSource": "receptorNif",
-            "Alias": "receptorNif",
-            "Type": "System.String"
-          },
-          "20": {
-            "Name": "receptorNombre",
-            "Index": -1,
-            "NameInSource": "receptorNombre",
-            "Alias": "receptorNombre",
-            "Type": "System.String"
-          },
-          "21": {
             "Name": "receptorPoblacion",
-            "Index": -1,
             "NameInSource": "receptorPoblacion",
             "Alias": "receptorPoblacion",
             "Type": "System.String"
           },
-          "22": {
+          "19": {
             "Name": "receptorProvincia",
-            "Index": -1,
             "NameInSource": "receptorProvincia",
             "Alias": "receptorProvincia",
             "Type": "System.String"
           },
-          "23": {
-            "Name": "serie",
-            "Index": -1,
-            "NameInSource": "serie",
-            "Alias": "serie",
-            "Type": "System.String"
-          },
-          "24": {
+          "20": {
             "Name": "total",
-            "Index": -1,
             "NameInSource": "total",
             "Alias": "total",
             "Type": "System.Decimal"
           },
-          "25": {
+          "21": {
             "Name": "totalConIva",
-            "Index": -1,
             "NameInSource": "totalConIva",
             "Alias": "totalConIva",
+            "Type": "System.Decimal"
+          },
+          "22": {
+            "Name": "formaPago",
+            "NameInSource": "formaPago",
+            "Alias": "formaPago",
+            "Type": "System.String"
+          },
+          "23": {
+            "Name": "observaciones",
+            "NameInSource": "observaciones",
+            "Alias": "observaciones",
+            "Type": "System.String"
+          },
+          "24": {
+            "Name": "porcentajeRetencion",
+            "NameInSource": "porcentajeRetencion",
+            "Alias": "porcentajeRetencion",
+            "Type": "System.Decimal"
+          },
+          "25": {
+            "Name": "importeRetencion",
+            "NameInSource": "importeRetencion",
+            "Alias": "importeRetencion",
             "Type": "System.Decimal"
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT\r\npf.prefacturaId, pf.ano, pf.numero, pf.serie,DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\r\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\r\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\r\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\r\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.porcentajeRetencion, pf.importeRetencion\r\nFROM prefacturas AS pf\r\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId"
+        "SqlCommand": "SELECT\npf.prefacturaId, pf.ano, pf.numero, pf.serie,DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.porcentajeRetencion, pf.importeRetencion\nFROM prefacturas AS pf\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\n"
       },
-      "2": {
+      "1": {
         "Ident": "StiMySqlSource",
         "Name": "lineas_prefactura",
         "Alias": "lineas_prefactura",
@@ -297,126 +186,168 @@
         "Columns": {
           "0": {
             "Name": "articuloId",
-            "Index": -1,
             "NameInSource": "articuloId",
             "Alias": "articuloId",
             "Type": "System.Int32"
           },
           "1": {
             "Name": "cantidad",
-            "Index": -1,
             "NameInSource": "cantidad",
             "Alias": "cantidad",
             "Type": "System.Decimal"
           },
           "2": {
             "Name": "capituloLinea",
-            "Index": -1,
             "NameInSource": "capituloLinea",
             "Alias": "capituloLinea",
             "Type": "System.String"
           },
           "3": {
             "Name": "coste",
-            "Index": -1,
             "NameInSource": "coste",
             "Alias": "coste",
             "Type": "System.Decimal"
           },
           "4": {
             "Name": "descripcion",
-            "Index": -1,
             "NameInSource": "descripcion",
             "Alias": "descripcion",
             "Type": "System.String"
           },
           "5": {
             "Name": "grupo",
-            "Index": -1,
             "NameInSource": "grupo",
             "Alias": "grupo",
             "Type": "System.String"
           },
           "6": {
             "Name": "importe",
-            "Index": -1,
             "NameInSource": "importe",
             "Alias": "importe",
             "Type": "System.Decimal"
           },
           "7": {
             "Name": "linea",
-            "Index": -1,
             "NameInSource": "linea",
             "Alias": "linea",
             "Type": "System.Decimal"
           },
           "8": {
             "Name": "porcentaje",
-            "Index": -1,
             "NameInSource": "porcentaje",
             "Alias": "porcentaje",
             "Type": "System.Decimal"
           },
           "9": {
             "Name": "porcentajeAgente",
-            "Index": -1,
             "NameInSource": "porcentajeAgente",
             "Alias": "porcentajeAgente",
             "Type": "System.Decimal"
           },
           "10": {
             "Name": "porcentajeBeneficio",
-            "Index": -1,
             "NameInSource": "porcentajeBeneficio",
             "Alias": "porcentajeBeneficio",
             "Type": "System.Decimal"
           },
           "11": {
             "Name": "prefacturaId",
-            "Index": -1,
             "NameInSource": "prefacturaId",
             "Alias": "prefacturaId",
             "Type": "System.Int32"
           },
           "12": {
             "Name": "prefacturaLineaId",
-            "Index": -1,
             "NameInSource": "prefacturaLineaId",
             "Alias": "prefacturaLineaId",
             "Type": "System.Int32"
           },
           "13": {
             "Name": "tipoIva",
-            "Index": -1,
             "NameInSource": "tipoIva",
             "Alias": "tipoIva",
             "Type": "System.String"
           },
           "14": {
             "Name": "tipoIvaId",
-            "Index": -1,
             "NameInSource": "tipoIvaId",
             "Alias": "tipoIvaId",
             "Type": "System.Int32"
           },
           "15": {
             "Name": "totalLinea",
-            "Index": -1,
             "NameInSource": "totalLinea",
             "Alias": "totalLinea",
             "Type": "System.Decimal"
           },
           "16": {
             "Name": "unidadId",
-            "Index": -1,
             "NameInSource": "unidadId",
             "Alias": "unidadId",
             "Type": "System.Int32"
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo\r\nFROM prefacturas_lineas AS pfl\r\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\r\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\r\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId"
+        "SqlCommand": "SELECT pfl.*, t.nombre AS tipoIva, ga.nombre AS grupo\nFROM prefacturas_lineas AS pfl\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfl.tipoIvaId\nLEFT JOIN articulos AS a ON a.articuloId = pfl.articuloId\nLEFT JOIN grupo_articulo AS ga ON ga.grupoArticuloId = a.grupoArticuloId"
+      },
+      "2": {
+        "Ident": "StiMySqlSource",
+        "Name": "bases_prefactura",
+        "Alias": "bases_prefactura",
+        "Key": "dbe9d351574c452c9dcd3cc617bed3e8",
+        "Columns": {
+          "0": {
+            "Name": "base",
+            "NameInSource": "base",
+            "Alias": "base",
+            "Type": "System.Decimal",
+            "Key": "d6cfefbd29124fbeb166e1efa7dfd139"
+          },
+          "1": {
+            "Name": "cuota",
+            "NameInSource": "cuota",
+            "Alias": "cuota",
+            "Type": "System.Decimal",
+            "Key": "0f6592bc65fe46eba1e5ac5f877b2483"
+          },
+          "2": {
+            "Name": "porcentaje",
+            "NameInSource": "porcentaje",
+            "Alias": "porcentaje",
+            "Type": "System.Decimal",
+            "Key": "3add74fe78434062bdbcb1755f0ad344"
+          },
+          "3": {
+            "Name": "prefacturaBaseId",
+            "NameInSource": "prefacturaBaseId",
+            "Alias": "prefacturaBaseId",
+            "Type": "System.Int32",
+            "Key": "8b3fa222b84848df8061e0895be4a1f4"
+          },
+          "4": {
+            "Name": "prefacturaId",
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Int32",
+            "Key": "212937f83c394382b65ef0f0ad015797"
+          },
+          "5": {
+            "Name": "tipoIva",
+            "NameInSource": "tipoIva",
+            "Alias": "tipoIva",
+            "Type": "System.String",
+            "Key": "75e04a02731c49a89870557949148d6a"
+          },
+          "6": {
+            "Name": "tipoIvaId",
+            "NameInSource": "tipoIvaId",
+            "Alias": "tipoIvaId",
+            "Type": "System.Int32",
+            "Key": "af272dedea014c8cb5fed9820d9de7f6"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT pfb.*, t.nombre AS tipoIva\nFROM prefacturas_bases AS pfb\nLEFT JOIN tipos_iva AS t ON t.tipoIvaId = pfb.tipoIvaId"
       }
     },
     "Databases": {
@@ -430,19 +361,6 @@
     },
     "Relations": {
       "0": {
-        "Name": "cabeceras_lineas",
-        "ChildColumns": {
-          "0": "prefacturaId"
-        },
-        "ParentColumns": {
-          "0": "prefacturaId"
-        },
-        "NameInSource": "cabeceras_lineas",
-        "Alias": "cabeceras_lineas",
-        "ParentSource": "cabecera_prefactura",
-        "ChildSource": "lineas_prefactura"
-      },
-      "1": {
         "Name": "cabecera_bases",
         "ChildColumns": {
           "0": "prefacturaId"
@@ -455,6 +373,19 @@
         "Key": "de964d9e8e69426db4e158018a9e0adb",
         "ParentSource": "cabecera_prefactura",
         "ChildSource": "bases_prefactura"
+      },
+      "1": {
+        "Name": "cabeceras_lineas",
+        "ChildColumns": {
+          "0": "prefacturaId"
+        },
+        "ParentColumns": {
+          "0": "prefacturaId"
+        },
+        "NameInSource": "cabeceras_lineas",
+        "Alias": "cabeceras_lineas",
+        "ParentSource": "cabecera_prefactura",
+        "ChildSource": "lineas_prefactura"
       }
     }
   },
@@ -472,6 +403,7 @@
         "0": {
           "Ident": "StiPageFooterBand",
           "Name": "PiePagina",
+          "CanGrow": true,
           "ClientRectangle": "0,32.44,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -500,6 +432,7 @@
         "1": {
           "Ident": "StiDataBand",
           "Name": "Datacabecera_prefactura",
+          "CanGrow": true,
           "ClientRectangle": "0,0.4,19,6.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -756,6 +689,7 @@
         "2": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,7.8,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -790,6 +724,7 @@
         "3": {
           "Ident": "StiHeaderBand",
           "Name": "CabeceraLineas",
+          "CanGrow": true,
           "ClientRectangle": "0,9.4,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -901,6 +836,7 @@
         "4": {
           "Ident": "StiDataBand",
           "Name": "Datalineas_prefactura",
+          "CanGrow": true,
           "ClientRectangle": "0,11,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -979,10 +915,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               }
@@ -1004,10 +941,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -1031,6 +969,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false
               }
@@ -1043,6 +982,7 @@
         "5": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,12.6,19,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -1067,10 +1007,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -1098,6 +1039,7 @@
         "6": {
           "Ident": "StiHeaderBand",
           "Name": "CabeceraBases",
+          "CanGrow": true,
           "ClientRectangle": "0,14.2,19,1.4",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -1193,6 +1135,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "Databases_prefactura",
+          "CanGrow": true,
           "ClientRectangle": "0,16.4,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -1232,6 +1175,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false
               }
@@ -1252,10 +1196,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               }
@@ -1277,10 +1222,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -1294,6 +1240,7 @@
         "8": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,18,19,5.6",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -1318,10 +1265,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -1380,10 +1328,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               }
@@ -1406,10 +1355,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -1441,7 +1391,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Observaciones:\r\n{cabecera_prefactura.observaciones}"
+                "Value": "Observaciones:\n{cabecera_prefactura.observaciones}"
               },
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
@@ -1457,7 +1407,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Forma de pago:\r\n{cabecera_prefactura.formaPago}"
+                "Value": "Forma de pago:\n{cabecera_prefactura.formaPago}"
               },
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
@@ -1470,16 +1420,8 @@
           "PrintIfEmpty": true
         }
       },
-      "PageWidth": 21.0,
-      "PageHeight": 29.7,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
-      },
-      "Margins": {
-        "Left": 1.0,
-        "Right": 1.0,
-        "Top": 1.0,
-        "Bottom": 1.0
       }
     }
   }
