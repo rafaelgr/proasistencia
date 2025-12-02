@@ -149,14 +149,6 @@ function obtainKey() {
     });
 }
 
-function obtainKeyNew() {
-    llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
-            Stimulsoft.Base.StiLicense.key = data.sti_key_new
-        }
-    });
-}
 
 function admData() {
     var self = this;
