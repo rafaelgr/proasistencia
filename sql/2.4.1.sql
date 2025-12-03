@@ -142,3 +142,12 @@ ALTER TABLE `prefacturas_bases_temporal`
 
 ALTER TABLE `prefacturas_lineas_temporal` 
 ADD CONSTRAINT `prefl_pref_temporal` FOREIGN KEY (`prefacturaTempId`)  REFERENCES  `prefacturas_temporal`(`prefacturaTempId`) ON DELETE CASCADE; 
+
+
+ALTER TABLE `contrato_planificacion`   
+	ADD COLUMN `contPlanificacionTempId` INT(11) NULL AFTER `formaPagoId`,
+  ADD CONSTRAINT `contPlanificacion_temp_FK` FOREIGN KEY (`contPlanificacionTempId`) REFERENCES `contrato_planificacion_temporal`(`contPlanificacionTempId`);
+
+  ALTER TABLE contrato_planificacion
+ADD UNIQUE INDEX idx_tempId (contPlanificacionTempId);
+

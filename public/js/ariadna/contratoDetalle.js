@@ -4007,36 +4007,43 @@ function initTablaPrefacturas(departamentoId) {
             }
         }, {
             data: "coste",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "noFacturado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "facturado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
@@ -4610,26 +4617,31 @@ function initTablaFacturas() {
             }
         }, {
             data: "coste",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
@@ -4952,18 +4964,21 @@ function initTablaFacproves() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -5285,12 +5300,14 @@ function initTablaAntproves() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -5584,12 +5601,14 @@ function initTablaAntcols() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -5891,18 +5910,21 @@ function initTablaFactcol() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -6970,13 +6992,13 @@ function initTablaConceptosLineas() {
 
         }, {
             data: "porcentaje",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         }, {
             data: "importe",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
@@ -7502,59 +7524,59 @@ function initTablaPlanificacionLineasObras() {
 
         }, {
             data: "porcentaje",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         }, {
             data: "importe",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         }, {
             data: "numPrefacturas",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
         }, {
             data: "importePrefacturado",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
 
         }, {
             data: "numFacturas",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
         }, {
             data: "importeFacturado",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
 
         }, {
             data: "importeFacturadoIva",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
 
         }, {
             data: "numCobros",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
         },
         {
             data: "importeCobrado",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
@@ -9140,11 +9162,11 @@ function initTablaPlanificacionLineasObrasTemp() {
             { data: "fecha" }, // columna oculta
             { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
             { data: "concepto" },
-            { data: "porcentaje", className: "text-left", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "importe", className: "text-left", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "numPrefacturas", className: "text-left", render: function (data) { return numeral(data).format('0'); } },
-            { data: "importePrefacturado", className: "text-left", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "porRetenGarantias", className: "text-left", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "porcentaje", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "importe", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "numPrefacturas", className: "text-right", render: function (data) { return numeral(data).format('0'); } },
+            { data: "importePrefacturado", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "porRetenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPagoNombre" },
             {
                 data: "contPlanificacionTempId", render: function (data, type, row) {
@@ -9865,22 +9887,18 @@ function initTablaPrefacturasTemp(departamentoId) {
             { data: "receptorNombre" },
             { data: "vNum" },
             { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
-            { data: "coste", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "retenGarantias", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "coste", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "total", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "totalConIva", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "retenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "vFPago" },
             {
-                data: "prefacturaTempId", render: function (data, row) {
-                    var bt1 = "", bt2, bt3;
-                    if (!row.contratoPorcenId) {
-                        if (row.departamentoId != 8 || (row.departamentoId == 8 && !row.facturaId)) {
-                            bt1 = `<button class='btn btn-circle btn-danger' onclick='deletePrefactura(${data});' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>`;
-                        }
-                    }
-                    bt2 = `<button class='btn btn-circle btn-success' onclick='editPrefactura(${data});' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>`;
-                    bt3 = `<button class='btn btn-circle btn-success' onclick='printPrefactura(${data});' title='Imprimir PDF'><i class='fa fa-file-pdf-o fa-fw'></i></button>`;
-                    return `<div class='pull-right'>${bt1} ${bt2} ${bt3}</div>`;
+                data: "prefacturaTempId", width: "5%", render: function (data, row) {
+                    var bt1 = "";
+                    bt1 = `<button class='btn btn-circle btn-danger' onclick='deletePrefactura(${data});' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>`;
+                    //bt2 = `<button class='btn btn-circle btn-success' onclick='editPrefactura(${data});' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>`;
+                    //bt3 = `<button class='btn btn-circle btn-success' onclick='printPrefactura(${data});' title='Imprimir PDF'><i class='fa fa-file-pdf-o fa-fw'></i></button>`;
+                    return `<div class='pull-right'>${bt1}</div>`;
                 }
             }
         ]
@@ -9987,5 +10005,26 @@ function loadPrefacturasDelContratoTemp(contratoId) {
     llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/temporales/" + contratoId, null, function (err, data) {
         if (err) return;
         loadTablaPrefacturasTemp(data);
+    });
+}
+
+function importarPlanificacionObrasTemp() {
+    // mensaje de confirmación
+    var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación.¿Desea continuar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/importa/palnificacion/lineas/temporales/" + vm.contratoId(), null, function (err, data) {
+                if (err) return;
+                loadPlanificacionLineasObras(vm.contratoId(), null);
+            });
+        }
+
+        if (ButtonPressed === "Cancelar") {
+            //no hacemos nada
+        }
     });
 }
