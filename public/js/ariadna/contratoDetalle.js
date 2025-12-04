@@ -435,6 +435,69 @@ function initForm() {
         vm.porcentajePlanificacionTemp(roundToSix(porcentaje));
 
     });
+    $('#modalGenerarPrefacturasPlanificacionTemp').on('hidden.bs.modal', function () {
+
+        // --- 1. LIMPIAR CHECKBOX Y SELECTS ---
+        $('#chkFacturaParcial').prop('checked', false);
+        $('#cmbPeriodosPagos3').val(null).trigger('change');
+        $('#txtNumPagos3').val('');
+
+        // --- 2. LIMPIAR KO OBSERVABLES (excepto los permitidos) ---
+        if (typeof viewModelGenerarPrefacturasTemp !== "undefined") {
+
+            // Fecha Inicio facturación → NO se toca
+            // viewModelGenerarPrefacturasTemp.fechaPrimeraFactura()
+
+            // Importe a facturar → NO se toca
+            // viewModelGenerarPrefacturasTemp.importeAFacturar()
+
+            viewModelGenerarPrefacturasTemp.facturaParcial(false);
+            viewModelGenerarPrefacturasTemp.speriodoPagoId(null);
+            viewModelGenerarPrefacturasTemp.elegidosPeriodosPagos([]);
+            viewModelGenerarPrefacturasTemp.numPagos('');
+        }
+
+        // --- 3. LIMPIAR DATATABLE ---
+        if ($.fn.DataTable.isDataTable('#dt_generar_prefacturas-temp')) {
+            $('#dt_generar_prefacturas-temp').DataTable().clear().draw();
+        }
+
+    });
+
+    $('#modalGenerarPrefacturasPlanificacion').on('hidden.bs.modal', function () {
+
+        // --- 1. LIMPIAR CHECKBOX, SELECTS Y CAMPOS ---
+        $('#chkFacturaParcial').prop('checked', false);
+        $('#cmbPeriodosPagos2').val(null).trigger('change');
+        $('#txtNumPagos2').val('');
+
+        // No limpiar:
+        // #txtGFechaPrimeraFactura2  (fecha inicio facturación)
+        // #txtImporteFacturar2       (importe a facturar)
+
+        // --- 2. LIMPIAR OBSERVABLES KO (excepto los permitidos) ---
+        if (typeof viewModelGenerarPrefacturas !== "undefined") {
+
+            // No tocar:
+            // viewModelGenerarPrefacturas.fechaPrimeraFactura()
+            // viewModelGenerarPrefacturas.importeAFacturar()
+
+            viewModelGenerarPrefacturas.facturaParcial(false);
+            viewModelGenerarPrefacturas.speriodoPagoId(null);
+            viewModelGenerarPrefacturas.elegidosPeriodosPagos([]);
+            viewModelGenerarPrefacturas.numPagos('');
+        }
+
+        // --- 3. LIMPIAR DATATABLE ---
+        if ($.fn.DataTable.isDataTable('#dt_generar_prefacturas2')) {
+            $('#dt_generar_prefacturas2').DataTable().clear().draw();
+        }
+
+    });
+
+
+
+
 
     //Evento de marcar/desmarcar todos los checks
     $('#checkMain').click(
@@ -712,6 +775,7 @@ function initForm() {
         $('#btnAltaAntcol').hide();
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
+
 
         //
         document.title = "NUEVO CONTRATO";
@@ -1046,7 +1110,6 @@ function admData() {
     self.porcentajePlanificacionTemp = ko.observable();
     self.importeCalculadoPlanificacionTemp = ko.observable();
     self.fechaPlanificacionObrasTemp = ko.observable();
-    self.fechaPlanificacionObras3 = ko.observable();
     self.importeFacturadoTemp = ko.observable();
     self.importeCobradoTemp = ko.observable();
     self.importePlanificadoTemp = ko.observable();
@@ -3131,6 +3194,7 @@ var cambioPeriodosPagosPlanificacion = function (data) {
     vm.numPagos(calcularNumPagosPlanificacion());
 }
 
+
 var obtenerDivisor = function () {
     var divisor = 1;
     switch (vm.speriodoPagoId()) {
@@ -3400,7 +3464,7 @@ var controlDePrefacturasYaGeneradas = function (contratoId, done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
         if (err) return done(err);
         if (data.length == 0) return done(null, true);
-        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        var mensaje = "Ya hay prefacturas temporales generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
         mensajeAceptarCancelar(mensaje, function () {
             llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
                 if (err) return done(err);
@@ -6790,6 +6854,7 @@ var calcularNumPagosPlanificacion = function () {
 
 
 
+
 /* FUNCIONES RELACIONADAS CON LA CARGA DE LA TABLA HISTORIAL DE COBROS */
 
 function initTablaContratosCobros() {
@@ -9113,7 +9178,7 @@ function initTablaPlanificacionLineasObrasTemp() {
 
             // Update footer
             $(api.columns(4).footer()).html(
-                numeral(total).format('0,0.00')
+                numeral(totalImporte).format('0,0.00')
             );
 
             // Total Núm. Prefacturas (columna 5)
@@ -9314,8 +9379,8 @@ function generarPrefacturaPlanificacionObrasTemp(id) {
 
 }
 function limpiarModalGenerarPrefacturasObrasTemp() {
-    vm.fechaPlanificacionObras3(null);
-    $('#chkVarias').prop('checked', false);
+    vm.fechaPlanificacionObrasTemp(null);
+    $('#chkVariasTemp').prop('checked', false);
     RegPlanificacion = null;
 }
 
@@ -9345,7 +9410,7 @@ function deletePlanificacionLineaObrasTemp(contPlanificacionTempId) {
             if (err) return;
             llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data) {
                 loadTablaPlanificacionLineasObrasTemp(data);
-                loadPrefacturasDelContrato(vm.contratoId());
+                loadPrefacturasDelContratoTemp(vm.contratoId());
             });
         });
     }, function () {
@@ -9476,7 +9541,7 @@ function crearPrefacturaPlanificacionTemp(numPagos, empresaId, clienteId, empres
     return pagos;
 }
 
-function aceptarGenerarPrefacturaPlanificacionObrasTemp() {
+function aceptarGenerarPrefacturaPlanificacionObrasTemp(init) {
     $('#modalGenerarPrefacturasObrasTemp').modal('hide');
     var opcion = $('#chkVariasTemp').prop('checked');
     //limpiarModalGenerarPrefacturasObras();
@@ -9494,7 +9559,7 @@ function aceptarGenerarPrefacturaPlanificacionObrasTemp() {
         var clienteId = vm.clienteId();
         var cliente = vm.nombreComercial();
         var empresa = $("#cmbEmpresas").select2('data').text;
-        RegPlanificacion[0].fecha = vm.fechaPlanificacionObras3()
+        RegPlanificacion[0].fecha = vm.fechaPlanificacionObrasTemp()
         var prefacturas = crearPrefacturaPlanificacionTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
         aceptarGenerarPrefacturaPlanificacionTemp();
@@ -9509,10 +9574,10 @@ var aceptarGenerarPrefacturaPlanificacionTemp = function () {
         prefacturas: vm.prefacturasAGenerar(),
     };
 
-    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
         if (err) return;
         if (!result) {
-            $('#modalGenerarPrefacturas').modal('hide');
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
             return;
         }
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
@@ -9520,8 +9585,10 @@ var aceptarGenerarPrefacturaPlanificacionTemp = function () {
                 mensError('Error al crear la prefactura temporal');
                 return;
             }
-            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-            $('#modalGenerarPrefacturas').modal('hide');
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
         });
     });
 
@@ -9738,14 +9805,15 @@ var generarPrefacturasPlanificacionTemp = function (data) {
     vm.importeAFacturar(roundToSix(resto));
     $("#cmbPeriodosPagos3").select2(select2Spanish());
     loadPeriodosPagos(vm.speriodoPagoId());
+
     $("#cmbPeriodosPagos3").select2().on('change', function (e) {
-        cambioPeriodosPagosPlanificacion(e.added);
+        cambioPeriodosPagosPlanificacionTemp(e.added);
     });
 
 
 
-    if (vm.fechaPlanificacionObras2()) {
-        vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
+    if (vm.fechaPlanificacionObrasTemp()) {
+        vm.fechaPrimeraFactura(vm.fechaPlanificacionObrasTemp());
     }
     else if (!vm.fechaPrimeraFactura()) {
         var f = new Date();
@@ -9767,10 +9835,10 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
     };
-    controlDePrefacturasYaGeneradasPlanificacion(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
         if (err) return;
         if (!result) {
-            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
             return;
         }
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
@@ -9779,9 +9847,10 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
                 return;
             }
             $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
-            mostrarMensajeSmart('Prefacturas temporales creadas correctamente.');
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
-            //loadPrefacturasDelContrato(vm.contratoId());
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId());
             //actualizaCobrosPlanificacion(vm.contratoId());
             limpiarModalGenerarPrefacturasObrasTemp();
         });
@@ -9895,7 +9964,7 @@ function initTablaPrefacturasTemp(departamentoId) {
             {
                 data: "prefacturaTempId", width: "5%", render: function (data, row) {
                     var bt1 = "";
-                    bt1 = `<button class='btn btn-circle btn-danger' onclick='deletePrefactura(${data});' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>`;
+                    bt1 = `<button class='btn btn-circle btn-danger' onclick='deletePrefacturaTemp(${data});' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>`;
                     //bt2 = `<button class='btn btn-circle btn-success' onclick='editPrefactura(${data});' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>`;
                     //bt3 = `<button class='btn btn-circle btn-success' onclick='printPrefactura(${data});' title='Imprimir PDF'><i class='fa fa-file-pdf-o fa-fw'></i></button>`;
                     return `<div class='pull-right'>${bt1}</div>`;
@@ -10027,4 +10096,85 @@ function importarPlanificacionObrasTemp() {
             //no hacemos nada
         }
     });
+}
+
+var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, contPlanificacionTempId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        //sumamos los importes que se van a eliminar
+        var importe = 0
+        data.forEach(function (pf) {
+            importe = importe + pf.totalAlCliente;
+        });
+        var datos = {
+            importe: importe
+        }
+        mensajeAceptarCancelar(mensaje, function () {
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, datos, function (err, data) {
+                if (err) return done(err);
+                done(null, true);
+            });
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+function deletePrefacturaTemp(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                prefacturaId: id
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/prefacturas/temporales/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadPrefacturasDelContratoTemp(vm.contratoId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+var cambioPeriodosPagosPlanificacionTemp = function (data) {
+    vm.numPagos(calcularNumPagosPlanificacionTemp());
+}
+
+var calcularNumPagosPlanificacionTemp = function () {
+    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    // if (vm.facturaParcial()){
+    //     var aux = moment(fInicial).format('YYYY-MM-DD').split('-');
+    //     fInicial = aux[0] + "-" + aux[1] + "-01";
+    // }
+    var fFinal = new Date(spanishDbDate(vm.fechaFinal()));
+    // añadimos un dia a la feha final para contemplar el caso en el que ponen
+    // como fecha final de contrato la de fin de mes.
+    var numMeses = parseInt(moment(fFinal).add(1, 'days').diff(fInicial, 'months', true));
+    if (numMeses == 0) numMeses = 1; // por lo menos un pago
+    // calculamos según la periodicidad
+    var divisor = obtenerDivisor();
+    var numpagos = 1
+    if (divisor != 0) numpagos = parseInt(numMeses / divisor);
+    if (numpagos == 0) numpagos = 1; // por lo menos uno
+    $('#txtNumPagos3').val(numpagos);
+    return numpagos;
 }
