@@ -163,7 +163,8 @@ function initForm() {
         if (err) return;
         if (data) {
             initAutoCliente();
-            vm.contratoId(gup('contratoId'));
+            vm.contratoId(gup('ContratoId'));
+            vm.empresaId(gup('EmpresaId'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
             llamadaAjax(verb, url, null, function (err, data) {
@@ -407,10 +408,19 @@ var rptContratosParametrosJson = function () {
 
 
 function obtainReportJson(obj) {
+
+    let file = null
+    if(vm.empresaId() == 2) file = "/reports/contrato_proas.mrt";
+    else if(vm.empresaId() == 7) file = "/reports/contrato_reabita.mrt";
     const report = new Stimulsoft.Report.StiReport();
 
+    if(!file) {
+        mensError("No se ha encontrado el archivo de informe para esta empresa");
+        return;
+    }
+
     // Cargar el reporte desde archivo .mrt
-    report.loadFile("/reports/contrato_reabita2.mrt");
+    report.loadFile(file);
 
     // Crear DataSet y registrar
     const dataSet = new Stimulsoft.System.Data.DataSet("datos_contrato");

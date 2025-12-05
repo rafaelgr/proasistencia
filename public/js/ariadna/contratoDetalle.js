@@ -1584,6 +1584,7 @@ function loadEmpresas(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesEmpresas(empresas);
+        if(id) vm.scontratoId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
     });
 }
@@ -9103,7 +9104,7 @@ var imprimir = function () {
 }
 
 function printContrato(id) {
-    var url = "InfContratos2.html?contratoId=" + id;
+    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" +  vm.sempresaId();
     window.open(url, '_new');
 }
 //CREAR CONTRATO DE INTERESES
