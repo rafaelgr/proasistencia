@@ -1132,6 +1132,7 @@ function admData() {
     self.nombrePresidente = ko.observable();
     self.dniPresidente = ko.observable();
     self.correoPresidente = ko.observable();
+    self.fechaJunta = ko.observable();
 }
 
 function loadData(data) {
@@ -1237,6 +1238,7 @@ function loadData(data) {
     vm.nombrePresidente(data.nombrePresidente);
     vm.dniPresidente(data.dniPresidente);
     vm.correoPresidente(data.correoPresidente);
+    vm.fechaJunta(spanishDate(data.fechaJunta));
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1545,7 +1547,8 @@ var generarContratoDb = function () {
             //
             "nombrePresidente": vm.nombrePresidente(),
             "dniPresidente": vm.dniPresidente(),
-            "correoPresidente": vm.correoPresidente()
+            "correoPresidente": vm.correoPresidente(),
+            "fechaJunta": spanishDbDate(vm.fechaJunta())
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)

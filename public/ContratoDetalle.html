@@ -64,7 +64,7 @@
     <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png"
         media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
-  
+
 </head>
 <!--
 
@@ -1143,7 +1143,7 @@
                                                                                                     data-bind="value: dniPresidente" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        <section class="col col-md-4">
+                                                                                        <section class="col col-md-2">
                                                                                             <label
                                                                                                 class="label">Correo</label>
                                                                                             <label class="input">
@@ -1151,6 +1151,17 @@
                                                                                                     id="txtCorreoPresidente"
                                                                                                     name="txtCorreoPresidente"
                                                                                                     data-bind="value: correoPresidente" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">Fecha de la junta</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtFechaJunta"
+                                                                                                    name="txtFechaJunta"
+                                                                                                    data-bind="value: fechaJunta"
+                                                                                                    class="datepicker"
+                                                                                                    data-dateformat="dd/mm/yy" />
                                                                                             </label>
                                                                                         </section>
                                                                                     </div>
@@ -1906,7 +1917,8 @@
                                                                                 <!-- TABLA PLANIFICACIÓN -->
                                                                                 <div
                                                                                     id="tbLineasPlanificacionObrasTemp">
-                                                                                    <table  style="background-color: antiquewhite !important;"
+                                                                                    <table
+                                                                                        style="background-color: antiquewhite !important;"
                                                                                         id="dt_lineasPlanificacionObrasTemp"
                                                                                         class="table table-striped table-bordered table-hover"
                                                                                         width="100%">
@@ -1935,7 +1947,8 @@
                                                                                                 <th></th>
                                                                                             </tr>
                                                                                         </thead>
-                                                                                        <tfoot style="background-color: #fff !important;">
+                                                                                        <tfoot
+                                                                                            style="background-color: #fff !important;">
                                                                                             <tr>
                                                                                                 <th colspan="3"
                                                                                                     style="text-align:right !important">

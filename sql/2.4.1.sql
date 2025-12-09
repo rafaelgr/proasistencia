@@ -151,3 +151,5 @@ ALTER TABLE `contrato_planificacion`
   ALTER TABLE contrato_planificacion
 ADD UNIQUE INDEX idx_tempId (contPlanificacionTempId);
 
+ALTER TABLE `contratos`   
+	ADD COLUMN `fechaJunta` DATE NULL AFTER `contratoInteresesId`;

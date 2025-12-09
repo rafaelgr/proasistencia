@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "60a05ac4c3f86bb6632d13fae0acd3a8",
+  "ReportGuid": "396ed90959a8869a5b678ed06ce0dcb0",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1764941302000+0100)/",
+  "ReportChanged": "/Date(1765283064000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -27,6 +27,307 @@
         "Key": "_x0034_ff264f6a7094357906f362ae68f9ea4"
       }
     },
+    "DataSources": {
+      "0": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato",
+        "Alias": "datos_contrato",
+        "Columns": {
+          "0": {
+            "Name": "cerFinal",
+            "NameInSource": "cerFinal",
+            "Alias": "cerFinal",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "codPostalTrabajo",
+            "NameInSource": "codPostalTrabajo",
+            "Alias": "codPostalTrabajo",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "correoPresidente",
+            "NameInSource": "correoPresidente",
+            "Alias": "correoPresidente",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "direccionTrabajo",
+            "NameInSource": "direccionTrabajo",
+            "Alias": "direccionTrabajo",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "dniPresidente",
+            "NameInSource": "dniPresidente",
+            "Alias": "dniPresidente",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "fechaContrato",
+            "NameInSource": "fechaContrato",
+            "Alias": "fechaContrato",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "fechaJunta",
+            "NameInSource": "fechaJunta",
+            "Alias": "fechaJunta",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "iban",
+            "NameInSource": "iban",
+            "Alias": "iban",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "importeCliente",
+            "NameInSource": "importeCliente",
+            "Alias": "importeCliente",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "nifCliente",
+            "NameInSource": "nifCliente",
+            "Alias": "nifCliente",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "nombrePresidente",
+            "NameInSource": "nombrePresidente",
+            "Alias": "nombrePresidente",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "poblacionTrabajo",
+            "NameInSource": "poblacionTrabajo",
+            "Alias": "poblacionTrabajo",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "provinciaTrabajo",
+            "NameInSource": "provinciaTrabajo",
+            "Alias": "provinciaTrabajo",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "referencia",
+            "NameInSource": "referencia",
+            "Alias": "referencia",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "tipoProyecto",
+            "NameInSource": "tipoProyecto",
+            "Alias": "tipoProyecto",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "tipoProyectoId",
+            "NameInSource": "tipoProyectoId",
+            "Alias": "tipoProyectoId",
+            "Type": "System.Decimal"
+          }
+        },
+        "NameInSource": "datosReporte(71).datos_contrato"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato_Intereses",
+        "Alias": "datos_contrato_Intereses",
+        "Columns": {
+          "0": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "esLetra",
+            "NameInSource": "esLetra",
+            "Alias": "esLetra",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "numletras",
+            "NameInSource": "numletras",
+            "Alias": "numletras",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "sumTotalAlcliente",
+            "NameInSource": "sumTotalAlcliente",
+            "Alias": "sumTotalAlcliente",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "sumTotalConIva",
+            "NameInSource": "sumTotalConIva",
+            "Alias": "sumTotalConIva",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "totalAlCliente",
+            "NameInSource": "totalAlCliente",
+            "Alias": "totalAlCliente",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "totalConIva",
+            "NameInSource": "totalConIva",
+            "Alias": "totalConIva",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "totletras",
+            "NameInSource": "totletras",
+            "Alias": "totletras",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "datosReporte(71).datos_contrato_Intereses"
+      },
+      "2": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato_letras",
+        "Alias": "datos_contrato_letras",
+        "Columns": {
+          "0": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "esLetra",
+            "NameInSource": "esLetra",
+            "Alias": "esLetra",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "numletras",
+            "NameInSource": "numletras",
+            "Alias": "numletras",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "sumTotalAlcliente",
+            "NameInSource": "sumTotalAlcliente",
+            "Alias": "sumTotalAlcliente",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "sumTotalConIva",
+            "NameInSource": "sumTotalConIva",
+            "Alias": "sumTotalConIva",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "totalAlCliente",
+            "NameInSource": "totalAlCliente",
+            "Alias": "totalAlCliente",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "totalConIva",
+            "NameInSource": "totalConIva",
+            "Alias": "totalConIva",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "totletras",
+            "NameInSource": "totletras",
+            "Alias": "totletras",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "datosReporte(71).datos_contrato_letras"
+      },
+      "3": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato_pagos",
+        "Alias": "datos_contrato_pagos",
+        "Columns": {
+          "0": {
+            "Name": "concepto",
+            "NameInSource": "concepto",
+            "Alias": "concepto",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "contPlanificacionTempId",
+            "NameInSource": "contPlanificacionTempId",
+            "Alias": "contPlanificacionTempId",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "formaPago",
+            "NameInSource": "formaPago",
+            "Alias": "formaPago",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "formaPagoId",
+            "NameInSource": "formaPagoId",
+            "Alias": "formaPagoId",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "formaPagoNombre",
+            "NameInSource": "formaPagoNombre",
+            "Alias": "formaPagoNombre",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "importePrefacturadoIva",
+            "NameInSource": "importePrefacturadoIva",
+            "Alias": "importePrefacturadoIva",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "porcentaje",
+            "NameInSource": "porcentaje",
+            "Alias": "porcentaje",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "totalAlCliente",
+            "NameInSource": "totalAlCliente",
+            "Alias": "totalAlCliente",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "datosReporte(71).datos_contrato_pagos"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiJsonDatabase",
+        "Name": "datosReporte(71)",
+        "Alias": "datosReporte(71)",
+        "PathData": "C:\\Users\\Vicent\\Downloads\\datosReporte (71).json",
+        "HeadersString": "YyoQVHvZXeyY3LY5ASN05g=="
+      }
+    },
     "Relations": {
       "0": {
         "Name": "datos_contrato",
@@ -37,8 +338,7 @@
           "0": "importeCliente"
         },
         "NameInSource": "datos_contrato_importeCliente",
-        "Alias": "datos_contrato",
-        "ParentSource": "datos_contrato"
+        "Alias": "datos_contrato"
       },
       "1": {
         "Name": "datos_contrato_importeCliente",
@@ -132,7 +432,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; text-align: justify;\"><font size=\"10\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\">Reunidos, en Madrid a {datos_contrato.fecha}, D. {datos_contrato.nombrePresidente} con D.N.I. nº {datos_contrato.dniPresidente}, en calidad de presidente de la Comunidad de Propietarios de la {datos_contrato.direccionTrabajo}&nbsp; ({datos_contrato.codPostalTrabajo}-{datos_contrato.poblacionTrabajo}) con CIF. {datos_contrato.nifCliente}, en adelante la&nbsp;<b>PROPIEDAD&nbsp;</b>y Dª. M.ª ADELA ALONSO GARCIA, con D.N.I. 70025204W en representación de PROASISTENCIA, SL., con domicilio en Cº de Rejas nº 1 – 28821-Coslada (Madrid) con N.I.F. nº B-81323180 en adelante la&nbsp;<b>CONTRATA.</b></font><font size=\"8\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><b>&nbsp;</b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font size=\"8\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><b><br></b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\">EXPONEN:</b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\"><br></b></font></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><font size=\"10\">I.- Que la Propiedad desea llevar a cabo las obras de {datos_contrato.tipoProyecto}, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}-{datos_contrato.poblacionTrabajo}); por lo que adjudican a la <b>CONTRATA</b> mediante junta general extraordinaria celebrada con fecha&nbsp; &nbsp;05/04/25 <b>y según certificado de la Administración de la finca, donde todos los propietarios, acuerdan el abono de las obras de forma solidaria </b>según cuadro de amortización adjunto y en base al Presupuesto de <b>Ref. {datos_contrato.referencia}&nbsp;</b>por importe de {datos_contrato.importeCliente} € más IVA, de fecha 15/11/2024 que se adjunta como Anexo nº 1 y de acuerdo a las siguientes</font></span></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><font size=\"10\"><br></font></span></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial; text-align: start;\"><b><font size=\"10\">CLAUSULAS:</font></b></span></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial; text-align: start;\"><b><font size=\"10\"><br></font></b></span></div><div style=\"text-align: justify;\"><p class=\"MsoNormal\"><font size=\"10\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">I.-&nbsp;<u>SERAN DE CUENTA DE LA CONTRATA</u></span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b>:</b><o:p></o:p></span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b><br></b></span></font></p><p class=\"MsoNormal\"><font size=\"10\"><b><u><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Materiales</span></u></b><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">&nbsp;.-&nbsp;</span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Todos los necesarios para la realización de los trabajos, salvo aquellos que no estén incluidos específicamente en el presupuesto.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><b><u><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Transporte</span></u></b><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">.-&nbsp;</span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">De todos los materiales incluidos en el presupuesto hasta la zona de trabajo de la obra.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><b><u><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Instalación</span></u></b><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">.-&nbsp;</span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">De todos los materiales incluidos en el presupuesto, incluyendo retribución del personal, dietas, desplazamiento y seguros sociales.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><br></span></font></p><p class=\"MsoNormal\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b><font size=\"10\">II.-&nbsp;<u>SERAN DE CUENTA DE LA PROPIEDAD</u>:</font></b></span></p><p class=\"MsoNormal\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b><font size=\"10\"><br></font></b></span></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">- La obtención de permisos y licencias legales, la obtención de permisos de enganches, implantación o&nbsp;&nbsp;</span><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">accesos a</span><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">&nbsp;&nbsp;</span><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">finca ajena, etc. Esta responsabilidad alcanza al pago de cualquier multa o sanción que pudiera derivarse al Contratista por la falta de determinados permisos de la Propiedad.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><br></span></font></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o futuros, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que fueran necesarios.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">- Estudio de Seguridad y Salud y Coordinador de Seguridad y Salud en fase de Ejecución.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">- Los Honorarios facultativos de redacción de proyectos y dirección de Obras.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif;\">- Suministro próximo al lugar del trabajo de agua, fuerza y alumbrado en caso de que fueran necesarios, así como&nbsp;</span><span style=\"font-family: Arial, sans-serif;\">&nbsp;</span><span style=\"font-family: Arial, sans-serif;\">su consumo.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif;\"><br></span></font></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Se facilitará local para acopio de materiales y aseo de operarios.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">- Impuestos y arbitrios que se devengan con ocasión de la ejecución de las Obras, entre ellos el I.V.A.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">-</span><span style=\"font-family: Arial, sans-serif;\">&nbsp;Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif;\"><br></span></font></p><p class=\"MsoNormal\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">III.-<u>MEDICION</u></font></span></b></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"NaN\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"NaN\">- </font><font size=\"10\">Las mediciones que figuran en el Presupuesto son aproximadas, facturándose la medición realizada en obra, no se descontarán huecos menores de 1 m2. e igualmente se facturarán 1 m2. en aquellas unidades de menor medición.</font></span></p></div>"
+                "Value": "<div style=\"font-family: Tahoma; text-align: justify;\"><font size=\"10\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\">Reunidos, en Madrid a {datos_contrato.fecha}, D. {datos_contrato.nombrePresidente} con D.N.I. nº {datos_contrato.dniPresidente}, en calidad de presidente de la Comunidad de Propietarios de la {datos_contrato.direccionTrabajo}&nbsp; ({datos_contrato.codPostalTrabajo}-{datos_contrato.poblacionTrabajo}) con CIF. {datos_contrato.nifCliente}, en adelante la&nbsp;<b style=\"\">PROPIEDAD&nbsp;</b>y Dª. M.ª ADELA ALONSO GARCIA, con D.N.I. 70025204W en representación de PROASISTENCIA, SL., con domicilio en Cº de Rejas nº 1 – 28821-Coslada (Madrid) con N.I.F. nº B-81323180 en adelante la&nbsp;<b style=\"\">CONTRATA.</b></font><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><b>&nbsp;</b></font></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b><br></b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\">EXPONEN:</b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\"><br></b></font></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><font size=\"10\">I.- Que la Propiedad desea llevar a cabo las obras de {datos_contrato.tipoProyecto}, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}-{datos_contrato.poblacionTrabajo}); por lo que adjudican a la <b>CONTRATA</b> mediante junta general extraordinaria celebrada con fecha {datos_contrato.fechaJunta} y según certificado de la Administración de la finca, donde todos los propietarios, acuerdan el abono de las obras de forma solidaria<b> </b>según cuadro de amortización adjunto y en base al Presupuesto de <b>Ref. {datos_contrato.referencia}&nbsp;</b>por importe de {datos_contrato.importeCliente} € más IVA, de fecha {datos_contrato.fechaJunta} que se adjunta como Anexo nº 1 y de acuerdo a las siguientes</font></span></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\"><font size=\"10\"><br></font></span></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial; text-align: start;\"><b><font size=\"10\">CLAUSULAS:</font></b></span></div><div style=\"text-align: justify;\"><span style=\"font-family: Arial; text-align: start;\"><b><font size=\"10\"><br></font></b></span></div><div style=\"text-align: justify;\"><p class=\"MsoNormal\"><font size=\"10\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">I.-&nbsp;<u>SERAN DE CUENTA DE LA CONTRATA</u></span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b>:</b><o:p></o:p></span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b><br></b></span></font></p><p class=\"MsoNormal\"><font size=\"10\"><b><u><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Materiales</span></u></b><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">&nbsp;.-&nbsp;</span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Todos los necesarios para la realización de los trabajos, salvo aquellos que no estén incluidos específicamente en el presupuesto.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><b><u><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Transporte</span></u></b><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">.-&nbsp;</span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">De todos los materiales incluidos en el presupuesto hasta la zona de trabajo de la obra.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><b><u><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">Instalación</span></u></b><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">.-&nbsp;</span></b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">De todos los materiales incluidos en el presupuesto, incluyendo retribución del personal, dietas, desplazamiento y seguros sociales.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><br></span></font></p><p class=\"MsoNormal\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b><font size=\"10\">II.-&nbsp;<u>SERAN DE CUENTA DE LA PROPIEDAD</u>:</font></b></span></p><p class=\"MsoNormal\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><b><font size=\"10\"><br></font></b></span></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">- La obtención de permisos y licencias legales, la obtención de permisos de enganches, implantación o&nbsp;&nbsp;</span><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">accesos a</span><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">&nbsp;&nbsp;</span><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">finca ajena, etc. Esta responsabilidad alcanza al pago de cualquier multa o sanción que pudiera derivarse al Contratista por la falta de determinados permisos de la Propiedad.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><br></span></font></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o futuros, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que fueran necesarios.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">- Estudio de Seguridad y Salud y Coordinador de Seguridad y Salud en fase de Ejecución.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">- Los Honorarios facultativos de redacción de proyectos y dirección de Obras.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif;\">- Suministro próximo al lugar del trabajo de agua, fuerza y alumbrado en caso de que fueran necesarios, así como&nbsp;</span><span style=\"font-family: Arial, sans-serif;\">&nbsp;</span><span style=\"font-family: Arial, sans-serif;\">su consumo.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif;\"><br></span></font></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Se facilitará local para acopio de materiales y aseo de operarios.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">- Impuestos y arbitrios que se devengan con ocasión de la ejecución de las Obras, entre ellos el I.V.A.</font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">-</span><span style=\"font-family: Arial, sans-serif;\">&nbsp;Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</span></font></p><p class=\"MsoNormal\"><font size=\"10\"><span style=\"font-family: Arial, sans-serif;\"><br></span></font></p><p class=\"MsoNormal\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">III.-<u>MEDICION</u></font></span></b></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"NaN\"><br></font></span></p><p class=\"MsoNormal\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"NaN\">- </font><font size=\"10\">Las mediciones que figuran en el Presupuesto son aproximadas, facturándose la medición realizada en obra, no se descontarán huecos menores de 1 m2. e igualmente se facturarán 1 m2. en aquellas unidades de menor medición.</font></span></p></div>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;10;;",
@@ -201,7 +501,7 @@
           "Name": "DataBand3",
           "CanShrink": true,
           "CanGrow": true,
-          "ClientRectangle": "0,0.4,18,8.8",
+          "ClientRectangle": "0,0.4,18,8.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -212,24 +512,19 @@
               "Ident": "StiText",
               "Name": "Text5",
               "ShiftMode": "OnlyInWidthOfComponent",
-              "CanShrink": true,
-              "CanGrow": true,
               "MaxSize": "0,18",
-              "ClientRectangle": "0.2,0,17.6,8.8",
+              "ClientRectangle": "0.2,0,17.6,8.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p class=\"MsoNormal\" style=\"text-align: justify;\"><b><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">IV.-<u style=\"\">CERTIFICACIONES Y FACTURACION</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-Los días 15 y 30 de cada mes se entregarán a la propiedad Certificaciones de Obra que contendrán la obra realmente ejecutada más los acopios de materiales.&nbsp;</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Si en el transcurso de la ejecución de las Obras surgiera la necesidad de realizar nuevas unidades, se determinarán de mutuo acuerdo y con anterioridad a su ejecución los precios a aplicar a las mismas.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">En el caso de realizarse trabajos sin presupuesto previo, se aplicarán las tarifas de Proasistencia y en su defecto los precios de ejecución material publicados en el Libro de Precios del Colegio Oficial de Arquitectos T. de Guadalajara, añadiendo a estos un 15 % de mano de obra indirecta y m. auxiliares más un 19 % de gastos generales y beneficio industrial.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><font size=\"10\"><font face=\"Tahoma\">-</font><font face=\"Arial, sans-serif\" style=\"letter-spacing: -0.133333px;\">&nbsp;Trascurridos 10 días naturales desde la fecha de Certificación, se entenderá conforme por la propiedad si no hubiera reclamación expresa.</font></font></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">V.-<u>CONDICIONES DE PAGO</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">El importe resultante de los trabajos será abonado:</font></span></p><p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">-Mediante recibo/letra domiciliada en la cta. <u style=\"\">cte.\nnº  {datos_contrato.iban}</u> que la Comunidad tiene abierta a tal\nefecto, se adjunta orden <span style=\"color: #ee0000;\">SEPA</span>&nbsp; y en los\nsiguientes plazos:<o:p></o:p></font></span></p><div><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"8\"><br></font></span></div>"
+                "Value": "<p class=\"MsoNormal\" style=\"text-align: justify;\"><b><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">IV.-<u style=\"\">CERTIFICACIONES Y FACTURACION</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-Los días 15 y 30 de cada mes se entregarán a la propiedad Certificaciones de Obra que contendrán la obra realmente ejecutada más los acopios de materiales.&nbsp;</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Si en el transcurso de la ejecución de las Obras surgiera la necesidad de realizar nuevas unidades, se determinarán de mutuo acuerdo y con anterioridad a su ejecución los precios a aplicar a las mismas.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">En el caso de realizarse trabajos sin presupuesto previo, se aplicarán las tarifas de Proasistencia y en su defecto los precios de ejecución material publicados en el Libro de Precios del Colegio Oficial de Arquitectos T. de Guadalajara, añadiendo a estos un 15 % de mano de obra indirecta y m. auxiliares más un 19 % de gastos generales y beneficio industrial.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><font size=\"10\"><font face=\"Tahoma\">-</font><font face=\"Arial, sans-serif\" style=\"letter-spacing: -0.133333px;\">&nbsp;Trascurridos 10 días naturales desde la fecha de Certificación, se entenderá conforme por la propiedad si no hubiera reclamación expresa.</font></font></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">V.-<u>CONDICIONES DE PAGO</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">El importe resultante de los trabajos será abonado:</font></span></p><p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">-Mediante recibo/letra domiciliada en la cta. cte.\nnº  {datos_contrato.iban} que la Comunidad tiene abierta a tal\nefecto, se adjunta orden <span style=\"color: #ee0000;\">SEPA</span>&nbsp; y en los\nsiguientes plazos:<o:p></o:p></font></span></p><div><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"8\"><br></font></span></div>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
               "TextQuality": "Wysiwyg",
               "AllowHtmlTags": true,
               "Type": "Expression"
@@ -238,58 +533,9 @@
           "DataSourceName": "datos_contrato"
         },
         "2": {
-          "Ident": "StiHeaderBand",
-          "Name": "HeaderBand2",
-          "ClientRectangle": "0,10,18,0.7",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text9",
-              "ClientRectangle": "0.2,0.2,1.6,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<b style=\"\"><font face=\"Arial\" size=\"10\">Recibos</font></b>"
-              },
-              "Font": "Tahoma;10;;",
-              "Border": "Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text32",
-              "ClientRectangle": "1.8,0.2,1.8,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<font face=\"Arial\" size=\"8\">* Incluido Iva</font>"
-              },
-              "VertAlignment": "Center",
-              "Font": "Tahoma;6;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            }
-          },
-          "CanGrow": false,
-          "KeepHeaderTogether": false
-        },
-        "3": {
           "Ident": "StiDataBand",
           "Name": "DataBand2",
-          "ClientRectangle": "0,11.5,18,0.4",
+          "ClientRectangle": "0,9.8,18,0.45",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -304,12 +550,13 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto {datos_contrato_pagos.importePrefacturadoIva} € "
+                "Value": "<font face=\"Arial\" size=\"10\"></font><span style=\"font-family: Tahoma;\">{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €</span>"
               },
               "Font": "Tahoma;10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "AllowHtmlTags": true,
               "Type": "Expression"
             }
           },
@@ -317,11 +564,11 @@
           "DataSourceName": "datos_contrato_pagos",
           "DataRelationName": "pagos_contrato"
         },
-        "4": {
+        "3": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,12.7,18,0",
+          "ClientRectangle": "0,11.05,18,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -331,10 +578,10 @@
             "Value": "{datos_contrato_letras.sumTotalConIva}"
           }
         },
-        "5": {
+        "4": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,13.5,18,1.4",
+          "ClientRectangle": "0,11.85,18,1.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -343,124 +590,16 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text28",
-              "ClientRectangle": "0.2,0.8,1.8,0.6",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Nº Letras"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:242,242,242",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text15",
-              "ClientRectangle": "2,0.8,2.4,0.6",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Importe Total"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:242,242,242",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text30",
-              "ClientRectangle": "4.4,0.8,3,0.6",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Importe Por Letra"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:242,242,242",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
               "Name": "Text13",
-              "ClientRectangle": "0.2,0.2,1.2,0.4",
+              "ClientRectangle": "0.2,0.4,16.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<b style=\"\"><font face=\"Arial\" size=\"10\">Letras</font></b>"
+                "Value": "<div style=\"\"><font face=\"Arial\" size=\"10\">AL INICIO de la obra se entregarán las siguientes letras de cambio incluyendo IVA e intereses:</font></div>"
               },
               "Font": "Tahoma;10;;",
-              "Border": "Bottom;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            },
-            "4": {
-              "Ident": "StiText",
-              "Name": "Text31",
-              "ClientRectangle": "1.4,0.2,4.6,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<font face=\"Arial\" size=\"8\">* Intereses e Iva incluidos</font>"
-              },
-              "VertAlignment": "Center",
-              "Font": "Tahoma;6;;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "AllowHtmlTags": true,
@@ -470,10 +609,10 @@
           "CanGrow": false,
           "KeepHeaderTogether": false
         },
-        "6": {
+        "5": {
           "Ident": "StiDataBand",
           "Name": "DataBand4",
-          "ClientRectangle": "0,15.7,18,0",
+          "ClientRectangle": "0,13.85,18,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -494,11 +633,11 @@
           "DataSourceName": "datos_contrato_letras",
           "DataRelationName": "letras_contrato"
         },
-        "7": {
+        "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,16.5,18,0.5",
+          "ClientRectangle": "0,14.65,18,0.5",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -508,22 +647,16 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text12",
-              "ClientRectangle": "0.2,0,1.8,0.5",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
+              "ClientRectangle": "0.2,0,3.4,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)}"
+                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} letra de cambio de"
               },
-              "HorAlignment": "Right",
               "VertAlignment": "Center",
               "Font": ";10;;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -531,35 +664,23 @@
                 "Right": 5,
                 "Top": 0,
                 "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalDigits": 0,
-                "GroupSeparator": ",",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize"
               },
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text10",
-              "ClientRectangle": "2,0,2.4,0.5",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
+              "Name": "Text8",
+              "Guid": "e4f37746ca6d9e8acafe3388ee9e0ce4",
+              "ClientRectangle": "5.2,0,1.6,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataBand4, datos_contrato_letras.sumTotalConIva)} "
+                "Value": "{IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\"cada una\",\"\")}"
               },
-              "HorAlignment": "Right",
               "VertAlignment": "Center",
               "Font": ";10;;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -568,37 +689,22 @@
                 "Top": 0,
                 "Bottom": 0
               },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
               "Type": "Expression"
             },
             "2": {
               "Ident": "StiText",
-              "Name": "Text11",
-              "ClientRectangle": "4.4,0,3,0.5",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
+              "Name": "Text9",
+              "Guid": "a76055797550550804b7e3a3bc1b56b6",
+              "ClientRectangle": "3.6,0,1.6,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{datos_contrato_letras.sumTotalConIva}"
               },
-              "HorAlignment": "Right",
               "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
+              "Font": "Tahoma;10;;",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -621,12 +727,12 @@
             }
           }
         },
-        "8": {
+        "7": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
           "Guid": "a85e41c4a097d7144d3090a7d0c85b79",
           "CanGrow": true,
-          "ClientRectangle": "0,17.8,18,0",
+          "ClientRectangle": "0,15.95,18,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -636,11 +742,11 @@
             "Value": "{datos_contrato_letras.esLetra}"
           }
         },
-        "9": {
+        "8": {
           "Ident": "StiDataBand",
           "Name": "DataBand6",
           "CanGrow": true,
-          "ClientRectangle": "0,18.6,18,0",
+          "ClientRectangle": "0,16.75,18,0",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -653,11 +759,11 @@
           "Brush": "solid:",
           "DataSourceName": "datos_contrato_letras"
         },
-        "10": {
+        "9": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand2",
           "CanGrow": true,
-          "ClientRectangle": "0,19.4,18,0.6",
+          "ClientRectangle": "0,17.55,18,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -666,24 +772,52 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text7",
-              "Guid": "723818d2fa5d6b5fdc63f986a8cb6f43",
-              "ClientRectangle": "2,0,2.4,0.5",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
+              "Name": "Text10",
+              "Guid": "755c5b767bbe6da48be623f8f74aa398",
+              "ClientRectangle": "0.2,0.1,5.8,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
               },
+              "Text": {
+                "Value": "Siendo el total de todas las letras de "
+              },
+              "VertAlignment": "Center",
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 0,
+                "Right": 5,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "Guid": "aaff6e7d98949fabbe48cfef53169dac",
+              "ClientRectangle": "6,0.1,2.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{Sum(datos_contrato_letras.sumTotalConIva)}"
               },
-              "HorAlignment": "Right",
               "VertAlignment": "Center",
               "Font": ";10;;",
-              "Border": "Left, Right, Bottom;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -706,13 +840,13 @@
             }
           }
         },
-        "11": {
+        "10": {
           "Ident": "StiDataBand",
           "Name": "DataBand7",
           "Guid": "120bb9121de85b2c863a22dec009d69c",
           "CanShrink": true,
           "CanGrow": true,
-          "ClientRectangle": "0,20.8,18,8.4",
+          "ClientRectangle": "0,18.95,18,8.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -803,7 +937,7 @@
           "Name": "PageFooterBand6",
           "PrintOn": "OnlyLastPage",
           "CanGrow": true,
-          "ClientRectangle": "0,22.3,18,3",
+          "ClientRectangle": "0,21.1,18,4.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -813,7 +947,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text17",
-              "ClientRectangle": "0.8,0.22,3,0.4",
+              "ClientRectangle": "1.8,0.22,3,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -834,7 +968,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text21",
-              "ClientRectangle": "0.4,2.02,5.8,0.4",
+              "ClientRectangle": "1.4,3.42,5.8,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -844,7 +978,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FDO. {datos_contrato.nombrePresidente}"
+                "Value": "Fdo. {datos_contrato.nombrePresidente}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
@@ -855,7 +989,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text24",
-              "ClientRectangle": "7,2.02,6.2,0.4",
+              "ClientRectangle": "11.2,3.42,6.2,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -865,7 +999,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FDO. Mª ADELA  ALONSO GARCIA "
+                "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
@@ -877,7 +1011,7 @@
               "Ident": "StiText",
               "Name": "Text1",
               "Guid": "058f27035b82d43bc2a3327f1e273021",
-              "ClientRectangle": "7.6,0.3,2.6,0.4",
+              "ClientRectangle": "12,0.3,2.6,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
