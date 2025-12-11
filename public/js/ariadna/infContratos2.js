@@ -411,7 +411,7 @@ function obtainReportJson(obj) {
 
     let file = null
     if(vm.empresaId() == 2) file = "/reports/contrato_proas.mrt";
-    else if(vm.empresaId() == 7) file = "/reports/contrato_reabita.mrt";
+    else if(vm.empresaId() == 7) file = "/reports/contrato_reabita2.mrt";
     const report = new Stimulsoft.Report.StiReport();
 
     if(!file) {

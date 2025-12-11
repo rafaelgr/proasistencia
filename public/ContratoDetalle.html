@@ -66,6 +66,13 @@
     <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
 
 </head>
+<style>
+    .modal-grande {
+        width: 95% !important;
+        /* O el tamaño que necesites */
+        max-width: 1200px !important;
+    }
+</style>
 <!--
 
     TABLE OF CONTENTS.
@@ -1154,7 +1161,8 @@
                                                                                             </label>
                                                                                         </section>
                                                                                         <section class="col col-md-2">
-                                                                                            <label class="label">Fecha de la junta</label>
+                                                                                            <label class="label">Fecha
+                                                                                                de la junta</label>
                                                                                             <label class="input">
                                                                                                 <input
                                                                                                     id="txtFechaJunta"
@@ -1935,6 +1943,8 @@
                                                                                                     Porcentaje</th>
                                                                                                 <th class="text-left">
                                                                                                     Importe</th>
+                                                                                                     <th class="text-left">
+                                                                                                    Importe intereses</th>
                                                                                                 <th class="text-left">
                                                                                                     Núm. pref.</th>
                                                                                                 <th class="text-left">
@@ -1944,6 +1954,11 @@
                                                                                                     Ret. garantías</th>
                                                                                                 <th class="text-left">
                                                                                                     Forma pago</th>
+                                                                                                <th class="text-left">
+                                                                                                    Es adicional</th>
+                                                                                                <th class="text-left">
+                                                                                                    Ref. Presupuesto
+                                                                                                    adicional</th>
                                                                                                 <th></th>
                                                                                             </tr>
                                                                                         </thead>
@@ -1957,7 +1972,8 @@
                                                                                                 <th></th>
                                                                                                 <th></th>
                                                                                                 <th></th>
-                                                                                                <th colspan="3"></th>
+                                                                                                <th></th>
+                                                                                                <th colspan="5"></th>
                                                                                             </tr>
                                                                                         </tfoot>
                                                                                     </table>
@@ -5091,7 +5107,7 @@
     <!-- Modal -->
     <div class="modal fade" id="modalPlanificacionObrasTemp" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-grande">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -5103,28 +5119,42 @@
                     <form id="conceptoObrasTemp-form" class="smart-form">
                         <fieldset>
                             <div class="row">
-                                <section class="col col-md-12">
+                                <section class="col col-md-10">
                                     <label class="label">Planificación</label>
                                     <label class="input">
                                         <input id="txtConceptoPlanificacionTemp" name="txtConceptoPlanificacionTemp"
                                             type="text" data-bind="value: conceptoPlanificacionTemp" />
                                     </label>
                                 </section>
+                                <section class="col col-md-2">
+                                    <div style="margin-top: 20%;">
+                                        <input id="chkEsAdicionalTemp" type="checkbox" name="chkEsAdicionalTemp"
+                                            data-bind="checked: esAdicionalTemp" />
+                                        Es adicional
+                                    </div>
+                                </section>
                             </div>
                             <div class="row">
-                                <section class="col col-md-2">
+                                <section class="col col-md-1">
                                     <label class="label">Porcentaje</label>
                                     <label class="input">
                                         <input id="txtPorcentajePlanificacionTemp" name="txtPorcentajePlanificacionTemp"
                                             type="text" data-bind="value: porcentajePlanificacionTemp" />
                                     </label>
                                 </section>
-                                <section class="col col-md-3">
+                                <section class="col col-md-2">
                                     <label class="label">importe</label>
                                     <label class="input">
                                         <input id="txtImporteCalculadoPlanificacionTemp"
                                             name="txtImporteCalculadoPlanificacionTemp" type="text"
                                             data-bind="value: importeCalculadoPlanificacionTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Importe intereses</label>
+                                    <label class="input">
+                                        <input id="txtImporteIntereses" name="txtImporteIntereses" type="text"
+                                            data-bind="value: importeIntereses" />
                                     </label>
                                 </section>
                                 <section class="col col-md-2">
@@ -5150,6 +5180,17 @@
                                             data-bind="options: posiblesFormasPagoLinea, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoIdLinea, valueAllowUnset: true, selectedOptions: elegidosFormasPagoLinea, selected2:{}"></select><i></i>
                                     </label>
                                 </section>
+                            </div>
+
+                            <div class="row" id="refAdicional">
+                                <section class="col col-md-12">
+                                    <label class="label">Referencia presupuesto Adicional</label>
+                                    <label class="input">
+                                        <input id="txtRefPresupuestoAdicionalTemp" name="txtRefPresupuestoAdicionalTemp"
+                                            type="text" data-bind="value: refPresupuestoAdicionalTemp" />
+                                    </label>
+                                </section>
+
                             </div>
                         </fieldset>
                         <footer>

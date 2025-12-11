@@ -287,6 +287,13 @@ function initForm() {
         }
     });
 
+    $("#chkEsAdicionalTemp").change(function () {
+        if ($('#chkEsAdicionalTemp').prop('checked')) {
+            $('#refAdicional').show();
+        } else {
+            $('#refAdicional').hide();
+        }
+    });
     $("#txtFechaInicio").change(function (e) {
         if (vm.contratoId() == 0) vm.fechaOriginal(this.value);
     });
@@ -1109,6 +1116,7 @@ function admData() {
     self.conceptoPlanificacionTemp = ko.observable();
     self.porcentajePlanificacionTemp = ko.observable();
     self.importeCalculadoPlanificacionTemp = ko.observable();
+    self.importeIntereses = ko.observable();
     self.fechaPlanificacionObrasTemp = ko.observable();
     self.importeFacturadoTemp = ko.observable();
     self.importeCobradoTemp = ko.observable();
@@ -1118,6 +1126,8 @@ function admData() {
     self.diferenciaPrefacturadoTemp = ko.observable();
     self.certificacionFinalFormat = ko.observable();
     self.porRetenGarantiasTemp = ko.observable();
+    self.esAdicionalTemp = ko.observable();
+    self.refPresupuestoAdicionalTemp = ko.observable();
     //
     self.emitidasTemp = ko.observable();
     self.numEmitidasTemp = ko.observable();
@@ -1142,6 +1152,8 @@ function loadData(data) {
         window.open(url, '_self');
         //return;
     }
+
+
     $('#btnNuevaLinea').show();
     vm.contratoId(data.contratoId);
     vm.ofertaId(data.ofertaId);
@@ -1587,7 +1599,7 @@ function loadEmpresas(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesEmpresas(empresas);
-        if(id) vm.scontratoId(id);
+        if (id) vm.scontratoId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
     });
 }
@@ -9107,7 +9119,7 @@ var imprimir = function () {
 }
 
 function printContrato(id) {
-    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" +  vm.sempresaId();
+    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId();
     window.open(url, '_new');
 }
 //CREAR CONTRATO DE INTERESES
@@ -9185,23 +9197,32 @@ function initTablaPlanificacionLineasObrasTemp() {
                 numeral(totalImporte).format('0,0.00')
             );
 
-            // Total Núm. Prefacturas (columna 5)
-            var totalPrefacturas = api
+            var totalIntereses = api
                 .column(5)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)));
                 }, 0);
-            $(api.columns(5).footer()).html(numeral(totalPrefacturas).format('0'));
+            $(api.columns(5).footer()).html(numeral(totalIntereses).format('0,0.00'));
+
+
+            // Total Núm. Prefacturas (columna 6)
+            var totalPrefacturas = api
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)));
+                }, 0);
+            $(api.columns(6).footer()).html(numeral(totalPrefacturas).format('0'));
 
             // Total Importe Prefacturado (columna 6)
             var totalPrefacturado = api
-                .column(6)
+                .column(7)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-            $(api.columns(6).footer()).html(numeral(totalPrefacturado).format('0,0.00'));
+            $(api.columns(7).footer()).html(numeral(totalPrefacturado).format('0,0.00'));
 
             // Opcional: actualizar variables VM
             vm.importePlanificadoTemp(numeral(totalImporte).format('0,0.00'));
@@ -9233,10 +9254,20 @@ function initTablaPlanificacionLineasObrasTemp() {
             { data: "concepto" },
             { data: "porcentaje", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "importe", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "importeIntereses", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "numPrefacturas", className: "text-right", render: function (data) { return numeral(data).format('0'); } },
             { data: "importePrefacturado", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "porRetenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPagoNombre" },
+            {
+                data: "esAdicional",
+                className: "text-center",
+                render: function (data) {
+                    var checked = (data == 1 ? "checked" : "");
+                    return "<input type='checkbox' disabled " + checked + ">";
+                }
+            },
+            { data: "refPresupuestoAdicional" },
             {
                 data: "contPlanificacionTempId", render: function (data, type, row) {
                     var html = "", bt1 = "", bt2 = "", bt3 = "";
@@ -9332,7 +9363,11 @@ function limpiaDataLineaPlanificacionObrasTemp() {
     vm.porcentajePlanificacionTemp(0);
     vm.fechaPlanificacionObrasTemp(vm.fechaInicio());
     vm.importeCalculadoPlanificacionTemp(0);
+    vm.importeIntereses(0);
     vm.porRetenGarantiasTemp(0);
+    vm.refPresupuestoAdicionalTemp('');
+    $('#chkEsAdicionalTemp').prop('checked', false);
+    vm.esAdicionalTemp(0);
     loadFormasPagoLinea(vm.formaPagoId())
 }
 
@@ -9349,7 +9384,10 @@ function aceptarLineaPlanificacionObrasTemp() {
             porcentaje: vm.porcentajePlanificacionTemp(),
             fecha: spanishDbDate(vm.fechaPlanificacionObrasTemp()),
             importe: vm.importeCalculadoPlanificacionTemp(),
+            importeIntereses: vm.importeIntereses(),
             porRetenGarantias: vm.porRetenGarantiasTemp(),
+            esAdicional: vm.esAdicionalTemp() || 0,
+            refPresupuestoAdicional: vm.refPresupuestoAdicionalTemp(),
             formaPagoId: vm.sformaPagoIdLinea()
         }
     }
@@ -9398,10 +9436,21 @@ function editPlanificacionTemp(id) {
 function loadDataLineaPlanificacionObrasTemp(data) {
     vm.contPlanificacionTempId(data.contPlanificacionTempId);
     vm.conceptoPlanificacionTemp(data.concepto);
+    if (data.esAdicional) {
+        $('#chkEsAdicionalTemp').prop('checked', true);
+        $('#refAdicional').show();
+        vm.esAdicionalTemp(1);
+    } else {
+        $('#chkEsAdicionalTemp').prop('checked', false);
+        $('#refAdicional').hide();
+        vm.esAdicionalTemp(0);
+    };
     vm.porcentajePlanificacionTemp(data.porcentaje);
     vm.fechaPlanificacionObrasTemp(spanishDate(data.fecha));
     vm.porRetenGarantiasTemp(data.porRetenGarantias);
     vm.importeCalculadoPlanificacionTemp(data.importe);
+    vm.importeIntereses(data.importeIntereses);
+    vm.refPresupuestoAdicionalTemp(data.refPresupuestoAdicional);
     loadFormasPagoLinea(data.formaPagoId);
 
 }
@@ -9473,7 +9522,12 @@ function limpiarModalLineasPlanificacionTemp() {
     vm.porcentajePlanificacionTemp(null);
     vm.fechaPlanificacionObrasTemp(null);
     vm.importeCalculadoPlanificacionTemp(null);
+    vm.importeIntereses(null);
+    vm.esAdicionalTemp(0);
+    $('#chkEsAdicionalTemp').prop('checked', false);
     vm.porRetenGarantiasTemp(null);
+    vm.refPresupuestoAdicionalTemp(null);
+
     loadFormasPagoLinea(null);
 }
 
