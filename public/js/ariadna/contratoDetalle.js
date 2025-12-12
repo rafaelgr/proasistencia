@@ -46,6 +46,7 @@ var dataDocumentacion;
 var subCarpeta = '';
 var carpetaTipo = null;
 var parent = null;
+var totalIntereses = 0;
 //
 let dataPlanificacion
 
@@ -821,7 +822,10 @@ var mostrarMensajeEnFuncionDeCmd = function (cmd) {
             mens = "Este contrato ha sido generado desde una oferta. Compruebe que sus datos y colaboradores asociados son correctos";
             break;
         case 'REN':
-            mens = "Este contrato es una renovación de un contrato anterio. Repase que las condiciones del mismo son correctas para este periodo";
+            mens = "Este contrato es una renovación de un contrato anterior. Repase que las condiciones del mismo son correctas para este periodo";
+            break;
+            case 'INT':
+            mens = "Este contrato es un contrato de intereses generado a partior de un contrato principal. Repase que las condiciones del mismo son correctas.";
             break;
         default:
             mens = null;
@@ -9124,14 +9128,17 @@ function printContrato(id) {
 }
 //CREAR CONTRATO DE INTERESES
 function crearContratoIntereses() {
+    //PRIMERO BUSCAMOS SI HAY YA UN CONTRATO CREADO
     var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
     mensajeAceptarCancelar(mensaje, function () {
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId(), null, function (err, data) {
-            if (err) return errorGeneral(err, done);
-            window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=REN", '_new');
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId() + "/" + totalIntereses, null, function (err, data) {
+            if (err) { return errorGeneral(err, done);} 
+            else { window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=INT", '_new');
+
+            }
         });
     }, function () {
-        done(null, false);
+        //cancelar no hace nada
     });
 }
 
@@ -9197,11 +9204,11 @@ function initTablaPlanificacionLineasObrasTemp() {
                 numeral(totalImporte).format('0,0.00')
             );
 
-            var totalIntereses = api
+            totalIntereses = api
                 .column(5)
                 .data()
                 .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)));
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
             $(api.columns(5).footer()).html(numeral(totalIntereses).format('0,0.00'));
 
