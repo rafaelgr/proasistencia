@@ -824,7 +824,7 @@ var mostrarMensajeEnFuncionDeCmd = function (cmd) {
         case 'REN':
             mens = "Este contrato es una renovación de un contrato anterior. Repase que las condiciones del mismo son correctas para este periodo";
             break;
-            case 'INT':
+        case 'INT':
             mens = "Este contrato es un contrato de intereses generado a partior de un contrato principal. Repase que las condiciones del mismo son correctas.";
             break;
         default:
@@ -851,6 +851,7 @@ function admData() {
     self.ofertaId = ko.observable();
     self.beneficioLineal = ko.observable();
     self.fechaCierreContrato = ko.observable();
+    self.contratoInteresesId = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -1175,6 +1176,7 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
+    vm.contratoInteresesId(data.contratoInteresesId);
     //
     vm.importeCliente(data.importeCliente);
     vm.importeClienteFormat(data.importeCliente);
@@ -9132,8 +9134,9 @@ function crearContratoIntereses() {
     var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
     mensajeAceptarCancelar(mensaje, function () {
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId() + "/" + totalIntereses, null, function (err, data) {
-            if (err) { return errorGeneral(err, done);} 
-            else { window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=INT", '_new');
+            if (err) { return errorGeneral(err, done); }
+            else {
+                window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=INT", '_new');
 
             }
         });
@@ -9277,13 +9280,14 @@ function initTablaPlanificacionLineasObrasTemp() {
             { data: "refPresupuestoAdicional" },
             {
                 data: "contPlanificacionTempId", render: function (data, type, row) {
-                    var html = "", bt1 = "", bt2 = "", bt3 = "";
+                    var html = "", bt1 = "", bt2 = "", bt3 = "", bt4 = "";
                     if (!vm.contratoCerrado()) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
+                        if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
                     }
-                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
+                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
                     return html;
                 }
             }
@@ -10242,4 +10246,29 @@ var calcularNumPagosPlanificacionTemp = function () {
     if (numpagos == 0) numpagos = 1; // por lo menos uno
     $('#txtNumPagos3').val(numpagos);
     return numpagos;
+}
+
+function exportarlineaPlanificacionAdicionaltempal(id) {
+    // mensaje de confirmación
+    var mens = "Se exportará el registro el contrato de intereses, ¿Realmente desea realizar esta acción?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            let data = {
+                contPlanificacionTempId: id,
+                contratoInteresesId: vm.contratoInteresesId()
+            }
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/planificacion/obras/temporal/exportar/linea/intereses", data, function (err, data) {
+                if (err) {
+                    mensError('Error al exportar la linea de planificación temporal');
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada 
+        }
+    });
 }
