@@ -1566,7 +1566,8 @@ var generarContratoDb = function () {
             "nombrePresidente": vm.nombrePresidente(),
             "dniPresidente": vm.dniPresidente(),
             "correoPresidente": vm.correoPresidente(),
-            "fechaJunta": spanishDbDate(vm.fechaJunta())
+            "fechaJunta": spanishDbDate(vm.fechaJunta()),
+            "contratoInteresesId": vm.contratoInteresesId()
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -9130,7 +9131,9 @@ function printContrato(id) {
 }
 //CREAR CONTRATO DE INTERESES
 function crearContratoIntereses() {
-    //PRIMERO BUSCAMOS SI HAY YA UN CONTRATO CREADO
+    if (vm.contratoInteresesId()) {
+        return mensError('Ya hay un contrato de intereses asociado a este contrato.');
+    }
     var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
     mensajeAceptarCancelar(mensaje, function () {
         llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId() + "/" + totalIntereses, null, function (err, data) {
@@ -9286,6 +9289,8 @@ function initTablaPlanificacionLineasObrasTemp() {
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
+                        else if (row.esAdicional && row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-success' onclick='imprimirContratoAdicional(" + data + ");' title='Imprimir contrato adicional'><i class='fa fa-print fa-fw'></i></button>";
+
                     }
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
                     return html;
@@ -9399,13 +9404,15 @@ function aceptarLineaPlanificacionObrasTemp() {
             porRetenGarantias: vm.porRetenGarantiasTemp(),
             esAdicional: vm.esAdicionalTemp() || 0,
             refPresupuestoAdicional: vm.refPresupuestoAdicionalTemp(),
-            formaPagoId: vm.sformaPagoIdLinea()
+            formaPagoId: vm.sformaPagoIdLinea(),
+            contPlanificacionTempIntId: null
         }
     }
     var verbo = "POST";
     var url = myconfig.apiUrl + "/api/contratos/planificacion/temporal";
     if (lineaEnEdicion) {
         data.planificacion.contPlanificacionTempId = vm.contPlanificacionTempId();
+        delete data.planificacion.contPlanificacionTempIntId
         verbo = "PUT";
         url = myconfig.apiUrl + "/api/contratos/planificacion/temporal/" + vm.contPlanificacionTempId();
     }
@@ -10250,6 +10257,9 @@ var calcularNumPagosPlanificacionTemp = function () {
 
 function exportarlineaPlanificacionAdicionaltempal(id) {
     // mensaje de confirmación
+    if (vm.contratoInteresesId() == null || vm.contratoInteresesId() == 0) {
+        return mensError('Debe seleccionar un contrato de intereses para poder exportar la línea de intereses.');
+    }
     var mens = "Se exportará el registro el contrato de intereses, ¿Realmente desea realizar esta acción?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
@@ -10259,7 +10269,8 @@ function exportarlineaPlanificacionAdicionaltempal(id) {
         if (ButtonPressed === "Aceptar") {
             let data = {
                 contPlanificacionTempId: id,
-                contratoInteresesId: vm.contratoInteresesId()
+                contratoInteresesId: vm.contratoInteresesId(),
+                totalIntereses: totalIntereses
             }
             llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/planificacion/obras/temporal/exportar/linea/intereses", data, function (err, data) {
                 if (err) {
@@ -10271,4 +10282,15 @@ function exportarlineaPlanificacionAdicionaltempal(id) {
             // no hacemos nada 
         }
     });
+}
+
+
+var imprimirContratoAdicional = function (id) {
+    printContratoAdicional(id);
+}
+
+
+function printContratoAdicional(id) {
+    var url = "InfContratos2.html?ContPlanificacionTempId=" + id + "&EmpresaId=" + vm.sempresaId();
+    window.open(url, '_new');
 }

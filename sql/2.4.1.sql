@@ -201,3 +201,27 @@ AFTER
   `importeIntereses`,
 ADD
   KEY `comtPlanificacionTemp_contPlanificacionTempIntereses` (`contPlanificacionTempIntId`);
+
+ALTER TABLE
+  `contratos`
+ADD
+  CONSTRAINT `contrato_interesesFK` FOREIGN KEY (`contratoInteresesId`) REFERENCES `proasistencia`.`contratos`(`contratoId`) ON DELETE
+SET
+  NULL;
+
+ALTER TABLE
+  `contrato_planificacion_temporal`
+ADD
+  CONSTRAINT `comtPlanificacionTemp_contPlanificacionTempInteresesFK` FOREIGN KEY (`contPlanificacionTempIntId`) REFERENCES `contrato_planificacion_temporal`(`contPlanificacionTempId`) ON DELETE
+SET
+  NULL;
+
+ALTER TABLE
+  `contratos`
+ADD
+  CONSTRAINT `contrato_intereseesFK` FOREIGN KEY (`contratoInteresesId`) REFERENCES `contratos`(`contratoId`) ON DELETE
+SET
+  NULL;
+
+  ALTER TABLE `contrato_planificacion_temporal`  
+  ADD CONSTRAINT `planificacionTemp_comtratoFK` FOREIGN KEY (`contratoId`) REFERENCES `proasistencia`.`contratos`(`contratoId`) ON DELETE CASCADE;

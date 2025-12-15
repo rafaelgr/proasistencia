@@ -164,9 +164,11 @@ function initForm() {
         if (data) {
             initAutoCliente();
             vm.contratoId(gup('ContratoId'));
+            vm.ContPlanificacionTempId(gup('ContPlanificacionTempId'));
             vm.empresaId(gup('EmpresaId'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
+            if(vm.ContPlanificacionTempId()) var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional/" + vm.ContPlanificacionTempId();
             llamadaAjax(verb, url, null, function (err, data) {
                 obtainReportJson(data);
                 $('#selector').hide();
@@ -234,6 +236,7 @@ function admData() {
     //
     self.scontratoId = ko.observable();
     self.contratoId = ko.observable();
+    self.ContPlanificacionTempId = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
@@ -410,8 +413,9 @@ var rptContratosParametrosJson = function () {
 function obtainReportJson(obj) {
 
     let file = null
-    if(vm.empresaId() == 2) file = "/reports/contrato_proas.mrt";
-    else if(vm.empresaId() == 7) file = "/reports/contrato_reabita2.mrt";
+    if(vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
+    else if(vm.empresaId() == 7  && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
+     else if(vm.ContPlanificacionTempId()) file = "/reports/contrato_proas_adicional.mrt";
     const report = new Stimulsoft.Report.StiReport();
 
     if(!file) {
