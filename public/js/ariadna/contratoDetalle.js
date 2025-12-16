@@ -1158,6 +1158,13 @@ function loadData(data) {
         //return;
     }
 
+    if(data.contratoIntereses) { 
+        $("#btnImprimir").hide();
+        $('btnIntereses').hide();
+    } else {
+        $("#btnImprimir").show();   
+        $('#btnIntereses').show();
+    }
 
     $('#btnNuevaLinea').show();
     vm.contratoId(data.contratoId);
@@ -9283,16 +9290,17 @@ function initTablaPlanificacionLineasObrasTemp() {
             { data: "refPresupuestoAdicional" },
             {
                 data: "contPlanificacionTempId", render: function (data, type, row) {
-                    var html = "", bt1 = "", bt2 = "", bt3 = "", bt4 = "";
+                    var html = "", bt1 = "", bt2 = "", bt3 = "", bt4 = "", bt5 = "";
                     if (!vm.contratoCerrado()) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
-                        else if (row.esAdicional && row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-success' onclick='imprimirContratoAdicional(" + data + ");' title='Imprimir contrato adicional'><i class='fa fa-print fa-fw'></i></button>";
+                        if (row.esAdicional) bt5 = "<button class='btn btn-circle btn-success' onclick='imprimirContratoAdicional(" + data + ");' title='Imprimir contrato adicional'><i class='fa fa-print fa-fw'></i></button>";
+                        if(vm.contratoIntereses()) { bt4=""; bt5="";  }
 
                     }
-                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
+                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + " " + bt5 + "</div>";
                     return html;
                 }
             }
@@ -9332,7 +9340,7 @@ function loadPlanificacionLineasObrasTemp(id, numCobros) {
             numCobros
         }
     }
-    llamadaAjax("POST", "/api/contratos/lineas/planificacion/temporal/" + id, data, function (err, data) {
+    llamadaAjax("GET", "/api/contratos/lineas/planificacion/temporal/" + id, data, function (err, data) {
         if (err) return;
 
         loadTablaPlanificacionLineasObrasTemp(data);
@@ -10276,6 +10284,8 @@ function exportarlineaPlanificacionAdicionaltempal(id) {
                 if (err) {
                     mensError('Error al exportar la linea de planificación temporal');
                 }
+                mensNormal('Línea de planificación temporal exportada correctamente al contrato de intereses.');
+                loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
             });
         }
         if (ButtonPressed === "Cancelar") {
@@ -10291,6 +10301,6 @@ var imprimirContratoAdicional = function (id) {
 
 
 function printContratoAdicional(id) {
-    var url = "InfContratos2.html?ContPlanificacionTempId=" + id + "&EmpresaId=" + vm.sempresaId();
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true";
     window.open(url, '_new');
 }

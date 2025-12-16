@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "987ebe8a037928d70904239010e7fc74",
+  "ReportGuid": "1ea4bbb4393c64e1d0bc9d2303fe5e56",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_proas_adicional.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1765812681000+0100)/",
+  "ReportChanged": "/Date(1765893889000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -114,7 +114,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<font face=\"Arial\" size=\"10\">ADICIONAL 1.- Presupuesto de Ref. {datos_contrato.referencia}</font>"
+                "Value": "<font face=\"Arial\" size=\"10\">ADICIONAL 1.- Presupuesto de Ref. {datos_contrato.referenciaAdicional}</font>"
               },
               "Font": ";9;;",
               "Border": ";;;;;;;solid:Black",
@@ -131,7 +131,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; text-align: justify;\"><font size=\"10\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\">En Madrid a {datos_contrato.fecha}, D. {datos_contrato.nombrePresidente} con D.N.I. nº {datos_contrato.dniPresidente}, en calidad de presidente de la Comunidad de Propietarios de la {datos_contrato.direccionTrabajo}&nbsp; ({datos_contrato.codPostalTrabajo}-{datos_contrato.poblacionTrabajo}) con CIF. {datos_contrato.nifCliente}, en adelante la&nbsp;PROPIEDAD<b style=\"\">&nbsp;</b>y Dª. M.ª ADELA ALONSO GARCIA, con D.N.I. 70025204W en representación de PROASISTENCIA, SL., con domicilio en Cº de Rejas nº 1 – 28821-Coslada (Madrid) con N.I.F. nº B-81323180 en adelante la&nbsp;CONTRATA.</font><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\">&nbsp;</font></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b><br></b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\">EXPONEN:</b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\"><br></b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Arial, sans-serif\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">Que la PROPIEDAD tiene contratadas con la CONTRATA la ejecución de unas obras conforme al contrato de fecha {datos_contrato.fechaContrato} y Pto de Ref. {datos_contrato.referencia}.</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Arial, sans-serif\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\"><br></span></font></div><div style=\"text-align: justify;\"><font face=\"Arial, sans-serif\" size=\"10\" style=\"\"><div style=\"font-family: Tahoma; letter-spacing: -0.133333px;\">Que durante la ejecución de las obras ha surgido la necesidad de realizar nuevas unidades de obra que se recogen en le Presupuesto de Ref. XCXX, que se adjunta.</div><div style=\"font-family: Tahoma; letter-spacing: -0.133333px;\"><br></div><div style=\"font-family: Tahoma;\"><span style=\"letter-spacing: -0.133333px;\">Que la PROPIEDAD adjudica a la CONTRATA la realización de dichas obras, siendo de aplicación las CLAUSULAS establecidas en el contrato de obra referenciado, a excepción de las condiciones de pago, que serán las que se indican.</span></div><div style=\"font-family: Tahoma; letter-spacing: -0.133333px;\"><br></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b>V.-CONDICIONES DE PAGO</b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\">El importe resultante de los trabajos será abonado:</span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><br></span></div><div style=\"\"><div style=\"letter-spacing: -0.133333px;\">Mediante recibo/letra domiciliada en la cta. cte. nº ES09 0081 0575 73 0001200230 que la Comunidad&nbsp;<span style=\"letter-spacing: -0.133333px;\">tiene abierta a tal efecto, se adjunta orden SEPAs y en los siguientes plazos:</span></div></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\"><br></b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><div style=\"\"><font size=\"10\"><font style=\"\" face=\"Arial\"></font><p><br></p></font></div></div>"
+                "Value": "<div style=\"text-align: justify;\"><font size=\"10\" style=\"\" face=\"Tahoma\"><font style=\"letter-spacing: -0.133333px;\">En Madrid a {datos_contrato.fecha}, D. {datos_contrato.nombrePresidente} con D.N.I. nº {datos_contrato.dniPresidente}, en calidad de presidente de la Comunidad de Propietarios de la {datos_contrato.direccionTrabajo}&nbsp; ({datos_contrato.codPostalTrabajo}-{datos_contrato.poblacionTrabajo}) con CIF. {datos_contrato.nifCliente}, en adelante la&nbsp;<b>PROPIEDAD&nbsp;</b>y Dª. M.ª ADELA ALONSO GARCIA, con D.N.I. 70025204W en representación de PROASISTENCIA, SL., con domicilio en Cº de Rejas nº 1 – 28821-Coslada (Madrid) con N.I.F. nº B-81323180 en adelante la&nbsp;<b>CONTRATA</b>.</font><font style=\"letter-spacing: -0.133333px;\">&nbsp;</font></font></div><div style=\"text-align: justify;\"><font style=\"letter-spacing: -0.133333px;\" size=\"10\" face=\"Tahoma\"><b><br></b></font></div><div style=\"text-align: justify;\"><font style=\"letter-spacing: -0.133333px;\" size=\"10\" face=\"Tahoma\"><b style=\"\">EXPONEN:</b></font></div><div style=\"text-align: justify;\"><font style=\"letter-spacing: -0.133333px;\" size=\"10\" face=\"Tahoma\"><b style=\"\"><br></b></font></div><div style=\"text-align: justify;\"><font size=\"10\" face=\"Tahoma\"><span style=\"letter-spacing: -0.133333px;\">Que la <b>PROPIEDAD</b> tiene contratadas con la CONTRATA la ejecución de unas obras conforme al contrato de fecha {datos_contrato.fechaContrato} y Pto de Ref. {datos_contrato.referencia}.</span></font></div><div style=\"text-align: justify;\"><font size=\"10\" face=\"Tahoma\"><span style=\"letter-spacing: -0.133333px;\"><br></span></font></div><div style=\"text-align: justify;\"><font size=\"10\" style=\"\" face=\"Tahoma\"><div style=\"letter-spacing: -0.133333px;\">Que durante la ejecución de las obras ha surgido la necesidad de realizar nuevas unidades de obra que se recogen en le Presupuesto de Ref.&nbsp;<span style=\"text-align: start;\">&nbsp;</span><span style=\"text-align: start;\">{datos_contrato.referenciaAdicional}</span><span style=\"letter-spacing: -0.133333px;\">, que se adjunta.</span></div></font><font face=\"Arial, sans-serif\" size=\"10\" style=\"font-family: Tahoma;\"><div style=\"font-family: Tahoma; letter-spacing: -0.133333px;\"><br></div><div style=\"font-family: Tahoma;\"><span style=\"letter-spacing: -0.133333px;\">Que la <b>PROPIEDAD </b>adjudica a la <b>CONTRATA </b>la realización de dichas obras, siendo de aplicación las <b>CLAUSULAS </b>establecidas en el contrato de obra referenciado, a excepción de las condiciones de pago, que serán las que se indican.</span></div><div style=\"font-family: Tahoma; letter-spacing: -0.133333px;\"><br></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b>CONDICIONES DE PAGO</b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\">El importe resultante de los trabajos será abonado:</span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><br></span></div><div style=\"\"><div style=\"letter-spacing: -0.133333px;\">Mediante recibo/letra domiciliada en la cta. cte. nº ES09 0081 0575 73 0001200230 que la Comunidad&nbsp;<span style=\"letter-spacing: -0.133333px;\">tiene abierta a tal efecto, se adjunta orden SEPAs y en los siguientes plazos:</span></div></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div><div style=\"\"><span style=\"letter-spacing: -0.133333px;\"><b><br></b></span></div></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font style=\"font-family: Arial, sans-serif; letter-spacing: -0.133333px;\" size=\"10\"><b style=\"\"><br></b></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><div style=\"\"><font size=\"10\"><font style=\"\" face=\"Arial\"></font><p><br></p></font></div></div>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;10;;",
@@ -150,6 +150,11 @@
           "Name": "DataBand8",
           "Guid": "7a224edf51a0dd328af540c4d981335b",
           "ClientRectangle": "0,13.2,18,0.45",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -165,7 +170,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<font face=\"Arial\" size=\"10\"></font><span style=\"font-family: Tahoma;\">{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €</span>"
+                "Value": "<font face=\"Arial\" size=\"10\"></font><span style=\"font-family: Tahoma;\"><font size=\"10\">{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €</font></span>"
               },
               "Font": "Tahoma;10;;",
               "Border": ";;;;;;;solid:Black",
@@ -176,8 +181,7 @@
             }
           },
           "CanGrow": false,
-          "DataSourceName": "datos_contrato_pagos",
-          "DataRelationName": "pagos_contrato"
+          "DataSourceName": "datos_contrato_pagos"
         },
         "3": {
           "Ident": "StiGroupHeaderBand",
@@ -247,14 +251,18 @@
               "BorderSides": "None"
             }
           },
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:",
           "CanGrow": false,
-          "DataSourceName": "datos_contrato_letras",
-          "DataRelationName": "letras_contrato"
+          "DataSourceName": "datos_contrato_letras"
         },
         "6": {
           "Ident": "StiGroupFooterBand",
@@ -272,18 +280,19 @@
               "Ident": "StiText",
               "Name": "Text19",
               "Guid": "ed07118eb79c9a67132e71323548698b",
-              "ClientRectangle": "0.2,0,3.4,0.3",
+              "ClientRectangle": "0.2,0,3.6,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} letra de cambio de"
+                "Value": "<font face=\"Tahoma\" size=\"10\">{Sum(DataBand9,datos_contrato_letras.numletras)} letra de cambio de</font>"
               },
               "VertAlignment": "Center",
               "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "AllowHtmlTags": true,
               "Margins": {
                 "Left": 0,
                 "Right": 5,
@@ -294,33 +303,9 @@
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text22",
-              "Guid": "e8b97e9cd0072bef3494b6d74aaf0beb",
-              "ClientRectangle": "5.2,0,1.6,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\"cada una\",\"\")}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
               "Name": "Text23",
               "Guid": "78aa7f03d84b35934173a96eab93aef7",
-              "ClientRectangle": "3.6,0,1.6,0.3",
+              "ClientRectangle": "3.8,0,1.6,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -332,12 +317,7 @@
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
+              "AllowHtmlTags": true,
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
                 "DecimalSeparator": ",",
@@ -348,6 +328,23 @@
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text2",
+              "ClientRectangle": "5.4,-0.05,3.4,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(Sum(DataBand9,datos_contrato_letras.numletras)>1,\"cada una\",\"\")}"
+              },
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
               "Type": "Expression"
             }
           }
@@ -401,24 +398,19 @@
               "Ident": "StiText",
               "Name": "Text25",
               "Guid": "0af6ce843ce93933f78277dab0279c7f",
-              "ClientRectangle": "0.2,0.1,5.8,0.5",
+              "ClientRectangle": "0.2,0.1,5.6,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Siendo el total de todas las letras de "
+                "Value": "<font face=\"Tahoma\" size=\"10\">Siendo el total de todas las letras de </font>"
               },
               "VertAlignment": "Center",
               "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
+              "AllowHtmlTags": true,
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
                 "DecimalSeparator": ",",
@@ -433,9 +425,30 @@
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text26",
-              "Guid": "2eabbc7508c7430f6de423be0187a653",
-              "ClientRectangle": "6,0.1,2.4,0.5",
+              "Name": "Text27",
+              "Guid": "08037c1344096828beb3c0d02bc41662",
+              "ClientRectangle": "0.2,0.85,11,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<div style=\"\"><font size=\"10\" style=\"\" face=\"Tahoma\">Lo que firman de mutuo acuerdo en el lugar y fecha referenciados.</font></div>"
+              },
+              "HorAlignment": "Width",
+              "Font": "Tahoma;10;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "ClientRectangle": "5.8,0.05,4.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -443,13 +456,13 @@
                 "Value": "{Sum(datos_contrato_letras.sumTotalConIva)}"
               },
               "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
+              "Font": "Tahoma;10;;",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 0,
-                "Right": 5,
+                "Left": 2,
+                "Right": 0,
                 "Top": 0,
                 "Bottom": 0
               },
@@ -463,28 +476,6 @@
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
-              "Type": "Totals"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text27",
-              "Guid": "08037c1344096828beb3c0d02bc41662",
-              "ClientRectangle": "0.2,0.85,11,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<div style=\"\"><font face=\"Arial\" size=\"10\">Lo que firman de mutuo acuerdo en el lugar y fecha referenciados.</font></div>"
-              },
-              "HorAlignment": "Width",
-              "Font": "Tahoma;10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "AllowHtmlTags": true,
               "Type": "Expression"
             }
           }
@@ -514,12 +505,13 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "LA PROPIEDAD"
+                "Value": "<font face=\"Tahoma\">LA PROPIEDAD</font>"
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "AllowHtmlTags": true,
               "Type": "Expression"
             },
             "1": {
@@ -536,12 +528,13 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "LA CONTRATA"
+                "Value": "<font face=\"Tahoma\">LA CONTRATA</font>"
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "AllowHtmlTags": true,
               "Type": "Expression"
             },
             "2": {
@@ -558,12 +551,13 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fdo. {datos_contrato.nombrePresidente}"
+                "Value": "<font face=\"Tahoma\" size=\"10\">Fdo. {datos_contrato.nombrePresidente}</font>"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "AllowHtmlTags": true,
               "Type": "Expression"
             },
             "3": {
@@ -580,7 +574,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fdo.Mª Adela Alonso García"
+                "Value": "<font size=\"10\" style=\"\" face=\"Tahoma\">Fdo.Mª Adela Alonso García</font>"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:Black",
@@ -594,624 +588,6 @@
         }
       },
       "PaperSize": "A4",
-      "Watermark": {
-        "TextBrush": "solid:50,0,0,0"
-      },
-      "Margins": {
-        "Left": 1.5,
-        "Right": 1.5,
-        "Top": 1.5,
-        "Bottom": 1.5
-      }
-    },
-    "1": {
-      "Ident": "StiPage",
-      "Name": "Page2",
-      "Guid": "74e727959c4e4dbca9152e8274125e8f",
-      "Interaction": {
-        "Ident": "StiInteraction"
-      },
-      "Border": ";;2;;;;;solid:Black",
-      "Brush": "solid:",
-      "Components": {
-        "0": {
-          "Ident": "StiPageFooterBand",
-          "Name": "PageFooterBand3",
-          "CanGrow": true,
-          "ClientRectangle": "0,36.78,18,0.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": "Top;;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text6",
-              "ClientRectangle": "16.8,0.16,1,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{PageNumberThrough}"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          }
-        },
-        "1": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand3",
-          "CanShrink": true,
-          "CanGrow": true,
-          "ClientRectangle": "0,0.4,18,8.6",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text5",
-              "ShiftMode": "OnlyInWidthOfComponent",
-              "MaxSize": "0,18",
-              "ClientRectangle": "0.2,0,17.6,8.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<p class=\"MsoNormal\" style=\"text-align: justify;\"><b><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">IV.-<u style=\"\">CERTIFICACIONES Y FACTURACION</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">-Los días 15 y 30 de cada mes se entregarán a la propiedad Certificaciones de Obra que contendrán la obra realmente ejecutada más los acopios de materiales.&nbsp;</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">- Si en el transcurso de la ejecución de las Obras surgiera la necesidad de realizar nuevas unidades, se determinarán de mutuo acuerdo y con anterioridad a su ejecución los precios a aplicar a las mismas.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif;\"><font size=\"10\">En el caso de realizarse trabajos sin presupuesto previo, se aplicarán las tarifas de Proasistencia y en su defecto los precios de ejecución material publicados en el Libro de Precios del Colegio Oficial de Arquitectos T. de Guadalajara, añadiendo a estos un 15 % de mano de obra indirecta y m. auxiliares más un 19 % de gastos generales y beneficio industrial.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><font size=\"10\"><font face=\"Tahoma\">-</font><font face=\"Arial, sans-serif\" style=\"letter-spacing: -0.133333px;\">&nbsp;Trascurridos 10 días naturales desde la fecha de Certificación, se entenderá conforme por la propiedad si no hubiera reclamación expresa.</font></font></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">V.-<u>CONDICIONES DE PAGO</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">El importe resultante de los trabajos será abonado:</font></span></p><p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">-Mediante recibo/letra domiciliada en la cta. cte.\nnº  {datos_contrato.iban} que la Comunidad tiene abierta a tal\nefecto, se adjunta orden <span style=\"color: #ee0000;\">SEPA</span>&nbsp; y en los\nsiguientes plazos:<o:p></o:p></font></span></p><div><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"8\"><br></font></span></div>"
-              },
-              "HorAlignment": "Width",
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextQuality": "Wysiwyg",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            }
-          },
-          "DataSourceName": "datos_contrato"
-        },
-        "2": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand2",
-          "ClientRectangle": "0,9.8,18,0.45",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text4",
-              "ClientRectangle": "0.2,0,17.6,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<font face=\"Arial\" size=\"10\"></font><span style=\"font-family: Tahoma;\">{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €</span>"
-              },
-              "Font": "Tahoma;10;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            }
-          },
-          "CanGrow": false,
-          "DataSourceName": "datos_contrato_pagos",
-          "DataRelationName": "pagos_contrato"
-        },
-        "3": {
-          "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand1",
-          "CanGrow": true,
-          "ClientRectangle": "0,11.05,18,0",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Condition": {
-            "Value": "{datos_contrato_letras.sumTotalConIva}"
-          }
-        },
-        "4": {
-          "Ident": "StiHeaderBand",
-          "Name": "HeaderBand1",
-          "ClientRectangle": "0,11.85,18,1.2",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text13",
-              "ClientRectangle": "0.2,0.4,16.6,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<div style=\"\"><font face=\"Arial\" size=\"10\">AL INICIO de la obra se entregarán las siguientes letras de cambio incluyendo IVA e intereses:</font></div>"
-              },
-              "Font": "Tahoma;10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            }
-          },
-          "CanGrow": false,
-          "KeepHeaderTogether": false
-        },
-        "5": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand4",
-          "ClientRectangle": "0,13.85,18,0",
-          "Conditions": {
-            "0": {
-              "Ident": "StiCondition",
-              "Condition": "IsNull",
-              "DataType": "Numeric",
-              "Column": "datos_contrato_letras.totletras",
-              "Enabled": false,
-              "TextColor": "255,255,255",
-              "BorderSides": "None"
-            }
-          },
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "CanGrow": false,
-          "DataSourceName": "datos_contrato_letras",
-          "DataRelationName": "letras_contrato"
-        },
-        "6": {
-          "Ident": "StiGroupFooterBand",
-          "Name": "GroupFooterBand1",
-          "CanGrow": true,
-          "ClientRectangle": "0,14.65,18,0.5",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text12",
-              "ClientRectangle": "0.2,0,3.4,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} letra de cambio de"
-              },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text8",
-              "Guid": "e4f37746ca6d9e8acafe3388ee9e0ce4",
-              "ClientRectangle": "5.2,0,1.6,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\"cada una\",\"\")}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text9",
-              "Guid": "a76055797550550804b7e3a3bc1b56b6",
-              "ClientRectangle": "3.6,0,1.6,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{datos_contrato_letras.sumTotalConIva}"
-              },
-              "VertAlignment": "Center",
-              "Font": "Tahoma;10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
-              "Type": "Expression"
-            }
-          }
-        },
-        "7": {
-          "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand2",
-          "Guid": "a85e41c4a097d7144d3090a7d0c85b79",
-          "CanGrow": true,
-          "ClientRectangle": "0,15.95,18,0",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Condition": {
-            "Value": "{datos_contrato_letras.esLetra}"
-          }
-        },
-        "8": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand6",
-          "CanGrow": true,
-          "ClientRectangle": "0,16.75,18,0",
-          "Expressions": {
-            "0": {
-              "Name": "CountData"
-            }
-          },
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "DataSourceName": "datos_contrato_letras"
-        },
-        "9": {
-          "Ident": "StiGroupFooterBand",
-          "Name": "GroupFooterBand2",
-          "CanGrow": true,
-          "ClientRectangle": "0,17.55,18,0.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text10",
-              "Guid": "755c5b767bbe6da48be623f8f74aa398",
-              "ClientRectangle": "0.2,0.1,5.8,0.5",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Siendo el total de todas las letras de "
-              },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text11",
-              "Guid": "aaff6e7d98949fabbe48cfef53169dac",
-              "ClientRectangle": "6,0.1,2.4,0.5",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{Sum(datos_contrato_letras.sumTotalConIva)}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
-              "Type": "Totals"
-            }
-          }
-        },
-        "10": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand7",
-          "Guid": "120bb9121de85b2c863a22dec009d69c",
-          "CanShrink": true,
-          "CanGrow": true,
-          "ClientRectangle": "0,18.95,18,8.4",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text2",
-              "ShiftMode": "OnlyInWidthOfComponent",
-              "Guid": "f53f1f19f99a5fcdfb79d9e7828275c6",
-              "CanShrink": true,
-              "CanGrow": true,
-              "MaxSize": "0,18",
-              "ClientRectangle": "0.2,0,17.6,8.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<p class=\"MsoNormal\" style=\"text-align: justify;\"></p><p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">* En el supuesto de que exista diferencia\nentre el importe resultante de la Certificación Final de Obra y el Presupuesto\ninicial, será abonado mediante un recibo domiciliado en la misma cta., cte.\ny&nbsp; en un plazo no superior a los cinco\ndías desde la fecha de certificación final de obra.</font></span></p><p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></p><p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><font size=\"10\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\">La demora a su vencimiento o el impago de una de las\ncantidades aplazadas, dará derecho a la Contrata<b> </b>a resolver el presente contrato, quedando anulada la garantía de\nlos trabajos ejecutados y podrá exigir el pago de todas las cantidades\npendientes, incluso las cantidades aplazadas y no vencidas, </span><span style=\"font-family: Arial, sans-serif;\">así como el devengo de\nintereses por demora al tipo del interés legal</span><span style=\"\">.</span></font></p><p class=\"MsoNormal\" style=\"text-align:justify\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">costo\nde los timbres de dichos efectos será por cuenta de la Propiedad.</font></span></p><p class=\"MsoNormal\" style=\"text-align:justify\"><span style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"NaN\"><br></font></span></p><p class=\"MsoNormal\" style=\"text-align:justify\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VI.&nbsp;<u style=\"\">VALIDEZ DE LA OFERTA</u></font></span></b></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">Si las obras no se iniciaran en un plazo de 90 días desde la fecha del contrato por causa no imputables a la Contrata, los precios se revisarán en función del IPC que se encuentre en vigor.</font></span></p><div><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><br></font></span></div><p></p>"
-              },
-              "HorAlignment": "Width",
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "TextQuality": "Wysiwyg",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            }
-          },
-          "DataSourceName": "datos_contrato"
-        }
-      },
-      "Watermark": {
-        "TextBrush": "solid:50,0,0,0"
-      },
-      "Margins": {
-        "Left": 1.5,
-        "Right": 1.5,
-        "Top": 1.5,
-        "Bottom": 1.5
-      }
-    },
-    "2": {
-      "Ident": "StiPage",
-      "Name": "Page3",
-      "Guid": "c109210b912b4eeeb5f4d88c78343981",
-      "Interaction": {
-        "Ident": "StiInteraction"
-      },
-      "Border": ";;2;;;;;solid:Black",
-      "Brush": "solid:",
-      "Components": {
-        "0": {
-          "Ident": "StiPageFooterBand",
-          "Name": "PageFooterBand5",
-          "CanGrow": true,
-          "ClientRectangle": "0,26.1,18,0.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": "Top;;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text16",
-              "ClientRectangle": "16.8,0.16,1,0.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{PageNumberThrough}"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          }
-        },
-        "1": {
-          "Ident": "StiPageFooterBand",
-          "Name": "PageFooterBand6",
-          "PrintOn": "OnlyLastPage",
-          "CanGrow": true,
-          "ClientRectangle": "0,21.1,18,4.2",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text17",
-              "ClientRectangle": "1.8,0.22,3,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "LA PROPIEDAD"
-              },
-              "Font": ";10;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text21",
-              "ClientRectangle": "1.4,3.42,5.8,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Fdo. {datos_contrato.nombrePresidente}"
-              },
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text24",
-              "ClientRectangle": "11.2,3.42,6.2,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
-              },
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text1",
-              "Guid": "058f27035b82d43bc2a3327f1e273021",
-              "ClientRectangle": "12,0.3,2.6,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "LA CONTRATA"
-              },
-              "Font": ";10;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          }
-        },
-        "2": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand5",
-          "CanGrow": true,
-          "ClientRectangle": "0,0.4,18,13.4",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text14",
-              "ClientRectangle": "0.2,0,17.6,13",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><b style=\"\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VII.-<u style=\"\">RECEPCION</u></font></span></b></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">A la finalización de los trabajos, se\nlevantará un Acta de recepción de Obras, firmándose por un representante de la Propiedad<b style=\"mso-bidi-font-weight:normal\"> </b>y otro de la<b style=\"mso-bidi-font-weight:\nnormal\"> </b>Contrata, no obstante, en caso de no realizarse dicha Acta, la\nobra realizada se entenderá recibida de conformidad, si dentro de los quince\ndías naturales a partir de la fecha de la certificación final, no se hubiera\npresentado reclamación expresa.<b style=\"mso-bidi-font-weight:normal\"> <o:p></o:p></b></font></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><b style=\"mso-bidi-font-weight:normal\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></b></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><b style=\"mso-bidi-font-weight:normal\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VIII.-<u>PRECAUCIONES\nADICIONALES<o:p></o:p></u></font></span></b></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">La Propiedad consiente igualmente (prestando,\nen este sentido, su consentimiento a tal efecto, de conformidad con lo\nestablecido en la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de\nDatos de Carácter Personal en especial su artículo 11 – y normas de desarrollo)\na La Contrata, las posibles cesiones de sus datos de carácter personal a favor\nde terceros que puedan requerirse como consecuencia de la relación con\nentidades bancarias. <o:p></o:p></font></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">No se permiten enmiendas y adiciones a estos\ntérminos y condiciones.<o:p></o:p></font></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">Si algunas estipulaciones de este Acuerdo\npasaran a ser no válidas, éstas no afectarían a la validez del resto de\nAcuerdo. Las partes deberán reemplazar tales términos inmediatamente por otros\nlegalmente válidos.<o:p></o:p></font></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">Para todas cuantas cuestiones puedan\nsuscitarse respecto de la eficacia e interpretación de este acuerdo, las\npartes, renunciando a su propio fuero, se someten a la jurisdicción y\ncompetencia de los tribunales de la villa de Madrid. <o:p></o:p></font></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><o:p><font size=\"10\">&nbsp;</font></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"text-align:justify;mso-hyphenate:none\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">Y en prueba de conformidad y aceptación con\ntodo lo anteriormente expuesto y estipulado, en cuyo contenido se afirma,\nsuscriben el presente documento por duplicado y a un solo efecto en el lugar y\nfecha al comienzo referenciado.</font><span style=\"\"><font size=\"10\"><o:p></o:p></font></span></span></p>"
-              },
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "TextQuality": "Wysiwyg",
-              "AllowHtmlTags": true,
-              "Type": "Expression"
-            }
-          }
-        }
-      },
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },

@@ -224,4 +224,8 @@ SET
   NULL;
 
   ALTER TABLE `contrato_planificacion_temporal`  
-  ADD CONSTRAINT `planificacionTemp_comtratoFK` FOREIGN KEY (`contratoId`) REFERENCES `proasistencia`.`contratos`(`contratoId`) ON DELETE CASCADE;
+  ADD CONSTRAINT `planificacionTemp_comtratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON DELETE CASCADE;
+
+
+ALTER TABLE `contrato_planificacion_temporal`   
+	ADD COLUMN `externa` TINYINT(1) DEFAULT 0 NULL AFTER `contPlanificacionTempIntId`;
