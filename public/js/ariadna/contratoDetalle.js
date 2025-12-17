@@ -24,6 +24,7 @@ var dep;
 var usuario;
 var dataConceptosLineas;
 var dataPlanificacionLineas;
+var dataPlanificacionLineasTemp;
 var numConceptos = 0;
 var dataConceptos;
 var numPrefacturas = 0;
@@ -45,6 +46,9 @@ var dataDocumentacion;
 var subCarpeta = '';
 var carpetaTipo = null;
 var parent = null;
+var totalIntereses = 0;
+//
+let dataPlanificacion
 
 datePickerSpanish(); // see comun.js
 
@@ -64,6 +68,7 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtNumPagos2').on('blur', verPrefacturasAGenerarPlanificacion);
+    $('#txtNumPagos3').on('blur', verPrefacturasAGenerarPlanificacionTemp);
 
     // asignación de eventos al clic
     $("#btnAceptar").click(clicAceptar);
@@ -77,7 +82,8 @@ function initForm() {
     });
 
     $("#btnSalir").click(salir());
-    //$("#btnImprimir").click(imprimir);
+    $("#btnImprimir").click(imprimir);
+    $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
     });
@@ -137,11 +143,20 @@ function initForm() {
         return false;
     });
 
+
+    $("#conceptoObrasTemp-form").submit(function () {
+        return false;
+    });
+
     $("#frmLineaConceptos").submit(function () {
         return false;
     });
 
     $("#frmLineaPlanificacionObras").submit(function () {
+        return false;
+    });
+
+    $("#frmLineaPlanificacionObrasTemp").submit(function () {
         return false;
     });
 
@@ -161,6 +176,10 @@ function initForm() {
         return false;
     });
     $("#generarPrefacturasObras-form").submit(function () {
+        return false;
+    });
+
+    $("#generarPrefacturasObrasTemp-form").submit(function () {
         return false;
     });
 
@@ -269,6 +288,13 @@ function initForm() {
         }
     });
 
+    $("#chkEsAdicionalTemp").change(function () {
+        if ($('#chkEsAdicionalTemp').prop('checked')) {
+            $('#refAdicional').show();
+        } else {
+            $('#refAdicional').hide();
+        }
+    });
     $("#txtFechaInicio").change(function (e) {
         if (vm.contratoId() == 0) vm.fechaOriginal(this.value);
     });
@@ -313,6 +339,7 @@ function initForm() {
         }
     })
 
+    //CONCEMTOS
     $("#txtPorcentajeCobro").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
         var porcentaje = parseFloat($("#txtPorcentajeCobro").val());
@@ -349,19 +376,6 @@ function initForm() {
         }
     });
 
-    $("#txtPorcentajePlanificacion").on('blur', function (e) {
-        var totalContrato = vm.importeCliente();
-        var porcentaje = parseFloat($("#txtPorcentajePlanificacion").val());
-        var restoPorcentaje = 0;
-        var restoContraro = 0;
-        var importePorcentaje = 0;
-        if (isNaN(porcentaje)) return;
-        restoContraro = totalContrato;
-        porcentaje = porcentaje / 100;
-        importePorcentaje = porcentaje * restoContraro;
-        vm.importeCalculadoPlanificacion(roundToSix(importePorcentaje));
-    });
-
     $("#txtImporteCalculado").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculado").val());
@@ -378,6 +392,22 @@ function initForm() {
         }
     });
 
+    //PLANIFICACION
+    $("#txtPorcentajePlanificacion").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var porcentaje = parseFloat($("#txtPorcentajePlanificacion").val());
+        var restoPorcentaje = 0;
+        var restoContraro = 0;
+        var importePorcentaje = 0;
+        if (isNaN(porcentaje)) return;
+        restoContraro = totalContrato;
+        porcentaje = porcentaje / 100;
+        importePorcentaje = porcentaje * restoContraro;
+        vm.importeCalculadoPlanificacion(roundToSix(importePorcentaje));
+    });
+
+
+
     $("#txtImporteCalculadoPlanificacion").on('blur', function (e) {
         var totalContrato = vm.importeCliente();
         var importeCalculado = parseFloat($("#txtImporteCalculadoPlanificacion").val());
@@ -387,6 +417,95 @@ function initForm() {
         vm.porcentajePlanificacion(roundToSix(porcentaje));
 
     });
+
+    //PLANIFICACION TEMPORAL
+    $("#txtPorcentajePlanificacionTemp").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var porcentaje = parseFloat($("#txtPorcentajePlanificacionTemp").val());
+        var restoPorcentaje = 0;
+        var restoContraro = 0;
+        var importePorcentaje = 0;
+        if (isNaN(porcentaje)) return;
+        restoContraro = totalContrato;
+        porcentaje = porcentaje / 100;
+        importePorcentaje = porcentaje * restoContraro;
+        vm.importeCalculadoPlanificacionTemp(roundToSix(importePorcentaje));
+    });
+
+
+
+    $("#txtImporteCalculadoPlanificacionTemp").on('blur', function (e) {
+        var totalContrato = vm.importeCliente();
+        var importeCalculado = parseFloat($("#txtImporteCalculadoPlanificacionTemp").val());
+        var porcentaje = 0;
+        if (isNaN(importeCalculado)) return;
+        porcentaje = (importeCalculado * 100) / totalContrato;
+        vm.porcentajePlanificacionTemp(roundToSix(porcentaje));
+
+    });
+    $('#modalGenerarPrefacturasPlanificacionTemp').on('hidden.bs.modal', function () {
+
+        // --- 1. LIMPIAR CHECKBOX Y SELECTS ---
+        $('#chkFacturaParcial').prop('checked', false);
+        $('#cmbPeriodosPagos3').val(null).trigger('change');
+        $('#txtNumPagos3').val('');
+
+        // --- 2. LIMPIAR KO OBSERVABLES (excepto los permitidos) ---
+        if (typeof viewModelGenerarPrefacturasTemp !== "undefined") {
+
+            // Fecha Inicio facturación → NO se toca
+            // viewModelGenerarPrefacturasTemp.fechaPrimeraFactura()
+
+            // Importe a facturar → NO se toca
+            // viewModelGenerarPrefacturasTemp.importeAFacturar()
+
+            viewModelGenerarPrefacturasTemp.facturaParcial(false);
+            viewModelGenerarPrefacturasTemp.speriodoPagoId(null);
+            viewModelGenerarPrefacturasTemp.elegidosPeriodosPagos([]);
+            viewModelGenerarPrefacturasTemp.numPagos('');
+        }
+
+        // --- 3. LIMPIAR DATATABLE ---
+        if ($.fn.DataTable.isDataTable('#dt_generar_prefacturas-temp')) {
+            $('#dt_generar_prefacturas-temp').DataTable().clear().draw();
+        }
+
+    });
+
+    $('#modalGenerarPrefacturasPlanificacion').on('hidden.bs.modal', function () {
+
+        // --- 1. LIMPIAR CHECKBOX, SELECTS Y CAMPOS ---
+        $('#chkFacturaParcial').prop('checked', false);
+        $('#cmbPeriodosPagos2').val(null).trigger('change');
+        $('#txtNumPagos2').val('');
+
+        // No limpiar:
+        // #txtGFechaPrimeraFactura2  (fecha inicio facturación)
+        // #txtImporteFacturar2       (importe a facturar)
+
+        // --- 2. LIMPIAR OBSERVABLES KO (excepto los permitidos) ---
+        if (typeof viewModelGenerarPrefacturas !== "undefined") {
+
+            // No tocar:
+            // viewModelGenerarPrefacturas.fechaPrimeraFactura()
+            // viewModelGenerarPrefacturas.importeAFacturar()
+
+            viewModelGenerarPrefacturas.facturaParcial(false);
+            viewModelGenerarPrefacturas.speriodoPagoId(null);
+            viewModelGenerarPrefacturas.elegidosPeriodosPagos([]);
+            viewModelGenerarPrefacturas.numPagos('');
+        }
+
+        // --- 3. LIMPIAR DATATABLE ---
+        if ($.fn.DataTable.isDataTable('#dt_generar_prefacturas2')) {
+            $('#dt_generar_prefacturas2').DataTable().clear().draw();
+        }
+
+    });
+
+
+
+
 
     //Evento de marcar/desmarcar todos los checks
     $('#checkMain').click(
@@ -447,59 +566,6 @@ function initForm() {
         }
     });
 
-    /*  $('#upload-input').on('change', function () {
-         if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
-         var encontrado = false;
-         var id = 0;
-         var files = $(this).get(0).files;
-         var file = files[0];
-         var ext = file.name.split('.').pop().toLowerCase();
-         var blob = file.slice(0, file.size, file.type); 
-         var newFile = new File([blob], {type: file.type});
-         var nom = vm.documNombre() + "." + ext;
-         nom = nom.replace(/\//g, "-");
-         var fileKey =  carpeta + "/" + nom
-         //buscamos si el documento ya existe en la carpeta de destino
-         llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
-             if (err) return;
-             if(docums && docums.length > 0) {
-                 for(var i = 0; i < docums.length; i++) {
-                     var d = docums[i];
-                     var n = d.key.split('/');
-                     if(n[1] == nom) {
-                         encontrado = true;
-                         id = d.documentoId
-                         break;
-                     }
-                 }
-                 if(encontrado) {
- 
-                     var mens = "Ya existe un documento con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
-                     $.SmartMessageBox({
-                         title: "<i class='fa fa-info'></i> Mensaje",
-                         content: mens,
-                         buttons: '[Aceptar][Cancelar]'
-                     }, function (ButtonPressed) {
-                         if (ButtonPressed === "Aceptar") {
-                             method = 'PUT';
-                             uploadDocum(newFile, fileKey, id);
-                         }
-                         if (ButtonPressed === "Cancelar") {
-                             $('#upload-input').val([]);
-                         }
-                     });
- 
-                 } else {
-                     uploadDocum(newFile, fileKey, id);
-                 }
-             } else {
-                 uploadDocum(newFile, fileKey, id);
-             }
-         }); 
-     }); */
-
-
-
     // 7 bind to events triggered on the tree
     $('#jstreeDocumentacion').on("click.jstree", function (e) {
         var node = $(e.target).closest('.jstree-node');
@@ -529,6 +595,7 @@ function initForm() {
 
     $("#cmbFormasPagoLinea").select2(select2Spanish());
     $("#cmbFormasPagoLineaObras").select2(select2Spanish());
+    $("#cmbFormasPagoLineaObrasTemp").select2(select2Spanish());
     loadFormasPagoLinea();
 
 
@@ -563,6 +630,7 @@ function initForm() {
     initTablaComisionistas();
     initTablaGenerarPrefacturas();
     initTablaGenerarPrefacturasPlanificacion();
+    initTablaGenerarPrefacturasPlanificacionTemp();
 
 
     initTablaFacturas();
@@ -574,6 +642,7 @@ function initForm() {
     initTablaFactcol();
     initTablaConceptosLineas();
     initTablaPlanificacionLineasObras();
+    initTablaPlanificacionLineasObrasTemp();
     //initTablaDocumentacion();
     initArbolDocumentacion();
 
@@ -663,6 +732,8 @@ function initForm() {
 
             initTablaPrefacturas(data.tipoContratoId);
 
+            initTablaPrefacturasTemp(data.tipoContratoId);
+
 
             loadLineasContrato(data.contratoId);
             loadBasesContrato(data.contratoId);
@@ -713,6 +784,7 @@ function initForm() {
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
 
+
         //
         document.title = "NUEVO CONTRATO";
     }
@@ -750,7 +822,10 @@ var mostrarMensajeEnFuncionDeCmd = function (cmd) {
             mens = "Este contrato ha sido generado desde una oferta. Compruebe que sus datos y colaboradores asociados son correctos";
             break;
         case 'REN':
-            mens = "Este contrato es una renovación de un contrato anterio. Repase que las condiciones del mismo son correctas para este periodo";
+            mens = "Este contrato es una renovación de un contrato anterior. Repase que las condiciones del mismo son correctas para este periodo";
+            break;
+        case 'INT':
+            mens = "Este contrato es un contrato de intereses generado a partior de un contrato principal. Repase que las condiciones del mismo son correctas.";
             break;
         default:
             mens = null;
@@ -776,6 +851,7 @@ function admData() {
     self.ofertaId = ko.observable();
     self.beneficioLineal = ko.observable();
     self.fechaCierreContrato = ko.observable();
+    self.contratoInteresesId = ko.observable();
     // calculadora
     self.coste = ko.observable();
     self.porcentajeBeneficio = ko.observable();
@@ -1036,7 +1112,42 @@ function admData() {
     //
     self.posiblesTecnicos = ko.observableArray([]);
     self.elegidosTecnicos = ko.observableArray([]);
+    //DATOS CONTRATO
+    self.fechaFormalizacionContrato = ko.observable();
 
+
+    //PLANIFICACIÓN TEMPORAL
+    self.contPlanificacionTempId = ko.observable();
+    self.conceptoPlanificacionTemp = ko.observable();
+    self.porcentajePlanificacionTemp = ko.observable();
+    self.importeCalculadoPlanificacionTemp = ko.observable();
+    self.importeIntereses = ko.observable();
+    self.fechaPlanificacionObrasTemp = ko.observable();
+    self.importeFacturadoTemp = ko.observable();
+    self.importeCobradoTemp = ko.observable();
+    self.importePlanificadoTemp = ko.observable();
+    self.diferenciaTemp = ko.observable();
+    self.importePrefacturadoTemp = ko.observable();
+    self.diferenciaPrefacturadoTemp = ko.observable();
+    self.certificacionFinalFormat = ko.observable();
+    self.porRetenGarantiasTemp = ko.observable();
+    self.esAdicionalTemp = ko.observable();
+    self.refPresupuestoAdicionalTemp = ko.observable();
+    //
+    self.emitidasTemp = ko.observable();
+    self.numEmitidasTemp = ko.observable();
+    self.totEmitidasTemp = ko.observable();
+    //
+    self.totLetrasPlanificadasTemp = ko.observable();
+    self.numLetrasPlanificadasTemp = ko.observable();
+    //
+    self.difPlanificadoLetrasTemp = ko.observable();
+    self.difNumPlanificadoLetrasTemp = ko.observable()
+    //DATOS DEL PRESIDENTE DE LA COMUNIDAD
+    self.nombrePresidente = ko.observable();
+    self.dniPresidente = ko.observable();
+    self.correoPresidente = ko.observable();
+    self.fechaJunta = ko.observable();
 }
 
 function loadData(data) {
@@ -1046,6 +1157,15 @@ function loadData(data) {
         window.open(url, '_self');
         //return;
     }
+
+    if(data.contratoIntereses) { 
+        $("#btnImprimir").hide();
+        $('btnIntereses').hide();
+    } else {
+        $("#btnImprimir").show();   
+        $('#btnIntereses').show();
+    }
+
     $('#btnNuevaLinea').show();
     vm.contratoId(data.contratoId);
     vm.ofertaId(data.ofertaId);
@@ -1063,6 +1183,7 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
+    vm.contratoInteresesId(data.contratoInteresesId);
     //
     vm.importeCliente(data.importeCliente);
     vm.importeClienteFormat(data.importeCliente);
@@ -1136,6 +1257,13 @@ function loadData(data) {
     vm.resumenDr(data.resumenDr);
     vm.resumenTasasVisado(data.resumenTasasVisado);
     vm.resumenDiario(data.resumenDiario);
+    //
+    vm.fechaFormalizacionContrato(spanishDate(data.fechaFormalizacionContrato));
+    //
+    vm.nombrePresidente(data.nombrePresidente);
+    vm.dniPresidente(data.dniPresidente);
+    vm.correoPresidente(data.correoPresidente);
+    vm.fechaJunta(spanishDate(data.fechaJunta));
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1153,6 +1281,7 @@ function loadData(data) {
         $('.obras').show()
         actualizaCobrosPlanificacion(data.contratoId);
         //loadPlanificacionLineasObras(data.contratoId);
+        loadPlanificacionLineasObrasTemp(data.contratoId);
         $('#lineasPagoObras').show();
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
@@ -1437,7 +1566,15 @@ var generarContratoDb = function () {
             "ipc": vm.ipc(),
             "renovar": vm.renovar(),
             "fechaFinAlquiler": spanishDbDate(vm.fechaFinAlquiler()),
-            "importeAnualRenovacion": vm.importeAnualRenovacion()
+            "importeAnualRenovacion": vm.importeAnualRenovacion(),
+            //
+            "fechaFormalizacionContrato": spanishDbDate(vm.fechaFormalizacionContrato()),
+            //
+            "nombrePresidente": vm.nombrePresidente(),
+            "dniPresidente": vm.dniPresidente(),
+            "correoPresidente": vm.correoPresidente(),
+            "fechaJunta": spanishDbDate(vm.fechaJunta()),
+            "contratoInteresesId": vm.contratoInteresesId()
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -1476,6 +1613,7 @@ function loadEmpresas(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesEmpresas(empresas);
+        if (id) vm.scontratoId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
     });
 }
@@ -1560,7 +1698,9 @@ function loadFormasPagoLinea(id) {
         vm.sformaPagoIdLinea(id);
         $("#cmbFormasPagoLinea").val([id]).trigger('change');
         $("#cmbFormasPagoLineaObras").val([id]).trigger('change');
+        $("#cmbFormasPagoLineaObrasTemp").val([id]).trigger('change');
     });
+
 }
 
 function loadContratos(id) {
@@ -3000,6 +3140,7 @@ var loadPeriodosPagos = function (periodoPagoId) {
     vm.posiblesPeriodosPagos(periodosPagos);
     $("#cmbPeriodosPagos").val([periodoPagoId]).trigger('change');
     $("#cmbPeriodosPagos2").val([periodoPagoId]).trigger('change');
+    $("#cmbPeriodosPagos3").val([periodoPagoId]).trigger('change');
 }
 
 var generarPrefacturas = function () {
@@ -3011,6 +3152,7 @@ var generarPrefacturas = function () {
   */
     var resto = 0;
     $("#cmbPeriodosPagos").select2(select2Spanish());
+
     $("#cmbPeriodosPagos2").select2(select2Spanish());
     loadPeriodosPagos(vm.speriodoPagoId());
     $("#cmbPeriodosPagos").select2().on('change', function (e) {
@@ -3040,7 +3182,14 @@ var generarPrefacturas = function () {
     $("#generar-prefacturas-form-planificacion").submit(function () {
         return false;
     });
+
+    $("#generar-prefacturas-form-planificacion-temp").submit(function () {
+        return false;
+    });
+
 }
+
+
 
 var generarPrefacturasPlanificacion = function (data) {
     var resto = data[0].importe;
@@ -3064,6 +3213,7 @@ var generarPrefacturasPlanificacion = function (data) {
     $("#generar-prefacturas-form-planificacion").submit(function () {
         return false;
     });
+
 }
 
 var cambioPeriodosPagos = function (data) {
@@ -3073,6 +3223,7 @@ var cambioPeriodosPagos = function (data) {
 var cambioPeriodosPagosPlanificacion = function (data) {
     vm.numPagos(calcularNumPagosPlanificacion());
 }
+
 
 var obtenerDivisor = function () {
     var divisor = 1;
@@ -3343,7 +3494,7 @@ var controlDePrefacturasYaGeneradas = function (contratoId, done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
         if (err) return done(err);
         if (data.length == 0) return done(null, true);
-        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        var mensaje = "Ya hay prefacturas temporales generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
         mensajeAceptarCancelar(mensaje, function () {
             llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
                 if (err) return done(err);
@@ -3950,36 +4101,43 @@ function initTablaPrefacturas(departamentoId) {
             }
         }, {
             data: "coste",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "noFacturado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "facturado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
@@ -4090,16 +4248,16 @@ function calculaImportesInformativosPrefacturas(c) {
         if (vm.totEmitidas()) {
             var a = numeroDbf(vm.totEmitidas());
             var na = vm.numEmitidas();
-            var totLetrasPlanificadas = vm.totLetrasPlanificadas();
-            var numLetrasPlanificadas = vm.numLetrasPlanificadas();
+            var totLetrasPlanificadas = vm.totLetrasPlanificadas() || 0;
+            var numLetrasPlanificadas = vm.numLetrasPlanificadas() || 0;
 
             vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100) / 100).format('0,0.00'));
             vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100) / 100).format('0'));
         } else {
             var a = 0
             var na = 0
-            var totLetrasPlanificadas = vm.totLetrasPlanificadas();
-            var numLetrasPlanificadas = vm.numLetrasPlanificadas();
+            var totLetrasPlanificadas = vm.totLetrasPlanificadas() || 0;
+            var numLetrasPlanificadas = vm.numLetrasPlanificadas() || 0;
 
             vm.difPlanificadoLetras(numeral(Math.round((totLetrasPlanificadas - a) * 100) / 100).format('0,0.00'));
             vm.difNumPlanificadoLetras(numeral(Math.round((numLetrasPlanificadas - na) * 100) / 100).format('0'));
@@ -4553,26 +4711,31 @@ function initTablaFacturas() {
             }
         }, {
             data: "coste",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
@@ -4895,18 +5058,21 @@ function initTablaFacproves() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -5228,12 +5394,14 @@ function initTablaAntproves() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -5527,12 +5695,14 @@ function initTablaAntcols() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -5834,18 +6004,21 @@ function initTablaFactcol() {
         },
         {
             data: "importeServiciado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "total",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
 
@@ -6079,14 +6252,14 @@ function confirmarNoFacturar() {
         if (datos.length == 0) {
             return mensError("No se han seleccionado registros");
 
-        } 
-        for(let d of datos){
-            if(d.facturaId) {
+        }
+        for (let d of datos) {
+            if (d.facturaId) {
                 hayFactura = true;
                 break;
             }
         }
-        if(hayFactura) {
+        if (hayFactura) {
             return mensError("No se puede marcar como no facturable/no facturable porque alguna de las prefacturas seleccionadas ya tiene factura asociada");
         }
         var m = $('#chkFacturarNofacturar').prop('checked') ? 'no facturable?' : 'facturable?. Se actualizará la fecha de las prefacturas seleccionadas';
@@ -6667,6 +6840,7 @@ function crearPrefacturaPlanificacion(numPagos, empresaId, clienteId, empresa, c
 }
 
 
+
 var calcularNumPagos = function () {
     var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
     // if (vm.facturaParcial()){
@@ -6707,6 +6881,7 @@ var calcularNumPagosPlanificacion = function () {
     $('#txtNumPagos2').val(numpagos);
     return numpagos;
 }
+
 
 
 
@@ -6912,13 +7087,13 @@ function initTablaConceptosLineas() {
 
         }, {
             data: "porcentaje",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         }, {
             data: "importe",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
@@ -7444,59 +7619,59 @@ function initTablaPlanificacionLineasObras() {
 
         }, {
             data: "porcentaje",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         }, {
             data: "importe",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
         }, {
             data: "numPrefacturas",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
         }, {
             data: "importePrefacturado",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
 
         }, {
             data: "numFacturas",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
         }, {
             data: "importeFacturado",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
 
         }, {
             data: "importeFacturadoIva",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
 
         }, {
             data: "numCobros",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0');
             }
         },
         {
             data: "importeCobrado",
-            className: "text-left",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
@@ -7678,6 +7853,7 @@ function limpiarModalGenerarPrefacturasObras() {
     $('#chkVarias').prop('checked', false);
     RegPlanificacion = null;
 }
+
 function aceptarGenerarPrefacturaPlanificacionObras() {
     $('#modalGenerarPrefacturasObras').modal('hide');
     var opcion = $('#chkVarias').prop('checked');
@@ -7702,6 +7878,8 @@ function aceptarGenerarPrefacturaPlanificacionObras() {
         aceptarGenerarPrefacturaPlanificacion();
     }
 }
+
+
 
 function editPlanificacion(id) {
     lineaEnEdicion = true;
@@ -8023,6 +8201,7 @@ function ocualtaBotonesContratoCerrado() {
     $('#btnGenerarPrefacturas').hide();
     $('#btnNuevaLineaConcepto').hide();
     $('#btnNuevaLineaPlanificacionObras').hide();
+    //$('#btnNuevaLineaPlanificacionObrasTemp').hide();
 
 }
 
@@ -8892,11 +9071,15 @@ function loadContratoTasasVisado(id) {
 
 function loadTablaContratoTasasVisado(data) {
     var dt = $('#dt_lineasVisado').dataTable();
+    // Verificar que la tabla existe en el DOM
+    if (!dt || dt.length === 0) {
+        return; // La tabla no existe, salir sin error
+    }
     if (data !== null && data.length === 0) {
         data = null;
     }
     dt.fnClearTable();
-    dt.fnAddData(data);
+    if (data != null) dt.fnAddData(data);
     dt.fnDraw();
 }
 
@@ -8942,4 +9125,1182 @@ function initTablaContratosLineasTasas() {
             }
         }]
     });
+}
+
+//IMPRESION DE CONTRATO
+var imprimir = function () {
+    printContrato(vm.contratoId());
+}
+
+function printContrato(id) {
+    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId();
+    window.open(url, '_new');
+}
+//CREAR CONTRATO DE INTERESES
+function crearContratoIntereses() {
+    if (vm.contratoInteresesId()) {
+        return mensError('Ya hay un contrato de intereses asociado a este contrato.');
+    }
+    var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
+    mensajeAceptarCancelar(mensaje, function () {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId() + "/" + totalIntereses, null, function (err, data) {
+            if (err) { return errorGeneral(err, done); }
+            else {
+                window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=INT", '_new');
+
+            }
+        });
+    }, function () {
+        //cancelar no hace nada
+    });
+}
+
+
+//FUNCIONES RELACIONADAS CON LA PLANIFICACION TEMPORAL DE OBRAS
+
+function initTablaPlanificacionLineasObrasTemp() {
+    tablaLineasPlanificacionTemp = $('#dt_lineasPlanificacionObrasTemp').DataTable({
+        autoWidth: true,
+        paging: false,
+        responsive: true,
+        "order": [[0, "asc"]],
+        "columnDefs": [
+            {
+                "targets": [0], // columna "Fecha" oculta si quieres
+                "visible": false,
+                "searchable": false
+            }
+        ],
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api();
+
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ? i : 0;
+            };
+
+            if (vm.tipoContratoId() == 8) {
+                var c = api.data();
+                calculaImportesInformativosPlanificacionTemp(c);
+            }
+
+            // Total Porcentaje (columna 3)
+            var totalPorcentaje = api
+                .column(3)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+            $(api.columns(3).footer()).html(numeral(totalPorcentaje).format('0,0.00'));
+
+            // Total over all pages
+            totalImporte = api
+                .column(4)
+                .data()
+                .reduce(function (a, b) {
+                    var dif = 0
+                    vm.importePlanificadoTemp(numeral(totalImporte).format('0,0.00'));
+
+                    dif = totalImporte - vm.importeCliente();
+                    vm.diferenciaTemp(numeral(dif).format('0,0.00'));
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(4).footer()).html(
+                numeral(totalImporte).format('0,0.00')
+            );
+
+            totalIntereses = api
+                .column(5)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+            $(api.columns(5).footer()).html(numeral(totalIntereses).format('0,0.00'));
+
+
+            // Total Núm. Prefacturas (columna 6)
+            var totalPrefacturas = api
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)));
+                }, 0);
+            $(api.columns(6).footer()).html(numeral(totalPrefacturas).format('0'));
+
+            // Total Importe Prefacturado (columna 6)
+            var totalPrefacturado = api
+                .column(7)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+            $(api.columns(7).footer()).html(numeral(totalPrefacturado).format('0,0.00'));
+
+            // Opcional: actualizar variables VM
+            vm.importePlanificadoTemp(numeral(totalImporte).format('0,0.00'));
+            vm.importePrefacturadoTemp(numeral(totalPrefacturado).format('0,0.00'));
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataPlanificacionLineasTemp,
+        columns: [
+            { data: "fecha" }, // columna oculta
+            { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
+            { data: "concepto" },
+            { data: "porcentaje", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "importe", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "importeIntereses", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "numPrefacturas", className: "text-right", render: function (data) { return numeral(data).format('0'); } },
+            { data: "importePrefacturado", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "porRetenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "formaPagoNombre" },
+            {
+                data: "esAdicional",
+                className: "text-center",
+                render: function (data) {
+                    var checked = (data == 1 ? "checked" : "");
+                    return "<input type='checkbox' disabled " + checked + ">";
+                }
+            },
+            { data: "refPresupuestoAdicional" },
+            {
+                data: "contPlanificacionTempId", render: function (data, type, row) {
+                    var html = "", bt1 = "", bt2 = "", bt3 = "", bt4 = "", bt5 = "";
+                    if (!vm.contratoCerrado()) {
+                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
+                        bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
+                        bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
+                        if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
+                        if (row.esAdicional) bt5 = "<button class='btn btn-circle btn-success' onclick='imprimirContratoAdicional(" + data + ");' title='Imprimir contrato adicional'><i class='fa fa-print fa-fw'></i></button>";
+                        if(vm.contratoIntereses()) { bt4=""; bt5="";  }
+
+                    }
+                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + " " + bt5 + "</div>";
+                    return html;
+                }
+            }
+        ]
+    });
+
+    // Ocultar columna 0 si no quieres mostrar "Fecha original"
+    tablaLineasPlanificacionTemp.columns(0).visible(false);
+}
+
+
+
+function calculaImportesInformativosPlanificacionTemp(c) {
+    if (!c) return;
+    if (c.length > 0) {
+        var totLetrasPlanificadas = 0;
+        var numLetrasPlanificadas = 0;
+        for (var i = 0; i < c.length; i++) {
+            var s = c[i];
+            if (s.esLetra == 1) {
+                //LETRAS PLANIFICADAS
+                totLetrasPlanificadas = totLetrasPlanificadas + parseFloat(s.importe);
+                numLetrasPlanificadas = numLetrasPlanificadas + parseInt(s.numPrefacturas);
+
+
+            }
+        }
+        //diferencia entre letras planificadas y prefacturadas
+        vm.totLetrasPlanificadasTemp(Math.round(totLetrasPlanificadas * 100) / 100);
+        vm.numLetrasPlanificadasTemp(Math.round((numLetrasPlanificadas) * 100) / 100);
+    }
+}
+
+function loadPlanificacionLineasObrasTemp(id, numCobros) {
+    var data = {
+        numCobros: {
+            numCobros
+        }
+    }
+    llamadaAjax("GET", "/api/contratos/lineas/planificacion/temporal/" + id, data, function (err, data) {
+        if (err) return;
+
+        loadTablaPlanificacionLineasObrasTemp(data);
+        loadPrefacturasDelContratoTemp(id);
+
+    });
+}
+
+function loadTablaPlanificacionLineasObrasTemp(data) {
+    var a = null;
+    if (data) {
+        dataPlanificacion = data;
+        numPlanificacion = data.length;
+    } else {
+        dataPlanificacion = null;
+        numPlanificacion = 0;
+    }
+    var dt = $('#dt_lineasPlanificacionObrasTemp').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) {
+        dt.fnAddData(data);
+    }
+    dt.fnDraw();
+
+    if (vm.diferenciaPrefacturado()) {
+        a = parseFloat(numeroDbf(vm.diferenciaPrefacturado()));
+    } else {
+        a = null;
+    }
+}
+
+
+
+function nuevaLineaPlanificacionObrasTemp() {
+    limpiaDataLineaPlanificacionObrasTemp();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataLineaPlanificacionObrasTemp() {
+    vm.conceptoPlanificacionTemp('');
+    vm.porcentajePlanificacionTemp(0);
+    vm.fechaPlanificacionObrasTemp(vm.fechaInicio());
+    vm.importeCalculadoPlanificacionTemp(0);
+    vm.importeIntereses(0);
+    vm.porRetenGarantiasTemp(0);
+    vm.refPresupuestoAdicionalTemp('');
+    $('#chkEsAdicionalTemp').prop('checked', false);
+    vm.esAdicionalTemp(0);
+    loadFormasPagoLinea(vm.formaPagoId())
+}
+
+
+function aceptarLineaPlanificacionObrasTemp() {
+    if (!datosOKLineasPlanificacionObrasTemp()) {
+        return;
+    }
+    var data = {
+        planificacion: {
+            contPlanificacionTempId: 0,
+            contratoId: vm.contratoId(),
+            concepto: vm.conceptoPlanificacionTemp(),
+            porcentaje: vm.porcentajePlanificacionTemp(),
+            fecha: spanishDbDate(vm.fechaPlanificacionObrasTemp()),
+            importe: vm.importeCalculadoPlanificacionTemp(),
+            importeIntereses: vm.importeIntereses(),
+            porRetenGarantias: vm.porRetenGarantiasTemp(),
+            esAdicional: vm.esAdicionalTemp() || 0,
+            refPresupuestoAdicional: vm.refPresupuestoAdicionalTemp(),
+            formaPagoId: vm.sformaPagoIdLinea(),
+            contPlanificacionTempIntId: null
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/planificacion/temporal";
+    if (lineaEnEdicion) {
+        data.planificacion.contPlanificacionTempId = vm.contPlanificacionTempId();
+        delete data.planificacion.contPlanificacionTempIntId
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/planificacion/temporal/" + vm.contPlanificacionTempId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalPlanificacionObrasTemp').modal('hide');
+        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data) {
+            loadTablaPlanificacionLineasObrasTemp(data);
+            limpiarModalLineasPlanificacionTemp();
+        });
+    });
+}
+
+
+
+function generarPrefacturaPlanificacionObrasTemp(id) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/temporal/" + id, null, function (err, data) {
+        if (err) return;
+        RegPlanificacion = data
+        var f = moment(data[0].fecha).format('DD/MM/YYYY');
+        vm.fechaPlanificacionObrasTemp(f);
+        $('#chkVarias').prop('checked', false);
+    });
+
+}
+function limpiarModalGenerarPrefacturasObrasTemp() {
+    vm.fechaPlanificacionObrasTemp(null);
+    $('#chkVariasTemp').prop('checked', false);
+    RegPlanificacion = null;
+}
+
+function editPlanificacionTemp(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/contratos/linea-planificacion/temporal/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataLineaPlanificacionObrasTemp(data[0]);
+    });
+}
+function loadDataLineaPlanificacionObrasTemp(data) {
+    vm.contPlanificacionTempId(data.contPlanificacionTempId);
+    vm.conceptoPlanificacionTemp(data.concepto);
+    if (data.esAdicional) {
+        $('#chkEsAdicionalTemp').prop('checked', true);
+        $('#refAdicional').show();
+        vm.esAdicionalTemp(1);
+    } else {
+        $('#chkEsAdicionalTemp').prop('checked', false);
+        $('#refAdicional').hide();
+        vm.esAdicionalTemp(0);
+    };
+    vm.porcentajePlanificacionTemp(data.porcentaje);
+    vm.fechaPlanificacionObrasTemp(spanishDate(data.fecha));
+    vm.porRetenGarantiasTemp(data.porRetenGarantias);
+    vm.importeCalculadoPlanificacionTemp(data.importe);
+    vm.importeIntereses(data.importeIntereses);
+    vm.refPresupuestoAdicionalTemp(data.refPresupuestoAdicional);
+    loadFormasPagoLinea(data.formaPagoId);
+
+}
+
+function deletePlanificacionLineaObrasTemp(contPlanificacionTempId) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?, se borrarán además todas las prefacturas generadas.";
+    mensajeAceptarCancelar(mens, function () {
+        llamadaAjax("DELETE", myconfig.apiUrl + "/api/contratos/planificacion/temporal/" + contPlanificacionTempId, null, function (err, data) {
+            if (err) return;
+            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data) {
+                loadTablaPlanificacionLineasObrasTemp(data);
+                loadPrefacturasDelContratoTemp(vm.contratoId());
+            });
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function datosOKLineasPlanificacionObrasTemp() {
+    $('#conceptoObras-form').validate({
+        rules: {
+            txtConceptoPlanificaciontemp: {
+                required: true
+            },
+            txtPorcentajePlanificacionTemp: {
+                required: true,
+                number: true
+            },
+            txtImporteCalculadoPlanificacionTemp: {
+                required: true,
+                number: true
+            },
+            txtFechaPlanificacionObrasTemp: {
+                required: true,
+                greaterThan: '#txtFechaInicio',
+                lessThan: '#txtFechaFinal'
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtConceptoPlanificacionTemp: {
+                required: "Debe dar un concepto"
+            },
+            txtPorcentajePlanificacionTemp: {
+                required: "Debe proporcionar un porcentaje",
+                number: "Se tiene que introducir un numero válido"
+            },
+            txtImporteCalculadoPlanificacionTemp: {
+                required: true,
+                number: true
+            },
+            txtFechaPlanificacionObrasTemp: {
+                required: "Debe proporcionar una fecha de factura",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#conceptoObras-form').valid();
+}
+
+function limpiarModalLineasPlanificacionTemp() {
+    vm.contPlanificacionTempId(null);
+    vm.conceptoPlanificacionTemp(null);
+    vm.porcentajePlanificacionTemp(null);
+    vm.fechaPlanificacionObrasTemp(null);
+    vm.importeCalculadoPlanificacionTemp(null);
+    vm.importeIntereses(null);
+    vm.esAdicionalTemp(0);
+    $('#chkEsAdicionalTemp').prop('checked', false);
+    vm.porRetenGarantiasTemp(null);
+    vm.refPresupuestoAdicionalTemp(null);
+
+    loadFormasPagoLinea(null);
+}
+
+
+
+function crearPrefacturaPlanificacionTemp(numPagos, empresaId, clienteId, empresa, cliente, data) {
+    var divisor = 1;
+    var fecha = new Date(spanishDbDate(data[0].fecha));
+    var pagos = [];
+    var nPagos = numPagos;
+    var porRetenGarantias = 0
+    var retenGarantias = 0
+    var copiadata = data.slice();
+
+    for (var i = 0; i < nPagos; i++) {
+        var importePago = roundToSix(data[i].importe);
+        var importePagoCliente = roundToSix(data[i].importe);
+        var importeCoste = roundToSix(data[i].importe);
+        var contPlanificacionTempId = data[i].contPlanificacionTempId;
+        var formaPagoId = data[i].formaPagoId;
+        // sucesivas fechas de factura
+        var f = moment(fecha).format('DD/MM/YYYY');
+        // inicio de periodo
+        if (i == 0) {
+            var f0 = moment(fecha).add(i * divisor, 'month').format('DD/MM/YYYY');
+        }
+
+        var f2 = moment(fecha).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        //completamos el compo observacionesPago
+        var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
+        var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
+        var cabOtrosConceptos = '\nOTROS CONCEPTOS';
+        var otrosConceptos = ''
+        //calculamos la retención de garantia si existe
+        if (copiadata[i].porRetenGarantias) {
+            porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
+            retenGarantias = roundToTwo(importePago * porRetenGarantias);
+        }
+        copiadata.splice(i, 1);
+        for (var k = 0; k < copiadata.length; k++) {
+            otrosConceptos += "\n" + copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
+        }
+
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            retenGarantias: retenGarantias,
+            porcentajeBeneficio: vm.porcentajeBeneficio(),
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2,
+            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos,
+            contratoPorcenId: null,
+            contPlanificacionTempId: contPlanificacionTempId,
+            formaPagoId: formaPagoId
+        };
+
+
+        pagos.push(p);
+        copiadata = [];
+        copiadata = data.slice();
+    }
+
+    return pagos;
+}
+
+function aceptarGenerarPrefacturaPlanificacionObrasTemp(init) {
+    $('#modalGenerarPrefacturasObrasTemp').modal('hide');
+    var opcion = $('#chkVariasTemp').prop('checked');
+    //limpiarModalGenerarPrefacturasObras();
+    if (opcion) {
+        $('#modalGenerarPrefacturasPlanificacionTemp').modal({
+            show: 'true'
+        });
+        generarPrefacturasPlanificacionTemp(RegPlanificacion);
+
+    } else {
+        //comprobamos que le cliente tenga un nombre comercial
+        var d = vm.nombreComercial();
+        if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
+        var clienteId = vm.clienteId();
+        var cliente = vm.nombreComercial();
+        var empresa = $("#cmbEmpresas").select2('data').text;
+        RegPlanificacion[0].fecha = vm.fechaPlanificacionObrasTemp()
+        var prefacturas = crearPrefacturaPlanificacionTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
+        vm.prefacturasAGenerar(prefacturas);
+        aceptarGenerarPrefacturaPlanificacionTemp();
+    }
+}
+
+var aceptarGenerarPrefacturaPlanificacionTemp = function () {
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+    };
+
+    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                mensError('Error al crear la prefactura temporal');
+                return;
+            }
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+        });
+    });
+
+}
+
+
+var verPrefacturasAGenerarPlanificacionTemp = function () {
+    if (!generarPrefacturasOK()) return;
+
+    //comprobamos que le cliente tenga un nombre comercial
+    var d = vm.nombreComercial();
+    if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
+    // comprobamos si es de mantenedor o cliente final.
+    var importe = vm.importeAFacturar(); // importe real de la factura;
+    var importeAlCliente = vm.importeAFacturar(); // importe al cliente final;
+    var clienteId = vm.clienteId();
+    var cliente = vm.nombreComercial();
+    var empresa = $("#cmbEmpresas").select2('data').text;
+    // si es un mantenedor su importe de factura es el calculado para él.
+    if (vm.mantenedorId()) {
+        importe = vm.importeMantenedor();
+        clienteId = vm.mantenedorId();
+        cliente = $("#txtMantenedor").val();
+    }
+    var divisor = importe / vm.importeCliente();
+    var coste = vm.coste() * divisor;
+    var porRetenGarantias = RegPlanificacion[0].porRetenGarantias;
+    var prefacturas = crearPrefacturasTemp(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+
+    vm.prefacturasAGenerar(prefacturas);
+    loadTablaGenerarPrefacturasPlanificaciontemp(prefacturas);
+}
+
+function loadTablaGenerarPrefacturasPlanificaciontemp(data) {
+    var dt = $('#dt_generar_prefacturas-temp').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function crearPrefacturasTemp(importe, importeAlCliente, coste, fechaPrimeraFactura, porRetenGarantias, numPagos, empresaId, clienteId, empresa, cliente) {
+    var divisor = obtenerDivisor();
+    var numLetra = '';
+
+
+    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
+    // de mes 
+    var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
+    //var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
+    var iniContrato = moment(inicioFactura).format('YYYY-MM-DD');
+    //var fFactura = moment(finFactura).format('YYYY-MM-DD');
+    var finMesinicioFactura = moment(inicioFactura).endOf('month');
+    var aux = iniContrato.split('-');
+    var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
+    var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
+
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
+    porRetenGarantias = parseFloat(porRetenGarantias);
+
+
+
+    // como la división puede no dar las cifras hay que calcular los restos.
+    var restoImportePago = importe - (importePago * numPagos);
+    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
+    var restoImporteCoste = coste - (importeCoste * numPagos);
+
+    var import1 = (importePago / 30) * diffDias;
+    var import11 = (importePagoCliente / 30) * diffDias;
+    var import12 = (importeCoste / 30) * diffDias;
+    var import2 = importePago - import1;
+    var import21 = importePagoCliente - import11;
+    var import22 = importeCoste - import12;
+    var pagos = [];
+    var nPagos = numPagos;
+    if (importe == 0 || importe < 0) return pagos;
+    if (vm.facturaParcial()) {
+        nPagos++
+    }
+    for (var i = 0; i < nPagos; i++) {
+        // sucesivas fechas de factura
+        var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
+        // inicio de periodo
+        var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+        // fin de periodo
+        var f2 = moment(inicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        if (vm.facturaParcial()) {
+            if (i > 0) {
+                f0 = moment(inicioMesinicioFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
+            }
+            f2 = moment(inicioMesinicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        }
+        /*  if (i == (nPagos - 1)) {
+             f2 = moment(fFactura).format('DD/MM/YYYY');
+         } */
+        var n = i + 1
+        numLetra = n + "/" + nPagos
+
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            retenGarantias: 0,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            porcentajeBeneficio: vm.porcentajeBeneficio(),
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2,
+            contPlanificacionTempId: RegPlanificacion[0].contPlanificacionTempId,
+            formaPagoId: RegPlanificacion[0].formaPagoId,
+            numLetra: numLetra
+        };
+        if (vm.facturaParcial() && i == 0) {
+            p.importe = import1;
+            p.importeCliente = import11;
+            p.importeCoste = import12;
+        }
+        if (vm.facturaParcial() && i == (nPagos - 1)) {
+            p.importe = import2;
+            p.importeCliente = import21;
+            p.importeCoste = import22;
+        }
+        //calculamos la retención de garantia si existe
+        if (porRetenGarantias) {
+            var por = roundToTwo(porRetenGarantias / 100)
+            p.retenGarantias = roundToTwo(p.importe * por);
+        }
+
+
+        pagos.push(p);
+    }
+    if (pagos.length > 1) {
+        // en la última factura ponemos los restos
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        if (porRetenGarantias) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo(pagos[pagos.length - 1].importe * por);
+        }
+        /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
+        pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
+        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
+    }
+    return pagos;
+}
+
+function initTablaGenerarPrefacturasPlanificacionTemp() {
+    tablaGenerarPrefcaturas = $('#dt_generar_prefacturas-temp').dataTable({
+        bSort: false,
+        autoWidth: true,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataGenerarPrefacturas,
+        columnDefs: [{
+            "width": "20%",
+            "targets": [2, 3]
+        }],
+        columns: [{
+            data: "fecha"
+        }, {
+            data: "importeCoste",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "empresa",
+            className: "text-center"
+        }, {
+            data: "cliente",
+            className: "text-center"
+        }, {
+            data: "periodo",
+            className: "text-center"
+        }]
+    });
+}
+
+var generarPrefacturasPlanificacionTemp = function (data) {
+    var resto = data[0].importe;
+    vm.importeAFacturar(roundToSix(resto));
+    $("#cmbPeriodosPagos3").select2(select2Spanish());
+    loadPeriodosPagos(vm.speriodoPagoId());
+
+    $("#cmbPeriodosPagos3").select2().on('change', function (e) {
+        cambioPeriodosPagosPlanificacionTemp(e.added);
+    });
+
+
+
+    if (vm.fechaPlanificacionObrasTemp()) {
+        vm.fechaPrimeraFactura(vm.fechaPlanificacionObrasTemp());
+    }
+    else if (!vm.fechaPrimeraFactura()) {
+        var f = new Date();
+        f = moment(f).format('DD/MM/YYYY');
+        vm.fechaPrimeraFactura(f);
+    }
+    $("#generar-prefacturas-form-planificacion-temp").submit(function () {
+        return false;
+    });
+
+}
+
+var aceptarGenerarPrefacturasPlanificacionTemp = function () {
+    if (!generarPrefacturasOK()) return;
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', true);
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+    };
+    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+                return;
+            }
+            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId());
+            //actualizaCobrosPlanificacion(vm.contratoId());
+            limpiarModalGenerarPrefacturasObrasTemp();
+        });
+    });
+}
+
+function initTablaPrefacturasTemp(departamentoId) {
+
+    var buttonCommon = {
+        exportOptions: {
+            format: {
+                body: function (data, row, column, node) {
+                    // Columnas numéricas: coste (6), total (7), totalConIva (8), retenGarantias (9)
+                    if ([6, 7, 8, 9].includes(column)) {
+                        return numeroDbf(data);
+                    } else if ([0, 11].includes(column)) {
+                        return "";
+                    } else {
+                        return data;
+                    }
+                },
+                footer: function (data, row, column, node) {
+                    if ([6, 7, 8, 9].includes(row)) {
+                        return numeroDbf(data);
+                    } else if (row === 10) {
+                        return data;
+                    } else {
+                        return "";
+                    }
+                }
+            }
+        }
+    };
+
+    tablaPrefacturas = $('#dt_prefacturaTemp').DataTable({
+        paging: false,
+        responsive: true,
+        "bDestroy": true,
+        bSort: false,
+        "oColVis": { "buttonText": "Mostrar / ocultar columnas" },
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'C Br>r>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        buttons: [
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, { extend: 'excel', footer: true }),
+            $.extend(true, {}, buttonCommon, { extend: 'pdf', orientation: 'landscape', pageSize: 'LEGAL', footer: true }),
+            'print'
+        ],
+        autoWidth: false,
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+
+            // Columnas numéricas
+            var columnasNumericas = [6, 7, 8, 9];
+
+            columnasNumericas.forEach(function (colIdx) {
+                var total = api
+                    .column(colIdx)
+                    .data()
+                    .reduce(function (a, b) {
+                        return (parseFloat(a) || 0) + (parseFloat(b) || 0);
+                    }, 0);
+                $(api.column(colIdx).footer()).html(numeral(total).format('0,0.00'));
+            });
+        },
+        fnCreatedRow: function (nRow, aData) {
+            // Estilos por estado
+            if (aData.facturaId) $(nRow).css('background', '#81F889'); // registro facturado
+            else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
+            else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
+            else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: { first: "Primero", previous: "Anterior", next: "Siguiente", last: "Último" },
+            aria: { sortAscending: ": Activar para ordenar la columna de manera ascendente", sortDescending: ": Activar para ordenar la columna de manera descendente" }
+        },
+        data: dataPrefacturas,
+        columns: [
+            {
+                data: "prefacturaTempId", width: "5%", render: function (data, type, row) {
+                    if (row.departamentoId == 8) {
+                        if (row.esLetra != 1) {
+                            return row.facturaId ? "<i class='fa fa-files-o'></i>" : "<i class='fa fa-file-o'></i>";
+                        } else {
+                            return `<label class="input"><input id="chk${data}" type="checkbox" class="checkAll" name="chk${data}"></label>`;
+                        }
+                    } else {
+                        return row.facturaId ? "<i class='fa fa-file-o'></i>" : `<label class="input"><input id="chk${data}" type="checkbox" class="checkAll" name="chk${data}"></label>`;
+                    }
+                }
+            },
+            { data: "referencia" },
+            { data: "emisorNombre" },
+            { data: "receptorNombre" },
+            { data: "vNum" },
+            { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
+            { data: "coste", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "total", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "totalConIva", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "retenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "vFPago" },
+            {
+                data: "prefacturaTempId", width: "5%", render: function (data, row) {
+                    var bt1 = "";
+                    bt1 = `<button class='btn btn-circle btn-danger' onclick='deletePrefacturaTemp(${data});' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>`;
+                    //bt2 = `<button class='btn btn-circle btn-success' onclick='editPrefactura(${data});' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>`;
+                    //bt3 = `<button class='btn btn-circle btn-success' onclick='printPrefactura(${data});' title='Imprimir PDF'><i class='fa fa-file-pdf-o fa-fw'></i></button>`;
+                    return `<div class='pull-right'>${bt1}</div>`;
+                }
+            }
+        ]
+    });
+
+    // Filtro en cabecera
+    $("#dt_prefacturaTemp thead th input[type=text]").on('keyup change', function () {
+        tablaPrefacturas.column($(this).parent().index() + ':visible').search(this.value).draw();
+    });
+
+    // Ocultar columnas por defecto
+    [1, 10].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
+}
+
+
+function loadTablaPrefacturasTemp(data) {
+    var dt = $('#dt_prefacturaTemp').dataTable();
+    //new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+
+
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data != null) {
+        dt.fnAddData(data);
+        numPrefacturas = data.length;
+        importePrefacturas = 0;
+        importePrefacturasConcepto = 0
+        for (var i = 0; i < data.length; i++) {
+            importePrefacturas = importePrefacturas + data[i].total;
+            if (data[i].contratoPorcenId) importePrefacturasConcepto = importePrefacturasConcepto + data[i].total;
+        }
+        if (numPrefacturas > 0) {
+            $('#cmbEmpresas').prop('disabled', true);
+            $('#cmbTiposContrato').prop('disabled', true);
+            $('#cmbTipoProyecto').prop('disabled', true);
+            $('#txtReferencia').prop('disabled', true);
+            $('#txtCliente').prop('disabled', true);
+            $('#txtAgente').prop('disabled', true);
+        } else {
+            $('#cmbEmpresas').prop('disabled', false);
+            $('#cmbTiposContrato').prop('disabled', false);
+            $('#cmbTipoProyecto').prop('disabled', false);
+            $('#txtReferencia').prop('disabled', false);
+            $('#txtCliente').prop('disabled', false);
+            $('#txtAgente').prop('disabled', false);
+
+        }
+    } else {
+        importePrefacturas = 0;
+        numPrefacturas = 0;
+        importePrefacturasConcepto = 0
+        $('#cmbEmpresas').prop('disabled', false);
+        $('#cmbTiposContrato').prop('disabled', false);
+        $('#cmbTipoProyecto').prop('disabled', false);
+        $('#txtReferencia').prop('disabled', false);
+        $('#txtCliente').prop('disabled', false);
+        $('#txtAgente').prop('disabled', false);
+    }
+    dt.fnDraw();
+    if (data) {
+        data.forEach(function (v) {
+            var field = "#chk" + v.prefacturaId;
+            if (v.sel == 1) {
+                $(field).attr('checked', true);
+            }
+            $(field).change(function () {
+                var quantity = 0;
+                var data = {
+                    prefactura: {
+                        prefacturaId: v.prefacturaId,
+                        empresaId: v.empresaId,
+                        clienteId: v.clienteId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        sel: 0
+                    }
+                };
+                if (this.checked) {
+                    data.prefactura.sel = 1;
+                }
+                var url = "", type = "";
+                // updating record
+                var type = "PUT";
+                var url = sprintf('%s/api/prefacturas/%s', myconfig.apiUrl, v.prefacturaId);
+                $.ajax({
+                    type: type,
+                    url: url,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                    }
+                });
+            });
+        });
+    }
+}
+
+function loadPrefacturasDelContratoTemp(contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/temporales/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaPrefacturasTemp(data);
+    });
+}
+
+function importarPlanificacionObrasTemp() {
+    // mensaje de confirmación
+    var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación.¿Desea continuar?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/importa/palnificacion/lineas/temporales/" + vm.contratoId(), null, function (err, data) {
+                if (err) return;
+                loadPlanificacionLineasObras(vm.contratoId(), null);
+            });
+        }
+
+        if (ButtonPressed === "Cancelar") {
+            //no hacemos nada
+        }
+    });
+}
+
+var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, contPlanificacionTempId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        //sumamos los importes que se van a eliminar
+        var importe = 0
+        data.forEach(function (pf) {
+            importe = importe + pf.totalAlCliente;
+        });
+        var datos = {
+            importe: importe
+        }
+        mensajeAceptarCancelar(mensaje, function () {
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, datos, function (err, data) {
+                if (err) return done(err);
+                done(null, true);
+            });
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+function deletePrefacturaTemp(id) {
+    // mensaje de confirmación
+    var mens = "¿Realmente desea borrar este registro?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            var data = {
+                prefacturaId: id
+            };
+            $.ajax({
+                type: "DELETE",
+                url: myconfig.apiUrl + "/api/prefacturas/temporales/" + id,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+                    loadPrefacturasDelContratoTemp(vm.contratoId());
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada (no quiere borrar)
+        }
+    });
+}
+
+var cambioPeriodosPagosPlanificacionTemp = function (data) {
+    vm.numPagos(calcularNumPagosPlanificacionTemp());
+}
+
+var calcularNumPagosPlanificacionTemp = function () {
+    var fInicial = new Date(spanishDbDate(vm.fechaInicio()));
+    // if (vm.facturaParcial()){
+    //     var aux = moment(fInicial).format('YYYY-MM-DD').split('-');
+    //     fInicial = aux[0] + "-" + aux[1] + "-01";
+    // }
+    var fFinal = new Date(spanishDbDate(vm.fechaFinal()));
+    // añadimos un dia a la feha final para contemplar el caso en el que ponen
+    // como fecha final de contrato la de fin de mes.
+    var numMeses = parseInt(moment(fFinal).add(1, 'days').diff(fInicial, 'months', true));
+    if (numMeses == 0) numMeses = 1; // por lo menos un pago
+    // calculamos según la periodicidad
+    var divisor = obtenerDivisor();
+    var numpagos = 1
+    if (divisor != 0) numpagos = parseInt(numMeses / divisor);
+    if (numpagos == 0) numpagos = 1; // por lo menos uno
+    $('#txtNumPagos3').val(numpagos);
+    return numpagos;
+}
+
+function exportarlineaPlanificacionAdicionaltempal(id) {
+    // mensaje de confirmación
+    if (vm.contratoInteresesId() == null || vm.contratoInteresesId() == 0) {
+        return mensError('Debe seleccionar un contrato de intereses para poder exportar la línea de intereses.');
+    }
+    var mens = "Se exportará el registro el contrato de intereses, ¿Realmente desea realizar esta acción?";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            let data = {
+                contPlanificacionTempId: id,
+                contratoInteresesId: vm.contratoInteresesId(),
+                totalIntereses: totalIntereses
+            }
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/planificacion/obras/temporal/exportar/linea/intereses", data, function (err, data) {
+                if (err) {
+                    mensError('Error al exportar la linea de planificación temporal');
+                }
+                mensNormal('Línea de planificación temporal exportada correctamente al contrato de intereses.');
+                loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
+            });
+        }
+        if (ButtonPressed === "Cancelar") {
+            // no hacemos nada 
+        }
+    });
+}
+
+
+var imprimirContratoAdicional = function (id) {
+    printContratoAdicional(id);
+}
+
+
+function printContratoAdicional(id) {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true";
+    window.open(url, '_new');
 }

@@ -1,6 +1,6 @@
 {
   "name": "proasistencia",
-  "version": "2.3.251",
+  "version": "2.4.1",
   "description": "Server and API for PROASISTENCIA application",
   "main": "index.js",
   "scripts": {
@@ -49,6 +49,6 @@
     "serve-index": "^1.9.1",
     "socket.io": "^2.5.0",
     "sprintf-js": "^1.0.3",
-    "stimulsoft-reports-js": "^2021.3.6"
+    "stimulsoft-reports-js": "^2025.4.2"
   }
 }

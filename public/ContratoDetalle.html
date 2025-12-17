@@ -64,7 +64,15 @@
     <link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png"
         media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
     <link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
 </head>
+<style>
+    .modal-grande {
+        width: 95% !important;
+        /* O el tamaño que necesites */
+        max-width: 1200px !important;
+    }
+</style>
 <!--
 
     TABLE OF CONTENTS.
@@ -107,6 +115,23 @@
     * 'fixed-page-footer' - Fixes footer
     * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
     -->
+
+<style>
+    .custom-btn {
+        background-color: #284dc9;
+        /* tu color */
+        border-color: #6967db;
+        /* opcional: cambiar borde */
+        color: white;
+        /* color del texto */
+    }
+
+    .custom-btn:hover {
+        background-color: #435099;
+        /* color al pasar el mouse */
+        border-color: #535879;
+    }
+</style>
 
 <body class="">
     <!-- #HEADER -->
@@ -639,9 +664,7 @@
                                                 class="hidden-mobile hidden-tablet">Datos cliente</span></a>
                                     </li>
                                 </ul>
-                                <ul class="nav nav-tabs pull-left in" id="myTab">
 
-                                </ul>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -696,6 +719,17 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
+                                                                                    <label class="label">Fecha
+                                                                                        formalizacion contrato
+                                                                                        Inicial</label>
+                                                                                    <label class="input">
+                                                                                        <input
+                                                                                            id="txtGFechaFormalizacionContrato"
+                                                                                            name="txtGFechaFormalizacionContrato"
+                                                                                            data-bind="value: fechaFormalizacionContrato"
+                                                                                            class="datepicker"
+                                                                                            data-dateformat="dd/mm/yy" />
+                                                                                    </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
                                                                                     <label class="label">Fecha
@@ -1091,6 +1125,57 @@
                                                                                 </section>
                                                                             </div>
                                                                             <div class="row">
+                                                                                <section class="col col-md-12"
+                                                                                    style="border:solid; border-width:1px;">
+                                                                                    <header>Datos del presidente
+                                                                                    </header>
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-5">
+                                                                                            <label
+                                                                                                class="label">Nombre</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtNombrePresidente"
+                                                                                                    name="txtNombrePresidente"
+                                                                                                    data-bind="value: nombrePresidente" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-3">
+                                                                                            <label
+                                                                                                class="label">DNI</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtDniPresidente"
+                                                                                                    name="txtDniPresidente"
+                                                                                                    data-bind="value: dniPresidente" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label
+                                                                                                class="label">Correo</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtCorreoPresidente"
+                                                                                                    name="txtCorreoPresidente"
+                                                                                                    data-bind="value: correoPresidente" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">Fecha
+                                                                                                de la junta</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtFechaJunta"
+                                                                                                    name="txtFechaJunta"
+                                                                                                    data-bind="value: fechaJunta"
+                                                                                                    class="datepicker"
+                                                                                                    data-dateformat="dd/mm/yy" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
                                                                                 <section class="col col-md-12">
                                                                                     <label class="label">Observaciones
                                                                                         <i class="fa fa-lg fa-book"></i>
@@ -1263,6 +1348,16 @@
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
+                                                                                <button id="btnImprimir"
+                                                                                    title="Imprimir contrato"
+                                                                                    class="btn btn-success btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-print"></i>
+                                                                                </button>
+                                                                                <button id="btnIntereses"
+                                                                                    title="Crear contrato de intereses"
+                                                                                    class="btn custom-btn btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-percent"></i>
+                                                                                </button>
                                                                                 <button id="btnRenovarContratos"
                                                                                     title="Renovar contrato"
                                                                                     data-toggle="modal"
@@ -1282,7 +1377,7 @@
                                                                                 </button>
                                                                                 <button id="btnSalir"
                                                                                     title="Salir sin guardar"
-                                                                                    class="btn btn-warning btn-circle btn-lg">
+                                                                                    class="btn btn-light btn-circle btn-lg">
                                                                                     <i class="fa fa-lg fa-sign-out"></i>
                                                                                 </button>
                                                                                 <button id="btnAceptar2"
@@ -1538,6 +1633,13 @@
                                                                                 <div class="pull-right"
                                                                                     style="margin-right: 2%;">
                                                                                     <button
+                                                                                        id="btnImportarPlanificacionObrasTemp"
+                                                                                        title="Importar planificación temporal"
+                                                                                        onclick="importarPlanificacionObrasTemp()"
+                                                                                        class="btn custom-btn btn-circle btn-lg">
+                                                                                        <i class="fa fa-download"></i>
+                                                                                    </button>
+                                                                                    <button
                                                                                         id="btnNuevaLineaPlanificacionObras"
                                                                                         title="Nueva línea"
                                                                                         data-toggle="modal"
@@ -1546,6 +1648,7 @@
                                                                                         class="btn btn-success btn-circle btn-lg">
                                                                                         <i class="fa fa-lg fa-plus"></i>
                                                                                     </button>
+
                                                                                 </div>
                                                                             </div>
                                                                         </fieldset>
@@ -1724,6 +1827,346 @@
                                                         <!-- FIN WIDGET BASES Y CUOTAS -->
                                                     </article>
                                                 </div>
+                                                <section id="widget-grid">
+                                                    <div class="row">
+                                                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                                            <div class="jarviswidget" id="wid-id-new-19"
+                                                                data-widget-editbutton="false"
+                                                                data-widget-colorbutton="false"
+                                                                data-widget-deletebutton="false">
+
+                                                                <!-- Header del widget con tabs -->
+                                                                <header>
+                                                                    <ul class="nav nav-tabs pull-right in"
+                                                                        id="myTabTemp">
+                                                                        <li class="active">
+                                                                            <a data-toggle="tab" href="#s14">
+                                                                                <i class="fa fa-file-text-o"></i>
+                                                                                <span
+                                                                                    class="hidden-mobile hidden-tablet">Datos</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a data-toggle="tab" href="#s15">
+                                                                                <i class="fa fa-file-text-o"></i>
+                                                                                <span
+                                                                                    class="hidden-mobile hidden-tablet">PREFACTURAS
+                                                                                    TEMPORALES</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <!-- Puedes agregar más tabs aquí -->
+                                                                    </ul>
+                                                                    <div style="clear:both;"></div>
+                                                                </header>
+
+                                                                <div>
+                                                                    <!-- Widget edit box (SmartAdmin) -->
+                                                                    <div class="jarviswidget-editbox">
+                                                                        <input class="form-control" type="text">
+                                                                    </div>
+
+                                                                    <!-- Widget body -->
+                                                                    <div class="widget-body">
+                                                                        <h2>PLANIFICACIÓN TEMPORAL</h2>
+                                                                        <!-- Contenedor de tabs -->
+                                                                        <div id="myTabTemporalContent"
+                                                                            class="tab-content">
+
+                                                                            <!-- TAB "Datos" -->
+                                                                            <div class="tab-pane fade active in padding-10 no-padding-bottom"
+                                                                                id="s14">
+
+                                                                                <!-- FORMULARIO GENERAL -->
+                                                                                <form
+                                                                                    id="frmLineaPlanificacionObrasTemp">
+                                                                                    <fieldset>
+                                                                                        <div
+                                                                                            style="height: 20px; margin-bottom: 1%;">
+                                                                                            <h5
+                                                                                                style="text-decoration: underline;">
+                                                                                                GENERAL</h5>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-4">
+                                                                                                <strong>Importe
+                                                                                                    contrato:</strong>
+                                                                                                <span
+                                                                                                    data-bind="text: importeClienteFormat"></span><br />
+                                                                                                <strong>Importe
+                                                                                                    planificado:</strong>
+                                                                                                <span
+                                                                                                    data-bind="text: importePlanificadoTemp"></span><br />
+                                                                                                <strong
+                                                                                                    style="color:red;">Diferencia:</strong>
+                                                                                                <span style="color:red;"
+                                                                                                    data-bind="text: diferenciaTemp"></span>
+                                                                                            </div>
+                                                                                            <div class="pull-right"
+                                                                                                style="margin-right:2%;">
+                                                                                                <button
+                                                                                                    id="btnNuevaLineaPlanificacionObrasTemp"
+                                                                                                    title="Nueva línea"
+                                                                                                    data-toggle="modal"
+                                                                                                    data-target="#modalPlanificacionObrasTemp"
+                                                                                                    onclick="nuevaLineaPlanificacionObrasTemp()"
+                                                                                                    class="btn btn-success btn-circle btn-lg">
+                                                                                                    <i
+                                                                                                        class="fa fa-lg fa-plus"></i>
+                                                                                                </button>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </form>
+
+                                                                                <hr />
+
+                                                                                <!-- TABLA PLANIFICACIÓN -->
+                                                                                <div
+                                                                                    id="tbLineasPlanificacionObrasTemp">
+                                                                                    <table
+                                                                                        style="background-color: antiquewhite !important;"
+                                                                                        id="dt_lineasPlanificacionObrasTemp"
+                                                                                        class="table table-striped table-bordered table-hover"
+                                                                                        width="100%">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th class="text-left">
+                                                                                                    Fecha</th>
+                                                                                                <th class="text-left">
+                                                                                                    Fecha registro</th>
+                                                                                                <th data-hide="phone"
+                                                                                                    class="text-left">
+                                                                                                    Concepto</th>
+                                                                                                <th class="text-left">
+                                                                                                    Porcentaje</th>
+                                                                                                <th class="text-left">
+                                                                                                    Importe</th>
+                                                                                                     <th class="text-left">
+                                                                                                    Importe intereses</th>
+                                                                                                <th class="text-left">
+                                                                                                    Núm. pref.</th>
+                                                                                                <th class="text-left">
+                                                                                                    Importe pre
+                                                                                                    facturado</th>
+                                                                                                <th class="text-left">%
+                                                                                                    Ret. garantías</th>
+                                                                                                <th class="text-left">
+                                                                                                    Forma pago</th>
+                                                                                                <th class="text-left">
+                                                                                                    Es adicional</th>
+                                                                                                <th class="text-left">
+                                                                                                    Ref. Presupuesto
+                                                                                                    adicional</th>
+                                                                                                <th></th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tfoot
+                                                                                            style="background-color: #fff !important;">
+                                                                                            <tr>
+                                                                                                <th colspan="3"
+                                                                                                    style="text-align:right !important">
+                                                                                                    Totales:</th>
+                                                                                                <th></th>
+                                                                                                <th></th>
+                                                                                                <th></th>
+                                                                                                <th></th>
+                                                                                                <th></th>
+                                                                                                <th colspan="5"></th>
+                                                                                            </tr>
+                                                                                        </tfoot>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                                <hr />
+
+                                                                                <!-- SECCIÓN GENERAL REPETIDA -->
+                                                                                <fieldset>
+                                                                                    <div
+                                                                                        style="height: 20px; margin-bottom: 1%;">
+                                                                                        <h5
+                                                                                            style="text-decoration: underline;">
+                                                                                            GENERAL</h5>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-4">
+                                                                                            <strong>Importe
+                                                                                                contrato:</strong>
+                                                                                            <span
+                                                                                                data-bind="text: importeClienteFormat"></span><br />
+                                                                                            <strong>Importe
+                                                                                                planificado:</strong>
+                                                                                            <span
+                                                                                                data-bind="text: importePlanificadoTemp"></span><br />
+                                                                                            <strong
+                                                                                                style="color:red;">Diferencia:</strong>
+                                                                                            <span style="color:red;"
+                                                                                                data-bind="text: diferenciaTemp"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </fieldset>
+
+                                                                            </div> <!-- end tab-pane -->
+                                                                            <!-- TAB "Prefacturas Temp" -->
+                                                                            <div class="tab-pane fade padding-10 no-padding-bottom"
+                                                                                id="s15">
+                                                                                <div class="row" id="prefacturasTemp">
+                                                                                    <article
+                                                                                        class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                                                                        <div class="jarviswidget"
+                                                                                            id="wid-id-new-20"
+                                                                                            data-widget-editbutton="false"
+                                                                                            data-widget-colorbutton="false"
+                                                                                            data-widget-deletebutton="false">
+
+                                                                                            <header>
+                                                                                                <span
+                                                                                                    class="widget-icon"><i
+                                                                                                        class="fa fa-edit"></i></span>
+                                                                                                <h2>PREFACUTRAS
+                                                                                                    TEMPEMPORALES
+                                                                                                </h2>
+                                                                                            </header>
+
+                                                                                            <div>
+                                                                                                <div
+                                                                                                    class="jarviswidget-editbox">
+                                                                                                    <input
+                                                                                                        class="form-control"
+                                                                                                        type="text">
+                                                                                                </div>
+
+                                                                                                <div
+                                                                                                    class="widget-body">
+
+                                                                                                    <form
+                                                                                                        id="frmPrefacturasTemp"
+                                                                                                        class="smart-form">
+                                                                                                        <header>
+                                                                                                            Prefacturas
+                                                                                                            temporales
+                                                                                                            emitidas
+                                                                                                            contra este
+                                                                                                            contrato
+                                                                                                        </header>
+                                                                                                    </form>
+
+                                                                                                    <hr />
+
+                                                                                                    <div
+                                                                                                        id="tbPrefacturaTemp">
+                                                                                                        <table
+                                                                                                            id="dt_prefacturaTemp"
+                                                                                                            class="table table-striped table-bordered table-hover"
+                                                                                                            width="100%">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <th data-hide="phone"
+                                                                                                                        style="background: none;">
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-class="phone">
+                                                                                                                        Referencia
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="expand">
+                                                                                                                        <i
+                                                                                                                            class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Emisor
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Receptor
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Número
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Fecha
+                                                                                                                    </th>
+
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Coste
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Base
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Total
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Retención
+                                                                                                                        garantías
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Forma
+                                                                                                                        de
+                                                                                                                        pago
+                                                                                                                    </th>
+
+                                                                                                                    <th
+                                                                                                                        style="width:10%; text-align: center;">
+                                                                                                                        <i
+                                                                                                                            class="fa fa-fw fa-gears"></i>
+                                                                                                                    </th>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                            </tbody>
+                                                                                                            <tfoot>
+                                                                                                                <tr>
+                                                                                                                    <th colspan="7"
+                                                                                                                        style="text-align:right">
+                                                                                                                        Total:
+                                                                                                                    </th>
+                                                                                                                    <th>
+                                                                                                                    </th>
+                                                                                                                    <th>
+                                                                                                                    </th>
+                                                                                                                    <th>
+                                                                                                                    </th>
+                                                                                                                    <th>
+                                                                                                                    </th>
+                                                                                                                    <th>
+                                                                                                                    </th>
+
+                                                                                                                </tr>
+                                                                                                            </tfoot>
+                                                                                                        </table>
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                                <!-- end widget-body -->
+                                                                                            </div>
+                                                                                            <!-- end widget div -->
+                                                                                        </div> <!-- end jarviswidget -->
+
+                                                                                    </article>
+                                                                                </div>
+                                                                            </div> <!-- end tab-pane s14 -->
+
+
+                                                                        </div> <!-- end tab-content -->
+
+                                                                    </div> <!-- end widget-body -->
+
+                                                                </div> <!-- end jarviswidget div -->
+
+                                                            </div> <!-- end jarviswidget -->
+
+                                                        </article>
+                                                    </div>
+                                                </section>
+
+                                                <!-- end row -->
                                             </section>
                                         </div>
                                         <div class="tab-pane fade" id="s2">
@@ -3902,6 +4345,125 @@
         <!-- /.modal-dialog -->
     </div>
     <!--End Modal-->
+    <!-- /.modal -->
+    <div class="modal fade" id="modalGenerarPrefacturasPlanificacionTemp" tabindex="-1" role="dialog"
+        data-backdrop="static" data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> GENERAR PREFACTURAS TEMPORALES</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="generar-prefacturas-form-planificacion-temp" class="smart-form">
+                        <fieldset>
+                            <div id="obras">
+                                <div class="row">
+                                    <section class="col col-md-8">
+                                        <div class="form-group">
+                                            <label class="label">Fecha Inicio facturación</label>
+                                            <label class="input">
+                                                <input id="txtGFechaPrimeraFactura2" type="text"
+                                                    name="txtGFechaPrimeraFactura2"
+                                                    data-bind="value: fechaPrimeraFactura" class="datepicker"
+                                                    data-dateformat="dd/mm/yy" />
+                                            </label>
+                                        </div>
+                                    </section>
+                                    <section class="col col-md-4">
+                                        <label class="checkbox">
+                                            <input id="chkFacturaParcial" type="checkbox" name="chkFacturaParcial"
+                                                data-bind="checked: facturaParcial">
+                                            <i></i>Facturación parcial
+                                        </label>
+                                    </section>
+                                </div>
+                                <div class="row">
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <section class="col col-md-6">
+                                    <label class="label">Periodificación de pagos</label>
+                                    <label style="width:100%;">
+                                        <select style="width:100%" id="cmbPeriodosPagos3" name="cmbPeriodosPagos3"
+                                            data-bind="options: posiblesPeriodosPagos, optionsText: 'nombre', optionsValue: 'periodoPagoId', value: speriodoPagoId, valueAllowUnset: true, selectedOptions: elegidosPeriodosPagos, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Importe a facturar</label>
+                                    <label class="input">
+                                        <input id="txtImporteFacturar2" name="txtImporteAFacturar2"
+                                            data-bind="value:importeAFacturar" disabled />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Num.Pagos</label>
+                                    <label class="input">
+                                        <input id="txtNumPagos3" name="txtNumPagos3" data-bind="value:numPagos" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <button id="btnVerPrefacturasAGenerar2" class="btn btn-circle btn-lg btn-primary"
+                                        onclick="verPrefacturasAGenerarPlanificacionTemp(false)">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-md-12">
+                                    <div id="tbGenerarPrefacturas2Temp">
+                                        <table id="dt_generar_prefacturas-temp"
+                                            class="table table-striped table-bordered table-hover" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-class="expand">
+                                                        <i
+                                                            class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Fecha
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Coste
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        Importe
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        EMISOR
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        RECEPTOR
+                                                    </th>
+                                                    <th data-hide="phone">
+                                                        PERIODO
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </section>
+                            </div>
+
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarGenerarPrefacturasPlanificacionTemp" class="btn btn-primary"
+                                onclick="aceptarGenerarPrefacturasPlanificacionTemp()">
+                                GENERAR
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--End Modal-->
     <!-- Modal -->
     <div class="modal fade" id="modalRenovarContratos" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false">
@@ -4164,6 +4726,59 @@
                             </button> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal"
                                 onclick="limpiarModalGenerarPrefacturasObras()">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalGenerarPrefacturasObrasTemp" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false" style="overflow-y: scroll;">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> GENERACIÓN DE PREFACTURAS TEMPORALES</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="generarPrefacturasObrasTemp-form" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-md-6">
+                                    <div style="margin-top: 10%;">
+                                        <input id="chkVariasTemp" type="checkbox" name="chkVariasTemp" /> Generar varias
+                                        prefacturas
+                                    </div>
+                                </section>
+                                <section class="col col-md-6">
+                                    <label class="label">Fecha prefactura temporal</label>
+                                    <label class="input">
+                                        <input id="txtFechaPlanificacionObras3" name="txtFechaPlanificacionObras3"
+                                            data-bind="value: fechaPlanificacionObrasTemp" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarGenerarPrefacturasObrasTemp" class="btn btn-primary"
+                                onclick="aceptarGenerarPrefacturaPlanificacionObrasTemp()">
+                                Aceptar
+                            </button>
+                            <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="limpiarModalGenerarPrefacturasObrasTemp()">
                                 Cancelar
                             </button>
                         </footer>
@@ -4462,8 +5077,9 @@
                                 <section class="col col-md-12" id="fechaPrefactura">
                                     <label class="label">Nueva Fecha</label>
                                     <label class="input">
-                                        <input id="txtFechaPreFactura" name="txtFechaPreFactura" data-bind="value: fechaPreFactura"
-                                            class="datepicker" data-dateformat="dd/mm/yy" />
+                                        <input id="txtFechaPreFactura" name="txtFechaPreFactura"
+                                            data-bind="value: fechaPreFactura" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
                                     </label>
                                 </section>
                             </div>
@@ -4477,6 +5093,116 @@
                                 Aceptar
                             </button> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalPlanificacionObrasTemp" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-grande">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> LÍNEA PLANIFICACIÓN TEMPORAL</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="conceptoObrasTemp-form" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-md-10">
+                                    <label class="label">Planificación</label>
+                                    <label class="input">
+                                        <input id="txtConceptoPlanificacionTemp" name="txtConceptoPlanificacionTemp"
+                                            type="text" data-bind="value: conceptoPlanificacionTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <div style="margin-top: 20%;">
+                                        <input id="chkEsAdicionalTemp" type="checkbox" name="chkEsAdicionalTemp"
+                                            data-bind="checked: esAdicionalTemp" />
+                                        Es adicional
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="row">
+                                <section class="col col-md-1">
+                                    <label class="label">Porcentaje</label>
+                                    <label class="input">
+                                        <input id="txtPorcentajePlanificacionTemp" name="txtPorcentajePlanificacionTemp"
+                                            type="text" data-bind="value: porcentajePlanificacionTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">importe</label>
+                                    <label class="input">
+                                        <input id="txtImporteCalculadoPlanificacionTemp"
+                                            name="txtImporteCalculadoPlanificacionTemp" type="text"
+                                            data-bind="value: importeCalculadoPlanificacionTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Importe intereses</label>
+                                    <label class="input">
+                                        <input id="txtImporteIntereses" name="txtImporteIntereses" type="text"
+                                            data-bind="value: importeIntereses" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Porcen. garantías</label>
+                                    <label class="input">
+                                        <input id="txtPorRetenGarantiasTemp" name="txtPorRetenGarantiasTemp" type="text"
+                                            data-bind="value: porRetenGarantiasTemp" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Fecha concepto</label>
+                                    <label class="input">
+                                        <input id="txtFechaPlanificacionObrasTemp" name="txtFechaPlanificacionObrasTemp"
+                                            data-bind="value: fechaPlanificacionObrasTemp" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-3">
+                                    <label class="label">Forma de pago</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbFormasPagoLineaObrasTemp"
+                                            name="cmbFormasPagoLineaObrasTemp"
+                                            data-bind="options: posiblesFormasPagoLinea, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoIdLinea, valueAllowUnset: true, selectedOptions: elegidosFormasPagoLinea, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+                            </div>
+
+                            <div class="row" id="refAdicional">
+                                <section class="col col-md-12">
+                                    <label class="label">Referencia presupuesto Adicional</label>
+                                    <label class="input">
+                                        <input id="txtRefPresupuestoAdicionalTemp" name="txtRefPresupuestoAdicionalTemp"
+                                            type="text" data-bind="value: refPresupuestoAdicionalTemp" />
+                                    </label>
+                                </section>
+
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarPlanificacionTemp" class="btn btn-primary"
+                                onclick="aceptarLineaPlanificacionObrasTemp()">
+                                Aceptar
+                            </button>
+                            <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="limpiarModalLineasPlanificacionTemp()">
                                 Cancelar
                             </button>
                         </footer>

@@ -120,7 +120,7 @@ function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
         if(err) return;
         if(data) {
-            Stimulsoft.Base.StiLicense.key = data.sti_key
+            Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
 }
@@ -159,9 +159,9 @@ var obtainReport = function () {
     connectionString += "UserId=" + myconfig.report.user + ";"
     connectionString += "Pwd=" + myconfig.report.password + ";";
     report.dictionary.databases.list[0].connectionString = connectionString;
-    //var sql = report.dataSources.items[0].sqlCommand;
+    //var sql = report.dataSources.list[0].sqlCommand;
 
-    report.dataSources.items[0].sqlCommand = rptLiquidacionGeneralParametros();
+    report.dataSources.list[0].sqlCommand = rptLiquidacionGeneralParametros();
     // Assign report to the viewer, the report will be built automatically after rendering the viewer
     viewer.report = report;
 }
@@ -185,9 +185,9 @@ var obtainReportPdf = function () {
         connectionString += "UserId=" + myconfig.report.user + ";"
         connectionString += "Pwd=" + myconfig.report.password + ";";
         report.dictionary.databases.list[0].connectionString = connectionString;
-        var sql = report.dataSources.items[0].sqlCommand;
+        var sql = report.dataSources.list[0].sqlCommand;
  
-        report.dataSources.items[0].sqlCommand = rptLiquidacionGeneralParametros(sql);
+        report.dataSources.list[0].sqlCommand = rptLiquidacionGeneralParametros(sql);
         */
         // Render report
         report.dictionary.databases.clear();
