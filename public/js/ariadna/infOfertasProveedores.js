@@ -117,7 +117,7 @@ function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
         if(err) return;
         if(data) {
-            Stimulsoft.Base.StiLicense.key = data.sti_key
+            Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
 }
@@ -166,9 +166,9 @@ var obtainReport = function () {
     connectionString += "Pwd=" + myconfig.report.password + ";";
     connectionString += "dateStrings=true";
     report.dictionary.databases.list[0].connectionString = connectionString;
-    var sql = report.dataSources.items[0].sqlCommand;
+    var sql = report.dataSources.list[0].sqlCommand;
 
-    report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql);
+    report.dataSources.list[0].sqlCommand = rptOfertaParametros(sql);
     // Assign report to the viewer, the report will be built automatically after rendering the viewer
     viewer.report = report;
 };

@@ -259,6 +259,33 @@ function buscarAnticipos() {
             success: function (data, status) {
                 //comprobamos si hay anticipos a cero para mostrar mensaje de advertencia
                 if(data) {
+                    if (data.error) {
+                        var cuentas = JSON.stringify(data.error);
+
+                        // Insertar salto de línea antes de cada "cuentacontable" y reemplazar los caracteres innecesarios
+                        cuentas = cuentas.replace(/cuentacontable/g, "\r\ncuentacontable")
+                                        .replace(/cuentaCompras/g, "\r\ncuentaCompras")
+                                        .replace(/[\]\[{()}"]/g, '')  // Eliminar los corchetes y comillas
+                                        //.replace(/[_\s]/g, '-'); // Reemplazar guiones bajos y espacios por guiones
+
+                        // Mensaje de error
+                        mensError("Falta la cuenta contable en los siguientes anticipos " + cuentas + ". Se ha generado un archivo de texto con esta información.");
+
+                        // Crear un archivo de texto con el contenido formateado
+                        var blob = new Blob([cuentas], { type: "text/plain;charset=utf-8" });
+
+                        // Crear un enlace para descargar el archivo
+                        var enlace = document.createElement("a");
+                        enlace.href = URL.createObjectURL(blob);
+                        enlace.download = "archivo_generado.txt";
+
+                        // Agregar el enlace al DOM, hacer clic y luego eliminarlo
+                        document.body.appendChild(enlace);
+                        enlace.click();
+                        document.body.removeChild(enlace);
+                        return;
+
+                    }       
                     if(data.length > 0) {
                         for(var i = 0; i < data.length; i++) {
                             if(data[i].totalConIva == 0) {
@@ -266,38 +293,38 @@ function buscarAnticipos() {
                             }
                         }
                         if(facturasCero.length > 0) mensError("las siguentes facturas tienen el importe a cero\n" + facturasCero);
+                        data.forEach(function (f) {
+                            contador = 0;
+                            if(!f.IBAN) {// comprovamos si el cliente de la factura tiene IBAN para añadirlo a una lista
+                                if(numIban.length == 0) {
+                                    datos = {
+                                        nombre: f.emisorNombre,
+                                        id: f.clienteId
+                                    }
+                                    numIban.push(datos);
+                                    datos = {};
+                                } else {// comprobamos que el cliente no exista ya en lista y si es así lo añadimos.
+                                    for(i = 0; i < numIban.length; i++) {
+                                        if(numIban[i].id == f.clienteId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
+                                            contador ++;
+                                        }
+                                    };
+                                    if(contador == 0) {//si el objeto no está en la lista se añade
+                                        datos = {
+                                            nombre: f.emisorNombre,
+                                            id: f.clienteId
+                                        }
+                                        numIban.push(datos);
+                                    }
+                                    datos = {};
+                                }
+                            }
+                        });
+                        loadTablaAnticipos(data);
+                        // mostramos el botén de alta
+                        $("#btnAlta").show();
                     }
                 }
-                data.forEach(function (f) {
-                    contador = 0;
-                    if(!f.IBAN) {// comprovamos si el cliente de la factura tiene IBAN para añadirlo a una lista
-                        if(numIban.length == 0) {
-                            datos = {
-                                nombre: f.emisorNombre,
-                                id: f.clienteId
-                            }
-                            numIban.push(datos);
-                            datos = {};
-                        } else {// comprobamos que el cliente no exista ya en lista y si es así lo añadimos.
-                            for(i = 0; i < numIban.length; i++) {
-                                if(numIban[i].id == f.clienteId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
-                                    contador ++;
-                                }
-                            };
-                            if(contador == 0) {//si el objeto no está en la lista se añade
-                                datos = {
-                                    nombre: f.emisorNombre,
-                                    id: f.clienteId
-                                }
-                                numIban.push(datos);
-                            }
-                            datos = {};
-                        }
-                    }
-                });
-                loadTablaAnticipos(data);
-                // mostramos el botén de alta
-                $("#btnAlta").show();
             },
             error: function (err) {
                 mensErrorAjax(err);

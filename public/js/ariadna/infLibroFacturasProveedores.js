@@ -119,7 +119,7 @@ function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
         if(err) return;
         if(data) {
-            Stimulsoft.Base.StiLicense.key = data.sti_key
+            Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
 }
@@ -208,17 +208,17 @@ var obtainReport = function () {
         connectionString += "Pwd=" + myconfig.report.password + ";";
       
         var pos = 0;
-        for (var i = 0; i < report.dataSources.items.length; i++) {
-            var str = report.dataSources.items[i].sqlCommand;
+        for (var i = 0; i < report.dataSources.list.length; i++) {
+            var str = report.dataSources.list[i].sqlCommand;
         }
-        var sql = report.dataSources.items[pos].sqlCommand;
+        var sql = report.dataSources.list[pos].sqlCommand;
         var sql2 = rptFacturaParametros(sql);
         verb = "POST"; 
         url = myconfig.apiUrl + "/api/informes/sql";
         llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
             if (err) return;
             if (data) {
-                report.dataSources.items[pos].sqlCommand = sql2;
+                report.dataSources.list[pos].sqlCommand = sql2;
                 // Assign report to the viewer, the report will be built automatically after rendering the viewer
                 viewer.report = report;
             } else {
@@ -267,11 +267,11 @@ var obtainReportPdf = function () {
         report.dictionary.databases.list[0].connectionString = connectionString;
        
         var pos = 0;
-        for (var i = 0; i < report.dataSources.items.length; i++) {
-            var str = report.dataSources.items[i].sqlCommand;
+        for (var i = 0; i < report.dataSources.list.length; i++) {
+            var str = report.dataSources.list[i].sqlCommand;
         }
-        var sql = report.dataSources.items[pos].sqlCommand;
-        report.dataSources.items[pos].sqlCommand = rptFacturaParametros(sql);
+        var sql = report.dataSources.list[pos].sqlCommand;
+        report.dataSources.list[pos].sqlCommand = rptFacturaParametros(sql);
         // Render report
         report.render();
         // Create an PDF settings instance. You can change export settings.

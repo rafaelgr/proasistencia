@@ -52,9 +52,9 @@ connectionString += "Database=" + myconfig.report.database + ";"
 connectionString += "UserId=" + myconfig.report.user + ";"
 connectionString += "Pwd=" + myconfig.report.password + ";";
 report.dictionary.databases.list[0].connectionString = connectionString;
-var sql = report.dataSources.items[0].sqlCommand;
+var sql = report.dataSources.list[0].sqlCommand;
 
-report.dataSources.items[0].sqlCommand = rptOfertaParametros(sql);
+report.dataSources.list[0].sqlCommand = rptOfertaParametros(sql);
 // Assign report to the viewer, the report will be built automatically after rendering the viewer
 viewer.report = report;
 

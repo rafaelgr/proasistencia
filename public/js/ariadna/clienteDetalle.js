@@ -557,7 +557,6 @@ function admData() {
      //
      self.posiblesTiposViaOfertas = ko.observableArray([]);
      self.elegidosTiposViaOfertas = ko.observableArray([]);
-    
 }
 
 function loadData(data, desdeLoad, importacion) {
@@ -865,7 +864,8 @@ function aceptar() {
                 "provinciaOfertas" : vm.provinciaOfertas(),
                 "numeroOfertas" : vm.numeroOfertas(),
                 "puertaOfertas" : vm.puertaOfertas(),
-                "emailOfertas" : vm.emailOfertas()
+                "emailOfertas" : vm.emailOfertas(),
+                
             } 
         };
         
