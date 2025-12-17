@@ -447,11 +447,11 @@ function obtainReportJson(obj) {
     // Asignar y renderizar
     viewer.report = report;
 
-const jsonString = JSON.stringify(obj, null, 2);
+/* const jsonString = JSON.stringify(obj, null, 2);
   const blob = new Blob([jsonString], { type: 'application/json' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'datosReporte.json';
-  link.click();
+  link.click(); */
 }
 
