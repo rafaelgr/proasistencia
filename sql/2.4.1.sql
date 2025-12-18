@@ -161,6 +161,28 @@ ADD
 ALTER TABLE
   `contratos`
 ADD
+  COLUMN `fechaFormalizacionContrato` DATE NULL
+AFTER
+  `resumenDiario`;
+
+ALTER TABLE
+  `contratos`
+ADD
+  COLUMN `nombrePresidente` VARCHAR(255) NULL
+AFTER
+  `fechaFormalizacionContrato`,
+ADD
+  COLUMN `dniPresidente` VARCHAR(255) NULL
+AFTER
+  `nombrePresidente`,
+ADD
+  COLUMN `correoPresidente` VARCHAR(255) NULL
+AFTER
+  `dniPresidente`;
+
+ALTER TABLE
+  `contratos`
+ADD
   COLUMN `contratoInteresesId` TINYINT(1) DEFAULT 0 NULL
 AFTER
   `visulizaEnErp`;
