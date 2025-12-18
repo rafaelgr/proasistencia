@@ -161,6 +161,13 @@ ADD
 ALTER TABLE
   `contratos`
 ADD
+  COLUMN `contratoInteresesId` TINYINT(1) DEFAULT 0 NULL
+AFTER
+  `visulizaEnErp`;
+
+ALTER TABLE
+  `contratos`
+ADD
   COLUMN `fechaJunta` DATE NULL
 AFTER
   `contratoInteresesId`;
@@ -205,7 +212,7 @@ ADD
 ALTER TABLE
   `contratos`
 ADD
-  CONSTRAINT `contrato_interesesFK` FOREIGN KEY (`contratoInteresesId`) REFERENCES `proasistencia`.`contratos`(`contratoId`) ON DELETE
+  CONSTRAINT `contrato_interesesFK` FOREIGN KEY (`contratoInteresesId`) REFERENCES `contratos`(`contratoId`) ON DELETE
 SET
   NULL;
 
@@ -223,9 +230,14 @@ ADD
 SET
   NULL;
 
-  ALTER TABLE `contrato_planificacion_temporal`  
-  ADD CONSTRAINT `planificacionTemp_comtratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON DELETE CASCADE;
+ALTER TABLE
+  `contrato_planificacion_temporal`
+ADD
+  CONSTRAINT `planificacionTemp_comtratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON DELETE CASCADE;
 
-
-ALTER TABLE `contrato_planificacion_temporal`   
-	ADD COLUMN `externa` TINYINT(1) DEFAULT 0 NULL AFTER `contPlanificacionTempIntId`;
+ALTER TABLE
+  `contrato_planificacion_temporal`
+ADD
+  COLUMN `externa` TINYINT(1) DEFAULT 0 NULL
+AFTER
+  `contPlanificacionTempIntId`;
