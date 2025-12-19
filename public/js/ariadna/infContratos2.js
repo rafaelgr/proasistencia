@@ -161,16 +161,26 @@ function initForm() {
     //Recuperamos el departamento de trabajo
     recuperaDepartamento(function (err, data) {
         if (err) return;
+        let datos = null;
         if (data) {
             initAutoCliente();
             vm.contratoId(gup('ContratoId'));
+            vm.contratoInteresesId(gup('ContratoInteresesId'));
             vm.esAdicional(gup('esAdicional'));
             vm.empresaId(gup('EmpresaId'));
             vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
-            if(vm.esAdicional()) var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional/" + vm.contratoId() + "/" + vm.refPresupuestoAdicional();
-            llamadaAjax(verb, url, null, function (err, data) {
+            if(vm.esAdicional()) { 
+                datos = {
+                    contratoId: vm.contratoId(),
+                    refPresupuestoAdicional: vm.refPresupuestoAdicional(),
+                    contratoInteresesId: vm.contratoInteresesId()
+                }
+                url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional"
+                verb = "POST";
+            }
+            llamadaAjax(verb, url, datos, function (err, data) {
                 obtainReportJson(data);
                 $('#selector').hide();
             });
@@ -237,6 +247,7 @@ function admData() {
     //
     self.scontratoId = ko.observable();
     self.contratoId = ko.observable();
+    self.contratoInteresesId = ko.observable();
     self.esAdicional = ko.observable();
     self.refPresupuestoAdicional = ko.observable();
     //

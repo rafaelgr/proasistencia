@@ -9302,7 +9302,7 @@ function initTablaPlanificacionLineasObrasTemp() {
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (!vm.contratoIntereses()) {
                             if (row.esLetra) {
-                                if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
+                                if (!row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
                             }
 
                             if (row.esAdicional)
@@ -10315,6 +10315,6 @@ var imprimirContratoAdicional = function (ref) {
 
 
 function printContratoAdicional(ref) {
-    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref;
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_new');
 }
