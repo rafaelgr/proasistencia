@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "1ea4bbb4393c64e1d0bc9d2303fe5e56",
+  "ReportGuid": "525cdf6ffc35525a92372969f25ae990",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_proas_adicional.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1765893889000+0100)/",
+  "ReportChanged": "/Date(1766133610000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -305,7 +305,7 @@
               "Ident": "StiText",
               "Name": "Text23",
               "Guid": "78aa7f03d84b35934173a96eab93aef7",
-              "ClientRectangle": "3.8,0,1.6,0.3",
+              "ClientRectangle": "3.8,0,2,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -333,7 +333,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text2",
-              "ClientRectangle": "5.4,-0.05,3.4,0.4",
+              "ClientRectangle": "5.8,-0.05,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },

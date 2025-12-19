@@ -1158,11 +1158,11 @@ function loadData(data) {
         //return;
     }
 
-    if(data.contratoIntereses) { 
+    if (data.contratoIntereses) {
         $("#btnImprimir").hide();
         $('btnIntereses').hide();
     } else {
-        $("#btnImprimir").show();   
+        $("#btnImprimir").show();
         $('#btnIntereses').show();
     }
 
@@ -9176,6 +9176,11 @@ function initTablaPlanificacionLineasObrasTemp() {
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
+        rowCallback: function (row, data) {
+            if (data.contPlanificacionTempIntId) {
+                $(row).css('background-color', '#d4edda'); // verde claro Bootstrap
+            }
+        },
         "footerCallback": function (row, data, start, end, display) {
             var api = this.api();
 
@@ -9295,9 +9300,18 @@ function initTablaPlanificacionLineasObrasTemp() {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
-                        if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
-                        if (row.esAdicional) bt5 = "<button class='btn btn-circle btn-success' onclick='imprimirContratoAdicional(" + data + ");' title='Imprimir contrato adicional'><i class='fa fa-print fa-fw'></i></button>";
-                        if(vm.contratoIntereses()) { bt4=""; bt5="";  }
+                        if (!vm.contratoIntereses()) {
+                            if (row.esLetra) {
+                                if (row.esAdicional && !row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
+                            }
+
+                            if (row.esAdicional)
+                                bt5 = "<button class='btn btn-circle btn-success' " +
+                                    "onclick=\"imprimirContratoAdicional('" + row.refPresupuestoAdicional + "')\" " +
+                                    "title='Imprimir contrato adicional'>" +
+                                    "<i class='fa fa-print fa-fw'></i></button>";
+                        }
+
 
                     }
                     html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + " " + bt5 + "</div>";
@@ -10295,12 +10309,12 @@ function exportarlineaPlanificacionAdicionaltempal(id) {
 }
 
 
-var imprimirContratoAdicional = function (id) {
-    printContratoAdicional(id);
+var imprimirContratoAdicional = function (ref) {
+    printContratoAdicional(ref);
 }
 
 
-function printContratoAdicional(id) {
-    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true";
+function printContratoAdicional(ref) {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref;
     window.open(url, '_new');
 }

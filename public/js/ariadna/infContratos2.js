@@ -166,9 +166,10 @@ function initForm() {
             vm.contratoId(gup('ContratoId'));
             vm.esAdicional(gup('esAdicional'));
             vm.empresaId(gup('EmpresaId'));
+            vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
-            if(vm.esAdicional()) var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional/" + vm.contratoId();
+            if(vm.esAdicional()) var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional/" + vm.contratoId() + "/" + vm.refPresupuestoAdicional();
             llamadaAjax(verb, url, null, function (err, data) {
                 obtainReportJson(data);
                 $('#selector').hide();
@@ -237,6 +238,7 @@ function admData() {
     self.scontratoId = ko.observable();
     self.contratoId = ko.observable();
     self.esAdicional = ko.observable();
+    self.refPresupuestoAdicional = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
