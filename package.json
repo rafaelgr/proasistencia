@@ -35,7 +35,7 @@
     "cors": "^2.7.1",
     "dotenv": "^6.2.0",
     "easy-pdf-merge": "^0.2.6",
-    "express": "^4.21.2",
+    "express": "^4.22.0",
     "follow-redirects": "^1.15.11",
     "formidable": "^1.2.2",
     "glob": "^7.2.3",
