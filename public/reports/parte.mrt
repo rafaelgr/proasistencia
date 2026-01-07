@@ -1,24 +1,16 @@
 {
-  "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "b56763c9df124e3b825dadb88937c8ae",
+  "ReportVersion": "2025.4.3",
+  "ReportGuid": "d466ad415b2b7c73a44d961c3666120e",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
+  "ReportFile": "parte.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1654160895386+0200)/",
+  "ReportChanged": "/Date(1767784505000+0100)/",
   "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
   "CalculationMode": "Interpretation",
-  "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
-  "ReferencedAssemblies": {
-    "0": "System.Dll",
-    "1": "System.Drawing.Dll",
-    "2": "System.Windows.Forms.Dll",
-    "3": "System.Data.Dll",
-    "4": "System.Xml.Dll",
-    "5": "Stimulsoft.Controls.Dll",
-    "6": "Stimulsoft.Base.Dll",
-    "7": "Stimulsoft.Report.Dll"
-  },
   "Pages": {
     "0": {
       "Ident": "StiPage",
@@ -51,9 +43,10 @@
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "Stretch": true,
-              "ImageURL": {
-                "Value": "{cabecera.logoUrl}"
-              }
+              "ImageData": {
+                "Value": "{cabecera.logoBase64}"
+              },
+              "ImageBytes": ""
             },
             "1": {
               "Ident": "StiText",
@@ -287,6 +280,7 @@
           "Name": "HeaderBandLocales",
           "PrintOn": "OnlyFirstPage",
           "CanShrink": true,
+          "CanGrow": true,
           "ClientRectangle": "0,6.4,19,3.6",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -474,6 +468,7 @@
         "3": {
           "Ident": "StiDataBand",
           "Name": "DataLocales",
+          "CanGrow": true,
           "ClientRectangle": "0,10.8,19,0.5",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -555,6 +550,7 @@
         "4": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBandPresupuesto",
+          "CanGrow": true,
           "ClientRectangle": "0,12.1,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -568,6 +564,7 @@
         "5": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,12.9,19,1.4",
           "Conditions": {
             "0": {
@@ -623,6 +620,7 @@
         "6": {
           "Ident": "StiDataBand",
           "Name": "DataBand2",
+          "CanGrow": true,
           "ClientRectangle": "0,15.1,19,2.2",
           "Conditions": {
             "0": {
@@ -706,10 +704,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Margins": {
-                "Left": 2.0,
-                "Right": 0.0,
-                "Top": 0.0,
-                "Bottom": 0.0
+                "Left": 2,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
               },
               "Type": "Expression"
             },
@@ -807,10 +805,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "Margins": {
-                "Left": 0.0,
-                "Right": 2.0,
-                "Top": 0.0,
-                "Bottom": 0.0
+                "Left": 0,
+                "Right": 2,
+                "Top": 0,
+                "Bottom": 0
               },
               "Type": "Expression"
             },
@@ -896,6 +894,7 @@
         "9": {
           "Ident": "StiDataBand",
           "Name": "DataLineas",
+          "CanGrow": true,
           "ClientRectangle": "0,21.1,19,0.4",
           "Conditions": {
             "0": {
@@ -929,10 +928,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 2.0,
-                "Right": 0.0,
-                "Top": 2.0,
-                "Bottom": 2.0
+                "Left": 2,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 2
               },
               "Type": "Expression"
             },
@@ -950,10 +949,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 0.0,
-                "Right": 0.0,
-                "Top": 2.0,
-                "Bottom": 2.0
+                "Left": 0,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 2
               },
               "Type": "Expression"
             },
@@ -972,10 +971,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 0.0,
-                "Right": 0.0,
-                "Top": 2.0,
-                "Bottom": 2.0
+                "Left": 0,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 2
               },
               "Type": "Expression"
             },
@@ -995,17 +994,18 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 0.0,
-                "Right": 0.0,
-                "Top": 2.0,
-                "Bottom": 2.0
+                "Left": 0,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 2
               },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 5,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
                 "PositivePattern": 1,
                 "Symbol": "€"
               },
@@ -1027,17 +1027,18 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 0.0,
-                "Right": 2.0,
-                "Top": 2.0,
-                "Bottom": 2.0
+                "Left": 0,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 2
               },
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 5,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
                 "PositivePattern": 1,
                 "Symbol": "€"
               },
@@ -1050,6 +1051,7 @@
         "10": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBandlineas",
+          "CanGrow": true,
           "ClientRectangle": "0,22.3,19,2",
           "Conditions": {
             "0": {
@@ -1185,10 +1187,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
                 "PositivePattern": 1,
                 "Symbol": "€"
               },
@@ -1250,10 +1253,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
                 "PositivePattern": 1,
                 "Symbol": "€"
               },
@@ -1286,12 +1290,10 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiPercentageFormatService",
-                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 0,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator",
-                "PositivePattern": 1,
                 "Symbol": "%"
               },
               "Type": "Expression"
@@ -1324,10 +1326,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 5,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
                 "PositivePattern": 1,
                 "Symbol": "€"
               },
@@ -1339,6 +1342,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand3",
           "CanShrink": true,
+          "CanGrow": true,
           "ClientRectangle": "0,25.1,19,1.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -1415,6 +1419,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand4",
           "CanShrink": true,
+          "CanGrow": true,
           "ClientRectangle": "0,27.1,19,1.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -1491,6 +1496,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "CanShrink": true,
+          "CanGrow": true,
           "ClientRectangle": "0,29.5,19,3.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -1565,7 +1571,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "D.N.I. {cabecera.dniFirmante}\r\nCargo: {cabecera.cargoFirmante}"
+                "Value": "D.N.I. {cabecera.dniFirmante}\nCargo: {cabecera.cargoFirmante}"
               },
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
@@ -1593,24 +1599,21 @@
               "Border": "All;;;Dot;;;;solid:Black",
               "Brush": "solid:",
               "Stretch": true,
-              "ImageURL": {
-                "Value": "{cabecera.firma}"
-              }
+              "DataColumn": "cabecera.firmaBase64",
+              "ImageBytes": ""
             }
           },
           "PrintAtBottom": true,
           "DataSourceName": "cabecera"
         }
       },
-      "PageWidth": 21.0,
-      "PageHeight": 29.7,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
       "Margins": {
-        "Left": 1.0,
-        "Right": 1.0,
-        "Top": 1.0,
+        "Left": 1,
+        "Right": 1,
+        "Top": 1,
         "Bottom": 0.5
       },
       "ReportUnit": {

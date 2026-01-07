@@ -1,24 +1,16 @@
 {
-  "ReportVersion": "2021.3.6.0",
+  "ReportVersion": "2025.4.3",
   "ReportGuid": "d8ad0c6bc51244e7aef30ab6ae9ec51e",
   "ReportName": "FacturaFondogar",
   "ReportAlias": "FacturaFondogar",
+  "ReportFile": "factcli_reparaciones_fondo_json.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1655797609992+0200)/",
+  "ReportChanged": "/Date(1655797609000+0200)/",
   "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
   "CalculationMode": "Interpretation",
-  "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class FacturaProasistencia : Stimulsoft.Report.StiReport\r\n    {\r\n        public FacturaProasistencia()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
-  "ReferencedAssemblies": {
-    "0": "System.Dll",
-    "1": "System.Drawing.Dll",
-    "2": "System.Windows.Forms.Dll",
-    "3": "System.Data.Dll",
-    "4": "System.Xml.Dll",
-    "5": "Stimulsoft.Controls.Dll",
-    "6": "Stimulsoft.Base.Dll",
-    "7": "Stimulsoft.Report.Dll"
-  },
   "Pages": {
     "0": {
       "Ident": "StiPage",
@@ -34,6 +26,7 @@
           "Ident": "StiPageHeaderBand",
           "Name": "PageHeaderBand1",
           "Guid": "d686071912ea4912ba81092fe0dcba59",
+          "CanGrow": true,
           "ClientRectangle": "0,0.4,19,2.2",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -81,6 +74,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "Guid": "22e4625a10f34948b7969492d4bac36a",
+          "CanGrow": true,
           "ClientRectangle": "0,47.06,19,2.8",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -164,6 +158,7 @@
         "2": {
           "Ident": "StiDataBand",
           "Name": "Datacabecera",
+          "CanGrow": true,
           "ClientRectangle": "0,3.4,19,2.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -313,6 +308,7 @@
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
           "Guid": "74135b2a12a346a8b49e00d1922ce024",
+          "CanGrow": true,
           "ClientRectangle": "0,7,19,1",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -381,6 +377,7 @@
         "4": {
           "Ident": "StiDataBand",
           "Name": "Datalineas",
+          "CanGrow": true,
           "ClientRectangle": "0,8.8,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -429,10 +426,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               }
@@ -460,6 +458,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ",",
                 "State": "DecimalDigits, DecimalSeparator"
               },
@@ -489,6 +488,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
@@ -517,7 +517,7 @@
             }
           },
           "MinHeight": 0.8,
-          "MaxHeight": 20.0,
+          "MaxHeight": 20,
           "DataSourceName": "lineas",
           "DataRelationName": "cabecera_lineas",
           "MasterComponent": "Datacabecera",
@@ -529,6 +529,7 @@
         "5": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
+          "CanGrow": true,
           "ClientRectangle": "0,10.4,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -543,6 +544,7 @@
         "6": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
+          "CanGrow": true,
           "ClientRectangle": "0,11.2,19,1.6",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -576,7 +578,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "BASE \r\nIMPONIBLE"
+                "Value": "BASE \nIMPONIBLE"
               },
               "HorAlignment": "Center",
               "Font": "Microsoft Sans Serif;9;;",
@@ -594,7 +596,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "IVA\r\n{bases.tipoIva}"
+                "Value": "IVA\n{bases.tipoIva}"
               },
               "HorAlignment": "Center",
               "Font": "Microsoft Sans Serif;9;;",
@@ -612,7 +614,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "TOTAL \r\nFACTURA"
+                "Value": "TOTAL \nFACTURA"
               },
               "HorAlignment": "Center",
               "Font": "Microsoft Sans Serif;9;;",
@@ -630,7 +632,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "ENTRAGAS\r\nA CUENTA"
+                "Value": "ENTRAGAS\nA CUENTA"
               },
               "HorAlignment": "Center",
               "Font": "Microsoft Sans Serif;9;;",
@@ -648,7 +650,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "TOTAL A \r\nABONAR"
+                "Value": "TOTAL A \nABONAR"
               },
               "HorAlignment": "Center",
               "Font": "Microsoft Sans Serif;9;;",
@@ -663,6 +665,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "Databases",
+          "CanGrow": true,
           "ClientRectangle": "0,13.6,19,0.8",
           "Conditions": {
             "0": {
@@ -699,6 +702,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
@@ -724,6 +728,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
@@ -750,6 +755,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
@@ -776,6 +782,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
@@ -802,6 +809,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
@@ -811,7 +819,7 @@
           "PrintAtBottom": true,
           "DataSourceName": "bases",
           "DataRelationName": "cabecera_bases",
-          "ColumnWidth": 4.0,
+          "ColumnWidth": 4,
           "Columns": 1,
           "MasterComponent": "Datacabecera"
         },
@@ -819,6 +827,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "1dd040d9033a400389f34426affa95b9",
+          "CanGrow": true,
           "ClientRectangle": "0,15.2,19,21.8",
           "Conditions": {
             "0": {
@@ -852,7 +861,8 @@
               "AspectRatio": true,
               "ImageURL": {
                 "Value": "{imagen.imagen}"
-              }
+              },
+              "ImageBytes": ""
             },
             "1": {
               "Ident": "StiText",
@@ -967,16 +977,8 @@
           "MasterComponent": "Datacabecera"
         }
       },
-      "PageWidth": 21.0,
-      "PageHeight": 29.7,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
-      },
-      "Margins": {
-        "Left": 1.0,
-        "Right": 1.0,
-        "Top": 1.0,
-        "Bottom": 1.0
       },
       "ReportUnit": {
         "Ident": "StiCentimetersUnit"
