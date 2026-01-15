@@ -9669,29 +9669,34 @@ var aceptarGenerarPrefacturaPlanificacionTemp = function () {
     if (vm.prefacturasAGenerar().length == 0) {
         return;
     }
-    var data = {
-        prefacturas: vm.prefacturasAGenerar(),
-        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
-    };
+    //Damos de alta primero la linea de planificación temporal en los intereses
+    exportarlineaPlanificacionAdicionaltempal(function (err, newPlanificacionId) {
+        if (err) return mensError(err);
+        prefacturasAGenerarIntereses
+        var data = {
+            prefacturas: vm.prefacturasAGenerar(),
+            prefacturasIntereses: vm.prefacturasAGenerarIntereses()
+        };
 
-    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
-        if (err) return;
-        if (!result) {
-            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
-            return;
-        }
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
-            if (err) {
-                mensError('Error al crear la prefactura temporal');
+        controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+            if (err) return;
+            if (!result) {
+                $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
                 return;
             }
-            loadPrefacturasDelContratoTemp(vm.contratoId());
-            loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
-            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
+                if (err) {
+                    mensError('Error al crear la prefactura temporal');
+                    return;
+                }
+                loadPrefacturasDelContratoTemp(vm.contratoId());
+                loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
+                mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+                $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            });
         });
-    });
 
+    })
 }
 
 
@@ -9726,7 +9731,7 @@ var verPrefacturasAGenerarPlanificacionTemp = function () {
         var clienteId = vm.clienteId();
         var cliente = vm.nombreComercial();
         var empresa = $("#cmbEmpresas").select2('data').text;
-        
+
         var divisor = importe / RegPlanificacion[0].importeIntereses;
         var coste = RegPlanificacion[0].importeIntereses * divisor;
         var porRetenGarantias = 0
@@ -9944,31 +9949,42 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
     if (vm.prefacturasAGenerar().length == 0) {
         return;
     }
-    $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', true);
-    var data = {
-        prefacturas: vm.prefacturasAGenerar(),
-        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
-    };
-    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
-        if (err) return;
-        if (!result) {
-            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
-            return;
-        }
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
-            if (err) {
-                $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
-                return;
+    var contPlanificeacionTempId = RegPlanificacion[0].contPlanificacionTempId;
+    //Damos de alta primero la linea de planificación temporal en los intereses
+    exportarlineaPlanificacionAdicionaltempal(contPlanificeacionTempId, function (err, newPlanificacionId) {
+        if (err) {
+            return mensError(err);
+        } else {
+            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', true);
+            var data = {
+                prefacturas: vm.prefacturasAGenerar(),
+                prefacturasIntereses: vm.prefacturasAGenerarIntereses()
+            };
+            for (var i = 0; i < data.prefacturas.length; i++) {
+                data.prefacturas[i].contPlanificacionTempId = newPlanificacionId;
             }
-            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
-            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
-            vm.prefacturasAGenerarIntereses(null)
-            loadPrefacturasDelContratoTemp(vm.contratoId());
-            loadPlanificacionLineasObrasTemp(vm.contratoId());
-            //actualizaCobrosPlanificacion(vm.contratoId());
-            limpiarModalGenerarPrefacturasObrasTemp();
-        });
+            controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+                if (err) return;
+                if (!result) {
+                    $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+                    return;
+                }
+                llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
+                    if (err) {
+                        $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+                        return;
+                    }
+                    $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+                    mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+                    $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+                    vm.prefacturasAGenerarIntereses(null)
+                    loadPrefacturasDelContratoTemp(vm.contratoId());
+                    loadPlanificacionLineasObrasTemp(vm.contratoId());
+                    //actualizaCobrosPlanificacion(vm.contratoId());
+                    limpiarModalGenerarPrefacturasObrasTemp();
+                });
+            });
+        }
     });
 }
 
@@ -10294,10 +10310,10 @@ var calcularNumPagosPlanificacionTemp = function () {
     return numpagos;
 }
 
-function exportarlineaPlanificacionAdicionaltempal(id) {
+var exportarlineaPlanificacionAdicionaltempal = function (id, done) {
     // mensaje de confirmación
     if (vm.contratoInteresesId() == null || vm.contratoInteresesId() == 0) {
-        return mensError('Debe seleccionar un contrato de intereses para poder exportar la línea de intereses.');
+        return done(mensError('Debe seleccionar un contrato de intereses para poder exportar la línea de intereses.'));
     }
     var mens = "Se exportará el registro el contrato de intereses, ¿Realmente desea realizar esta acción?";
     $.SmartMessageBox({
@@ -10313,10 +10329,9 @@ function exportarlineaPlanificacionAdicionaltempal(id) {
             }
             llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/planificacion/obras/temporal/exportar/linea/intereses", data, function (err, data) {
                 if (err) {
-                    mensError('Error al exportar la linea de planificación temporal');
+                    return done(mensError('Error al exportar la linea de planificación temporal'));
                 }
-                mensNormal('Línea de planificación temporal exportada correctamente al contrato de intereses.');
-                loadPlanificacionLineasObrasTemp(vm.contratoId(), null);
+                return done(null, data);
             });
         }
         if (ButtonPressed === "Cancelar") {
