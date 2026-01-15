@@ -995,6 +995,7 @@ function admData() {
     self.porcentajeComision = ko.observable();
     //
     self.prefacturasAGenerar = ko.observableArray([]);
+    self.prefacturasAGenerarIntereses = ko.observableArray([]);
     // modal de renovación del contrato
     self.nuevaFechaInicio = ko.observable();
     self.nuevaFechaFinal = ko.observable();
@@ -9670,6 +9671,7 @@ var aceptarGenerarPrefacturaPlanificacionTemp = function () {
     }
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
+        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
     };
 
     controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
@@ -9718,6 +9720,19 @@ var verPrefacturasAGenerarPlanificacionTemp = function () {
     var prefacturas = crearPrefacturasTemp(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
 
     vm.prefacturasAGenerar(prefacturas);
+    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+        var importe = RegPlanificacion[0].importeIntereses; // importe real de la factura;
+        var importeAlCliente = RegPlanificacion[0].importeIntereses; // importe al cliente final;
+        var clienteId = vm.clienteId();
+        var cliente = vm.nombreComercial();
+        var empresa = $("#cmbEmpresas").select2('data').text;
+        
+        var divisor = importe / RegPlanificacion[0].importeIntereses;
+        var coste = RegPlanificacion[0].importeIntereses * divisor;
+        var porRetenGarantias = 0
+        var prefacturasIntereses = crearPrefacturasTemp(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+        vm.prefacturasAGenerarIntereses(prefacturasIntereses);
+    }
     loadTablaGenerarPrefacturasPlanificaciontemp(prefacturas);
 }
 
@@ -9932,6 +9947,7 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
     $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', true);
     var data = {
         prefacturas: vm.prefacturasAGenerar(),
+        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
     };
     controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
         if (err) return;
@@ -9947,6 +9963,7 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
             $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
             mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            vm.prefacturasAGenerarIntereses(null)
             loadPrefacturasDelContratoTemp(vm.contratoId());
             loadPlanificacionLineasObrasTemp(vm.contratoId());
             //actualizaCobrosPlanificacion(vm.contratoId());
