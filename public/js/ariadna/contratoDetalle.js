@@ -9949,42 +9949,33 @@ var aceptarGenerarPrefacturasPlanificacionTemp = function () {
     if (vm.prefacturasAGenerar().length == 0) {
         return;
     }
-    var contPlanificeacionTempId = RegPlanificacion[0].contPlanificacionTempId;
-    //Damos de alta primero la linea de planificación temporal en los intereses
-    exportarlineaPlanificacionAdicionaltempal(contPlanificeacionTempId, function (err, newPlanificacionId) {
-        if (err) {
-            return mensError(err);
-        } else {
-            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', true);
-            var data = {
-                prefacturas: vm.prefacturasAGenerar(),
-                prefacturasIntereses: vm.prefacturasAGenerarIntereses()
-            };
-            for (var i = 0; i < data.prefacturas.length; i++) {
-                data.prefacturas[i].contPlanificacionTempId = newPlanificacionId;
-            }
-            controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
-                if (err) return;
-                if (!result) {
-                    $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
-                    return;
-                }
-                llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId(), data, function (err) {
-                    if (err) {
-                        $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
-                        return;
-                    }
-                    $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
-                    mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
-                    $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
-                    vm.prefacturasAGenerarIntereses(null)
-                    loadPrefacturasDelContratoTemp(vm.contratoId());
-                    loadPlanificacionLineasObrasTemp(vm.contratoId());
-                    //actualizaCobrosPlanificacion(vm.contratoId());
-                    limpiarModalGenerarPrefacturasObrasTemp();
-                });
-            });
+
+    $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', true);
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
+    };
+    
+    controlDePrefacturasYaGeneradasPlanificacionTemp(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            return;
         }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId()+ "/" + vm.contratoInteresesId(), data, function (err) {
+            if (err) {
+                $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+                return;
+            }
+            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacionTemp').modal('hide');
+            vm.prefacturasAGenerarIntereses(null)
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId());
+            //actualizaCobrosPlanificacion(vm.contratoId());
+            limpiarModalGenerarPrefacturasObrasTemp();
+        });
     });
 }
 
