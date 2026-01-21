@@ -3306,6 +3306,19 @@ var verPrefacturasAGenerarPlanificacion = function () {
     var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
 
     vm.prefacturasAGenerar(prefacturas);
+    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+        var importe = RegPlanificacion[0].importeIntereses; // importe real de la factura;
+        var importeAlCliente = RegPlanificacion[0].importeIntereses; // importe al cliente final;
+        var clienteId = vm.clienteId();
+        var cliente = vm.nombreComercial();
+        var empresa = $("#cmbEmpresas").select2('data').text;
+
+        var divisor = importe / RegPlanificacion[0].importeIntereses;
+        var coste = RegPlanificacion[0].importeIntereses * divisor;
+        var porRetenGarantias = 0
+        var prefacturasIntereses = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+        vm.prefacturasAGenerarIntereses(prefacturasIntereses);
+    }
     loadTablaGenerarPrefacturasPlanificacion(prefacturas);
 }
 
@@ -10214,7 +10227,7 @@ function importarPlanificacionObrasTemp() {
     });
 }
 
-var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, contPlanificacionTempId, done) {
+var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId, contPlanificacionTempId, done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
         if (err) return done(err);
         if (data.length == 0) return done(null, true);
@@ -10331,4 +10344,210 @@ var imprimirContratoAdicional = function (ref) {
 function printContratoAdicional(ref) {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_new');
+}
+
+//NUEVA RUTINA PARA LA CREACIÓN DE PTREFACTURAS Y SUS INTERESES
+
+var aceptarGenerarPrefacturasPlanificacionIntereses = function () {
+    if (!generarPrefacturasOK()) return;
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+
+    $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', true);
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
+    };
+
+    controlDePrefacturasYaGeneradasPlanificacionIntereses(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId() + "/" + vm.contratoInteresesId() + "/" + totalIntereses, data, function (err) {
+            if (err) {
+                $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+                return;
+            }
+            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            vm.prefacturasAGenerarIntereses(null)
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId());
+            //actualizaCobrosPlanificacion(vm.contratoId());
+            limpiarModalGenerarPrefacturasObrasTemp();
+        });
+    });
+}
+
+
+var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, contPlanificacionTempId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        //sumamos los importes que se van a eliminar
+        var importe = 0
+        data.forEach(function (pf) {
+            importe = importe + pf.totalAlCliente;
+        });
+        var datos = {
+            importe: importe
+        }
+        mensajeAceptarCancelar(mensaje, function () {
+            done(null, true);
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+
+function aceptarGenerarPrefacturaPlanificacionObrasIntereses() {
+    $('#modalGenerarPrefacturasObras').modal('hide');
+    var opcion = $('#chkVarias').prop('checked');
+    //limpiarModalGenerarPrefacturasObras();
+    if (opcion) {
+        $('#modalGenerarPrefacturasPlanificacion').modal({
+            show: 'true'
+        });
+        generarPrefacturasPlanificacionIntereses(RegPlanificacion);
+
+    } else {
+        //comprobamos que le cliente tenga un nombre comercial
+        var d = vm.nombreComercial();
+        if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
+        var clienteId = vm.clienteId();
+        var cliente = vm.nombreComercial();
+        var empresa = $("#cmbEmpresas").select2('data').text;
+        RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
+        var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
+        vm.prefacturasAGenerar(prefacturas);
+        aceptarGenerarPrefacturaPlanificacion();
+    }
+}
+
+
+
+var generarPrefacturasPlanificacionIntereses = function (data) {
+    var resto = data[0].importe;
+    vm.importeAFacturar(roundToSix(resto));
+    $("#cmbPeriodosPagos2").select2(select2Spanish());
+    loadPeriodosPagos(vm.speriodoPagoId());
+    $("#cmbPeriodosPagos2").select2().on('change', function (e) {
+        cambioPeriodosPagosPlanificacion(e.added);
+    });
+
+
+
+    if (vm.fechaPlanificacionObras2()) {
+        vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
+    }
+    else if (!vm.fechaPrimeraFactura()) {
+        var f = new Date();
+        f = moment(f).format('DD/MM/YYYY');
+        vm.fechaPrimeraFactura(f);
+    }
+    $("#generar-prefacturas-form-planificacion").submit(function () {
+        return false;
+    });
+
+}
+
+function crearPrefacturaPlanificacionIntereses(numPagos, empresaId, clienteId, empresa, cliente, data, importe) {
+    var divisor = 1;
+    var fecha = new Date(spanishDbDate(data[0].fecha));
+    var pagos = [];
+    var nPagos = numPagos;
+    var porRetenGarantias = 0
+    var retenGarantias = 0
+    var copiadata = data.slice();
+
+    for (var i = 0; i < nPagos; i++) {
+        var importePago = roundToSix(importe);
+        var importePagoCliente = roundToSix(importe);
+        var importeCoste = roundToSix(importe);
+        var contPlanificacionTempId = data[i].contPlanificacionTempId;
+        var formaPagoId = data[i].formaPagoId;
+        // sucesivas fechas de factura
+        var f = moment(fecha).format('DD/MM/YYYY');
+        // inicio de periodo
+        if (i == 0) {
+            var f0 = moment(fecha).add(i * divisor, 'month').format('DD/MM/YYYY');
+        }
+
+        var f2 = moment(fecha).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        //completamos el compo observacionesPago
+        var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
+        var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
+        var cabOtrosConceptos = '\nOTROS CONCEPTOS';
+        var otrosConceptos = ''
+        //calculamos la retención de garantia si existe
+        if (copiadata[i].porRetenGarantias) {
+            porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
+            retenGarantias = roundToTwo(importePago * porRetenGarantias);
+        }
+        copiadata.splice(i, 1);
+        for (var k = 0; k < copiadata.length; k++) {
+            otrosConceptos += "\n" + copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
+        }
+
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            retenGarantias: retenGarantias,
+            porcentajeBeneficio: vm.porcentajeBeneficio(),
+            porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2,
+            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos,
+            contratoPorcenId: null,
+            contPlanificacionTempId: contPlanificacionTempId,
+            formaPagoId: formaPagoId
+        };
+
+
+        pagos.push(p);
+        copiadata = [];
+        copiadata = data.slice();
+    }
+
+    return pagos;
+}
+
+var aceptarGenerarPrefacturaPlanificacionIntereses = function () {
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+    };
+
+    controlDePrefacturasYaGeneradasPlanificacionIntereses(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturas').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                mensError('Error al crear la prefactura');
+                return;
+            }
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturas').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
+            actualizaCobrosPlanificacion(vm.contratoId());
+        });
+    });
+
 }
