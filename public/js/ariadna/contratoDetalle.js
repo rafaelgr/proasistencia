@@ -7506,10 +7506,25 @@ function initTablaPlanificacionLineasObras() {
                 numeral(total5).format('0')
             );
 
+
             //////
             // Total over all pages
-            total2 = api
+            total6 = api
                 .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(6).footer()).html(
+                numeral(total6).format('0')
+            );
+
+            //////
+            // Total over all pages
+            total7 = api
+                .column(7)
                 .data()
                 .reduce(function (a, b) {
                     vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
@@ -7524,39 +7539,25 @@ function initTablaPlanificacionLineasObras() {
                 }, 0);
 
             // Update footer
-            $(api.columns(6).footer()).html(
-                numeral(total2).format('0,0.00')
-            );
-
-            //////
-            // Total over all pages
-            total7 = api
-                .column(7)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
-
-            // Update footer
             $(api.columns(7).footer()).html(
-                numeral(total7).format('0')
+                numeral(total7).format('0,0.00')
             );
 
             //////
             // Total over all pages
-            total3 = api
+            total8 = api
                 .column(8)
                 .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                    .reduce(function (a, b) {
+                        return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
 
             // Update footer
             $(api.columns(8).footer()).html(
-                numeral(total3).format('0,0.00')
+                numeral(total8).format('0')
             );
 
-            /////
+            //////
             // Total over all pages
             total9 = api
                 .column(9)
@@ -7581,7 +7582,7 @@ function initTablaPlanificacionLineasObras() {
 
             // Update footer
             $(api.columns(10).footer()).html(
-                numeral(total10).format('0')
+                numeral(total10).format('0,0.00')
             );
 
             /////
@@ -7595,7 +7596,21 @@ function initTablaPlanificacionLineasObras() {
 
             // Update footer
             $(api.columns(11).footer()).html(
-                numeral(total11).format('0,0.00')
+                numeral(total11).format('0')
+            );
+
+            /////
+            // Total over all pages
+            total12 = api
+                .column(12)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(12).footer()).html(
+                numeral(total12).format('0,0.00')
             );
 
         },
@@ -7639,6 +7654,13 @@ function initTablaPlanificacionLineasObras() {
             }
         }, {
             data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, 
+        {
+            data: "importeIntereses",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -7719,7 +7741,7 @@ function initTablaPlanificacionLineasObras() {
             }
         }]
     });
-    tablaLineasPlanificacion.columns(11).visible(false);
+    tablaLineasPlanificacion.columns(12).visible(false);
 }
 
 function calculaImportesInformativosPlanificacion(c) {
@@ -7829,6 +7851,7 @@ function aceptarLineaPlanificacionObras() {
             porcentaje: vm.porcentajePlanificacion(),
             fecha: spanishDbDate(vm.fechaPlanificacionObras()),
             importe: vm.importeCalculadoPlanificacion(),
+            importeIntereses: vm.importeIntereses(),
             porRetenGarantias: vm.porRetenGarantias(),
             formaPagoId: vm.sformaPagoIdLinea()
         }
@@ -7911,6 +7934,7 @@ function loadDataLineaPlanificacionObras(data) {
     vm.importeFacturado(data.importeFacturado);
     vm.importeCobrado(data.importeCobrado);
     vm.porRetenGarantias(data.porRetenGarantias);
+    vm.importeIntereses(data.importeIntereses);
     loadFormasPagoLinea(data.formaPagoId);
 
 }
@@ -7993,6 +8017,7 @@ function limpiarModalLineasPlanificacion() {
     vm.fechaPlanificacionObras(null);
     vm.importeCalculadoPlanificacion(null);
     vm.porRetenGarantias(null);
+    vm.importeIntereses(0)
     loadFormasPagoLinea(null);
 }
 
@@ -10227,8 +10252,8 @@ function importarPlanificacionObrasTemp() {
     });
 }
 
-var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId, contPlanificacionTempId, done) {
-    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
+var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId, contPlanificacionId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/" + contratoId + "/" + contPlanificacionId, null, function (err, data) {
         if (err) return done(err);
         if (data.length == 0) return done(null, true);
         var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
@@ -10366,7 +10391,7 @@ var aceptarGenerarPrefacturasPlanificacionIntereses = function () {
             $('#modalGenerarPrefacturasPlanificacion').modal('hide');
             return;
         }
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/temporal/" + vm.contratoId() + "/" + vm.contratoInteresesId() + "/" + totalIntereses, data, function (err) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/con-intereses/" + vm.contratoId() + "/" + vm.contratoInteresesId() + "/" + totalIntereses, data, function (err) {
             if (err) {
                 $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
                 return;
@@ -10427,6 +10452,10 @@ function aceptarGenerarPrefacturaPlanificacionObrasIntereses() {
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
         var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
+        if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+            var prefacturasIntereses = crearPrefacturaPlanificacionIntereses(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importeIntereses);
+            vm.prefacturasAGenerarIntereses(prefacturasIntereses);
+        }
         aceptarGenerarPrefacturaPlanificacion();
     }
 }
@@ -10471,7 +10500,7 @@ function crearPrefacturaPlanificacionIntereses(numPagos, empresaId, clienteId, e
         var importePago = roundToSix(importe);
         var importePagoCliente = roundToSix(importe);
         var importeCoste = roundToSix(importe);
-        var contPlanificacionTempId = data[i].contPlanificacionTempId;
+        var contPlanificacionId = data[i].contPlanificacionId;
         var formaPagoId = data[i].formaPagoId;
         // sucesivas fechas de factura
         var f = moment(fecha).format('DD/MM/YYYY');
@@ -10504,14 +10533,14 @@ function crearPrefacturaPlanificacionIntereses(numPagos, empresaId, clienteId, e
             empresaId: empresaId,
             clienteId: clienteId,
             retenGarantias: retenGarantias,
-            porcentajeBeneficio: vm.porcentajeBeneficio(),
-            porcentajeAgente: vm.porcentajeAgente(),
+            porcentajeBeneficio: 0,
+            porcentajeAgente: 0,
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
             observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos,
             contratoPorcenId: null,
-            contPlanificacionTempId: contPlanificacionTempId,
+            contPlanificacionId: contPlanificacionId,
             formaPagoId: formaPagoId
         };
 

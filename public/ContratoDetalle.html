@@ -1677,6 +1677,9 @@
                                                                                         Importe
                                                                                     </th>
                                                                                     <th class="text-left">
+                                                                                        Importe intereses
+                                                                                    </th>
+                                                                                    <th class="text-left">
                                                                                         Núm. pref.
                                                                                     </th>
                                                                                     <th class="text-left">
@@ -1712,6 +1715,7 @@
                                                                                     <th colspan="3"
                                                                                         style="text-align:right !important">
                                                                                         Totales:</th>
+                                                                                    <th></th>
                                                                                     <th></th>
                                                                                     <th></th>
                                                                                     <th></th>
@@ -2149,8 +2153,8 @@
                                                                                                                             class="form-control"
                                                                                                                             placeholder="" />
                                                                                                                     </th>
-                                                                                                                    
-                                                                                                                    
+
+
                                                                                                                     <th
                                                                                                                         style="width:10%">
                                                                                                                     </th>
@@ -4423,7 +4427,7 @@
                         </fieldset>
                         <footer>
                             <button id="btnAceptarGenerarPrefacturasPlanificacion" class="btn btn-primary"
-                                onclick="aceptarGenerarPrefacturasPlanificacion()">
+                                onclick="aceptarGenerarPrefacturasPlanificacionIntereses()">
                                 GENERAR
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -4723,12 +4727,19 @@
                                             type="text" data-bind="value: porcentajePlanificacion" />
                                     </label>
                                 </section>
-                                <section class="col col-md-3">
+                                <section class="col col-md-2">
                                     <label class="label">importe</label>
                                     <label class="input">
                                         <input id="txtImporteCalculadoPlanificacion"
                                             name="txtImporteCalculadoPlanificacion" type="text"
                                             data-bind="value: importeCalculadoPlanificacion" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Importe intereses</label>
+                                    <label class="input">
+                                        <input id="txtImporteIntereses" name="txtImporteIntereses" type="text"
+                                            data-bind="value: importeIntereses" />
                                     </label>
                                 </section>
                                 <section class="col col-md-2">
@@ -4746,7 +4757,7 @@
                                             data-dateformat="dd/mm/yy" />
                                     </label>
                                 </section>
-                                <section class="col col-md-3">
+                                <section class="col col-md-2">
                                     <label class="label">Forma de pago</label>
                                     <label style="width:100%; height:50px;">
                                         <select style="width:100%" id="cmbFormasPagoLineaObras"
@@ -5246,7 +5257,7 @@
                                 <section class="col col-md-2">
                                     <label class="label">Importe intereses</label>
                                     <label class="input">
-                                        <input id="txtImporteIntereses" name="txtImporteIntereses" type="text"
+                                        <input id="txtImporteInteresesTemp" name="txtImporteInteresesTemp" type="text"
                                             data-bind="value: importeIntereses" />
                                     </label>
                                 </section>
