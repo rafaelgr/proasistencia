@@ -34,17 +34,17 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     // asignación de eventos al clic
-    $("#btnAceptar").click(function() {
+    $("#btnAceptar").click(function () {
         aceptar(true)();
     });
-    
-    $("#btnAceptar2").click(function() {
+
+    $("#btnAceptar2").click(function () {
         aceptar(false)();
     });
-    
+
     $("#btnSalir").click(salir());
     $('#btnBuscar').click(buscarFacturasFecha());
-   
+
 
     $('#frmProveedor').submit(function () {
         return false;
@@ -107,7 +107,7 @@ function initForm() {
     loadPaises();
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
-   
+
     $("#cmbTiposProveedor").select2().on('change', function (e) {
         //alert(JSON.stringify(e.added));
 
@@ -140,27 +140,27 @@ function initForm() {
 
     $(".esNif").on('change', function (e) {
         var origin = e.currentTarget.id;
-        var nif = $('#'+origin).val();
-        
-        if(!nif || nif == "") return;
+        var nif = $('#' + origin).val();
 
-        if(nif != "") {
-            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            if(origin == "txtNif") vm.nif(nif);
-            if(origin == "txtDniRp") vm.dniRp(nif);
-            if(origin == "txtDniRepresentante") vm.dniRepresentante(nif);
+        if (!nif || nif == "") return;
+
+        if (nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+            if (origin == "txtNif") vm.nif(nif);
+            if (origin == "txtDniRp") vm.dniRp(nif);
+            if (origin == "txtDniRepresentante") vm.dniRepresentante(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
             var esNif = patron.test(nif);
 
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
-            if(esNif || esCif) {
+            if (esNif || esCif) {
                 //si es el nif del proveedor comprobamos si está repetido
-                if(origin == "txtNif")   compruebaNifRepetido(nif);
+                if (origin == "txtNif") compruebaNifRepetido(nif);
             } else {
                 mensError('El nif introducido no tiene un formato valido');
-                if(origin == "txtNif") compruebaNifRepetido(nif);
+                if (origin == "txtNif") compruebaNifRepetido(nif);
                 //$('#txtNif').val('');
             }
         }
@@ -182,33 +182,33 @@ function initForm() {
     });
 
     $('#btnNuevaCarpeta').show();
-    if(!usuario.puedeEditar) {
+    if (!usuario.puedeEditar) {
         $('#btnNuevaCarpeta').hide();
-    } 
+    }
 
     initTablaFacturas();
     initTablaUsuariosPush();
     initArbolDocumentacion();
     initTablaindicesCorrectores();
 
-      //abrir en pestaña de facturas de proveedores
-      if (gup('doc') != "") {
+    //abrir en pestaña de facturas de proveedores
+    if (gup('doc') != "") {
         $('.nav-tabs a[href="#s2"]').tab('show');
-    } 
+    }
 
-       //validacion de fecha mayor que fecha
-       $.validator.addMethod("greaterThan2",
-       function (value, element, params) {
-           var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
-           var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
-           if (!/Invalid|NaN/.test(new Date(fv))) {
-               return new Date(fv) >= new Date(fp);
-           } else {
-               // esto es debido a que permitimos que la segunda fecha nula
-               return true;
-           }
-       }, 'La fecha final debe ser mayor que la inicial.');
-   
+    //validacion de fecha mayor que fecha
+    $.validator.addMethod("greaterThan2",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha final debe ser mayor que la inicial.');
+
 
     // autosalto en IBAN
     $(function () {
@@ -231,16 +231,16 @@ function initForm() {
             var num = 0;
             var cadena = null;
             var n1 = 0;
-            for(var j = 1; j < 7; j++) {
+            for (var j = 1; j < 7; j++) {
                 var s = $(this).attr('id').substr(0, 7);
                 var s2 = s + j;
                 $("#" + s2).val(null);
             }
-            
+
             console.log(this.value)
             if (this.value.length > 0) {
-                for(var i = 0; i < this.value.length; i++ ) {
-                    if(!cadena) {
+                for (var i = 0; i < this.value.length; i++) {
+                    if (!cadena) {
                         cadena = this.value.substr(i, 1);
                         num++;
                     } else {
@@ -256,7 +256,7 @@ function initForm() {
                         cadena = null;
                     }
                 }
-               
+
             }
         });
     });
@@ -264,53 +264,53 @@ function initForm() {
 
     //
     $.validator.addMethod("greaterThan",
-    function (value, element, params) {
-        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
-        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
-        if (!/Invalid|NaN/.test(new Date(fv))) {
-            return new Date(fv) >= new Date(fp);
-        } else {
-            // esto es debido a que permitimos que la segunda fecha nula
-            return true;
-        }
-    }, 'La fecha de alta debe ser menor que la fecha de baja.');
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha de alta debe ser menor que la fecha de baja.');
     //
 
     $.validator.addMethod("numberGreaterThan",
-    function (value, element, params) {
-        var fv = parseFloat(value);
-        var fp = parseFloat($(params).val());
-        if (!/Invalid|NaN/.test(new Date(fv))) {
-            return fv > fp;
-        } 
-    }, 'El máximo tiene que ser mayor que el mínimo.');
+        function (value, element, params) {
+            var fv = parseFloat(value);
+            var fp = parseFloat($(params).val());
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return fv > fp;
+            }
+        }, 'El máximo tiene que ser mayor que el mínimo.');
 
-    
+
     // 7 bind to events triggered on the tree
     $('#jstreeDocumentacion').on("click.jstree", function (e) {
-            var node = $(e.target).closest('.jstree-node');
-            var selectedNodeId = node.attr('id');
-            if (e.which === 1) {
-                var jsTree = $.jstree.reference(e.target);
-                var originalNode = jsTree.get_node(node);
-                if(!originalNode.data.folder)  {
-                    var url = originalNode.original.location;
-                    window.open(url, '_blank');
-                }
+        var node = $(e.target).closest('.jstree-node');
+        var selectedNodeId = node.attr('id');
+        if (e.which === 1) {
+            var jsTree = $.jstree.reference(e.target);
+            var originalNode = jsTree.get_node(node);
+            if (!originalNode.data.folder) {
+                var url = originalNode.original.location;
+                window.open(url, '_blank');
             }
+        }
     });
     // 8 interact with the tree - either way is OK
     $('#demo').on('click', function () {
-      $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
-      $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
-      $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
+        $('#jstreeDocumentacion').jstree(true).select_node('child_node_1');
+        $('#jstreeDocumentacion').jstree('select_node', 'child_node_1');
+        $.jstree.reference('#jstreeDocumentacion').select_node('child_node_1');
     });
 
     //sublineas de la tabla indices_correctores
     $('#dt_indices').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = tablaIndices.row(tr);
- 
+
         if (row.child.isShown()) {
             // This row is already open - close it
             row.child.hide();
@@ -322,7 +322,7 @@ function initForm() {
         }
     });
 
-  
+
 
     // obtener el número de digitos de la contabilidad
     // para controlar la cuenta contable.
@@ -365,9 +365,9 @@ function initForm() {
                 vm.proveedorId(0);
                 vm.activa(1);
                 vm.cuentaContable(null);
-                 // contador de código
-                 var inicioCuenta = "40";
-                 $.ajax({
+                // contador de código
+                var inicioCuenta = "40";
+                $.ajax({
                     type: "GET",
                     url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/" + inicioCuenta,
                     dataType: "json",
@@ -384,21 +384,21 @@ function initForm() {
                             contentType: "application/json",
                             success: function (data, status) {
                                 vm.inicioCuenta(data.inicioCuenta);
-                                var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                                var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos);
                                 vm.cuentaContable(codmacta);
                             },
                             error: function (err) {
                                 mensErrorAjax(err);
                                 // si hay algo más que hacer lo haremos aquí.
                             }
-                        });    
+                        });
                     },
                     error: function (err) {
                         mensErrorAjax(err);
                         // si hay algo más que hacer lo haremos aquí.
                     }
                 });
-        
+
                 loadFacturasDelProveedor();
             }
         },
@@ -510,7 +510,7 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
-    
+
     //combo paises
     //
     self.paisId = ko.observable();
@@ -546,7 +546,7 @@ function admData() {
     self.posiblesTiposProfesionalIndice = ko.observableArray([]);
     self.elegidosTiposProfesionalIndice = ko.observableArray([]);
 
-    
+
     //RECURSO PREVNTIVO
     self.nombreRp = ko.observable();
     self.dniRp = ko.observable();
@@ -641,7 +641,7 @@ function loadData(data) {
     vm.codPostalRepresentante(data.codPostalRepresentante);
     vm.provinciaRepresentante(data.provinciaRepresentante);
 
-  
+
     antNif = data.nif;
     // split iban
     if (vm.iban()) {
@@ -776,7 +776,7 @@ function datosOK() {
                 required: "Debe introducir un código de país"
             },
             cmbEmpresas: {
-                required:  "Debe introducir una empresa de facturación"
+                required: "Debe introducir una empresa de facturación"
             }
         },
         // Do not change code below
@@ -802,10 +802,10 @@ function datosOK() {
 function aceptar(salir) {
     var mf = function () {
         if (!datosOK()) return;
-        if(!vm.fianza() || vm.fianza() == '') vm.fianza('0.00'); 
-        if(vm.starifaProveedorId() == 0) vm.starifaProveedorId(null);
-        if(vm.sempresaId() == 0) vm.sempresaId(null);
-        if(!vm.cuentaContable() || vm.cuentaContable() == '') {
+        if (!vm.fianza() || vm.fianza() == '') vm.fianza('0.00');
+        if (vm.starifaProveedorId() == 0) vm.starifaProveedorId(null);
+        if (vm.sempresaId() == 0) vm.sempresaId(null);
+        if (!vm.cuentaContable() || vm.cuentaContable() == '') {
             mensError('La cuenta contable está vacia');
             return;
         }
@@ -842,7 +842,7 @@ function aceptar(salir) {
                 "fianza": vm.fianza(),
                 "tipoIvaId": vm.stipoIvaId(),
                 "fianzaAcumulada": vm.fianzaAcumulada(),
-                "retencionFianza" : vm.retencionFianza(),
+                "retencionFianza": vm.retencionFianza(),
                 "revisionFianza": spanishDbDate(vm.revisionFianza()),
                 "tarifaId": vm.starifaProveedorId(),
                 "codigoRetencion": vm.scodigoRetencion(),
@@ -880,13 +880,13 @@ function aceptar(salir) {
         };
 
         var verb = "POST";
-        var url =   myconfig.apiUrl + "/api/proveedores";
+        var url = myconfig.apiUrl + "/api/proveedores";
         var returnUrl = "ProveedoresGeneral.html?cmd=nuevo&ProveedorId=";
 
         // caso modificación
         if (proId != 0) {
             verb = "PUT";
-            url =  myconfig.apiUrl + "/api/proveedores/" + proId;
+            url = myconfig.apiUrl + "/api/proveedores/" + proId;
             "ProveedoresGeneral.html?ProveedorId=" + proId;
         }
         $.ajax({
@@ -896,15 +896,15 @@ function aceptar(salir) {
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data, status) {
-                if(salir) {
+                if (salir) {
                     window.open(returnUrl, '_self');
                 } else {
-                    if(verb == 'POST') {
-                        returnUrl =  "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
+                    if (verb == 'POST') {
+                        returnUrl = "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
                         window.open(returnUrl, '_self');
                         mensNormal('Proveedor guardado.');
                     }
-                   
+
                 }
             },
             error: function (err) {
@@ -984,7 +984,7 @@ function loadEmpresas(empresaId) {
         var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         $("#cmbEmpresas").val([empresaId]).trigger('change');
-        if(empresaId) vm.sempresaId(empresaId);
+        if (empresaId) vm.sempresaId(empresaId);
     });
 }
 
@@ -1040,7 +1040,7 @@ function loadMotivosBaja(id) {
     });
 }
 
-function loadTarifas(id){
+function loadTarifas(id) {
     $.ajax({
         type: "GET",
         url: "/api/tarifas_proveedor",
@@ -1065,11 +1065,11 @@ function loadTiposRetencion(id) {
         if (id) {
             $("#cmbTiposRetencion").val([id]).trigger('change');
             vm.scodigoRetencion(id);
-        
+
         } else {
             $("#cmbTiposRetencion").val([0]).trigger('change');
             vm.scodigoRetencion(0);
-          
+
         }
     });
 }
@@ -1080,9 +1080,9 @@ function loadDepartamentos(departamentosIds) {
         if (err) return;
         var departamentos = data;
         vm.posiblesDepartamentos(departamentos);
-        if(departamentosIds) {
+        if (departamentosIds) {
             vm.elegidosDepartamentos(departamentosIds);
-            for ( var i = 0; i < departamentosIds.length; i++ ) {
+            for (var i = 0; i < departamentosIds.length; i++) {
                 ids.push(departamentosIds[i].departamentoId)
             }
             $("#cmbDepartamentosTrabajo").val(ids).trigger('change');
@@ -1098,11 +1098,11 @@ function loadTiposProfesionales(tiposProfesionalesIds) {
         contentType: "application/json",
         success: function (data, status) {
             var ids = [];
-            var tiposProfesionales  = data
+            var tiposProfesionales = data
             vm.posiblesTiposProfesional(tiposProfesionales);
-            if(tiposProfesionalesIds) {
+            if (tiposProfesionalesIds) {
                 vm.elegidosTiposProfesional(tiposProfesionalesIds);
-                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                for (var i = 0; i < tiposProfesionalesIds.length; i++) {
                     ids.push(tiposProfesionalesIds[i].tipoProfesionalId)
                 }
                 $("#cmbTiposProfesional").val(ids).trigger('change');
@@ -1124,12 +1124,12 @@ function loadTiposProfesionalesIndice(tiposProfesionalesIds) {
         contentType: "application/json",
         success: function (data, status) {
             var ids = [];
-            var tiposProfesionales  = data
+            var tiposProfesionales = data
             vm.posiblesTiposProfesionalIndice(tiposProfesionales);
             $("#cmbTiposProfesionalIndice").val([]).trigger('change');
-            if(tiposProfesionalesIds) {
+            if (tiposProfesionalesIds) {
                 vm.elegidosTiposProfesionalIndice(tiposProfesionalesIds);
-                for ( var i = 0; i < tiposProfesionalesIds.length; i++ ) {
+                for (var i = 0; i < tiposProfesionalesIds.length; i++) {
                     ids.push(tiposProfesionalesIds[i].tipoProfesionalId)
                 }
                 $("#cmbTiposProfesionalIndice").val(ids).trigger('change');
@@ -1172,29 +1172,29 @@ function buscaProfesiones() {
         loadTiposProfesionales(data);
     });
 }
-   
+
 
 
 
 function compruebaCodigoProveedor() {
     var codmacta;
-    if(vm.stipoProveedorId()){
-        if(vm.codigo()){
-            var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+    if (vm.stipoProveedorId()) {
+        if (vm.codigo()) {
+            var codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos);
             vm.cuentaContable(codmacta);
             llamadaAjax("GET", "/api/proveedores/codigo/proveedor/" + vm.cuentaContable(), null, function (err, data) {
                 if (!data) {
-                    if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
-                        if(vm.codigoOriginal()) vm.codigo(vm.codigoOriginal());
-                        if(vm.inicioCuenta() &&  vm.codigo() && numDigitos) {}
-                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                    if (vm.stipoProveedorId() == vm.tipoProOriginalId()) {
+                        if (vm.codigoOriginal()) vm.codigo(vm.codigoOriginal());
+                        if (vm.inicioCuenta() && vm.codigo() && numDigitos) { }
+                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos);
                         vm.cuentaContable(codmacta);
-                    } 
+                    }
                 }
-                if(data) {
-                    if(vm.stipoProveedorId() == vm.tipoProOriginalId()) {
-                        if(vm.codigoOriginal()) vm.codigo(vm.codigoOriginal());
-                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos); 
+                if (data) {
+                    if (vm.stipoProveedorId() == vm.tipoProOriginalId()) {
+                        if (vm.codigoOriginal()) vm.codigo(vm.codigoOriginal());
+                        codmacta = montarCuentaContable(vm.inicioCuenta(), vm.codigo(), numDigitos);
                         vm.cuentaContable(codmacta);
                     } else {
                         mostrarMensajeSmart('La cuenta contable ya existe');
@@ -1205,11 +1205,11 @@ function compruebaCodigoProveedor() {
                 }
             });
         }
-    }    
+    }
 }
 function cambioTipoProveedor(data) {
-    if(data) {
-        if(vm.cuentaContable() && vm.cuentaContable() != '') {
+    if (data) {
+        if (vm.cuentaContable() && vm.cuentaContable() != '') {
             // mensaje de confirmación
             var mens = "Al cambiar el tipo de proveedor se cambiará su cuenta contable ¿Realmente desea cambiar el tipo de proveedor registro?";
             $.SmartMessageBox({
@@ -1237,20 +1237,20 @@ function cambioTipoProveedor(data) {
                                     codigoSugerido = datos.codigo;
                                     vm.codigo(datos.codigo)
                                     compruebaCodigoProveedor();
-                                
+
                                 },
                                 error: function (err) {
                                     mensErrorAjax(err);
                                     // si hay algo más que hacer lo haremos aquí.
                                 }
                             });
-                                 
+
                         },
                         error: function (err) {
                             mensErrorAjax(err);
                             // si hay algo más que hacer lo haremos aquí.
                         }
-                    });    
+                    });
                 }
                 if (ButtonPressed === "Cancelar") {
                     // no hacemos nada (no quiere borrar)
@@ -1264,13 +1264,13 @@ function cambioTipoProveedor(data) {
                 contentType: "application/json",
                 success: function (data, status) {
                     vm.inicioCuenta(data.inicioCuenta);
-                        compruebaCodigoProveedor();
+                    compruebaCodigoProveedor();
                 },
                 error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
-            });   
+            });
 
             /* mensError("No hay una cuenta contable por defecto, recargue la página");
             return; */
@@ -1285,11 +1285,11 @@ function compruebaNifRepetido(nif) {
         url: myconfig.apiUrl + "/api/proveedores/comprueba/nif/repetido/" + nif,
         dataType: "json",
         contentType: "application/json",
-        data:null,
+        data: null,
         success: function (data, status) {
-            if(data && data.proveedorId != vm.proveedorId()) {
-               mensError('Ya existe un proveedor con este NIF');
-               
+            if (data && data.proveedorId != vm.proveedorId()) {
+                mensError('Ya existe un proveedor con este NIF');
+
             }
         },
         error: function (err) {
@@ -1305,15 +1305,15 @@ function initTablaFacturas() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 5 || column === 6 || column === 11) {
+                    if (column === 5 || column === 6 || column === 7) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column ===8) {
+                        if (column === 0 || column === 9) {
                             return "";
                         } else {
                             return data;
@@ -1324,115 +1324,118 @@ function initTablaFacturas() {
         }
     };
     tablaFacturas = $('#dt_factura').DataTable({
-        bSort: false,
         bSort: true,
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        paging: false,
+
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
-                extend: 'excel'
-            } ), 
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
+                extend: 'excel',
+                title: ''
+            }),
             {
-               
+
                 extend: 'pdf',
+                title: '',
                 orientation: 'landscape',
                 pageSize: 'LEGAL'
-            }, 
+            },
             'print'
         ],
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         columnDefs: [
-           
-            { 
+
+            {
                 "type": "datetime-moment",
                 "targets": [3, 4],
                 "render": function (data, type, row) {
                     if (type === 'display' || type === 'filter') {
-                        if(!data) return null;
+                        if (!data) return null;
                         return moment(data).format('DD/MM/YYYY');
                     }
                     // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
                     else if (type === 'sort') {
-                        if(!data) return null;
+                        if (!data) return null;
                         return moment(data).format('YYYY-MM-DD HH:mm:ss');
                     }
                     // En otros casos, solo devuelve los datos sin cambios
                     else {
-                        if(!data) return null;
+                        if (!data) return null;
                         return data;
                     }
                 }
             }
         ],
-        
+
         autoWidth: true,
-        
-        "footerCallback": function ( row, data, start, end, display ) {
+
+        "footerCallback": function (row, data, start, end, display) {
             var api = this.api(), data;
- 
+
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            var intVal = function (i) {
                 return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
+                    i.replace(/[\$,]/g, '') * 1 :
                     typeof i === 'number' ?
                         i : 0;
             };
 
             // Total over all pages
             total = api
-                .column( 5 )
+                .column(5, { search: 'applied' })
                 .data()
-                .reduce( function (a, b) {
+                .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0 );
+                }, 0);
 
-              
-            
+
+
 
             ///////
 
-             // Total over all pages
-             total2 = api
-             .column( 6 )
-             .data()
-             .reduce( function (a, b) {
-                 return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-             }, 0 );
+            // Total over all pages
+            total2 = api
+                .column(6, { search: 'applied' })
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
-             // Total over all pages
-              total3 = api
-              .column( 7 )
-              .data()
-              .reduce( function (a, b) {
-                  return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-              }, 0 );
+            // Total over all pages
+            total3 = api
+                .column(7, { search: 'applied' })
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
 
 
-           
+
 
 
             // Update footer
-            $( api.columns(5).footer() ).html(
+            $(api.columns(5).footer()).html(
                 numeral(total).format('0,0.00')
             );
 
-            $( api.columns(6).footer() ).html(
+            $(api.columns(6).footer()).html(
                 numeral(total2).format('0,0.00')
             );
 
-            $( api.columns(7).footer() ).html(
+            $(api.columns(7).footer()).html(
                 numeral(total3).format('0,0.00')
-            ); 
+            );
 
 
             //////
 
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -1470,8 +1473,8 @@ function initTablaFacturas() {
             data: "receptorNombre"
         }, {
             data: "fecha"
-            
-        },  {
+
+        }, {
             data: "fecha_recepcion"
         }, {
             data: "total",
@@ -1491,7 +1494,7 @@ function initTablaFacturas() {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "facproveId",
@@ -1505,18 +1508,18 @@ function initTablaFacturas() {
         }]
     });
 
-     //function sort by date
-     jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "date-uk-pre": function ( a ) {
+    //function sort by date
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
             var ukDatea = a.split('/');
             return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
         },
-        
-        "date-uk-asc": function ( a, b ) {
+
+        "date-uk-asc": function (a, b) {
             return ((a < b) ? -1 : ((a > b) ? 1 : 0));
         },
-        
-        "date-uk-desc": function ( a, b ) {
+
+        "date-uk-desc": function (a, b) {
             return ((a < b) ? 1 : ((a > b) ? -1 : 0));
         }
     });
@@ -1529,12 +1532,12 @@ function initTablaFacturas() {
             .draw();
     });
 
-    
+
 }
 
 
 function loadFacturasDelProveedor(proveedorId) {
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/facturasProveedores/proveedor/facturas/solapa/muestra/tabla/datos/factura/" + proveedorId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/facturasProveedores/proveedor/facturas/solapa/muestra/tabla/datos/factura/" + proveedorId, null, function (err, data) {
         if (err) return;
         loadTablaFacturas(data);
     });
@@ -1545,7 +1548,7 @@ function loadTablaFacturas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
-    if(data) {
+    if (data) {
         numfactu = data.length;
     }
     dt.fnClearTable();
@@ -1574,28 +1577,28 @@ function deleteFactura(id) {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (data, status) {
-                   if(data.nombreFacprovePdf){
-                    $.ajax({
-                        type: "DELETE",
-                        url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(data),
-                        success: function (data, status) {
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
-                        }
-                    });
-                   }
+                    if (data.nombreFacprovePdf) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: myconfig.apiUrl + "/api/doc/" + data.nombreFacprovePdf,
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (data, status) {
+                            },
+                            error: function (err) {
+                                mensErrorAjax(err);
+                                // si hay algo más que hacer lo haremos aquí.
+                            }
+                        });
+                    }
                 },
                 error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-           
+
             var data = {
                 facproveId: id
             };
@@ -1631,16 +1634,16 @@ function buscarFacturas() {
 
 
 function compruebaAnticipos(id) {
-        llamadaAjax('GET', "/api/anticiposProveedores/proveedor/recupera/todos/" + id, null, function (err, data) {
-            if (err) return;
-            if(data.length > 0 || numfactu > 0) {
-                $( "#txtNif" ).prop( "disabled", true );
-                $( "#txtCodigo" ).prop( "disabled", true );
-            } else {
-                $( "#txtNif" ).prop( "disabled", false );
-                $( "#txtCodigo" ).prop( "disabled", false );
-            }
-        });
+    llamadaAjax('GET', "/api/anticiposProveedores/proveedor/recupera/todos/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0 || numfactu > 0) {
+            $("#txtNif").prop("disabled", true);
+            $("#txtCodigo").prop("disabled", true);
+        } else {
+            $("#txtNif").prop("disabled", false);
+            $("#txtCodigo").prop("disabled", false);
+        }
+    });
 }
 
 // --------------- Solapa de Usuarios
@@ -1648,12 +1651,12 @@ function initTablaUsuariosPush() {
     tablaSeries = $('#dt_usuarios').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-       
+
         autoWidth: true,
         language: {
             processing: "Procesando...",
@@ -1685,13 +1688,13 @@ function initTablaUsuariosPush() {
                 }
                 return html;
             }
-        },{
+        }, {
             data: "nombre"
         }, {
             data: "login"
         }, {
             data: "password"
-        },{
+        }, {
             data: "proveedorUsuarioPushId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteUsuariosPush(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -1724,7 +1727,7 @@ function loadTablaUsuariosPush(data) {
 
 function guardarUsuarioPush() {
     //COMPROBAMOS PRIMERO QUE NO HAYA YA UN USUARIO CON ESTE LOGIN Y CONTRASEÑA 
-    
+
     var encontrado = 0;
     var data = {
         usuarioPush: {
@@ -1744,19 +1747,19 @@ function guardarUsuarioPush() {
         success: function (datos, status) {
             // si se devuelve un registro el login/password ya existe y hay que comprobar que se trate de otro registro y 
             //no que simplemente estemos editando y ayamos aceprado sin cambiar nada
-            if(datos) {
-                if(datos.length > 0) {
-                    for(var i = 0; i < datos.length; i++) {
-                        if(datos[i].proveedorUsuarioPushId != vm.proveedorUsuarioPushId()) {
+            if (datos) {
+                if (datos.length > 0) {
+                    for (var i = 0; i < datos.length; i++) {
+                        if (datos[i].proveedorUsuarioPushId != vm.proveedorUsuarioPushId()) {
                             mensError("Ya existe un proveedor con este usuario y contraseña");
                             encontrado = 1;
                             break;
                         }
                     }
-               
-                    if(encontrado) return;
+
+                    if (encontrado) return;
                     if (!usuarioEnEdicion) {
-                        if(!datosOKUsuariosPush()) return;
+                        if (!datosOKUsuariosPush()) return;
                         $.ajax({
                             type: "POST",
                             url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
@@ -1796,7 +1799,7 @@ function guardarUsuarioPush() {
 
                 } else {
                     if (!usuarioEnEdicion) {
-                        if(!datosOKUsuariosPush()) return;
+                        if (!datosOKUsuariosPush()) return;
                         $.ajax({
                             type: "POST",
                             url: myconfig.apiUrl + "/api/proveedores/usuarios/proveedor/app/nuevo",
@@ -1834,7 +1837,7 @@ function guardarUsuarioPush() {
                         });
                     }
                 }
-            }  
+            }
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -1876,9 +1879,9 @@ function deleteUsuariosPush(id) {
 
 function limpiaModalUsuariosPush() {
     vm.proveedorUsuarioPushId(null);
-   vm.nombrePush(null);
-   vm.loginPush(null);
-   vm.passwordPush(null);
+    vm.nombrePush(null);
+    vm.loginPush(null);
+    vm.passwordPush(null);
 
 }
 
@@ -1889,13 +1892,13 @@ function editUsuariosPush(id) {
 
 function cargaModalUsuariosPush(id) {
     limpiaModalUsuariosPush();
-    if(id) {
+    if (id) {
         llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/usuario/proveedor/app/" + id, null, function (err, data) {
             if (err) return;
-           vm.proveedorUsuarioPushId(data.proveedorUsuarioPushId);
-           vm.nombrePush(data.nombre);
-           vm.loginPush(data.login);
-           vm.passwordPush(data.password);
+            vm.proveedorUsuarioPushId(data.proveedorUsuarioPushId);
+            vm.nombrePush(data.nombre);
+            vm.loginPush(data.login);
+            vm.passwordPush(data.password);
             $('#modalUsuariosPush').modal('show');
         });
     }
@@ -1908,10 +1911,10 @@ function datosOKUsuariosPush() {
                 required: true
             },
             txtLoginPush: {
-                required:true,
+                required: true,
             },
             txtPasswordPush: {
-                required:true,
+                required: true,
             }
         },
         // Messages for form validation
@@ -1938,77 +1941,78 @@ function datosOKUsuariosPush() {
 //FUNCIONES REALCIONADAS CON LA DOCUMENTACIÓN
 
 function initArbolDocumentacion() {
-    $('#jstreeDocumentacion').jstree({ 'core' : 
-    {
-        'data' : [],
-    },
-    'check_callback' : true,
-    "plugins" : [ "themes", "html_data", "ui", "crrm", "contextmenu" ],
-    "select_node": true,
-    'contextmenu': {
-        'items': function(node) {
-            var menuItems = {
-            // Define las opciones del menú contextual para cada nodo
-         
-            'Option 1': {
-                'label': 'Subir documento',
-                'action': function(a, b , c) {
-                  console.log(node.type);
-                  $('#modalUploadDoc').modal('show');
-                  preparaDatosArchivo(node.original);
-                }
-              },
-              'Option 2': {
-                'label': 'Crear Subcarpeta',
-                'action': function() {
-                   $('#modalpostSubcarpeta').modal('show');
-                   nuevaSubcarpeta(node.original);
-                }
-              },
-              'Option 3': {
-                  'label': 'Eliminar',
-                  'action': function() {
-                    if(!node.data.folder) {
-                        deleteDocumento(node.id);
-                    } else {
-                        deleteCarpeta(node.id);
+    $('#jstreeDocumentacion').jstree({
+        'core':
+        {
+            'data': [],
+        },
+        'check_callback': true,
+        "plugins": ["themes", "html_data", "ui", "crrm", "contextmenu"],
+        "select_node": true,
+        'contextmenu': {
+            'items': function (node) {
+                var menuItems = {
+                    // Define las opciones del menú contextual para cada nodo
+
+                    'Option 1': {
+                        'label': 'Subir documento',
+                        'action': function (a, b, c) {
+                            console.log(node.type);
+                            $('#modalUploadDoc').modal('show');
+                            preparaDatosArchivo(node.original);
+                        }
+                    },
+                    'Option 2': {
+                        'label': 'Crear Subcarpeta',
+                        'action': function () {
+                            $('#modalpostSubcarpeta').modal('show');
+                            nuevaSubcarpeta(node.original);
+                        }
+                    },
+                    'Option 3': {
+                        'label': 'Eliminar',
+                        'action': function () {
+                            if (!node.data.folder) {
+                                deleteDocumento(node.id);
+                            } else {
+                                deleteCarpeta(node.id);
+                            }
+                        }
                     }
-                  }
+
                 }
-         
+                if (!node.data.folder) {
+                    delete menuItems['Option 1'];
+                    delete menuItems['Option 2'];
+                }
+                if (!usuario.puedeEditar) {
+                    delete menuItems['Option 2'];
+                    delete menuItems['Option 3'];
+                }
+                return menuItems;
             }
-            if (!node.data.folder) {
-                delete menuItems['Option 1'];
-                delete menuItems['Option 2'];
-            }
-            if(!usuario.puedeEditar) {
-                delete menuItems['Option 2'];
-                delete menuItems['Option 3'];
-            }
-            return menuItems;
         }
-    }
-});
+    });
 
 }
-function cargaTablaDocumentacion(){
-    llamadaAjax("GET",  "/api/documentacion/proveedor/"  + vm.proveedorId(), null, function (err, data) {
+function cargaTablaDocumentacion() {
+    llamadaAjax("GET", "/api/documentacion/proveedor/" + vm.proveedorId(), null, function (err, data) {
         if (err) return;
         loadDocumentacionTree(data);
-         //if(data) loadTablaDocumentacion(data);
+        //if(data) loadTablaDocumentacion(data);
     });
 }
 
 function loadDocumentacionTree(data) {
     //if(data.length == 0) return;
     var obj = data;
-    
+
     $('#jstreeDocumentacion').jstree(true).settings.core.data = obj;
     $('#jstreeDocumentacion').jstree(true).refresh();
 
     //$('#jstreeDocumentacion').jstree(true).redraw();
 
-    
+
 }
 
 function loadTablaDocumentacion(data) {
@@ -2022,51 +2026,51 @@ function loadTablaDocumentacion(data) {
 }
 
 function formatData(d) {
-    if(!d.documentos) d.documentos = [];
+    if (!d.documentos) d.documentos = [];
     var doc = d.documentos;
     var html = "";
-        html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
-        var a;
-        doc.forEach(e => {
-            var l = e.key.split('/');
-            var index = l.length - 1;
-             a = '<div class="row" style="margin-bottom: 10px">' +
-                        '<section class="col col-md-5">' + 
-                            '<a href="' + e.location  + '" target="_blank">' +  l[index] +'</a>' +
-                        '</section>' +
-                        '<section class="col col-md-3 text-left">' +
-                            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
-                        '</section>' +
-                        '<section class="col col-md-4">' + '</section>' +
-                    '</div>' 
-            html += a;
-        });
-    if(!d.subcarpetas) d.subcarpetas = [];
+    html = '<h6 style="padding-left: 5px"> DOCUMENTOS</h6>'
+    var a;
+    doc.forEach(e => {
+        var l = e.key.split('/');
+        var index = l.length - 1;
+        a = '<div class="row" style="margin-bottom: 10px">' +
+            '<section class="col col-md-5">' +
+            '<a href="' + e.location + '" target="_blank">' + l[index] + '</a>' +
+            '</section>' +
+            '<section class="col col-md-3 text-left">' +
+            '<button  class="btn btn-circle btn-danger"  onclick="deleteDocumento(' + e.documentoId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+            '</section>' +
+            '<section class="col col-md-4">' + '</section>' +
+            '</div>'
+        html += a;
+    });
+    if (!d.subcarpetas) d.subcarpetas = [];
     var subC = d.subcarpetas;
     html += '<h6 style="padding-left: 5px"> Subcarpetas</h6>'
     var b;
     subC.forEach(e => {
-         b = '<div class="row" style="margin-bottom: 10px">' +
-         '<section class="col col-md-3 text-left">' +
-                        '<button  class="dt-control"></button>' +
-                    '</section>' +
-                    '<section class="col col-md-5">' + 
-                        '<a href="" target="_blank">' + e.carpetaNombre +'</a>' +
-                    '</section>' +
-                    '<section class="col col-md-3 text-left">' +
-                        '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
-                    '</section>' +
-                    '<section class="col col-md-2">' + '</section>' +
-                '</div>' 
+        b = '<div class="row" style="margin-bottom: 10px">' +
+            '<section class="col col-md-3 text-left">' +
+            '<button  class="dt-control"></button>' +
+            '</section>' +
+            '<section class="col col-md-5">' +
+            '<a href="" target="_blank">' + e.carpetaNombre + '</a>' +
+            '</section>' +
+            '<section class="col col-md-3 text-left">' +
+            '<button  class="btn btn-circle btn-danger"  onclick="deleteCarpeta(' + e.carpetaId + ')" title="Eliminar registro"> <i class="fa fa-trash-o fa-fw"></i> </button>' +
+            '</section>' +
+            '<section class="col col-md-2">' + '</section>' +
+            '</div>'
         html += b;
     });
     return html;
 }
 
- function formatFecha(f) {
-    if(f) return spanishDate(f);
+function formatFecha(f) {
+    if (f) return spanishDate(f);
     return ' ';
- }
+}
 
 function preparaDatosArchivo(r) {
     vm.files(null);
@@ -2075,7 +2079,7 @@ function preparaDatosArchivo(r) {
     docName = docName.replace(/[\/]/g, "-");
     console.log(docName);
     carpeta = r.carpetaNombre;
-    key = r.carpetaNombre   + "/" +  docName;
+    key = r.carpetaNombre + "/" + docName;
     carpetaTipo = r.tipo;
     vm.documNombre(docName);
 }
@@ -2085,8 +2089,8 @@ function limpiaDatosArchivo(r) {
     carpetaId = null
     docName = null
     carpeta = null
-    $('.progress-bar').text(parseInt((0)+'%'));
-    $('.progress-bar').width(parseInt((0)+'%'));
+    $('.progress-bar').text(parseInt((0) + '%'));
+    $('.progress-bar').width(parseInt((0) + '%'));
 }
 
 function nuevaCarpeta() {
@@ -2095,37 +2099,37 @@ function nuevaCarpeta() {
 
 
 function aceptarNuevaCarpeta() {
-        //CREAMOS EL REGISTRO EN LA TABLA carpetas
-        if( vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
-        var a = vm.carpetaNombre();
-        a = a.trim();
-        a = a.replace(/[\/]/g, "-");
-        var data = 
-        {
-            carpeta: {
-                carpetaId: 0,
-                nombre: a,
-                tipo: "proveedor",
-                departamentoId: null
-            }
+    //CREAMOS EL REGISTRO EN LA TABLA carpetas
+    if (vm.carpetaNombre() == '' || vm.carpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a = vm.carpetaNombre();
+    a = a.trim();
+    a = a.replace(/[\/]/g, "-");
+    var data =
+    {
+        carpeta: {
+            carpetaId: 0,
+            nombre: a,
+            tipo: "proveedor",
+            departamentoId: null
         }
+    }
 
-        llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
-            if (err) return
-            $('#modalNuevaCarpeta').modal('hide');
-            mensNormal('Carpeta creada con exito');
-            cargaTablaDocumentacion();
-        });
+    llamadaAjax('POST', myconfig.apiUrl + "/api/documentacion/carpeta", data, function (err, data) {
+        if (err) return
+        $('#modalNuevaCarpeta').modal('hide');
+        mensNormal('Carpeta creada con exito');
+        cargaTablaDocumentacion();
+    });
 }
 
 function aceptarNuevaSubCarpeta() {
     //CREAMOS EL REGISTRO EN LA TABLA carpetas
-    if( vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
-    var a =  vm.subCarpetaNombre();
+    if (vm.subCarpetaNombre() == '' || vm.subCarpetaNombre() == null) return mensError('Se tiene que asignar un nombre');
+    var a = vm.subCarpetaNombre();
     a = a.trim();
     a = a.replace(/\//g, "-");
     var n = subCarpeta + "/" + a;
-    var data = 
+    var data =
     {
         carpeta: {
             carpetaId: 0,
@@ -2162,24 +2166,24 @@ function deleteDocumento(id) {
         });
         llamadaAjax('GET', "/api/documentacion/" + id, null, function (err, data) {
             if (err) return;
-            if(data) {
+            if (data) {
                 var params = {
                     Bucket: parametros.bucket_docum,
                     Key: data.key
-            }
-    
-            //borramos el documento en s3
-            var s3 = new AWS.S3({ params });
-    
-            s3.deleteObject({}, (err, result) => {
-                if (err) mensError('Error al borrar el docuemnto');
-                //Actualizamos la tabla documentacion
-                llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
-                    if (err) return;
-                    cargaTablaDocumentacion();
+                }
+
+                //borramos el documento en s3
+                var s3 = new AWS.S3({ params });
+
+                s3.deleteObject({}, (err, result) => {
+                    if (err) mensError('Error al borrar el docuemnto');
+                    //Actualizamos la tabla documentacion
+                    llamadaAjax('DELETE', myconfig.apiUrl + "/api/documentacion/elimina-documento/" + id, null, function (err, data) {
+                        if (err) return;
+                        cargaTablaDocumentacion();
+                    });
                 });
-            }); 
-            
+
             }
         });
     })
@@ -2193,69 +2197,69 @@ function deleteCarpeta(id) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            
+
             llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
                 if (err) return;
                 var parametros = data;
                 llamadaAjax('DELETE', "/api/documentacion/elimina-carpeta/" + id, null, function (err, data2) {
                     if (err) return mensError('Fallo al borrar la documentación en la base de datos');
-                    if(data2) {
-                        
-                    AWS.config.region = parametros.bucket_region_docum; // Región
-                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: parametros.identity_pool_docum,
-                    });
-                    var prefix = data2.nombre;
-                    var params = {
-                        Bucket: parametros.bucket_docum,
-                        Prefix: prefix,
-                        Delimeter: "/"
-                    }
-        
-                    var s3 = new AWS.S3({ params });
-                    s3.listObjectsV2({}, (err, result) => {
-                        if (err) mensError('Error de lectura en la nube');
-                        console.log(result);
-                        if(result.Contents.length > 0) {
+                    if (data2) {
 
-
-
-                    var objectKeys = []
-                    result.Contents.forEach(e => {
-                        objectKeys.push(e.Key);
-                    });
-
-                    // Crea un objeto Delete para especificar los objetos que se van a eliminar
-                    const objects = objectKeys.map(key => ({ Key: key }));
-                    const deleteParams = {
-                    Bucket: parametros.bucket_docum,
-                    Delete: { Objects: objects }
-                    };
-
-                    // Elimina los objetos utilizando el método deleteObjects del objeto S3
-                    s3.deleteObjects(deleteParams, function(err, data) {
-                        if (err) {
-                            mensError('Fallo al borrar la carpeta en la nube');
-                        } else {
-                            mensNormal('Carpeta eliminada con éxito');
-                            cargaTablaDocumentacion();
+                        AWS.config.region = parametros.bucket_region_docum; // Región
+                        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                            IdentityPoolId: parametros.identity_pool_docum,
+                        });
+                        var prefix = data2.nombre;
+                        var params = {
+                            Bucket: parametros.bucket_docum,
+                            Prefix: prefix,
+                            Delimeter: "/"
                         }
-}                   );
 
-                        } else {
-                            mensAlerta('No se han encontrado archivos en la nube para borrar');
-                            cargaTablaDocumentacion();
-                        }
-                       
-                    }); 
-            
-                  
-                    
+                        var s3 = new AWS.S3({ params });
+                        s3.listObjectsV2({}, (err, result) => {
+                            if (err) mensError('Error de lectura en la nube');
+                            console.log(result);
+                            if (result.Contents.length > 0) {
+
+
+
+                                var objectKeys = []
+                                result.Contents.forEach(e => {
+                                    objectKeys.push(e.Key);
+                                });
+
+                                // Crea un objeto Delete para especificar los objetos que se van a eliminar
+                                const objects = objectKeys.map(key => ({ Key: key }));
+                                const deleteParams = {
+                                    Bucket: parametros.bucket_docum,
+                                    Delete: { Objects: objects }
+                                };
+
+                                // Elimina los objetos utilizando el método deleteObjects del objeto S3
+                                s3.deleteObjects(deleteParams, function (err, data) {
+                                    if (err) {
+                                        mensError('Fallo al borrar la carpeta en la nube');
+                                    } else {
+                                        mensNormal('Carpeta eliminada con éxito');
+                                        cargaTablaDocumentacion();
+                                    }
+                                });
+
+                            } else {
+                                mensAlerta('No se han encontrado archivos en la nube para borrar');
+                                cargaTablaDocumentacion();
+                            }
+
+                        });
+
+
+
                     } else {
                         mensError('No se han encontrado carpetas para borrar');
                         cargaTablaDocumentacion();
                     }
-                }); 
+                });
             })
         }
         if (ButtonPressed === "Cancelar") {
@@ -2265,7 +2269,7 @@ function deleteCarpeta(id) {
 }
 
 function aceptarSubirDocumentos() {
-    if(vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
+    if (vm.documNombre() == '') return mensError("Se tiene que asignar un nombre al documento.");
     //buscamos los parámetros
     llamadaAjax('GET', "/api/parametros/0", null, function (err, data) {
         if (err) return;
@@ -2276,17 +2280,17 @@ function aceptarSubirDocumentos() {
             mensError('Debe escoger seleccionar un archivo para subirlo al repositorio');
             return;
         }
-        for(var i = 0; i< files.length; i++) {
+        for (var i = 0; i < files.length; i++) {
             var e = files[i];
             var encontrado = false;
             var id = 0;
             var file = e;
             var ext = file.name.split('.').pop().toLowerCase();
-            var blob = file.slice(0, file.size, file.type); 
-            var newFile = new File([blob], {type: file.type});
+            var blob = file.slice(0, file.size, file.type);
+            var newFile = new File([blob], { type: file.type });
             var nom = "";
             nom = vm.documNombre()
-            if(files.length > 1) {
+            if (files.length > 1) {
                 var s = parseInt(i)
                 s++
                 nom = nom + "-" + s + "." + ext;
@@ -2295,7 +2299,7 @@ function aceptarSubirDocumentos() {
             }
             nom = nom.replace(/\//g, "-");
             newFile.nom = nom;
-            var fileKey =  carpeta + "/" + nom
+            var fileKey = carpeta + "/" + nom
             newFile.fileKey = fileKey;
             newFile.repetido = false;
             arr.push(newFile);
@@ -2303,24 +2307,24 @@ function aceptarSubirDocumentos() {
         //buscamos si el documento ya existe en la carpeta de destino
         llamadaAjax('GET', "/api/documentacion/documentos/de/la/carpeta/" + carpetaId, null, function (err, docums) {
             if (err) return;
-            if(docums && docums.length > 0) {
-                for(var i = 0; i < docums.length; i++) {
+            if (docums && docums.length > 0) {
+                for (var i = 0; i < docums.length; i++) {
                     var d = docums[i];
                     var n = d.key.split('/');
                     var index = n.length - 1
-                    
-                    for(var j = 0; j < arr.length; j++) {
-                        if(n[index] == arr[j].nom) {
+
+                    for (var j = 0; j < arr.length; j++) {
+                        if (n[index] == arr[j].nom) {
                             encontrado = true;
                             arr[j].repetido = true;
                             arr[j].documentoId = d.documentoId;
                             arr[j].repetido = true;
                             break;
-                        } 
+                        }
                     }
                 }
 
-                if(encontrado) {
+                if (encontrado) {
                     var mens = "Ya existen documentos con este nombre en esta carpeta, se reemplazará con el que está apunto de subir. ¿Desea continuar?";
                     $.SmartMessageBox({
                         title: "<i class='fa fa-info'></i> Mensaje",
@@ -2342,54 +2346,54 @@ function aceptarSubirDocumentos() {
             } else {
                 uploadDocum(arr);
             }
-        }); 
+        });
 
     });
-    
+
 }
 
 function uploadDocum(arr) {
     var index = 0;
-      
-        arr.forEach(e => {
-            var repetido = e.repetido;
-            var documentoId = e.documentoId;
-            var filekey = e.fileKey;
-            delete e.fileKey
-            delete e.documentoId;
-            delete e.repetido;
-            var nom = e.nom;
-            delete e.nom;
 
-            AWS.config.region = parametros.bucket_region_docum; // Región
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                IdentityPoolId: parametros.identity_pool_docum,
-            });
-            var bucket = parametros.bucket_docum;
-            var params = {
-                Bucket: bucket,
-                Key: filekey,
-                IdentityPoolId: parametros.identity_pool_docum,
-                Body: e,
-                ACL: "public-read"
-            }
-            var ext = nom.split('.').pop().toLowerCase();
-            if(ext == "pdf") params.ContentType = 'application/pdf'
-            // Use S3 ManagedUpload class as it supports multipart uploads
-            var upload = new AWS.S3.ManagedUpload({
-                params: params
-            });
-            var promise = upload.on('httpUploadProgress', function(evt) {
-                $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total)+'%');
-                $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total)+'%');
-              })
-              .promise();
-            promise.
-            then (
+    arr.forEach(e => {
+        var repetido = e.repetido;
+        var documentoId = e.documentoId;
+        var filekey = e.fileKey;
+        delete e.fileKey
+        delete e.documentoId;
+        delete e.repetido;
+        var nom = e.nom;
+        delete e.nom;
+
+        AWS.config.region = parametros.bucket_region_docum; // Región
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: parametros.identity_pool_docum,
+        });
+        var bucket = parametros.bucket_docum;
+        var params = {
+            Bucket: bucket,
+            Key: filekey,
+            IdentityPoolId: parametros.identity_pool_docum,
+            Body: e,
+            ACL: "public-read"
+        }
+        var ext = nom.split('.').pop().toLowerCase();
+        if (ext == "pdf") params.ContentType = 'application/pdf'
+        // Use S3 ManagedUpload class as it supports multipart uploads
+        var upload = new AWS.S3.ManagedUpload({
+            params: params
+        });
+        var promise = upload.on('httpUploadProgress', function (evt) {
+            $('.progress-bar').text(parseInt((evt.loaded * 100) / evt.total) + '%');
+            $('.progress-bar').width(parseInt((evt.loaded * 100) / evt.total) + '%');
+        })
+            .promise();
+        promise.
+            then(
                 data => {
-                    if(data) {
+                    if (data) {
                         //CREAMOS EL REGISTRO EN LA TABLA documentacion
-                        var data = 
+                        var data =
                         {
                             documentacion: {
                                 documentoId: 0,
@@ -2402,9 +2406,9 @@ function uploadDocum(arr) {
                                 key: filekey
                             }
                         }
-                       
-    
-                        if(!repetido) {
+
+
+                        if (!repetido) {
                             method = 'POST';
                             url = "/api/documentacion";
                         } else {
@@ -2412,11 +2416,11 @@ function uploadDocum(arr) {
                             method = 'PUT';
                             url = "/api/documentacion/" + documentoId;
                         }
-        
+
                         llamadaAjax(method, myconfig.apiUrl + url, data, function (err, data) {
                             if (err) return mensError(err);
                             index++
-                            if(index == arr.length) {
+                            if (index == arr.length) {
                                 $('#modalUploadDoc').modal('hide');
                                 mensNormal('Archivo subido con exito');
                                 limpiaDatosArchivo();
@@ -2425,11 +2429,11 @@ function uploadDocum(arr) {
                         });
                     }
                 },
-                err =>{
+                err => {
                     if (err) return mensError(err);
                 }
-            );        
-            });       
+            );
+    });
 }
 
 function buscarFacturasFecha() {
@@ -2481,14 +2485,14 @@ function initTablaindicesCorrectores() {
     tablaIndices = $('#dt_indices').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-       
+
         autoWidth: true,
-        
+
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -2511,13 +2515,13 @@ function initTablaindicesCorrectores() {
         },
         data: dataindices,
         columns: [{
-                
+
             className: 'dt-control',
             orderable: false,
             data: null,
             defaultContent: '',
             //data:"carpetaId",
-        },{
+        }, {
             data: "indiceCorrectorId",
             render: function (data, type, row) {
                 var html = "<i class='fa fa-file-o'></i>";
@@ -2526,7 +2530,7 @@ function initTablaindicesCorrectores() {
                 }
                 return html;
             }
-        },{
+        }, {
             data: "nombre"
         }, {
             data: "minimo"
@@ -2534,7 +2538,7 @@ function initTablaindicesCorrectores() {
             data: "maximo"
         }, {
             data: "porcentajeDescuento"
-        },{
+        }, {
             data: "indiceCorrectorId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteIndiceCorrector(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
@@ -2578,7 +2582,7 @@ function guardarIndiceCorrector() {
     }
 
     if (!indiceEnEdicion) {
-        if(!datosOKIndicesCorrectores()) return;
+        if (!datosOKIndicesCorrectores()) return;
         $.ajax({
             type: "POST",
             url: myconfig.apiUrl + "/api/proveedores/indices-correctores/proveedor/",
@@ -2649,13 +2653,13 @@ function deleteIndiceCorrector(id) {
 }
 
 function limpiaModalIndicesCorrectores() {
-   vm.indiceCorrectorId(null);
-   vm.nombreIndice(null);
-   vm.minimo(null);
-   vm.maximo(null);
-   vm.porcentajeDescuento(null);
-   vm.elegidosTiposProfesionalIndice([]);
-   //vm.posiblesTiposProfesionalIndice([]);
+    vm.indiceCorrectorId(null);
+    vm.nombreIndice(null);
+    vm.minimo(null);
+    vm.maximo(null);
+    vm.porcentajeDescuento(null);
+    vm.elegidosTiposProfesionalIndice([]);
+    //vm.posiblesTiposProfesionalIndice([]);
 }
 
 function editIndiceCorrector(id) {
@@ -2665,22 +2669,22 @@ function editIndiceCorrector(id) {
 
 function cargaModalIndicesCorrectores(id) {
     limpiaModalIndicesCorrectores();
-    if(id) {//ES UN PUT
+    if (id) {//ES UN PUT
         llamadaAjax("GET", myconfig.apiUrl + "/api/proveedores/indices-correctores/" + id, null, function (err, data) {
             if (err) return;
-           vm.indiceCorrectorId(data.indiceCorrectorId);
-           vm.nombreIndice(data.nombre);
-           vm.minimo(data.minimo);
-           vm.maximo(data.maximo);
-           vm.porcentajeDescuento(data.porcentajeDescuento);
-           loadTiposProfesionalesIndice(data.lin);
-           $('#modalIndicesCorrectores').modal('show');
-           //cargamos los tipos profesionales asociados al indice
-          /*  llamadaAjax("GET", myconfig.apiUrl + " /api/tipos_profesional/indice/" + id, null, function (err, data2) {
-            if (err) return;
-             loadTiposProfesionalesIndice(data2);
+            vm.indiceCorrectorId(data.indiceCorrectorId);
+            vm.nombreIndice(data.nombre);
+            vm.minimo(data.minimo);
+            vm.maximo(data.maximo);
+            vm.porcentajeDescuento(data.porcentajeDescuento);
+            loadTiposProfesionalesIndice(data.lin);
             $('#modalIndicesCorrectores').modal('show');
-            }); */
+            //cargamos los tipos profesionales asociados al indice
+            /*  llamadaAjax("GET", myconfig.apiUrl + " /api/tipos_profesional/indice/" + id, null, function (err, data2) {
+              if (err) return;
+               loadTiposProfesionalesIndice(data2);
+              $('#modalIndicesCorrectores').modal('show');
+              }); */
         });
     } else {//ES UN POST
         indiceEnEdicion = false;
@@ -2695,14 +2699,14 @@ function datosOKIndicesCorrectores() {
                 required: true
             },
             txtMinimo: {
-                required:true,
+                required: true,
             },
             txtMaximo: {
                 required: true,
-                numberGreaterThan: "#txtMinimo" 
+                numberGreaterThan: "#txtMinimo"
             },
             txtPorcentajeDescuento: {
-                required:true,
+                required: true,
             }
         },
         // Messages for form validation
@@ -2730,21 +2734,21 @@ function datosOKIndicesCorrectores() {
 
 
 function formatDataIndices(d) {
-    if(!d.lin) d.lin = [];
+    if (!d.lin) d.lin = [];
     var lin = d.lin;
     var html = "";
     html = '<h5> PROFESIONES ASOCIADAS</h5>'
     html += '<table cellpadding="4" cellspacing="0" border="0" style="padding-left:50px;">'
     lin.forEach(e => {
-         html += 
-         '<tr>' + 
-            '<td>'  +
-                e.nombreProfesion +
+        html +=
+            '<tr>' +
+            '<td>' +
+            e.nombreProfesion +
             '</td>' +
-        '</tr>'
-       
+            '</tr>'
+
     });
-    html +=  '</table>'
+    html += '</table>'
     return html
 }
 

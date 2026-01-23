@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "d99c61460b2ffdfb4f966b9a5b0352f0",
+  "ReportGuid": "b99a743e407b783b1fbe373ba4f0103f",
   "ReportName": "FacturaProasistencia",
   "ReportAlias": "FacturaProasistencia",
   "ReportFile": "factcli_obras_proas_json.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1767628827000+0100)/",
+  "ReportChanged": "/Date(1769169230000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -1068,7 +1068,7 @@
               "Ident": "StiText",
               "Name": "Text21",
               "Guid": "670d95fa334f472d81d27a91a71f6bc2",
-              "ClientRectangle": "16.6,0,2,0.4",
+              "ClientRectangle": "16,0,2.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1086,7 +1086,7 @@
               "Ident": "StiText",
               "Name": "Text35",
               "Guid": "e75a5f985166476a9b0e1cfbc467159e",
-              "ClientRectangle": "0.4,0,16.2,0.4",
+              "ClientRectangle": "0.4,0,15.6,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1119,8 +1119,8 @@
               "CanGrow": true,
               "GrowToHeight": true,
               "MinSize": "16.2,0.5",
-              "MaxSize": "16.2,20",
-              "ClientRectangle": "0.4,0,16.2,0.5",
+              "MaxSize": "15.6,20",
+              "ClientRectangle": "0.4,0,15.6,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1141,7 +1141,7 @@
               "Name": "Text27",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "16.8,0,1.8,0.5",
+              "ClientRectangle": "16,0,2.6,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
