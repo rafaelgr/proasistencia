@@ -170,7 +170,7 @@ function initForm() {
             vm.empresaId(gup('EmpresaId'));
             vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
             verb = "GET";
-            var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
+            var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/acta/recepcion/" + vm.contratoId();
             if(vm.esAdicional()) { 
                 datos = {
                     contratoId: vm.contratoId(),
@@ -426,9 +426,11 @@ var rptContratosParametrosJson = function () {
 function obtainReportJson(obj) {
 
     let file = null
-    if(vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
+/*     if(vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
     if(vm.empresaId() == 7  && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
-    if(vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt";
+    if(vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt"; */
+
+    file = "/reports/acta_recepcion_proas.mrt";
     const report = new Stimulsoft.Report.StiReport();
 
     if(!file) {
@@ -460,11 +462,11 @@ function obtainReportJson(obj) {
     // Asignar y renderizar
     viewer.report = report;
 
-/* const jsonString = JSON.stringify(obj, null, 2);
+const jsonString = JSON.stringify(obj, null, 2);
   const blob = new Blob([jsonString], { type: 'application/json' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'datosReporte.json';
-  link.click(); */
+  link.click(); 
 }
 
