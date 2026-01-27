@@ -22,21 +22,21 @@ SET
   NULL;
 
 ALTER TABLE
-  `contrato_planificacion_temporal`
+  `contrato_planificacion`
 ADD
   COLUMN `esAdicional` TINYINT(1) DEFAULT 0 NULL
 AFTER
   `formaPagoId`;
 
 ALTER TABLE
-  `contrato_planificacion_temporal`
+  `contrato_planificacion`
 ADD
   COLUMN `contratoAdicionalId` INT(11) NULL
 AFTER
   `esAdicional`;
 
 ALTER TABLE
-  `contrato_planificacion_temporal`
+  `contrato_planificacion`
 ADD
   COLUMN `refPresupuestoAdicional` VARCHAR(211) NULL
 AFTER
