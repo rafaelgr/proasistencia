@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "5f0c033472217dc0171435d9671045eb",
+  "ReportGuid": "2de0db1a99f844d5032c2b16a95e63fa",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1769436471000+0100)/",
+  "ReportChanged": "/Date(1769521553000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -151,6 +151,18 @@
             "Name": "nombreCliente",
             "NameInSource": "nombreCliente",
             "Alias": "nombreCliente",
+            "Type": "System.String"
+          },
+          "20": {
+            "Name": "totalPendienteFacturar",
+            "NameInSource": "totalPendienteFacturar",
+            "Alias": "totalPendienteFacturar",
+            "Type": "System.String"
+          },
+          "21": {
+            "Name": "fechaActual",
+            "NameInSource": "fechaActual",
+            "Alias": "fechaActual",
             "Type": "System.String"
           }
         },
@@ -398,7 +410,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,36.78,18,0.6",
+          "ClientRectangle": "0,42.12,18,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -409,12 +421,18 @@
               "Ident": "StiText",
               "Name": "Text3",
               "ClientRectangle": "16.8,0.16,1,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{PageNumberThrough}"
               },
+              "Font": "Tahoma;;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -428,7 +446,7 @@
           "Guid": "4b34768ba2f07e5acd6aee57acbc2baf",
           "PrintOn": "OnlyLastPage",
           "CanGrow": true,
-          "ClientRectangle": "0,31.78,18,4.2",
+          "ClientRectangle": "0,37.12,18,4.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -439,7 +457,7 @@
               "Ident": "StiText",
               "Name": "Text2",
               "Guid": "7758662f4bf32e1eefbb5562b1b8fd76",
-              "ClientRectangle": "1.8,0.22,3,0.4",
+              "ClientRectangle": "10.8,0.42,3,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -449,9 +467,9 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "LA PROPIEDAD"
+                "Value": "POR LA  PROPIEDAD"
               },
-              "Font": ";10;Bold;",
+              "Font": "Tahoma;;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -461,7 +479,7 @@
               "Ident": "StiText",
               "Name": "Text5",
               "Guid": "2e60cc94803cec0515a72c1ba22a9b5b",
-              "ClientRectangle": "1.4,3.42,5.8,0.4",
+              "ClientRectangle": "11,2.42,5.8,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -473,7 +491,7 @@
               "Text": {
                 "Value": "Fdo. {datos_contrato.nombrePresidente}"
               },
-              "Font": ";10;;",
+              "Font": "Tahoma;;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -483,7 +501,7 @@
               "Ident": "StiText",
               "Name": "Text6",
               "Guid": "3a3e0199b7fea2a080752eb076e4fd47",
-              "ClientRectangle": "11.2,3.42,6.2,0.4",
+              "ClientRectangle": "1.6,2.42,6.2,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -495,7 +513,7 @@
               "Text": {
                 "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
               },
-              "Font": ";10;;",
+              "Font": "Tahoma;;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -505,7 +523,7 @@
               "Ident": "StiText",
               "Name": "Text7",
               "Guid": "07c0c5a3ddb1404add8e5457690f23c7",
-              "ClientRectangle": "12,0.3,2.6,0.4",
+              "ClientRectangle": "1.4,0.3,3.4,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -515,9 +533,9 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "LA CONTRATA"
+                "Value": "POR LA CONTRATA"
               },
-              "Font": ";10;Bold;",
+              "Font": "Tahoma;;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -528,7 +546,7 @@
         "2": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
-          "ClientRectangle": "0,0.4,18,7",
+          "ClientRectangle": "0,0.4,18,4.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -538,7 +556,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text20",
-              "ClientRectangle": "6,0.6,6.2,0.6",
+              "ClientRectangle": "6,0,6.2,0.6",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -560,12 +578,12 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text18",
-              "ClientRectangle": "0.2,1.2,17.6,5.6",
+              "ClientRectangle": "0,0.6,17.8,4.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"text-align: right;\"><font face=\"Tahoma\"><font size=\"10\" style=\"\"><font style=\"letter-spacing: -0.133333px;\"><span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t\t\t</span></font></font><span style=\"letter-spacing: -0.133333px;\"><font size=\"NaN\">&nbsp;</font></span><span style=\"letter-spacing: -0.133333px;\"><font size=\"NaN\">{datos_contrato.fecha}</font></span></font></div><div style=\"text-align: justify;\"><span style=\"letter-spacing: -0.133333px;\"><font face=\"Tahoma\" size=\"10\"><b>DATOS DE LA OBRA</b></font></span></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Dirección obra:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.direccionTrabajo}</span><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span></font></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Trabajos realizados:&nbsp; </span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.tipoProyecto}</span></font></div><div style=\"text-align: justify;\"><span style=\"letter-spacing: -0.133333px;\"><font face=\"Tahoma\" size=\"10\"><br></font></span></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Ref. presupuesto:&nbsp; &nbsp; &nbsp; </span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.referencia}&nbsp;</span></font></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Fecha de contrato de ejecución de obras:&nbsp;</span></font></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Certificación final&nbsp; &nbsp; &nbsp; &nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.certificacionFinal}</span></font></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Saldo pendiente de abono al día de la fecha:</span></font></div><div style=\"text-align: justify;\"><font face=\"Tahoma\" size=\"10\">&nbsp; El abono del saldo pendiente se realizará mediante:</font></div>"
+                "Value": "<div style=\"font-family: Tahoma; text-align: right;\"><font face=\"Tahoma\" size=\"8\"><font style=\"letter-spacing: -0.133333px;\"><span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t</span>En Madrid a</font><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.fechaActual}</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><span style=\"letter-spacing: -0.133333px;\"><font face=\"Tahoma\" size=\"8\"><b style=\"\">DATOS DE LA OBRA</b></font></span></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Tahoma\" size=\"8\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Dirección obra:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.direccionTrabajo}</span><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Tahoma\" size=\"8\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Trabajos realizados:&nbsp; </span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.tipoProyecto}</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><span style=\"letter-spacing: -0.133333px;\"><font face=\"Tahoma\" size=\"8\"><br></font></span></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Tahoma\" size=\"8\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Ref. presupuesto:&nbsp; &nbsp; &nbsp; </span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.referencia}&nbsp;</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font size=\"8\"><font face=\"Tahoma\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Fecha de contrato de ejecución de obras:&nbsp;</span></font><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Tahoma\" size=\"8\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Certificación final&nbsp; &nbsp; &nbsp; &nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.certificacionFinal}</span></font></div><div style=\"text-align: justify;\"><font size=\"8\"><font face=\"Tahoma\" style=\"font-family: Tahoma;\"><span style=\"letter-spacing: -0.133333px;\">&nbsp; Saldo pendiente de abono al día de la fecha:&nbsp;</span></font><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.totalPendienteFacturar} €</span></font></div><div style=\"font-family: Tahoma; text-align: justify;\"><font face=\"Tahoma\" size=\"8\">&nbsp; El abono del saldo pendiente se realizará mediante:</font></div>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;10;;",
@@ -573,7 +591,6 @@
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "AllowHtmlTags": true,
-              "LineSpacing": 1.3,
               "Type": "Expression"
             }
           },
@@ -584,7 +601,8 @@
           "Ident": "StiDataBand",
           "Name": "DataBand2",
           "Guid": "9cc073b4c394601028625c232f24bedd",
-          "ClientRectangle": "0,8.2,18,0.45",
+          "CanShrink": true,
+          "ClientRectangle": "0,6,18,0.65",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -595,12 +613,14 @@
               "Ident": "StiText",
               "Name": "Text4",
               "Guid": "4b7fd885114472f8b4c3747dd06026f6",
-              "ClientRectangle": "0.2,0,17.6,0.4",
+              "CanShrink": true,
+              "MinSize": "0,0.1",
+              "ClientRectangle": "0.4,0,17.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<font face=\"Arial\" size=\"10\"></font><span style=\"font-family: Tahoma;\">{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €</span>"
+                "Value": "<font face=\"Arial\"></font><span style=\"font-family: Tahoma;\"><font size=\"8\">{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €</font></span>"
               },
               "Font": "Tahoma;10;;",
               "Border": ";;;;;;;solid:Black",
@@ -611,6 +631,7 @@
             }
           },
           "CanGrow": false,
+          "MinHeight": 0.1,
           "DataSourceName": "datos_contrato_pagos",
           "DataRelationName": "pagos_contrato"
         },
@@ -619,7 +640,7 @@
           "Name": "GroupHeaderBand1",
           "Guid": "10a6095b9f3aa16036e8292d0f364389",
           "CanGrow": true,
-          "ClientRectangle": "0,9.45,18,0",
+          "ClientRectangle": "0,7.45,18,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -633,7 +654,7 @@
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
           "Guid": "367425ac1a3a3c352f5e839078b8671e",
-          "ClientRectangle": "0,10.25,18,0",
+          "ClientRectangle": "0,8.25,18,0.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -646,7 +667,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand4",
           "Guid": "e604c603d7af508ed92a2413eb6d1274",
-          "ClientRectangle": "0,11.05,18,0",
+          "ClientRectangle": "0,9.25,18,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -672,7 +693,7 @@
           "Name": "GroupFooterBand1",
           "Guid": "9b8e26f9ac1f9c0290f1a2a971c7c2d1",
           "CanGrow": true,
-          "ClientRectangle": "0,11.85,18,0.5",
+          "ClientRectangle": "0,10.05,18,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -683,15 +704,20 @@
               "Ident": "StiText",
               "Name": "Text12",
               "Guid": "25addfa79848d1954cf1756357d72476",
-              "ClientRectangle": "0.2,0,3.4,0.3",
+              "ClientRectangle": "0.4,0,3.4,0.3",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} letra de cambio de"
+                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} {IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\"  letras de cambio  de \",\" letra de cambio de \")}"
               },
               "VertAlignment": "Center",
-              "Font": ";10;;",
+              "Font": "Tahoma;;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -707,15 +733,20 @@
               "Ident": "StiText",
               "Name": "Text8",
               "Guid": "eaa01dad70cacc2714618d49b5ee3e93",
-              "ClientRectangle": "5.2,0,1.6,0.3",
+              "ClientRectangle": "5.4,0,1.6,0.3",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\"cada una\",\"\")}"
+                "Value": "{IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\" cada una\",\"\")}"
               },
               "VertAlignment": "Center",
-              "Font": ";10;;",
+              "Font": "Tahoma;;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -731,7 +762,12 @@
               "Ident": "StiText",
               "Name": "Text9",
               "Guid": "2cc52ca1c7061aef98e77b8ac55bbf46",
-              "ClientRectangle": "3.6,0,1.6,0.3",
+              "ClientRectangle": "3.8,0,1.6,0.3",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -739,7 +775,7 @@
                 "Value": "{datos_contrato_letras.sumTotalConIva}"
               },
               "VertAlignment": "Center",
-              "Font": "Tahoma;10;;",
+              "Font": "Tahoma;;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -764,26 +800,10 @@
           }
         },
         "8": {
-          "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand2",
-          "Guid": "5465a48d579d80dc2af136d6a8bc7b9f",
-          "CanGrow": true,
-          "ClientRectangle": "0,13.15,18,0",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Condition": {
-            "Value": "{datos_contrato_letras.esLetra}"
-          }
-        },
-        "9": {
           "Ident": "StiDataBand",
-          "Name": "DataBand6",
-          "Guid": "1dfbb7e9a5bbcd7e533268e75994c3af",
+          "Name": "DataBand5",
           "CanGrow": true,
-          "ClientRectangle": "0,13.95,18,0",
+          "ClientRectangle": "0,11.25,18,1",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -794,95 +814,40 @@
           },
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:",
-          "DataSourceName": "datos_contrato_letras"
-        },
-        "10": {
-          "Ident": "StiGroupFooterBand",
-          "Name": "GroupFooterBand2",
-          "Guid": "2b4312f5d046f40da1d4e64eba5428f3",
-          "CanGrow": true,
-          "ClientRectangle": "0,14.75,18,0.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
           "Components": {
             "0": {
               "Ident": "StiText",
               "Name": "Text10",
-              "Guid": "973fc02af16eb3edeff1de545286f96c",
-              "ClientRectangle": "0.2,0.1,5.8,0.5",
+              "ClientRectangle": "0.2,0.05,17.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Siendo el total de todas las letras de "
+                "Value": "<div style=\"\"><font size=\"8\"><font face=\"Tahoma\" style=\"\">Las letras de cambio estarán debidamente aceptadas y domiciliadas en la cuenta corriente de la Comunidad,&nbsp;</font><span style=\"font-family: Tahoma;\">siendo los vencimientos mensuales y sucesivos del día 10/07/23 al 10/06/24.</span></font></div>"
               },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
               "Margins": {
                 "Left": 0,
-                "Right": 5,
-                "Top": 0,
+                "Right": 0,
+                "Top": 2,
                 "Bottom": 0
               },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
+              "LineSpacing": 1.2,
               "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text11",
-              "Guid": "e1b0268983e289a1ffd60099f79db7c3",
-              "ClientRectangle": "6,0.1,2.4,0.5",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{Sum(datos_contrato_letras.sumTotalConIva)}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";10;;",
-              "Border": ";;;;;;;solid:0,0,0",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Margins": {
-                "Left": 0,
-                "Right": 5,
-                "Top": 0,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
-              },
-              "Type": "Totals"
             }
           }
         },
-        "11": {
+        "9": {
           "Ident": "StiDataBand",
           "Name": "DataBand3",
           "CanGrow": true,
-          "ClientRectangle": "0,16.15,18,7.2",
+          "ClientRectangle": "0,13.05,18,4.6",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -898,7 +863,7 @@
               "Ident": "StiText",
               "Name": "Text1",
               "Guid": "1624098b3cd0433ddca940db75cd7a98",
-              "ClientRectangle": "0,0.45,2,0.4",
+              "ClientRectangle": "0,0.05,2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -915,12 +880,12 @@
               "Ident": "StiText",
               "Name": "Text14",
               "Guid": "2bfb2bdc5712a317373a238b8248cfc2",
-              "ClientRectangle": "9.2,0.85,8.6,6",
+              "ClientRectangle": "9.8,0.45,8,4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p style=\"font-family: Tahoma;\"><font size=\"10\"><u>LA PROPIEDAD</u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font></p><p style=\"font-family: Tahoma;\"><span style=\"\"><font size=\"10\">&nbsp;Cliente: {datos_contrato.nombrePresidente}</font></span></p><p style=\"\"><font size=\"10\" style=\"\"><font face=\"Tahoma\" style=\"font-family: Tahoma;\">&nbsp;Nombre:&nbsp; &nbsp;</font><font face=\"Tahoma\">&nbsp;{datos_contrato.nombreCliente}</font></font></p><p style=\"font-family: Tahoma;\"><font face=\"Tahoma\" size=\"10\">&nbsp;Cargo:&nbsp; PRESIDENTE</font></p><p style=\"font-family: Tahoma;\"><font face=\"Tahoma\" size=\"10\">&nbsp;Cuenta Bancaria:&nbsp; ES9300810651870001329741</font></p>"
+                "Value": "<p style=\"font-family: Tahoma;\"><font size=\"8\" style=\"\">&nbsp;&nbsp;<u>LA PROPIEDAD&nbsp;</u></font></p><p style=\"font-family: Tahoma;\"><span style=\"\"><font size=\"8\">&nbsp; Cliente: {datos_contrato.nombrePresidente}</font></span></p><p style=\"\"><font size=\"8\"><font face=\"Tahoma\" style=\"font-family: Tahoma;\">&nbsp; Nombre:&nbsp; &nbsp;</font><font face=\"Tahoma\">&nbsp;{datos_contrato.nombreCliente}</font></font></p><p style=\"font-family: Tahoma;\"><font face=\"Tahoma\" size=\"8\">&nbsp; Cargo:&nbsp; PRESIDENTE</font></p><p style=\"font-family: Tahoma;\"><font face=\"Tahoma\" size=\"8\">&nbsp; Cuenta Bancaria:&nbsp; ES9300810651870001329741</font></p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -938,12 +903,12 @@
               "Ident": "StiText",
               "Name": "Text15",
               "Guid": "9bc9cb0d9ff1405720eea90877410a77",
-              "ClientRectangle": "0,0.85,8.6,6",
+              "ClientRectangle": "0,0.45,9,4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p style=\"font-family: Tahoma;\"><font size=\"10\"><u>LA PROPIEDAD</u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font></p><p><font size=\"10\">Nombre: Proasistencia S.L.</font></p><p><span style=\"font-size: small;\">Representante:&nbsp;</span><font face=\"Tahoma\" style=\"font-size: small;\">ADELA ALONSO AGARCIA</font></p><p><font face=\"Tahoma\" size=\"10\">Domicilio: C/ Camino de Rejas 1,</font><font size=\"NaN\">&nbsp;Coslada, 28821. Madrid</font></p><p><span style=\"font-size: small;\">CIF:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B81323180</span></p><p><span style=\"font-size: small;\">e‐mail: administracion@proasistencia.es</span></p>"
+                "Value": "<p style=\"font-family: Tahoma;\"><font size=\"8\">&nbsp; <u style=\"\">LA CONTRATA</u>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font></p><p><font size=\"8\">&nbsp; Nombre: Proasistencia S.L.</font></p><p><span style=\"\"><font size=\"NaN\">&nbsp; Representante:&nbsp;</font></span><font face=\"Tahoma\" style=\"\"><font size=\"NaN\">ADELA ALONSO AGARCIA</font></font></p><p><font size=\"8\"><font face=\"Tahoma\">&nbsp; Domicilio: C/ Camino de Rejas 1,</font>&nbsp;Coslada, 28821. Madrid</font></p><p><span style=\"\"><font size=\"8\">&nbsp; CIF:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B81323180</font></span></p><p><span style=\"\"><font size=\"8\">&nbsp; e‐mail: administracion@proasistencia.es</font></span></p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -959,6 +924,47 @@
             }
           },
           "Columns": 2
+        },
+        "10": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand6",
+          "Guid": "f409c93f1e34bf66a8fd8eb7ba3ca0ed",
+          "CanGrow": true,
+          "ClientRectangle": "0,18.45,18,7.6",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "Guid": "b5975b42d941acdefe9a689cc3e426da",
+              "ClientRectangle": "0.2,0.05,17.6,7.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<div style=\"\"><div style=\"font-family: Arial;\"><font size=\"8\"><font face=\"Tahoma\" style=\"\">Reunidos en Madrid, la empresa adjudicataria de las obras y la propiedad de la finca de referencia, para dar&nbsp;</font><span style=\"font-family: Tahoma;\">cumplimiento a lo dispuesto en el contrato suscrito por ambas partes, una vez finalizadas las mismas, recorrido a su&nbsp;</span><span style=\"font-family: Tahoma;\">ámbito de actuación para comprobar su terminación y en base al seguimiento realizado durante su ejecución.</span></font></div><div style=\"font-family: Arial;\"><span style=\"font-family: Tahoma;\"><font size=\"8\"><br></font></span></div><div style=\"\"><font face=\"Tahoma\" size=\"8\">ACUERDAN:</font></div><div style=\"\"><font face=\"Tahoma\" size=\"8\"><br></font></div><div style=\"\"><ol><li><font size=\"8\"><font face=\"Tahoma\" style=\"\">Que los trabajos realizados del presupuesto de referencia, ascienden al importe de la certificación final indicada en&nbsp;</font>el encabezamiento de este documento, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad señalada en el encabezamiento mediante la forma de abono indicada.</font></li><li><font size=\"8\">Que las obras se han realizado de acuerdo con el contrato de ejecución de obras y del buen hacer de la construcción.</font></li><li><font size=\"8\">Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de desecho, en el ámbito de las obras.</font></li><li><font size=\"8\">Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</font></li></ol><div><div><font face=\"Tahoma\" size=\"8\">En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de:</font></div><div><font face=\"Tahoma\" size=\"8\">REPARACION FILTRACIONES EN AZOTEA/HUMEDADES EN 6ºB</font></div><div><font face=\"Tahoma\" size=\"8\">Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados</font></div></div><div><br></div></div></div>"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "ShrinkFontToFitMinimumSize": 1.1,
+              "LineSpacing": 1.2,
+              "Type": "Expression"
+            }
+          }
         }
       },
       "PaperSize": "A4",

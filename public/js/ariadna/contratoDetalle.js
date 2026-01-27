@@ -83,6 +83,7 @@ function initForm() {
 
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
+    $("#btnImprimirActaRecepcion").click(imprimirActaRecepcion);
     $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
@@ -776,6 +777,7 @@ function initForm() {
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
+        $("#btnImprimirActaRecepcion").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
@@ -1162,9 +1164,11 @@ function loadData(data) {
     if (data.contratoIntereses) {
         $("#btnImprimir").hide();
         $('btnIntereses').hide();
+        $("#btnImprimirActaRecepcion").hide();
     } else {
         $("#btnImprimir").show();
         $('#btnIntereses').show();
+        $("#btnImprimirActaRecepcion").show();
     }
 
     $('#btnNuevaLinea').show();
@@ -7548,8 +7552,8 @@ function initTablaPlanificacionLineasObras() {
             total8 = api
                 .column(8)
                 .data()
-                    .reduce(function (a, b) {
-                        return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
 
             // Update footer
@@ -7658,7 +7662,7 @@ function initTablaPlanificacionLineasObras() {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
             }
-        }, 
+        },
         {
             data: "importeIntereses",
             className: "text-right",
@@ -10368,6 +10372,16 @@ var imprimirContratoAdicional = function (ref) {
 
 function printContratoAdicional(ref) {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
+    window.open(url, '_new');
+}
+
+var imprimirActaRecepcion = function () {
+    printActaRecepcion();
+}
+
+
+function printActaRecepcion() {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcion=true&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_new');
 }
 

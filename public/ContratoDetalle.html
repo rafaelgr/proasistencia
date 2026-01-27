@@ -131,6 +131,21 @@
         /* color al pasar el mouse */
         border-color: #535879;
     }
+
+     .custom-btn2 {
+        background-color: #1d7996;
+        /* tu color */
+        border-color: #29758b;
+        /* opcional: cambiar borde */
+        color: white;
+        /* color del texto */
+    }
+
+    .custom-btn2:hover {
+        background-color: #435099;
+        /* color al pasar el mouse */
+        border-color: #313442;
+    }
 </style>
 
 <body class="">
@@ -1348,6 +1363,11 @@
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
+                                                                                <button id="btnImprimirActaRecepcion"
+                                                                                    title="Imprimir acta de recepción"
+                                                                                    class="btn custom-btn2 btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-file-text-o"></i>
+                                                                                </button>
                                                                                 <button id="btnImprimir"
                                                                                     title="Imprimir contrato"
                                                                                     class="btn btn-success btn-circle btn-lg">
