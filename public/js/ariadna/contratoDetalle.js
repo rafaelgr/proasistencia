@@ -7534,10 +7534,10 @@ function initTablaPlanificacionLineasObras() {
                     vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
                     //
                     var dif2 = 0
-                    var tot2 = numeral(total2).format('0,0.00')
+                    var tot2 = numeral(total7).format('0,0.00')
                     vm.importePrefacturado(tot2);
                     //
-                    dif2 = total2 - vm.certificacionFinal();
+                    dif2 = total7 - vm.certificacionFinal();
                     vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
