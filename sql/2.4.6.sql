@@ -41,3 +41,12 @@ ADD
   COLUMN `refPresupuestoAdicional` VARCHAR(211) NULL
 AFTER
   `contratoAdicionalId`;
+
+  ALTER TABLE
+  `prefacturas`
+ADD
+  COLUMN `prefacturaInteresesId` INT(11) NULL
+AFTER
+  `noFacturar`,
+ADD
+  CONSTRAINT `pref_intereses2` FOREIGN KEY (`prefacturaInteresesId`) REFERENCES `prefacturas`(`prefacturaId`) ON UPDATE CASCADE ON DELETE CASCADE;
