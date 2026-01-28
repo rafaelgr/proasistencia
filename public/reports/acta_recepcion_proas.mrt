@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "2de0db1a99f844d5032c2b16a95e63fa",
+  "ReportGuid": "e7f90dfa7ddcbe8d5470a8bcbf73da86",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1769521553000+0100)/",
+  "ReportChanged": "/Date(1769601764000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -743,7 +743,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\" cada una\",\"\")}"
+                "Value": "€ {IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\" cada una\",\"\")}"
               },
               "VertAlignment": "Center",
               "Font": "Tahoma;;;",
@@ -762,6 +762,8 @@
               "Ident": "StiText",
               "Name": "Text9",
               "Guid": "2cc52ca1c7061aef98e77b8ac55bbf46",
+              "CanShrink": true,
+              "MinSize": "0.1,0",
               "ClientRectangle": "3.8,0,1.6,0.3",
               "Expressions": {
                 "0": {
@@ -786,14 +788,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 8,
-                "PositivePattern": 3,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             }
