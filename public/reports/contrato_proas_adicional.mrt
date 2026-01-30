@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "525cdf6ffc35525a92372969f25ae990",
+  "ReportGuid": "ac6fa431ba54728ee20d53db39729a3d",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_proas_adicional.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1766133610000+0100)/",
+  "ReportChanged": "/Date(1769770561000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -67,7 +67,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,36.78,18,0.6",
+          "ClientRectangle": "0,31.44,18,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -94,7 +94,9 @@
         "1": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
-          "ClientRectangle": "0,0.4,18,12",
+          "CanShrink": true,
+          "CanGrow": true,
+          "ClientRectangle": "0,0.4,18,7.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -126,7 +128,10 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text18",
-              "ClientRectangle": "0.2,1.2,17.6,10.8",
+              "CanShrink": true,
+              "CanGrow": true,
+              "MaxSize": "0,10.7",
+              "ClientRectangle": "0.2,1.2,17.6,5.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -142,14 +147,15 @@
               "Type": "Expression"
             }
           },
-          "CanGrow": false,
+          "MinHeight": 1,
+          "MaxHeight": 11.2,
           "DataSourceName": "datos_contrato"
         },
         "2": {
           "Ident": "StiDataBand",
           "Name": "DataBand8",
           "Guid": "7a224edf51a0dd328af540c4d981335b",
-          "ClientRectangle": "0,13.2,18,0.45",
+          "ClientRectangle": "0,8.4,18,0.45",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -188,7 +194,7 @@
           "Name": "GroupHeaderBand3",
           "Guid": "45f5b25c934ec04b6d8bffa5f583bdb2",
           "CanGrow": true,
-          "ClientRectangle": "0,14.45,18,0",
+          "ClientRectangle": "0,9.65,18,0.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -202,7 +208,9 @@
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand2",
           "Guid": "02f1f2ae7e9b749ab9ed072171c0bfc1",
-          "ClientRectangle": "0,15.25,18,1.2",
+          "CanShrink": true,
+          "CanGrow": true,
+          "ClientRectangle": "0,10.65,18,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -213,7 +221,11 @@
               "Ident": "StiText",
               "Name": "Text15",
               "Guid": "79c21e42e546e4ff0eba21c64feae1aa",
-              "ClientRectangle": "0.2,0.4,17.6,0.4",
+              "CanShrink": true,
+              "CanGrow": true,
+              "MinSize": "0,0.1",
+              "MaxSize": "0,1.4",
+              "ClientRectangle": "0.2,0.2,17.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -232,14 +244,15 @@
               "Type": "Expression"
             }
           },
-          "CanGrow": false,
+          "MinHeight": 0.1,
+          "MaxHeight": 1.4,
           "KeepHeaderTogether": false
         },
         "5": {
           "Ident": "StiDataBand",
           "Name": "DataBand9",
           "Guid": "e83a0d34093ac166241d5d926acee573",
-          "ClientRectangle": "0,17.25,18,0",
+          "ClientRectangle": "0,12.25,18,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -269,7 +282,7 @@
           "Name": "GroupFooterBand3",
           "Guid": "0f716f6ca17dc97c3e1b1bb7e9f75089",
           "CanGrow": true,
-          "ClientRectangle": "0,18.05,18,0.5",
+          "ClientRectangle": "0,13.05,18,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -280,7 +293,7 @@
               "Ident": "StiText",
               "Name": "Text19",
               "Guid": "ed07118eb79c9a67132e71323548698b",
-              "ClientRectangle": "0.2,0,3.6,0.3",
+              "ClientRectangle": "0.4,0,3.6,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -305,7 +318,7 @@
               "Ident": "StiText",
               "Name": "Text23",
               "Guid": "78aa7f03d84b35934173a96eab93aef7",
-              "ClientRectangle": "3.8,0,2,0.3",
+              "ClientRectangle": "4,0,2,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -333,7 +346,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text2",
-              "ClientRectangle": "5.8,-0.05,3.4,0.4",
+              "ClientRectangle": "6,-0.05,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -354,7 +367,7 @@
           "Name": "GroupHeaderBand4",
           "Guid": "324b7da020a0da65c57ea0dc12c1ab49",
           "CanGrow": true,
-          "ClientRectangle": "0,19.35,18,0",
+          "ClientRectangle": "0,14.25,18,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -369,7 +382,7 @@
           "Name": "DataBand10",
           "Guid": "aa2fd145f5c8f731f449a67319025bc1",
           "CanGrow": true,
-          "ClientRectangle": "0,20.15,18,0",
+          "ClientRectangle": "0,15.05,18,0",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -387,7 +400,7 @@
           "Name": "GroupFooterBand4",
           "Guid": "9e89d52d57b1a600f43c633e5642b245",
           "CanGrow": true,
-          "ClientRectangle": "0,20.95,18,1.6",
+          "ClientRectangle": "0,15.85,18,1.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -398,7 +411,7 @@
               "Ident": "StiText",
               "Name": "Text25",
               "Guid": "0af6ce843ce93933f78277dab0279c7f",
-              "ClientRectangle": "0.2,0.1,5.6,0.5",
+              "ClientRectangle": "0.2,0.1,5.8,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -448,7 +461,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text1",
-              "ClientRectangle": "5.8,0.05,4.8,0.6",
+              "ClientRectangle": "6,0.05,5,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -484,7 +497,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,23.35,18,4",
+          "ClientRectangle": "0,18.25,18,4",
           "Interaction": {
             "Ident": "StiInteraction"
           },

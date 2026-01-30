@@ -9177,7 +9177,7 @@ var imprimir = function () {
 
 function printContrato(id) {
     var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId();
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 //CREAR CONTRATO DE INTERESES
 function crearContratoIntereses() {
@@ -10372,7 +10372,7 @@ var imprimirContratoAdicional = function (ref) {
 
 function printContratoAdicional(ref) {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 var imprimirActaRecepcion = function () {
@@ -10382,7 +10382,7 @@ var imprimirActaRecepcion = function () {
 
 function printActaRecepcion() {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcion=true&ContratoInteresesId=" + vm.contratoInteresesId();
-    window.open(url, '_new');
+    window.open(url, '_blank');
 }
 
 //NUEVA RUTINA PARA LA CREACIÓN DE PTREFACTURAS Y SUS INTERESES
