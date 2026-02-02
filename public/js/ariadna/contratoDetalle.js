@@ -1165,10 +1165,12 @@ function loadData(data) {
         $("#btnImprimir").hide();
         $('#btnIntereses').hide();
         $("#btnImprimirActaRecepcion").hide();
+        $('#btnImportarPlanificacionObrasTemp').hide();
     } else {
         $("#btnImprimir").show();
         $('#btnIntereses').show();
         $("#btnImprimirActaRecepcion").show();
+        $('#btnImportarPlanificacionObrasTemp').show();
     }
 
     $('#btnNuevaLinea').show();
@@ -1282,6 +1284,7 @@ function loadData(data) {
         $('#lineasPago').show();
         $('#btnGenerarPrefacturas').show();
         $('#wid-id-new-19').hide();
+        $('#btnImportarPlanificacionObrasTemp').hide();
 
     } else {
         $('.obras').show()
@@ -1292,7 +1295,13 @@ function loadData(data) {
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
         $('#btnAltaPrefactura').hide();
-         $('#wid-id-new-19').show();
+        $('#wid-id-new-19').show();
+        if(data.contratoIntereses){
+             $('#btnImportarPlanificacionObrasTemp').hide();
+        } else {
+               $('#btnImportarPlanificacionObrasTemp').show();
+        }
+     
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);
@@ -9178,7 +9187,7 @@ var imprimir = function () {
 }
 
 function printContrato(id) {
-    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId();
+    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId() + "&esContrato=true";
     window.open(url, '_blank');
 }
 //CREAR CONTRATO DE INTERESES
@@ -9346,10 +9355,10 @@ function initTablaPlanificacionLineasObrasTemp() {
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (!vm.contratoIntereses()) {
-                            if (row.esLetra) {
+                            /* if (row.esLetra) {
                                 if (!row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
                             }
-
+ */
                             if (row.esAdicional)
                                 bt5 = "<button class='btn btn-circle btn-success' " +
                                     "onclick=\"imprimirContratoAdicional('" + row.refPresupuestoAdicional + "')\" " +

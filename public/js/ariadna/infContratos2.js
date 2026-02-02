@@ -167,6 +167,7 @@ function initForm() {
             vm.contratoId(gup('ContratoId'));
             vm.contratoInteresesId(gup('ContratoInteresesId'));
             vm.esAdicional(gup('esAdicional'));
+            vm.esContrato(gup('esContrato'));
             vm.esRecepcion(gup('esRecepcion'));
             vm.empresaId(gup('EmpresaId'));
             vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
@@ -255,6 +256,7 @@ function admData() {
     self.contratoId = ko.observable();
     self.contratoInteresesId = ko.observable();
     self.esAdicional = ko.observable();
+    self.esContrato = ko.observable();
     self.esRecepcion = ko.observable();
     self.refPresupuestoAdicional = ko.observable();
     //
@@ -433,14 +435,17 @@ var rptContratosParametrosJson = function () {
 function obtainReportJson(obj) {
 
     let file = null
-    if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
-    if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
+    if(vm.esContrato()) {
+        if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
+        if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
+    }
     if (vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt";
     if (vm.esRecepcion()) {
          if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
-         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
+         //if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
     }
-
+    if(!file) return mensError("No se ha encontrado el archivo de informe.");
+ 
     //file = "/reports/acta_recepcion_proas.mrt";
     const report = new Stimulsoft.Report.StiReport();
 
