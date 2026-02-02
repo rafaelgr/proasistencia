@@ -1348,6 +1348,17 @@ function loadData(data) {
         ocualtaBotonesContratoCerrado();
     }
 
+    //si hay contrato de intrereses recuperamos su total
+    if(data.contratoInteresesId){
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/lineas/" + data.contratoInteresesId, null, function (err, data) {
+            if(err) return;
+            totalIntereses = 0;
+            data.forEach(function (linea) {
+                totalIntereses += linea.totalLinea;
+            });
+        });
+    }
+
 }
 
 
@@ -3321,7 +3332,7 @@ var verPrefacturasAGenerarPlanificacion = function () {
     var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
 
     vm.prefacturasAGenerar(prefacturas);
-    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0 && vm.contratoInteresesId()) {
         var importe = RegPlanificacion[0].importeIntereses; // importe real de la factura;
         var importeAlCliente = RegPlanificacion[0].importeIntereses; // importe al cliente final;
         var clienteId = vm.clienteId();
@@ -9276,13 +9287,13 @@ function initTablaPlanificacionLineasObrasTemp() {
                 numeral(totalImporte).format('0,0.00')
             );
 
-            totalIntereses = api
+            var totalInt = api
                 .column(5)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-            $(api.columns(5).footer()).html(numeral(totalIntereses).format('0,0.00'));
+            $(api.columns(5).footer()).html(numeral(totalInt).format('0,0.00'));
 
 
             // Total Núm. Prefacturas (columna 6)
@@ -9716,7 +9727,7 @@ function aceptarGenerarPrefacturaPlanificacionObrasTemp(init) {
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObrasTemp()
         var prefacturas = crearPrefacturaPlanificacionTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importe);
         vm.prefacturasAGenerar(prefacturas);
-        if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+        if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0 && vm.contratoInteresesId()) {
             var prefacturasIntereses = crearPrefacturaPlanificacionTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importeIntereses);
             vm.prefacturasAGenerarIntereses(prefacturasIntereses);
         }
@@ -9780,7 +9791,7 @@ var verPrefacturasAGenerarPlanificacionTemp = function () {
     var prefacturas = crearPrefacturasTemp(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
 
     vm.prefacturasAGenerar(prefacturas);
-    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0 && vm.contratoInteresesId()) {
         var importe = RegPlanificacion[0].importeIntereses; // importe real de la factura;
         var importeAlCliente = RegPlanificacion[0].importeIntereses; // importe al cliente final;
         var clienteId = vm.clienteId();
@@ -10477,7 +10488,7 @@ function aceptarGenerarPrefacturaPlanificacionObrasIntereses() {
         RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
         var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
         vm.prefacturasAGenerar(prefacturas);
-        if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+        if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0 && vm.contratoInteresesId()) {
             var prefacturasIntereses = crearPrefacturaPlanificacionIntereses(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importeIntereses);
             vm.prefacturasAGenerarIntereses(prefacturasIntereses);
         }
