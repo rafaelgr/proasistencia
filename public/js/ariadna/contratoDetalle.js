@@ -1163,7 +1163,7 @@ function loadData(data) {
 
     if (data.contratoIntereses) {
         $("#btnImprimir").hide();
-        $('btnIntereses').hide();
+        $('#btnIntereses').hide();
         $("#btnImprimirActaRecepcion").hide();
     } else {
         $("#btnImprimir").show();
@@ -1281,6 +1281,7 @@ function loadData(data) {
         $('#lineasPagoObras').hide();
         $('#lineasPago').show();
         $('#btnGenerarPrefacturas').show();
+        $('#wid-id-new-19').hide();
 
     } else {
         $('.obras').show()
@@ -1291,6 +1292,7 @@ function loadData(data) {
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
         $('#btnAltaPrefactura').hide();
+         $('#wid-id-new-19').show();
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);

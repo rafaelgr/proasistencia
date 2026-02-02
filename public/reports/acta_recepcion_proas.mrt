@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "ec034d3be2e82ab38a0da7808b890c4a",
+  "ReportGuid": "1942c573df5b00ad580aa0f1ec567754",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1769777712000+0100)/",
+  "ReportChanged": "/Date(1770019487000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -236,18 +236,13 @@
               "Ident": "StiText",
               "Name": "Text18",
               "ClientRectangle": "0,0.6,17.8,1",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; text-align: right;\">\n  <font size=\"9\">\n    <font face=\"Tahoma\">\n      <font style=\"letter-spacing: -0.133333px;\">\n        <span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t</span>En Madrid a\n      </font>\n      <span style=\"letter-spacing: -0.133333px;\">&nbsp;</span>\n      <span style=\"letter-spacing: -0.133333px;\">{datos_contrato.fechaActual}</span>\n    </font>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"9\">\n    <span style=\"letter-spacing: -0.133333px;\">\n      <font face=\"Tahoma\"><b>DATOS DE LA OBRA</b></font>\n    </span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"9\">\n    <span style=\"letter-spacing: -0.133333px;\"><br></span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\"><br></div>\n"
+                "Value": "<div style=\"font-family: Tahoma; text-align: right;\">\n  <font size=\"10\">\n    <font face=\"Tahoma\">\n      <font style=\"letter-spacing: -0.133333px;\">\n        <span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t</span>&nbsp; En Madrid a</font><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.fechaActual}</span>\n    </font>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"10\">\n    <span style=\"letter-spacing: -0.133333px;\">\n      <font face=\"Tahoma\"><b>DATOS DE LA OBRA</b></font>\n    </span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"10\">\n    <span style=\"letter-spacing: -0.133333px;\"><br></span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\"><br></div>\n"
               },
-              "HorAlignment": "Width",
+              "HorAlignment": "Right",
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
@@ -263,7 +258,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Dirección obra:          {datos_contrato.direccionTrabajo}  \n  Trabajos realizados:  {datos_contrato.tipoProyecto}\n\n  Ref. presupuesto:      {datos_contrato.referencia} \n  Fecha de contrato de ejecución de obras:      {datos_contrato.fechaInicio} \n  Certificación final        {datos_contrato.certificacionFinal}\n  Saldo pendiente de abono al día de la fecha:    {datos_contrato.totalPendienteFacturar} €\n\n  El abono del saldo pendiente se realizará mediante:"
+                "Value": "  Dirección obra:        {datos_contrato.direccionTrabajo}  \n  Trabajos realizados:  {datos_contrato.tipoProyecto}\n\n  Ref. presupuesto:    {datos_contrato.referencia} \n  Certificación final      {datos_contrato.certificacionFinal}\n  Fecha de contrato de ejecución de obras:    {datos_contrato.fechaInicio} \n  Saldo pendiente de abono al día de la fecha: {datos_contrato.totalPendienteFacturar} €\n\n  El abono del saldo pendiente se realizará mediante:"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -501,7 +496,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp;&nbsp;<u>LA PROPIEDAD</u></font>\n</p><p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><br></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp; Cliente: {datos_contrato.nombreCliente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Nombre: &nbsp; {datos_contrato.nombrePresidente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cargo: PRESIDENTE</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cuenta Bancaria: {datos_contrato.iban}</font>\n</p>\n\n"
+                "Value": "<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp;&nbsp;<u>LA PROPIEDAD</u></font>\n</p><p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><br></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp; Cliente:&nbsp; &nbsp;{datos_contrato.nombreCliente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Nombre: {datos_contrato.nombrePresidente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cargo:&nbsp; &nbsp; PRESIDENTE</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cuenta Bancaria: {datos_contrato.iban}</font>\n</p>\n\n"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -529,7 +524,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><font size=\"10\">\n  &nbsp; <u style=\"\">LA CONTRATA</u>&nbsp; &nbsp; &nbsp;</font></p><p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><font size=\"10\">&nbsp;</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; Nombre: Proasistencia S.L.\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; Representante: ADELA ALONSO AGARCIA\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; Domicilio: C/ Camino de Rejas 1, Coslada, 28821. Madrid\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; CIF: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B81323180\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; e‐mail: administracion@proasistencia.es\n</font></p>\n\n"
+                "Value": "<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><font size=\"10\">\n  &nbsp; <u style=\"\">LA CONTRATA</u>&nbsp; &nbsp; &nbsp;</font></p><p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><font size=\"10\">&nbsp;</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; Nombre:&nbsp; Proasistencia S.L.\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; Representante: ADELA ALONSO AGARCIA\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; Domicilio: C/ Camino de Rejas 1, Coslada, 28821. Madrid\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; CIF:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B81323180\n</font></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\"><font size=\"10\">\n  &nbsp; e‐mail:&nbsp; &nbsp; &nbsp;administracion@proasistencia.es\n</font></p>\n\n"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
