@@ -167,11 +167,13 @@ function initForm() {
             vm.contratoId(gup('ContratoId'));
             vm.contratoInteresesId(gup('ContratoInteresesId'));
             vm.esAdicional(gup('esAdicional'));
+            vm.esContrato(gup('esContrato'));
+            vm.esRecepcion(gup('esRecepcion'));
             vm.empresaId(gup('EmpresaId'));
             vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
-            if(vm.esAdicional()) { 
+            if (vm.esAdicional()) {
                 datos = {
                     contratoId: vm.contratoId(),
                     refPresupuestoAdicional: vm.refPresupuestoAdicional(),
@@ -179,6 +181,11 @@ function initForm() {
                 }
                 url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional"
                 verb = "POST";
+            }
+
+            if (vm.esRecepcion()) {
+                url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/acta/recepcion/" + vm.contratoId();
+                verb = "GET";
             }
             llamadaAjax(verb, url, datos, function (err, data) {
                 obtainReportJson(data);
@@ -208,8 +215,8 @@ function obtainKey() {
 
 function obtainKeyNew() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
@@ -249,6 +256,8 @@ function admData() {
     self.contratoId = ko.observable();
     self.contratoInteresesId = ko.observable();
     self.esAdicional = ko.observable();
+    self.esContrato = ko.observable();
+    self.esRecepcion = ko.observable();
     self.refPresupuestoAdicional = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
@@ -426,12 +435,21 @@ var rptContratosParametrosJson = function () {
 function obtainReportJson(obj) {
 
     let file = null
-    if(vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
-    if(vm.empresaId() == 7  && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
-    if(vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt";
+    if(vm.esContrato()) {
+        if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
+        if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
+    }
+    if (vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt";
+    if (vm.esRecepcion()) {
+         if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
+         //if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
+    }
+    if(!file) return mensError("No se ha encontrado el archivo de informe.");
+ 
+    //file = "/reports/acta_recepcion_proas.mrt";
     const report = new Stimulsoft.Report.StiReport();
 
-    if(!file) {
+    if (!file) {
         mensError("No se ha encontrado el archivo de informe para esta empresa");
         return;
     }
@@ -460,11 +478,11 @@ function obtainReportJson(obj) {
     // Asignar y renderizar
     viewer.report = report;
 
-/* const jsonString = JSON.stringify(obj, null, 2);
-  const blob = new Blob([jsonString], { type: 'application/json' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'datosReporte.json';
-  link.click(); */
+    const jsonString = JSON.stringify(obj, null, 2);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'datosReporte.json';
+      link.click(); 
 }
 

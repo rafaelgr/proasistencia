@@ -83,6 +83,7 @@ function initForm() {
 
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
+    $("#btnImprimirActaRecepcion").click(imprimirActaRecepcion);
     $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
@@ -776,6 +777,7 @@ function initForm() {
         obtenerPorcentajeBeneficioPorDefecto();
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
+        $("#btnImprimirActaRecepcion").hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
@@ -1161,10 +1163,14 @@ function loadData(data) {
 
     if (data.contratoIntereses) {
         $("#btnImprimir").hide();
-        $('btnIntereses').hide();
+        $('#btnIntereses').hide();
+        $("#btnImprimirActaRecepcion").hide();
+        $('#btnImportarPlanificacionObrasTemp').hide();
     } else {
         $("#btnImprimir").show();
         $('#btnIntereses').show();
+        $("#btnImprimirActaRecepcion").show();
+        $('#btnImportarPlanificacionObrasTemp').show();
     }
 
     $('#btnNuevaLinea').show();
@@ -1277,6 +1283,8 @@ function loadData(data) {
         $('#lineasPagoObras').hide();
         $('#lineasPago').show();
         $('#btnGenerarPrefacturas').show();
+        $('#wid-id-new-19').hide();
+        $('#btnImportarPlanificacionObrasTemp').hide();
 
     } else {
         $('.obras').show()
@@ -1287,6 +1295,13 @@ function loadData(data) {
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
         $('#btnAltaPrefactura').hide();
+        $('#wid-id-new-19').show();
+        if(data.contratoIntereses){
+             $('#btnImportarPlanificacionObrasTemp').hide();
+        } else {
+               $('#btnImportarPlanificacionObrasTemp').show();
+        }
+     
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);
@@ -3306,6 +3321,19 @@ var verPrefacturasAGenerarPlanificacion = function () {
     var prefacturas = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
 
     vm.prefacturasAGenerar(prefacturas);
+    if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+        var importe = RegPlanificacion[0].importeIntereses; // importe real de la factura;
+        var importeAlCliente = RegPlanificacion[0].importeIntereses; // importe al cliente final;
+        var clienteId = vm.clienteId();
+        var cliente = vm.nombreComercial();
+        var empresa = $("#cmbEmpresas").select2('data').text;
+
+        var divisor = importe / RegPlanificacion[0].importeIntereses;
+        var coste = RegPlanificacion[0].importeIntereses * divisor;
+        var porRetenGarantias = 0
+        var prefacturasIntereses = crearPrefacturas2(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+        vm.prefacturasAGenerarIntereses(prefacturasIntereses);
+    }
     loadTablaGenerarPrefacturasPlanificacion(prefacturas);
 }
 
@@ -7493,26 +7521,19 @@ function initTablaPlanificacionLineasObras() {
                 numeral(total5).format('0')
             );
 
+
             //////
             // Total over all pages
-            total2 = api
+            total6 = api
                 .column(6)
                 .data()
                 .reduce(function (a, b) {
-                    vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
-                    //
-                    var dif2 = 0
-                    var tot2 = numeral(total2).format('0,0.00')
-                    vm.importePrefacturado(tot2);
-                    //
-                    dif2 = total2 - vm.certificacionFinal();
-                    vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
 
             // Update footer
             $(api.columns(6).footer()).html(
-                numeral(total2).format('0,0.00')
+                numeral(total6).format('0')
             );
 
             //////
@@ -7521,17 +7542,25 @@ function initTablaPlanificacionLineasObras() {
                 .column(7)
                 .data()
                 .reduce(function (a, b) {
+                    vm.certificacionFinalFormat(numeral(vm.certificacionFinal()).format('0,0.00'));
+                    //
+                    var dif2 = 0
+                    var tot2 = numeral(total7).format('0,0.00')
+                    vm.importePrefacturado(tot2);
+                    //
+                    dif2 = total7 - vm.certificacionFinal();
+                    vm.diferenciaPrefacturado(numeral(dif2).format('0,0.00'));
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
 
             // Update footer
             $(api.columns(7).footer()).html(
-                numeral(total7).format('0')
+                numeral(total7).format('0,0.00')
             );
 
             //////
             // Total over all pages
-            total3 = api
+            total8 = api
                 .column(8)
                 .data()
                 .reduce(function (a, b) {
@@ -7540,10 +7569,10 @@ function initTablaPlanificacionLineasObras() {
 
             // Update footer
             $(api.columns(8).footer()).html(
-                numeral(total3).format('0,0.00')
+                numeral(total8).format('0')
             );
 
-            /////
+            //////
             // Total over all pages
             total9 = api
                 .column(9)
@@ -7568,7 +7597,7 @@ function initTablaPlanificacionLineasObras() {
 
             // Update footer
             $(api.columns(10).footer()).html(
-                numeral(total10).format('0')
+                numeral(total10).format('0,0.00')
             );
 
             /////
@@ -7582,7 +7611,21 @@ function initTablaPlanificacionLineasObras() {
 
             // Update footer
             $(api.columns(11).footer()).html(
-                numeral(total11).format('0,0.00')
+                numeral(total11).format('0')
+            );
+
+            /////
+            // Total over all pages
+            total12 = api
+                .column(12)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(12).footer()).html(
+                numeral(total12).format('0,0.00')
             );
 
         },
@@ -7626,6 +7669,13 @@ function initTablaPlanificacionLineasObras() {
             }
         }, {
             data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        },
+        {
+            data: "importeIntereses",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00');
@@ -7706,7 +7756,7 @@ function initTablaPlanificacionLineasObras() {
             }
         }]
     });
-    tablaLineasPlanificacion.columns(11).visible(false);
+    tablaLineasPlanificacion.columns(12).visible(false);
 }
 
 function calculaImportesInformativosPlanificacion(c) {
@@ -7816,6 +7866,7 @@ function aceptarLineaPlanificacionObras() {
             porcentaje: vm.porcentajePlanificacion(),
             fecha: spanishDbDate(vm.fechaPlanificacionObras()),
             importe: vm.importeCalculadoPlanificacion(),
+            importeIntereses: vm.importeIntereses(),
             porRetenGarantias: vm.porRetenGarantias(),
             formaPagoId: vm.sformaPagoIdLinea()
         }
@@ -7898,6 +7949,7 @@ function loadDataLineaPlanificacionObras(data) {
     vm.importeFacturado(data.importeFacturado);
     vm.importeCobrado(data.importeCobrado);
     vm.porRetenGarantias(data.porRetenGarantias);
+    vm.importeIntereses(data.importeIntereses);
     loadFormasPagoLinea(data.formaPagoId);
 
 }
@@ -7980,6 +8032,7 @@ function limpiarModalLineasPlanificacion() {
     vm.fechaPlanificacionObras(null);
     vm.importeCalculadoPlanificacion(null);
     vm.porRetenGarantias(null);
+    vm.importeIntereses(0)
     loadFormasPagoLinea(null);
 }
 
@@ -9134,8 +9187,8 @@ var imprimir = function () {
 }
 
 function printContrato(id) {
-    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId();
-    window.open(url, '_new');
+    var url = "InfContratos2.html?ContratoId=" + id + "&EmpresaId=" + vm.sempresaId() + "&esContrato=true";
+    window.open(url, '_blank');
 }
 //CREAR CONTRATO DE INTERESES
 function crearContratoIntereses() {
@@ -9302,10 +9355,10 @@ function initTablaPlanificacionLineasObrasTemp() {
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (!vm.contratoIntereses()) {
-                            if (row.esLetra) {
+                            /* if (row.esLetra) {
                                 if (!row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
                             }
-
+ */
                             if (row.esAdicional)
                                 bt5 = "<button class='btn btn-circle btn-success' " +
                                     "onclick=\"imprimirContratoAdicional('" + row.refPresupuestoAdicional + "')\" " +
@@ -10214,8 +10267,8 @@ function importarPlanificacionObrasTemp() {
     });
 }
 
-var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, contPlanificacionTempId, done) {
-    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
+var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId, contPlanificacionId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/" + contratoId + "/" + contPlanificacionId, null, function (err, data) {
         if (err) return done(err);
         if (data.length == 0) return done(null, true);
         var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
@@ -10330,5 +10383,225 @@ var imprimirContratoAdicional = function (ref) {
 
 function printContratoAdicional(ref) {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
-    window.open(url, '_new');
+    window.open(url, '_blank');
+}
+
+var imprimirActaRecepcion = function () {
+    printActaRecepcion();
+}
+
+
+function printActaRecepcion() {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcion=true&ContratoInteresesId=" + vm.contratoInteresesId();
+    window.open(url, '_blank');
+}
+
+//NUEVA RUTINA PARA LA CREACIÓN DE PTREFACTURAS Y SUS INTERESES
+
+var aceptarGenerarPrefacturasPlanificacionIntereses = function () {
+    if (!generarPrefacturasOK()) return;
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+
+    $('#btnAceptarGenerarPrefacturasPlanificacion').prop('disabled', true);
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+        prefacturasIntereses: vm.prefacturasAGenerarIntereses()
+    };
+
+    controlDePrefacturasYaGeneradasPlanificacionIntereses(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/con-intereses/" + vm.contratoId() + "/" + vm.contratoInteresesId() + "/" + totalIntereses, data, function (err) {
+            if (err) {
+                $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+                return;
+            }
+            $('#btnAceptarGenerarPrefacturasPlanificacionTemp').prop('disabled', false);
+            mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturasPlanificacion').modal('hide');
+            vm.prefacturasAGenerarIntereses(null)
+            loadPrefacturasDelContratoTemp(vm.contratoId());
+            loadPlanificacionLineasObrasTemp(vm.contratoId());
+            //actualizaCobrosPlanificacion(vm.contratoId());
+            limpiarModalGenerarPrefacturasObrasTemp();
+        });
+    });
+}
+
+
+var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, contPlanificacionTempId, done) {
+    llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, null, function (err, data) {
+        if (err) return done(err);
+        if (data.length == 0) return done(null, true);
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        //sumamos los importes que se van a eliminar
+        var importe = 0
+        data.forEach(function (pf) {
+            importe = importe + pf.totalAlCliente;
+        });
+        var datos = {
+            importe: importe
+        }
+        mensajeAceptarCancelar(mensaje, function () {
+            done(null, true);
+        }, function () {
+            done(null, false);
+        });
+    });
+}
+
+
+function aceptarGenerarPrefacturaPlanificacionObrasIntereses() {
+    $('#modalGenerarPrefacturasObras').modal('hide');
+    var opcion = $('#chkVarias').prop('checked');
+    //limpiarModalGenerarPrefacturasObras();
+    if (opcion) {
+        $('#modalGenerarPrefacturasPlanificacion').modal({
+            show: 'true'
+        });
+        generarPrefacturasPlanificacionIntereses(RegPlanificacion);
+
+    } else {
+        //comprobamos que le cliente tenga un nombre comercial
+        var d = vm.nombreComercial();
+        if (!d || d == '') return mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+
+        var clienteId = vm.clienteId();
+        var cliente = vm.nombreComercial();
+        var empresa = $("#cmbEmpresas").select2('data').text;
+        RegPlanificacion[0].fecha = vm.fechaPlanificacionObras2()
+        var prefacturas = crearPrefacturaPlanificacion(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion);
+        vm.prefacturasAGenerar(prefacturas);
+        if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0) {
+            var prefacturasIntereses = crearPrefacturaPlanificacionIntereses(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importeIntereses);
+            vm.prefacturasAGenerarIntereses(prefacturasIntereses);
+        }
+        aceptarGenerarPrefacturaPlanificacion();
+    }
+}
+
+
+
+var generarPrefacturasPlanificacionIntereses = function (data) {
+    var resto = data[0].importe;
+    vm.importeAFacturar(roundToSix(resto));
+    $("#cmbPeriodosPagos2").select2(select2Spanish());
+    loadPeriodosPagos(vm.speriodoPagoId());
+    $("#cmbPeriodosPagos2").select2().on('change', function (e) {
+        cambioPeriodosPagosPlanificacion(e.added);
+    });
+
+
+
+    if (vm.fechaPlanificacionObras2()) {
+        vm.fechaPrimeraFactura(vm.fechaPlanificacionObras2());
+    }
+    else if (!vm.fechaPrimeraFactura()) {
+        var f = new Date();
+        f = moment(f).format('DD/MM/YYYY');
+        vm.fechaPrimeraFactura(f);
+    }
+    $("#generar-prefacturas-form-planificacion").submit(function () {
+        return false;
+    });
+
+}
+
+function crearPrefacturaPlanificacionIntereses(numPagos, empresaId, clienteId, empresa, cliente, data, importe) {
+    var divisor = 1;
+    var fecha = new Date(spanishDbDate(data[0].fecha));
+    var pagos = [];
+    var nPagos = numPagos;
+    var porRetenGarantias = 0
+    var retenGarantias = 0
+    var copiadata = data.slice();
+
+    for (var i = 0; i < nPagos; i++) {
+        var importePago = roundToSix(importe);
+        var importePagoCliente = roundToSix(importe);
+        var importeCoste = roundToSix(importe);
+        var contPlanificacionId = data[i].contPlanificacionId;
+        var formaPagoId = data[i].formaPagoId;
+        // sucesivas fechas de factura
+        var f = moment(fecha).format('DD/MM/YYYY');
+        // inicio de periodo
+        if (i == 0) {
+            var f0 = moment(fecha).add(i * divisor, 'month').format('DD/MM/YYYY');
+        }
+
+        var f2 = moment(fecha).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        //completamos el compo observacionesPago
+        var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
+        var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
+        var cabOtrosConceptos = '\nOTROS CONCEPTOS';
+        var otrosConceptos = ''
+        //calculamos la retención de garantia si existe
+        if (copiadata[i].porRetenGarantias) {
+            porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
+            retenGarantias = roundToTwo(importePago * porRetenGarantias);
+        }
+        copiadata.splice(i, 1);
+        for (var k = 0; k < copiadata.length; k++) {
+            otrosConceptos += "\n" + copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
+        }
+
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            retenGarantias: retenGarantias,
+            porcentajeBeneficio: 0,
+            porcentajeAgente: 0,
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2,
+            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos,
+            contratoPorcenId: null,
+            contPlanificacionId: contPlanificacionId,
+            formaPagoId: formaPagoId
+        };
+
+
+        pagos.push(p);
+        copiadata = [];
+        copiadata = data.slice();
+    }
+
+    return pagos;
+}
+
+var aceptarGenerarPrefacturaPlanificacionIntereses = function () {
+    if (vm.prefacturasAGenerar().length == 0) {
+        return;
+    }
+    var data = {
+        prefacturas: vm.prefacturasAGenerar(),
+    };
+
+    controlDePrefacturasYaGeneradasPlanificacionIntereses(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
+        if (err) return;
+        if (!result) {
+            $('#modalGenerarPrefacturas').modal('hide');
+            return;
+        }
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), data, function (err) {
+            if (err) {
+                mensError('Error al crear la prefactura');
+                return;
+            }
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            $('#modalGenerarPrefacturas').modal('hide');
+            loadPrefacturasDelContrato(vm.contratoId());
+            actualizaCobrosPlanificacion(vm.contratoId());
+        });
+    });
+
 }
