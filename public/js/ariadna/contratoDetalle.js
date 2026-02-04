@@ -9704,6 +9704,72 @@ function crearPrefacturaPlanificacionTemp(numPagos, empresaId, clienteId, empres
     return pagos;
 }
 
+function crearPrefacturaPlanificacionInteresesTemp(numPagos, empresaId, clienteId, empresa, cliente, data, importe) {
+    var divisor = 1;
+    var fecha = new Date(spanishDbDate(data[0].fecha));
+    var pagos = [];
+    var nPagos = numPagos;
+    var porRetenGarantias = 0
+    var retenGarantias = 0
+    var copiadata = data.slice();
+
+    for (var i = 0; i < nPagos; i++) {
+        var importePago = roundToSix(importe);
+        var importePagoCliente = roundToSix(importe);
+        var importeCoste = roundToSix(importe);
+        var contPlanificacionTempId = data[i].contPlanificacionTempId;
+        var formaPagoId = data[i].formaPagoId;
+        // sucesivas fechas de factura
+        var f = moment(fecha).format('DD/MM/YYYY');
+        // inicio de periodo
+        if (i == 0) {
+            var f0 = moment(fecha).add(i * divisor, 'month').format('DD/MM/YYYY');
+        }
+
+        var f2 = moment(fecha).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        //completamos el compo observacionesPago
+        var cabecera = "CONCEPTO DE LA PRESENTE FACTURA\n"
+        var campoDestacado = copiadata[i].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100) + "%\n";
+        var cabOtrosConceptos = '\nOTROS CONCEPTOS';
+        var otrosConceptos = ''
+        //calculamos la retención de garantia si existe
+        if (copiadata[i].porRetenGarantias) {
+            porRetenGarantias = roundToTwo(copiadata[i].porRetenGarantias / 100)
+            retenGarantias = roundToTwo(importePago * porRetenGarantias);
+        }
+        copiadata.splice(i, 1);
+        for (var k = 0; k < copiadata.length; k++) {
+            otrosConceptos += "\n" + copiadata[k].concepto + " " + Math.round((copiadata[i].porcentaje * 100) / 100);
+        }
+
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            retenGarantias: retenGarantias,
+            porcentajeBeneficio: 0,
+            porcentajeAgente: 0,
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2,
+            observacionesPago: cabecera + campoDestacado + cabOtrosConceptos + otrosConceptos,
+            contratoPorcenId: null,
+            contPlanificacionTempId: contPlanificacionTempId,
+            formaPagoId: formaPagoId
+        };
+
+
+        pagos.push(p);
+        copiadata = [];
+        copiadata = data.slice();
+    }
+
+    return pagos;
+}
+
 
 
 function aceptarGenerarPrefacturaPlanificacionObrasTemp(init) {
@@ -9728,7 +9794,7 @@ function aceptarGenerarPrefacturaPlanificacionObrasTemp(init) {
         var prefacturas = crearPrefacturaPlanificacionTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importe);
         vm.prefacturasAGenerar(prefacturas);
         if (RegPlanificacion[0].importeIntereses && RegPlanificacion[0].importeIntereses > 0 && vm.contratoInteresesId()) {
-            var prefacturasIntereses = crearPrefacturaPlanificacionTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importeIntereses);
+            var prefacturasIntereses = crearPrefacturaPlanificacionInteresesTemp(1, vm.sempresaId(), clienteId, empresa, cliente, RegPlanificacion, RegPlanificacion[0].importeIntereses);
             vm.prefacturasAGenerarIntereses(prefacturasIntereses);
         }
 
@@ -9801,7 +9867,7 @@ var verPrefacturasAGenerarPlanificacionTemp = function () {
         var divisor = importe / RegPlanificacion[0].importeIntereses;
         var coste = RegPlanificacion[0].importeIntereses * divisor;
         var porRetenGarantias = 0
-        var prefacturasIntereses = crearPrefacturasTemp(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
+        var prefacturasIntereses = crearPrefacturasIntTemp(importe, importeAlCliente, coste, spanishDbDate(vm.fechaPrimeraFactura()), porRetenGarantias, $('#txtNumPagos').val(), vm.sempresaId(), clienteId, empresa, cliente);
         vm.prefacturasAGenerarIntereses(prefacturasIntereses);
     }
     loadTablaGenerarPrefacturasPlanificaciontemp(prefacturas);
@@ -9886,6 +9952,116 @@ function crearPrefacturasTemp(importe, importeAlCliente, coste, fechaPrimeraFact
             clienteId: clienteId,
             porcentajeBeneficio: vm.porcentajeBeneficio(),
             porcentajeAgente: vm.porcentajeAgente(),
+            empresa: empresa,
+            cliente: cliente,
+            periodo: f0 + "-" + f2,
+            contPlanificacionTempId: RegPlanificacion[0].contPlanificacionTempId,
+            formaPagoId: RegPlanificacion[0].formaPagoId,
+            numLetra: numLetra
+        };
+        if (vm.facturaParcial() && i == 0) {
+            p.importe = import1;
+            p.importeCliente = import11;
+            p.importeCoste = import12;
+        }
+        if (vm.facturaParcial() && i == (nPagos - 1)) {
+            p.importe = import2;
+            p.importeCliente = import21;
+            p.importeCoste = import22;
+        }
+        //calculamos la retención de garantia si existe
+        if (porRetenGarantias) {
+            var por = roundToTwo(porRetenGarantias / 100)
+            p.retenGarantias = roundToTwo(p.importe * por);
+        }
+
+
+        pagos.push(p);
+    }
+    if (pagos.length > 1) {
+        // en la última factura ponemos los restos
+        pagos[pagos.length - 1].importe = pagos[pagos.length - 1].importe + restoImportePago;
+        pagos[pagos.length - 1].importeCliente = pagos[pagos.length - 1].importeCliente + restoImportePagoCliente;
+        pagos[pagos.length - 1].importeCoste = pagos[pagos.length - 1].importeCoste + restoImporteCoste;
+        if (porRetenGarantias) {
+            pagos[pagos.length - 1].retenGarantias = roundToTwo(pagos[pagos.length - 1].importe * por);
+        }
+        /* pagos[pagos.length - 1].importe = importe - (importePago * (numPagos-1));
+        pagos[pagos.length - 1].importeCliente = importeAlCliente - (importePagoCliente * (numPagos-1));
+        pagos[pagos.length - 1].importeCoste = coste - (importeCoste * (numPagos-1)); */
+    }
+    return pagos;
+}
+
+function crearPrefacturasIntTemp(importe, importeAlCliente, coste, fechaPrimeraFactura, porRetenGarantias, numPagos, empresaId, clienteId, empresa, cliente) {
+    var divisor = obtenerDivisor();
+    var numLetra = '';
+
+
+    // si hay parcial el primer pago será por la diferencia entre el inicio de contrato y la fecha de primera factura
+    // de mes 
+    var inicioFactura = new Date(spanishDbDate(vm.fechaPrimeraFactura()));
+    //var finFactura = new Date(spanishDbDate(vm.fechaUltimaFactura()));
+    var iniContrato = moment(inicioFactura).format('YYYY-MM-DD');
+    //var fFactura = moment(finFactura).format('YYYY-MM-DD');
+    var finMesinicioFactura = moment(inicioFactura).endOf('month');
+    var aux = iniContrato.split('-');
+    var inicioMesinicioFactura = aux[0] + "-" + aux[1] + "-01";
+    var diffDias = finMesinicioFactura.diff(inicioFactura, 'days');
+
+    var importePago = roundToTwo(importe / numPagos);
+    var importePagoCliente = roundToTwo(importeAlCliente / numPagos);
+    var importeCoste = roundToTwo(coste / numPagos);
+    porRetenGarantias = parseFloat(porRetenGarantias);
+
+
+
+    // como la división puede no dar las cifras hay que calcular los restos.
+    var restoImportePago = importe - (importePago * numPagos);
+    var restoImportePagoCliente = importeAlCliente - (importePagoCliente * numPagos);
+    var restoImporteCoste = coste - (importeCoste * numPagos);
+
+    var import1 = (importePago / 30) * diffDias;
+    var import11 = (importePagoCliente / 30) * diffDias;
+    var import12 = (importeCoste / 30) * diffDias;
+    var import2 = importePago - import1;
+    var import21 = importePagoCliente - import11;
+    var import22 = importeCoste - import12;
+    var pagos = [];
+    var nPagos = numPagos;
+    if (importe == 0 || importe < 0) return pagos;
+    if (vm.facturaParcial()) {
+        nPagos++
+    }
+    for (var i = 0; i < nPagos; i++) {
+        // sucesivas fechas de factura
+        var f = moment(fechaPrimeraFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
+        // inicio de periodo
+        var f0 = moment(iniContrato).add(i * divisor, 'month').format('DD/MM/YYYY');
+        // fin de periodo
+        var f2 = moment(inicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        if (vm.facturaParcial()) {
+            if (i > 0) {
+                f0 = moment(inicioMesinicioFactura).add(i * divisor, 'month').format('DD/MM/YYYY');
+            }
+            f2 = moment(inicioMesinicioFactura).add((i + 1) * divisor, 'month').add(-1, 'days').format('DD/MM/YYYY');
+        }
+        /*  if (i == (nPagos - 1)) {
+             f2 = moment(fFactura).format('DD/MM/YYYY');
+         } */
+        var n = i + 1
+        numLetra = n + "/" + nPagos
+
+        var p = {
+            fecha: f,
+            importe: importePago,
+            importeCliente: importePagoCliente,
+            importeCoste: importeCoste,
+            retenGarantias: 0,
+            empresaId: empresaId,
+            clienteId: clienteId,
+            porcentajeBeneficio: 0,
+            porcentajeAgente: 0,
             empresa: empresa,
             cliente: cliente,
             periodo: f0 + "-" + f2,
@@ -10259,7 +10435,7 @@ function loadPrefacturasDelContratoTemp(contratoId) {
 
 function importarPlanificacionObrasTemp() {
     // mensaje de confirmación
-    var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación.¿Desea continuar?";
+    var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
