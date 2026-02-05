@@ -1142,27 +1142,37 @@
                                                                             <div class="row">
                                                                                 <section class="col col-md-12"
                                                                                     style="border:solid; border-width:1px;">
-                                                                                    <header>Datos del presidente
+                                                                                    <header>Datos del Firmante
                                                                                     </header>
                                                                                     <div class="row">
-                                                                                        <section class="col col-md-5">
+                                                                                        <section class="col col-md-4">
                                                                                             <label
                                                                                                 class="label">Nombre</label>
                                                                                             <label class="input">
                                                                                                 <input
-                                                                                                    id="txtNombrePresidente"
-                                                                                                    name="txtNombrePresidente"
-                                                                                                    data-bind="value: nombrePresidente" />
+                                                                                                    id="txtNombreFirmante"
+                                                                                                    name="txtNombreFirmante"
+                                                                                                    data-bind="value: nombreFirmante" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        <section class="col col-md-3">
+                                                                                        <section class="col col-md-2">
                                                                                             <label
                                                                                                 class="label">DNI</label>
                                                                                             <label class="input">
                                                                                                 <input
-                                                                                                    id="txtDniPresidente"
-                                                                                                    name="txtDniPresidente"
-                                                                                                    data-bind="value: dniPresidente" />
+                                                                                                    id="txtDniFirmante"
+                                                                                                    name="txtDniFirmante"
+                                                                                                    data-bind="value: dniFirmante" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label
+                                                                                                class="label">Cargo</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtCargoFirmante"
+                                                                                                    name="txtCargoFirmante"
+                                                                                                    data-bind="value: cargoFirmante" />
                                                                                             </label>
                                                                                         </section>
                                                                                         <section class="col col-md-2">
@@ -1170,9 +1180,9 @@
                                                                                                 class="label">Correo</label>
                                                                                             <label class="input">
                                                                                                 <input
-                                                                                                    id="txtCorreoPresidente"
-                                                                                                    name="txtCorreoPresidente"
-                                                                                                    data-bind="value: correoPresidente" />
+                                                                                                    id="txtCorreoFirmante"
+                                                                                                    name="txtCorreoFirmante"
+                                                                                                    data-bind="value: correoFirmante" />
                                                                                             </label>
                                                                                         </section>
                                                                                         <section class="col col-md-2">
@@ -1971,6 +1981,8 @@
                                                                                                     Fecha</th>
                                                                                                 <th class="text-left">
                                                                                                     Fecha registro</th>
+                                                                                                    <th class="text-left">
+                                                                                                    Fecha real</th>
                                                                                                 <th data-hide="phone"
                                                                                                     class="text-left">
                                                                                                     Concepto</th>
@@ -2001,7 +2013,7 @@
                                                                                         <tfoot
                                                                                             style="background-color: #fff !important;">
                                                                                             <tr>
-                                                                                                <th colspan="3"
+                                                                                                <th colspan="4"
                                                                                                     style="text-align:right !important">
                                                                                                     Totales:</th>
                                                                                                 <th></th>
@@ -5274,15 +5286,15 @@
                                             data-bind="value: importeCalculadoPlanificacionTemp" />
                                     </label>
                                 </section>
-                                <section class="col col-md-2">
-                                    <label class="label">Importe intereses</label>
+                                <section class="col col-md-1">
+                                    <label class="label">Intereses</label>
                                     <label class="input">
                                         <input id="txtImporteInteresesTemp" name="txtImporteInteresesTemp" type="text"
                                             data-bind="value: importeIntereses" />
                                     </label>
                                 </section>
-                                <section class="col col-md-2">
-                                    <label class="label">Porcen. garantías</label>
+                                <section class="col col-md-1">
+                                    <label class="label">% garantías</label>
                                     <label class="input">
                                         <input id="txtPorRetenGarantiasTemp" name="txtPorRetenGarantiasTemp" type="text"
                                             data-bind="value: porRetenGarantiasTemp" />
@@ -5293,6 +5305,14 @@
                                     <label class="input">
                                         <input id="txtFechaPlanificacionObrasTemp" name="txtFechaPlanificacionObrasTemp"
                                             data-bind="value: fechaPlanificacionObrasTemp" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Fecha real</label>
+                                    <label class="input">
+                                        <input id="txtFechaRealPlanificacionObrasTemp" name="txtFechaRealPlanificacionObrasTemp"
+                                            data-bind="value: fechaRealPlanificacionObrasTemp" class="datepicker"
                                             data-dateformat="dd/mm/yy" />
                                     </label>
                                 </section>

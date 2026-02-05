@@ -47,6 +47,7 @@ var subCarpeta = '';
 var carpetaTipo = null;
 var parent = null;
 var totalIntereses = 0;
+var totalPorcentajeTemporal = 0;
 //
 let dataPlanificacion
 
@@ -1126,6 +1127,7 @@ function admData() {
     self.importeCalculadoPlanificacionTemp = ko.observable();
     self.importeIntereses = ko.observable();
     self.fechaPlanificacionObrasTemp = ko.observable();
+    self.fechaRealPlanificacionObrasTemp = ko.observable();
     self.importeFacturadoTemp = ko.observable();
     self.importeCobradoTemp = ko.observable();
     self.importePlanificadoTemp = ko.observable();
@@ -1146,10 +1148,11 @@ function admData() {
     //
     self.difPlanificadoLetrasTemp = ko.observable();
     self.difNumPlanificadoLetrasTemp = ko.observable()
-    //DATOS DEL PRESIDENTE DE LA COMUNIDAD
-    self.nombrePresidente = ko.observable();
-    self.dniPresidente = ko.observable();
-    self.correoPresidente = ko.observable();
+    //DATOS DEL Firmante DE LA COMUNIDAD
+    self.nombreFirmante = ko.observable();
+    self.dniFirmante = ko.observable();
+    self.correoFirmante = ko.observable();
+    self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
 }
 
@@ -1267,9 +1270,10 @@ function loadData(data) {
     //
     vm.fechaFormalizacionContrato(spanishDate(data.fechaFormalizacionContrato));
     //
-    vm.nombrePresidente(data.nombrePresidente);
-    vm.dniPresidente(data.dniPresidente);
-    vm.correoPresidente(data.correoPresidente);
+    vm.nombreFirmante(data.nombreFirmante);
+    vm.dniFirmante(data.dniFirmante);
+    vm.correoFirmante(data.correoFirmante);
+    vm.cargoFirmante(data.cargoFirmante);
     vm.fechaJunta(spanishDate(data.fechaJunta));
 
     //src del iframe con los datos del cliente
@@ -1597,9 +1601,10 @@ var generarContratoDb = function () {
             //
             "fechaFormalizacionContrato": spanishDbDate(vm.fechaFormalizacionContrato()),
             //
-            "nombrePresidente": vm.nombrePresidente(),
-            "dniPresidente": vm.dniPresidente(),
-            "correoPresidente": vm.correoPresidente(),
+            "nombreFirmante": vm.nombreFirmante(),
+            "dniFirmante": vm.dniFirmante(),
+            "correoFirmante": vm.correoFirmante(),
+            "cargoFirmante": vm.cargoFirmante(),
             "fechaJunta": spanishDbDate(vm.fechaJunta()),
             "contratoInteresesId": vm.contratoInteresesId()
         }
@@ -9194,7 +9199,18 @@ function initTablaContratosLineasTasas() {
 
 //IMPRESION DE CONTRATO
 var imprimir = function () {
-    printContrato(vm.contratoId());
+    //miramos primero si el contrato está planificado al 100% o mas
+    if(totalPorcentajeTemporal < 100) {
+        var mensaje = "El contrato no está planificado al 100%";
+        mensError(mensaje);  
+    } else {     
+        //miramos si faltan los datos del firmante
+        if(!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
+            var mensaje = "Faltan datos del firmante, es necesario completar el nombre, cargo, dni, correo y fecha de junta para poder imprimir el contrato.";
+            mensError(mensaje);  
+        }
+         printContrato(vm.contratoId());
+     }      
 }
 
 function printContrato(id) {
@@ -9261,17 +9277,17 @@ function initTablaPlanificacionLineasObrasTemp() {
             }
 
             // Total Porcentaje (columna 3)
-            var totalPorcentaje = api
-                .column(3)
+            totalPorcentajeTemporal = api
+                .column(4)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-            $(api.columns(3).footer()).html(numeral(totalPorcentaje).format('0,0.00'));
+            $(api.columns(4).footer()).html(numeral(totalPorcentajeTemporal).format('0,0.00'));
 
             // Total over all pages
             totalImporte = api
-                .column(4)
+                .column(5)
                 .data()
                 .reduce(function (a, b) {
                     var dif = 0
@@ -9283,36 +9299,36 @@ function initTablaPlanificacionLineasObrasTemp() {
                 }, 0);
 
             // Update footer
-            $(api.columns(4).footer()).html(
+            $(api.columns(5).footer()).html(
                 numeral(totalImporte).format('0,0.00')
             );
 
             var totalInt = api
-                .column(5)
+                .column(6)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-            $(api.columns(5).footer()).html(numeral(totalInt).format('0,0.00'));
+            $(api.columns(6).footer()).html(numeral(totalInt).format('0,0.00'));
 
 
             // Total Núm. Prefacturas (columna 6)
             var totalPrefacturas = api
-                .column(6)
+                .column(7)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)));
                 }, 0);
-            $(api.columns(6).footer()).html(numeral(totalPrefacturas).format('0'));
+            $(api.columns(7).footer()).html(numeral(totalPrefacturas).format('0'));
 
             // Total Importe Prefacturado (columna 6)
             var totalPrefacturado = api
-                .column(7)
+                .column(8)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-            $(api.columns(7).footer()).html(numeral(totalPrefacturado).format('0,0.00'));
+            $(api.columns(8).footer()).html(numeral(totalPrefacturado).format('0,0.00'));
 
             // Opcional: actualizar variables VM
             vm.importePlanificadoTemp(numeral(totalImporte).format('0,0.00'));
@@ -9341,6 +9357,7 @@ function initTablaPlanificacionLineasObrasTemp() {
         columns: [
             { data: "fecha" }, // columna oculta
             { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
+            { data: "fechaReal", render: function (data) { if(data ) {return moment(data).format('DD/MM/YYYY');} else { return ""; }  } },
             { data: "concepto" },
             { data: "porcentaje", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "importe", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
@@ -9465,6 +9482,7 @@ function limpiaDataLineaPlanificacionObrasTemp() {
     vm.conceptoPlanificacionTemp('');
     vm.porcentajePlanificacionTemp(0);
     vm.fechaPlanificacionObrasTemp(vm.fechaInicio());
+    vm.fechaRealPlanificacionObrasTemp(null);
     vm.importeCalculadoPlanificacionTemp(0);
     vm.importeIntereses(0);
     vm.porRetenGarantiasTemp(0);
@@ -9486,6 +9504,7 @@ function aceptarLineaPlanificacionObrasTemp() {
             concepto: vm.conceptoPlanificacionTemp(),
             porcentaje: vm.porcentajePlanificacionTemp(),
             fecha: spanishDbDate(vm.fechaPlanificacionObrasTemp()),
+            fechaReal: spanishDbDate(vm.fechaRealPlanificacionObrasTemp()),
             importe: vm.importeCalculadoPlanificacionTemp(),
             importeIntereses: vm.importeIntereses(),
             porRetenGarantias: vm.porRetenGarantiasTemp(),
@@ -9552,6 +9571,7 @@ function loadDataLineaPlanificacionObrasTemp(data) {
     };
     vm.porcentajePlanificacionTemp(data.porcentaje);
     vm.fechaPlanificacionObrasTemp(spanishDate(data.fecha));
+    vm.fechaRealPlanificacionObrasTemp(spanishDate(data.fechaReal));
     vm.porRetenGarantiasTemp(data.porRetenGarantias);
     vm.importeCalculadoPlanificacionTemp(data.importe);
     vm.importeIntereses(data.importeIntereses);
@@ -9626,6 +9646,7 @@ function limpiarModalLineasPlanificacionTemp() {
     vm.conceptoPlanificacionTemp(null);
     vm.porcentajePlanificacionTemp(null);
     vm.fechaPlanificacionObrasTemp(null);
+    vm.fechaRealPlanificacionObrasTemp(null);
     vm.importeCalculadoPlanificacionTemp(null);
     vm.importeIntereses(null);
     vm.esAdicionalTemp(0);

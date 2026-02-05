@@ -146,7 +146,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fdo. {datos_contrato.nombrePresidente}"
+                "Value": "Fdo. {datos_contrato.nombreFirmante}"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -496,7 +496,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp;&nbsp;<u>LA PROPIEDAD</u></font>\n</p><p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><br></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp; Cliente:&nbsp; &nbsp;{datos_contrato.nombreCliente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Nombre: {datos_contrato.nombrePresidente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cargo:&nbsp; &nbsp; PRESIDENTE</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cuenta Bancaria: {datos_contrato.iban}</font>\n</p>\n\n"
+                "Value": "<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp;&nbsp;<u>LA PROPIEDAD</u></font>\n</p><p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\"><br></p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 6pt;\">\n  <font size=\"10\">&nbsp; Cliente:&nbsp; &nbsp;{datos_contrato.nombreCliente}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Nombre: {datos_contrato.nombreFirmante}</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cargo:&nbsp; &nbsp; PRESIDENTE</font>\n</p>\n\n<p style=\"font-family: Tahoma; margin: 0px 0px 12pt;\">\n  <font size=\"10\">&nbsp; Cuenta Bancaria: {datos_contrato.iban}</font>\n</p>\n\n"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
