@@ -10463,7 +10463,7 @@ function importarPlanificacionObrasTemp() {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/importa/palnificacion/lineas/temporales/" + vm.contratoId(), null, function (err, data) {
+            llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/importa/palnificacion/lineas/temporales/" + vm.contratoId() + "/" + vm.contratoInteresesId(), null, function (err, data) {
                 if (err) return;
                 loadPlanificacionLineasObras(vm.contratoId(), null);
             });
