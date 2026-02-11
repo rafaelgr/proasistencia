@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "1cce6524e30f89555d3273f0dd08a51a",
+  "ReportGuid": "cb65404ed2bf4b8bdeaca52dba7a7fd7",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_reabita2.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1770307434000+0100)/",
+  "ReportChanged": "/Date(1770643040000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -256,7 +256,7 @@
             "9": {
               "Ident": "StiText",
               "Name": "Text2",
-              "ClientRectangle": "7.4,12.2,3,0.4",
+              "ClientRectangle": "7.4,12.2,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
