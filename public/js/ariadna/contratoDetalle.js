@@ -1300,12 +1300,12 @@ function loadData(data) {
         $('#btnGenerarPrefacturas').hide();
         $('#btnAltaPrefactura').hide();
         $('#wid-id-new-19').show();
-        if(data.contratoIntereses){
-             $('#btnImportarPlanificacionObrasTemp').hide();
+        if (data.contratoIntereses) {
+            $('#btnImportarPlanificacionObrasTemp').hide();
         } else {
-               $('#btnImportarPlanificacionObrasTemp').show();
+            $('#btnImportarPlanificacionObrasTemp').show();
         }
-     
+
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);
@@ -1353,9 +1353,9 @@ function loadData(data) {
     }
 
     //si hay contrato de intrereses recuperamos su total
-    if(data.contratoInteresesId){
+    if (data.contratoInteresesId) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/lineas/" + data.contratoInteresesId, null, function (err, data) {
-            if(err) return;
+            if (err) return;
             totalIntereses = 0;
             data.forEach(function (linea) {
                 totalIntereses += linea.totalLinea;
@@ -9200,17 +9200,17 @@ function initTablaContratosLineasTasas() {
 //IMPRESION DE CONTRATO
 var imprimir = function () {
     //miramos primero si el contrato está planificado al 100% o mas
-    if(totalPorcentajeTemporal < 100) {
+    if (totalPorcentajeTemporal < 100) {
         var mensaje = "El contrato no está planificado al 100%";
-        mensError(mensaje);  
-    } else {     
+        mensError(mensaje);
+    } else {
         //miramos si faltan los datos del firmante
-        if(!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
+        if (!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
             var mensaje = "Faltan datos del firmante, es necesario completar el nombre, cargo, dni, correo y fecha de junta para poder imprimir el contrato.";
-            mensError(mensaje);  
+            mensError(mensaje);
         }
-         printContrato(vm.contratoId());
-     }      
+        printContrato(vm.contratoId());
+    }
 }
 
 function printContrato(id) {
@@ -9357,7 +9357,7 @@ function initTablaPlanificacionLineasObrasTemp() {
         columns: [
             { data: "fecha" }, // columna oculta
             { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
-            { data: "fechaReal", render: function (data) { if(data ) {return moment(data).format('DD/MM/YYYY');} else { return ""; }  } },
+            { data: "fechaReal", render: function (data) { if (data) { return moment(data).format('DD/MM/YYYY'); } else { return ""; } } },
             { data: "concepto" },
             { data: "porcentaje", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "importe", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
@@ -10489,7 +10489,10 @@ var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId
             importe: importe
         }
         mensajeAceptarCancelar(mensaje, function () {
-            done(null, true);
+           llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, datos, function (err, data) {
+                    if (err) return done(err);
+                    done(null, true);
+                });
         }, function () {
             done(null, false);
         });
@@ -10656,7 +10659,14 @@ var controlDePrefacturasYaGeneradasPlanificacionTemp = function (contratoId, con
             importe: importe
         }
         mensajeAceptarCancelar(mensaje, function () {
-            done(null, true);
+            mensajeAceptarCancelar(mensaje, function () {
+                llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, datos, function (err, data) {
+                    if (err) return done(err);
+                    done(null, true);
+                });
+            }, function () {
+                done(null, false);
+            });
         }, function () {
             done(null, false);
         });
