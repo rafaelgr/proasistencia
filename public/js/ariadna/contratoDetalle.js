@@ -10457,6 +10457,7 @@ function loadPrefacturasDelContratoTemp(contratoId) {
 function importarPlanificacionObrasTemp() {
     // mensaje de confirmación
     var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
+    if(totalPorcentajeTemporal < 100) mens = "EL PORCENTAJER PLANIFICADO ES INFERIOR AL 100%. Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
