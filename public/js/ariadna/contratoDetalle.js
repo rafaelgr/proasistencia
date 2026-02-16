@@ -47,6 +47,7 @@ var subCarpeta = '';
 var carpetaTipo = null;
 var parent = null;
 var totalIntereses = 0;
+var  totalIntTemp = 0;
 var totalPorcentajeTemporal = 0;
 //
 let dataPlanificacion
@@ -1194,6 +1195,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.contratoInteresesId(data.contratoInteresesId);
+
     //
     vm.importeCliente(data.importeCliente);
     vm.importeClienteFormat(data.importeCliente);
@@ -1236,6 +1238,14 @@ function loadData(data) {
     }
     vm.beneficioLineal(data.beneficioLineal);
     vm.contratoIntereses(data.contratoIntereses);
+    if (data.contratoIntereses) {
+        $('#btnNuevaLineaPlanificacionObrasTemp').hide();
+        $('#btnNuevaLineaPlanificacionObras').hide();
+
+    } else {
+        $('#btnNuevaLineaPlanificacionObrasTemp').show();
+        $('#btnNuevaLineaPlanificacionObras').show();
+    }
     vm.liquidarBase(data.liquidarBasePrefactura);
     vm.preaviso(data.preaviso);
     //
@@ -7757,15 +7767,20 @@ function initTablaPlanificacionLineasObras() {
                 var bt2 = "";
                 var bt3 = "";
                 if (!vm.contratoCerrado()) {
-                    if (row.importeFacturado == '0.00') {
-                        bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                        bt3 = "<button class='btn btn-circle btn-primary'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
-                    }
+                    if (!vm.contratoIntereses()) {
+                        if (row.importeFacturado == '0.00') {
+                            bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                            bt3 = "<button class='btn btn-circle btn-primary'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
+                        }
 
-                    if (row.importePrefacturado == '0.00') {
-                        bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                        if (row.importePrefacturado == '0.00') {
+                            bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                        }
+                    } else {
+                        if (row.importeFacturado == '0.00') {
+                            bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                        }
                     }
-
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
                 return html;
@@ -9200,17 +9215,42 @@ function initTablaContratosLineasTasas() {
 //IMPRESION DE CONTRATO
 var imprimir = function () {
     //miramos primero si el contrato está planificado al 100% o mas
+    //miramos si faltan los datos del firmante
+    if (!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
+        var mensaje = "Faltan datos del firmante, es necesario completar el nombre, cargo, dni, correo y fecha de junta para poder imprimir el contrato.";
+        return mensError(mensaje);
+    }
     if (totalPorcentajeTemporal < 100) {
+        var mens = "No se ha planificado el 100% del contrato, ¿desea continuar?.";
+        mensajeAceptarCancelar(mens, function () {
+            printContrato(vm.contratoId())
+        }, function () {
+            // cancelar no hace nada
+        });
+    } else {
+        printContrato(vm.contratoId());
+    }
+    /* if (totalPorcentajeTemporal < 100) {
         var mensaje = "El contrato no está planificado al 100%";
         mensError(mensaje);
     } else {
         //miramos si faltan los datos del firmante
         if (!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
             var mensaje = "Faltan datos del firmante, es necesario completar el nombre, cargo, dni, correo y fecha de junta para poder imprimir el contrato.";
-            mensError(mensaje);
+            return mensError(mensaje);
         }
-        printContrato(vm.contratoId());
-    }
+        if (totalPorcentajeTemporal < 100) {
+            var mens = "No se ha planificado el 100% del contrato, ¿desea continuar?.";
+            mensajeAceptarCancelar(mens, function () {
+               printContrato(vm.contratoId())
+            }, function () {
+                // cancelar no hace nada
+            });
+        } else {
+            printContrato(vm.contratoId());
+        }
+
+    } */
 }
 
 function printContrato(id) {
@@ -9224,7 +9264,7 @@ function crearContratoIntereses() {
     }
     var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
     mensajeAceptarCancelar(mensaje, function () {
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId() + "/" + totalIntereses, null, function (err, data) {
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/crear/interes/" + vm.contratoId() + "/" + totalIntTemp, null, function (err, data) {
             if (err) { return errorGeneral(err, done); }
             else {
                 window.open("ContratoDetalle.html?ContratoId=" + data + "&CMD=INT", '_new');
@@ -9303,13 +9343,13 @@ function initTablaPlanificacionLineasObrasTemp() {
                 numeral(totalImporte).format('0,0.00')
             );
 
-            var totalInt = api
+            totalIntTemp = api
                 .column(6)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-            $(api.columns(6).footer()).html(numeral(totalInt).format('0,0.00'));
+            $(api.columns(6).footer()).html(numeral(totalIntTemp).format('0,0.00'));
 
 
             // Total Núm. Prefacturas (columna 6)
@@ -9392,7 +9432,12 @@ function initTablaPlanificacionLineasObrasTemp() {
                                     "onclick=\"imprimirContratoAdicional('" + row.refPresupuestoAdicional + "')\" " +
                                     "title='Imprimir contrato adicional'>" +
                                     "<i class='fa fa-print fa-fw'></i></button>";
+                        } else {
+                            bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
+                            bt2 = "";
+                            bt3 = "";
                         }
+
 
 
                     }
@@ -10457,7 +10502,7 @@ function loadPrefacturasDelContratoTemp(contratoId) {
 function importarPlanificacionObrasTemp() {
     // mensaje de confirmación
     var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
-    if(totalPorcentajeTemporal < 100) mens = "EL PORCENTAJER PLANIFICADO ES INFERIOR AL 100%. Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
+    if (totalPorcentajeTemporal < 100) mens = "EL PORCENTAJER PLANIFICADO ES INFERIOR AL 100%. Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
@@ -10490,10 +10535,10 @@ var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId
             importe: importe
         }
         mensajeAceptarCancelar(mensaje, function () {
-           llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/temporales/" + contratoId + "/" + contPlanificacionTempId, datos, function (err, data) {
-                    if (err) return done(err);
-                    done(null, true);
-                });
+            llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/" + contratoId + "/" + contPlanificacionId, datos, function (err, data) {
+                if (err) return done(err);
+                done(null, true);
+            });
         }, function () {
             done(null, false);
         });
@@ -10622,7 +10667,7 @@ var aceptarGenerarPrefacturasPlanificacionIntereses = function () {
         prefacturasIntereses: vm.prefacturasAGenerarIntereses()
     };
 
-    controlDePrefacturasYaGeneradasPlanificacionIntereses(vm.contratoId(), RegPlanificacion[0].contPlanificacionTempId, function (err, result) {
+    controlDePrefacturasYaGeneradasPlanificacionIntereses(vm.contratoId(), RegPlanificacion[0].contPlanificacionId, function (err, result) {
         if (err) return;
         if (!result) {
             $('#modalGenerarPrefacturasPlanificacion').modal('hide');
