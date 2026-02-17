@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "c45be0dfc4f3d5b79c04b1faa1df6720",
+  "ReportGuid": "70bdc194b9262fc046b298f17e1fd8c0",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1770641436000+0100)/",
+  "ReportChanged": "/Date(1771257104000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -377,7 +377,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} {IIF(Sum(DataBand4,datos_contrato_letras.numletras) > 1, \"letras\", \"letra\")} de cambio de {datos_contrato_letras.sumTotalConIva.ToString(\"#,##0.00\")} € {IIF(Sum(DataBand4,datos_contrato_letras.numletras) > 1, \"cada una\", \"\")}"
+                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} {IIF(Sum(DataBand4,datos_contrato_letras.numletras) > 1, \"letras\", \"letra\")} de cambio de {Math.Round(datos_contrato_letras.sumTotalConIva, 2).ToString(\"#,##0.00\")} € {IIF(Sum(DataBand4,datos_contrato_letras.numletras) > 1, \"cada una\", \"\")}"
               },
               "Font": ";10;;",
               "Border": ";;;;;;;solid:0,0,0",
