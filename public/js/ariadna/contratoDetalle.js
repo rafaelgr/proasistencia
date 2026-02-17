@@ -47,7 +47,7 @@ var subCarpeta = '';
 var carpetaTipo = null;
 var parent = null;
 var totalIntereses = 0;
-var  totalIntTemp = 0;
+var totalIntTemp = 0;
 var totalPorcentajeTemporal = 0;
 //
 let dataPlanificacion
@@ -1299,7 +1299,10 @@ function loadData(data) {
         $('#btnGenerarPrefacturas').show();
         $('#wid-id-new-19').hide();
         $('#btnImportarPlanificacionObrasTemp').hide();
-
+        //
+        $('#btnImprimirActaRecepcion').hide();
+        $('#btnImprimir').hide();
+        $('#btnIntereses').hide();
     } else {
         $('.obras').show()
         actualizaCobrosPlanificacion(data.contratoId);
@@ -1315,6 +1318,10 @@ function loadData(data) {
         } else {
             $('#btnImportarPlanificacionObrasTemp').show();
         }
+        //
+        $('#btnImprimirActaRecepcion').show();
+        $('#btnImprimir').show();
+        $('#btnIntereses').show();
 
     }
     loadDepartamento(data.tipoContratoId);
@@ -3549,7 +3556,7 @@ var controlDePrefacturasYaGeneradas = function (contratoId, done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
         if (err) return done(err);
         if (data.length == 0) return done(null, true);
-        var mensaje = "Ya hay prefacturas temporales generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
+        var mensaje = "Ya hay prefacturas generadas para este contrato. ¿Desea borrarlas y volverlas a generar?";
         mensajeAceptarCancelar(mensaje, function () {
             llamadaAjax('DELETE', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/" + contratoId, null, function (err, data) {
                 if (err) return done(err);
