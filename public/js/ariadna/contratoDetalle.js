@@ -1155,6 +1155,11 @@ function admData() {
     self.correoFirmante = ko.observable();
     self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
+    //importes prefacturacion real
+    self.diferenciaPrefacturadoRealFormat = ko.observable();
+    self.importePrefacturadoRealFormat = ko.observable();
+    self.diferenciaPrefacturadoReal = ko.observable();
+
 }
 
 function loadData(data) {
@@ -3999,7 +4004,10 @@ function initTablaPrefacturas(departamentoId) {
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-
+                
+                let n = numeral(total9).format('0,0.00');
+                vm.importePrefacturadoRealFormat(n);
+                vm.diferenciaPrefacturadoRealFormat(numeral(total9 - vm.importeCliente()).format('0,0.00'));
             // Total over all pages
             total10 = api
                 .column(10)
@@ -9268,6 +9276,9 @@ function printContrato(id) {
 function crearContratoIntereses() {
     if (vm.contratoInteresesId()) {
         return mensError('Ya hay un contrato de intereses asociado a este contrato.');
+    }
+    if (totalIntTemp === 0 || !totalIntTemp) {
+        return mensError('No hay intereses creados en la planificación temporal.');
     }
     var mensaje = "Se creará un contrato de intereses asociado a este contrato. ¿Desea continuar?";
     mensajeAceptarCancelar(mensaje, function () {

@@ -132,7 +132,7 @@
         border-color: #535879;
     }
 
-     .custom-btn2 {
+    .custom-btn2 {
         background-color: #1d7996;
         /* tu color */
         border-color: #29758b;
@@ -801,7 +801,8 @@
                                                                                         <input id="chkIntereses"
                                                                                             type="checkbox"
                                                                                             name="chkIntereses"
-                                                                                            data-bind="checked: contratoIntereses" disabled/>
+                                                                                            data-bind="checked: contratoIntereses"
+                                                                                            disabled />
                                                                                         Contrato de intereses
                                                                                     </div>
                                                                                 </section>
@@ -1376,7 +1377,8 @@
                                                                                 <button id="btnImprimirActaRecepcion"
                                                                                     title="Imprimir acta de recepción"
                                                                                     class="btn custom-btn2 btn-circle btn-lg">
-                                                                                    <i class="fa fa-lg fa-file-text-o"></i>
+                                                                                    <i
+                                                                                        class="fa fa-lg fa-file-text-o"></i>
                                                                                 </button>
                                                                                 <button id="btnImprimir"
                                                                                     title="Imprimir contrato"
@@ -1861,7 +1863,7 @@
                                                         <!-- FIN WIDGET BASES Y CUOTAS -->
                                                     </article>
                                                 </div>
-                                                <section id="widget-grid" >
+                                                <section id="widget-grid">
                                                     <div class="row">
                                                         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -1981,7 +1983,7 @@
                                                                                                     Fecha</th>
                                                                                                 <th class="text-left">
                                                                                                     Fecha registro</th>
-                                                                                                    <th class="text-left">
+                                                                                                <th class="text-left">
                                                                                                     Fecha real</th>
                                                                                                 <th data-hide="phone"
                                                                                                     class="text-left">
@@ -2398,9 +2400,38 @@
                                                                     </header>
                                                                     <fieldset>
                                                                         <div class="row">
-                                                                            <legend style="height: 20px;" class="obras">
+                                                                            <legend
+                                                                                style="height: 20px; margin-top: 20px;"
+                                                                                class="obras">
+                                                                                <h5>CONTRATO</h5>
+                                                                            </legend>
+                                                                            <fieldset class="pull-left obras">
+                                                                                <legend>
+                                                                                    Totales
+                                                                                </legend>
+                                                                                <strong>Total contrato: </strong>
+                                                                                <span
+                                                                                    data-bind="text: importeClienteFormat"></span>
+                                                                                <br />
+                                                                                <strong> Importe prefacturado: </strong>
+                                                                                <span
+                                                                                    data-bind="text: importePrefacturadoRealFormat"></span>
+                                                                                <br />
+                                                                                <strong style="color:red;"> Diferencia
+                                                                                </strong>
+                                                                                <span style="color:red;"
+                                                                                    data-bind="text: diferenciaPrefacturadoRealFormat"></span>
+                                                                                <br />
+                                                                            </fieldset>
+                                                                        </div>
+                                                                        <div class="row">
+
+                                                                            <legend
+                                                                                style="height: 20px; margin-top: 20px;"
+                                                                                class="obras">
                                                                                 <h5>LETRAS</h5>
                                                                             </legend>
+
                                                                             <fieldset class="pull-left obras">
                                                                                 <legend>
                                                                                     Prefacturas
@@ -5311,7 +5342,8 @@
                                 <section class="col col-md-2">
                                     <label class="label">Fecha real</label>
                                     <label class="input">
-                                        <input id="txtFechaRealPlanificacionObrasTemp" name="txtFechaRealPlanificacionObrasTemp"
+                                        <input id="txtFechaRealPlanificacionObrasTemp"
+                                            name="txtFechaRealPlanificacionObrasTemp"
                                             data-bind="value: fechaRealPlanificacionObrasTemp" class="datepicker"
                                             data-dateformat="dd/mm/yy" />
                                     </label>

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "cb65404ed2bf4b8bdeaca52dba7a7fd7",
+  "ReportGuid": "7b18f6483237b317304eaac7714a5557",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_reabita2.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1770643040000+0100)/",
+  "ReportChanged": "/Date(1771413667000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -85,7 +85,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p>{datos_contrato.nombreFirmante}, mayor de edad, con domicilio a estos efectos de comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniFirmante} y correo electrónico {datos_contrato.correoFirmante}</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</p>"
+                "Value": "<p>D. {datos_contrato.nombreFirmante}, mayor de edad, con domicilio a estos efectos de comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniFirmante} y correo electrónico {datos_contrato.correoFirmante}</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -155,7 +155,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p>{datos_contrato.nombreFirmante}, en calidad de {datos_contrato.cargoFirmante} de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-\n{datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniFirmante}, denominándose en lo sucesivo la <b>PROPIEDAD</b>.</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el <b>CONTRATISTA</b>.</p>"
+                "Value": "<p>D. {datos_contrato.nombreFirmante}, en calidad de {datos_contrato.cargoFirmante} de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-\n{datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniFirmante}, denominándose en lo sucesivo la <b>PROPIEDAD</b>.</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el <b>CONTRATISTA</b>.</p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -290,7 +290,6 @@
           "DataSourceName": "datos_contrato"
         }
       },
-      "PaperSize": "A4",
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
@@ -363,7 +362,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<b>Cuarta. - MODIFICACIONES AL PROYECTO Y OBRAS ADICIONALES.</b>\n\n<p> durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la <b>PROPIEDAD</b>, \nhubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras \nadicionales que no estuviesen contempladas en el Presupuesto, la valoración de esta unidad de obra será objeto de precio \ncontradictorio en base a los precios ofertados por el <b>CONTRATISTA</b>.</p>\n\n<p>Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente \nContrato a todos los efectos.</p>\n<b>Quinta. - SEGURIDAD Y SALUD.</b>\n\n<p>Si la obra requiriera la elaboración de un Proyecto, la <b>PROPIEDAD</b>, deberá entregar al <b>CONTRATISTA</b> el Estudio de \nSeguridad y Salud, incluido en el mismo, antes del inicio de las obras.</p>\n\n<p>El <b>CONTRATISTA</b> una vez analizado el Estudio de Seguridad y Salud, presentará a la <b>PROPIEDAD</b> el Plan de Seguridad de \nlas obras.</p>\n\n<p>Si la obra no requiriera proyecto, el <b>CONTRATISTA</b> elaborará directamente el Plan de Seguridad y Salud.</p>\n\n<p>El <b>CONTRATISTA</b> obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y Salud nombrado \npor la <b>PROPIEDAD</b>.</p>\n\n<b>Sexta. - GASTOS ADICIONALES</b> \n\n<p>Serán por cuenta de la <b>PROPIEDAD</b> los siguientes gastos:</p>\n<ol>\n<li>La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o \n\tfuturos, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.</li>\n<li>Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que \n\tfueran necesarios.</li>\n<li>Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.</li>\n<li>El consumo de agua y energía eléctrica.</li>\n<li>Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como \n\tlocal para acopio de materiales y aseo de operarios.</li>\n<li>Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</li>\n</ol>\n\n<p>El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares \n(grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las \nobras, serán por cuenta del <b>CONTRATISTA</b>.</p>\n\n\n<b>Séptima. - CERTIFICACIONES Y ABONO DE LAS OBRAS.</b>\n\n<p>Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, \nemitiéndose la correspondiente Certificación de Obra que será entregada a la <b>PROPIEDAD</b>, quien dispondrá \nde un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, \nse entenderá aceptada.</p>\n\n<p>El abono de las obras por importe de {datos_contrato.cerFinal}€ Incluido IVA e intereses, se realizará mediante recibo/letras \ndomiciliado en la cta. cte. número {datos_contrato.iban} se adjunta orden Sepa de domiciliación, y en los \nsiguientes plazos:</p>"
+                "Value": "<b>Cuarta. - MODIFICACIONES AL PROYECTO Y OBRAS ADICIONALES.</b>\n\n<p> durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la <b>PROPIEDAD</b>, \nhubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras \nadicionales que no estuviesen contempladas en el Presupuesto, la valoración de esta unidad de obra será objeto de precio \ncontradictorio en base a los precios ofertados por el <b>CONTRATISTA</b>.</p>\n\n<p>Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente \nContrato a todos los efectos.</p>\n<b>Quinta. - SEGURIDAD Y SALUD.</b>\n\n<p>Si la obra requiriera la elaboración de un Proyecto, la <b>PROPIEDAD</b>, deberá entregar al <b>CONTRATISTA</b> el Estudio de \nSeguridad y Salud, incluido en el mismo, antes del inicio de las obras.</p>\n\n<p>El <b>CONTRATISTA</b> una vez analizado el Estudio de Seguridad y Salud, presentará a la <b>PROPIEDAD</b> el Plan de Seguridad de \nlas obras.</p>\n\n<p>Si la obra no requiriera proyecto, el <b>CONTRATISTA</b> elaborará directamente el Plan de Seguridad y Salud.</p>\n\n<p>El <b>CONTRATISTA</b> obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y Salud nombrado \npor la <b>PROPIEDAD</b>.</p>\n\n<b>Sexta. - GASTOS ADICIONALES</b> \n\n<p>Serán por cuenta de la <b>PROPIEDAD</b> los siguientes gastos:</p>\n<ol>\n<li>La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o \n\tfuturos, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.</li>\n<li>Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que \n\tfueran necesarios.</li>\n<li>Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.</li>\n<li>El consumo de agua y energía eléctrica.</li>\n<li>Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como \n\tlocal para acopio de materiales y aseo de operarios.</li>\n<li>Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</li>\n</ol>\n\n<p>El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares \n(grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las \nobras, serán por cuenta del <b>CONTRATISTA</b>.</p>\n\n\n<b>Séptima. - CERTIFICACIONES Y ABONO DE LAS OBRAS.</b>\n\n<p>Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, \nemitiéndose la correspondiente Certificación de Obra que será entregada a la <b>PROPIEDAD</b>, quien dispondrá \nde un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, \nse entenderá aceptada.</p>\n\n<p>El abono de las obras por importe de {datos_contrato.totalContratoIva}€ Incluido IVA e intereses, se realizará mediante recibo/letras \ndomiciliado en la cta. cte. número {datos_contrato.iban} se adjunta orden Sepa de domiciliación, y en los \nsiguientes plazos:</p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -885,12 +884,12 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text17",
-              "ClientRectangle": "0.4,0.22,13.2,0.4",
+              "ClientRectangle": "0.4,0.22,5.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "LA PROPIEDAD.............................................EL CONTRATISTA"
+                "Value": "LA PROPIEDAD"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -917,12 +916,29 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text24",
-              "ClientRectangle": "7,2.02,6.2,0.4",
+              "ClientRectangle": "10.6,2.02,6.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "FDO. Mª DOLORES GOMEZ MARTIN"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text33",
+              "Guid": "0dcb56091820445da31c8a840c479d05",
+              "ClientRectangle": "10.6,0.1,5.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "EL CONTRATISTA"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",

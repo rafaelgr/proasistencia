@@ -1,23 +1,15 @@
 {
-  "ReportVersion": "2021.3.6.0",
-  "ReportGuid": "8af02d9995854746a5455e7906d8ba11",
+  "ReportVersion": "2025.4.3",
+  "ReportGuid": "184b54ad496aa2930f6f904577affae1",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
+  "ReportFile": "oferta_reparaciones_proveedor_json.mrt",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1729496328959+0200)/",
+  "ReportChanged": "/Date(1771326135000+0100)/",
   "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
   "CalculationMode": "Interpretation",
-  "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class OfertaGeneral : Stimulsoft.Report.StiReport\r\n    {\r\n        public OfertaGeneral()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
-  "ReferencedAssemblies": {
-    "0": "System.Dll",
-    "1": "System.Drawing.Dll",
-    "2": "System.Windows.Forms.Dll",
-    "3": "System.Data.Dll",
-    "4": "System.Xml.Dll",
-    "5": "Stimulsoft.Controls.Dll",
-    "6": "Stimulsoft.Base.Dll",
-    "7": "Stimulsoft.Report.Dll"
-  },
   "Pages": {
     "0": {
       "Ident": "StiPage",
@@ -32,6 +24,7 @@
         "0": {
           "Ident": "StiPageHeaderBand",
           "Name": "CabeceraPagina",
+          "CanGrow": true,
           "ClientRectangle": "0,0.4,19,4.6",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -278,7 +271,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PiePagina",
-          "ClientRectangle": "0,35,19,1.4",
+          "ClientRectangle": "0,29.8,19,1.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -325,6 +318,7 @@
         "2": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas",
+          "CanGrow": true,
           "ClientRectangle": "0,5.8,19,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -336,6 +330,7 @@
         "3": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,6.6,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -366,6 +361,7 @@
         "4": {
           "Ident": "StiHeaderBand",
           "Name": "CabeceraLineas",
+          "CanGrow": true,
           "ClientRectangle": "0,8.2,19,1.2",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -405,10 +401,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 4.0,
-                "Right": 0.0,
-                "Top": 0.0,
-                "Bottom": 0.0
+                "Left": 4,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
               },
               "Type": "Expression"
             },
@@ -447,10 +443,10 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
-                "Left": 0.0,
-                "Right": 2.0,
-                "Top": 0.0,
-                "Bottom": 0.0
+                "Left": 0,
+                "Right": 2,
+                "Top": 0,
+                "Bottom": 0
               },
               "Type": "Expression"
             },
@@ -498,7 +494,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Precio\r\nOferta"
+                "Value": "Precio\nOferta"
               },
               "HorAlignment": "Right",
               "Font": ";11;Bold;",
@@ -516,7 +512,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Muy Sr. Nuestro por la presente le informamos de los trabajos adjudicados a su empresasegún detalle"
+                "Value": "Muy Sr. Nuestro por la presente le informamos de los trabajos adjudicados a su empresa según detalle"
               },
               "Font": ";9.75;;",
               "Border": ";;;;;;;solid:Black",
@@ -530,6 +526,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
+          "CanGrow": true,
           "ClientRectangle": "0,10.2,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -555,10 +552,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -582,10 +580,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -611,6 +610,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false
               }
@@ -658,6 +658,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false
               },
@@ -681,10 +682,11 @@
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -744,6 +746,7 @@
         "6": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,11.8,19,0.2",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -787,10 +790,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -802,6 +806,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
+          "CanGrow": true,
           "ClientRectangle": "0,12.8,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -847,10 +852,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 8,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false,
+                "NegativePattern": 8,
                 "PositivePattern": 3,
                 "Symbol": "€"
               },
@@ -862,6 +868,7 @@
         "8": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
+          "CanGrow": true,
           "ClientRectangle": "0,14,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -910,6 +917,7 @@
         "9": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
+          "CanGrow": true,
           "ClientRectangle": "0,15.2,19,1.6",
           "Interaction": {
             "Ident": "StiBandInteraction"
@@ -925,7 +933,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "ABONO DE LOS TRABAJOS\r\n\r\nLa forma de abono de los trabajos será la convenida en el Contrato de Colaboración suscrito por las partes."
+                "Value": "ABONO DE LOS TRABAJOS\n\nLa forma de abono de los trabajos será la convenida en el Contrato de Colaboración suscrito por las partes."
               },
               "Font": ";10;;",
               "Border": "Bottom;;;;;;;solid:0,0,0",
@@ -978,11 +986,10 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiPercentageFormatService",
-                "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, PercentageSymbol",
-                "PositivePattern": 1,
                 "Symbol": "%"
               },
               "Type": "Expression"
@@ -1006,6 +1013,7 @@
                 "Ident": "StiNumberFormatService",
                 "NegativePattern": 1,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "UseLocalSetting": false
               },
@@ -1027,10 +1035,11 @@
               "TextBrush": "solid:Black",
               "TextFormat": {
                 "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 5,
                 "DecimalSeparator": ",",
+                "DecimalDigits": 2,
                 "GroupSeparator": ".",
                 "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
                 "PositivePattern": 1,
                 "Symbol": "€"
               },
@@ -1048,6 +1057,7 @@
           "Ident": "StiFooterBand",
           "Name": "PieOferta",
           "PrintOn": "OnlyLastPage",
+          "CanGrow": true,
           "ClientRectangle": "0,19,19,5",
           "Interaction": {
             "Ident": "StiInteraction"
@@ -1161,23 +1171,17 @@
               "Stretch": true,
               "ImageURL": {
                 "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/firma+proasistencia.jpg"
-              }
+              },
+              "ImageBytes": ""
             }
           },
           "PrintAtBottom": true
         }
       },
       "PaperSize": "A4",
-      "PageWidth": 21.0,
-      "PageHeight": 28.0,
+      "PageHeight": 28,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
-      },
-      "Margins": {
-        "Left": 1.0,
-        "Right": 1.0,
-        "Top": 1.0,
-        "Bottom": 1.0
       },
       "ReportUnit": {
         "Ident": "StiCentimetersUnit"
