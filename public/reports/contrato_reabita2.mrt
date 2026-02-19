@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "deac6093bdd3421da2a87d7b51e6a9c0",
+  "ReportGuid": "33c86def7ab2d84ba9da7992f216bf08",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_reabita2.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1765962649000+0100)/",
+  "ReportChanged": "/Date(1771490267000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -85,7 +85,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p>{datos_contrato.nombrePresidente}, mayor de edad, con domicilio a estos efectos de comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniPresidente} y correo electrónico {datos_contrato.correoPresidente}</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</p>"
+                "Value": "<p>D. {datos_contrato.nombreFirmante}, mayor de edad, con domicilio a estos efectos de comunicaciones en {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}- {datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniFirmante} y correo electrónico {datos_contrato.correoFirmante}</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, mayor de edad, con domicilio a estos efectos en Los Molinos - Madrid, Calle Real, nº 1, con DNI. 50700591N y correo electrónico administracion@reabita.es.</p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -155,7 +155,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p>{datos_contrato.nombrePresidente}, en calidad de Presidente de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-\n{datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniPresidente}, denominándose en lo sucesivo la <b>PROPIEDAD</b>.</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el <b>CONTRATISTA</b>.</p>"
+                "Value": "<p>D. {datos_contrato.nombreFirmante}, en calidad de {datos_contrato.cargoFirmante} de la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ( {datos_contrato.codPostalTrabajo}-\n{datos_contrato.poblacionTrabajo}), con DNI {datos_contrato.dniFirmante}, denominándose en lo sucesivo la <b>PROPIEDAD</b>.</p>\n<p>Dª. MARÍA DOLORES GÓMEZ MARTÍN, en representación de la Sociedad REABITA OBRAS DE REHABILITACIÓN, S.L., con domicilio en la C/ Real nº 1 / 28460-Los Molinos (Madrid), con NIF B85983054, denominándose en lo sucesivo el <b>CONTRATISTA</b>.</p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -256,7 +256,7 @@
             "9": {
               "Ident": "StiText",
               "Name": "Text2",
-              "ClientRectangle": "7.4,12.2,3,0.4",
+              "ClientRectangle": "7.4,12.2,3.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -290,7 +290,6 @@
           "DataSourceName": "datos_contrato"
         }
       },
-      "PaperSize": "A4",
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
@@ -363,7 +362,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<b>Cuarta. - MODIFICACIONES AL PROYECTO Y OBRAS ADICIONALES.</b>\n\n<p> durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la <b>PROPIEDAD</b>, \nhubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras \nadicionales que no estuviesen contempladas en el Presupuesto, la valoración de esta unidad de obra será objeto de precio \ncontradictorio en base a los precios ofertados por el <b>CONTRATISTA</b>.</p>\n\n<p>Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente \nContrato a todos los efectos.</p>\n<b>Quinta. - SEGURIDAD Y SALUD.</b>\n\n<p>Si la obra requiriera la elaboración de un Proyecto, la <b>PROPIEDAD</b>, deberá entregar al <b>CONTRATISTA</b> el Estudio de \nSeguridad y Salud, incluido en el mismo, antes del inicio de las obras.</p>\n\n<p>El <b>CONTRATISTA</b> una vez analizado el Estudio de Seguridad y Salud, presentará a la <b>PROPIEDAD</b> el Plan de Seguridad de \nlas obras.</p>\n\n<p>Si la obra no requiriera proyecto, el <b>CONTRATISTA</b> elaborará directamente el Plan de Seguridad y Salud.</p>\n\n<p>El <b>CONTRATISTA</b> obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y Salud nombrado \npor la <b>PROPIEDAD</b>.</p>\n\n<b>Sexta. - GASTOS ADICIONALES</b> \n\n<p>Serán por cuenta de la <b>PROPIEDAD</b> los siguientes gastos:</p>\n<ol>\n<li>La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o \n\tfuturos, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.</li>\n<li>Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que \n\tfueran necesarios.</li>\n<li>Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.</li>\n<li>El consumo de agua y energía eléctrica.</li>\n<li>Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como \n\tlocal para acopio de materiales y aseo de operarios.</li>\n<li>Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</li>\n</ol>\n\n<p>El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares \n(grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las \nobras, serán por cuenta del <b>CONTRATISTA</b>.</p>\n\n\n<b>Séptima. - CERTIFICACIONES Y ABONO DE LAS OBRAS.</b>\n\n<p>Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, \nemitiéndose la correspondiente Certificación de Obra que será entregada a la <b>PROPIEDAD</b>, quien dispondrá \nde un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, \nse entenderá aceptada.</p>\n\n<p>El abono de las obras por importe de {datos_contrato.cerFinal}€ Incluido IVA e intereses, se realizará mediante recibo/letras \ndomiciliado en la cta. cte. número {datos_contrato.iban} se adjunta orden Sepa de domiciliación, y en los \nsiguientes plazos:</p>"
+                "Value": "<b style=\"font-family: Tahoma;\">Cuarta. - MODIFICACIONES AL PROYECTO Y OBRAS ADICIONALES.</b>\n\n<p style=\"font-family: Tahoma;\"> durante la ejecución de las obras, a juicio de la Dirección Facultativa y con la conformidad de la <b>PROPIEDAD</b>, \nhubieren de ejecutarse modificaciones necesarias o imprescindibles, utilizarse nuevos materiales o ejecutarse obras \nadicionales que no estuviesen contempladas en el Presupuesto, la valoración de esta unidad de obra será objeto de precio \ncontradictorio en base a los precios ofertados por el <b>CONTRATISTA</b>.</p>\n\n<p style=\"font-family: Tahoma;\">Estas nuevas unidades o materiales, una vez aprobado el precio y medición, pasarán a formar parte del presente \nContrato a todos los efectos.</p>\n<b style=\"font-family: Tahoma;\">Quinta. - SEGURIDAD Y SALUD.</b>\n\n<p style=\"font-family: Tahoma;\">Si la obra requiriera la elaboración de un Proyecto, la <b>PROPIEDAD</b>, deberá entregar al <b>CONTRATISTA</b> el Estudio de \nSeguridad y Salud, incluido en el mismo, antes del inicio de las obras.</p>\n\n<p style=\"font-family: Tahoma;\">El <b>CONTRATISTA</b> una vez analizado el Estudio de Seguridad y Salud, presentará a la <b>PROPIEDAD</b> el Plan de Seguridad de \nlas obras.</p>\n\n<p style=\"font-family: Tahoma;\">Si la obra no requiriera proyecto, el <b>CONTRATISTA</b> elaborará directamente el Plan de Seguridad y Salud.</p>\n\n<p style=\"font-family: Tahoma;\">El <b>CONTRATISTA</b> obedecerá en todo momento las indicaciones dadas por el Coordinador de Seguridad y Salud nombrado \npor la <b>PROPIEDAD</b>.</p>\n\n<b style=\"font-family: Tahoma;\">Sexta. - GASTOS ADICIONALES</b> \n\n<p style=\"font-family: Tahoma;\">Serán por cuenta de la <b>PROPIEDAD</b> los siguientes gastos:</p>\n<ol style=\"font-family: Tahoma;\">\n<li>La Licencia Municipal de Obras, así como cualquier clase de contribución, impuesto, arbitrio o tasa, actuales o \n\tfuturos, que legalmente le correspondan con ocasión de este contrato o de la ejecución de las obras.</li>\n<li>Los honorarios profesionales de los Técnicos que realicen el Proyecto o la Dirección Facultativa en caso de que \n\tfueran necesarios.</li>\n<li>Los honorarios del Coordinador de Seguridad y Salud en fase de ejecución de obras.</li>\n<li>El consumo de agua y energía eléctrica.</li>\n<li>Se facilitará acceso a toma de agua y conexión eléctrica apropiada para los trabajos a realizar, así como \n\tlocal para acopio de materiales y aseo de operarios.</li>\n<li>Gestión y tramitación de autorización de acceso a zonas de circulación o aparcamiento restringido.</li>\n</ol>\n\n<p style=\"font-family: Tahoma;\">El resto de los gastos que pudieren ocasionarse, tales como permisos provisionales para medios auxiliares \n(grúas, etc.), o cualesquiera otros que pudieren producirse como consecuencia de la ejecución material de las \nobras, serán por cuenta del <b>CONTRATISTA</b>.</p>\n\n\n<b style=\"font-family: Tahoma;\">Séptima. - CERTIFICACIONES Y ABONO DE LAS OBRAS.</b>\n\n<p style=\"font-family: Tahoma;\">Los días 15 y 30 de cada mes, se realizará la valoración de las obras ejecutadas, más los acopios de material, \nemitiéndose la correspondiente Certificación de Obra que será entregada a la <b>PROPIEDAD</b>, quien dispondrá \nde un plazo de 10 días naturales para su aprobación, transcurrido dicho plazo y si no hubiese disconformidad expresa, \nse entenderá aceptada.</p>\n\n<p style=\"\"><font face=\"Tahoma\">El abono de las obras por importe de {datos_contrato.totalContratoIva} € Incluido IVA</font><span style=\"text-align: justify; letter-spacing: -0.133333px;\"><font face=\"Tahoma\">{IIF(datos_contrato.hayIntereses==1,\" e intereses\",\"\")}</font></span><font face=\"Tahoma\">, se realizará mediante recibo/letras \ndomiciliado en la cta. cte. número {datos_contrato.iban} se adjunta orden Sepa de domiciliación, y en los \nsiguientes plazos:</font></p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -885,12 +884,12 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text17",
-              "ClientRectangle": "0.4,0.22,13.2,0.4",
+              "ClientRectangle": "0.4,0.22,5.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "LA PROPIEDAD.............................................EL CONTRATISTA"
+                "Value": "LA PROPIEDAD"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -906,7 +905,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "FDO. {datos_contrato.nombrePresidente}"
+                "Value": "FDO. {datos_contrato.nombreFirmante}"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -917,12 +916,29 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text24",
-              "ClientRectangle": "7,2.02,6.2,0.4",
+              "ClientRectangle": "10.6,2.02,6.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "FDO. Mª DOLORES GOMEZ MARTIN"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text33",
+              "Guid": "0dcb56091820445da31c8a840c479d05",
+              "ClientRectangle": "10.6,0.1,5.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "EL CONTRATISTA"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -951,7 +967,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<b>Décima- Resolución del contrato. </b>\n<p>A. Sin perjuicio de los establecidos legalmente, la PROPIEDAD podrá resolver el presente contrato por los siguientes motivos:</p>\n\n<ol>\n\n       <li>Por la disolución o extinción de la empresa que actúa como <b>CONTRATISTA</b>.<li>\n\n       <li>Por la mala fe en la ejecución de los trabajos y la desobediencia o incumplimiento de las órdenes dadas por la Dirección Facultativa y el Coordinador de Seguridad.</li>\n\n <li>Por incumplimiento de las obligaciones del <b>CONTRATISTA</b> en materia de Seguridad y Salud.</li>\n\n</ol>\n<p>B. Sin perjuicio de los establecidos legalmente, el <b>CONTRATISTA</b> podrá resolver el presente contrato por los siguientes motivos:</p>\n\n<ol>\n       <li>Por el incumplimiento de alguna o algunas de las estipulaciones establecidas en el presente contrato.</li>\n\n       <li>Por el impago o demora en el pago del importe correspondiente a cualquiera de las Certificaciones de Obra, se considerará impago o demora cuando habiendo transcurridos 10 días naturales desde su presentación y sin que haya habido reclamación expresa de la Propiedad, no se haya producido el pago.</li>\n\n       <li>Por el impago o demora en el pago del importe de cualquiera de las letras de cambio debidamente aceptadas que llegado su vencimiento no hayan sido abonadas.</li>\n\n       <li>Por la disolución o extinción de la <b>PROPIEDAD</b>.</li>\n\n       <li>Por la paralización de las obras durante más de un mes, por causas no  imputables al <b>CONTRATISTA</b></li>\n</ol>\n\n<p>Si la resolución del contrato es por causas no imputables a la CONSTRUCTORA se procederá a la liquidación de las obras realmente ejecutadas y acopio de materiales dentro del mes siguiente a la resolución</p>\n\n<p>Si se produce la resolución del contrato por causas imputables al <b>CONTRATISTA</b>, éste deberá dejar la obra libre en un plazo máximo de quince días, contando desde la comunicación por escrito de la resolución del presente contrato efectuada por la <b>PROPIEDAD</b>.</p> \n\n<b>Decimoprimera. - CLÁSULA DE SUMISIÓN EXPRESA</b>\n\n<p>Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a los Juzgados y Tribunales de Madrid, con renuncia expresa a cualquier otro fuero o competencia que pudiera corresponderles.</p>\n\n<p>Y en prueba de conformidad, ambas partes contratantes firman el presente contrato por duplicado y a un solo efecto, junto con sus anexos que se unen al presente, en el lugar y fecha establecidos en el encabezamiento del mismo.<p>\n"
+                "Value": "<b>Décima- Resolución del contrato. </b>\n<p>A. Sin perjuicio de los establecidos legalmente, la PROPIEDAD podrá resolver el presente contrato por los siguientes motivos:</p>\n\n<ol>\n\n       <li>Por la disolución o extinción de la empresa que actúa como <b>CONTRATISTA</b>.</li><li>\n\n       </li><li>Por la mala fe en la ejecución de los trabajos y la desobediencia o incumplimiento de las órdenes dadas por la Dirección Facultativa y el Coordinador de Seguridad.</li>\n\n <li>Por incumplimiento de las obligaciones del <b>CONTRATISTA</b> en materia de Seguridad y Salud.</li>\n\n</ol>\n<p>B. Sin perjuicio de los establecidos legalmente, el <b>CONTRATISTA</b> podrá resolver el presente contrato por los siguientes motivos:</p>\n\n<ol>\n       <li>Por el incumplimiento de alguna o algunas de las estipulaciones establecidas en el presente contrato.</li>\n\n       <li>Por el impago o demora en el pago del importe correspondiente a cualquiera de las Certificaciones de Obra, se considerará impago o demora cuando habiendo transcurridos 10 días naturales desde su presentación y sin que haya habido reclamación expresa de la Propiedad, no se haya producido el pago.</li>\n\n       <li>Por el impago o demora en el pago del importe de cualquiera de las letras de cambio debidamente aceptadas que llegado su vencimiento no hayan sido abonadas.</li>\n\n       <li>Por la disolución o extinción de la <b>PROPIEDAD</b>.</li>\n\n       <li>Por la paralización de las obras durante más de un mes, por causas no  imputables al <b>CONTRATISTA</b></li>\n</ol>\n\n<p>Si la resolución del contrato es por causas no imputables a la CONSTRUCTORA se procederá a la liquidación de las obras realmente ejecutadas y acopio de materiales dentro del mes siguiente a la resolución</p>\n\n<p>Si se produce la resolución del contrato por causas imputables al <b>CONTRATISTA</b>, éste deberá dejar la obra libre en un plazo máximo de quince días, contando desde la comunicación por escrito de la resolución del presente contrato efectuada por la <b>PROPIEDAD</b>.</p> \n\n<b>Decimoprimera. - CLÁSULA DE SUMISIÓN EXPRESA</b>\n\n<p>Para la interpretación y cumplimiento de este contrato, las partes se someten expresamente a los Juzgados y Tribunales de Madrid, con renuncia expresa a cualquier otro fuero o competencia que pudiera corresponderles.</p>\n\n<p>Y en prueba de conformidad, ambas partes contratantes firman el presente contrato por duplicado y a un solo efecto, junto con sus anexos que se unen al presente, en el lugar y fecha establecidos en el encabezamiento del mismo.</p><p>\n</p>"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
