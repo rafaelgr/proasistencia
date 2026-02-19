@@ -538,6 +538,13 @@ function loadData(data, desdeLoad) {
 
     //PESTAÑA CORREOS SOLO VISIBLE PARA LOS JEFES DE OBRA
     if(data.tipoComercialId != 5) $('#tabCorreo').hide();
+
+    if(data.comercialId == 32) {
+        $('#btnActualizarClientes').hide();
+    } else {
+        $('#btnActualizarClientes').show();
+    }
+
 }
 
 function datosOK() {
