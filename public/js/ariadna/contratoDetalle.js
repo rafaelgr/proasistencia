@@ -10700,10 +10700,10 @@ var aceptarGenerarPrefacturasPlanificacionIntereses = function () {
             mostrarMensajeSmart('Prefacturas temporales creadas correctamente. Puede consultarlas en la solapa correspondiente.');
             $('#modalGenerarPrefacturasPlanificacion').modal('hide');
             vm.prefacturasAGenerarIntereses(null)
-            loadPrefacturasDelContratoTemp(vm.contratoId());
-            loadPlanificacionLineasObrasTemp(vm.contratoId());
-            //actualizaCobrosPlanificacion(vm.contratoId());
-            limpiarModalGenerarPrefacturasObrasTemp();
+            loadPrefacturasDelContrato(vm.contratoId());
+            loadPlanificacionLineasObras(vm.contratoId());
+            actualizaCobrosPlanificacion(vm.contratoId());
+            limpiarModalGenerarPrefacturasObras();
         });
     });
 }

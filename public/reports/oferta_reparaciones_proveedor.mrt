@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "5eecbd062bfaad85dd78a5aa6849192b",
+  "ReportGuid": "5f4d2a01beca8d1e1c1d4cf84c9f7fcb",
   "ReportName": "OfertaGeneral",
   "ReportAlias": "OfertaGeneral",
   "ReportFile": "oferta_reparaciones_proveedor.mrt",
   "ReportCreated": "/Date(1492633073000+0200)/",
-  "ReportChanged": "/Date(1771328934000+0100)/",
+  "ReportChanged": "/Date(1771492021000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -742,7 +742,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PiePagina",
-          "ClientRectangle": "0,42,19,1.4",
+          "ClientRectangle": "0,35.8,19,1.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1051,6 +1051,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "Dataofertas_lineas",
+          "CanShrink": true,
           "CanGrow": true,
           "ClientRectangle": "0,11.1,19,0.8",
           "Interaction": {
@@ -1278,6 +1279,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text23",
+              "CanShrink": true,
               "CanGrow": true,
               "GrowToHeight": true,
               "ClientRectangle": "2.4,0.4,9.6,0.4",
@@ -1308,7 +1310,7 @@
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,12.7,19,0.2",
+          "ClientRectangle": "0,12.7,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1318,7 +1320,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text31",
-              "ClientRectangle": "12.8,0,3.4,0.4",
+              "ClientRectangle": "12.8,0.2,3.4,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -1341,7 +1343,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text32",
-              "ClientRectangle": "16.4,0,2.4,0.4",
+              "ClientRectangle": "16.4,0.2,2.4,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -1378,7 +1380,7 @@
           "Name": "PieLineas",
           "Guid": "a3d1121575904f918c8fb593a6d607e7",
           "CanGrow": true,
-          "ClientRectangle": "0,13.7,19,0.4",
+          "ClientRectangle": "0,14.1,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1450,7 +1452,7 @@
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,14.9,19,0.4",
+          "ClientRectangle": "0,15.3,19,0.4",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1509,7 +1511,7 @@
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand2",
           "CanGrow": true,
-          "ClientRectangle": "0,16.1,19,1.4",
+          "ClientRectangle": "0,16.5,19,1.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1548,7 +1550,7 @@
           "Ident": "StiDataBand",
           "Name": "DataBand1",
           "Guid": "b06d3654b24a43ca85a9a915c543df13",
-          "ClientRectangle": "0,18.3,19,0.4",
+          "ClientRectangle": "0,18.7,19,0.4",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -1670,7 +1672,7 @@
           "Name": "PieOferta",
           "PrintOn": "OnlyLastPage",
           "CanGrow": true,
-          "ClientRectangle": "0,19.5,19,5.8",
+          "ClientRectangle": "0,19.9,19,5.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
