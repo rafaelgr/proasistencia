@@ -773,7 +773,7 @@ function actualizaClientes() {
         if (!datosImportOK())
             return;
 
-    var mens = "Se actualizarán los datos de TODOS los clientes asociados al Agente ¿Realmente desea continuar?";
+    var mens = "Se actualizarán los datos de TODOS los clientes asociados al Agente en gestión y contabilidad.  ¿Realmente desea continuar?";
 
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
@@ -809,7 +809,7 @@ function actualizaClientes() {
                 contentType: "application/json",
                 success: function (data, status) {
                     $('#btnActualizaClientes').removeClass('fa-spin');
-                    mensNormal('Los clientes se han actualizado con exito');
+                    mensNormal('Los clientes se han actualizado con exito, compruebe la contabilidad de alguno de ellos para verificar que los cambios se han aplicado correctamente');
                 },
                 error: function (err) {
                     mensErrorAjax(err);
