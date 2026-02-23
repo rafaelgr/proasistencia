@@ -1307,7 +1307,6 @@ function loadData(data) {
         //
         $('#btnImprimirActaRecepcion').hide();
         $('#btnImprimir').hide();
-        $('#btnIntereses').hide();
     } else {
         $('.obras').show()
         actualizaCobrosPlanificacion(data.contratoId);
@@ -1323,11 +1322,7 @@ function loadData(data) {
         } else {
             $('#btnImportarPlanificacionObrasTemp').show();
         }
-        //
-        $('#btnImprimirActaRecepcion').show();
-        $('#btnImprimir').show();
-        $('#btnIntereses').show();
-
+       
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);
@@ -4004,10 +3999,10 @@ function initTablaPrefacturas(departamentoId) {
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
-                
-                let n = numeral(total9).format('0,0.00');
-                vm.importePrefacturadoRealFormat(n);
-                vm.diferenciaPrefacturadoRealFormat(numeral(total9 - vm.importeCliente()).format('0,0.00'));
+
+            let n = numeral(total9).format('0,0.00');
+            vm.importePrefacturadoRealFormat(n);
+            vm.diferenciaPrefacturadoRealFormat(numeral(total9 - vm.importeCliente()).format('0,0.00'));
             // Total over all pages
             total10 = api
                 .column(10)
@@ -9585,12 +9580,30 @@ function aceptarLineaPlanificacionObrasTemp() {
         verbo = "PUT";
         url = myconfig.apiUrl + "/api/contratos/planificacion/temporal/" + vm.contPlanificacionTempId();
     }
-    llamadaAjax(verbo, url, data, function (err, data) {
+    llamadaAjax(verbo, url, data, function (err, pl) {
         if (err) return;
         $('#modalPlanificacionObrasTemp').modal('hide');
-        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data) {
-            loadTablaPlanificacionLineasObrasTemp(data);
+        llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data2) {
+            loadTablaPlanificacionLineasObrasTemp(data2);
             limpiarModalLineasPlanificacionTemp();
+            //si se ha implementado la fecha real en la planificaciópn temporal y no estaá ya exportada a planificación definitiva, preguntamos si se quiere exportar a planificación definitiva para que se tengan en cuenta las fechas reales en la planificación definitiva  
+            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/asociada/" + pl.contPlanificacionTempId, null, function (err, pl2) {
+                if (pl.fechaReal && pl2.length == 0) {
+                    var mens = "La fecha real está implementada en esta linea, ¿desea exportar a planificacion definitiva?";
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-info'></i> Mensaje",
+                        content: mens,
+                        buttons: '[Aceptar][Cancelar]'
+                    }, function (ButtonPressed) {
+                        if (ButtonPressed === "Aceptar") {
+                            importarPlanificacionObrasTemp(pl.contPlanificacionTempId);
+                        }
+                        if (ButtonPressed === "Cancelar") {
+                            $('#upload-input').val([]);
+                        }
+                    });
+                }
+            });
         });
     });
 }
@@ -9600,6 +9613,11 @@ function aceptarLineaPlanificacionObrasTemp() {
 function generarPrefacturaPlanificacionObrasTemp(id) {
     llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/temporal/" + id, null, function (err, data) {
         if (err) return;
+        let i = parseFloat(data[0].importeIntereses);
+        if (i && !vm.contratoInteresesId()) {
+            $('#modalGenerarPrefacturasObrasTemp').modal('hide');
+            return mensError("Esta línea de planificación tiene intereses asociados pero no hay un contrato de intereses creado.");
+        }
         RegPlanificacion = data
         var f = moment(data[0].fecha).format('DD/MM/YYYY');
         vm.fechaPlanificacionObrasTemp(f);
@@ -10517,17 +10535,21 @@ function loadPrefacturasDelContratoTemp(contratoId) {
     });
 }
 
-function importarPlanificacionObrasTemp() {
+function importarPlanificacionObrasTemp(contPlanificacionTempId) {
     // mensaje de confirmación
-    var mens = "Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
-    if (totalPorcentajeTemporal < 100) mens = "EL PORCENTAJER PLANIFICADO ES INFERIOR AL 100%. Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
+    let id = 0;
+    let mens = "";
+    if (contPlanificacionTempId) id = contPlanificacionTempId;
+    mens = " Se importará las lineas de la planificación temporal que no se encuentren en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
+    if (id) mens = " Se importará la línea de planificación temporal que no se encuentre en planificación y se crearán sus prefacturas asociadas.¿Desea continuar?";
+    if (totalPorcentajeTemporal < 100) mens = "EL PORCENTAJER PLANIFICADO ES INFERIOR AL 100%." + mens;
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/importa/palnificacion/lineas/temporales/" + vm.contratoId() + "/" + vm.contratoInteresesId(), null, function (err, data) {
+            llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/importa/palnificacion/lineas/temporales/" + vm.contratoId() + "/" + vm.contratoInteresesId() + "/" + id, null, function (err, data) {
                 if (err) return;
                 loadPlanificacionLineasObras(vm.contratoId(), null);
             });
@@ -10538,6 +10560,8 @@ function importarPlanificacionObrasTemp() {
         }
     });
 }
+
+
 
 var controlDePrefacturasYaGeneradasPlanificacionIntereses = function (contratoId, contPlanificacionId, done) {
     llamadaAjax('GET', myconfig.apiUrl + "/api/prefacturas/contrato/generadas/planificacion/" + contratoId + "/" + contPlanificacionId, null, function (err, data) {
