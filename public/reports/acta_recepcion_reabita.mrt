@@ -1,0 +1,781 @@
+{
+  "ReportVersion": "2025.4.3",
+  "ReportGuid": "7c95e6cdb221c3e7a598aebb17868ba7",
+  "ReportName": "Report",
+  "ReportAlias": "Report",
+  "ReportFile": "acta_recepcion_reabita.mrt",
+  "ReportCreated": "/Date(0+0100)/",
+  "ReportChanged": "/Date(1771940596000+0100)/",
+  "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
+  "CalculationMode": "Interpretation",
+  "Dictionary": {
+    "Variables": {
+      "0": {
+        "Value": "del contrato",
+        "Name": "VariableContrato",
+        "Alias": "VariableContrato",
+        "Type": "System.String",
+        "Key": "_x0031_aabf910c70d42019d27805026900b7b"
+      },
+      "1": {
+        "Value": "de la obra",
+        "Name": "VariableObra",
+        "Alias": "VariableObra",
+        "Type": "System.String",
+        "Key": "_x0034_ff264f6a7094357906f362ae68f9ea4"
+      }
+    },
+    "DataSources": {
+      "0": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato",
+        "Alias": "datos_contrato",
+        "Columns": {
+          "0": {
+            "Name": "cerFinal",
+            "NameInSource": "cerFinal",
+            "Alias": "cerFinal",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "certificacionFinal",
+            "NameInSource": "certificacionFinal",
+            "Alias": "certificacionFinal",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "codPostalTrabajo",
+            "NameInSource": "codPostalTrabajo",
+            "Alias": "codPostalTrabajo",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "correoPresidente",
+            "NameInSource": "correoPresidente",
+            "Alias": "correoPresidente",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "direccionTrabajo",
+            "NameInSource": "direccionTrabajo",
+            "Alias": "direccionTrabajo",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "dniPresidente",
+            "NameInSource": "dniPresidente",
+            "Alias": "dniPresidente",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "fechaActual",
+            "NameInSource": "fechaActual",
+            "Alias": "fechaActual",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "fechaContrato",
+            "NameInSource": "fechaContrato",
+            "Alias": "fechaContrato",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "fechaJunta",
+            "NameInSource": "fechaJunta",
+            "Alias": "fechaJunta",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "fechaMayorLetra",
+            "NameInSource": "fechaMayorLetra",
+            "Alias": "fechaMayorLetra",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "fechaMenorLetra",
+            "NameInSource": "fechaMenorLetra",
+            "Alias": "fechaMenorLetra",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "iban",
+            "NameInSource": "iban",
+            "Alias": "iban",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "importeCliente",
+            "NameInSource": "importeCliente",
+            "Alias": "importeCliente",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "nifCliente",
+            "NameInSource": "nifCliente",
+            "Alias": "nifCliente",
+            "Type": "System.String"
+          },
+          "16": {
+            "Name": "nombreCliente",
+            "NameInSource": "nombreCliente",
+            "Alias": "nombreCliente",
+            "Type": "System.String"
+          },
+          "17": {
+            "Name": "nombrePresidente",
+            "NameInSource": "nombrePresidente",
+            "Alias": "nombrePresidente",
+            "Type": "System.String"
+          },
+          "18": {
+            "Name": "poblacionTrabajo",
+            "NameInSource": "poblacionTrabajo",
+            "Alias": "poblacionTrabajo",
+            "Type": "System.String"
+          },
+          "19": {
+            "Name": "provinciaTrabajo",
+            "NameInSource": "provinciaTrabajo",
+            "Alias": "provinciaTrabajo",
+            "Type": "System.String"
+          },
+          "20": {
+            "Name": "referencia",
+            "NameInSource": "referencia",
+            "Alias": "referencia",
+            "Type": "System.String"
+          },
+          "21": {
+            "Name": "tipoProyecto",
+            "NameInSource": "tipoProyecto",
+            "Alias": "tipoProyecto",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "tipoProyectoId",
+            "NameInSource": "tipoProyectoId",
+            "Alias": "tipoProyectoId",
+            "Type": "System.Decimal"
+          },
+          "23": {
+            "Name": "totalPendienteFacturar",
+            "NameInSource": "totalPendienteFacturar",
+            "Alias": "totalPendienteFacturar",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "acta_recepcion2.datos_contrato"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato_Intereses",
+        "Alias": "datos_contrato_Intereses",
+        "Columns": {
+          "0": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "esLetra",
+            "NameInSource": "esLetra",
+            "Alias": "esLetra",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.DateTime"
+          },
+          "3": {
+            "Name": "numletras",
+            "NameInSource": "numletras",
+            "Alias": "numletras",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "prefacturaInteresesId",
+            "NameInSource": "prefacturaInteresesId",
+            "Alias": "prefacturaInteresesId",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "sumTotalAlcliente",
+            "NameInSource": "sumTotalAlcliente",
+            "Alias": "sumTotalAlcliente",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "sumTotalConIva",
+            "NameInSource": "sumTotalConIva",
+            "Alias": "sumTotalConIva",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "totalAlCliente",
+            "NameInSource": "totalAlCliente",
+            "Alias": "totalAlCliente",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "totalConIva",
+            "NameInSource": "totalConIva",
+            "Alias": "totalConIva",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "totletras",
+            "NameInSource": "totletras",
+            "Alias": "totletras",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "acta_recepcion2.datos_contrato_Intereses"
+      },
+      "2": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato_letras",
+        "Alias": "datos_contrato_letras",
+        "Columns": {
+          "0": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "esLetra",
+            "NameInSource": "esLetra",
+            "Alias": "esLetra",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.DateTime"
+          },
+          "3": {
+            "Name": "numletras",
+            "NameInSource": "numletras",
+            "Alias": "numletras",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "prefacturaId",
+            "NameInSource": "prefacturaId",
+            "Alias": "prefacturaId",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "prefacturaInteresesId",
+            "NameInSource": "prefacturaInteresesId",
+            "Alias": "prefacturaInteresesId",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "sumTotalAlcliente",
+            "NameInSource": "sumTotalAlcliente",
+            "Alias": "sumTotalAlcliente",
+            "Type": "System.Decimal"
+          },
+          "7": {
+            "Name": "sumTotalConIva",
+            "NameInSource": "sumTotalConIva",
+            "Alias": "sumTotalConIva",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "sumTotalConIvaFormat",
+            "NameInSource": "sumTotalConIvaFormat",
+            "Alias": "sumTotalConIvaFormat",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "totalAlCliente",
+            "NameInSource": "totalAlCliente",
+            "Alias": "totalAlCliente",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "totalConIva",
+            "NameInSource": "totalConIva",
+            "Alias": "totalConIva",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "totletras",
+            "NameInSource": "totletras",
+            "Alias": "totletras",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "acta_recepcion2.datos_contrato_letras"
+      },
+      "3": {
+        "Ident": "StiDataTableSource",
+        "Name": "datos_contrato_pagos",
+        "Alias": "datos_contrato_pagos",
+        "NameInSource": "acta_recepcion2.datos_contrato_pagos"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiJsonDatabase",
+        "Name": "acta_recepcion2",
+        "Alias": "acta_recepcion2",
+        "PathData": "E:\\node_apps\\proasistencia\\public\\reports\\acta_recepcion2.json",
+        "HeadersString": "YyoQVHvZXeyY3LY5ASN05g=="
+      }
+    },
+    "Relations": {
+      "0": {
+        "Name": "datos_contrato",
+        "ChildColumns": {
+          "0": "relationId"
+        },
+        "ParentColumns": {
+          "0": "importeCliente"
+        },
+        "NameInSource": "datos_contrato_importeCliente",
+        "Alias": "datos_contrato"
+      },
+      "1": {
+        "Name": "datos_contrato_importeCliente",
+        "ChildColumns": {
+          "0": "relationId"
+        },
+        "ParentColumns": {
+          "0": "data"
+        },
+        "NameInSource": "datos_contrato_importeCliente_data",
+        "Alias": "datos_contrato_importeCliente"
+      }
+    }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "c0ec49d34de049368e90985b1a5b90ae",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:",
+      "Components": {
+        "0": {
+          "Ident": "StiPageFooterBand",
+          "Name": "PageFooterBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,31.24,18,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": "Top;;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "ClientRectangle": "16.8,0.16,1,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{PageNumberThrough}"
+              },
+              "Font": "Tahoma;;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiPageFooterBand",
+          "Name": "PageFooterBand2",
+          "Guid": "4b34768ba2f07e5acd6aee57acbc2baf",
+          "PrintOn": "OnlyLastPage",
+          "CanGrow": true,
+          "ClientRectangle": "0,26.24,18,4.2",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "Guid": "2e60cc94803cec0515a72c1ba22a9b5b",
+              "ClientRectangle": "10.8,3.02,5.8,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Fdo. {datos_contrato.nombreFirmante}"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "Guid": "3a3e0199b7fea2a080752eb076e4fd47",
+              "ClientRectangle": "1.4,3.02,6.2,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          }
+        },
+        "2": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand1",
+          "ClientRectangle": "0,0.4,18,4.4",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text20",
+              "ClientRectangle": "7.4,0,4,0.6",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<font size=\"10\"><u>ACTA DE RECEPCIÓN</u></font>"
+              },
+              "Font": "Tahoma;9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "AllowHtmlTags": true,
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text18",
+              "ClientRectangle": "0,0.6,17.8,1.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<div style=\"font-family: Tahoma; text-align: right;\">\n  <font size=\"10\">\n    <font face=\"Tahoma\">\n      <font style=\"letter-spacing: -0.133333px;\">\n        <span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t</span>&nbsp; Madrid </font><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.fechaActual}</span>\n    </font>\n  </font>\n</div><div style=\"font-family: Tahoma; text-align: right;\"><font size=\"10\"><font face=\"Tahoma\"><span style=\"letter-spacing: -0.133333px;\"><br></span></font></font></div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\"><b>OBRA -{datos_contrato.tipoProyecto} en la Comunidad\nde Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.provinciaTrabajo})</b></div><p class=\"MsoBodyText\"><span lang=\"ES-TRAD\"><o:p></o:p></span></p>\n"
+              },
+              "HorAlignment": "Right",
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "AllowHtmlTags": true,
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text8",
+              "ClientRectangle": "0,2.2,17.6,2.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<font face=\"Tahoma\" size=\"9\">Reunidos en Madrid, D.{datos_contrato.nombrePresidente} en calidad de de la Comunidad de Propietarios de {datos_contrato.direccionTrabajo} ({datos_contrato.provinciaTrabajo}) y Dª. M.ª DOLORES GOMEZ MARTIN, como&nbsp; representante de REABITA OBRAS DE REHABILITACION S.L., empresa adjudicataria de las mismas, para dar cumplimiento a lo dispuesto en el contrato suscrito por ambas partes el día 17 de abril de 2024, una vez finalizadas las mismas, recorrido su ámbito de actuación para comprobar su terminación y en base al seguimiento realizado durante su ejecución,</font>"
+              },
+              "HorAlignment": "Width",
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "LineSpacing": 1.1,
+              "Type": "Expression"
+            }
+          },
+          "CanGrow": false,
+          "DataSourceName": "datos_contrato"
+        },
+        "3": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand6",
+          "Guid": "81616fafe9f68dc6ce71c076d57f64ca",
+          "CanGrow": true,
+          "ClientRectangle": "0,5.6,18,3",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "Guid": "fdd3343e2d69d23dc1fbdf56c33faa9b",
+              "ClientRectangle": "0.2,0.05,17.6,2.8",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<div style=\"font-family: Tahoma; line-height: 1.3; text-align: justify;\"><font size=\"10\">\n\n    <div><b>EXPONEN:</b></div><div><ol ><li>Que las obras de Reparación de bajantes en dicha Comunidad, con referencia de presupuesto I-1009-10-24, asciende, según certificación final de obra, a un importe de 26.933,84€ más IVA, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad de 25.450,48€, según se detalla:</li></ol><div></div></div>\n\n</font></div>"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "ShrinkFontToFitMinimumSize": 1.1,
+              "LineSpacing": 1.2,
+              "Type": "Expression"
+            }
+          }
+        },
+        "4": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand2",
+          "Guid": "220374796f989782e70e2c3b9d7230f4",
+          "CanShrink": true,
+          "ClientRectangle": "0,9.4,18,0.65",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "Guid": "ecd5d0210f43cd0027ae2d2fa5f7547f",
+              "CanShrink": true,
+              "MinSize": "0,0.1",
+              "ClientRectangle": "0.4,0,17.4,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            }
+          },
+          "CanGrow": false,
+          "MinHeight": 0.1,
+          "DataSourceName": "datos_contrato_pagos",
+          "DataRelationName": "pagos_contrato"
+        },
+        "5": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "Guid": "5214775703c340d2d14a1dfc76b68c48",
+          "CanGrow": true,
+          "ClientRectangle": "0,10.85,18,0",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Condition": {
+            "Value": "{datos_contrato_letras.sumTotalConIva}"
+          }
+        },
+        "6": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand4",
+          "Guid": "39038bcecd789f46f8cdb0ef7e5e6fa6",
+          "ClientRectangle": "0,11.65,18,0",
+          "Conditions": {
+            "0": {
+              "Ident": "StiCondition",
+              "Condition": "IsNull",
+              "DataType": "Numeric",
+              "Column": "datos_contrato_letras.totletras",
+              "Enabled": false,
+              "TextColor": "255,255,255",
+              "BorderSides": "None"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "CanGrow": false,
+          "DataSourceName": "datos_contrato_letras",
+          "DataRelationName": "letras_contrato"
+        },
+        "7": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand1",
+          "Guid": "be5c3efccb66631f84cc03c23efb68f7",
+          "CanShrink": true,
+          "CanGrow": true,
+          "ClientRectangle": "0,12.45,18,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "9e2c408549f3967f6c0059fe9877a70c",
+              "CanShrink": true,
+              "CanGrow": true,
+              "ClientRectangle": "0.4,0,17.2,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(DataBand4,datos_contrato_letras.numletras)} {IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\" letras de cambio de \",\" letra de cambio de \")} {datos_contrato_letras.sumTotalConIvaFormat} € {IIF(Sum(DataBand4,datos_contrato_letras.numletras)>1,\" cada una\",\"\")}"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 0,
+                "Right": 5,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "Type": "Expression"
+            }
+          }
+        },
+        "8": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand3",
+          "Guid": "56d7dec6f4ef437abb71af882aaf58da",
+          "CanGrow": true,
+          "ClientRectangle": "0,13.85,18,5.4",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "Guid": "f777026ffae33ae22eeeecf0e7e668b3",
+              "ClientRectangle": "0.2,0.05,17.6,5",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<div style=\"font-family: Tahoma; line-height: 1.3; text-align: justify;\"><font size=\"10\">\n\n    <div><ol start=\"2\"><li>Que las obras se han realizado de acuerdo con el contrato de ejecución de obras de fecha 17/04/2024 y al buen hacer de la construcción, siendo el resultado de las pruebas efectuadas satisfactorio.</li><li>Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de deshecho, en el ámbito de las obras.</li><li>Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</li></ol></div>\n\n</font></div>"
+              },
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "ShrinkFontToFitMinimumSize": 1.1,
+              "LineSpacing": 1.2,
+              "Type": "Expression"
+            }
+          }
+        }
+      },
+      "PaperSize": "A4",
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 1.5,
+        "Right": 1.5,
+        "Top": 1.5,
+        "Bottom": 1.5
+      }
+    }
+  }
+}
