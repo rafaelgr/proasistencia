@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "e2fd12b45a02500abab7ececb9e0467e",
+  "ReportGuid": "86d0b38c1608cf2779069c91d8069c9b",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1772027072000+0100)/",
+  "ReportChanged": "/Date(1772101431000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -146,7 +146,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
+                "Value": "M.ª DOLORES GOMEZ MARTIN"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -301,12 +301,12 @@
               "Ident": "StiText",
               "Name": "Text11",
               "Guid": "fdd3343e2d69d23dc1fbdf56c33faa9b",
-              "ClientRectangle": "0.2,0.05,17.6,2",
+              "ClientRectangle": "0.2,0.05,17.6,2.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.3; text-align: justify;\"><font size=\"9\">\n\n    <div><b>EXPONEN:</b></div><div><ol ><li>Que las obras de Reparación de bajantes en dicha Comunidad, con referencia de presupuesto I-1009-10-24, asciende, según certificación final de obra, a un importe de 26.933,84€ más IVA, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad de 25.450,48€, según se detalla:</li></ol><div></div></div>\n\n</font></div>"
+                "Value": "<div style=\"font-family: Tahoma; line-height: 1.3; text-align: justify;\"><font size=\"9\">\n\n    <div><b>EXPONEN:</b></div><div><ol><li>Que las obras de Reparación de bajantes en dicha Comunidad, con referencia de presupuesto I-1009-10-24, asciende, según certificación final de obra, a un importe de {datos_contrato.certificacionFinal} € más IVA, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad de {datos_contrato.totalPendienteFacturar} €, según se detalla:</li></ol><div></div></div>\n\n</font></div>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -351,7 +351,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{datos_contrato_pagos.concepto} {datos_contrato_pagos.porcentaje}% del importe total del presupuesto incluido IVA, {datos_contrato_pagos.importePrefacturadoIva} €"
+                "Value": "Factura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -371,38 +371,12 @@
           "Name": "GroupHeaderBand2",
           "Guid": "602d60e75f476cb0dfa8da9249c3173d",
           "CanGrow": true,
-          "ClientRectangle": "0,10.45,18,0.6",
+          "ClientRectangle": "0,10.45,18,0.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text12",
-              "Guid": "6f738cac0451e7492f007e34ca4a9215",
-              "CanGrow": true,
-              "MinSize": "0,0.1",
-              "ClientRectangle": "1.2,0.15,16.6,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{datos_contrato_letras_narrativa.concepto}"
-              },
-              "Font": "Tahoma;9;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          },
           "Condition": {
             "Value": "{datos_contrato_letras_narrativa.contPlanificacionId}"
           }
@@ -412,7 +386,7 @@
           "Name": "DataBand4",
           "Guid": "8eedd638de96defe0567d46fb5cee85d",
           "CanGrow": true,
-          "ClientRectangle": "0,11.85,18,0.4",
+          "ClientRectangle": "0,11.65,18,0.4",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -473,7 +447,7 @@
           "Name": "DataBand3",
           "Guid": "56d7dec6f4ef437abb71af882aaf58da",
           "CanGrow": true,
-          "ClientRectangle": "0,13.05,18,1",
+          "ClientRectangle": "0,12.85,18,1",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -517,7 +491,7 @@
           "Name": "DataBand5",
           "Guid": "31eeba79bce3822f19320409fba28d93",
           "CanGrow": true,
-          "ClientRectangle": "0,14.85,18,1",
+          "ClientRectangle": "0,14.65,18,1",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -561,7 +535,7 @@
           "Name": "DataBand7",
           "Guid": "3798f8ecde2b692c7bd5e89708793e50",
           "CanGrow": true,
-          "ClientRectangle": "0,16.65,18,1",
+          "ClientRectangle": "0,16.45,18,1",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -601,7 +575,6 @@
           }
         }
       },
-      "PaperSize": "A4",
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"
       },
