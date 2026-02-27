@@ -442,7 +442,7 @@ function obtainReportJson(obj) {
     if (vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt";
     if (vm.esRecepcion()) {
          if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
-         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
+         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
     }
     if(!file) return mensError("No se ha encontrado el archivo de informe.");
  
