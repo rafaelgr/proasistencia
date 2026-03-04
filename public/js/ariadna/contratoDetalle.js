@@ -102,7 +102,7 @@ function initForm() {
         return false;
     });
 
-    $("#btnNuevoAdicionalObras").submit(function () {
+    $("#frmTrabajosAdicionalesObras").submit(function () {
         return false;
     });
 
@@ -223,6 +223,10 @@ function initForm() {
         return false;
     });
 
+    $("#adicional-form").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -271,6 +275,8 @@ function initForm() {
 
     $("#cmbTecnicos").select2(select2Spanish());
     loadTecnicos(null);
+
+    $("#cmbPresupuestoAdicional").select2(select2Spanish());
 
 
 
@@ -1168,6 +1174,18 @@ function admData() {
     self.diferenciaPrefacturadoRealFormat = ko.observable();
     self.importePrefacturadoRealFormat = ko.observable();
     self.diferenciaPrefacturadoReal = ko.observable();
+    //modal adicinales
+    self.trabajoAdicionalId = ko.observable();
+    self.tituloAdicional = ko.observable();
+    self.importeAdicional = ko.observable();
+    self.fechaAdicional = ko.observable();
+    self.referenciaAdicional = ko.observable();
+    //combo adicioanles
+    self.trabajoAdicionalId = ko.observable();
+    self.strabajoAdicionalId = ko.observable();
+    //
+    self.posiblesTrabajosAdicionales = ko.observableArray([]);
+    self.elegidosTrabajosAdicionales = ko.observableArray([]);
 
 }
 
@@ -9546,10 +9564,12 @@ function limpiaDataLineaPlanificacionObrasTemp() {
     vm.importeCalculadoPlanificacionTemp(0);
     vm.importeIntereses(0);
     vm.porRetenGarantiasTemp(0);
-    vm.refPresupuestoAdicionalTemp('');
+    //vm.refPresupuestoAdicionalTemp('');
     $('#chkEsAdicionalTemp').prop('checked', false);
+    $('#refAdicional').hide(); // por defecto oculto
     vm.esAdicionalTemp(0);
-    loadFormasPagoLinea(vm.formaPagoId())
+    loadFormasPagoLinea(vm.formaPagoId());
+    loadComboAdicionales(null);
 }
 
 
@@ -11004,22 +11024,10 @@ function initTablaAdicionales() {
                 var bt1 = "";
                 var bt2 = "";
                 var bt3 = "";
-                /*  if (!vm.contratoCerrado()) {
-                     if (!vm.contratoIntereses()) {
-                         if (row.importeFacturado == '0.00') {
-                             bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                             bt3 = "<button class='btn btn-circle btn-primary'  data-toggle='modal' data-target='#modalGenerarPrefacturasObras' onclick='generarPrefacturaPlanificacionObras(" + data + ");' title='Generar prefacturas'> <i class='fa fa-stack-exchange'></i> </button>";
-                         }
- 
-                         if (row.importePrefacturado == '0.00') {
-                             bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObras' onclick='editPlanificacion(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                         }
-                     } else {
-                         if (row.importeFacturado == '0.00') {
-                             bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                         }
-                     }
-                 } */
+                if (!vm.contratoIntereses()) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAdicionalObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalAdicionalObras' onclick='editAdicionalObras(" + data + ");' title='Editar adicional'> <i class='fa fa-edit'></i> </button>";
+                }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
                 return html;
             }
@@ -11034,23 +11042,12 @@ function nuevoAdicionalObras() {
 }
 
 function loadDataAdicionales(data) {
-    vm.contratoLineaId(data.contratoLineaId);
-    vm.linea(data.linea);
-    vm.articuloId(data.articuloId);
-    vm.tipoIvaId(data.tipoIvaId);
-    vm.porcentaje(data.porcentaje);
-    vm.descripcion(data.descripcion);
-    vm.cantidad(data.cantidad);
-    vm.importe(data.importe);
-    vm.totalLinea(data.totalLinea);
-    vm.costeLinea(data.coste);
-    vm.capituloLinea(data.capituloLinea);
-    //
-    loadGrupoArticulos(data.grupoArticuloId);
-    loadArticulos(data.articuloId);
-    loadTiposIva(data.tipoIvaId);
-    loadUnidades(data.unidadId);
-    //
+    vm.trabajoAdicionalId(data.trabajoAdicionalId);
+    vm.contratoId(data.contratoId);
+    vm.tituloAdicional(data.concepto);
+    vm.fechaAdicional(moment(data.fecha).format('DD/MM/YYYY'));
+    vm.importeAdicional(data.importe);
+    vm.referenciaAdicional(data.refPresupuestoAdicional);
 }
 
 
@@ -11082,6 +11079,120 @@ function nuevoAdicionalObras() {
 }
 
 function limpiaDataAdicionalObras() {
-    vm.conceptoCobro('');
+    vm.trabajoAdicionalId(0);
+    vm.tituloAdicional('');
+    vm.importeAdicional(0);
     vm.fechaAdicional(vm.fechaInicio());
+    vm.referenciaAdicional('');
 }
+
+
+function aceptarAdicional() {
+    if (!datosOKAdicional()) {
+        return;
+    }
+    var data = {
+        adicional: [{
+            trabajoAdicionalId: 0,
+            contratoId: vm.contratoId(),
+            concepto: vm.tituloAdicional(),
+            fecha: spanishDbDate(vm.fechaAdicional()),
+            importe: vm.importeAdicional(),
+            contratoAdicionalId: 0,
+            refPresupuestoAdicional: vm.referenciaAdicional(),
+            externa: 0
+
+        }]
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/trabajo/adicional";
+    if (lineaEnEdicion) {
+        data.adicional.trabajoAdicionalId = vm.trabajoAdicionalId();
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/trabajo/adicional/" + vm.trabajoAdicionalId();
+    }
+    llamadaAjax(verbo, url, data, function (err, pl) {
+        if (err) return;
+        $('#modalAdicionalObras').modal('hide');
+        loadAdicionalesObras(vm.contratoId());
+        limpiaDataAdicionalObras();
+    });
+}
+
+function editAdicionalObras(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/contratos/trabajo/adicional/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataAdicionales(data[0]);
+    });
+}
+
+function deleteAdicionalObras(id) {
+    // mensaje de confirmación
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/trabajo/adicional/" + id, null, function (err, data) {
+            if (err) return;
+            loadAdicionalesObras(vm.contratoId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadComboAdicionales(id) {
+    llamadaAjax("GET", "/api/contratos/trabajo/adicional/contrato/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        var trabajosAdicionales = data.map(function (item) {
+            return {
+                trabajoAdicionalId: item.trabajoAdicionalId, 
+                concepto: item.concepto
+            };
+        });
+        vm.posiblesTrabajosAdicionales(trabajosAdicionales);
+        $("#cmbPresupuestoAdicional").val([id]).trigger('change');
+    });
+}
+
+function datosOKAdicional() {
+    $('#adicional-form').validate({
+        rules: {
+            txtTituloAdicional: {
+                required: true
+            },
+            txtReferenciaAdicional: {
+                required: true
+            },
+            txtImporteAdicional: {
+                required: true,
+                number: true
+            },
+            txtFechaAdicional: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtTituloAdicional: {
+                required: "Debe dar un concepto"
+            },
+            txtReferenciaAdicional: {
+                required: "Debe dar una referencia"
+            },
+            txtImporteAdicional: {
+                required: "Debe dar un importe",
+                number: "Se tiene que introducir un numero válido"
+            },
+            txtFechaAdicional: {
+                required: "Debe proporcionar una fecha",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#adicional-form').valid();
+}
+

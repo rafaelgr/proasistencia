@@ -5432,6 +5432,17 @@
                                     </div>
                                 </section>
                             </div>
+                            <div class="row" id="refAdicional">
+                                <section class="col col-md-12">
+                                    <label class="label">Presupuesto Adicional</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbPresupuestoAdicional"
+                                            name="cmbPresupuestoAdicional"
+                                            data-bind="options: posiblesTrabajosAdicionales, optionsText: 'concepto', optionsValue: 'trabajoAdicionalId', value: strabajoAdicionalId, valueAllowUnset: true, selectedOptions: elegidosTrabajosAdicionales, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+
+                            </div>
                             <div class="row">
                                 <section class="col col-md-1">
                                     <label class="label">Porcentaje</label>
@@ -5487,17 +5498,6 @@
                                             data-bind="options: posiblesFormasPagoLinea, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoIdLinea, valueAllowUnset: true, selectedOptions: elegidosFormasPagoLinea, selected2:{}"></select><i></i>
                                     </label>
                                 </section>
-                            </div>
-
-                            <div class="row" id="refAdicional">
-                                <section class="col col-md-12">
-                                    <label class="label">Referencia presupuesto Adicional</label>
-                                    <label class="input">
-                                        <input id="txtRefPresupuestoAdicionalTemp" name="txtRefPresupuestoAdicionalTemp"
-                                            type="text" data-bind="value: refPresupuestoAdicionalTemp" />
-                                    </label>
-                                </section>
-
                             </div>
                         </fieldset>
                         <footer>
@@ -5522,7 +5522,7 @@
     </div>
     <!--End modal-->
     <!-- Modal -->
-    <div class="modal fade" id="#modalAdicionalObras" tabindex="-1" role="dialog" data-backdrop="static"
+    <div class="modal fade" id="modalAdicionalObras" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false">
         <div class="modal-dialog modal-grande">
             <div class="modal-content">
@@ -5533,102 +5533,50 @@
                     <h4 class="modal-title"> TRABAJO ADICIONAL</h4>
                 </div>
                 <div class="modal-body no-padding">
-                    <form id="conceptoObrasTemp-form" class="smart-form">
+                    <form id="adicional-form" class="smart-form">
                         <fieldset>
                             <div class="row">
-                                <section class="col col-md-10">
+                                <section class="col col-md-4">
                                     <label class="label">Titulo</label>
                                     <label class="input">
-                                        <input id="txtTituloAdicionalTemp" name="txtTituloAdicional"
-                                            type="text" data-bind="value: tituloAdicional" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-2">
-                                    <div style="margin-top: 20%;">
-                                        <input id="chkEsAdicionalTemp" type="checkbox" name="chkEsAdicionalTemp"
-                                            data-bind="checked: esAdicionalTemp" />
-                                        Es adicional
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="row">
-                                <section class="col col-md-1">
-                                    <label class="label">Porcentaje</label>
-                                    <label class="input">
-                                        <input id="txtPorcentajePlanificacionTemp" name="txtPorcentajePlanificacionTemp"
-                                            type="text" data-bind="value: porcentajePlanificacionTemp" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-2">
-                                    <label class="label">importe</label>
-                                    <label class="input">
-                                        <input id="txtImporteCalculadoPlanificacionTemp"
-                                            name="txtImporteCalculadoPlanificacionTemp" type="text"
-                                            data-bind="value: importeCalculadoPlanificacionTemp" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-1">
-                                    <label class="label">Intereses</label>
-                                    <label class="input">
-                                        <input id="txtImporteInteresesTemp" name="txtImporteInteresesTemp" type="text"
-                                            data-bind="value: importeIntereses" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-1">
-                                    <label class="label">% garantías</label>
-                                    <label class="input">
-                                        <input id="txtPorRetenGarantiasTemp" name="txtPorRetenGarantiasTemp" type="text"
-                                            data-bind="value: porRetenGarantiasTemp" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-2">
-                                    <label class="label">Fecha concepto</label>
-                                    <label class="input">
-                                        <input id="txtFechaPlanificacionObrasTemp" name="txtFechaPlanificacionObrasTemp"
-                                            data-bind="value: fechaPlanificacionObrasTemp" class="datepicker"
-                                            data-dateformat="dd/mm/yy" />
-                                    </label>
-                                </section>
-                                <section class="col col-md-2">
-                                    <label class="label">Fecha real</label>
-                                    <label class="input">
-                                        <input id="txtFechaRealPlanificacionObrasTemp"
-                                            name="txtFechaRealPlanificacionObrasTemp"
-                                            data-bind="value: fechaRealPlanificacionObrasTemp" class="datepicker"
-                                            data-dateformat="dd/mm/yy" />
+                                        <input id="txtTituloAdicional" name="txtTituloAdicional" type="text"
+                                            data-bind="value: tituloAdicional" />
                                     </label>
                                 </section>
                                 <section class="col col-md-3">
-                                    <label class="label">Forma de pago</label>
-                                    <label style="width:100%; height:50px;">
-                                        <select style="width:100%" id="cmbFormasPagoLineaObrasTemp"
-                                            name="cmbFormasPagoLineaObrasTemp"
-                                            data-bind="options: posiblesFormasPagoLinea, optionsText: 'nombre', optionsValue: 'formaPagoId', value: sformaPagoIdLinea, valueAllowUnset: true, selectedOptions: elegidosFormasPagoLinea, selected2:{}"></select><i></i>
-                                    </label>
-                                </section>
-                            </div>
-
-                            <div class="row" id="refAdicional">
-                                <section class="col col-md-12">
-                                    <label class="label">Referencia presupuesto Adicional</label>
+                                    <label class="label">Referencia</label>
                                     <label class="input">
-                                        <input id="txtRefPresupuestoAdicionalTemp" name="txtRefPresupuestoAdicionalTemp"
-                                            type="text" data-bind="value: refPresupuestoAdicionalTemp" />
+                                        <input id="txtReferenciaAdicional" name="txtReferenciaAdicional" type="text"
+                                            data-bind="value: referenciaAdicional" />
                                     </label>
                                 </section>
-
+                                <section class="col col-md-3">
+                                    <label class="label">importe</label>
+                                    <label class="input">
+                                        <input id="txtImporteAdicional" name="txtImporteAdicional" type="text"
+                                            data-bind="value: importeAdicional" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Fecha</label>
+                                    <label class="input">
+                                        <input id="txtFechaAdicional" name="txtFechaAdicional"
+                                            data-bind="value: fechaAdicional" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
                             </div>
                         </fieldset>
                         <footer>
                             <button id="btnAceptarPlanificacionTemp" class="btn btn-primary"
-                                onclick="aceptarLineaPlanificacionObrasTemp()">
+                                onclick="aceptarAdicional()">
                                 Aceptar
                             </button>
                             <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
                                 Aceptar
                             </button> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="limpiarModalLineasPlanificacionTemp()">
+                                onclick="limpiaDataAdicionalObras()">
                                 Cancelar
                             </button>
                         </footer>
