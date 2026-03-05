@@ -54,6 +54,7 @@ var totalPorcentajeTemporal = 0;
 let dataPlanificacion
 var totalPrefacturado = 0;
 var sumIntereses = 0
+var impAdicional = 0;
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -262,6 +263,11 @@ function initForm() {
         cambioTipoProyecto(e.added);
     });
 
+    $("#cmbPresupuestoAdicional").select2().on('change', function (e) {
+        if(!e.added) return;    
+        cambioAdicional(e.added.id);
+    });
+
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
 
@@ -442,9 +448,15 @@ function initForm() {
         var restoContraro = 0;
         var importePorcentaje = 0;
         if (isNaN(porcentaje)) return;
+        //importe para el adicional
+        var esAdicional = vm.esAdicionalTemp();
+        if (esAdicional) {
+            totalContrato = impAdicional;
+        }
         restoContraro = totalContrato;
         porcentaje = porcentaje / 100;
         importePorcentaje = porcentaje * restoContraro;
+
         vm.importeCalculadoPlanificacionTemp(roundToSix(importePorcentaje));
     });
 
@@ -455,6 +467,11 @@ function initForm() {
         var importeCalculado = parseFloat($("#txtImporteCalculadoPlanificacionTemp").val());
         var porcentaje = 0;
         if (isNaN(importeCalculado)) return;
+        //importe para el adicional
+        var esAdicional = vm.esAdicionalTemp();
+        if (esAdicional) {
+            totalContrato = impAdicional;
+        }
         porcentaje = (importeCalculado * 100) / totalContrato;
         vm.porcentajePlanificacionTemp(roundToSix(porcentaje));
 
@@ -1153,7 +1170,6 @@ function admData() {
     self.certificacionFinalFormat = ko.observable();
     self.porRetenGarantiasTemp = ko.observable();
     self.esAdicionalTemp = ko.observable();
-    self.refPresupuestoAdicionalTemp = ko.observable();
     //
     self.emitidasTemp = ko.observable();
     self.numEmitidasTemp = ko.observable();
@@ -1179,7 +1195,7 @@ function admData() {
     self.tituloAdicional = ko.observable();
     self.importeAdicional = ko.observable();
     self.fechaAdicional = ko.observable();
-    self.referenciaAdicional = ko.observable();
+    self.refPresupuestoAdicional = ko.observable();
     //combo adicioanles
     self.trabajoAdicionalId = ko.observable();
     self.strabajoAdicionalId = ko.observable();
@@ -9462,7 +9478,7 @@ function initTablaPlanificacionLineasObrasTemp() {
  */
                             if (row.esAdicional)
                                 bt5 = "<button class='btn btn-circle btn-success' " +
-                                    "onclick=\"imprimirContratoAdicional('" + row.refPresupuestoAdicional + "')\" " +
+                                    "onclick=\"imprimirContratoAdicional('" + row.contratoAdicionalId + "')\" " +
                                     "title='Imprimir contrato adicional'>" +
                                     "<i class='fa fa-print fa-fw'></i></button>";
                         } else {
@@ -9557,6 +9573,7 @@ function nuevaLineaPlanificacionObrasTemp() {
 }
 
 function limpiaDataLineaPlanificacionObrasTemp() {
+    vm.contPlanificacionTempId(null);
     vm.conceptoPlanificacionTemp('');
     vm.porcentajePlanificacionTemp(0);
     vm.fechaPlanificacionObrasTemp(vm.fechaInicio());
@@ -9564,7 +9581,7 @@ function limpiaDataLineaPlanificacionObrasTemp() {
     vm.importeCalculadoPlanificacionTemp(0);
     vm.importeIntereses(0);
     vm.porRetenGarantiasTemp(0);
-    //vm.refPresupuestoAdicionalTemp('');
+    impAdicional = 0
     $('#chkEsAdicionalTemp').prop('checked', false);
     $('#refAdicional').hide(); // por defecto oculto
     vm.esAdicionalTemp(0);
@@ -9589,7 +9606,7 @@ function aceptarLineaPlanificacionObrasTemp() {
             importeIntereses: vm.importeIntereses(),
             porRetenGarantias: vm.porRetenGarantiasTemp(),
             esAdicional: vm.esAdicionalTemp() || 0,
-            refPresupuestoAdicional: vm.refPresupuestoAdicionalTemp(),
+            contratoAdicionalId: vm.strabajoAdicionalId() || null,
             formaPagoId: vm.sformaPagoIdLinea(),
             contPlanificacionTempIntId: null
         }
@@ -9607,7 +9624,7 @@ function aceptarLineaPlanificacionObrasTemp() {
         $('#modalPlanificacionObrasTemp').modal('hide');
         llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data2) {
             loadTablaPlanificacionLineasObrasTemp(data2);
-            limpiarModalLineasPlanificacionTemp();
+            limpiaDataLineaPlanificacionObrasTemp();
             if (verbo == "POST") {
                 $('#modalGenerarPrefacturasObrasTemp').modal('show');
                 generarPrefacturaPlanificacionObrasTemp(pl.contPlanificacionTempId);
@@ -9683,9 +9700,10 @@ function loadDataLineaPlanificacionObrasTemp(data) {
     vm.porRetenGarantiasTemp(data.porRetenGarantias);
     vm.importeCalculadoPlanificacionTemp(data.importe);
     vm.importeIntereses(data.importeIntereses);
-    vm.refPresupuestoAdicionalTemp(data.refPresupuestoAdicional);
-    loadFormasPagoLinea(data.formaPagoId);
+    impAdicional = data.importeAdicional;
 
+    loadFormasPagoLinea(data.formaPagoId);
+    loadComboAdicionales(data.contratoAdicionalId);
 }
 
 function deletePlanificacionLineaObrasTemp(contPlanificacionTempId) {
@@ -9749,21 +9767,6 @@ function datosOKLineasPlanificacionObrasTemp() {
     return $('#conceptoObras-form').valid();
 }
 
-function limpiarModalLineasPlanificacionTemp() {
-    vm.contPlanificacionTempId(null);
-    vm.conceptoPlanificacionTemp(null);
-    vm.porcentajePlanificacionTemp(null);
-    vm.fechaPlanificacionObrasTemp(null);
-    vm.fechaRealPlanificacionObrasTemp(null);
-    vm.importeCalculadoPlanificacionTemp(null);
-    vm.importeIntereses(null);
-    vm.esAdicionalTemp(0);
-    $('#chkEsAdicionalTemp').prop('checked', false);
-    vm.porRetenGarantiasTemp(null);
-    vm.refPresupuestoAdicionalTemp(null);
-
-    loadFormasPagoLinea(null);
-}
 
 
 
@@ -10702,13 +10705,13 @@ var exportarlineaPlanificacionAdicionaltempal = function (id, done) {
 }
 
 
-var imprimirContratoAdicional = function (ref) {
-    printContratoAdicional(ref);
+var imprimirContratoAdicional = function (id) {
+    printContratoAdicional(id);
 }
 
 
-function printContratoAdicional(ref) {
-    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
+function printContratoAdicional(id) {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&contratoAdicionalId=" + id + "&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_blank');
 }
 
@@ -11047,7 +11050,7 @@ function loadDataAdicionales(data) {
     vm.tituloAdicional(data.concepto);
     vm.fechaAdicional(moment(data.fecha).format('DD/MM/YYYY'));
     vm.importeAdicional(data.importe);
-    vm.referenciaAdicional(data.refPresupuestoAdicional);
+    vm.refPresupuestoAdicional(data.refPresupuestoAdicional);
 }
 
 
@@ -11083,7 +11086,7 @@ function limpiaDataAdicionalObras() {
     vm.tituloAdicional('');
     vm.importeAdicional(0);
     vm.fechaAdicional(vm.fechaInicio());
-    vm.referenciaAdicional('');
+    vm.refPresupuestoAdicional('');
 }
 
 
@@ -11099,7 +11102,7 @@ function aceptarAdicional() {
             fecha: spanishDbDate(vm.fechaAdicional()),
             importe: vm.importeAdicional(),
             contratoAdicionalId: 0,
-            refPresupuestoAdicional: vm.referenciaAdicional(),
+            refPresupuestoAdicional: vm.refPresupuestoAdicional(),
             externa: 0
 
         }]
@@ -11146,12 +11149,16 @@ function loadComboAdicionales(id) {
         if (err) return;
         var trabajosAdicionales = data.map(function (item) {
             return {
-                trabajoAdicionalId: item.trabajoAdicionalId, 
+                trabajoAdicionalId: item.trabajoAdicionalId,
                 concepto: item.concepto
             };
         });
         vm.posiblesTrabajosAdicionales(trabajosAdicionales);
         $("#cmbPresupuestoAdicional").val([id]).trigger('change');
+        vm.trabajoAdicionalId(id);
+        vm.strabajoAdicionalId(id);
+        return;
+
     });
 }
 
@@ -11161,7 +11168,7 @@ function datosOKAdicional() {
             txtTituloAdicional: {
                 required: true
             },
-            txtReferenciaAdicional: {
+            txtrefPresupuestoAdicional: {
                 required: true
             },
             txtImporteAdicional: {
@@ -11177,7 +11184,7 @@ function datosOKAdicional() {
             txtTituloAdicional: {
                 required: "Debe dar un concepto"
             },
-            txtReferenciaAdicional: {
+            txtrefPresupuestoAdicional: {
                 required: "Debe dar una referencia"
             },
             txtImporteAdicional: {
@@ -11196,3 +11203,15 @@ function datosOKAdicional() {
     return $('#adicional-form').valid();
 }
 
+function cambioAdicional(id) {
+    //
+    if (!id) {
+        return;
+    }
+    llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/trabajo/adicional/" + id, null, function (err, data) {
+        if (err) return;
+        vm.porcentajePlanificacionTemp(100);
+        vm.importeCalculadoPlanificacionTemp(data[0].importe);
+        impAdicional = data[0].importe;
+    });
+}

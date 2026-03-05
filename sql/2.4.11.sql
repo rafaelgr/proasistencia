@@ -8,7 +8,10 @@ CREATE TABLE `contrato_adicionales` (
   `refPresupuestoAdicional` VARCHAR(255),
   `externa` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`trabajoAdicionalId`) ,
-  KEY `idexterna` (`contratoAdicionalId`)
- ,
+  KEY `idexterna` (`contratoAdicionalId`),
   CONSTRAINT `adicionalContratoFK` FOREIGN KEY (`contratoId`) REFERENCES `contratos`(`contratoId`) ON DELETE CASCADE
 );
+
+
+ALTER TABLE `contrato_planificacion_temporal`   
+	DROP COLUMN `refPresupuestoAdicional`;

@@ -170,13 +170,13 @@ function initForm() {
             vm.esContrato(gup('esContrato'));
             vm.esRecepcion(gup('esRecepcion'));
             vm.empresaId(gup('EmpresaId'));
-            vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
+            vm.contratoAdicionalId(gup('contratoAdicionalId'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
             if (vm.esAdicional()) {
                 datos = {
                     contratoId: vm.contratoId(),
-                    refPresupuestoAdicional: vm.refPresupuestoAdicional(),
+                    contratoAdicionalId: vm.contratoAdicionalId(),
                     contratoInteresesId: vm.contratoInteresesId()
                 }
                 url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional"
@@ -258,7 +258,7 @@ function admData() {
     self.esAdicional = ko.observable();
     self.esContrato = ko.observable();
     self.esRecepcion = ko.observable();
-    self.refPresupuestoAdicional = ko.observable();
+    self.contratoAdicionalId = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
