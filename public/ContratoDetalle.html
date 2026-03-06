@@ -857,6 +857,16 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
+                                                                                    <label
+                                                                                        class="label">Nº Expediente</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtnExpediente"
+                                                                                            name="txtnExpediente"
+                                                                                            type="text"
+                                                                                            data-bind="value: nExpediente" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Empresa</label>
                                                                                     <label
                                                                                         style="width:100%; height:50px;">
@@ -877,7 +887,7 @@
                                                                                             data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label
                                                                                         class="label">Departamento</label>
                                                                                     <label
@@ -888,7 +898,7 @@
                                                                                             data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'departamentoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Tipo
                                                                                         Proyecto</label>
                                                                                     <label
@@ -2285,6 +2295,20 @@
                                                                                                                             class="form-control"
                                                                                                                             placeholder="" />
                                                                                                                     </th>
+                                                                                                                    <th
+                                                                                                                        class="hasinput">
+                                                                                                                        <input
+                                                                                                                            type="text"
+                                                                                                                            class="form-control"
+                                                                                                                            placeholder="" />
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        class="hasinput">
+                                                                                                                        <input
+                                                                                                                            type="text"
+                                                                                                                            class="form-control"
+                                                                                                                            placeholder="" />
+                                                                                                                    </th>
 
 
                                                                                                                     <th
@@ -2340,6 +2364,15 @@
                                                                                                                         de
                                                                                                                         pago
                                                                                                                     </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Planificación
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Presupuesto
+                                                                                                                        adicional
+                                                                                                                    </th>
 
                                                                                                                     <th
                                                                                                                         style="width:10%; text-align: center;">
@@ -2365,6 +2398,10 @@
                                                                                                                     <th>
                                                                                                                     </th>
                                                                                                                     <th>
+                                                                                                                    </th>
+                                                                                                                     <th>
+                                                                                                                    </th>
+                                                                                                                     <th>
                                                                                                                     </th>
 
                                                                                                                 </tr>

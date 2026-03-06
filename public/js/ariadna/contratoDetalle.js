@@ -264,7 +264,7 @@ function initForm() {
     });
 
     $("#cmbPresupuestoAdicional").select2().on('change', function (e) {
-        if(!e.added) return;    
+        if (!e.added) return;
         cambioAdicional(e.added.id);
     });
 
@@ -1186,6 +1186,7 @@ function admData() {
     self.correoFirmante = ko.observable();
     self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
+    self.nExpediente = ko.observable();
     //importes prefacturacion real
     self.diferenciaPrefacturadoRealFormat = ko.observable();
     self.importePrefacturadoRealFormat = ko.observable();
@@ -1333,6 +1334,8 @@ function loadData(data) {
     vm.correoFirmante(data.correoFirmante);
     vm.cargoFirmante(data.cargoFirmante);
     vm.fechaJunta(spanishDate(data.fechaJunta));
+    //
+    vm.nExpediente(data.nExpediente);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -10449,6 +10452,8 @@ function initTablaPrefacturasTemp(departamentoId) {
             { data: "totalConIva", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "retenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "vFPago" },
+            { data: "conceptoPlanificacion" },
+            { data: "refPresupuestoAdicional" },
             {
                 data: "prefacturaTempId", width: "5%", render: function (data, row) {
                     var bt1 = "";
@@ -10467,7 +10472,7 @@ function initTablaPrefacturasTemp(departamentoId) {
     });
 
     // Ocultar columnas por defecto
-    [1, 10].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
+    [1, 10, 11, 12].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
 }
 
 
@@ -11101,8 +11106,6 @@ function aceptarAdicional() {
             concepto: vm.tituloAdicional(),
             fecha: spanishDbDate(vm.fechaAdicional()),
             importe: vm.importeAdicional(),
-            contratoAdicionalId: 0,
-            refPresupuestoAdicional: vm.refPresupuestoAdicional(),
             externa: 0
 
         }]

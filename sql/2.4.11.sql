@@ -13,5 +13,5 @@ CREATE TABLE `contrato_adicionales` (
 );
 
 
-ALTER TABLE `contrato_planificacion_temporal`   
-	DROP COLUMN `refPresupuestoAdicional`;
+ALTER TABLE `contratos`   
+	ADD COLUMN `nExpediente` VARCHAR(255) NULL AFTER `fechaJunta`;

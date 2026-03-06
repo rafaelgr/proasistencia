@@ -301,6 +301,8 @@ function initTablaContratos() {
         }, {
             data: "agente"
         }, {
+            data: "nExpediente"
+        }, {
             data: "observaciones"
         }, {
             data: "contratoId",
