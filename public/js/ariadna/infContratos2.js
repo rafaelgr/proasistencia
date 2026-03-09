@@ -16,6 +16,7 @@ var usuario;
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 options.appearance.scrollbarsMode = true;
 options.toolbar.showSendEmailButton = true;
+options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.Continuous;
 
 // Configurar servidor y localización
 StiOptions.WebServer.url = "/api/streport";
@@ -479,11 +480,11 @@ function obtainReportJson(obj) {
     // Asignar y renderizar
     viewer.report = report;
 
-   const jsonString = JSON.stringify(obj, null, 2);
+  /*  const jsonString = JSON.stringify(obj, null, 2);
       const blob = new Blob([jsonString], { type: 'application/json' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'datosReporte.json';
-      link.click(); 
+      link.click();  */
 }
 
