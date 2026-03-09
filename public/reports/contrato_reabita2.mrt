@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "33c86def7ab2d84ba9da7992f216bf08",
+  "ReportGuid": "c78dea93838de062082c53bd1c6398c5",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_reabita2.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1771490267000+0100)/",
+  "ReportChanged": "/Date(1772798580000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -119,6 +119,11 @@
               "Ident": "StiText",
               "Name": "Text20",
               "ClientRectangle": "8,1.6,2,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -199,7 +204,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p>I.- la Propiedad desea llevar a cabo las Obras Obras de Reabilitación, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}- {datos_contrato.poblacionTrabajo}), en base al Presupuesto que se adjunta de Ref.{datos_contrato.referencia} por importe {datos_contrato.cerFinal}€ más IVA , de fecha {datos_contrato.fecha}.</p>\n<p> Y en base a todo lo anterior, acuerdan la realización de las referidas obras por parte de REABITA OBRAS DE REHABILITACIÓN, S.L. con arreglo a las siguientes</p>"
+                "Value": "<p style=\"\"><font style=\"\" face=\"Tahoma\">I.- la Propiedad desea llevar a cabo las Obras Obras de Reabilitación, en la Comunidad de Propietarios {datos_contrato.direccionTrabajo} ({datos_contrato.codPostalTrabajo}- {datos_contrato.poblacionTrabajo}), en base al Presupuesto que se adjunta de Ref.{datos_contrato.referencia}&nbsp;<span style=\"text-align: justify; letter-spacing: -0.133333px;\">por importe de {datos_contrato.totalContratoIva} € incluido IVA</span><span style=\"text-align: justify; letter-spacing: -0.133333px;\">{IIF(datos_contrato.hayIntereses==1,\" e intereses\",\"\")}</span><span style=\"text-align: justify; letter-spacing: -0.133333px;\">, de fecha {datos_contrato.fechaJunta}&nbsp;</span>.</font></p>\n<p style=\"\"><font style=\"\" face=\"Tahoma\"> Y en base a todo lo anterior, acuerdan la realización de las referidas obras por parte de REABITA OBRAS DE REHABILITACIÓN, S.L. con arreglo a las siguientes</font></p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",

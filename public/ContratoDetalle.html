@@ -857,6 +857,16 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
+                                                                                    <label
+                                                                                        class="label">Nº Expediente</label>
+                                                                                    <label class="input">
+                                                                                        <input id="txtnExpediente"
+                                                                                            name="txtnExpediente"
+                                                                                            type="text"
+                                                                                            data-bind="value: nExpediente" disabled/>
+                                                                                    </label>
+                                                                                </section>
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Empresa</label>
                                                                                     <label
                                                                                         style="width:100%; height:50px;">
@@ -877,7 +887,7 @@
                                                                                             data-dateformat="dd/mm/yy" />
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label
                                                                                         class="label">Departamento</label>
                                                                                     <label
@@ -888,7 +898,7 @@
                                                                                             data-bind="options: posiblesTiposContrato, optionsText: 'nombre', optionsValue: 'departamentoId', value: stipoContratoId, valueAllowUnset: true, selectedOptions: elegidosTiposContrato, selected2:{}"></select><i></i>
                                                                                     </label>
                                                                                 </section>
-                                                                                <section class="col col-md-3">
+                                                                                <section class="col col-md-2">
                                                                                     <label class="label">Tipo
                                                                                         Proyecto</label>
                                                                                     <label
@@ -1454,6 +1464,10 @@
                                                                                 <br />
                                                                                 <strong> Total (+IVA): </strong><span
                                                                                     data-bind="text: totalConIva"></span>
+                                                                                <br />
+                                                                                <strong> Total (+IVA) + Intereses:
+                                                                                </strong><span
+                                                                                    data-bind="text: totalConIvaIntereses"></span>
                                                                             </div>
                                                                             <div class="pull-right">
                                                                                 <button id="btnNuevaLinea"
@@ -1645,6 +1659,95 @@
                                                         </div>
                                                         <!-- FIN WIDGET BASES Y CUOTAS -->
                                                     </article>
+                                                </div>
+                                                <div class="row" id="lineasAdicionales">
+                                                    <!-- NEW WIDGET START -->
+                                                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <!-- Widget ID (each widget will need unique ID)-->
+                                                        <div class="jarviswidget" id="wid-id-new-21"
+                                                            data-widget-editbutton="false"
+                                                            data-widget-colorbutton="false"
+                                                            data-widget-deletebutton="false">
+                                                            <header>
+                                                                <span class="widget-icon">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </span>
+                                                                <h2>TRABAJOS ADICIONALES</h2>
+                                                            </header>
+                                                            <!-- widget div-->
+                                                            <div>
+                                                                <!-- widget edit box -->
+                                                                <div class="jarviswidget-editbox">
+                                                                    <!-- This area used as dropdown edit box -->
+                                                                    <input class="form-control" type="text">
+                                                                </div>
+                                                                <!-- end widget edit box -->
+                                                                <!-- widget content -->
+                                                                <div class="widget-body">
+                                                                    <!-- this is what the user will see -->
+                                                                    <form id="frmTrabajosAdicionalesObras">
+                                                                        <fieldset>
+                                                                            <div class="row">
+                                                                                <div class="pull-right"
+                                                                                    style="margin-right: 2%;">
+
+                                                                                    <button id="btnNuevoAdicionalObras"
+                                                                                        title="Nuevo Adicional"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#modalAdicionalObras"
+                                                                                        onclick="nuevoAdicionalObras()"
+                                                                                        class="btn btn-success btn-circle btn-lg">
+                                                                                        <i class="fa fa-lg fa-plus"></i>
+                                                                                    </button>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </form>
+                                                                    <hr />
+                                                                    <div id="tbTrabajosAdicionalesObras">
+                                                                        <table id="dt_trabajosAdicionalesObras"
+                                                                            class="table table-striped table-bordered table-hover"
+                                                                            width="100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="text-left">
+                                                                                        Fecha
+                                                                                    </th>
+                                                                                    <th data-hide="phone"
+                                                                                        class="text-left">
+                                                                                        Concepto
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Referencia
+                                                                                    </th>
+                                                                                    <th class="text-left">
+                                                                                        Importe
+                                                                                    </th>
+                                                                                    <th>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="3"
+                                                                                        style="text-align:right !important">
+                                                                                        Total:</th>
+                                                                                    <th></th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                        </table>
+                                                                    </div>
+                                                                    <hr />
+                                                                </div>
+                                                                <!-- end widget content -->
+                                                            </div>
+                                                            <!-- end widget div -->
+                                                        </div>
+                                                        <!-- end widget -->
+                                                    </article>
+                                                    <!-- WIDGET END -->
                                                 </div>
                                                 <div class="row" id="lineasPagoObras">
                                                     <!-- NEW WIDGET START -->
@@ -2192,6 +2295,20 @@
                                                                                                                             class="form-control"
                                                                                                                             placeholder="" />
                                                                                                                     </th>
+                                                                                                                    <th
+                                                                                                                        class="hasinput">
+                                                                                                                        <input
+                                                                                                                            type="text"
+                                                                                                                            class="form-control"
+                                                                                                                            placeholder="" />
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        class="hasinput">
+                                                                                                                        <input
+                                                                                                                            type="text"
+                                                                                                                            class="form-control"
+                                                                                                                            placeholder="" />
+                                                                                                                    </th>
 
 
                                                                                                                     <th
@@ -2247,6 +2364,15 @@
                                                                                                                         de
                                                                                                                         pago
                                                                                                                     </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Planificación
+                                                                                                                    </th>
+                                                                                                                    <th
+                                                                                                                        data-hide="phone">
+                                                                                                                        Presupuesto
+                                                                                                                        adicional
+                                                                                                                    </th>
 
                                                                                                                     <th
                                                                                                                         style="width:10%; text-align: center;">
@@ -2272,6 +2398,10 @@
                                                                                                                     <th>
                                                                                                                     </th>
                                                                                                                     <th>
+                                                                                                                    </th>
+                                                                                                                     <th>
+                                                                                                                    </th>
+                                                                                                                     <th>
                                                                                                                     </th>
 
                                                                                                                 </tr>
@@ -5339,6 +5469,17 @@
                                     </div>
                                 </section>
                             </div>
+                            <div class="row" id="refAdicional">
+                                <section class="col col-md-12">
+                                    <label class="label">Presupuesto Adicional</label>
+                                    <label style="width:100%; height:50px;">
+                                        <select style="width:100%" id="cmbPresupuestoAdicional"
+                                            name="cmbPresupuestoAdicional"
+                                            data-bind="options: posiblesTrabajosAdicionales, optionsText: 'concepto', optionsValue: 'trabajoAdicionalId', value: strabajoAdicionalId, valueAllowUnset: true, selectedOptions: elegidosTrabajosAdicionales, selected2:{}"></select><i></i>
+                                    </label>
+                                </section>
+
+                            </div>
                             <div class="row">
                                 <section class="col col-md-1">
                                     <label class="label">Porcentaje</label>
@@ -5395,17 +5536,6 @@
                                     </label>
                                 </section>
                             </div>
-
-                            <div class="row" id="refAdicional">
-                                <section class="col col-md-12">
-                                    <label class="label">Referencia presupuesto Adicional</label>
-                                    <label class="input">
-                                        <input id="txtRefPresupuestoAdicionalTemp" name="txtRefPresupuestoAdicionalTemp"
-                                            type="text" data-bind="value: refPresupuestoAdicionalTemp" />
-                                    </label>
-                                </section>
-
-                            </div>
                         </fieldset>
                         <footer>
                             <button id="btnAceptarPlanificacionTemp" class="btn btn-primary"
@@ -5416,7 +5546,74 @@
                                 Aceptar
                             </button> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="limpiarModalLineasPlanificacionTemp()">
+                                onclick="limpiaDataLineaPlanificacionObrasTemp()">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--End modal-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalAdicionalObras" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-grande">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title"> TRABAJO ADICIONAL</h4>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="adicional-form" class="smart-form">
+                        <fieldset>
+                            <div class="row">
+                                <section class="col col-md-4">
+                                    <label class="label">Titulo</label>
+                                    <label class="input">
+                                        <input id="txtTituloAdicional" name="txtTituloAdicional" type="text"
+                                            data-bind="value: tituloAdicional" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-3">
+                                    <label class="label">Referencia</label>
+                                    <label class="input">
+                                        <input id="txtrefPresupuestoAdicional" name="txtrefPresupuestoAdicional" type="text"
+                                            data-bind="value: refPresupuestoAdicional" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-3">
+                                    <label class="label">importe</label>
+                                    <label class="input">
+                                        <input id="txtImporteAdicional" name="txtImporteAdicional" type="text"
+                                            data-bind="value: importeAdicional" />
+                                    </label>
+                                </section>
+                                <section class="col col-md-2">
+                                    <label class="label">Fecha</label>
+                                    <label class="input">
+                                        <input id="txtFechaAdicional" name="txtFechaAdicional"
+                                            data-bind="value: fechaAdicional" class="datepicker"
+                                            data-dateformat="dd/mm/yy" />
+                                    </label>
+                                </section>
+                            </div>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarPlanificacionTemp" class="btn btn-primary"
+                                onclick="aceptarAdicional()">
+                                Aceptar
+                            </button>
+                            <!--  <button id="btnAceptarconcepto" class="btn btn-primary" onclick="aceptarLineaPlanificacion()">
+                                Aceptar
+                            </button> -->
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="limpiaDataAdicionalObras()">
                                 Cancelar
                             </button>
                         </footer>

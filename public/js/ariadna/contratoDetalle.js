@@ -6,6 +6,7 @@ var contratoId = 0;
 var lineaEnEdicion = false;
 
 var dataContratosLineas;
+var tabledataTrabajosAdicionalesObras;
 var dataContratosTasas;
 var dataBases;
 var dataComisionistas;
@@ -51,7 +52,9 @@ var totalIntTemp = 0;
 var totalPorcentajeTemporal = 0;
 //
 let dataPlanificacion
-
+var totalPrefacturado = 0;
+var sumIntereses = 0
+var impAdicional = 0;
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -99,6 +102,11 @@ function initForm() {
     $("#frmContrato").submit(function () {
         return false;
     });
+
+    $("#frmTrabajosAdicionalesObras").submit(function () {
+        return false;
+    });
+
     $("#frmPrefacturas").submit(function () {
         return false;
     });
@@ -216,6 +224,10 @@ function initForm() {
         return false;
     });
 
+    $("#adicional-form").submit(function () {
+        return false;
+    });
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -251,6 +263,11 @@ function initForm() {
         cambioTipoProyecto(e.added);
     });
 
+    $("#cmbPresupuestoAdicional").select2().on('change', function (e) {
+        if (!e.added) return;
+        cambioAdicional(e.added.id);
+    });
+
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
 
@@ -264,6 +281,8 @@ function initForm() {
 
     $("#cmbTecnicos").select2(select2Spanish());
     loadTecnicos(null);
+
+    $("#cmbPresupuestoAdicional").select2(select2Spanish());
 
 
 
@@ -429,9 +448,15 @@ function initForm() {
         var restoContraro = 0;
         var importePorcentaje = 0;
         if (isNaN(porcentaje)) return;
+        //importe para el adicional
+        var esAdicional = vm.esAdicionalTemp();
+        if (esAdicional) {
+            totalContrato = impAdicional;
+        }
         restoContraro = totalContrato;
         porcentaje = porcentaje / 100;
         importePorcentaje = porcentaje * restoContraro;
+
         vm.importeCalculadoPlanificacionTemp(roundToSix(importePorcentaje));
     });
 
@@ -442,6 +467,11 @@ function initForm() {
         var importeCalculado = parseFloat($("#txtImporteCalculadoPlanificacionTemp").val());
         var porcentaje = 0;
         if (isNaN(importeCalculado)) return;
+        //importe para el adicional
+        var esAdicional = vm.esAdicionalTemp();
+        if (esAdicional) {
+            totalContrato = impAdicional;
+        }
         porcentaje = (importeCalculado * 100) / totalContrato;
         vm.porcentajePlanificacionTemp(roundToSix(porcentaje));
 
@@ -646,6 +676,7 @@ function initForm() {
     initTablaConceptosLineas();
     initTablaPlanificacionLineasObras();
     initTablaPlanificacionLineasObrasTemp();
+    initTablaAdicionales();
     //initTablaDocumentacion();
     initArbolDocumentacion();
 
@@ -938,6 +969,7 @@ function admData() {
     //
     self.total = ko.observable();
     self.totalConIva = ko.observable();
+    self.totalConIvaIntereses = ko.observable();
     //radio buttons
     self.firmaActa = ko.observable();
     //
@@ -1138,7 +1170,6 @@ function admData() {
     self.certificacionFinalFormat = ko.observable();
     self.porRetenGarantiasTemp = ko.observable();
     self.esAdicionalTemp = ko.observable();
-    self.refPresupuestoAdicionalTemp = ko.observable();
     //
     self.emitidasTemp = ko.observable();
     self.numEmitidasTemp = ko.observable();
@@ -1155,10 +1186,23 @@ function admData() {
     self.correoFirmante = ko.observable();
     self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
+    self.nExpediente = ko.observable();
     //importes prefacturacion real
     self.diferenciaPrefacturadoRealFormat = ko.observable();
     self.importePrefacturadoRealFormat = ko.observable();
     self.diferenciaPrefacturadoReal = ko.observable();
+    //modal adicinales
+    self.trabajoAdicionalId = ko.observable();
+    self.tituloAdicional = ko.observable();
+    self.importeAdicional = ko.observable();
+    self.fechaAdicional = ko.observable();
+    self.refPresupuestoAdicional = ko.observable();
+    //combo adicioanles
+    self.trabajoAdicionalId = ko.observable();
+    self.strabajoAdicionalId = ko.observable();
+    //
+    self.posiblesTrabajosAdicionales = ko.observableArray([]);
+    self.elegidosTrabajosAdicionales = ko.observableArray([]);
 
 }
 
@@ -1290,6 +1334,8 @@ function loadData(data) {
     vm.correoFirmante(data.correoFirmante);
     vm.cargoFirmante(data.cargoFirmante);
     vm.fechaJunta(spanishDate(data.fechaJunta));
+    //
+    vm.nExpediente(data.nExpediente);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1312,6 +1358,7 @@ function loadData(data) {
         actualizaCobrosPlanificacion(data.contratoId);
         //loadPlanificacionLineasObras(data.contratoId);
         loadPlanificacionLineasObrasTemp(data.contratoId);
+        loadAdicionalesObras(data.contratoId);
         $('#lineasPagoObras').show();
         $('#lineasPago').hide();
         $('#btnGenerarPrefacturas').hide();
@@ -1322,7 +1369,7 @@ function loadData(data) {
         } else {
             $('#btnImportarPlanificacionObrasTemp').show();
         }
-       
+
     }
     loadDepartamento(data.tipoContratoId);
     recalcularCostesImportesDesdeCoste(true);
@@ -2486,6 +2533,11 @@ function loadBasesContrato(id) {
         }
         vm.total(numeral(t1).format('0,0.00'));
         vm.totalConIva(numeral(t2).format('0,0.00'));
+        if (sumIntereses && sumIntereses > 0) {
+            vm.totalConIvaIntereses(numeral(t2 + sumIntereses).format('0,0.00'));
+        } else {
+            vm.totalConIvaIntereses(numeral(t2).format('0,0.00'));
+        }
         loadTablaBases(data);
     })
 }
@@ -2775,6 +2827,7 @@ var recalcularImportesGuardar = function (done) {
             }
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalConIva(numeral(t2).format('0,0.00'));
+            vm.totalConIvaIntereses(numeral(t2 + sumIntereses).format('0,0.00'));
             vm.ventaNeta(vm.coste() * 1 + vm.importeBeneficio() * 1);
             done(null, 'OK')
         })
@@ -3235,7 +3288,6 @@ var generarPrefacturas = function () {
     $("#generar-prefacturas-form-planificacion-temp").submit(function () {
         return false;
     });
-
 }
 
 
@@ -7545,7 +7597,7 @@ function initTablaPlanificacionLineasObras() {
 
             //////
             // Total over all pages
-            total5 = api
+            sumIntereses = api
                 .column(5)
                 .data()
                 .reduce(function (a, b) {
@@ -7554,8 +7606,16 @@ function initTablaPlanificacionLineasObras() {
 
             // Update footer
             $(api.columns(5).footer()).html(
-                numeral(total5).format('0')
+                numeral(sumIntereses).format('0,0.00')
             );
+
+            setTimeout(function () {
+                let ti = parseFloat(numeroDbf(vm.totalConIva()));
+                let sum = numeral(ti + sumIntereses).format('0,0.00');
+                vm.totalConIvaIntereses(sum);
+                //vm.totalConIvaIntereses(numeral(ti + sumIntereses).format('0,0.00'));
+            }, 3000);
+
 
 
             //////
@@ -9231,36 +9291,15 @@ var imprimir = function () {
         return mensError(mensaje);
     }
     if (totalPorcentajeTemporal < 100) {
-        var mens = "No se ha planificado el 100% del contrato, ¿desea continuar?.";
-        mensajeAceptarCancelar(mens, function () {
-            printContrato(vm.contratoId())
-        }, function () {
-            // cancelar no hace nada
-        });
-    } else {
-        printContrato(vm.contratoId());
+        var mens = "No se ha planificado el 100% del contrato.";
+        return mensError(mens);
     }
-    /* if (totalPorcentajeTemporal < 100) {
-        var mensaje = "El contrato no está planificado al 100%";
-        mensError(mensaje);
-    } else {
-        //miramos si faltan los datos del firmante
-        if (!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
-            var mensaje = "Faltan datos del firmante, es necesario completar el nombre, cargo, dni, correo y fecha de junta para poder imprimir el contrato.";
-            return mensError(mensaje);
-        }
-        if (totalPorcentajeTemporal < 100) {
-            var mens = "No se ha planificado el 100% del contrato, ¿desea continuar?.";
-            mensajeAceptarCancelar(mens, function () {
-               printContrato(vm.contratoId())
-            }, function () {
-                // cancelar no hace nada
-            });
-        } else {
-            printContrato(vm.contratoId());
-        }
+    if (totalPrefacturado < vm.importeCliente()) {
+        var mens = "No se ha prefacturado el 100% del contrato.";
+        return mensError(mens);
+    }
 
-    } */
+    printContrato(vm.contratoId());
 }
 
 function printContrato(id) {
@@ -9375,7 +9414,7 @@ function initTablaPlanificacionLineasObrasTemp() {
             $(api.columns(7).footer()).html(numeral(totalPrefacturas).format('0'));
 
             // Total Importe Prefacturado (columna 6)
-            var totalPrefacturado = api
+            totalPrefacturado = api
                 .column(8)
                 .data()
                 .reduce(function (a, b) {
@@ -9442,7 +9481,7 @@ function initTablaPlanificacionLineasObrasTemp() {
  */
                             if (row.esAdicional)
                                 bt5 = "<button class='btn btn-circle btn-success' " +
-                                    "onclick=\"imprimirContratoAdicional('" + row.refPresupuestoAdicional + "')\" " +
+                                    "onclick=\"imprimirContratoAdicional('" + row.contratoAdicionalId + "')\" " +
                                     "title='Imprimir contrato adicional'>" +
                                     "<i class='fa fa-print fa-fw'></i></button>";
                         } else {
@@ -9537,6 +9576,7 @@ function nuevaLineaPlanificacionObrasTemp() {
 }
 
 function limpiaDataLineaPlanificacionObrasTemp() {
+    vm.contPlanificacionTempId(null);
     vm.conceptoPlanificacionTemp('');
     vm.porcentajePlanificacionTemp(0);
     vm.fechaPlanificacionObrasTemp(vm.fechaInicio());
@@ -9544,10 +9584,12 @@ function limpiaDataLineaPlanificacionObrasTemp() {
     vm.importeCalculadoPlanificacionTemp(0);
     vm.importeIntereses(0);
     vm.porRetenGarantiasTemp(0);
-    vm.refPresupuestoAdicionalTemp('');
+    impAdicional = 0
     $('#chkEsAdicionalTemp').prop('checked', false);
+    $('#refAdicional').hide(); // por defecto oculto
     vm.esAdicionalTemp(0);
-    loadFormasPagoLinea(vm.formaPagoId())
+    loadFormasPagoLinea(vm.formaPagoId());
+    loadComboAdicionales(null);
 }
 
 
@@ -9567,7 +9609,7 @@ function aceptarLineaPlanificacionObrasTemp() {
             importeIntereses: vm.importeIntereses(),
             porRetenGarantias: vm.porRetenGarantiasTemp(),
             esAdicional: vm.esAdicionalTemp() || 0,
-            refPresupuestoAdicional: vm.refPresupuestoAdicionalTemp(),
+            contratoAdicionalId: vm.strabajoAdicionalId() || null,
             formaPagoId: vm.sformaPagoIdLinea(),
             contPlanificacionTempIntId: null
         }
@@ -9585,25 +9627,30 @@ function aceptarLineaPlanificacionObrasTemp() {
         $('#modalPlanificacionObrasTemp').modal('hide');
         llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/temporal/" + vm.contratoId(), null, function (err, data2) {
             loadTablaPlanificacionLineasObrasTemp(data2);
-            limpiarModalLineasPlanificacionTemp();
-            //si se ha implementado la fecha real en la planificaciópn temporal y no estaá ya exportada a planificación definitiva, preguntamos si se quiere exportar a planificación definitiva para que se tengan en cuenta las fechas reales en la planificación definitiva  
-            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/asociada/" + pl.contPlanificacionTempId, null, function (err, pl2) {
-                if (pl.fechaReal && pl2.length == 0) {
-                    var mens = "La fecha real está implementada en esta linea, ¿desea exportar a planificacion definitiva?";
-                    $.SmartMessageBox({
-                        title: "<i class='fa fa-info'></i> Mensaje",
-                        content: mens,
-                        buttons: '[Aceptar][Cancelar]'
-                    }, function (ButtonPressed) {
-                        if (ButtonPressed === "Aceptar") {
-                            importarPlanificacionObrasTemp(pl.contPlanificacionTempId);
-                        }
-                        if (ButtonPressed === "Cancelar") {
-                            $('#upload-input').val([]);
-                        }
-                    });
-                }
-            });
+            limpiaDataLineaPlanificacionObrasTemp();
+            if (verbo == "POST") {
+                $('#modalGenerarPrefacturasObrasTemp').modal('show');
+                generarPrefacturaPlanificacionObrasTemp(pl.contPlanificacionTempId);
+            } else {
+                //si se ha implementado la fecha real en la planificaciópn temporal y no estaá ya exportada a planificación definitiva, preguntamos si se quiere exportar a planificación definitiva para que se tengan en cuenta las fechas reales en la planificación definitiva  
+                llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/linea-planificacion/asociada/" + pl.contPlanificacionTempId, null, function (err, pl2) {
+                    if (pl.fechaReal && pl2.length == 0) {
+                        var mens = "La fecha real está implementada en esta linea, ¿desea exportar a planificacion definitiva?";
+                        $.SmartMessageBox({
+                            title: "<i class='fa fa-info'></i> Mensaje",
+                            content: mens,
+                            buttons: '[Aceptar][Cancelar]'
+                        }, function (ButtonPressed) {
+                            if (ButtonPressed === "Aceptar") {
+                                importarPlanificacionObrasTemp(pl.contPlanificacionTempId);
+                            }
+                            if (ButtonPressed === "Cancelar") {
+                                $('#upload-input').val([]);
+                            }
+                        });
+                    }
+                });
+            }
         });
     });
 }
@@ -9656,9 +9703,10 @@ function loadDataLineaPlanificacionObrasTemp(data) {
     vm.porRetenGarantiasTemp(data.porRetenGarantias);
     vm.importeCalculadoPlanificacionTemp(data.importe);
     vm.importeIntereses(data.importeIntereses);
-    vm.refPresupuestoAdicionalTemp(data.refPresupuestoAdicional);
-    loadFormasPagoLinea(data.formaPagoId);
+    impAdicional = data.importeAdicional;
 
+    loadFormasPagoLinea(data.formaPagoId);
+    loadComboAdicionales(data.contratoAdicionalId);
 }
 
 function deletePlanificacionLineaObrasTemp(contPlanificacionTempId) {
@@ -9722,21 +9770,6 @@ function datosOKLineasPlanificacionObrasTemp() {
     return $('#conceptoObras-form').valid();
 }
 
-function limpiarModalLineasPlanificacionTemp() {
-    vm.contPlanificacionTempId(null);
-    vm.conceptoPlanificacionTemp(null);
-    vm.porcentajePlanificacionTemp(null);
-    vm.fechaPlanificacionObrasTemp(null);
-    vm.fechaRealPlanificacionObrasTemp(null);
-    vm.importeCalculadoPlanificacionTemp(null);
-    vm.importeIntereses(null);
-    vm.esAdicionalTemp(0);
-    $('#chkEsAdicionalTemp').prop('checked', false);
-    vm.porRetenGarantiasTemp(null);
-    vm.refPresupuestoAdicionalTemp(null);
-
-    loadFormasPagoLinea(null);
-}
 
 
 
@@ -10419,6 +10452,8 @@ function initTablaPrefacturasTemp(departamentoId) {
             { data: "totalConIva", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "retenGarantias", className: "text-right", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "vFPago" },
+            { data: "conceptoPlanificacion" },
+            { data: "refPresupuestoAdicional" },
             {
                 data: "prefacturaTempId", width: "5%", render: function (data, row) {
                     var bt1 = "";
@@ -10437,7 +10472,7 @@ function initTablaPrefacturasTemp(departamentoId) {
     });
 
     // Ocultar columnas por defecto
-    [1, 10].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
+    [1, 10, 11, 12].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
 }
 
 
@@ -10675,13 +10710,13 @@ var exportarlineaPlanificacionAdicionaltempal = function (id, done) {
 }
 
 
-var imprimirContratoAdicional = function (ref) {
-    printContratoAdicional(ref);
+var imprimirContratoAdicional = function (id) {
+    printContratoAdicional(id);
 }
 
 
-function printContratoAdicional(ref) {
-    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&refPresupuestoAdicional=" + ref + "&ContratoInteresesId=" + vm.contratoInteresesId();
+function printContratoAdicional(id) {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esAdicional=true&contratoAdicionalId=" + id + "&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_blank');
 }
 
@@ -10910,4 +10945,276 @@ var aceptarGenerarPrefacturaPlanificacionIntereses = function () {
         });
     });
 
+}
+
+
+//ADICIONALES
+
+function initTablaAdicionales() {
+    tablaAdicionales = $('#dt_trabajosAdicionalesObras').DataTable({
+        autoWidth: true,
+        paging: false,
+        responsive: false,
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>>" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            //footer de la columna importe
+            total = api
+                .column(3)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Update footer
+            $(api.columns(3).footer()).html(
+                numeral(total).format('0,0.00')
+            );
+
+        },
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: tabledataTrabajosAdicionalesObras,
+        columns: [{
+            data: "fecha",
+            render: function (data, type, row) {
+                return moment(data).format('DD/MM/YYYY');
+            }
+        }, {
+            data: "concepto",
+
+        },
+        {
+            data: "refPresupuestoAdicional",
+
+        }, {
+            data: "importe",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00');
+            }
+        }, {
+            data: "trabajoAdicionalId",
+            render: function (data, type, row) {
+                var html = "";
+                var bt1 = "";
+                var bt2 = "";
+                var bt3 = "";
+                if (!vm.contratoIntereses()) {
+                    bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAdicionalObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                    bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalAdicionalObras' onclick='editAdicionalObras(" + data + ");' title='Editar adicional'> <i class='fa fa-edit'></i> </button>";
+                }
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+
+function nuevoAdicionalObras() {
+    limpiaDataAdicionalObras();
+    lineaEnEdicion = false;
+}
+
+function loadDataAdicionales(data) {
+    vm.trabajoAdicionalId(data.trabajoAdicionalId);
+    vm.contratoId(data.contratoId);
+    vm.tituloAdicional(data.concepto);
+    vm.fechaAdicional(moment(data.fecha).format('DD/MM/YYYY'));
+    vm.importeAdicional(data.importe);
+    vm.refPresupuestoAdicional(data.refPresupuestoAdicional);
+}
+
+
+function loadAdicionalesObras(id) {
+    llamadaAjax("GET", "/api/contratos/trabajo/adicional/contrato/" + id, null, function (err, data) {
+        if (err) return;
+
+        loadTablaAdicionales(data);
+    });
+}
+
+
+
+function loadTablaAdicionales(data) {
+    numLineas = data.length;
+    var dt = $('#dt_trabajosAdicionalesObras').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    if (!data) numLineas = 0
+    dt.fnClearTable();
+    dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function nuevoAdicionalObras() {
+    limpiaDataAdicionalObras();
+    lineaEnEdicion = false;
+}
+
+function limpiaDataAdicionalObras() {
+    vm.trabajoAdicionalId(0);
+    vm.tituloAdicional('');
+    vm.importeAdicional(0);
+    vm.fechaAdicional(vm.fechaInicio());
+    vm.refPresupuestoAdicional('');
+}
+
+
+function aceptarAdicional() {
+    if (!datosOKAdicional()) {
+        return;
+    }
+    var data = {
+        adicional: [{
+            trabajoAdicionalId: 0,
+            contratoId: vm.contratoId(),
+            concepto: vm.tituloAdicional(),
+            fecha: spanishDbDate(vm.fechaAdicional()),
+            importe: vm.importeAdicional(),
+            externa: 0
+
+        }]
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/trabajo/adicional";
+    if (lineaEnEdicion) {
+        data.adicional.trabajoAdicionalId = vm.trabajoAdicionalId();
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/trabajo/adicional/" + vm.trabajoAdicionalId();
+    }
+    llamadaAjax(verbo, url, data, function (err, pl) {
+        if (err) return;
+        $('#modalAdicionalObras').modal('hide');
+        loadAdicionalesObras(vm.contratoId());
+        limpiaDataAdicionalObras();
+    });
+}
+
+function editAdicionalObras(id) {
+    lineaEnEdicion = true;
+    llamadaAjax("GET", "/api/contratos/trabajo/adicional/" + id, null, function (err, data) {
+        if (err) return;
+        if (data.length > 0) loadDataAdicionales(data[0]);
+    });
+}
+
+function deleteAdicionalObras(id) {
+    // mensaje de confirmación
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/trabajo/adicional/" + id, null, function (err, data) {
+            if (err) return;
+            loadAdicionalesObras(vm.contratoId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadComboAdicionales(id) {
+    llamadaAjax("GET", "/api/contratos/trabajo/adicional/contrato/" + vm.contratoId(), null, function (err, data) {
+        if (err) return;
+        var trabajosAdicionales = data.map(function (item) {
+            return {
+                trabajoAdicionalId: item.trabajoAdicionalId,
+                concepto: item.concepto
+            };
+        });
+        vm.posiblesTrabajosAdicionales(trabajosAdicionales);
+        $("#cmbPresupuestoAdicional").val([id]).trigger('change');
+        vm.trabajoAdicionalId(id);
+        vm.strabajoAdicionalId(id);
+        return;
+
+    });
+}
+
+function datosOKAdicional() {
+    $('#adicional-form').validate({
+        rules: {
+            txtTituloAdicional: {
+                required: true
+            },
+            txtrefPresupuestoAdicional: {
+                required: true
+            },
+            txtImporteAdicional: {
+                required: true,
+                number: true
+            },
+            txtFechaAdicional: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtTituloAdicional: {
+                required: "Debe dar un concepto"
+            },
+            txtrefPresupuestoAdicional: {
+                required: "Debe dar una referencia"
+            },
+            txtImporteAdicional: {
+                required: "Debe dar un importe",
+                number: "Se tiene que introducir un numero válido"
+            },
+            txtFechaAdicional: {
+                required: "Debe proporcionar una fecha",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#adicional-form').valid();
+}
+
+function cambioAdicional(id) {
+    //
+    if (!id) {
+        return;
+    }
+    llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/trabajo/adicional/" + id, null, function (err, data) {
+        if (err) return;
+        vm.porcentajePlanificacionTemp(100);
+        vm.importeCalculadoPlanificacionTemp(data[0].importe);
+        impAdicional = data[0].importe;
+    });
 }

@@ -16,6 +16,7 @@ var usuario;
 var options = new Stimulsoft.Viewer.StiViewerOptions();
 options.appearance.scrollbarsMode = true;
 options.toolbar.showSendEmailButton = true;
+options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.Continuous;
 
 // Configurar servidor y localización
 StiOptions.WebServer.url = "/api/streport";
@@ -170,13 +171,13 @@ function initForm() {
             vm.esContrato(gup('esContrato'));
             vm.esRecepcion(gup('esRecepcion'));
             vm.empresaId(gup('EmpresaId'));
-            vm.refPresupuestoAdicional(gup('refPresupuestoAdicional'));
+            vm.contratoAdicionalId(gup('contratoAdicionalId'));
             verb = "GET";
             var url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/" + vm.contratoId();
             if (vm.esAdicional()) {
                 datos = {
                     contratoId: vm.contratoId(),
-                    refPresupuestoAdicional: vm.refPresupuestoAdicional(),
+                    contratoAdicionalId: vm.contratoAdicionalId(),
                     contratoInteresesId: vm.contratoInteresesId()
                 }
                 url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/adicional"
@@ -258,7 +259,7 @@ function admData() {
     self.esAdicional = ko.observable();
     self.esContrato = ko.observable();
     self.esRecepcion = ko.observable();
-    self.refPresupuestoAdicional = ko.observable();
+    self.contratoAdicionalId = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
     self.elegidosContratos = ko.observableArray([]);
@@ -479,7 +480,7 @@ function obtainReportJson(obj) {
     // Asignar y renderizar
     viewer.report = report;
 
-   /*  const jsonString = JSON.stringify(obj, null, 2);
+  /*  const jsonString = JSON.stringify(obj, null, 2);
       const blob = new Blob([jsonString], { type: 'application/json' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
