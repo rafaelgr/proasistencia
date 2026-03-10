@@ -1187,6 +1187,7 @@ function admData() {
     self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
     self.nExpediente = ko.observable();
+    self.tituloExpediente = ko.observable();
     //importes prefacturacion real
     self.diferenciaPrefacturadoRealFormat = ko.observable();
     self.importePrefacturadoRealFormat = ko.observable();
@@ -1336,6 +1337,7 @@ function loadData(data) {
     vm.fechaJunta(spanishDate(data.fechaJunta));
     //
     vm.nExpediente(data.nExpediente);
+    vm.tituloExpediente(data.tituloExpediente);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1670,7 +1672,8 @@ var generarContratoDb = function () {
             "correoFirmante": vm.correoFirmante(),
             "cargoFirmante": vm.cargoFirmante(),
             "fechaJunta": spanishDbDate(vm.fechaJunta()),
-            "contratoInteresesId": vm.contratoInteresesId()
+            "contratoInteresesId": vm.contratoInteresesId(),
+            "tituloExpediente": vm.tituloExpediente()
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -9286,8 +9289,8 @@ function initTablaContratosLineasTasas() {
 var imprimir = function () {
     //miramos primero si el contrato está planificado al 100% o mas
     //miramos si faltan los datos del firmante
-    if (!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta()) {
-        var mensaje = "Faltan datos del firmante, es necesario completar el nombre, cargo, dni, correo y fecha de junta para poder imprimir el contrato.";
+    if (!vm.nombreFirmante() || !vm.cargoFirmante() || !vm.dniFirmante() || !vm.correoFirmante() || !vm.fechaJunta() || !vm.fechaFormalizacionContrato() || !vm.tituloExpediente()) {
+        var mensaje = "Faltan datos del contrato, es necesario completar el nombre, cargo, dni, correo, la fecha de junta, la fecha de formalización y el título del expediente para poder imprimir el contrato.";
         return mensError(mensaje);
     }
     if (totalPorcentajeTemporal < 100) {
