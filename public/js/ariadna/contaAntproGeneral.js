@@ -48,9 +48,9 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+
     });
     //
     $('#btnBuscar').click(buscarAnticipos());
@@ -69,6 +69,19 @@ function initForm() {
     // select2 things
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
+
+    //Evento de marcar/desmarcar todos los checks
+    $('#checkMain').click(
+        function (e) {
+            if ($('#checkMain').prop('checked')) {
+                $('.checkAll').prop('checked', true);
+                updateAll(true);
+            } else {
+                $('.checkAll').prop('checked', false);
+                updateAll(false);
+            }
+        }
+    );
 }
 
 // tratamiento knockout
@@ -131,7 +144,7 @@ function initTablaAnticipos() {
             width: "10%",
             render: function (data, type, row) {
                 var html = '<label class="input">';
-                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s">', data, data);
+                html += sprintf('<input id="chk%s" type="checkbox" name="chk%s" class="checkAll">', data, data);
                 //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                 html += '</label>';
                 return html;
@@ -171,7 +184,7 @@ function initTablaAnticipos() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 /*var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo(" + data + ");' title='Imprimir PDF'> <i class='fa fa-file-pdf-o fa-fw'></i> </button>";*/
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 /*+ "" + bt3 */+ "</div>";
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 /*+ "" + bt3 */ + "</div>";
                 return html;
             }
         }]
@@ -183,7 +196,7 @@ function datosOK() {
     // habrá que controlarlos aquí
     $('#frmBuscar').validate({
         rules: {
-            
+
             txtHastaFecha: {
                 greaterThan: "#txtDesdeFecha"
             },
@@ -191,7 +204,7 @@ function datosOK() {
         },
         // Messages for form validation
         messages: {
-            
+
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -260,25 +273,25 @@ function buscarAnticipos() {
         facturasCero = [];
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/anticiposProveedores/emision2/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario.usuarioId,
+            url: myconfig.apiUrl + "/api/anticiposProveedores/emision2/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId() + "/" + usuario.usuarioId,
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
                 //comprobamos si hay anticipos a cero para mostrar mensaje de advertencia
-                if(data) {
-                    if(data.length > 0) {
-                        for(var i = 0; i < data.length; i++) {
-                            if(data[i].totalConIva == 0) {
+                if (data) {
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].totalConIva == 0) {
                                 facturasCero.push(data[i].vNum);
                             }
                         }
-                        if(facturasCero.length > 0) mensError("las siguentes facturas tienen el importe a cero\n" + facturasCero);
+                        if (facturasCero.length > 0) mensError("las siguentes facturas tienen el importe a cero\n" + facturasCero);
                     }
                 }
                 data.forEach(function (f) {
                     contador = 0;
-                    if(!f.IBAN) {// comprovamos si el proveedor de la factura tiene IBAN para añadirlo a una lista
-                        if(numIban.length == 0) {
+                    if (!f.IBAN) {// comprovamos si el proveedor de la factura tiene IBAN para añadirlo a una lista
+                        if (numIban.length == 0) {
                             datos = {
                                 nombre: f.emisorNombre,
                                 id: f.proveedorId
@@ -286,12 +299,12 @@ function buscarAnticipos() {
                             numIban.push(datos);
                             datos = {};
                         } else {// comprobamos que el proveedor no exista ya en lista y si es así lo añadimos.
-                            for(i = 0; i < numIban.length; i++) {
-                                if(numIban[i].id == f.proveedorId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
-                                    contador ++;
+                            for (i = 0; i < numIban.length; i++) {
+                                if (numIban[i].id == f.proveedorId) {//le sumas una unidad al contador si se encunetra una coincidencia en la lists
+                                    contador++;
                                 }
                             };
-                            if(contador == 0) {//si el objeto no está en la lista se añade
+                            if (contador == 0) {//si el objeto no está en la lista se añade
                                 datos = {
                                     nombre: f.emisorNombre,
                                     id: f.proveedorId
@@ -305,6 +318,7 @@ function buscarAnticipos() {
                 loadTablaAnticipos(data);
                 // mostramos el botén de alta
                 $("#btnAlta").show();
+                $('#checkMain').prop('checked', true);
             },
             error: function (err) {
                 mensErrorAjax(err);
@@ -322,46 +336,46 @@ function buscarFicheros() {
     };
     return mf;
 }
-function contabilizarAnticipos() { 
-        if (!datosOK()) return;
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/anticiposProveedores/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha())+ "/" + vm.sdepartamentoId()+ "/" + usuario.usuarioId,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                if(data[0].length > 0  || data[1].length > 0) {
-                    if(data[1]) {
-                        if(data[1].length > 0) {
-                            var cuentas = JSON.stringify(data[1]);
+function contabilizarAnticipos() {
+    if (!datosOK()) return;
+    $.ajax({
+        type: "POST",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/contabilizar/" + spanishDbDate(vm.desdeFecha()) + "/" + spanishDbDate(vm.hastaFecha()) + "/" + vm.sdepartamentoId() + "/" + usuario.usuarioId,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data[0].length > 0 || data[1].length > 0) {
+                if (data[1]) {
+                    if (data[1].length > 0) {
+                        var cuentas = JSON.stringify(data[1]);
 
-                            cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
-                            mensError("Los anticipos siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
-                            var fn = buscarAnticipos();
-                            fn();
-                        }
-                    }
-                    if(data[0].length > 0) {
-                        //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
-                        var lista = data[0].toString();
-                        mensError("Los anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
+                        cuentas = cuentas.replace(/}/g, "<br\>").replace(/[\]\[{()}"]/g, '').replace(/[_\s]/g, '-');
+                        mensError("Los anticipos siguientes con las cuentas contables  " + cuentas + "  no han sido contabilizadas, las cuentas contable de compras no existen.");
                         var fn = buscarAnticipos();
                         fn();
                     }
-                } else {
-                    // borramos datos
-                    $("#btnAlta").hide();
-                    mensNormal('Las facturas han sido pasadas a contabilidad');
-                    vm.desdeFecha(null);
-                    vm.hastaFecha(null);
-                    loadTablaAnticipos(null);
                 }
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
+                if (data[0].length > 0) {
+                    //facturas sin contabilizar, mantenemos datos, mostramos mensaje de error y actualizamos tabla
+                    var lista = data[0].toString();
+                    mensError("Los anticipos con numero " + lista + "  no han sido contabilizadas, revise el reparto de las empresas serviciadas.");
+                    var fn = buscarAnticipos();
+                    fn();
+                }
+            } else {
+                // borramos datos
+                $("#btnAlta").hide();
+                mensNormal('Las facturas han sido pasadas a contabilidad');
+                vm.desdeFecha(null);
+                vm.hastaFecha(null);
+                loadTablaAnticipos(null);
             }
-        });
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 function deleteAnticipo(id) {
@@ -399,33 +413,33 @@ function deleteAnticipo(id) {
 }
 
 function muestraMensNoIBAN() {
-    var mf = function () { 
+    var mf = function () {
         var lista = []
-           // mensaje de confirmación
-           numIban.forEach( function(f) {
-                delete f.id;
-                lista.push(f.nombre.toString());
-           });
-           var mens = "¿Los proveedores "+lista+" no tienen IBAN, desea continuiar";
-           if(numIban.length > 0) {
-               $.SmartMessageBox({
-                   title: "<i class='fa fa-info'></i> Mensaje",
-                   content: mens,
-                   buttons: '[Aceptar][Cancelar]'
-               }, function (ButtonPressed) {
-                   if (ButtonPressed === "Aceptar") {
-                           contabilizarAnticipos();
-                           lista = []
-                       }
-                   if (ButtonPressed === "Cancelar") {
-                       // no hacemos nada
-                       
-                   }
-               });
-           } else {
-               contabilizarAnticipos();
-               lista = []
-           }
+        // mensaje de confirmación
+        numIban.forEach(function (f) {
+            delete f.id;
+            lista.push(f.nombre.toString());
+        });
+        var mens = "¿Los proveedores " + lista + " no tienen IBAN, desea continuiar";
+        if (numIban.length > 0) {
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    contabilizarAnticipos();
+                    lista = []
+                }
+                if (ButtonPressed === "Cancelar") {
+                    // no hacemos nada
+
+                }
+            });
+        } else {
+            contabilizarAnticipos();
+            lista = []
+        }
     }
     return mf;
 }
@@ -513,7 +527,7 @@ function informePDF(data) {
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
     });
 }*/
-    
+
 
 var f_open_post = function (verb, url, data, target) {
     var form = document.createElement("form");
@@ -535,3 +549,43 @@ var f_open_post = function (verb, url, data, target) {
     document.body.appendChild(form);
     form.submit();
 };
+
+function updateAll(opcion) {
+    var datos = null;
+    var sel = 0;
+    var tb = $('#dt_anticipo').dataTable().api();
+    var datos = tb.rows({ page: 'current' }).data();
+    if (opcion) sel = 1
+
+    if (datos) {
+        for (var i = 0; i < datos.length; i++) {
+            var data = {
+                antprove: {
+                    antproveId:  datos[i].antproveId,
+                    empresaId:  datos[i].empresaId,
+                    proveedorId:  datos[i].proveedorId,
+                    fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
+                    sel: sel
+                }
+            };
+
+
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/anticiposProveedores/%s', myconfig.apiUrl, datos[i].antproveId);
+            $.ajax({
+                type: type,
+                url: url,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data, status) {
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                }
+            });
+        }
+    }
+}

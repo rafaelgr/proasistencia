@@ -18,63 +18,63 @@ function initForm() {
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
     filtros = getCookie('filtro_facturas');
-    if(filtros != undefined) {
+    if (filtros != undefined) {
         filtros = JSON.parse(filtros);
     }
-    
+
     initTablaFacturas();
 
     var conservaFiltro = gup("ConservaFiltro");
     var cleaned = gup("cleaned");
-    if(conservaFiltro != 'true' && cleaned != 'true') limpiarFiltros();
+    if (conservaFiltro != 'true' && cleaned != 'true') limpiarFiltros();
 
     $.validator.addMethod("greaterThan",
-    function (value, element, params) {
-        var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
-        var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
-        if (!/Invalid|NaN/.test(new Date(fv))) {
-            return new Date(fv) >= new Date(fp);
-        } else {
-            // esto es debido a que permitimos que la segunda fecha nula
-            return true;
-        }
-    }, 'La fecha final debe ser mayor que la inicial.');
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha final debe ser mayor que la inicial.');
 
-   
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        if(data) {
+
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+        if (data) {
             // comprobamos parámetros
             facturaId = gup('FacturaId');
             var f = facturaId;
-            if(facturaId = '') {
+            if (facturaId = '') {
                 f = null
             }
-             compruebaFiltros(f);
+            compruebaFiltros(f);
 
         }
     });
 
-     //Evento asociado al cambio de departamento
-     $("#cmbDepartamentosTrabajo").on('change', function (e) {
+    //Evento asociado al cambio de departamento
+    $("#cmbDepartamentosTrabajo").on('change', function (e) {
         //alert(JSON.stringify(e.added));
         // comprobamos parámetros
         facturaId = gup('FacturaId');
         var f = facturaId;
-        if(facturaId = '') {
+        if (facturaId = '') {
             f = null
         }
-         //compruebaFiltros(f);
+        //compruebaFiltros(f);
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        if( !$('#chkTodos').prop('checked') ) {
-            if(this.value != antDepartamentoId) {
+        if (!$('#chkTodos').prop('checked')) {
+            if (this.value != antDepartamentoId) {
                 cargarFacturas2()();
             } else {
-                setTimeout(function() {
+                setTimeout(function () {
                     cargarFacturas2(f)();
                 }, 1000);
-                
+
             }
         } else {
             cargarFacturas2All()();
@@ -83,12 +83,12 @@ function initForm() {
     });
 
     $("#cmbEmpresas").select2(select2Spanish());
-    
+
 
     // de smart admin
     pageSetUp();
     getVersionFooter();
-    
+
     //
     $('#btnBuscar').click(buscarFacturas());
     $('#btnAlta').click(crearFactura());
@@ -97,13 +97,17 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
+    $("#enviarCorreo-form").submit(function () {
+        return false;
+    });
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarFacturas();
     //});
     //
-    
-    
+
+
     $('#chkTodos').change(function () {
         if (this.checked) {
             cargarFacturas2All()();
@@ -112,12 +116,12 @@ function initForm() {
         }
     });
 
-    
+
 }
 
 function admData() {
     var self = this;
-    
+
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
     //
@@ -129,48 +133,50 @@ function admData() {
     //
     self.posiblesEmpresas = ko.observableArray([]);
     self.elegidosEmpresas = ko.observableArray([]);
-    
+
     self.dFecha = ko.observable();
     self.hFecha = ko.observable();
-} 
+
+    self.emailEnvio = ko.observable();
+}
 
 
 
 
 function compruebaFiltros(id) {
-    if(filtros) {
+    if (filtros) {
         vm.dFecha(filtros.dFecha);
         vm.hFecha(filtros.hFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
-        if(filtros.contabilizadas == true) {
+        if (filtros.contabilizadas == true) {
             $('#chkTodos').prop('checked', true);
-            if(id > 0) {
-                setTimeout(function() {
+            if (id > 0) {
+                setTimeout(function () {
                     cargarFacturas2(id)();
                 }, 1000);
-               
+
             } else {
                 cargarFacturas2All()();
             }
         } else {
             $('#chkTodos').prop('checked', false);
-            setTimeout(function() {
+            setTimeout(function () {
                 cargarFacturas2(id)();
             }, 1000);
         }
-       /*  if(id) {
-            cargarFacturas2()(id);
-        } */
-    } else{
+        /*  if(id) {
+             cargarFacturas2()(id);
+         } */
+    } else {
         vm.sempresaId(0);
         loadEmpresas(0);
         estableceFechaEjercicio();
-        if(id) {
-            setTimeout(function() {
+        if (id) {
+            setTimeout(function () {
                 cargarFacturas2(id)();
             }, 1000);
-        } else{
+        } else {
             cargarFacturas2()();
         }
 
@@ -181,20 +187,20 @@ function initTablaFacturas() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 7 || column === 8) {
+                    if (column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column ===12) {
+                        if (column === 0 || column === 12) {
                             return "";
                         } else {
                             return data;
                         }
-    
+
                     }
                 }
             }
@@ -209,7 +215,7 @@ function initTablaFacturas() {
         "stateLoaded": function (settings, state) {
             state.columns.forEach(function (column, index) {
                 $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
-             });
+            });
         },
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [6] },
@@ -221,28 +227,28 @@ function initTablaFacturas() {
             }
         ],
         dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'f>>" +
-             "rt" +
-             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
-        
+            "rt" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
+
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            } ), 
+            }),
             {
-               
+
                 extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'LEGAL'
-            }, 
+            },
             'print'
         ],
-       
+
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-       
+
         autoWidth: true,
         language: {
             processing: "Procesando...",
@@ -285,10 +291,10 @@ function initTablaFacturas() {
         }, {
             data: "nombreAgente",
             render: function (data, type, row) {
-                if(!data || data =="") return "";
+                if (!data || data == "") return "";
                 return data;
             }
-        },{
+        }, {
             data: "fecha",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -317,29 +323,31 @@ function initTablaFacturas() {
             data: "facturaId",
             render: function (data, type, row) {
                 var bt1 = "";
-                if(!row.contabilizada || usuario.puedeEditar) {
-                    var bt1 = "<button class='btn btn-circle btn-danger' onclick='compruebaNumero(" + data + ","+row.departamentoId+ ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                if (!row.contabilizada || usuario.puedeEditar) {
+                    var bt1 = "<button class='btn btn-circle btn-danger' onclick='compruebaNumero(" + data + "," + row.departamentoId + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                var bt4 = "<button class='btn btn-circle custom-btn' data-bs-toggle='modal' data-bs-target='#modalEnviarCorreo' onclick=\"enviarCorreo(" + row.clienteId + ", '" + data + "')\" title='Enviar factura por correo'><i class='fa fa-lg fa-envelope-o'></i></button>";
+
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
                 return html;
             }
         }]
     });
 
     //function sort by date
-    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-        "date-uk-pre": function ( a ) {
+    jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+        "date-uk-pre": function (a) {
             var ukDatea = a.split('/');
             return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
         },
-        
-        "date-uk-asc": function ( a, b ) {
+
+        "date-uk-asc": function (a, b) {
             return ((a < b) ? -1 : ((a > b) ? 1 : 0));
         },
-        
-        "date-uk-desc": function ( a, b ) {
+
+        "date-uk-desc": function (a, b) {
             return ((a < b) ? 1 : ((a > b) ? -1 : 0));
         }
     });
@@ -431,20 +439,20 @@ function deleteFactura(id, departamentoId) {
                 title: "<i class='fa fa-info'></i> Mensaje",
                 content: mens,
                 buttons: '[Cancelar][Borrar]'
-            },function (ButtonPressed2) {
+            }, function (ButtonPressed2) {
                 if (ButtonPressed2 === "Borrar") {
-                    var data = { 
+                    var data = {
                         factura: {
                             facturaId: id,
-                            departamentoId: departamentoId 
+                            departamentoId: departamentoId
                         }
                     };
-                    if(departamentoId == 7) {
-                        url =  myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id;
+                    if (departamentoId == 7) {
+                        url = myconfig.apiUrl + "/api/facturas/parte/relacionado/" + id;
                     }
                     llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/desmarcar-prefactura/" + id, null, function (err) {
                         if (err) return;
-                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data,function (err) {
+                        llamadaAjax("DELETE", myconfig.apiUrl + "/api/liquidaciones/borrar-factura/" + id, data, function (err) {
                             if (err) return;
                             llamadaAjax("DELETE", url, data, function (err) {
                                 if (err) return;
@@ -458,14 +466,14 @@ function deleteFactura(id, departamentoId) {
                     // no hacemos nada (no quiere borrar)
                 }
             });
-            
+
         }
         if (ButtonPressed === "Descontabilizar factura") {
             var data = { facturaId: id };
             llamadaAjax("POST", myconfig.apiUrl + "/api/facturas/descontabilizar/" + id, null, function (err, data) {
                 if (err) return;
-                $('#chkTodos').prop('checked',false);
-                if(data.changedRows > 0) {
+                $('#chkTodos').prop('checked', false);
+                if (data.changedRows > 0) {
                     mostrarMensajeFacturaDescontabilizada();
                 } else {
                     mostrarMensajeFacturaNoCambiada();
@@ -480,15 +488,15 @@ function deleteFactura(id, departamentoId) {
 }
 
 function compruebaNumero(facturaId, departamentoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/buscar/ultimo/numero/conta/" +facturaId, null, function (err, reuslt) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/facturas/buscar/ultimo/numero/conta/" + facturaId, null, function (err, reuslt) {
         if (err) return;
-        if(reuslt == 'OK') {
+        if (reuslt == 'OK') {
             deleteFactura(facturaId, departamentoId);
         }
         else {
             mensError('Hay numeros posteriores, se va a dejar un hueco en contabilidad, no se puede borrar');
         }
-       
+
     });
 }
 
@@ -505,20 +513,20 @@ var mostrarMensajeFacturaBorrada = function () {
 var mostrarMensajeFacturaNoCambiada = function () {
     var mens = "La factura NO se ha descontabilizado, es posible que no estubise contabilizada.";
     mensAlerta(mens);
-}  
+}
 
 function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     cargaFacturas = true;
     var contabilizadas = $('#chkTodos').prop('checked');
-    var busquedaFacturas = 
-        {
-            empresaId:vm.sempresaId(),
-            dFecha: vm.dFecha(),
-            hFecha: vm.hFecha(),
-            contabilizadas: contabilizadas
-        }
+    var busquedaFacturas =
+    {
+        empresaId: vm.sempresaId(),
+        dFecha: vm.dFecha(),
+        hFecha: vm.hFecha(),
+        contabilizadas: contabilizadas
+    }
     setCookie("filtro_facturas", JSON.stringify(busquedaFacturas), 1);
     var url = "FacturaDetalle.html?FacturaId=" + id;
     window.open(url, '_self');
@@ -583,13 +591,13 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 function cargarFacturas2(id) {
-    var mf = function() {
+    var mf = function () {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
-        if(hFecha == '' || hFecha == undefined) hFecha = null;
-        if(hFecha != null) {
-            if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            if(!datosOK) return;
+        if (hFecha == '' || hFecha == undefined) hFecha = null;
+        if (hFecha != null) {
+            if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if (!datosOK) return;
         }
         if (id) {
             var data = {
@@ -612,13 +620,13 @@ function cargarFacturas2(id) {
                 }
             });
         } else {
-            if(hFecha != null) {
-                if(!datosOK()) return;
+            if (hFecha != null) {
+                if (!datosOK()) return;
             }
-            
+
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -632,21 +640,21 @@ function cargarFacturas2(id) {
             });
         }
     }
-   return mf
+    return mf
 }
 
 function cargarFacturas2All() {
-    var mf = function() {
+    var mf = function () {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
-        if(hFecha == '' || hFecha == undefined) hFecha = null;
-        if(hFecha != null) {
-            if(hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            if(!datosOK) return;
+        if (hFecha == '' || hFecha == undefined) hFecha = null;
+        if (hFecha != null) {
+            if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if (!datosOK) return;
         }
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/"  +usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
+            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
             dataType: "json",
             contentType: "application/json",
             success: function (data, status) {
@@ -666,7 +674,7 @@ imprimirFactura = function () {
     window.open(url, '_blank');
 }
 
-var limpiarFiltros = function() {
+var limpiarFiltros = function () {
     var returnUrl = "FacturaGeneral.html?cleaned=true"
     deleteCookie('filtro_facturas');
     tablaFacturas.state.clear();
@@ -692,16 +700,24 @@ function estableceFechaEjercicio() {
     var fActual = new Date();
     var ano = fActual.getFullYear();
 
-    var InicioEjercicio = new Date(ano +'-01-15');
-    if(fActual > InicioEjercicio) {
+    var InicioEjercicio = new Date(ano + '-01-15');
+    if (fActual > InicioEjercicio) {
         fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
         vm.dFecha(fechaInicio);
     } else {
-        ano = ano-1
+        ano = ano - 1
         fechaInicio = moment(ano + '-01-01').format('DD/MM/YYYY');
         vm.dFecha(fechaInicio);
     }
+}
 
-
-
+function enviarCorreo(clienteId, facturaId) {
+    vm.emailEnvio("");
+    $('#modalEnviarCorreo').modal('show');
+    llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
+        if (err) return;
+        if (data) {
+            vm.emailEnvio(data.emailFacturas);
+        }
+    });
 }

@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "0eec6fb140030be9630a0d08ca6b02b0",
+  "ReportGuid": "08e90d54aaf551e0e5ddaec114cfaedd",
   "ReportName": "FacturasProveedores",
   "ReportAlias": "FacturasProveedores",
   "ReportFile": "libro_facturas_proveedores.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1769169867000+0100)/",
+  "ReportChanged": "/Date(1773232112000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -70,7 +70,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text16",
-              "ClientRectangle": "19.8,0.8,7.4,0.6",
+              "ClientRectangle": "11.8,0.8,15.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
