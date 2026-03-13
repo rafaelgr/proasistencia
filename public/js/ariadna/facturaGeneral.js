@@ -14,6 +14,26 @@ function initForm() {
     comprobarLogin();
     datePickerSpanish(); // see comun.js
 
+    var socket = io.connect('/');
+    socket.on('message', function (data) {
+        alert(data);
+    });
+    socket.on('progress', function (data) {
+        vm.titleReg(data.titleReg);
+        vm.numReg(data.numReg);
+        vm.totalReg(data.totalReg);
+        // calculate the percentage of upload completed
+        var percentComplete = vm.numReg() / vm.totalReg();
+        percentComplete = parseInt(percentComplete * 100);
+        // update the Bootstrap progress bar with the new percentage
+        $('.progress-bar').text(percentComplete + '%');
+        $('.progress-bar').width(percentComplete + '%');
+        // once the upload reaches 100%, set the progress bar text to done
+        if (percentComplete === 100) {
+            $('.progress-bar').html('Proceso terminado');
+        }
+    });
+
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
@@ -138,6 +158,11 @@ function admData() {
     self.hFecha = ko.observable();
 
     self.emailEnvio = ko.observable();
+    self.facturaId = ko.observable();
+    //
+    self.titleReg = ko.observable();
+    self.numReg = ko.observable();
+    self.totalReg = ko.observable();
 }
 
 
@@ -328,7 +353,7 @@ function initTablaFacturas() {
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var bt4 = "<button class='btn btn-circle custom-btn' data-bs-toggle='modal' data-bs-target='#modalEnviarCorreo' onclick=\"enviarCorreo(" + row.clienteId + ", '" + data + "')\" title='Enviar factura por correo'><i class='fa fa-lg fa-envelope-o'></i></button>";
+                var bt4 = "<button class='btn btn-circle custom-btn' data-bs-toggle='modal' data-bs-target='#modalEnviarCorreo' onclick=\"prepararCorreo(" + row.clienteId + ", '" + data + "')\" title='Enviar factura por correo'><i class='fa fa-lg fa-envelope-o'></i></button>";
 
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
                 return html;
@@ -711,13 +736,37 @@ function estableceFechaEjercicio() {
     }
 }
 
-function enviarCorreo(clienteId, facturaId) {
+function prepararCorreo(clienteId, facturaId) {
     vm.emailEnvio("");
+    vm.facturaId(facturaId)
     $('#modalEnviarCorreo').modal('show');
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
         if (data) {
             vm.emailEnvio(data.emailFacturas);
         }
+    });
+}
+
+function enviarCorreo() {
+    if (!datosOK()) return;
+    $('#modalEnviarCorreo').modal('hide');
+    $('#progress').show();
+    var url = myconfig.apiUrl + "/api/facturas/preparar-correo/unico/" + vm.facturaId() + "/" + vm.emailEnvio();
+    llamadaAjax("POST", url, null, function (err, data) {
+        if (err) {
+            $('#progress').hide();
+            return;
+        }
+        llamadaAjax("PUT", '/api/facturas/borrar-directorio', null, function (err, data2) {
+            if (err) {
+                mensErrorAjax(err);
+                $('#progress').hide();
+                return;
+            } else {
+                mensNormal("Correo enviado correctamente");
+                $('#progress').hide();
+            }
+        });
     });
 }
