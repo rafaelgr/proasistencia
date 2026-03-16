@@ -159,6 +159,7 @@ function admData() {
 
     self.emailEnvio = ko.observable();
     self.facturaId = ko.observable();
+    self.depFactura = ko.observable();
     //
     self.titleReg = ko.observable();
     self.numReg = ko.observable();
@@ -353,8 +354,7 @@ function initTablaFacturas() {
                 }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var bt4 = "<button class='btn btn-circle custom-btn' data-bs-toggle='modal' data-bs-target='#modalEnviarCorreo' onclick=\"prepararCorreo(" + row.clienteId + ", '" + data + "')\" title='Enviar factura por correo'><i class='fa fa-lg fa-envelope-o'></i></button>";
-
+                var bt4 = "<button class='btn btn-circle custom-btn' data-bs-toggle='modal' data-bs-target='#modalEnviarCorreo' onclick=\"prepararCorreo(" + row.clienteId + ", " + data + ", " + row.departamentoId + ")\"  title='Enviar factura por correo'><i class='fa fa-lg fa-envelope-o'></i></button>";
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
                 return html;
             }
@@ -736,14 +736,16 @@ function estableceFechaEjercicio() {
     }
 }
 
-function prepararCorreo(clienteId, facturaId) {
+function prepararCorreo(clienteId, facturaId, departamentoId) {
     vm.emailEnvio("");
-    vm.facturaId(facturaId)
+    vm.depFactura("");
+    vm.facturaId(facturaId);
     $('#modalEnviarCorreo').modal('show');
     llamadaAjax("GET", "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
         if (data) {
             vm.emailEnvio(data.emailFacturas);
+            vm.depFactura(departamentoId);
         }
     });
 }
@@ -752,7 +754,7 @@ function enviarCorreo() {
     if (!datosOK()) return;
     $('#modalEnviarCorreo').modal('hide');
     $('#progress').show();
-    var url = myconfig.apiUrl + "/api/facturas/preparar-correo/unico/" + vm.facturaId() + "/" + vm.emailEnvio();
+    var url = myconfig.apiUrl + "/api/facturas/preparar-correo/unico/" + vm.facturaId() + "/" + vm.emailEnvio() + "/" + vm.depFactura();
     llamadaAjax("POST", url, null, function (err, data) {
         if (err) {
             $('#progress').hide();

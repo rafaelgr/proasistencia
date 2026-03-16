@@ -1029,12 +1029,12 @@ function nuevaRefReparaciones(departamentoId, comision) {
 
 var cambioCliente = function (data) {
     //
-    if (!data) {
-        return;
-    }
+    if (!data) return;
+
     var clienteId = data.id;
     llamadaAjax('GET', "/api/clientes/" + clienteId, null, function (err, data) {
         if (err) return;
+        $('#txtCliente').val(data.nombre);
         cargaAgente(data.comercialId, false);
         vm.agenteId(data.comercialId);
         loadFormasPago(data.formaPagoId);
@@ -2321,12 +2321,12 @@ var cargaAgente = function (id, encarga) {
 var initAutoCliente = function () {
     $("#txtCliente").autocomplete({
         source: function (request, response) {
-            llamadaAjax('GET', "/api/clientes/clientes_activos/?nombre=" + request.term, null, function (err, data) {
+            llamadaAjax('GET', "/api/clientes/activos/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
                 var r = []
                 data.forEach(function (d) {
                     var v = {
-                        value: d.nombre,
+                        value: d.nomconcat,
                         id: d.clienteId
                     };
                     r.push(v);

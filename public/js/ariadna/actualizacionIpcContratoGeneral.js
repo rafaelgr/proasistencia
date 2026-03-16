@@ -616,21 +616,13 @@ function updateAll(opcion) {
 function ajustaDepartamentos(data) {
     //ELIMINAMOS TODOS LOS DEPARTAMENTOS EXECTO Alquileres DEL COMBO
     var id = $("#cmbDepartamentosTrabajo").val();//departamento de trabajo
-     for (var i = 0; i < data.length; i++) {
-            if (data[i].departamentoId != 3) {
-                data.splice(i, 1);//eliminamos un elemto del array y modificamops su tamaño
-                i = -1;//devolvemos el contador al principio para que vualva a inspeccionar desde el principio del array
-            }
-    }
+    data = data.filter(x => x.departamentoId == 3 || x.departamentoId == 4);
     console.log(data);
-    var departamentos = [{
-        departamentoId: 0,
-        nombre: ""
-    }].concat(data);
+    var departamentos = data;
     vm.posiblesDepartamentos(departamentos);
     if(id != 3)  {
-        $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
-        vm.sdepartamentoId(0);
+        $("#cmbDepartamentosTrabajo").val([3]).trigger('change');
+        vm.sdepartamentoId(3);
     }
 }
 
@@ -720,7 +712,7 @@ var actualizarContratos = function() {
 }
 
 var getContratosActulizados = function() {
-    let url = myconfig.apiUrl + "/api/contratos/actualizados/precio";
+    let url = myconfig.apiUrl + "/api/contratos/actualizados/precio/" + vm.sdepartamentoId();
     let m = '';
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
@@ -897,7 +889,7 @@ var mensRevertirIpc = function() {
 }
 
 var revertirIpc = function() {
-    let url = myconfig.apiUrl + "/api/contratos/actualizados/revertir/ipc";
+    let url = myconfig.apiUrl + "/api/contratos/actualizados/revertir/ipc/" + vm.sdepartamentoId();
     llamadaAjax("PUT", url, ids, function (err, data) {
         if (err) return;
         if(data) {
