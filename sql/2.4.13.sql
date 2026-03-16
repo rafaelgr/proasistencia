@@ -1,1 +1,1 @@
-ALTER TABLE lineasParte ADD COLUMN orden INT DEFAULT 0;
+ALTER TABLE partes_lineas ADD COLUMN orden INT DEFAULT 0;
