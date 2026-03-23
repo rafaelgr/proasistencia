@@ -11100,12 +11100,10 @@ function aceptarAdicional() {
     }
     var data = {
         adicional: [{
-            trabajoAdicionalId: 0,
             contratoId: vm.contratoId(),
             concepto: vm.tituloAdicional(),
             fecha: spanishDbDate(vm.fechaAdicional()),
             importe: vm.importeAdicional(),
-            externa: 0
 
         }]
     }
