@@ -9472,21 +9472,13 @@ function initTablaPlanificacionLineasObrasTemp() {
             { data: "refPresupuestoAdicional" },
             {
                 data: "contPlanificacionTempId", render: function (data, type, row) {
-                    var html = "", bt1 = "", bt2 = "", bt3 = "", bt4 = "", bt5 = "";
+                    var html = "", bt1 = "", bt2 = "", bt3 = "";
                     if (!vm.contratoCerrado()) {
                         bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (!vm.contratoIntereses()) {
-                            /* if (row.esLetra) {
-                                if (!row.contPlanificacionTempIntId) bt4 = "<button class='btn btn-circle btn-info' onclick='exportarlineaPlanificacionAdicionaltempal(" + data + ");' title='Exportar intereses'><i class='fa fa-share fa-fw'></i></button>";
-                            }
- */
-                            if (row.esAdicional)
-                                bt5 = "<button class='btn btn-circle btn-success' " +
-                                    "onclick=\"imprimirContratoAdicional('" + row.contratoAdicionalId + "')\" " +
-                                    "title='Imprimir contrato adicional'>" +
-                                    "<i class='fa fa-print fa-fw'></i></button>";
+                            
                         } else {
                             bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
                             bt2 = "";
@@ -9496,7 +9488,7 @@ function initTablaPlanificacionLineasObrasTemp() {
 
 
                     }
-                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + " " + bt5 + "</div>";
+                    html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
                     return html;
                 }
             }
@@ -11038,8 +11030,12 @@ function initTablaAdicionales() {
                 if (!vm.contratoIntereses()) {
                     bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAdicionalObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalAdicionalObras' onclick='editAdicionalObras(" + data + ");' title='Editar adicional'> <i class='fa fa-edit'></i> </button>";
+                    bt5 = "<button class='btn btn-circle btn-success' " +
+                                    "onclick=\"imprimirContratoAdicional('" + data + "')\" " +
+                                    "title='Imprimir contrato adicional'>" +
+                                    "<i class='fa fa-print fa-fw'></i></button>";
                 }
-                html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + "</div>";
+                html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt5 + "</div>";
                 return html;
             }
         }]
@@ -11153,12 +11149,13 @@ function deleteAdicionalObras(id) {
 function loadComboAdicionales(id) {
     llamadaAjax("GET", "/api/contratos/trabajo/adicional/contrato/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-        var trabajosAdicionales = data.map(function (item) {
+          var trabajosAdicionales = [{ trabajoAdicionalId: null, concepto: "" }].concat(data);
+       /*  var trabajosAdicionales = data.map(function (item) {
             return {
                 trabajoAdicionalId: item.trabajoAdicionalId,
                 concepto: item.concepto
             };
-        });
+        }); */
         vm.posiblesTrabajosAdicionales(trabajosAdicionales);
         $("#cmbPresupuestoAdicional").val([id]).trigger('change');
         vm.trabajoAdicionalId(id);
