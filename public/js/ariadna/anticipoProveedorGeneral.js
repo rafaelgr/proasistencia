@@ -209,6 +209,9 @@ function initTablaAnticipos() {
             }
         },  {
             data: "vFPago"
+        },
+          {
+            data: "observaciones"
         }, {
             data: "antproveId",
             render: function (data, type, row) {
