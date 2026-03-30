@@ -9297,10 +9297,10 @@ var imprimir = function () {
         var mens = "No se ha planificado el 100% del contrato.";
         return mensError(mens);
     }
-    if (totalPrefacturado < vm.importeCliente()) {
+/*     if (totalPrefacturado < vm.importeCliente()) {
         var mens = "No se ha prefacturado el 100% del contrato.";
         return mensError(mens);
-    }
+    } */
 
     printContrato(vm.contratoId());
 }
