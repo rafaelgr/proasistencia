@@ -45,7 +45,7 @@ function initForm() {
     });
 
     $('#btnBuscarImpagos').click(buscarImpagos());
-    $('#btngenerarFacturasRectificativas').click(generarFacturasRectificativas());
+    $('#btnGenerarFacturasRectificativas').click(generarFacturasRectificativas());
     $('#frmBuscarImpagos').submit(function () { return false; });
 
     $("#checkMain").click(function (e) {
@@ -57,6 +57,8 @@ function initForm() {
             updateAll(false);
         }
     });
+
+    $('#btnGenerarFacturasRectificativas').hide();
 
     initTablaImpagos();
 }
@@ -148,35 +150,41 @@ function initTablaImpagos() {
 // Carga datos en la tabla
 function loadTablaImpagos(data) {
     var dt = $('#dt_impagos').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
 
-    data.forEach(function (v) {
-        var field = "#chk" + v.facturaId;
-        if (v.sel == 1) {
-            $(field).attr('checked', true);
-        }
-       $(field).change(function () {
-            var dataToUpdate = {
-                factura: {
-                    facturaId: v.facturaId,
-                    empresaId: v.empresaId,
-                    clienteId: v.clienteId,
-                    fecha: moment(v.fecha).format('YYYY-MM-DD'),
-                    sel: this.checked ? 1 : 0
-                }
-            };
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/facturas/" + v.facturaId,
-                contentType: "application/json",
-                data: JSON.stringify(dataToUpdate),
-                success: function () { },
-                error: function (err) { mensErrorAjax(err); }
+    if (data.length > 0) {
+        data.forEach(function (v) {
+            var field = "#chk" + v.facturaId;
+            if (v.sel == 1) {
+                $(field).attr('checked', true);
+            }
+            $(field).change(function () {
+                var dataToUpdate = {
+                    factura: {
+                        facturaId: v.facturaId,
+                        empresaId: v.empresaId,
+                        clienteId: v.clienteId,
+                        fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                        sel: this.checked ? 1 : 0
+                    }
+                };
+                $.ajax({
+                    type: "PUT",
+                    url: myconfig.apiUrl + "/api/facturas/" + v.facturaId,
+                    contentType: "application/json",
+                    data: JSON.stringify(dataToUpdate),
+                    success: function () { },
+                    error: function (err) { mensErrorAjax(err); }
+                });
             });
         });
-    });
+    }
+
 }
 
 // Buscar impagos
@@ -197,12 +205,15 @@ function buscarImpagos() {
             success: function (data) {
                 if (data && data.length > 0) {
                     loadTablaImpagos(data);
-                    $('#checkMain').prop('checked', true);
+                    $('#checkMain').prop('checked', false);
+                    $('#btnGenerarFacturasRectificativas').show();
 
                     data.forEach(function (f) {
                         if (f.total == 0) impagosCero.push(f.vNum);
                     });
                     if (impagosCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + impagosCero.join("\n"));
+                } else {
+                    mensAlerta("No se han encontrado registros")
                 }
             },
             error: function (err) { mensErrorAjax(err); }
@@ -213,11 +224,9 @@ function buscarImpagos() {
 // Gestionar impagos
 function generarFacturasRectificativas() {
     return function () {
-        if (!datosOK()) return;
-
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/generar/rectificativas/desde/facturas"
+            url: myconfig.apiUrl + "/api/facturas/generar/rectificativas/desde/facturas/"
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId() // filtramos por departamento
@@ -231,7 +240,9 @@ function generarFacturasRectificativas() {
                     mensNormal("Impagos gestionados correctamente");
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
-                    loadTablaImpagos([]);
+                     $('#checkMain').prop('checked', false);
+                      $('#btnGenerarFacturasRectificativas').hide();
+                    loadTablaImpagos(null);
                 }
             },
             error: function (err) { mensErrorAjax(err); }
@@ -247,9 +258,9 @@ function updateAll(opcion) {
         var dataToUpdate = {
             factura: {
                 facturaId: datos[i].facturaId,
-                empresaId: v.empresaId,
-                clienteId: v.clienteId,
-                fecha: moment(v.fecha).format('YYYY-MM-DD'),
+                empresaId: datos[i].empresaId,
+                clienteId: datos[i].clienteId,
+                fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
                 sel: sel
             }
         };
