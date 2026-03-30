@@ -597,11 +597,12 @@
                                         <fieldset>
                                             <div class="pull-right">
 
-                                                <button id="btnBuscarImpagos" class="btn btn-primary btn-circle btn-lg">
+                                                <button id="btnBuscarImpagos" title="Buscar Impagos" class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-search"></i>
                                                 </button>
 
                                                 <button id="btnGestionarImpagos"
+                                                    title="Generar facturas rectificativas"
                                                     class="btn btn-danger btn-circle btn-lg">
                                                     <i class="fa fa-exclamation-triangle"></i>
                                                 </button>
@@ -614,6 +615,12 @@
                                     <!-- TABLA -->
                                     <table id="dt_impagos" class="table table-striped table-bordered table-hover"
                                         width="100%">
+                                        <section style="margin-left: 3%;">
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="checkMain">
+                                                <i></i>Seleccionar todos los registros
+                                            </label>
+                                        </section>
 
                                         <thead>
                                             <tr>
@@ -623,6 +630,7 @@
                                                 <th>Dir. Trabajo</th>
                                                 <th>Número</th>
                                                 <th>Fecha</th>
+                                                <th>Días desde vencimiento</th>
                                                 <th>Base</th>
                                                 <th>Total</th>
                                                 <th>Forma pago</th>
