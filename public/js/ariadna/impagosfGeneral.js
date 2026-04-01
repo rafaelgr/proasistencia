@@ -127,6 +127,7 @@ function initTablaImpagos() {
                     return '<label class="input"><input id="chk' + data + '" type="checkbox" class="checkAll"></label>';
                 }
             },
+            { data: "referencia" },
             { data: "emisorNombre" },
             { data: "receptorNombre" },
             { data: "dirTrabajo" },
@@ -240,8 +241,8 @@ function generarFacturasRectificativas() {
                     mensNormal("Impagos gestionados correctamente");
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
-                     $('#checkMain').prop('checked', false);
-                      $('#btnGenerarFacturasRectificativas').hide();
+                    $('#checkMain').prop('checked', false);
+                    $('#btnGenerarFacturasRectificativas').hide();
                     loadTablaImpagos(null);
                 }
             },
