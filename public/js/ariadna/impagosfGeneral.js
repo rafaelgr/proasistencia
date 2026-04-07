@@ -42,6 +42,10 @@ function initForm() {
         if (err) return;
         vm.posiblesDepartamentos(data);
         $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+        $("#cmbEmpresas").select2(select2Spanish());
+        loadEmpresas(null);
+        initTablaImpagos();
+
     });
 
     $('#btnBuscarImpagos').click(buscarImpagos());
@@ -60,7 +64,7 @@ function initForm() {
 
     $('#btnGenerarFacturasRectificativas').hide();
 
-    initTablaImpagos();
+
 }
 
 // knockout
@@ -73,16 +77,24 @@ function admData() {
     self.sdepartamentoId = ko.observable();
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
 }
 
 // Validación de fechas
 function datosOK() {
     $('#frmBuscarImpagos').validate({
         rules: {
+            cmbEmpresas: { required: true },
             txtDesdeFecha: { required: true },
             txtHastaFecha: { required: true, greaterThan: "#txtDesdeFecha" }
         },
         messages: {
+            cmbEmpresas: { required: "Debe seleccionar una empresa" },
             txtDesdeFecha: { required: "Debe seleccionar una fecha" },
             txtHastaFecha: { required: "Debe seleccionar una fecha" }
         },
@@ -200,7 +212,8 @@ function buscarImpagos() {
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId() // filtramos por departamento
-                + "/" + usuario.usuarioId,
+                + "/" + usuario.usuarioId
+                + "/" + vm.sempresaId(),
             dataType: "json",
             contentType: "application/json",
             success: function (data) {
@@ -214,7 +227,9 @@ function buscarImpagos() {
                     });
                     if (impagosCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + impagosCero.join("\n"));
                 } else {
-                    mensAlerta("No se han encontrado registros")
+                    mensAlerta("No se han encontrado registros");
+                    loadTablaImpagos(null);
+                    $('#checkMain').prop('checked', false);
                 }
             },
             error: function (err) { mensErrorAjax(err); }
@@ -231,7 +246,8 @@ function generarFacturasRectificativas() {
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId() // filtramos por departamento
-                + "/" + usuario.usuarioId,
+                + "/" + usuario.usuarioId
+                + "/" + vm.sempresaId(),
             dataType: "json",
             contentType: "application/json",
             success: function (data) {
@@ -280,5 +296,15 @@ function updateAll(opcion) {
 function editImpago(id) {
     var url = "FacturaDetalle.html?FacturaId=" + id;
     window.open(url, '_new');
+}
+
+function loadEmpresas(empresaId) {
+    llamadaAjax("GET", "/api/empresas", null, function (err, data) {
+        if (err) return;
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
+        vm.posiblesEmpresas(empresas);
+        vm.sempresaId(empresaId);
+        $("#cmbEmpresas").val([empresaId]).trigger('change');
+    });
 }
 
