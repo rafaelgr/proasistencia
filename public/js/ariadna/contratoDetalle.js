@@ -4083,17 +4083,33 @@ function initTablaPrefacturas(departamentoId) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
 
-            // Total over all pages
-            total13 = api
+                //
+                total13 = api
                 .column(13)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
                 }, 0);
 
-            // Total over all pages
-            total14 = api
+                //
+                total14 = api
                 .column(14)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Total over all pages
+            total15 = api
+                .column(15)
+                .data()
+                .reduce(function (a, b) {
+                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
+                }, 0);
+
+            // Total over all pages
+            total16 = api
+                .column(16)
                 .data()
                 .reduce(function (a, b) {
                     return Math.round((intVal(a) + intVal(b)) * 100) / 100;
@@ -4119,11 +4135,17 @@ function initTablaPrefacturas(departamentoId) {
             $(api.columns(12).footer()).html(
                 numeral(total12).format('0,0.00')
             );
-            $(api.columns(13).footer()).html(
+             $(api.columns(13).footer()).html(
                 numeral(total13).format('0,0.00')
             );
-            $(api.columns(14).footer()).html(
+             $(api.columns(14).footer()).html(
                 numeral(total14).format('0,0.00')
+            );
+            $(api.columns(15).footer()).html(
+                numeral(total15).format('0,0.00')
+            );
+            $(api.columns(16).footer()).html(
+                numeral(total16).format('0,0.00')
             );
 
             //////
@@ -4249,6 +4271,18 @@ function initTablaPrefacturas(departamentoId) {
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
+        },{
+            data: "impcobro",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00')
+            }
+        },{
+            data: "impago",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00')
+            }
         }, {
             data: "retenGarantias",
             className: "text-right",
@@ -4300,10 +4334,10 @@ function initTablaPrefacturas(departamentoId) {
     // Hide some columns by default
     tablaPrefacturas.columns(1).visible(false);
     tablaPrefacturas.columns(8).visible(false);
-    tablaPrefacturas.columns(13).visible(false);
-    tablaPrefacturas.columns(14).visible(false);
     tablaPrefacturas.columns(15).visible(false);
+    tablaPrefacturas.columns(16).visible(false);
     tablaPrefacturas.columns(17).visible(false);
+    tablaPrefacturas.columns(19).visible(false);
     /*  if(departamentoId != 8) {
          tablaPrefacturas.columns(6).visible(false);
          tablaPrefacturas.columns(7).visible(false);
@@ -4324,16 +4358,16 @@ function calculaImportesInformativosPrefacturas(c) {
             var s = c[i];
             if (s.esLetra == 1) {
                 //LETRAS EMITIDAS
-                totEmitidas = totEmitidas + s.total;
+                totEmitidas = totEmitidas + parseFloat(s.total);
                 numEmitidas++
                 //LETRAS RECIBIDAS
                 if (s.fechaRecibida) {
-                    totRecibidas = totRecibidas + s.total;
+                    totRecibidas = totRecibidas + parseFloat(s.total);
                     numRecibidas++
                 }
                 //LETRAS EN GESTION DE COBROS
                 if (s.fechaGestionCobros) {
-                    totGestionCobros = totGestionCobros + s.total;
+                    totGestionCobros = totGestionCobros + parseFloat(s.total);
                     numGestionCobros++
                 }
             }
@@ -4407,7 +4441,7 @@ function calculaImportesInformativosPrefacturas(c) {
 }
 
 function loadPrefacturasDelContrato(contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/con/cobros/" + contratoId, null, function (err, data) {
         if (err) return;
         loadTablaPrefacturas(data);
     });
