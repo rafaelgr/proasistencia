@@ -185,7 +185,7 @@ ALTER TABLE
 ADD
   COLUMN `contratoInteresesId` TINYINT(1) DEFAULT 0 NULL
 AFTER
-  `visulizaEnErp`;
+  `visualizaEnErp`;
 
 ALTER TABLE
   `contratos`
