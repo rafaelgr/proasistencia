@@ -4301,10 +4301,11 @@ function initTablaPrefacturas(departamentoId) {
     // Hide some columns by default
     tablaPrefacturas.columns(1).visible(false);
     tablaPrefacturas.columns(8).visible(false);
-    tablaPrefacturas.columns(16).visible(false);
     tablaPrefacturas.columns(17).visible(false);
     tablaPrefacturas.columns(18).visible(false);
+    tablaPrefacturas.columns(19).visible(false);
     tablaPrefacturas.columns(20).visible(false);
+    tablaPrefacturas.columns(22).visible(false);
 
     //
     tablaPrefacturas.on('column-visibility.dt', function () {

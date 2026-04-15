@@ -1,12 +1,12 @@
 /*-------------------------------------------------------------------------- 
-impagosfGeneral.js
-Funciones js para la página ImpagosfGeneral.html
+rectificativasfGeneral.js
+Funciones js para la página RectificativasfGeneral.html
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_impagos = undefined;
+var responsiveHelper_dt_rectificativas = undefined;
 
-var dataImpagos;
+var dataRectificativas;
 var usuario;
-var impagosCero = [];
+var rectificativasCero = [];
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -44,13 +44,13 @@ function initForm() {
         $("#cmbDepartamentosTrabajo").select2(select2Spanish());
         $("#cmbEmpresas").select2(select2Spanish());
         loadEmpresas(null);
-        initTablaImpagos();
+        initTablaRectificativas();
 
     });
 
-    $('#btnBuscarImpagos').click(buscarImpagos());
+    $('#btnBuscarRectificativas').click(buscarRectificativas());
     $('#btnGenerarFacturasRectificativas').click(generarFacturasRectificativas());
-    $('#frmBuscarImpagos').submit(function () { return false; });
+    $('#frmBuscarRectificativas').submit(function () { return false; });
 
     $("#checkMain").click(function (e) {
         if ($('#checkMain').prop('checked')) {
@@ -87,7 +87,7 @@ function admData() {
 
 // Validación de fechas
 function datosOK() {
-    $('#frmBuscarImpagos').validate({
+    $('#frmBuscarRectificativas').validate({
         rules: {
             cmbEmpresas: { required: true },
             txtDesdeFecha: { required: true },
@@ -102,24 +102,24 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    return $('#frmBuscarImpagos').valid();
+    return $('#frmBuscarRectificativas').valid();
 }
 
 // Inicializa tabla
-function initTablaImpagos() {
-    $('#dt_impagos').dataTable({
+function initTablaRectificativas() {
+    $('#dt_rectificativas').dataTable({
         autoWidth: true,
         paging: false,
         preDrawCallback: function () {
-            if (!responsiveHelper_dt_impagos) {
-                responsiveHelper_dt_impagos = new ResponsiveDatatablesHelper($('#dt_impagos'), breakpointDefinition);
+            if (!responsiveHelper_dt_rectificativas) {
+                responsiveHelper_dt_rectificativas = new ResponsiveDatatablesHelper($('#dt_rectificativas'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_impagos.createExpandIcon(nRow);
+            responsiveHelper_dt_rectificativas.createExpandIcon(nRow);
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_impagos.respond();
+            responsiveHelper_dt_rectificativas.respond();
         },
         language: {
             processing: "Procesando...",
@@ -132,7 +132,7 @@ function initTablaImpagos() {
             paginate: { first: "Primero", previous: "Anterior", next: "Siguiente", last: "Último" },
             aria: { sortAscending: ": Activar para ordenar ascendente", sortDescending: ": Activar para ordenar descendente" }
         },
-        data: dataImpagos,
+        data: dataRectificativas,
         columns: [
             {
                 data: "facturaId", render: function (data) {
@@ -152,7 +152,7 @@ function initTablaImpagos() {
             { data: "observaciones" },
             {
                 data: "facturaId", render: function (data) {
-                    var bt1 = "<button class='btn btn-circle btn-success' onclick='editImpago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var bt1 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                     return "<div class='pull-right'>" + bt1 + "</div>";
                 }
             }
@@ -161,8 +161,8 @@ function initTablaImpagos() {
 }
 
 // Carga datos en la tabla
-function loadTablaImpagos(data) {
-    var dt = $('#dt_impagos').dataTable();
+function loadTablaRectificativas(data) {
+    var dt = $('#dt_rectificativas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -200,15 +200,15 @@ function loadTablaImpagos(data) {
 
 }
 
-// Buscar impagos
-function buscarImpagos() {
+// Buscar rectificativas
+function buscarRectificativas() {
     return function () {
         if (!datosOK()) return;
 
-        impagosCero = [];
+        rectificativasCero = [];
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/impagos/"
+            url: myconfig.apiUrl + "/api/facturas/rectificativas/"
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId() // filtramos por departamento
@@ -218,17 +218,17 @@ function buscarImpagos() {
             contentType: "application/json",
             success: function (data) {
                 if (data && data.length > 0) {
-                    loadTablaImpagos(data);
+                    loadTablaRectificativas(data);
                     $('#checkMain').prop('checked', false);
                     $('#btnGenerarFacturasRectificativas').show();
 
                     data.forEach(function (f) {
-                        if (f.total == 0) impagosCero.push(f.vNum);
+                        if (f.total == 0) rectificativasCero.push(f.vNum);
                     });
-                    if (impagosCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + impagosCero.join("\n"));
+                    if (rectificativasCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + rectificativasCero.join("\n"));
                 } else {
                     mensAlerta("No se han encontrado registros");
-                    loadTablaImpagos(null);
+                    loadTablaRectificativas(null);
                     $('#checkMain').prop('checked', false);
                 }
             },
@@ -237,7 +237,7 @@ function buscarImpagos() {
     };
 }
 
-// Gestionar impagos
+// Gestionar rectificativas
 function generarFacturasRectificativas() {
     return function () {
         $.ajax({
@@ -252,14 +252,14 @@ function generarFacturasRectificativas() {
             contentType: "application/json",
             success: function (data) {
                 if (data != "OK") {
-                    mensError("Error gestionando impagos: " + JSON.stringify(data));
+                    mensError("Error gestionando rectificativas: " + JSON.stringify(data));
                 } else {
-                    mensNormal("Impagos gestionados correctamente");
+                    mensNormal("Rectificativas emitidas correctamente");
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
                     $('#checkMain').prop('checked', false);
                     $('#btnGenerarFacturasRectificativas').hide();
-                    loadTablaImpagos(null);
+                    loadTablaRectificativas(null);
                 }
             },
             error: function (err) { mensErrorAjax(err); }
@@ -270,7 +270,7 @@ function generarFacturasRectificativas() {
 // Checkbox todos
 function updateAll(opcion) {
     var sel = opcion ? 1 : 0;
-    var datos = $('#dt_impagos').dataTable().api().rows({ page: 'current' }).data();
+    var datos = $('#dt_rectificativas').dataTable().api().rows({ page: 'current' }).data();
     for (var i = 0; i < datos.length; i++) {
         var dataToUpdate = {
             factura: {
@@ -292,8 +292,8 @@ function updateAll(opcion) {
     }
 }
 
-// Editar impago
-function editImpago(id) {
+
+function editFactura(id) {
     var url = "FacturaDetalle.html?FacturaId=" + id;
     window.open(url, '_new');
 }
