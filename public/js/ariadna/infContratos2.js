@@ -440,7 +440,10 @@ function obtainReportJson(obj) {
         if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
     }
-    if (vm.esAdicional()) file = "/reports/contrato_proas_adicional.mrt";
+    if (vm.esAdicional()) {
+         if (vm.empresaId() == 2 ) file = "/reports/contrato_proas_adicional.mrt";
+         if (vm.empresaId() == 7) file = "/reports/contrato_reabita_adicional.mrt";
+    }
     if (vm.esRecepcion()) {
          if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
          if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";

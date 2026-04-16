@@ -9571,10 +9571,12 @@ function nuevaLineaPlanificacionObrasTemp() {
 }
 
 function limpiaDataLineaPlanificacionObrasTemp() {
+    let d = new Date();
+    var f = moment(d).format('DD/MM/YYYY');
     vm.contPlanificacionTempId(null);
     vm.conceptoPlanificacionTemp('');
     vm.porcentajePlanificacionTemp(0);
-    vm.fechaPlanificacionObrasTemp(vm.fechaInicio());
+    vm.fechaPlanificacionObrasTemp(f);
     vm.fechaRealPlanificacionObrasTemp(null);
     vm.importeCalculadoPlanificacionTemp(0);
     vm.importeIntereses(0);
