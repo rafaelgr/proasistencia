@@ -48,7 +48,7 @@ function initForm() {
 
     });
 
-    $('#btnBuscarDerivadas').click(buscarDerivadas());
+    $('#btnBuscarFacturas').click(buscarFacturas());
     $('#btnGenerarFacturasDerivadas').click(generarFacturasDerivadas());
     $('#frmBuscarDerivadas').submit(function () { return false; });
 
@@ -145,7 +145,6 @@ function initTablaDerivadas() {
             { data: "dirTrabajo" },
             { data: "vNum" },
             { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
-            { data: "diasDesdeVencimiento" },
             { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPago" },
@@ -201,7 +200,7 @@ function loadTablaDerivadas(data) {
 }
 
 // Buscar derivadas
-function buscarDerivadas() {
+function buscarFacturas() {
     return function () {
         if (!datosOK()) return;
 

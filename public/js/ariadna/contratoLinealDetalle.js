@@ -3690,7 +3690,7 @@ function initTablaPrefacturas(departamentoId) {
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    if (column === 0 || column === 18) {
+                    if (column === 0 || column === 23) {
                         return "";
                     } else {
                         return data;
@@ -3698,7 +3698,7 @@ function initTablaPrefacturas(departamentoId) {
                 },
                 footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14, row === 15 || row === 16 || row === 17 || row === 18) {
                         return data;
                     } else {
                         if (row === 7) {
@@ -3766,107 +3766,62 @@ function initTablaPrefacturas(departamentoId) {
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {
-            var api = this.api(), data;
+            var api = this.api();
 
-            // Remove the formatting to get integer data for summation
-            var intVal = function (i) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '') * 1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            const parseNumber = i => {
+                if (i === null || i === undefined || i === "") return 0;
+                if (typeof i === 'number') return i;
+                if (typeof i === 'string') return parseFloat(i.replace(/[\$,]/g, '')) || 0;
+                return 0;
             };
 
-            // Total over all pages
-            total8 = api
-                .column(8)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+            // 👉 Función para normalizar valores (clave del fix)
+            var parseVal = function (i) {
+                let val = typeof i === 'string'
+                    ? i.replace(/[\$,]/g, '') * 1
+                    : typeof i === 'number'
+                        ? i
+                        : 0;
 
-            total9 = api
-                .column(9)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+                return val < 0 ? 0 : val; // 🔥 aquí matas los negativos
+            };
 
-            // Total over all pages
-            total10 = api
-                .column(10)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+            // 👉 Columnas que quieres sumar
+            var columnas = [9, 10];
+            var columnasConNegativos = [8, 11, 12, 13, 14, 15, 16, 17, 18];
 
-            // Total over all pages
-            total11 = api
-                .column(11)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+            var totales = {};
 
+            // Columnas normales (sin negativos)
+            columnas.forEach(function (col) {
+                totales[col] = api
+                    .column(col)
+                    .data()
+                    .reduce(function (a, b) {
+                        return Math.round((parseVal(a) + parseVal(b)) * 100) / 100;
+                    }, 0);
 
-            // Total over all pages
-            total12 = api
-                .column(12)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+            });
 
-            // Total over all pages
-            total13 = api
-                .column(13)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+            // Columnas con negativos
+            columnasConNegativos.forEach(function (col) {
+                totales[col] = api
+                    .column(col)
+                    .data()
+                    .reduce(function (a, b) {
+                        return Math.round((a + parseNumber(b)) * 100) / 100;
+                    }, 0);
 
-            // Total over all pages
-            total14 = api
-                .column(14)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+            });
 
-
-            // Update footer
-            $(api.columns(8).footer()).html(
-                numeral(total8).format('0,0.00')
-
-            );
-            $(api.columns(9).footer()).html(
-                numeral(total9).format('0,0.00')
-
-            );
-
-            $(api.columns(10).footer()).html(
-                numeral(total10).format('0,0.00')
-            );
-            $(api.columns(11).footer()).html(
-                numeral(total11).format('0,0.00')
-            );
-            $(api.columns(12).footer()).html(
-                numeral(total12).format('0,0.00')
-            );
-            $(api.columns(13).footer()).html(
-                numeral(total13).format('0,0.00')
-            );
-            $(api.columns(14).footer()).html(
-                numeral(total14).format('0,0.00')
-            );
-
-            //////
-
-            //importes informaticos de las letras
+        
+            // 👉 caso especial letras
             if (vm.tipoContratoId() == 8) {
                 var c = api.data();
-                calculaImportesInformativosPrefacturas(c)
+                calculaImportesInformativosPrefacturas(c);
             }
-
         },
         language: {
             processing: "Procesando...",
@@ -3891,6 +3846,7 @@ function initTablaPrefacturas(departamentoId) {
         data: dataPrefacturas,
         columns: [{
             data: "prefacturaId",
+            width: "5%",
             render: function (data, type, row) {
                 if (row.departamentoId == 8) {
                     var html = "<i class='fa fa-file-o'></i>";
@@ -3914,12 +3870,10 @@ function initTablaPrefacturas(departamentoId) {
                         //html += sprintf('<input class="asw-center" id="qty%s" name="qty%s" type="text"/>', data, data);
                         html += '</label>';
                     }
-
                 }
                 return html;
 
             }
-
         }, {
             data: "referencia"
         }, {
@@ -3955,36 +3909,82 @@ function initTablaPrefacturas(departamentoId) {
             }
         }, {
             data: "coste",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "total",
+            className: "text-right",
+            render: function (data, type, row) {
+                // 👉 Para mostrar en pantalla
+                if (type === 'display') {
+                    if (data < 0) return '0,00';
+                    return numeral(data).format('0,0.00');
+                }
+
+                // 👉 Para cálculos, ordenación, exportación, etc.
+                return data < 0 ? 0 : data;
+            }
+        }, {
+            data: "totalConIva",
+            className: "text-right",
+            render: function (data, type, row) {
+                // 👉 Para mostrar en pantalla
+                if (type === 'display') {
+                    if (data < 0) return '0,00';
+                    return numeral(data).format('0,0.00');
+                }
+
+                // 👉 Para cálculos, ordenación, exportación, etc.
+                return data < 0 ? 0 : data;
+            }
+        },
+        {
+            data: "totalReal",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "totalConIva",
+            data: "totalConIvaReal",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "noFacturado",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "facturado",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "impcobro",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "impago",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "restoCobrar",
+            className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
             }
@@ -3994,6 +3994,8 @@ function initTablaPrefacturas(departamentoId) {
             data: "vFPago"
         }, {
             data: "observaciones"
+        }, {
+            data: "vFacR"
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
@@ -4027,17 +4029,30 @@ function initTablaPrefacturas(departamentoId) {
     // Hide some columns by default
     tablaPrefacturas.columns(1).visible(false);
     tablaPrefacturas.columns(8).visible(false);
-    tablaPrefacturas.columns(13).visible(false);
-    tablaPrefacturas.columns(14).visible(false);
-    tablaPrefacturas.columns(15).visible(false);
     tablaPrefacturas.columns(17).visible(false);
-    /*  if(departamentoId != 8) {
-         tablaPrefacturas.columns(6).visible(false);
-         tablaPrefacturas.columns(7).visible(false);
-     } */
+    tablaPrefacturas.columns(18).visible(false);
+    tablaPrefacturas.columns(19).visible(false);
+    tablaPrefacturas.columns(20).visible(false);
+    tablaPrefacturas.columns(22).visible(false);
+
+    //
+    tablaPrefacturas.on('column-visibility.dt', function () {
+        var dt = $('#dt_prefactura').DataTable();
+
+        // Ajustar columnas
+        dt.columns.adjust();
+
+        // Recrear FixedHeader
+        if (a) {
+            $('.fixedHeader').remove();
+            a = new $.fn.dataTable.FixedHeader(dt, {
+                header: true,
+                alwaysCloneTop: true
+            });
+        }
+    });
 
 }
-
 function calculaImportesInformativosPrefacturas(c) {
     if (!c) return;
     if (c.length > 0 && vm.tipoContratoId() == 8) {
@@ -4134,7 +4149,7 @@ function calculaImportesInformativosPrefacturas(c) {
 }
 
 function loadPrefacturasDelContrato(contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/con/cobros/" + contratoId, null, function (err, data) {
         if (err) return;
         loadTablaPrefacturas(data);
     });
