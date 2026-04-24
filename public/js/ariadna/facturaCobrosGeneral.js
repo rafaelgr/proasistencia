@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+FacturaCobrosGeneral.js
+Funciones js par la página FacturaCobrosGeneral.html
 
 ---------------------------------------------------------------------------*/
 var dataFacturas;
@@ -37,7 +37,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
-    filtros = getCookie('filtro_facturas');
+    filtros = getCookie('filtro_facturas_cobros');
     if (filtros != undefined) {
         filtros = JSON.parse(filtros);
     }
@@ -87,17 +87,13 @@ function initForm() {
         //compruebaFiltros(f);
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        if (!$('#chkTodos').prop('checked')) {
-            if (this.value != antDepartamentoId) {
-                cargarFacturas2()();
-            } else {
-                setTimeout(function () {
-                    cargarFacturas2(f)();
-                }, 1000);
-
-            }
-        } else {
+        if (this.value != antDepartamentoId) {
             cargarFacturas2All()();
+        } else {
+            setTimeout(function () {
+                cargarFacturas2All(f)();
+            }, 1000);
+
         }
         antDepartamentoId = this.value;
     });
@@ -121,22 +117,6 @@ function initForm() {
     $("#enviarCorreo-form").submit(function () {
         return false;
     });
-    //$('#txtBuscar').keypress(function (e) {
-    //    if (e.keyCode == 13)
-    //        buscarFacturas();
-    //});
-    //
-
-
-    $('#chkTodos').change(function () {
-        if (this.checked) {
-            cargarFacturas2All()();
-        } else {
-            cargarFacturas2()();
-        }
-    });
-
-
 }
 
 function admData() {
@@ -175,35 +155,24 @@ function compruebaFiltros(id) {
         vm.hFecha(filtros.hFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
-        if (filtros.contabilizadas == true) {
-            $('#chkTodos').prop('checked', true);
-            if (id > 0) {
-                setTimeout(function () {
-                    cargarFacturas2(id)();
-                }, 1000);
-
-            } else {
-                cargarFacturas2All()();
-            }
-        } else {
-            $('#chkTodos').prop('checked', false);
+        if (id > 0) {
             setTimeout(function () {
-                cargarFacturas2(id)();
+                cargarFacturas2All(id)();
             }, 1000);
+
+        } else {
+            cargarFacturas2All()();
         }
-        /*  if(id) {
-             cargarFacturas2()(id);
-         } */
     } else {
-        vm.sempresaId(0);
-        loadEmpresas(0);
+        //vm.sempresaId(2);
+        loadEmpresas(2);
         estableceFechaEjercicio();
         if (id) {
             setTimeout(function () {
-                cargarFacturas2(id)();
+                cargarFacturas2All(id)();
             }, 1000);
         } else {
-            cargarFacturas2()();
+            cargarFacturas2All()();
         }
 
     }
@@ -415,9 +384,7 @@ function initTablaFacturas() {
             .draw();
     });
 
-    // ocultar columnas
-    tablaFacturas.columns(13).visible(false); // vFPago
-    tablaFacturas.columns(14).visible(false); // observaciones
+
 
     calcularResumen(dataFacturas);
 }
@@ -455,11 +422,7 @@ function loadTablaFacturas(data) {
 
 function buscarFacturas() {
     var mf = function () {
-        if ($('#chkTodos').prop('checked')) {
-            cargarFacturas2All()();
-        } else {
-            cargarFacturas2()();
-        }
+        cargarFacturas2All()();
     };
     return mf;
 }
@@ -574,16 +537,14 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     cargaFacturas = true;
-    var contabilizadas = $('#chkTodos').prop('checked');
     var busquedaFacturas =
     {
         empresaId: vm.sempresaId(),
         dFecha: vm.dFecha(),
         hFecha: vm.hFecha(),
-        contabilizadas: contabilizadas
     }
-    setCookie("filtro_facturas", JSON.stringify(busquedaFacturas), 1);
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    setCookie("filtro_facturas_cobros", JSON.stringify(busquedaFacturas), 1);
+    var url = "FacturaDetalle.html?FacturaId=" + id + "&ConCobro=true";
     window.open(url, '_self');
 }
 
@@ -645,7 +606,9 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarFacturas2(id) {
+
+
+function cargarFacturas2All(id) {
     var mf = function () {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
@@ -675,16 +638,13 @@ function cargarFacturas2(id) {
                 }
             });
         } else {
-            if (hFecha != null) {
-                if (!datosOK()) return;
-            }
-
+            //if(!vm.sempresaId()) vm.sempresaId(2);
+            let id = vm.sempresaId() || 2;
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + id,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
                 success: function (data, status) {
                     loadTablaFacturas(data);
                 },
@@ -694,32 +654,7 @@ function cargarFacturas2(id) {
                 }
             });
         }
-    }
-    return mf
-}
 
-function cargarFacturas2All() {
-    var mf = function () {
-        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var hFecha = vm.hFecha();
-        if (hFecha == '' || hFecha == undefined) hFecha = null;
-        if (hFecha != null) {
-            if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            if (!datosOK) return;
-        }
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                loadTablaFacturas(data);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
     }
     return mf;
 }
@@ -730,8 +665,8 @@ imprimirFactura = function () {
 }
 
 var limpiarFiltros = function () {
-    var returnUrl = "FacturaGeneral.html?cleaned=true"
-    deleteCookie('filtro_facturas');
+    var returnUrl = "FacturaCobrosGeneral.html?cleaned=true"
+    deleteCookie('filtro_facturas_cobros');
     tablaFacturas.state.clear();
     window.open(returnUrl, '_self');
     //window.location.reload();
@@ -805,6 +740,12 @@ function enviarCorreo() {
 
 function calcularResumen(data) {
 
+    if (!data || data.length === 0) {
+        $('#totalCobrado').text('0,00 €');
+        $('#totalPendiente').text('0,00 €');
+        $('#porcentajeCobrado').text('0.00 %');
+        return;
+    }
     let totalCobrado = 0;
     let totalPendiente = 0;
     let totalFacturas = 0;
