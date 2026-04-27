@@ -645,6 +645,7 @@ function initForm() {
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
+            vm.sempresaId(data.empresaId);
             loadData(data);
             initTablaPrefacturas(data.tipoContratoId);
             loadLineasContrato(data.contratoId);
@@ -1027,6 +1028,7 @@ function loadData(data) {
     loadTiposContrato(data.tipoContratoId);
     vm.stipoContratoId(data.tipoContratoId);
     vm.referencia(data.referencia);
+
     loadEmpresas(data.empresaId);
     cargaCliente(data.clienteId);
     cargaMantenedor(data.mantenedorId);
@@ -1408,6 +1410,7 @@ function loadEmpresas(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesEmpresas(empresas);
+        if (id) vm.sempresaId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
     });
 }
@@ -3660,7 +3663,7 @@ function initTablaPrefacturas(departamentoId) {
                         console.log(dato);
                         return dato;
                     } else {
-                        if (column === 0 || column === 18) {
+                        if (column === 0 || column === 24) {
                             return "";
                         } else {
                             return data;
@@ -3690,7 +3693,7 @@ function initTablaPrefacturas(departamentoId) {
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    if (column === 0 || column === 23) {
+                    if (column === 0 || column === 25) {
                         return "";
                     } else {
                         return data;
@@ -3698,7 +3701,7 @@ function initTablaPrefacturas(departamentoId) {
                 },
                 footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14, row === 15 || row === 16 || row === 17 || row === 18) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14, row === 15 || row === 16 || row === 18) {
                         return data;
                     } else {
                         if (row === 7) {
@@ -3711,11 +3714,22 @@ function initTablaPrefacturas(departamentoId) {
             }
         }
 
-    }
+    };
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         paging: false,
         responsive: true,
         "bDestroy": true,
+        "initComplete": function () {
+            var dt = this.api();
+
+            dt.columns([1]).visible(false);
+            dt.columns([8]).visible(false);
+            dt.columns([18]).visible(false);
+            dt.columns([19]).visible(false);
+            dt.columns([20]).visible(false);
+            dt.columns([21]).visible(false);
+            dt.columns([22]).visible(false);
+        },
         fnCreatedRow:
             function (nRow, aData, iDataIndex) {
                 //registro facturado
@@ -3788,7 +3802,17 @@ function initTablaPrefacturas(departamentoId) {
 
             // 👉 Columnas que quieres sumar
             var columnas = [9, 10];
-            var columnasConNegativos = [8, 11, 12, 13, 14, 15, 16, 17, 18];
+            var columnasConNegativos = [
+                8,   // coste
+                11,  // base real
+                12,   //totalreal
+                13,  // noFacturado
+                14,  // facturado
+                15,  // total_cobrado
+                16,  // total_devuelto
+                17,  // pendiente
+                18,  // retenGarantias
+            ];
 
             var totales = {};
 
@@ -3816,7 +3840,7 @@ function initTablaPrefacturas(departamentoId) {
                 $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
             });
 
-        
+
             // 👉 caso especial letras
             if (vm.tipoContratoId() == 8) {
                 var c = api.data();
@@ -3965,25 +3989,27 @@ function initTablaPrefacturas(departamentoId) {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "impcobro",
+            data: "total_cobrado",
             className: "text-right",
-            render: function (data, type, row) {
+            render: function (data) {
                 return numeral(data).format('0,0.00')
             }
-        }, {
-            data: "impago",
+        },
+        {
+            data: "total_devuelto",
             className: "text-right",
-            render: function (data, type, row) {
+            render: function (data) {
+                return numeral(data).format('0,0.00')
+            }
+        },
+        {
+            data: "pendiente",
+            className: "text-right",
+            render: function (data) {
                 return numeral(data).format('0,0.00')
             }
         }, {
             data: "retenGarantias",
-            className: "text-right",
-            render: function (data, type, row) {
-                return numeral(data).format('0,0.00')
-            }
-        }, {
-            data: "restoCobrar",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
@@ -3996,6 +4022,18 @@ function initTablaPrefacturas(departamentoId) {
             data: "observaciones"
         }, {
             data: "vFacR"
+        },
+        {
+            data: "estado",
+            render: function (data) {
+                let color = "label-default";
+
+                if (data === "COBRADO") color = "label-success";
+                else if (data === "DEVUELTO") color = "label-danger";
+                else if (data === "PARCIAL") color = "label-warning";
+
+                return `<span class="label ${color}">${data}</span>`;
+            }
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
@@ -4014,7 +4052,6 @@ function initTablaPrefacturas(departamentoId) {
                 return html;
             }
         }]
-
     });
 
 
@@ -4026,14 +4063,6 @@ function initTablaPrefacturas(departamentoId) {
             .draw();
     });
 
-    // Hide some columns by default
-    tablaPrefacturas.columns(1).visible(false);
-    tablaPrefacturas.columns(8).visible(false);
-    tablaPrefacturas.columns(17).visible(false);
-    tablaPrefacturas.columns(18).visible(false);
-    tablaPrefacturas.columns(19).visible(false);
-    tablaPrefacturas.columns(20).visible(false);
-    tablaPrefacturas.columns(22).visible(false);
 
     //
     tablaPrefacturas.on('column-visibility.dt', function () {
@@ -4149,7 +4178,7 @@ function calculaImportesInformativosPrefacturas(c) {
 }
 
 function loadPrefacturasDelContrato(contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/con/cobros/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/con/cobros/" + contratoId + "/" + vm.sempresaId(), null, function (err, data) {
         if (err) return;
         loadTablaPrefacturas(data);
     });
@@ -6058,13 +6087,13 @@ function confirmarNoFacturar() {
             return mensError("No se han seleccionado registros");
 
         }
-        for(let d of datos){
-            if(d.facturaId) {
+        for (let d of datos) {
+            if (d.facturaId) {
                 hayFactura = true;
                 break;
             }
         }
-        if(hayFactura) {
+        if (hayFactura) {
             return mensError("No se puede marcar como no facturable/no facturable porque alguna de las prefacturas seleccionadas ya tiene factura asociada");
         }
         var m = $('#chkFacturarNofacturar').prop('checked') ? 'no facturable?' : 'facturable?. Se actualizará la fecha de las prefacturas seleccionadas';

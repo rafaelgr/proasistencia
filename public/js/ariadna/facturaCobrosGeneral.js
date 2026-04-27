@@ -384,10 +384,8 @@ function initTablaFacturas() {
             .draw();
     });
 
-
-
-    calcularResumen(dataFacturas);
 }
+
 function datosOK() {
     // Segun se incorporen criterios de filtrado
     // habrá que controlarlos aquí
@@ -418,6 +416,8 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
+
+    calcularResumen(data);
 }
 
 function buscarFacturas() {
@@ -617,6 +617,7 @@ function cargarFacturas2All(id) {
             if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
             if (!datosOK) return;
         }
+        let empid = vm.sempresaId() || 2;
         if (id) {
             var data = {
                 id: id
@@ -625,7 +626,7 @@ function cargarFacturas2All(id) {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/agente/" + id,
+                url: myconfig.apiUrl + "/api/facturas/agente/cobros/" + id + "/" + empid,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -639,10 +640,10 @@ function cargarFacturas2All(id) {
             });
         } else {
             //if(!vm.sempresaId()) vm.sempresaId(2);
-            let id = vm.sempresaId() || 2;
+           
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + id,
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + empid,
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data, status) {
@@ -743,26 +744,22 @@ function calcularResumen(data) {
     if (!data || data.length === 0) {
         $('#totalCobrado').text('0,00 €');
         $('#totalPendiente').text('0,00 €');
-        $('#porcentajeCobrado').text('0.00 %');
+        $('#totalDevuelto').text('0,00 €');
         return;
     }
     let totalCobrado = 0;
     let totalPendiente = 0;
-    let totalFacturas = 0;
+    let totalDevuelto = 0;
 
     data.forEach(f => {
         totalCobrado += Number(f.total_cobrado || 0);
         totalPendiente += Number(f.pendiente || 0);
-        totalFacturas += Number(f.totalConIva || 0);
+        totalDevuelto += Number(f.total_devuelto || 0);
     });
 
-    let porcentaje = 0;
-    if (totalFacturas > 0) {
-        porcentaje = (totalCobrado / totalFacturas) * 100;
-    }
 
     // pintar
     $('#totalCobrado').text(numeral(totalCobrado).format('0,0.00') + ' €');
     $('#totalPendiente').text(numeral(totalPendiente).format('0,0.00') + ' €');
-    $('#porcentajeCobrado').text(porcentaje.toFixed(2) + ' %');
+    $('#totalDevuelto').text(numeral(totalDevuelto).format('0,0.00') + ' €');
 }
