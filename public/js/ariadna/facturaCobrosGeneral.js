@@ -185,11 +185,11 @@ function initTablaFacturas() {
                 body: function (data, row, column, node) {
 
                     // 👉 columnas numéricas (Base, Total, Cobrado, Devuelto, Pendiente)
-                    if (column >= 7 && column <= 11) {
+                    if (column >= 9 && column <= 13) {
                         return numeroDbf(data);
                     } else {
                         // quitar iconos y botones
-                        if (column === 0 || column === 16) {
+                        if (column === 0 || column === 18) {
                             return "";
                         } else {
                             return data;
@@ -203,10 +203,16 @@ function initTablaFacturas() {
     tablaFacturas = $('#dt_factura').DataTable({
 
         bSort: true,
-        responsive: true,
+        responsive: false,
         paging: true,
         pageLength: 100,
         stateSave: true,
+        "initComplete": function () {
+            var dt = this.api();
+
+            dt.columns([5]).visible(false);
+            dt.columns([6]).visible(false);
+        },
 
         stateLoaded: function (settings, state) {
             state.columns.forEach(function (column, index) {
@@ -224,9 +230,12 @@ function initTablaFacturas() {
                 className: 'all'
             }
         ],
+         "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
 
         dom:
-            "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'f>>" +
+            "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
             "rt" +
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
 
@@ -278,6 +287,8 @@ function initTablaFacturas() {
             { data: "emisorNombre" },
             { data: "receptorNombre" },
             { data: "vNum" },
+            { data: "vFacR" },
+             { data: "vFacD" },
             { data: "nombreAgente" },
 
             // FECHA
@@ -640,7 +651,7 @@ function cargarFacturas2All(id) {
             });
         } else {
             //if(!vm.sempresaId()) vm.sempresaId(2);
-           
+
             $.ajax({
                 type: "GET",
                 url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + empid,

@@ -236,6 +236,12 @@ function initTablaFacturas() {
         bSort: true,
         responsive: true,
         paging: true,
+        "initComplete": function () {
+            var dt = this.api();
+
+            dt.columns([5]).visible(false);
+            dt.columns([6]).visible(false);
+        },
         "pageLength": 100,
         "stateSave": true,
         "stateLoaded": function (settings, state) {
@@ -252,7 +258,10 @@ function initTablaFacturas() {
                 className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             }
         ],
-        dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'f>>" +
+         "oColVis": {
+            "buttonText": "Mostrar / ocultar columnas"
+        },
+        dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'C>>" +
             "rt" +
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
 
@@ -314,6 +323,12 @@ function initTablaFacturas() {
             data: "receptorNombre"
         }, {
             data: "vNum"
+        }, 
+        {
+            data: "vFacR"
+        }, 
+        {
+            data: "vFacD"
         }, {
             data: "nombreAgente",
             render: function (data, type, row) {
@@ -337,8 +352,6 @@ function initTablaFacturas() {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        }, {
-            data: "vFac"
         }, {
             data: "vFPago"
         }, {
@@ -387,7 +400,7 @@ function initTablaFacturas() {
     });
 
     // Hide some columns by default
-    tablaFacturas.columns(9).visible(false);
+    
     tablaFacturas.columns(11).visible(false);
 }
 

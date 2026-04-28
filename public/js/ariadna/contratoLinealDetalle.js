@@ -3657,13 +3657,13 @@ function initTablaPrefacturas(departamentoId) {
             format: {
                 body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14) {
+                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14 || row === 15 || row === 16 || row === 18) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if (column === 0 || column === 24) {
+                        if (column === 0 || column === 25) {
                             return "";
                         } else {
                             return data;
@@ -3672,7 +3672,7 @@ function initTablaPrefacturas(departamentoId) {
                 },
                 footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 18) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -3693,7 +3693,7 @@ function initTablaPrefacturas(departamentoId) {
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    if (column === 0 || column === 25) {
+                    if (column === 25) {
                         return "";
                     } else {
                         return data;
@@ -3701,7 +3701,7 @@ function initTablaPrefacturas(departamentoId) {
                 },
                 footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14, row === 15 || row === 16 || row === 18) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 18) {
                         return data;
                     } else {
                         if (row === 7) {
@@ -3729,6 +3729,7 @@ function initTablaPrefacturas(departamentoId) {
             dt.columns([20]).visible(false);
             dt.columns([21]).visible(false);
             dt.columns([22]).visible(false);
+            dt.columns([23]).visible(false);
         },
         fnCreatedRow:
             function (nRow, aData, iDataIndex) {
@@ -3771,10 +3772,19 @@ function initTablaPrefacturas(departamentoId) {
                 extend: 'pdf'
             }, {
                 orientation: 'landscape',
-                pageSize: 'LEGAL',
-                footer: true
-            }),
+                pageSize: 'A3',
+                footer: true,
+                customize: function (doc) {
+                    doc.styles.tableHeader.fontSize = 8;
+                    doc.defaultStyle.fontSize = 7;
 
+                    doc.pageMargins = [10, 10, 10, 10]; // menos márgenes
+
+                    // Ajustar automáticamente ancho de columnas
+                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
+
+                }
+            }),
             'print'
         ],
         autoWidth: false,
@@ -3909,27 +3919,40 @@ function initTablaPrefacturas(departamentoId) {
         }, {
             data: "fecha",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
+                if (!data) return '';
+
+                if (type === 'display') {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+
+                // 👉 exportación (PDF, Excel, etc.)
+                return moment(data).format('YYYY-MM-DD');
             }
         },
         {
             data: "fechaRecibida",
             render: function (data, type, row) {
-                if (data) {
+                if (!data) return '';
+
+                if (type === 'display') {
                     return moment(data).format('DD/MM/YYYY');
-                } else {
-                    return null
                 }
+
+                // 👉 exportación (PDF, Excel, etc.)
+                return moment(data).format('YYYY-MM-DD');
             }
         },
         {
             data: "fechaGestionCobros",
             render: function (data, type, row) {
-                if (data) {
+                if (!data) return '';
+
+                if (type === 'display') {
                     return moment(data).format('DD/MM/YYYY');
-                } else {
-                    return null
                 }
+
+                // 👉 exportación (PDF, Excel, etc.)
+                return moment(data).format('YYYY-MM-DD');
             }
         }, {
             data: "coste",
@@ -4024,17 +4047,32 @@ function initTablaPrefacturas(departamentoId) {
             data: "vFacR"
         },
         {
+            data: "vFacD"
+        },
+        {
             data: "estado",
-            render: function (data) {
+            render: function (data, type, row) {
+
                 let color = "label-default";
 
                 if (data === "COBRADO") color = "label-success";
                 else if (data === "DEVUELTO") color = "label-danger";
                 else if (data === "PARCIAL") color = "label-warning";
 
-                return `<span class="label ${color}">${data}</span>`;
+                // 👇 pantalla
+                if (type === 'display') {
+                    return `<span class="label ${color}">${data}</span>`;
+                }
+
+                // 👇 export SIEMPRE limpio
+                if (type === 'export' || type === 'filter' || type === 'sort') {
+                    return data || '';
+                }
+
+                return data;
             }
-        }, {
+        },
+        {
             data: "prefacturaId",
             render: function (data, type, row) {
                 var bt1 = "";
