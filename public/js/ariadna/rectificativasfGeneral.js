@@ -148,6 +148,7 @@ function initTablaRectificativas() {
             { data: "diasDesdeVencimiento" },
             { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "totalImpagado", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPago" },
             { data: "observaciones" },
             {
