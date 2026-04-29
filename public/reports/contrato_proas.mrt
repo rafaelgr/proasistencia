@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "054b7f671a7bdc449da6139ceb54ecd2",
+  "ReportGuid": "dcde6f2859d29d25e86919280dc244e7",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "contrato_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1777367838000+0200)/",
+  "ReportChanged": "/Date(1777457273000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -488,7 +488,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<p class=\"MsoNormal\" style=\"font-family: Tahoma; text-align: justify;\"></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span lang=\"ES-TRAD\" style=\"letter-spacing: -0.1pt;\"><font size=\"10\" style=\"\" face=\"Arial\">* En el supuesto de que exista diferencia\nentre el importe resultante de la Certificación Final de Obra y el Presupuesto\ninicial, será abonado mediante un recibo domiciliado en la misma cta., cte.\ny&nbsp; en un plazo no superior a los cinco\ndías desde la fecha de certificación final de obra.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span lang=\"ES-TRAD\" style=\"letter-spacing: -0.1pt;\"><font size=\"10\" face=\"Arial\"><br></font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><font size=\"10\" face=\"Arial\"><span lang=\"ES-TRAD\" style=\"letter-spacing: -0.1pt;\">La demora a su vencimiento o el impago de una de las\ncantidades aplazadas, dará derecho a la Contrata<b> </b>a resolver el presente contrato, quedando anulada la garantía de\nlos trabajos ejecutados y podrá exigir el pago de todas las cantidades\npendientes, incluso las cantidades aplazadas y no vencidas, </span>así como el devengo de\nintereses por demora al tipo del interés legal<span style=\"\">.</span></font></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"letter-spacing: -0.1pt;\"><font size=\"10\" style=\"\" face=\"Arial\">El costo\nde los timbres de dichos efectos será por cuenta de la Propiedad.</font></span></p><p class=\"MsoNormal\" style=\"font-family: Tahoma; text-align: justify;\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VI.&nbsp;<u>VALIDEZ DE LA OFERTA</u></font></span></b></p><p class=\"MsoNormal\" style=\"font-family: Tahoma; text-align: justify;\"><span style=\"letter-spacing: -0.1pt; font-family: Arial;\"><font size=\"NaN\">Si las obras no se iniciaran en un plazo de 90 días desde la fecha del contrato por causa no imputables a la Contrata, los precios se revisarán en función del IPC que se encuentre en vigor.</font></span></p><div style=\"font-family: Tahoma;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><p style=\"letter-spacing: normal; text-align: justify; font-family: Arial;\"><b style=\"font-family: Tahoma;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VII. <u>RECEPCIÓN</u></font></span></b></p><p style=\"letter-spacing: normal; text-align: justify; font-family: Arial;\"><b style=\"font-family: Tahoma;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><u><br></u></font></span></b></p><p style=\"letter-spacing: normal; text-align: justify; font-family: Arial;\"><font size=\"10\">A la finalización de los trabajos, se levantará un Acta de recepción de Obras, firmándose por un representante de la Propiedad y otro de la Contrata, no obstante, en caso de no realizarse dicha Acta, la obra realizada se entenderá recibida de conformidad, si dentro de los quince días naturales a partir de la fecha de la certificación final, no se hubiera presentado reclamación expresa</font><font size=\"NaN\">.</font></p></span></div><p style=\"font-family: Tahoma;\"></p>"
+                "Value": "<p class=\"MsoNormal\" style=\"font-family: Tahoma; text-align: justify;\"></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span lang=\"ES-TRAD\" style=\"letter-spacing: -0.1pt;\"><font size=\"10\" style=\"\" face=\"Arial\">* En el supuesto de que exista diferencia\nentre el importe resultante de la Certificación Final de Obra y el Presupuesto\ninicial, será abonado mediante un recibo domiciliado en la misma cta., cte.\ny&nbsp; en un plazo no superior a los cinco\ndías desde la fecha de certificación final de obra.</font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span lang=\"ES-TRAD\" style=\"letter-spacing: -0.1pt;\"><font size=\"10\" face=\"Arial\"><br></font></span></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><font size=\"10\" face=\"Arial\"><span lang=\"ES-TRAD\" style=\"letter-spacing: -0.1pt;\">La demora a su vencimiento o el impago de una de las\ncantidades aplazadas, dará derecho a la Contrata<b> </b>a resolver el presente contrato, quedando anulada la garantía de\nlos trabajos ejecutados y podrá exigir el pago de todas las cantidades\npendientes, incluso las cantidades aplazadas y no vencidas, </span>así como el devengo de\nintereses por demora al tipo del interés legal<span style=\"\">.</span></font></p><p class=\"MsoNormal\" style=\"text-align: justify;\"><span style=\"letter-spacing: -0.1pt;\"><font size=\"10\" style=\"\" face=\"Arial\">El costo\nde los timbres de dichos efectos será por cuenta de la Propiedad.</font></span></p><p class=\"MsoNormal\" style=\"font-family: Tahoma; text-align: justify;\"><b><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VI.&nbsp;<u>VALIDEZ DE LA OFERTA</u></font></span></b></p><p class=\"MsoNormal\" style=\"font-family: Tahoma; text-align: justify;\"><span style=\"letter-spacing: -0.1pt; font-family: Arial;\"><font size=\"10\">Si las obras no se iniciaran en un plazo de 90 días desde la fecha del contrato por causa no imputables a la Contrata, los precios se revisarán en función del IPC que se encuentre en vigor.</font></span></p><div style=\"font-family: Tahoma;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><p style=\"letter-spacing: normal; text-align: justify; font-family: Arial;\"><b style=\"font-family: Tahoma;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\">VII. <u>RECEPCIÓN</u></font></span></b></p><p style=\"letter-spacing: normal; text-align: justify; font-family: Arial;\"><b style=\"font-family: Tahoma;\"><span lang=\"ES-TRAD\" style=\"font-family: Arial, sans-serif; letter-spacing: -0.1pt;\"><font size=\"10\"><u><br></u></font></span></b></p><p style=\"letter-spacing: normal; text-align: justify; font-family: Arial;\"><font size=\"10\">A la finalización de los trabajos, se levantará un Acta de recepción de Obras, firmándose por un representante de la Propiedad y otro de la Contrata, no obstante, en caso de no realizarse dicha Acta, la obra realizada se entenderá recibida de conformidad, si dentro de los quince días naturales a partir de la fecha de la certificación final, no se hubiera presentado reclamación expresa</font><font size=\"NaN\">.</font></p></span></div><p style=\"font-family: Tahoma;\"></p>"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -530,7 +530,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand5",
           "CanGrow": true,
-          "ClientRectangle": "0,36.78,18,0.6",
+          "ClientRectangle": "0,31.44,18,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -559,7 +559,7 @@
           "Name": "PageFooterBand6",
           "PrintOn": "OnlyLastPage",
           "CanGrow": true,
-          "ClientRectangle": "0,31.78,18,4.2",
+          "ClientRectangle": "0,26.44,18,4.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
