@@ -204,21 +204,30 @@ function loadTablaRectificativas(data) {
 // Buscar rectificativas
 function buscarRectificativas() {
     return function () {
+
         if (!datosOK()) return;
 
         rectificativasCero = [];
+
+        showLoader("Buscando facturas...");
+
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/facturas/rectificativas/"
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
-                + "/" + vm.sdepartamentoId() // filtramos por departamento
+                + "/" + vm.sdepartamentoId()
                 + "/" + usuario.usuarioId
                 + "/" + vm.sempresaId(),
             dataType: "json",
             contentType: "application/json",
+
             success: function (data) {
+
+                hideLoader();
+
                 if (data && data.length > 0) {
+
                     loadTablaRectificativas(data);
                     $('#checkMain').prop('checked', false);
                     $('#btnGenerarFacturasRectificativas').show();
@@ -226,44 +235,92 @@ function buscarRectificativas() {
                     data.forEach(function (f) {
                         if (f.total == 0) rectificativasCero.push(f.vNum);
                     });
-                    if (rectificativasCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + rectificativasCero.join("\n"));
+
+                    if (rectificativasCero.length > 0) {
+                        mensError(
+                            "Las siguientes facturas tienen importe a cero:\n" +
+                            rectificativasCero.join("\n")
+                        );
+                    }
+
                 } else {
                     mensAlerta("No se han encontrado registros");
                     loadTablaRectificativas(null);
                     $('#checkMain').prop('checked', false);
                 }
             },
-            error: function (err) { mensErrorAjax(err); }
+
+            error: function (err) {
+                hideLoader();
+                mensErrorAjax(err);
+            }
         });
     };
 }
-
 // Gestionar rectificativas
 function generarFacturasRectificativas() {
     return function () {
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/generar/rectificativas/desde/facturas/"
-                + spanishDbDate(vm.desdeFecha())
-                + "/" + spanishDbDate(vm.hastaFecha())
-                + "/" + vm.sdepartamentoId() // filtramos por departamento
-                + "/" + usuario.usuarioId
-                + "/" + vm.sempresaId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data) {
-                if (data != "OK") {
-                    mensError("Error gestionando rectificativas: " + JSON.stringify(data));
-                } else {
+
+        $.SmartMessageBox({
+            title: "Confirmación",
+            content: "¿Seguro que deseas generar las facturas rectificativas?",
+            buttons: "[Cancelar][Aceptar]"
+        }, function (ButtonPressed) {
+
+            if (ButtonPressed !== "Aceptar") return;
+
+            $('#btnGenerarFacturasRectificativas')
+                .prop('disabled', true)
+                .addClass('disabled');
+
+            showLoader("Generando rectificativas...");
+
+            $.ajax({
+                type: "POST",
+                url: myconfig.apiUrl + "/api/facturas/generar/rectificativas/desde/facturas/"
+                    + spanishDbDate(vm.desdeFecha())
+                    + "/" + spanishDbDate(vm.hastaFecha())
+                    + "/" + vm.sdepartamentoId()
+                    + "/" + usuario.usuarioId
+                    + "/" + vm.sempresaId(),
+                dataType: "json",
+                contentType: "application/json",
+
+                success: function (data) {
+
+                    hideLoader();
+
+                    $('#btnGenerarFacturasRectificativas')
+                        .prop('disabled', false)
+                        .removeClass('disabled');
+
+                    if (data != "OK") {
+                        mensError("Error gestionando rectificativas: " + JSON.stringify(data));
+                        return;
+                    }
+
                     mensNormal("Rectificativas emitidas correctamente");
+
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
                     $('#checkMain').prop('checked', false);
                     $('#btnGenerarFacturasRectificativas').hide();
+
                     loadTablaRectificativas(null);
+                },
+
+                error: function (err) {
+
+                    hideLoader();
+
+                    $('#btnGenerarFacturasRectificativas')
+                        .prop('disabled', false)
+                        .removeClass('disabled');
+
+                    mensErrorAjax(err);
                 }
-            },
-            error: function (err) { mensErrorAjax(err); }
+            });
+
         });
     };
 }
@@ -309,3 +366,26 @@ function loadEmpresas(empresaId) {
     });
 }
 
+function showLoader(text) {
+    $("#global-loader").remove();
+
+    $("body").append(`
+        <div id="global-loader" style="
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;">
+            <i class="fa fa-spinner fa-spin"></i>&nbsp; ${text}
+        </div>
+    `);
+}
+
+function hideLoader() {
+    $("#global-loader").remove();
+}

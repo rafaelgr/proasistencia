@@ -202,21 +202,30 @@ function loadTablaDerivadas(data) {
 // Buscar derivadas
 function buscarFacturas() {
     return function () {
+
         if (!datosOK()) return;
 
         derivadasCero = [];
+
+        showLoader("Buscando facturas derivadas...");
+
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/facturas/derivadas/"
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
-                + "/" + vm.sdepartamentoId() // filtramos por departamento
+                + "/" + vm.sdepartamentoId()
                 + "/" + usuario.usuarioId
                 + "/" + vm.sempresaId(),
             dataType: "json",
             contentType: "application/json",
+
             success: function (data) {
+
+                hideLoader();
+
                 if (data && data.length > 0) {
+
                     loadTablaDerivadas(data);
                     $('#checkMain').prop('checked', false);
                     $('#btnGenerarFacturasDerivadas').show();
@@ -224,14 +233,25 @@ function buscarFacturas() {
                     data.forEach(function (f) {
                         if (f.total == 0) derivadasCero.push(f.vNum);
                     });
-                    if (derivadasCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + derivadasCero.join("\n"));
+
+                    if (derivadasCero.length > 0) {
+                        mensError(
+                            "Las siguientes facturas tienen importe a cero:\n" +
+                            derivadasCero.join("\n")
+                        );
+                    }
+
                 } else {
                     mensAlerta("No se han encontrado registros");
                     loadTablaDerivadas(null);
                     $('#checkMain').prop('checked', false);
                 }
             },
-            error: function (err) { mensErrorAjax(err); }
+
+            error: function (err) {
+                hideLoader();
+                mensErrorAjax(err);
+            }
         });
     };
 }
@@ -239,29 +259,63 @@ function buscarFacturas() {
 // Gestionar derivadas
 function generarFacturasDerivadas() {
     return function () {
-        $.ajax({
-            type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/generar/derivadas/desde/facturas/"
-                + spanishDbDate(vm.desdeFecha())
-                + "/" + spanishDbDate(vm.hastaFecha())
-                + "/" + vm.sdepartamentoId() // filtramos por departamento
-                + "/" + usuario.usuarioId
-                + "/" + vm.sempresaId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data) {
-                if (data != "OK") {
-                    mensError("Error gestionando derivadas: " + JSON.stringify(data));
-                } else {
+
+        $.SmartMessageBox({
+            title: "Confirmación",
+            content: "¿Seguro que deseas generar las facturas derivadas?",
+            buttons: "[Cancelar][Aceptar]"
+        }, function (ButtonPressed) {
+
+            if (ButtonPressed !== "Aceptar") return;
+
+            var $btn = $('#btnGenerarFacturasDerivadas');
+
+            $btn.prop('disabled', true).addClass('disabled');
+
+            showLoader("Generando facturas derivadas...");
+
+            $.ajax({
+                type: "POST",
+                url: myconfig.apiUrl + "/api/facturas/generar/derivadas/desde/facturas/"
+                    + spanishDbDate(vm.desdeFecha())
+                    + "/" + spanishDbDate(vm.hastaFecha())
+                    + "/" + vm.sdepartamentoId()
+                    + "/" + usuario.usuarioId
+                    + "/" + vm.sempresaId(),
+                dataType: "json",
+                contentType: "application/json",
+
+                success: function (data) {
+
+                    hideLoader();
+
+                    $btn.prop('disabled', false).removeClass('disabled');
+
+                    if (data != "OK") {
+                        mensError("Error gestionando derivadas: " + JSON.stringify(data));
+                        return;
+                    }
+
                     mensNormal("Derivadas emitidas correctamente");
+
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
                     $('#checkMain').prop('checked', false);
                     $('#btnGenerarFacturasDerivadas').hide();
+
                     loadTablaDerivadas(null);
+                },
+
+                error: function (err) {
+
+                    hideLoader();
+
+                    $btn.prop('disabled', false).removeClass('disabled');
+
+                    mensErrorAjax(err);
                 }
-            },
-            error: function (err) { mensErrorAjax(err); }
+            });
+
         });
     };
 }
@@ -307,3 +361,25 @@ function loadEmpresas(empresaId) {
     });
 }
 
+function showLoader(text) {
+    $("#global-loader").remove();
+    $("body").append(`
+        <div id="global-loader" style="
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;">
+            <i class="fa fa-spinner fa-spin"></i>&nbsp; ${text}
+        </div>
+    `);
+}
+
+function hideLoader() {
+    $("#global-loader").remove();
+}
