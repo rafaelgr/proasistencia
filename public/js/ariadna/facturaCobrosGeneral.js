@@ -687,7 +687,7 @@ var limpiarFiltros = function () {
 function loadEmpresas(id) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         vm.sempresaId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
