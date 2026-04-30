@@ -101,6 +101,11 @@ function initTablaAnticipos() {
         bSort: true,
         responsive: true,
         paging: true,
+       "initComplete": function () {
+            var dt = this.api();
+
+            dt.columns([10]).visible(false);
+        },
         "pageLength": 100,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
         "t" +

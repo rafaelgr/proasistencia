@@ -336,7 +336,7 @@ function initForm() {
     $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
         var dt = $('#dt_prefactura').DataTable();
         if (e.target.hash == '#s3') {
-            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwaysCloneTop: true });
         } else {
             $('.fixedHeader').remove();
             a = null;
@@ -357,7 +357,7 @@ function initForm() {
         if (a) {
             $('.fixedHeader').remove();
             var dt = $('#dt_prefactura').DataTable();
-            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwayCloneTop: true });
+            a = new $.fn.dataTable.FixedHeader(dt, { header: true, alwaysCloneTop: true });
         }
     })
 
@@ -762,6 +762,7 @@ function initForm() {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) return;
 
+            vm.sempresaId(data.empresaId);
             loadData(data);
 
             initTablaPrefacturas(data.tipoContratoId);
@@ -1712,7 +1713,7 @@ function loadEmpresas(id) {
             nombre: ""
         }].concat(data);
         vm.posiblesEmpresas(empresas);
-        if (id) vm.scontratoId(id);
+        if (id) vm.sempresaId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
     });
 }
@@ -3913,6 +3914,12 @@ var reglasDeValidacionAdicionales = function () {
 
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas(departamentoId) {
+    // 🔴 IMPORTANTE: destruir instancia anterior si existe
+    if ($.fn.DataTable.isDataTable('#dt_prefactura')) {
+        $('#dt_prefactura').DataTable().destroy();
+        $('#dt_prefactura tbody').empty();
+    }
+
     var buttonCommon = {
         exportOptions: {
             format: {
@@ -3924,7 +3931,7 @@ function initTablaPrefacturas(departamentoId) {
                         console.log(dato);
                         return dato;
                     } else {
-                        if (column === 0 || column === 18) {
+                        if (column === 0 || column === 25) {
                             return "";
                         } else {
                             return data;
@@ -3933,7 +3940,7 @@ function initTablaPrefacturas(departamentoId) {
                 },
                 footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 17 || row === 18) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
@@ -3954,7 +3961,7 @@ function initTablaPrefacturas(departamentoId) {
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    if (column === 0 || column === 18) {
+                    if (column === 25) {
                         return "";
                     } else {
                         return data;
@@ -3962,7 +3969,7 @@ function initTablaPrefacturas(departamentoId) {
                 },
                 footer: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14) {
+                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 17 || row === 18) {
                         return data;
                     } else {
                         if (row === 7) {
@@ -3972,14 +3979,27 @@ function initTablaPrefacturas(departamentoId) {
                         }
                     }
                 },
-            }
+            },
+            columns: ':visible:not(:first-child):not(:last-child)'
         }
 
     }
     tablaPrefacturas = $('#dt_prefactura').DataTable({
         paging: false,
-        responsive: true,
+        responsive: false,
         "bDestroy": true,
+        "initComplete": function () {
+            var dt = this.api();
+
+            dt.columns([1]).visible(false);
+            dt.columns([8]).visible(false);
+            dt.columns([18]).visible(false);
+            dt.columns([19]).visible(false);
+            dt.columns([20]).visible(false);
+            dt.columns([21]).visible(false);
+            dt.columns([22]).visible(false);
+            dt.columns([23]).visible(false);
+        },
         fnCreatedRow:
             function (nRow, aData, iDataIndex) {
                 //registro facturado
@@ -4021,8 +4041,18 @@ function initTablaPrefacturas(departamentoId) {
                 extend: 'pdf'
             }, {
                 orientation: 'landscape',
-                pageSize: 'LEGAL',
-                footer: true
+                pageSize: 'A3',
+                footer: true,
+                customize: function (doc) {
+                    doc.styles.tableHeader.fontSize = 8;
+                    doc.defaultStyle.fontSize = 7;
+
+                    doc.pageMargins = [10, 10, 10, 10]; // menos márgenes
+
+                    // Ajustar automáticamente ancho de columnas
+                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
+
+                }
             }),
 
             'print'
@@ -4030,110 +4060,82 @@ function initTablaPrefacturas(departamentoId) {
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {
-            var api = this.api(), data;
+            var api = this.api();
 
-            // Remove the formatting to get integer data for summation
-            var intVal = function (i) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '') * 1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            const parseNumber = i => {
+                if (i === null || i === undefined || i === "") return 0;
+                if (typeof i === 'number') return i;
+                if (typeof i === 'string') return parseFloat(i.replace(/[\$,]/g, '')) || 0;
+                return 0;
             };
 
-            // Total over all pages
-            total8 = api
-                .column(8)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+            // 👉 Función para normalizar valores (clave del fix)
+            var parseVal = function (i) {
+                let val = typeof i === 'string'
+                    ? i.replace(/[\$,]/g, '') * 1
+                    : typeof i === 'number'
+                        ? i
+                        : 0;
 
-            total9 = api
-                .column(9)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
+                return val < 0 ? 0 : val; // 🔥 aquí matas los negativos
+            };
+
+            // 👉 Columnas que quieres sumar
+            var columnas = [
+                9, 10
+            ];
+
+            var columnasConNegativos = [
+                8,   // coste
+                11,  // base real
+                12,   //totalreal
+                13,  // noFacturado
+                14,  // facturado
+                15,  // total_cobrado
+                16,  // total_devuelto
+                17,  // pendiente
+                18,  // retenGarantias
+            ];
+            var totales = {};
+
+            // Columnas normales (sin negativos)
+            columnas.forEach(function (col) {
+                totales[col] = api
+                    .column(col)
+                    .data()
+                    .reduce(function (a, b) {
+                        return Math.round((parseVal(a) + parseVal(b)) * 100) / 100;
+                    }, 0);
+
+                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+            });
+
+            // Columnas con negativos
+            columnasConNegativos.forEach(function (col) {
+                totales[col] = api
+                    .column(col)
+                    .data()
+                    .reduce(function (a, b) {
+                        return Math.round((a + parseNumber(b)) * 100) / 100;
+                    }, 0);
+
+                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+            });
+
+            // 👉 lógica extra que ya tenías
+            let total9 = totales[9] || 0;
 
             let n = numeral(total9).format('0,0.00');
             vm.importePrefacturadoRealFormat(n);
-            vm.diferenciaPrefacturadoRealFormat(numeral(total9 - vm.importeCliente()).format('0,0.00'));
-            // Total over all pages
-            total10 = api
-                .column(10)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
-
-            // Total over all pages
-            total11 = api
-                .column(11)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
-
-
-            // Total over all pages
-            total12 = api
-                .column(12)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
-
-            // Total over all pages
-            total13 = api
-                .column(13)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
-
-            // Total over all pages
-            total14 = api
-                .column(14)
-                .data()
-                .reduce(function (a, b) {
-                    return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                }, 0);
-
-
-            // Update footer
-            $(api.columns(8).footer()).html(
-                numeral(total8).format('0,0.00')
-
-            );
-            $(api.columns(9).footer()).html(
-                numeral(total9).format('0,0.00')
-
+            vm.diferenciaPrefacturadoRealFormat(
+                numeral(total9 - vm.importeCliente()).format('0,0.00')
             );
 
-            $(api.columns(10).footer()).html(
-                numeral(total10).format('0,0.00')
-            );
-            $(api.columns(11).footer()).html(
-                numeral(total11).format('0,0.00')
-            );
-            $(api.columns(12).footer()).html(
-                numeral(total12).format('0,0.00')
-            );
-            $(api.columns(13).footer()).html(
-                numeral(total13).format('0,0.00')
-            );
-            $(api.columns(14).footer()).html(
-                numeral(total14).format('0,0.00')
-            );
-
-            //////
-
-            //importes informaticos de las letras
+            // 👉 caso especial letras
             if (vm.tipoContratoId() == 8) {
                 var c = api.data();
-                calculaImportesInformativosPrefacturas(c)
+                calculaImportesInformativosPrefacturas(c);
             }
-
         },
         language: {
             processing: "Procesando...",
@@ -4197,27 +4199,40 @@ function initTablaPrefacturas(departamentoId) {
         }, {
             data: "fecha",
             render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
+                if (!data) return '';
+
+                if (type === 'display') {
+                    return moment(data).format('DD/MM/YYYY');
+                }
+
+                // 👉 exportación (PDF, Excel, etc.)
+                return moment(data).format('YYYY-MM-DD');
             }
         },
         {
             data: "fechaRecibida",
             render: function (data, type, row) {
-                if (data) {
+                if (!data) return '';
+
+                if (type === 'display') {
                     return moment(data).format('DD/MM/YYYY');
-                } else {
-                    return null
                 }
+
+                // 👉 exportación (PDF, Excel, etc.)
+                return moment(data).format('YYYY-MM-DD');
             }
         },
         {
             data: "fechaGestionCobros",
             render: function (data, type, row) {
-                if (data) {
+                if (!data) return '';
+
+                if (type === 'display') {
                     return moment(data).format('DD/MM/YYYY');
-                } else {
-                    return null
                 }
+
+                // 👉 exportación (PDF, Excel, etc.)
+                return moment(data).format('YYYY-MM-DD');
             }
         }, {
             data: "coste",
@@ -4229,10 +4244,37 @@ function initTablaPrefacturas(departamentoId) {
             data: "total",
             className: "text-right",
             render: function (data, type, row) {
-                return numeral(data).format('0,0.00')
+                // 👉 Para mostrar en pantalla
+                if (type === 'display') {
+                    if (data < 0) return '0,00';
+                    return numeral(data).format('0,0.00');
+                }
+
+                // 👉 Para cálculos, ordenación, exportación, etc.
+                return data < 0 ? 0 : data;
             }
         }, {
             data: "totalConIva",
+            className: "text-right",
+            render: function (data, type, row) {
+                // 👉 Para mostrar en pantalla
+                if (type === 'display') {
+                    if (data < 0) return '0,00';
+                    return numeral(data).format('0,0.00');
+                }
+
+                // 👉 Para cálculos, ordenación, exportación, etc.
+                return data < 0 ? 0 : data;
+            }
+        },
+        {
+            data: "totalReal",
+            className: "text-right",
+            render: function (data, type, row) {
+                return numeral(data).format('0,0.00')
+            }
+        }, {
+            data: "totalConIvaReal",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
@@ -4250,13 +4292,27 @@ function initTablaPrefacturas(departamentoId) {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "retenGarantias",
+            data: "total_cobrado",
             className: "text-right",
-            render: function (data, type, row) {
+            render: function (data) {
+                return numeral(data).format('0,0.00')
+            }
+        },
+        {
+            data: "total_devuelto",
+            className: "text-right",
+            render: function (data) {
+                return numeral(data).format('0,0.00')
+            }
+        },
+        {
+            data: "pendiente",
+            className: "text-right",
+            render: function (data) {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "restoCobrar",
+            data: "retenGarantias",
             className: "text-right",
             render: function (data, type, row) {
                 return numeral(data).format('0,0.00')
@@ -4267,6 +4323,34 @@ function initTablaPrefacturas(departamentoId) {
             data: "vFPago"
         }, {
             data: "observaciones"
+        }, {
+            data: "vFacR"
+        },
+        {
+            data: "vFacD"
+        },
+        {
+            data: "estado",
+            render: function (data, type, row) {
+
+                let color = "label-default";
+
+                if (data === "COBRADO") color = "label-success";
+                else if (data === "DEVUELTO") color = "label-danger";
+                else if (data === "PARCIAL") color = "label-warning";
+
+                // 👇 pantalla
+                if (type === 'display') {
+                    return `<span class="label ${color}">${data}</span>`;
+                }
+
+                // 👇 export SIEMPRE limpio
+                if (type === 'export' || type === 'filter' || type === 'sort') {
+                    return data || '';
+                }
+
+                return data;
+            }
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
@@ -4297,17 +4381,23 @@ function initTablaPrefacturas(departamentoId) {
             .draw();
     });
 
-    // Hide some columns by default
-    tablaPrefacturas.columns(1).visible(false);
-    tablaPrefacturas.columns(8).visible(false);
-    tablaPrefacturas.columns(13).visible(false);
-    tablaPrefacturas.columns(14).visible(false);
-    tablaPrefacturas.columns(15).visible(false);
-    tablaPrefacturas.columns(17).visible(false);
-    /*  if(departamentoId != 8) {
-         tablaPrefacturas.columns(6).visible(false);
-         tablaPrefacturas.columns(7).visible(false);
-     } */
+
+    //
+    tablaPrefacturas.on('column-visibility.dt', function () {
+        var dt = $('#dt_prefactura').DataTable();
+
+        // Ajustar columnas
+        dt.columns.adjust();
+
+        // Recrear FixedHeader
+        if (a) {
+            $('.fixedHeader').remove();
+            a = new $.fn.dataTable.FixedHeader(dt, {
+                header: true,
+                alwaysCloneTop: true
+            });
+        }
+    });
 
 }
 
@@ -4324,16 +4414,16 @@ function calculaImportesInformativosPrefacturas(c) {
             var s = c[i];
             if (s.esLetra == 1) {
                 //LETRAS EMITIDAS
-                totEmitidas = totEmitidas + s.total;
+                totEmitidas = totEmitidas + parseFloat(s.total);
                 numEmitidas++
                 //LETRAS RECIBIDAS
                 if (s.fechaRecibida) {
-                    totRecibidas = totRecibidas + s.total;
+                    totRecibidas = totRecibidas + parseFloat(s.total);
                     numRecibidas++
                 }
                 //LETRAS EN GESTION DE COBROS
                 if (s.fechaGestionCobros) {
-                    totGestionCobros = totGestionCobros + s.total;
+                    totGestionCobros = totGestionCobros + parseFloat(s.total);
                     numGestionCobros++
                 }
             }
@@ -4407,7 +4497,7 @@ function calculaImportesInformativosPrefacturas(c) {
 }
 
 function loadPrefacturasDelContrato(contratoId) {
-    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/contrato/con/cobros/" + contratoId + "/" + vm.sempresaId(), null, function (err, data) {
         if (err) return;
         loadTablaPrefacturas(data);
     });
@@ -9297,10 +9387,10 @@ var imprimir = function () {
         var mens = "No se ha planificado el 100% del contrato.";
         return mensError(mens);
     }
-/*     if (totalPrefacturado < vm.importeCliente()) {
-        var mens = "No se ha prefacturado el 100% del contrato.";
-        return mensError(mens);
-    } */
+    /*     if (totalPrefacturado < vm.importeCliente()) {
+            var mens = "No se ha prefacturado el 100% del contrato.";
+            return mensError(mens);
+        } */
 
     printContrato(vm.contratoId());
 }
@@ -9478,7 +9568,7 @@ function initTablaPlanificacionLineasObrasTemp() {
                         bt2 = "<button class='btn btn-circle btn-success' data-toggle='modal' data-target='#modalPlanificacionObrasTemp' onclick='editPlanificacionTemp(" + data + ");' title='Editar registro'><i class='fa fa-edit fa-fw'></i></button>";
                         bt3 = "<button class='btn btn-circle btn-primary' data-toggle='modal' data-target='#modalGenerarPrefacturasObrasTemp' onclick='generarPrefacturaPlanificacionObrasTemp(" + data + ");' title='Generar prefacturas'><i class='fa fa-stack-exchange'></i></button>";
                         if (!vm.contratoIntereses()) {
-                            
+
                         } else {
                             bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePlanificacionLineaObrasTemp(" + data + ");' title='Eliminar registro'><i class='fa fa-trash-o fa-fw'></i></button>";
                             bt2 = "";
@@ -11033,9 +11123,9 @@ function initTablaAdicionales() {
                     bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAdicionalObras(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                     bt3 = "<button class='btn btn-circle btn-success'  data-toggle='modal' data-target='#modalAdicionalObras' onclick='editAdicionalObras(" + data + ");' title='Editar adicional'> <i class='fa fa-edit'></i> </button>";
                     bt5 = "<button class='btn btn-circle btn-success' " +
-                                    "onclick=\"imprimirContratoAdicional('" + data + "')\" " +
-                                    "title='Imprimir contrato adicional'>" +
-                                    "<i class='fa fa-print fa-fw'></i></button>";
+                        "onclick=\"imprimirContratoAdicional('" + data + "')\" " +
+                        "title='Imprimir contrato adicional'>" +
+                        "<i class='fa fa-print fa-fw'></i></button>";
                 }
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt5 + "</div>";
                 return html;
@@ -11106,7 +11196,7 @@ function aceptarAdicional() {
             concepto: vm.tituloAdicional(),
             fecha: spanishDbDate(vm.fechaAdicional()),
             importe: vm.importeAdicional(),
-
+            refPresupuestoAdicional: vm.refPresupuestoAdicional()
         }]
     }
     var verbo = "POST";
@@ -11149,13 +11239,13 @@ function deleteAdicionalObras(id) {
 function loadComboAdicionales(id) {
     llamadaAjax("GET", "/api/contratos/trabajo/adicional/contrato/" + vm.contratoId(), null, function (err, data) {
         if (err) return;
-          var trabajosAdicionales = [{ trabajoAdicionalId: null, concepto: "" }].concat(data);
-       /*  var trabajosAdicionales = data.map(function (item) {
-            return {
-                trabajoAdicionalId: item.trabajoAdicionalId,
-                concepto: item.concepto
-            };
-        }); */
+        var trabajosAdicionales = [{ trabajoAdicionalId: null, concepto: "" }].concat(data);
+        /*  var trabajosAdicionales = data.map(function (item) {
+             return {
+                 trabajoAdicionalId: item.trabajoAdicionalId,
+                 concepto: item.concepto
+             };
+         }); */
         vm.posiblesTrabajosAdicionales(trabajosAdicionales);
         $("#cmbPresupuestoAdicional").val([id]).trigger('change');
         vm.trabajoAdicionalId(id);

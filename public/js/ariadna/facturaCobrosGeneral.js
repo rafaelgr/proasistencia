@@ -1,6 +1,6 @@
 ﻿/*-------------------------------------------------------------------------- 
-facturaGeneral.js
-Funciones js par la página FacturaGeneral.html
+FacturaCobrosGeneral.js
+Funciones js par la página FacturaCobrosGeneral.html
 
 ---------------------------------------------------------------------------*/
 var dataFacturas;
@@ -37,7 +37,7 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
     usuario = recuperarUsuario();
-    filtros = getCookie('filtro_facturas');
+    filtros = getCookie('filtro_facturas_cobros');
     if (filtros != undefined) {
         filtros = JSON.parse(filtros);
     }
@@ -87,17 +87,13 @@ function initForm() {
         //compruebaFiltros(f);
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        if (!$('#chkTodos').prop('checked')) {
-            if (this.value != antDepartamentoId) {
-                cargarFacturas2()();
-            } else {
-                setTimeout(function () {
-                    cargarFacturas2(f)();
-                }, 1000);
-
-            }
-        } else {
+        if (this.value != antDepartamentoId) {
             cargarFacturas2All()();
+        } else {
+            setTimeout(function () {
+                cargarFacturas2All(f)();
+            }, 1000);
+
         }
         antDepartamentoId = this.value;
     });
@@ -121,22 +117,6 @@ function initForm() {
     $("#enviarCorreo-form").submit(function () {
         return false;
     });
-    //$('#txtBuscar').keypress(function (e) {
-    //    if (e.keyCode == 13)
-    //        buscarFacturas();
-    //});
-    //
-
-
-    $('#chkTodos').change(function () {
-        if (this.checked) {
-            cargarFacturas2All()();
-        } else {
-            cargarFacturas2()();
-        }
-    });
-
-
 }
 
 function admData() {
@@ -175,104 +155,95 @@ function compruebaFiltros(id) {
         vm.hFecha(filtros.hFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
-        if (filtros.contabilizadas == true) {
-            $('#chkTodos').prop('checked', true);
-            if (id > 0) {
-                setTimeout(function () {
-                    cargarFacturas2(id)();
-                }, 1000);
-
-            } else {
-                cargarFacturas2All()();
-            }
-        } else {
-            $('#chkTodos').prop('checked', false);
+        if (id > 0) {
             setTimeout(function () {
-                cargarFacturas2(id)();
+                cargarFacturas2All(id)();
             }, 1000);
+
+        } else {
+            cargarFacturas2All()();
         }
-        /*  if(id) {
-             cargarFacturas2()(id);
-         } */
     } else {
-        vm.sempresaId(0);
-        loadEmpresas(0);
+        //vm.sempresaId(2);
+        loadEmpresas(2);
         estableceFechaEjercicio();
         if (id) {
             setTimeout(function () {
-                cargarFacturas2(id)();
+                cargarFacturas2All(id)();
             }, 1000);
         } else {
-            cargarFacturas2()();
+            cargarFacturas2All()();
         }
 
     }
 }
-
 function initTablaFacturas() {
+
     var buttonCommon = {
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (column === 7 || column === 8) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
+
+                    // 👉 columnas numéricas (Base, Total, Cobrado, Devuelto, Pendiente)
+                    if (column >= 9 && column <= 13) {
+                        return numeroDbf(data);
                     } else {
-                        if (column === 0 || column === 12) {
+                        // quitar iconos y botones
+                        if (column === 0 || column === 18) {
                             return "";
                         } else {
                             return data;
                         }
-
                     }
                 }
             }
         }
     };
+
     tablaFacturas = $('#dt_factura').DataTable({
+
         bSort: true,
-        responsive: true,
+        responsive: false,
         paging: true,
+        pageLength: 100,
+        stateSave: true,
         "initComplete": function () {
             var dt = this.api();
 
             dt.columns([5]).visible(false);
             dt.columns([6]).visible(false);
         },
-        "pageLength": 100,
-        "stateSave": true,
-        "stateLoaded": function (settings, state) {
+
+        stateLoaded: function (settings, state) {
             state.columns.forEach(function (column, index) {
                 $('#' + settings.sTableId + '-head-filter-' + index).val(column.search.search);
             });
         },
-        "aoColumnDefs": [
-            { "sType": "date-uk", "aTargets": [6] },
+
+        aoColumnDefs: [
+            { sType: "date-uk", aTargets: [6] }
         ],
+
         columnDefs: [
             {
-                targets: 13, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
-                className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
+                targets: 16, // 👉 columna botones (última)
+                className: 'all'
             }
         ],
          "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
-        dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6'C>>" +
+
+        dom:
+            "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
             "rt" +
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
 
         buttons: [
             'copy',
             'csv',
-            $.extend(true, {}, buttonCommon, {
-                extend: 'excel'
-            }),
+            $.extend(true, {}, buttonCommon, { extend: 'excel' }),
             {
-
                 extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'LEGAL'
@@ -280,17 +251,13 @@ function initTablaFacturas() {
             'print'
         ],
 
-        "oColVis": {
-            "buttonText": "Mostrar / ocultar columnas"
-        },
-
         autoWidth: true,
+
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
             infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
             infoFiltered: "(filtrado de un total de _MAX_ registros)",
-            infoPostFix: "",
             loadingRecords: "Cargando...",
             zeroRecords: "No se encontraron resultados",
             emptyTable: "Ningún dato disponible en esta tabla",
@@ -299,99 +266,128 @@ function initTablaFacturas() {
                 previous: "Anterior",
                 next: "Siguiente",
                 last: "Último"
-            },
-            aria: {
-                sortAscending: ": Activar para ordenar la columna de manera ascendente",
-                sortDescending: ": Activar para ordenar la columna de manera descendente"
             }
         },
+
         data: dataFacturas,
-        columns: [{
-            data: "facturaId",
-            render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                if (row.contafich || row.contabilizada) {
-                    html = "<i class='fa fa-file'></i>";
+
+        columns: [
+
+            // ICONO
+            {
+                data: "facturaId",
+                render: function (data, type, row) {
+                    return (row.contafich || row.contabilizada)
+                        ? "<i class='fa fa-file'></i>"
+                        : "<i class='fa fa-file-o'></i>";
                 }
-                return html;
-            }
-        }, {
-            data: "referencia"
-        }, {
-            data: "emisorNombre"
-        }, {
-            data: "receptorNombre"
-        }, {
-            data: "vNum"
-        }, 
-        {
-            data: "vFacR"
-        }, 
-        {
-            data: "vFacD"
-        }, {
-            data: "nombreAgente",
-            render: function (data, type, row) {
-                if (!data || data == "") return "";
-                return data;
-            }
-        }, {
-            data: "fecha",
-            render: function (data, type, row) {
-                return moment(data).format('DD/MM/YYYY');
-            }
-        }, {
-            data: "total",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0,0.00');
-                return string;
-            }
-        }, {
-            data: "totalConIva",
-            render: function (data, type, row) {
-                var string = numeral(data).format('0,0.00');
-                return string;
-            }
-        }, {
-            data: "vFPago"
-        }, {
-            data: "observaciones"
-        }, {
-            data: "dirTrabajo"
-        }, {
-            data: "facturaId",
-            render: function (data, type, row) {
-                var bt1 = "";
-                if (!row.contabilizada || usuario.puedeEditar) {
-                    var bt1 = "<button class='btn btn-circle btn-danger' onclick='compruebaNumero(" + data + "," + row.departamentoId + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+            },
+
+            { data: "referencia" },
+            { data: "emisorNombre" },
+            { data: "receptorNombre" },
+            { data: "vNum" },
+            { data: "vFacR" },
+             { data: "vFacD" },
+            { data: "nombreAgente" },
+
+            // FECHA
+            {
+                data: "fecha",
+                render: data => moment(data).format('DD/MM/YYYY')
+            },
+
+            // BASE
+            {
+                data: "total",
+                render: data => numeral(data).format('0,0.00')
+            },
+
+            // TOTAL
+            {
+                data: "totalConIva",
+                render: data => numeral(data).format('0,0.00')
+            },
+
+            // 💰 COBRADO
+            {
+                data: "total_cobrado",
+                render: data => numeral(data).format('0,0.00')
+            },
+
+            // 🔴 DEVUELTO
+            {
+                data: "total_devuelto",
+                render: data => numeral(data).format('0,0.00')
+            },
+
+            // ⚖️ PENDIENTE
+            {
+                data: "pendiente",
+                render: data => numeral(data).format('0,0.00')
+            },
+
+            // 🚦 ESTADO
+            {
+                data: "estado",
+                render: function (data) {
+                    let color = "label-default";
+
+                    if (data === "COBRADO") color = "label-success";
+                    else if (data === "DEVUELTO") color = "label-danger";
+                    else if (data === "PARCIAL") color = "label-warning";
+
+                    return `<span class="label ${color}">${data}</span>`;
                 }
-                var bt2 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var bt3 = "<button class='btn btn-circle btn-success' onclick='printFactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var bt4 = "<button class='btn btn-circle custom-btn' data-bs-toggle='modal' data-bs-target='#modalEnviarCorreo' onclick=\"prepararCorreo(" + row.clienteId + ", " + data + ", " + row.departamentoId + ")\"  title='Enviar factura por correo'><i class='fa fa-lg fa-envelope-o'></i></button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + " " + bt3 + " " + bt4 + "</div>";
-                return html;
+            },
+
+            { data: "vFPago" },
+            { data: "observaciones" },
+            { data: "dirTrabajo" },
+
+            // BOTONES
+            {
+                data: "facturaId",
+                render: function (data, type, row) {
+
+                    let bt1 = "";
+                    if (!row.contabilizada || usuario.puedeEditar) {
+                        bt1 = `<button class='btn btn-circle btn-danger'
+                                onclick='compruebaNumero(${data},${row.departamentoId});'>
+                                <i class='fa fa-trash-o'></i></button>`;
+                    }
+
+                    let bt2 = `<button class='btn btn-circle btn-success'
+                                onclick='editFactura(${data});'>
+                                <i class='fa fa-edit'></i></button>`;
+
+                    let bt3 = `<button class='btn btn-circle btn-success'
+                                onclick='printFactura2(${data});'>
+                                <i class='fa fa-print'></i></button>`;
+
+                    let bt4 = `<button class='btn btn-circle custom-btn'
+                                data-bs-toggle='modal'
+                                data-bs-target='#modalEnviarCorreo'
+                                onclick="prepararCorreo(${row.clienteId}, ${data}, ${row.departamentoId})">
+                                <i class='fa fa-envelope-o'></i></button>`;
+
+                    return `<div class='pull-right'>${bt1} ${bt2} ${bt3} ${bt4}</div>`;
+                }
             }
-        }]
+        ]
     });
 
-    //function sort by date
+    // ordenar fechas
     jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-        "date-uk-pre": function (a) {
+        "date-uk-pre": a => {
             var ukDatea = a.split('/');
             return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
         },
-
-        "date-uk-asc": function (a, b) {
-            return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-        },
-
-        "date-uk-desc": function (a, b) {
-            return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-        }
+        "date-uk-asc": (a, b) => a < b ? -1 : a > b ? 1 : 0,
+        "date-uk-desc": (a, b) => a < b ? 1 : a > b ? -1 : 0
     });
 
-
-    // Apply the filter
+    // filtros
     $("#dt_factura thead th input[type=text]").on('keyup change', function () {
         tablaFacturas
             .column($(this).parent().index() + ':visible')
@@ -399,9 +395,6 @@ function initTablaFacturas() {
             .draw();
     });
 
-    // Hide some columns by default
-    
-    tablaFacturas.columns(11).visible(false);
 }
 
 function datosOK() {
@@ -434,15 +427,13 @@ function loadTablaFacturas(data) {
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
+
+    calcularResumen(data);
 }
 
 function buscarFacturas() {
     var mf = function () {
-        if ($('#chkTodos').prop('checked')) {
-            cargarFacturas2All()();
-        } else {
-            cargarFacturas2()();
-        }
+        cargarFacturas2All()();
     };
     return mf;
 }
@@ -557,16 +548,14 @@ function editFactura(id) {
     // hay que abrir la página de detalle de factura
     // pasando en la url ese ID
     cargaFacturas = true;
-    var contabilizadas = $('#chkTodos').prop('checked');
     var busquedaFacturas =
     {
         empresaId: vm.sempresaId(),
         dFecha: vm.dFecha(),
         hFecha: vm.hFecha(),
-        contabilizadas: contabilizadas
     }
-    setCookie("filtro_facturas", JSON.stringify(busquedaFacturas), 1);
-    var url = "FacturaDetalle.html?FacturaId=" + id;
+    setCookie("filtro_facturas_cobros", JSON.stringify(busquedaFacturas), 1);
+    var url = "FacturaDetalle.html?FacturaId=" + id + "&ConCobro=true";
     window.open(url, '_self');
 }
 
@@ -628,7 +617,9 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarFacturas2(id) {
+
+
+function cargarFacturas2All(id) {
     var mf = function () {
         var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var hFecha = vm.hFecha();
@@ -637,6 +628,7 @@ function cargarFacturas2(id) {
             if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
             if (!datosOK) return;
         }
+        let empid = vm.sempresaId() || 2;
         if (id) {
             var data = {
                 id: id
@@ -645,7 +637,7 @@ function cargarFacturas2(id) {
             // hay que buscar ese elemento en concreto
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/agente/" + id,
+                url: myconfig.apiUrl + "/api/facturas/agente/cobros/" + id + "/" + empid,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -658,16 +650,13 @@ function cargarFacturas2(id) {
                 }
             });
         } else {
-            if (hFecha != null) {
-                if (!datosOK()) return;
-            }
+            //if(!vm.sempresaId()) vm.sempresaId(2);
 
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + empid,
                 dataType: "json",
                 contentType: "application/json",
-                data: JSON.stringify(data),
                 success: function (data, status) {
                     loadTablaFacturas(data);
                 },
@@ -677,32 +666,7 @@ function cargarFacturas2(id) {
                 }
             });
         }
-    }
-    return mf
-}
 
-function cargarFacturas2All() {
-    var mf = function () {
-        var dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var hFecha = vm.hFecha();
-        if (hFecha == '' || hFecha == undefined) hFecha = null;
-        if (hFecha != null) {
-            if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            if (!datosOK) return;
-        }
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + vm.sempresaId(),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                loadTablaFacturas(data);
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
     }
     return mf;
 }
@@ -713,8 +677,8 @@ imprimirFactura = function () {
 }
 
 var limpiarFiltros = function () {
-    var returnUrl = "FacturaGeneral.html?cleaned=true"
-    deleteCookie('filtro_facturas');
+    var returnUrl = "FacturaCobrosGeneral.html?cleaned=true"
+    deleteCookie('filtro_facturas_cobros');
     tablaFacturas.state.clear();
     window.open(returnUrl, '_self');
     //window.location.reload();
@@ -723,7 +687,7 @@ var limpiarFiltros = function () {
 function loadEmpresas(id) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
-        var empresas = [{ empresaId: 0, nombre: "" }].concat(data);
+        var empresas = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresas(empresas);
         vm.sempresaId(id);
         $("#cmbEmpresas").val([id]).trigger('change');
@@ -784,4 +748,29 @@ function enviarCorreo() {
             }
         });
     });
+}
+
+function calcularResumen(data) {
+
+    if (!data || data.length === 0) {
+        $('#totalCobrado').text('0,00 €');
+        $('#totalPendiente').text('0,00 €');
+        $('#totalDevuelto').text('0,00 €');
+        return;
+    }
+    let totalCobrado = 0;
+    let totalPendiente = 0;
+    let totalDevuelto = 0;
+
+    data.forEach(f => {
+        totalCobrado += Number(f.total_cobrado || 0);
+        totalPendiente += Number(f.pendiente || 0);
+        totalDevuelto += Number(f.total_devuelto || 0);
+    });
+
+
+    // pintar
+    $('#totalCobrado').text(numeral(totalCobrado).format('0,0.00') + ' €');
+    $('#totalPendiente').text(numeral(totalPendiente).format('0,0.00') + ' €');
+    $('#totalDevuelto').text(numeral(totalDevuelto).format('0,0.00') + ' €');
 }

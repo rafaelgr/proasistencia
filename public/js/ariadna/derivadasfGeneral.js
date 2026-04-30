@@ -1,12 +1,12 @@
 /*-------------------------------------------------------------------------- 
-impagosfGeneral.js
-Funciones js para la página ImpagosfGeneral.html
+derivadasfGeneral.js
+Funciones js para la página DerivadasfGeneral.html
 ---------------------------------------------------------------------------*/
-var responsiveHelper_dt_impagos = undefined;
+var responsiveHelper_dt_derivadas = undefined;
 
-var dataImpagos;
+var dataDerivadas;
 var usuario;
-var impagosCero = [];
+var derivadasCero = [];
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -44,13 +44,13 @@ function initForm() {
         $("#cmbDepartamentosTrabajo").select2(select2Spanish());
         $("#cmbEmpresas").select2(select2Spanish());
         loadEmpresas(null);
-        initTablaImpagos();
+        initTablaDerivadas();
 
     });
 
-    $('#btnBuscarImpagos').click(buscarImpagos());
-    $('#btnGenerarFacturasRectificativas').click(generarFacturasRectificativas());
-    $('#frmBuscarImpagos').submit(function () { return false; });
+    $('#btnBuscarFacturas').click(buscarFacturas());
+    $('#btnGenerarFacturasDerivadas').click(generarFacturasDerivadas());
+    $('#frmBuscarDerivadas').submit(function () { return false; });
 
     $("#checkMain").click(function (e) {
         if ($('#checkMain').prop('checked')) {
@@ -62,7 +62,7 @@ function initForm() {
         }
     });
 
-    $('#btnGenerarFacturasRectificativas').hide();
+    $('#btnGenerarFacturasDerivadas').hide();
 
 
 }
@@ -87,7 +87,7 @@ function admData() {
 
 // Validación de fechas
 function datosOK() {
-    $('#frmBuscarImpagos').validate({
+    $('#frmBuscarDerivadas').validate({
         rules: {
             cmbEmpresas: { required: true },
             txtDesdeFecha: { required: true },
@@ -102,24 +102,24 @@ function datosOK() {
             error.insertAfter(element.parent());
         }
     });
-    return $('#frmBuscarImpagos').valid();
+    return $('#frmBuscarDerivadas').valid();
 }
 
 // Inicializa tabla
-function initTablaImpagos() {
-    $('#dt_impagos').dataTable({
+function initTablaDerivadas() {
+    $('#dt_derivadas').dataTable({
         autoWidth: true,
         paging: false,
         preDrawCallback: function () {
-            if (!responsiveHelper_dt_impagos) {
-                responsiveHelper_dt_impagos = new ResponsiveDatatablesHelper($('#dt_impagos'), breakpointDefinition);
+            if (!responsiveHelper_dt_derivadas) {
+                responsiveHelper_dt_derivadas = new ResponsiveDatatablesHelper($('#dt_derivadas'), breakpointDefinition);
             }
         },
         rowCallback: function (nRow) {
-            responsiveHelper_dt_impagos.createExpandIcon(nRow);
+            responsiveHelper_dt_derivadas.createExpandIcon(nRow);
         },
         drawCallback: function (oSettings) {
-            responsiveHelper_dt_impagos.respond();
+            responsiveHelper_dt_derivadas.respond();
         },
         language: {
             processing: "Procesando...",
@@ -132,7 +132,7 @@ function initTablaImpagos() {
             paginate: { first: "Primero", previous: "Anterior", next: "Siguiente", last: "Último" },
             aria: { sortAscending: ": Activar para ordenar ascendente", sortDescending: ": Activar para ordenar descendente" }
         },
-        data: dataImpagos,
+        data: dataDerivadas,
         columns: [
             {
                 data: "facturaId", render: function (data) {
@@ -145,14 +145,13 @@ function initTablaImpagos() {
             { data: "dirTrabajo" },
             { data: "vNum" },
             { data: "fecha", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
-            { data: "diasDesdeVencimiento" },
             { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPago" },
             { data: "observaciones" },
             {
                 data: "facturaId", render: function (data) {
-                    var bt1 = "<button class='btn btn-circle btn-success' onclick='editImpago(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                    var bt1 = "<button class='btn btn-circle btn-success' onclick='editFactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                     return "<div class='pull-right'>" + bt1 + "</div>";
                 }
             }
@@ -161,8 +160,8 @@ function initTablaImpagos() {
 }
 
 // Carga datos en la tabla
-function loadTablaImpagos(data) {
-    var dt = $('#dt_impagos').dataTable();
+function loadTablaDerivadas(data) {
+    var dt = $('#dt_derivadas').dataTable();
     if (data !== null && data.length === 0) {
         data = null;
     }
@@ -200,15 +199,15 @@ function loadTablaImpagos(data) {
 
 }
 
-// Buscar impagos
-function buscarImpagos() {
+// Buscar derivadas
+function buscarFacturas() {
     return function () {
         if (!datosOK()) return;
 
-        impagosCero = [];
+        derivadasCero = [];
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/facturas/impagos/"
+            url: myconfig.apiUrl + "/api/facturas/derivadas/"
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId() // filtramos por departamento
@@ -218,17 +217,17 @@ function buscarImpagos() {
             contentType: "application/json",
             success: function (data) {
                 if (data && data.length > 0) {
-                    loadTablaImpagos(data);
+                    loadTablaDerivadas(data);
                     $('#checkMain').prop('checked', false);
-                    $('#btnGenerarFacturasRectificativas').show();
+                    $('#btnGenerarFacturasDerivadas').show();
 
                     data.forEach(function (f) {
-                        if (f.total == 0) impagosCero.push(f.vNum);
+                        if (f.total == 0) derivadasCero.push(f.vNum);
                     });
-                    if (impagosCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + impagosCero.join("\n"));
+                    if (derivadasCero.length > 0) mensError("Las siguientes facturas tienen importe a cero:\n" + derivadasCero.join("\n"));
                 } else {
                     mensAlerta("No se han encontrado registros");
-                    loadTablaImpagos(null);
+                    loadTablaDerivadas(null);
                     $('#checkMain').prop('checked', false);
                 }
             },
@@ -237,12 +236,12 @@ function buscarImpagos() {
     };
 }
 
-// Gestionar impagos
-function generarFacturasRectificativas() {
+// Gestionar derivadas
+function generarFacturasDerivadas() {
     return function () {
         $.ajax({
             type: "POST",
-            url: myconfig.apiUrl + "/api/facturas/generar/rectificativas/desde/facturas/"
+            url: myconfig.apiUrl + "/api/facturas/generar/derivadas/desde/facturas/"
                 + spanishDbDate(vm.desdeFecha())
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId() // filtramos por departamento
@@ -252,14 +251,14 @@ function generarFacturasRectificativas() {
             contentType: "application/json",
             success: function (data) {
                 if (data != "OK") {
-                    mensError("Error gestionando impagos: " + JSON.stringify(data));
+                    mensError("Error gestionando derivadas: " + JSON.stringify(data));
                 } else {
-                    mensNormal("Impagos gestionados correctamente");
+                    mensNormal("Derivadas emitidas correctamente");
                     vm.desdeFecha(null);
                     vm.hastaFecha(null);
                     $('#checkMain').prop('checked', false);
-                    $('#btnGenerarFacturasRectificativas').hide();
-                    loadTablaImpagos(null);
+                    $('#btnGenerarFacturasDerivadas').hide();
+                    loadTablaDerivadas(null);
                 }
             },
             error: function (err) { mensErrorAjax(err); }
@@ -270,7 +269,7 @@ function generarFacturasRectificativas() {
 // Checkbox todos
 function updateAll(opcion) {
     var sel = opcion ? 1 : 0;
-    var datos = $('#dt_impagos').dataTable().api().rows({ page: 'current' }).data();
+    var datos = $('#dt_derivadas').dataTable().api().rows({ page: 'current' }).data();
     for (var i = 0; i < datos.length; i++) {
         var dataToUpdate = {
             factura: {
@@ -292,8 +291,8 @@ function updateAll(opcion) {
     }
 }
 
-// Editar impago
-function editImpago(id) {
+
+function editFactura(id) {
     var url = "FacturaDetalle.html?FacturaId=" + id;
     window.open(url, '_new');
 }
