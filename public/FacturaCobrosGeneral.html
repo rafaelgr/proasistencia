@@ -951,6 +951,15 @@
     </div>
     <!-- END PAGE FOOTER -->
     <!--================================================== -->
+    <script>
+        window.paceOptions = {
+            ajax: true,
+            document: true,
+            eventLag: false,
+            restartOnRequestAfter: true,
+            trackWebSockets: false   // 👈 CLAVE
+        };
+    </script>
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
     <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>
     <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
