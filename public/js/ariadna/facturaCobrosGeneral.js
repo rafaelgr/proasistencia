@@ -626,7 +626,7 @@ function cargarFacturas2All(id) {
         if (hFecha == '' || hFecha == undefined) hFecha = null;
         if (hFecha != null) {
             if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            if (!datosOK) return;
+            if (!(datosOK())) return;
         }
         let empid = vm.sempresaId() || 2;
         if (id) {
