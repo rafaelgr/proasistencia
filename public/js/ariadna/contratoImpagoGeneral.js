@@ -68,8 +68,7 @@ function initForm() {
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if (val) {
-            //val = this.value;
-            compruebaFiltros(null);
+            cargarContratos()();
         } else {
             val = this.value;
         }
@@ -241,7 +240,7 @@ function initTablaContratos() {
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [3, 4] },
         ],
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
+        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'B><'col-sm-6 col-xs-6 hidden-xs' 'l C>>" +
             "t" +
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
@@ -468,16 +467,16 @@ function deleteContrato(id) {
 }
 
 function editContrato(id) {
-    var cerrados = $('#chkCerrados').prop('checked');
-    var preaviso = $('#chkPreaviso').prop('checked');
+    var 
     filtros =
     {
-        cerrados: cerrados,
-        preaviso: preaviso
+        dFecha: vm.dFecha(),
+        hFecha: vm.hFecha(),
+        empresaId: vm.sempresaId()
     }
     setCookie("filtro_contratos_impago", JSON.stringify(filtros), 1);
-    var url = "ContratoDetalle.html?ContratoId=" + id;
-    window.open(url, '_new');
+    var url = "ContratoDetalle.html?ContratoId=" + id + "&ConImpago=true";
+    window.open(url, '_self');
 }
 
 function cargarContratos() {

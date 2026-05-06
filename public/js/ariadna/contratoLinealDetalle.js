@@ -45,6 +45,7 @@ var dataDocumentacion;
 var subCarpeta = '';
 var carpetaTipo = null;
 var parent = null;
+var ConImpago;
 
 datePickerSpanish(); // see comun.js
 
@@ -594,7 +595,8 @@ function initForm() {
     dep = gup('dep');
     ContratoId = gup('ContratoId');
     DesdeContrato = gup('DesdeContrato');
-    AscContratoId = gup('AscContratoId')
+    AscContratoId = gup('AscContratoId');
+    ConImpago = gup('ConImpago');
 
     if (cmd) mostrarMensajeEnFuncionDeCmd(cmd);
 
@@ -1266,6 +1268,8 @@ var clicAceptar = function (salir) {
         if (DesdeContrato == "true" && AscContratoId != 0) {
             url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true';
             if (dep == 'arquitectura') url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true&dep=arquitectura';
+        } else if (ConImpago == "true") {
+            url = 'ContratoImpagoGeneral.html?ConservaFiltro=true';
         } else {
             url = "ContratoGeneral.html?ConservaFiltro=true&ContratoId=" + vm.contratoId(); // default PUT
             if (dep == 'arquitectura') url = "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
