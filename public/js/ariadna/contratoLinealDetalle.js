@@ -3768,6 +3768,10 @@ function initTablaPrefacturas(departamentoId) {
                 if (aData.noFacturar) {
                     $(nRow).attr('style', 'background: #cc6c69ff');
                 }
+                 //prefactura rectificativa
+                if (aData.total < 0) {
+                    $(nRow).attr('style', 'background: rgb(175, 161, 216)');
+                }
 
             },
 
@@ -4681,7 +4685,10 @@ function initTablaFacturas() {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "vFac"
+            data: "vFacR"
+        },
+        {
+            data: "vFacD"
         }, {
             data: "vFPago"
         }, {
@@ -4711,8 +4718,9 @@ function initTablaFacturas() {
     tablaFacturas.columns(9).visible(false);
     tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
+    tablaFacturas.columns(12).visible(false);
 
-    tablaFacturas.columns(13).visible(false);
+    tablaFacturas.columns(14).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }

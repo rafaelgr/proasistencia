@@ -1845,16 +1845,46 @@
                                                                             </fieldset>
                                                                         </div>
                                                                         <hr>
-                                                                        <div class="pull-right" style="margin-top: 3%;">
-                                                                            <button id="btnNoFacturable"
-                                                                                title="Marcar facturables/no facturables"
-                                                                                data-toggle="modal"
-                                                                                data-target="#modalFacturarNoFacturar"
-                                                                                onclick="loadModalFacturarNoFacturar()"
-                                                                                class="btn btn-primary btn-circle btn-lg"
-                                                                                style="position: relative;">
-                                                                                <i class="fa fa-file fa-lg"></i>
-                                                                                <i class="fa fa-ban" style="
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-between; align-items: center; margin-top: 3%;">
+                                                                            <!-- Leyenda a la izquierda -->
+                                                                            <div>
+                                                                                <span
+                                                                                    style="background-color: #81F889; color: #81F889;">text</span>
+                                                                                <span>Prefactura facturada</span>
+                                                                                <br>
+
+                                                                                <span
+                                                                                    style="background-color: #cc6c69ff; color: #cc6c69ff;">text</span>
+                                                                                <span>Prefactura no facturable</span>
+                                                                                <br>
+                                                                                <span
+                                                                                    style="background-color: rgb(175, 161, 216); color: rgb(175, 161, 216);">text</span>
+                                                                                <span>Prefactura rectificativa</span>
+                                                                                <br>
+
+                                                                                <!-- <span
+                                                                                    style="background-color: #68ACCD; color: #68ACCD;">text</span>
+                                                                                <span>Letra recibida</span>
+                                                                                <br>
+
+                                                                                <span
+                                                                                    style="background-color: #FFC281; color: #FFC281;">text</span>
+                                                                                <span>Letra en gestión de cobros</span> -->
+                                                                                <br>
+                                                                            </div>
+
+                                                                            <div class="pull-right"
+                                                                                style="margin-top: 3%;">
+                                                                                <button id="btnNoFacturable"
+                                                                                    title="Marcar facturables/no facturables"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#modalFacturarNoFacturar"
+                                                                                    onclick="loadModalFacturarNoFacturar()"
+                                                                                    class="btn btn-primary btn-circle btn-lg"
+                                                                                    style="position: relative;">
+                                                                                    <i class="fa fa-file fa-lg"></i>
+                                                                                    <i class="fa fa-ban" style="
                                                                                         position: absolute;
                                                                                         top: 50%;
                                                                                         left: 50%;
@@ -1862,29 +1892,30 @@
                                                                                         font-size: 1.6em;
                                                                                         color: red;
                                                                                         opacity: 0.8;">
-                                                                                </i>
-                                                                            </button>
-                                                                            <button id="btnAltaRecepcion"
-                                                                                title="Recepcionar letras"
-                                                                                data-toggle="modal"
-                                                                                data-target="#modalGenerarRecepcionGestion"
-                                                                                onclick="prepararRecepcionGestion(true)"
-                                                                                class="btn btn-primary btn-circle btn-lg obras">
-                                                                                <i class="fa fa-lg fa-file"></i>
-                                                                            </button>
-                                                                            <button id="btnAltaGestionCobros"
-                                                                                title="Poner en gestión de cobros"
-                                                                                data-toggle="modal"
-                                                                                data-target="#modalGenerarRecepcionGestion"
-                                                                                onclick="prepararRecepcionGestion(false)"
-                                                                                class="btn btn-seconday btn-circle btn-lg obras">
-                                                                                <i class="fa fa-lg fa-clipboard"></i>
-                                                                            </button>
-                                                                            <button id="btnAltaPrefactura"
-                                                                                title="Crear nuevo registro"
-                                                                                class="btn btn-success btn-circle btn-lg">
-                                                                                <i class="fa fa-lg fa-plus"></i>
-                                                                            </button>
+                                                                                    </i>
+                                                                                </button>
+                                                                                <button id="btnAlta" title="ar letras"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#modalGenerarRecepcionGestion"
+                                                                                    onclick="prepararRecepcionGestion(true)"
+                                                                                    class="btn btn-primary btn-circle btn-lg obras">
+                                                                                    <i class="fa fa-lg fa-file"></i>
+                                                                                </button>
+                                                                                <button id="btnAltaGestionCobros"
+                                                                                    title="Poner en gestión de cobros"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#modalGenerarRecepcionGestion"
+                                                                                    onclick="prepararRecepcionGestion(false)"
+                                                                                    class="btn btn-seconday btn-circle btn-lg obras">
+                                                                                    <i
+                                                                                        class="fa fa-lg fa-clipboard"></i>
+                                                                                </button>
+                                                                                <button id="btnAltaPrefactura"
+                                                                                    title="Crear nuevo registro"
+                                                                                    class="btn btn-success btn-circle btn-lg">
+                                                                                    <i class="fa fa-lg fa-plus"></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                     </fieldset>
                                                                 </form>
@@ -1959,8 +1990,10 @@
 
                                                                                 <th data-hide="phone">Observaciones</th>
 
-                                                                                <th data-hide="phone">Rectificativa</th>
-                                                                                <th data-hide="phone">Derivada</th>
+                                                                                <th data-hide="phone">Factura
+                                                                                    rectificativa</th>
+                                                                                <th data-hide="phone">Factura derivada
+                                                                                </th>
 
                                                                                 <th data-hide="phone">Estado
                                                                                 </th>
@@ -2116,6 +2149,11 @@
                                                                                         class="form-control"
                                                                                         placeholder="" />
                                                                                 </th>
+                                                                                <th class="hasinput">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="" />
+                                                                                </th>
                                                                                 <th style="width:10%">
                                                                                 </th>
                                                                             </tr>
@@ -2155,7 +2193,10 @@
                                                                                     Resto a cobrar
                                                                                 </th>
                                                                                 <th data-hide="phone">
-                                                                                    Factura asociada
+                                                                                    Factura rectificativa
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Factura derivada
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Forma de pago
@@ -2173,6 +2214,7 @@
                                                                             <tr>
                                                                                 <th colspan="6"
                                                                                     style="text-align:right">Total:</th>
+                                                                                <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
                                                                                 <th></th>

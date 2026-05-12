@@ -2684,6 +2684,10 @@
                                                                                     style="background-color: #cc6c69ff; color: #cc6c69ff;">text</span>
                                                                                 <span>Prefactura no facturable</span>
                                                                                 <br>
+                                                                                <span
+                                                                                    style="background-color: rgb(175, 161, 216); color: rgb(175, 161, 216);">text</span>
+                                                                                <span>Prefactura rectificativa</span>
+                                                                                <br>
 
                                                                                 <span
                                                                                     style="background-color: #68ACCD; color: #68ACCD;">text</span>
@@ -2817,8 +2821,10 @@
 
                                                                                 <th data-hide="phone">Observaciones</th>
 
-                                                                                <th data-hide="phone">Rectificativa</th>
-                                                                                <th data-hide="phone">Derivada</th>
+                                                                                <th data-hide="phone">Factura
+                                                                                    rectificativa</th>
+                                                                                <th data-hide="phone">Factura derivada
+                                                                                </th>
                                                                                 <th data-hide="phone">Estado
                                                                                 </th>
 
@@ -2971,6 +2977,11 @@
                                                                                         class="form-control"
                                                                                         placeholder="" />
                                                                                 </th>
+                                                                                <th class="hasinput">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="" />
+                                                                                </th>
                                                                                 <th style="width:10%">
                                                                                 </th>
                                                                             </tr>
@@ -3010,7 +3021,10 @@
                                                                                     Resto a cobrar
                                                                                 </th>
                                                                                 <th data-hide="phone">
-                                                                                    Factura asociada
+                                                                                    Factura rectificativa
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Factura derivada
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Forma de pago
@@ -3028,6 +3042,7 @@
                                                                             <tr>
                                                                                 <th colspan="6"
                                                                                     style="text-align:right">Total:</th>
+                                                                                <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
@@ -5782,7 +5797,8 @@
                             <section>
                                 <label class="label">Texto</label>
                                 <label class="textarea">
-                                    <textarea id="txtTextoNota" name="textoNota" class="custom-scroll" rows="6" data-bind="value: textoNota"></textarea>
+                                    <textarea id="txtTextoNota" name="textoNota" class="custom-scroll" rows="6"
+                                        data-bind="value: textoNota"></textarea>
                                 </label>
                             </section>
 

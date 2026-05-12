@@ -371,11 +371,12 @@
                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
-                                   <li>
+                                <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
-                                 <li>
-                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos con impagos</a>
+                                <li>
+                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
+                                        Contratos con impagos</a>
                                 </li>
                                 <li>
                                     <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
@@ -728,6 +729,34 @@
 
                                     </div>
 
+                                    <div class="row" style="margin-bottom:10px;">
+                                        <div class="col-xs-12">
+
+                                            <span class="label label-default" style="margin-right:5px;">
+                                                PENDIENTE
+                                            </span>
+                                            Sin cobros ni devoluciones
+
+                                            <span class="label label-warning"
+                                                style="margin-left:15px; margin-right:5px;">
+                                                PARCIAL
+                                            </span>
+                                            Cobrado/devuelto parcialmente
+
+                                            <span class="label label-success"
+                                                style="margin-left:15px; margin-right:5px;">
+                                                COBRADO
+                                            </span>
+                                            Factura liquidada
+
+                                            <span class="label label-danger"
+                                                style="margin-left:15px; margin-right:5px;">
+                                                DEVUELTO
+                                            </span>
+                                            Factura devuelta
+
+                                        </div>
+                                    </div>
                                     <div id="tbFactura">
                                         <table id="dt_factura" class="table table-striped table-bordered table-hover"
                                             width="100%">
@@ -838,7 +867,7 @@
                                                         Base
                                                     </th>
                                                     <th data-hide="phone">
-                                                        Total
+                                                        Total factura
                                                     </th>
                                                     <th data-hide="phone">
                                                         Cobrado

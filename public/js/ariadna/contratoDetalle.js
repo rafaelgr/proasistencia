@@ -4038,6 +4038,10 @@ function initTablaPrefacturas(departamentoId) {
                 if (aData.noFacturar) {
                     $(nRow).attr('style', 'background: #cc6c69ff');
                 }
+                //prefactura rectificativa
+                if (aData.total < 0) {
+                    $(nRow).attr('style', 'background: rgb(175, 161, 216)');
+                }
 
             },
 
@@ -4969,7 +4973,10 @@ function initTablaFacturas() {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "vFac"
+            data: "vFacR"
+        },
+         {
+            data: "vFacD"
         }, {
             data: "vFPago"
         }, {
@@ -4999,8 +5006,9 @@ function initTablaFacturas() {
     tablaFacturas.columns(9).visible(false);
     tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
+    tablaFacturas.columns(12).visible(false);
 
-    tablaFacturas.columns(13).visible(false);
+    tablaFacturas.columns(14).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }
@@ -10525,7 +10533,8 @@ function initTablaPrefacturasTemp(departamentoId) {
         },
         fnCreatedRow: function (nRow, aData) {
             // Estilos por estado
-            if (aData.facturaId) $(nRow).css('background', '#81F889'); // registro facturado
+            if (aData.total < 0) $(nRow).css('background', 'rgb(175, 161, 216)'); // rectificativa
+            else if (aData.facturaId) $(nRow).css('background', '#81F889'); // registro facturado
             else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
             else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
             else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable

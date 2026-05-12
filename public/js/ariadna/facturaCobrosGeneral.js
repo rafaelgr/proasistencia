@@ -100,6 +100,12 @@ function initForm() {
 
     $("#cmbEmpresas").select2(select2Spanish());
 
+    $('#cmbEmpresas').on('change', function (e) {
+
+        if (e.added) cambioEmpresa(e.added.id);
+
+    });
+
 
     // de smart admin
     pageSetUp();
@@ -773,4 +779,9 @@ function calcularResumen(data) {
     $('#totalCobrado').text(numeral(totalCobrado).format('0,0.00') + ' €');
     $('#totalPendiente').text(numeral(totalPendiente).format('0,0.00') + ' €');
     $('#totalDevuelto').text(numeral(totalDevuelto).format('0,0.00') + ' €');
+}
+
+function cambioEmpresa(empresaId) {
+    if (!empresaId) return;
+    buscarFacturas()();
 }
