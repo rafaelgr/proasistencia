@@ -37,20 +37,36 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
 
+    // fechas por defecto
+    vm.desdeFecha(moment().startOf('year').format('DD/MM/YYYY'));
+    vm.hastaFecha(moment().format('DD/MM/YYYY'));
+
     // Recuperamos los departamentos de trabajo
     recuperaDepartamento(function (err, data) {
         if (err) return;
         vm.posiblesDepartamentos(data);
         $("#cmbDepartamentosTrabajo").select2(select2Spanish());
         $("#cmbEmpresas").select2(select2Spanish());
-        loadEmpresas(null);
+
+
+        loadEmpresas(2);
         initTablaRectificativas();
+
+        // búsqueda automática al entrar
+        setTimeout(function () {
+            buscarRectificativas()();
+        }, 300);
+
 
     });
 
     $('#btnBuscarRectificativas').click(buscarRectificativas());
     $('#btnGenerarFacturasRectificativas').click(generarFacturasRectificativas());
     $('#frmBuscarRectificativas').submit(function () { return false; });
+
+    $('#chkSoloDevueltas').change(function () {
+        buscarRectificativas()();
+    });
 
     $("#checkMain").click(function (e) {
         if ($('#checkMain').prop('checked')) {
@@ -121,6 +137,18 @@ function initTablaRectificativas() {
         drawCallback: function (oSettings) {
             responsiveHelper_dt_rectificativas.respond();
         },
+        createdRow: function (row, data) {
+            if (data.superaLimiteDias == 1) {
+                $(row).find('td').css({
+                    'background-color': '#f8d7da',
+                    'font-weight': 'bold'
+                });
+            } else if (data.tieneDevolucion == 1) {
+                $(row).find('td').css({
+                    'background-color': '#fff8e1'
+                });
+            }
+        },
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -148,7 +176,7 @@ function initTablaRectificativas() {
             { data: "diasDesdeVencimiento" },
             { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
-            { data: "totalImpagado", render: function (data) { return numeral(data).format('0,0.00'); } },
+            { data: "totalDevuelto", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPago" },
             { data: "observaciones" },
             {
@@ -218,7 +246,8 @@ function buscarRectificativas() {
                 + "/" + spanishDbDate(vm.hastaFecha())
                 + "/" + vm.sdepartamentoId()
                 + "/" + usuario.usuarioId
-                + "/" + vm.sempresaId(),
+                + "/" + vm.sempresaId()
+                + "/" + ($('#chkSoloDevueltas').prop('checked') ? 1 : 0),
             dataType: "json",
             contentType: "application/json",
 
