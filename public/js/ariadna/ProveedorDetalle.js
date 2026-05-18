@@ -122,7 +122,7 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
     $("#cmbPaises").select2(select2Spanish());
-    loadPaises();
+    loadPaises(66);
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
@@ -878,13 +878,12 @@ function aceptar(salir) {
 
         var verb = "POST";
         var url = myconfig.apiUrl + "/api/proveedores";
-        var returnUrl = "ProveedoresGeneral.html?cmd=nuevo&ProveedorId=";
+        var returnUrl = "ProveedoresGeneral.html?ProveedorId=";
 
         // caso modificación
         if (proId != 0) {
             verb = "PUT";
             url = myconfig.apiUrl + "/api/proveedores/" + proId;
-            "ProveedoresGeneral.html?ProveedorId=" + proId;
         }
         $.ajax({
             type: verb,
@@ -894,7 +893,13 @@ function aceptar(salir) {
             data: JSON.stringify(data),
             success: function (data, status) {
                 if (salir) {
-                    window.open(returnUrl, '_self');
+                    if (verb == 'POST') {
+                        returnUrl = returnUrl  + data.proveedorId;
+                        window.open(returnUrl, '_self');
+                    } else {
+                         window.open(returnUrl + data.proveedorId, '_self');
+                    }
+
                 } else {
                     if (verb == 'POST') {
                         returnUrl = "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;

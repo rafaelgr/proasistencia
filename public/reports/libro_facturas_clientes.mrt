@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "8a8a75dafe60247dd8e66f24a3351b0f",
+  "ReportGuid": "66677fb9a71bf48c84f2ce785f7f453b",
   "ReportName": "FacturasClientes",
   "ReportAlias": "FacturasClientes",
   "ReportFile": "libro_facturas_clientes.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1769169952000+0100)/",
+  "ReportChanged": "/Date(1779096089000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -70,7 +70,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text16",
-              "ClientRectangle": "18,0.2,9.4,0.6",
+              "ClientRectangle": "12.2,0.2,15.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
