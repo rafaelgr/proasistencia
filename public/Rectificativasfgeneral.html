@@ -335,11 +335,12 @@
                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
-                                   <li>
+                                <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
-                                 <li>
-                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos con impagos</a>
+                                <li>
+                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
+                                        Contratos con impagos</a>
                                 </li>
                                 <li>
                                     <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
@@ -369,11 +370,8 @@
                                     <a href="SelectPrefacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Emitir
                                         facturas</a>
                                 </li>
-                                    <li>
-                                    <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
-                                </li>
                                 <li>
-                                    <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i> Facturas con cobros</a>
+                                    <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
                                 <li>
                                     <a href="AnticipoClienteGeneral.html"><i class="fa fa-money"></i> Anticipos
@@ -454,20 +452,21 @@
                                 </li>
                             </ul>
                         </li>
-                            <li id="rectificativas">
-                            <a href="#"><i class="fa fa-fw fa-warning"></i> Rectificativas</a>
+
+                        <li id="cobros">
+                            <a href="#"><i class="fa fa-fw fa-eur"></i> Gestión de cobros</a>
                             <ul>
                                 <li>
-                                    <a href="RectificativasfGeneral.html"><i class="fa fa-fw fa-exclamation-triangle"></i>
-                                       Generar facturas rectificativas</a>
+                                    <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i>
+                                        Estado de facturas</a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li id="derivadas">
-                            <a href="#"><i class="fa fa-fw fa-warning"></i> Derivadas</a>
-                            <ul>
                                 <li>
-                                    <a href="Derivadasfgeneral.html"><i class="fa fa-fw fa-exclamation-triangle"></i>
+                                    <a href="RectificativasfGeneral.html"><i
+                                            class="fa fa-fw fa-exclamation-triangle"></i>
+                                        Generar facturas rectificativas</a>
+                                </li>
+                                <li>
+                                    <a href="Derivadasfgeneral.html"><i class="fa fa-fw fa-level-up"></i>
                                         Generar facturas derivadas</a>
                                 </li>
                             </ul>
@@ -609,15 +608,25 @@
                                                 <section class="col col-md-6">
                                                     <label class="label">Empresa</label>
                                                     <label style="width:100%;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas"
+                                                            data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-md-6">
+                                                <section class="col col-md-3">
                                                     <label class="label">Departamento</label>
                                                     <label style="width:100%;">
                                                         <select style="width:100%" id="cmbDepartamentosTrabajo"
                                                             name="cmbDepartamentosTrabajo"
                                                             data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                                    </label>
+                                                </section>
+                                                 <section class="col col-md-1">
+                                                    
+                                                </section>
+                                                <section class="col col-md-2" style="margin-top: 2%;" >
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" id="chkSoloDevueltas" checked>
+                                                        <i></i>Ver solo facturas devueltas
                                                     </label>
                                                 </section>
                                             </div>
@@ -627,7 +636,8 @@
                                         <fieldset>
                                             <div class="pull-right">
 
-                                                <button id="btnBuscarRectificativas" title="Buscar Rectificativas" class="btn btn-primary btn-circle btn-lg">
+                                                <button id="btnBuscarRectificativas" title="Buscar facturas"
+                                                    class="btn btn-primary btn-circle btn-lg">
                                                     <i class="fa fa-search"></i>
                                                 </button>
 
@@ -664,7 +674,7 @@
                                                 <th>Días desde vencimiento</th>
                                                 <th>Base</th>
                                                 <th>Total</th>
-                                                <th>Total impagado</th>
+                                                <th>Total devuelto</th>
                                                 <th>Forma pago</th>
                                                 <th>Observaciones</th>
                                                 <th></th>

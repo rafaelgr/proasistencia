@@ -20,6 +20,24 @@ var dataindices;
 var usuarioEnEdicion = false;
 var indiceEnEdicion = false;
 var tablaFacturas;
+var ajaxActivos = 0;
+
+$(document).ready(function () {
+    $.ajaxSetup({
+        beforeSend: function () {
+            ajaxActivos++;
+            $("#loadingSpinner").show();
+        },
+        complete: function () {
+            ajaxActivos--;
+
+            if (ajaxActivos <= 0) {
+                ajaxActivos = 0;
+                $("#loadingSpinner").hide();
+            }
+        }
+    });
+});
 
 
 datePickerSpanish(); // see comun.js
@@ -104,7 +122,7 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     loadDepartamentos();
     $("#cmbPaises").select2(select2Spanish());
-    loadPaises();
+    loadPaises(66);
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
 
@@ -114,29 +132,7 @@ function initForm() {
         cambioTipoProveedor(e.added);
     });
 
-    /* $("#txtNif").on('change', function (e) {
-        var nif = $("#txtNif").val();
-        if(!nif || nif == "") return;
 
-        var nif = $("#txtNif").val();
-        if(nif != "") {
-            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
-            $('#txtNif').val(nif);
-
-            var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
-            var esNif = patron.test(nif);
-
-            var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
-            var esCif = patron2.test(nif);
-            if(esNif || esCif) {
-                compruebaNifRepetido(nif);
-            } else {
-                mensError('El nif introducido no tiene un formato valido');
-                compruebaNifRepetido(nif);
-                //$('#txtNif').val('');
-            }
-        }
-    }); */
 
     $(".esNif").on('change', function (e) {
         var origin = e.currentTarget.id;
@@ -673,6 +669,7 @@ function loadData(data) {
     cargaTablaDocumentacion();
 }
 
+
 function obtenInicioCuenta() {
     var codmacta = vm.cuentaContable();
     var inicio = codmacta.substr(0, 2);
@@ -881,13 +878,12 @@ function aceptar(salir) {
 
         var verb = "POST";
         var url = myconfig.apiUrl + "/api/proveedores";
-        var returnUrl = "ProveedoresGeneral.html?cmd=nuevo&ProveedorId=";
+        var returnUrl = "ProveedoresGeneral.html?ProveedorId=";
 
         // caso modificación
         if (proId != 0) {
             verb = "PUT";
             url = myconfig.apiUrl + "/api/proveedores/" + proId;
-            "ProveedoresGeneral.html?ProveedorId=" + proId;
         }
         $.ajax({
             type: verb,
@@ -897,7 +893,13 @@ function aceptar(salir) {
             data: JSON.stringify(data),
             success: function (data, status) {
                 if (salir) {
-                    window.open(returnUrl, '_self');
+                    if (verb == 'POST') {
+                        returnUrl = returnUrl  + data.proveedorId;
+                        window.open(returnUrl, '_self');
+                    } else {
+                         window.open(returnUrl + data.proveedorId, '_self');
+                    }
+
                 } else {
                     if (verb == 'POST') {
                         returnUrl = "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;

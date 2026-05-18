@@ -1,4 +1,6 @@
-﻿/*-------------------------------------------------------------------------- 
+﻿
+
+/*-------------------------------------------------------------------------- 
 contratoDetalle.js
 Funciones js par la página ContratoDetalle.html
 ---------------------------------------------------------------------------*/
@@ -226,6 +228,13 @@ function initForm() {
     });
 
     $("#adicional-form").submit(function () {
+        return false;
+    });
+
+    $("#frmNotasWeb").submit(function () {
+        return false;
+    });
+    $("#notasweb-form").submit(function () {
         return false;
     });
 
@@ -678,6 +687,7 @@ function initForm() {
     initTablaPlanificacionLineasObras();
     initTablaPlanificacionLineasObrasTemp();
     initTablaAdicionales();
+    initTablaNotasWeb();
     //initTablaDocumentacion();
     initArbolDocumentacion();
 
@@ -793,7 +803,8 @@ function initForm() {
             loadContratosCobros(data.contratoId);
             buscaComisionistas(data.contratoId);
             loadAscContratos(data.contratoId);
-            loadFactcolDelContrato(contratoId);
+            loadFactcolDelContrato(data.contratoId);
+            getNotasWebContrato(data.contratoId);
             if (data.tipoContratoId == 8) {
                 $('#labObras').show();
                 $('#labNoObras').hide();
@@ -1207,6 +1218,10 @@ function admData() {
     self.posiblesTrabajosAdicionales = ko.observableArray([]);
     self.elegidosTrabajosAdicionales = ko.observableArray([]);
 
+    self.textoNota = ko.observable();
+    self.accion = ko.observable();
+    self.notaId = ko.observable();
+
 }
 
 function loadData(data) {
@@ -1527,9 +1542,9 @@ var clicAceptar = function (salir) {
         if (DesdeContrato == "true" && AscContratoId != 0) {
             url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true';
             if (dep == 'arquitectura') url = 'ContratoDetalle.html?ContratoId=' + AscContratoId + '&docAsc=true&dep=arquitectura';
-        } else if(ConImpago == "true") {
+        } else if (ConImpago == "true") {
             url = 'ContratoImpagoGeneral.html?ConservaFiltro=true&ContratoId=' + vm.contratoId();
-        } 
+        }
         else {
             url = "ContratoGeneral.html?ConservaFiltro=true&ContratoId=" + vm.contratoId(); // default PUT
             if (dep == 'arquitectura') url = "ContratoArquitecturaGeneral.html?ContratoId=" + vm.contratoId(); // default PUT
@@ -4023,6 +4038,10 @@ function initTablaPrefacturas(departamentoId) {
                 if (aData.noFacturar) {
                     $(nRow).attr('style', 'background: #cc6c69ff');
                 }
+                //prefactura rectificativa
+                if (aData.total < 0) {
+                    $(nRow).attr('style', 'background: rgb(175, 161, 216)');
+                }
 
             },
 
@@ -4954,7 +4973,10 @@ function initTablaFacturas() {
                 return numeral(data).format('0,0.00')
             }
         }, {
-            data: "vFac"
+            data: "vFacR"
+        },
+         {
+            data: "vFacD"
         }, {
             data: "vFPago"
         }, {
@@ -4984,8 +5006,9 @@ function initTablaFacturas() {
     tablaFacturas.columns(9).visible(false);
     tablaFacturas.columns(10).visible(false);
     tablaFacturas.columns(11).visible(false);
+    tablaFacturas.columns(12).visible(false);
 
-    tablaFacturas.columns(13).visible(false);
+    tablaFacturas.columns(14).visible(false);
 
     //tablaFacturas.columns(6).data().sum();
 }
@@ -10510,7 +10533,8 @@ function initTablaPrefacturasTemp(departamentoId) {
         },
         fnCreatedRow: function (nRow, aData) {
             // Estilos por estado
-            if (aData.facturaId) $(nRow).css('background', '#81F889'); // registro facturado
+            if (aData.total < 0) $(nRow).css('background', 'rgb(175, 161, 216)'); // rectificativa
+            else if (aData.facturaId) $(nRow).css('background', '#81F889'); // registro facturado
             else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
             else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
             else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable
@@ -11310,5 +11334,151 @@ function cambioAdicional(id) {
         vm.porcentajePlanificacionTemp(100);
         vm.importeCalculadoPlanificacionTemp(data[0].importe);
         impAdicional = data[0].importe;
+    });
+}
+
+//NOTAS WEB
+
+function initTablaNotasWeb() {
+    tablaCarro = $('#dt_notasweb').dataTable({
+        autoWidth: true,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataComisionistas,
+        columnDefs: [{
+            "width": "20%",
+            "targets": 2
+        }],
+        columns: [{
+            data: "accion"
+        }, {
+            data: "texto"
+        },
+        {
+            data: "usuarioNombre"
+        }, {
+            data: "notaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalNotasWeb' onclick='editNotaWeb(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                var html = "<div class='pull-right'>" + bt1 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function aceptarNotaWeb(id) {
+
+   /*  if (!datosOKLineasConceptos()) {
+        return;
+    } */
+    var data = {
+        nota: {
+            notaId: vm.notaId(),
+            contratoId: vm.contratoId(),
+            accion: vm.accion(),
+            texto: vm.textoNota(),
+            usuarioId: usuario.usuarioId
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/contratos/notasweb/contrato";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/contratos/notasweb/contrato/" + vm.notaId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalNotasWeb').modal('hide');
+        getNotasWebContrato(vm.contratoId());
+    });
+}
+
+function deleteNotaWeb(id) {
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/contratos/notasweb/contrato/" + id, null, function (err, data) {
+            if (err) return;
+            getNotasWebContrato(vm.contratoId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadNotaWeb(data) {
+    vm.notaId(data.notaId);
+    vm.accion(data.accion);
+    vm.textoNota(data.texto);
+    //
+    //loadComerciales(data.comercialId);
+}
+
+function limpiaNotaWeb(data) {
+    vm.notaId(0);
+    vm.accion(null);
+    vm.textoNota(null);
+    //loadComerciales(0);
+}
+
+
+function nuevaNotaWeb() {
+    limpiaNotaWeb(); // es un alta
+    lineaEnEdicion = false;
+}
+
+function loadTablaNotasWeb(data) {
+    var dt = $('#dt_notasweb').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+getNotasWebContrato = function (contratoId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/notasweb/contrato/" + contratoId, null, function (err, data) {
+        if (err) return;
+        loadTablaNotasWeb(data);
+    });
+}
+
+function editNotaWeb(id) {
+    lineaEnEdicion = true;
+    $.ajax({
+        type: "GET",
+        url: "/api/contratos/notasweb-linea/contrato/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                loadNotaWeb(data);
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }

@@ -397,11 +397,12 @@
                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
-                                   <li>
+                                <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
-                                 <li>
-                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos con impagos</a>
+                                <li>
+                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
+                                        Contratos con impagos</a>
                                 </li>
                                 <li>
                                     <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
@@ -431,12 +432,10 @@
                                     <a href="SelectPrefacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Emitir
                                         facturas</a>
                                 </li>
-                                    <li>
+                                <li>
                                     <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
-                                <li>
-                                    <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i> Facturas con cobros</a>
-                                </li>
+                                
                                 <li>
                                     <a href="AnticipoClienteGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         de clientes</a>
@@ -516,13 +515,22 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="rectificativas">
-                            <a href="#"><i class="fa fa-fw fa-warning"></i> Rectificativas</a>
+                        
+                             <li id="cobros">
+                            <a href="#"><i class="fa fa-fw fa-eur"></i> Gestión de cobros</a>
                             <ul>
+                                <li>
+                                    <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i> 
+                                        Estado de facturas</a>
+                                </li>
                                 <li>
                                     <a href="RectificativasfGeneral.html"><i
                                             class="fa fa-fw fa-exclamation-triangle"></i>
-                                        Facturas Impagadas</a>
+                                        Generar facturas rectificativas</a>
+                                </li>
+                                <li>
+                                    <a href="Derivadasfgeneral.html"><i class="fa fa-fw fa-level-up"></i>
+                                        Generar facturas derivadas</a>
                                 </li>
                             </ul>
                         </li>
@@ -693,6 +701,10 @@
                                     <li id="tabDatosCliente">
                                         <a data-toggle="tab" href="#s12"><i class="fa fa-user"></i> <span
                                                 class="hidden-mobile hidden-tablet">Datos cliente</span></a>
+                                    </li>
+                                    <li id="tabNotas">
+                                        <a data-toggle="tab" href="#s16"><i class="fa fa-list-alt"></i> <span
+                                                class="hidden-mobile hidden-tablet">Notas</span></a>
                                     </li>
                                 </ul>
 
@@ -2678,6 +2690,10 @@
                                                                                     style="background-color: #cc6c69ff; color: #cc6c69ff;">text</span>
                                                                                 <span>Prefactura no facturable</span>
                                                                                 <br>
+                                                                                <span
+                                                                                    style="background-color: rgb(175, 161, 216); color: rgb(175, 161, 216);">text</span>
+                                                                                <span>Prefactura rectificativa</span>
+                                                                                <br>
 
                                                                                 <span
                                                                                     style="background-color: #68ACCD; color: #68ACCD;">text</span>
@@ -2811,8 +2827,10 @@
 
                                                                                 <th data-hide="phone">Observaciones</th>
 
-                                                                                <th data-hide="phone">Rectificativa</th>
-                                                                                <th data-hide="phone">Derivada</th>
+                                                                                <th data-hide="phone">Factura
+                                                                                    rectificativa</th>
+                                                                                <th data-hide="phone">Factura derivada
+                                                                                </th>
                                                                                 <th data-hide="phone">Estado
                                                                                 </th>
 
@@ -2965,6 +2983,11 @@
                                                                                         class="form-control"
                                                                                         placeholder="" />
                                                                                 </th>
+                                                                                <th class="hasinput">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="" />
+                                                                                </th>
                                                                                 <th style="width:10%">
                                                                                 </th>
                                                                             </tr>
@@ -3004,7 +3027,10 @@
                                                                                     Resto a cobrar
                                                                                 </th>
                                                                                 <th data-hide="phone">
-                                                                                    Factura asociada
+                                                                                    Factura rectificativa
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Factura derivada
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Forma de pago
@@ -3022,6 +3048,7 @@
                                                                             <tr>
                                                                                 <th colspan="6"
                                                                                     style="text-align:right">Total:</th>
+                                                                                <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
                                                                                 <th></th>
@@ -4290,6 +4317,80 @@
                                             </section>
                                         </div>
                                         <!--FIN TAB RESUMEN-->
+                                        <div class="tab-pane fade" id="s16">
+                                            <!-- TAB (NOTAS) -->
+                                            <div class="row" id="colaboradores">
+                                                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <!-- Widget ID (each widget will need unique ID)-->
+                                                    <div class="jarviswidget" id="wid-id-new-22"
+                                                        data-widget-editbutton="false" data-widget-colorbutton="false"
+                                                        data-widget-deletebutton="false">
+                                                        <header>
+                                                            <span class="widget-icon"> <i class="fa fa-edit"></i>
+                                                            </span>
+                                                            <h2>NOTAS WEB</h2>
+                                                        </header>
+                                                        <!-- widget div-->
+                                                        <div>
+                                                            <!-- widget edit box -->
+                                                            <div class="jarviswidget-editbox">
+                                                                <!-- This area used as dropdown edit box -->
+                                                                <input class="form-control" type="text">
+                                                            </div>
+                                                            <!-- end widget edit box -->
+                                                            <!-- widget content -->
+                                                            <div class="widget-body">
+                                                                <!-- this is what the user will see -->
+                                                                <header>
+                                                                    Notas web del contrato
+                                                                </header>
+                                                                <form id="frmNotasWeb">
+                                                                    <fieldset>
+                                                                        <div class="pull-right">
+                                                                            <button id="btnNuevaNotaWeb"
+                                                                                title="Nueva nota web"
+                                                                                data-toggle="modal"
+                                                                                data-target="#modalNotasWeb"
+                                                                                onclick="nuevaNotaWeb()"
+                                                                                class="btn btn-success btn-circle btn-lg">
+                                                                                <i class="fa fa-lg fa-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </form>
+                                                                <hr />
+                                                                <div id="tbNotasWeb">
+                                                                    <table id="dt_notasweb"
+                                                                        class="table table-striped table-bordered table-hover"
+                                                                        width="100%">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th data-class="expand">
+                                                                                    <i
+                                                                                        class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Acción
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Texto
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Usuario
+                                                                                </th>
+                                                                                <th>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <!-- end widget content -->
+                                                        </div>
+                                                        <!-- end widget div -->
+                                                    </div>
+                                                    <!-- end widget -->
+                                                </article>
+                                                <!-- WIDGET END -->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -5667,6 +5768,66 @@
         <!-- /.modal-dialog -->
     </div>
     <!--End modal-->
+    <!--MODAL NOTAS WEB-->
+    <div class="modal fade" id="modalNotasWeb" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">NOTA</h4>
+                </div>
+
+                <div class="modal-body no-padding">
+                    <form id="notasweb-form" class="smart-form">
+
+                        <fieldset>
+
+                            <section>
+                                <div class="row">
+
+                                    <!-- Acción -->
+                                    <section class="col col-md-12">
+                                        <label class="label">Acción</label>
+                                        <label class="input">
+                                            <input id="txtAccion" name="accion" type="text" maxlength="255"
+                                                data-bind="value: accion">
+                                        </label>
+                                    </section>
+
+                                </div>
+                            </section>
+
+                            <section>
+                                <label class="label">Texto</label>
+                                <label class="textarea">
+                                    <textarea id="txtTextoNota" name="textoNota" class="custom-scroll" rows="6"
+                                        data-bind="value: textoNota"></textarea>
+                                </label>
+                            </section>
+
+                        </fieldset>
+
+                        <footer>
+                            <button id="btnAceptarNota" type="button" class="btn btn-primary"
+                                onclick="aceptarNotaWeb()">
+                                Aceptar
+                            </button>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

@@ -148,6 +148,8 @@ function initTablaDerivadas() {
             { data: "total", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "totalConIva", render: function (data) { return numeral(data).format('0,0.00'); } },
             { data: "formaPago" },
+             { data: "vNumRectificativa" },
+            { data: "fechaRectificativa", render: function (data) { return moment(data).format('DD/MM/YYYY'); } },
             { data: "observaciones" },
             {
                 data: "facturaId", render: function (data) {

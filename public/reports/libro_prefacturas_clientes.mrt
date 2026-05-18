@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "8907a27975b359d664e203322b16a7a7",
+  "ReportGuid": "0d4ce0b81ae3aff817c975322bde3333",
   "ReportName": "PrefacturasClientes",
   "ReportAlias": "PrefacturasClientes",
   "ReportFile": "libro_prefacturas_clientes.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1769169917000+0100)/",
+  "ReportChanged": "/Date(1779095974000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -70,7 +70,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text16",
-              "ClientRectangle": "18,0.2,9.4,0.6",
+              "ClientRectangle": "13.8,0.2,13.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },

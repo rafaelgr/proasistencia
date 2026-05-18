@@ -371,11 +371,12 @@
                         <li id="contratos">
                             <a href="#"><i class="fa fa-fw fa-files-o"></i> Contratos clientes</a>
                             <ul>
-                                   <li>
+                                <li>
                                     <a href="ContratoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos</a>
                                 </li>
-                                 <li>
-                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i> Contratos con impagos</a>
+                                <li>
+                                    <a href="ContratoImpagoGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
+                                        Contratos con impagos</a>
                                 </li>
                                 <li>
                                     <a href="ContratoArquitecturaGeneral.html"><i class="fa fa-fw fa-file-text-o"></i>
@@ -408,10 +409,7 @@
                                 <li>
                                     <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
-                                <li>
-                                    <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i> Facturas
-                                        con cobros</a>
-                                </li>
+                                
                                 <li>
                                     <a href="AnticipoClienteGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         de clientes</a>
@@ -491,21 +489,22 @@
                                 </li>
                             </ul>
                         </li>
-                        <li id="rectificativas">
-                            <a href="#"><i class="fa fa-fw fa-warning"></i> Rectificativas</a>
+                        
+                        
+                             <li id="cobros">
+                            <a href="#"><i class="fa fa-fw fa-eur"></i> Gestión de cobros</a>
                             <ul>
+                                <li>
+                                    <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i> 
+                                        Estado de facturas</a>
+                                </li>
                                 <li>
                                     <a href="RectificativasfGeneral.html"><i
                                             class="fa fa-fw fa-exclamation-triangle"></i>
-                                        Facturas Impagadas</a>
+                                        Generar facturas rectificativas</a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li id="derivadas">
-                            <a href="#"><i class="fa fa-fw fa-warning"></i> Derivadas</a>
-                            <ul>
                                 <li>
-                                    <a href="Derivadasfgeneral.html"><i class="fa fa-fw fa-exclamation-triangle"></i>
+                                    <a href="Derivadasfgeneral.html"><i class="fa fa-fw fa-level-up"></i>
                                         Generar facturas derivadas</a>
                                 </li>
                             </ul>
@@ -581,8 +580,8 @@
             <ol class="breadcrumb">
                 <li>Inicio</li>
                 <li>Gestión</li>
-                <li>Facturación</li>
-                <li>Facturas con cobros</li>
+                <li>Gestión de cobros</li>
+                <li>Estado de facturas</li>
             </ol>
             <!-- end breadcrumb -->
             <!-- You can also add more buttons to the
@@ -605,7 +604,7 @@
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                     <h1 class="page-title txt-color-blueDark">
                         <!-- PAGE HEADER -->
-                        <i class="fa-fw fa fa-th-list"></i> Facturas con cobros<a href="#" title="Ayuda"><i
+                        <i class="fa-fw fa fa-th-list"></i> Estado de facturas<a href="#" title="Ayuda"><i
                                 class="fa fa-question"></i></a>
                     </h1>
                 </div>
@@ -630,7 +629,7 @@
                             data-widget-colorbutton="false" data-widget-deletebutton="false">
                             <header>
                                 <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-                                <h2>Mantenimiento facturas con cobros</h2>
+                                <h2>Mantenimiento estado de facturas</h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -728,6 +727,34 @@
 
                                     </div>
 
+                                    <div class="row" style="margin-bottom:10px;">
+                                        <div class="col-xs-12">
+
+                                            <span class="label label-default" style="margin-right:5px;">
+                                                PENDIENTE
+                                            </span>
+                                            Sin cobros ni devoluciones
+
+                                            <span class="label label-warning"
+                                                style="margin-left:15px; margin-right:5px;">
+                                                PARCIAL
+                                            </span>
+                                            Cobrado/devuelto parcialmente
+
+                                            <span class="label label-success"
+                                                style="margin-left:15px; margin-right:5px;">
+                                                COBRADO
+                                            </span>
+                                            Factura liquidada
+
+                                            <span class="label label-danger"
+                                                style="margin-left:15px; margin-right:5px;">
+                                                DEVUELTO
+                                            </span>
+                                            Factura devuelta
+
+                                        </div>
+                                    </div>
                                     <div id="tbFactura">
                                         <table id="dt_factura" class="table table-striped table-bordered table-hover"
                                             width="100%">
@@ -838,7 +865,7 @@
                                                         Base
                                                     </th>
                                                     <th data-hide="phone">
-                                                        Total
+                                                        Total factura
                                                     </th>
                                                     <th data-hide="phone">
                                                         Cobrado
