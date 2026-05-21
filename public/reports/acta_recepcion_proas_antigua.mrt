@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "14f8c634001ffd6a8b257e2702255a54",
+  "ReportGuid": "ddc7eebee5f5faad0de5e0ff4b87b1a8",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779365778000+0200)/",
+  "ReportChanged": "/Date(1779364574000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -61,7 +61,7 @@
         "Ident": "StiInteraction"
       },
       "Border": ";;2;;;;;solid:Black",
-      "Brush": "solid:255,255,255",
+      "Brush": "solid:",
       "Components": {
         "0": {
           "Ident": "StiPageFooterBand",
@@ -89,11 +89,10 @@
               "Text": {
                 "Value": "{PageNumberThrough}"
               },
-              "HorAlignment": "Right",
               "Font": "Tahoma;;;",
-              "Border": ";;;;;;;solid:255,255,255",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:120,120,120",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           }
@@ -115,7 +114,7 @@
               "Ident": "StiText",
               "Name": "Text2",
               "Guid": "7758662f4bf32e1eefbb5562b1b8fd76",
-              "ClientRectangle": "10.8,0.25,4.4,0.45",
+              "ClientRectangle": "10.8,0.42,4.2,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -127,41 +126,17 @@
               "Text": {
                 "Value": "POR LA  PROPIEDAD"
               },
-              "HorAlignment": "Center",
               "Font": "Tahoma;9;Bold;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
-              "Name": "Text7",
-              "Guid": "07c0c5a3ddb1404add8e5457690f23c7",
-              "ClientRectangle": "1.4,0.25,4.4,0.45",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "POR LA CONTRATA"
-              },
-              "HorAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
               "Name": "Text5",
-              "Guid": "5e2dcb0c5b3996aaf3f5b1468c98c353",
-              "ClientRectangle": "10.8,2.48,5.8,0.4",
+              "Guid": "2e60cc94803cec0515a72c1ba22a9b5b",
+              "ClientRectangle": "10.8,3.02,5.8,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -179,11 +154,11 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "3": {
+            "2": {
               "Ident": "StiText",
               "Name": "Text6",
-              "Guid": "7ba98aeb7fa27d47a1c8392af1a53e05",
-              "ClientRectangle": "1.4,2.48,6.2,0.4",
+              "Guid": "3a3e0199b7fea2a080752eb076e4fd47",
+              "ClientRectangle": "1.4,3.02,6.2,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -196,6 +171,28 @@
                 "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
               },
               "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text7",
+              "Guid": "07c0c5a3ddb1404add8e5457690f23c7",
+              "ClientRectangle": "1.4,0.3,3.4,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "POR LA CONTRATA"
+              },
+              "Font": "Tahoma;9;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -216,7 +213,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text20",
-              "ClientRectangle": "3.2,0.05,11.6,0.75",
+              "ClientRectangle": "6,0,6.2,0.6",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -226,20 +223,19 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<font size=\"14\"><b>ACTA DE RECEPCIÓN DE OBRA</b></font>"
+                "Value": "<font size=\"10\"><u>ACTA DE RECEPCIÓN DE OBRA</u></font>"
               },
-              "HorAlignment": "Center",
-              "Font": "Tahoma;14;Bold;",
-              "Border": ";;;;;;;solid:31,78,121",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Font": "Tahoma;9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "AllowHtmlTags": true,
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
               "Name": "Text18",
-              "ClientRectangle": "0.2,0.95,17.4,0.95",
+              "ClientRectangle": "0,0.6,17.8,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -248,16 +244,16 @@
               },
               "HorAlignment": "Right",
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
               "AllowHtmlTags": true,
               "Type": "Expression"
             },
             "2": {
               "Ident": "StiText",
               "Name": "Text8",
-              "ClientRectangle": "0.35,2.05,17.2,3",
+              "ClientRectangle": "0,1.6,17.6,3.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -266,10 +262,10 @@
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:252,252,252",
-              "TextBrush": "solid:45,45,45",
-              "LineSpacing": 1.15,
+              "Border": ";;;;;;;solid:0,0,0",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "LineSpacing": 1.1,
               "Type": "Expression"
             }
           },
@@ -294,7 +290,7 @@
               "Guid": "addfb712441346fa51609fa6fdf30a40",
               "CanShrink": true,
               "MinSize": "0,0.1",
-              "ClientRectangle": "0.35,0.05,17.2,0.55",
+              "ClientRectangle": "0.2,0,17.6,0.6",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -306,11 +302,10 @@
               "Text": {
                 "Value": "Factura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA"
               },
-              "HorAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
-              "Border": ";;;;;;;solid:31,78,121",
-              "Brush": "solid:232,241,250",
-              "TextBrush": "solid:31,78,121",
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "LineSpacing": 1.2,
               "Type": "Expression"
             }
@@ -369,7 +364,7 @@
               "Guid": "93699d6da3596b95e4daa82b98c6a1cd",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0.35,0.05,17.2,0.5",
+              "ClientRectangle": "0.2,0.15,17.8,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -378,9 +373,9 @@
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:220,220,220",
+              "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
-              "TextBrush": "solid:55,55,55",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -390,7 +385,7 @@
                 "Top": 0,
                 "Bottom": 0
               },
-              "LineSpacing": 1.15,
+              "LineSpacing": 1.2,
               "Type": "Expression"
             }
           },
@@ -416,7 +411,7 @@
               "Ident": "StiText",
               "Name": "Text1",
               "Guid": "1624098b3cd0433ddca940db75cd7a98",
-              "ClientRectangle": "0.35,0.1,17.2,0.5",
+              "ClientRectangle": "0,0.25,2,0.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -428,17 +423,17 @@
               "Text": {
                 "Value": "REUNIDOS\n"
               },
-              "Font": "Tahoma;10;Bold;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Font": "Tahoma;9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "Type": "Expression"
             },
             "1": {
               "Ident": "StiText",
               "Name": "Text14",
               "Guid": "2bfb2bdc5712a317373a238b8248cfc2",
-              "ClientRectangle": "9.15,0.75,8.45,2.85",
+              "ClientRectangle": "9.2,0.85,8.6,2.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -452,9 +447,9 @@
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:252,252,252",
-              "TextBrush": "solid:45,45,45",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -466,7 +461,7 @@
               "Ident": "StiText",
               "Name": "Text15",
               "Guid": "9bc9cb0d9ff1405720eea90877410a77",
-              "ClientRectangle": "0.35,0.75,8.45,2.85",
+              "ClientRectangle": "0,0.85,9,2.8",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -480,9 +475,9 @@
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:205,214,224",
-              "Brush": "solid:252,252,252",
-              "TextBrush": "solid:45,45,45",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -527,9 +522,9 @@
                 "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"9\">\n    <font face=\"Tahoma\">\n      Reunidos en Madrid, la empresa adjudicataria de las obras y la propiedad de la finca de referencia, para dar&nbsp;\n    </font>\n    <span style=\"font-family: Tahoma;\">\n      cumplimiento a lo dispuesto en el contrato suscrito por ambas partes, una vez finalizadas las mismas, recorrido a su&nbsp;\n    </span>\n    <span style=\"font-family: Tahoma;\">\n      ámbito de actuación para comprobar su terminación y en base al seguimiento realizado durante su ejecución.</span></font></div>\n</div>\n\n"
               },
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -573,9 +568,9 @@
                 "Value": "<div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"9\">\n  \n  <div>ACUERDAN:</div>\n\n  <ol>\n    <li>\n      Que los trabajos realizados del presupuesto de referencia, ascienden al importe de la certificación final indicada en el encabezamiento de este documento, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad señalada en el encabezamiento mediante la forma de abono indicada.</li></ol>\n\n</font></div>"
               },
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -620,9 +615,9 @@
                 "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><div style=\"line-height: 1.1;\"><font size=\"9\"><ol start=\"2\"><li><font face=\"Tahoma\">Que las obras se han realizado de acuerdo con el contrato de ejecución de obras y del buen hacer de la construcción.</font></li></ol></font></div></div>\n</div>\n\n"
               },
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -667,9 +662,9 @@
                 "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><div style=\"line-height: 1.1;\"><font size=\"9\"><ol start=\"3\"><li><font face=\"Tahoma\">Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de desecho, en el ámbito de las obras.</font></li></ol></font></div></div>\n</div>\n\n"
               },
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -701,7 +696,7 @@
               "Ident": "StiText",
               "Name": "Text16",
               "Guid": "56cbe7bcba923393453e8a8e90daaffd",
-              "ClientRectangle": "0.35,-0.05,17.2,0.85",
+              "ClientRectangle": "0.2,-0.05,17.6,0.8",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -711,12 +706,12 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.2; text-align: justify;\"><font size=\"9\"><ol start=\"4\"><li>Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</li></ol></font></div>"
+                "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><div style=\"line-height: 1.1;\"><font size=\"9\"><ol start=\"4\"><li>Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</li></ol><div><ol start=\"3\"><li><font face=\"Tahoma\"><div style=\"line-height: 1.1;\"><font size=\"9\"><div><font face=\"Tahoma\">En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de:</font></div><div><font face=\"Tahoma\">{datos_contrato.tipoproyecto}</font></div><div><font face=\"Tahoma\">Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados</font></div></font></div></font></li></ol></div></font></div></div>\n</div>\n\n"
               },
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
+              "TextBrush": "solid:Black",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -747,7 +742,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text17",
-              "Guid": "8754eee2814fb58952bac0a14c5dbc4d",
+              "Guid": "50e338c2d0856f06e9dad8d1ceb22bd9",
               "ClientRectangle": "0.2,-0.05,17.6,1.6",
               "Expressions": {
                 "0": {
@@ -758,7 +753,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"10\">\n  \n  <div>\n    En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de {datos_contrato.tituloExpediente}</div>\n\n  <div>\n    Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados.\n  </div>\n\n</font></div>"
+                "Value": "<div style=\"font-family: Tahoma; font-size: 9pt; line-height: 1.1; text-align: justify;\">\n  \n  <div>\n    En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de:\n  </div>\n\n  <div>\n    {datos_contrato.tipoproyecto}\n  </div>\n\n  <div>\n    Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados.\n  </div>\n\n</div>"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",

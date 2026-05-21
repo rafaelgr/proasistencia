@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "14f8c634001ffd6a8b257e2702255a54",
+  "ReportGuid": "ddc7eebee5f5faad0de5e0ff4b87b1a8",
   "ReportName": "Report",
   "ReportAlias": "Report",
-  "ReportFile": "acta_recepcion_proas.mrt",
+  "ReportFile": "acta_recepcion_proas_mejorada.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779365778000+0200)/",
+  "ReportChanged": "/Date(1779365152000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -155,50 +155,6 @@
               "Border": ";;;;;;;solid:205,214,224",
               "Brush": "solid:245,248,252",
               "TextBrush": "solid:31,78,121",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text5",
-              "Guid": "5e2dcb0c5b3996aaf3f5b1468c98c353",
-              "ClientRectangle": "10.8,2.48,5.8,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Fdo. {datos_contrato.nombreFirmante}"
-              },
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text6",
-              "Guid": "7ba98aeb7fa27d47a1c8392af1a53e05",
-              "ClientRectangle": "1.4,2.48,6.2,0.4",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Fdo. Mª  ADELA  ALONSO GARCIA "
-              },
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
               "Type": "Expression"
             }
           }
@@ -747,8 +703,8 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text17",
-              "Guid": "8754eee2814fb58952bac0a14c5dbc4d",
-              "ClientRectangle": "0.2,-0.05,17.6,1.6",
+              "Guid": "50e338c2d0856f06e9dad8d1ceb22bd9",
+              "ClientRectangle": "0.35,-0.05,17.2,1.65",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -758,12 +714,12 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"10\">\n  \n  <div>\n    En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de {datos_contrato.tituloExpediente}</div>\n\n  <div>\n    Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados.\n  </div>\n\n</font></div>"
+                "Value": "<div style=\"font-family: Tahoma; font-size: 9pt; line-height: 1.2; text-align: justify;\"><div>En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de:</div><div style=\"margin: 6pt 0; font-weight: bold; color: #1F4E79;\">{datos_contrato.tipoproyecto}</div><div>Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados.</div></div>"
               },
               "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:255,255,255",
               "Brush": "solid:",
-              "TextBrush": "solid:Black",
+              "TextBrush": "solid:45,45,45",
               "TextOptions": {
                 "WordWrap": true
               },
