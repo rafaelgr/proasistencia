@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "14f8c634001ffd6a8b257e2702255a54",
-  "ReportName": "Report",
-  "ReportAlias": "Report",
+  "ReportGuid": "6f8d2412263be41d2485212a125048dd",
+  "ReportName": "acta_recepcion_proas",
+  "ReportAlias": "acta_recepcion_proas",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779365778000+0200)/",
+  "ReportChanged": "/Date(1779703625000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -206,7 +206,7 @@
         "2": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
-          "ClientRectangle": "0,0.4,18,5.2",
+          "ClientRectangle": "0,0.4,18,5.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -257,7 +257,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text8",
-              "ClientRectangle": "0.35,2.05,17.2,3",
+              "ClientRectangle": "0.35,2.05,17.2,3.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -281,7 +281,7 @@
           "Name": "DataBand2",
           "Guid": "54f75ff6b837f34b0f215a0c873d822f",
           "CanShrink": true,
-          "ClientRectangle": "0,6.4,18,0.65",
+          "ClientRectangle": "0,7,18,0.65",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -322,10 +322,10 @@
         },
         "4": {
           "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand2",
+          "Name": "GroupHeaderBand1",
           "Guid": "1fa1bf38d102c9031aca9d28f5117a26",
           "CanGrow": true,
-          "ClientRectangle": "0,7.85,18,0",
+          "ClientRectangle": "0,8.45,18,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -340,7 +340,7 @@
           "Name": "DataBand4",
           "Guid": "1cde985a6232c34df1cc2b79079f159b",
           "CanGrow": true,
-          "ClientRectangle": "0,8.65,18,0.6",
+          "ClientRectangle": "0,9.25,18,0.6",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -397,10 +397,21 @@
           "DataSourceName": "datos_contrato_letras_narrativa"
         },
         "6": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,10.65,18,0.2",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:"
+        },
+        "7": {
           "Ident": "StiDataBand",
           "Name": "DataBand3",
           "CanGrow": true,
-          "ClientRectangle": "0,10.05,18,4",
+          "ClientRectangle": "0,11.65,18,4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -493,12 +504,12 @@
           },
           "Columns": 2
         },
-        "7": {
+        "8": {
           "Ident": "StiDataBand",
           "Name": "DataBand6",
           "Guid": "f409c93f1e34bf66a8fd8eb7ba3ca0ed",
           "CanGrow": true,
-          "ClientRectangle": "0,14.85,18,1.4",
+          "ClientRectangle": "0,16.45,18,1.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -514,7 +525,7 @@
               "Ident": "StiText",
               "Name": "Text11",
               "Guid": "7741c03ceaac922f0cf5ca1fb97d75c3",
-              "ClientRectangle": "0.2,-0.05,17.6,1.4",
+              "ClientRectangle": "0.4,-0.05,17.4,1.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -540,11 +551,46 @@
             }
           }
         },
-        "8": {
+        "9": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand11",
+          "CanGrow": true,
+          "ClientRectangle": "0,18.65,18,0.8",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text19",
+              "ClientRectangle": "0.4,0.15,17.4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "ACUERDAN:"
+              },
+              "VertAlignment": "Center",
+              "Font": "Tahoma;9;Bold;",
+              "Border": ";;;;;;;solid:31,78,121",
+              "Brush": "solid:232,241,250",
+              "TextBrush": "solid:31,78,121",
+              "Type": "Expression"
+            }
+          }
+        },
+        "10": {
           "Ident": "StiDataBand",
           "Name": "DataBand5",
           "CanGrow": true,
-          "ClientRectangle": "0,17.05,18,1.8",
+          "ClientRectangle": "0,20.25,18,5.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -560,7 +606,7 @@
               "Ident": "StiText",
               "Name": "Text10",
               "Guid": "c3d78213c4580feb9174523534412dcb",
-              "ClientRectangle": "0.2,-0.05,17.6,1.8",
+              "ClientRectangle": "0.2,-0.05,17.6,5.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -570,101 +616,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"9\">\n  \n  <div>ACUERDAN:</div>\n\n  <ol>\n    <li>\n      Que los trabajos realizados del presupuesto de referencia, ascienden al importe de la certificación final indicada en el encabezamiento de este documento, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad señalada en el encabezamiento mediante la forma de abono indicada.</li></ol>\n\n</font></div>"
-              },
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "AllowHtmlTags": true,
-              "ShrinkFontToFitMinimumSize": 1.1,
-              "LineSpacing": 1.2,
-              "Type": "Expression"
-            }
-          }
-        },
-        "9": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand8",
-          "Guid": "b18d5c980cdd1d6b8fa1f3799b9d5bce",
-          "CanGrow": true,
-          "ClientRectangle": "0,19.65,18,1",
-          "Expressions": {
-            "0": {
-              "Name": "CountData"
-            }
-          },
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text12",
-              "Guid": "eccd5f182af9585c5680ec2dfe974249",
-              "ClientRectangle": "0.2,-0.05,17.6,1",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><div style=\"line-height: 1.1;\"><font size=\"9\"><ol start=\"2\"><li><font face=\"Tahoma\">Que las obras se han realizado de acuerdo con el contrato de ejecución de obras y del buen hacer de la construcción.</font></li></ol></font></div></div>\n</div>\n\n"
-              },
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "AllowHtmlTags": true,
-              "ShrinkFontToFitMinimumSize": 1.1,
-              "LineSpacing": 1.2,
-              "Type": "Expression"
-            }
-          }
-        },
-        "10": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand7",
-          "Guid": "a766c71d9e8d128987ca1dfdf571a303",
-          "CanGrow": true,
-          "ClientRectangle": "0,21.45,18,1",
-          "Expressions": {
-            "0": {
-              "Name": "CountData"
-            }
-          },
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text13",
-              "Guid": "385314371a366abf9d8a1c49cbc1cbf3",
-              "ClientRectangle": "0.2,-0.05,17.6,0.8",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><div style=\"line-height: 1.1;\"><font size=\"9\"><ol start=\"3\"><li><font face=\"Tahoma\">Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de desecho, en el ámbito de las obras.</font></li></ol></font></div></div>\n</div>\n\n"
+                "Value": "<ol>\n    <li><font size=\"10\">\n      Que los trabajos realizados del presupuesto de referencia, ascienden al importe de la certificación final indicada en el encabezamiento de este documento, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad señalada en el encabezamiento mediante la forma de abono indicada.</font></li><li><font face=\"Tahoma\" size=\"10\">Que las obras se han realizado de acuerdo con el contrato de ejecución de obras y del buen hacer de la construcción.</font></li><li><font face=\"Tahoma\" size=\"10\">Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de desecho, en el ámbito de las obras.</font></li><li><font size=\"10\">Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</font></li></ol>\n\n"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:255,255,255",
@@ -682,57 +634,10 @@
         },
         "11": {
           "Ident": "StiDataBand",
-          "Name": "DataBand9",
-          "Guid": "dc7344cba13997b50c85edf16a6bb912",
-          "CanGrow": true,
-          "ClientRectangle": "0,23.25,18,1",
-          "Expressions": {
-            "0": {
-              "Name": "CountData"
-            }
-          },
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text16",
-              "Guid": "56cbe7bcba923393453e8a8e90daaffd",
-              "ClientRectangle": "0.35,-0.05,17.2,0.85",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.2; text-align: justify;\"><font size=\"9\"><ol start=\"4\"><li>Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</li></ol></font></div>"
-              },
-              "Font": "Tahoma;9;;",
-              "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:",
-              "TextBrush": "solid:45,45,45",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "AllowHtmlTags": true,
-              "ShrinkFontToFitMinimumSize": 1.1,
-              "LineSpacing": 1.2,
-              "Type": "Expression"
-            }
-          }
-        },
-        "12": {
-          "Ident": "StiDataBand",
           "Name": "DataBand10",
           "Guid": "af5d80e61e0f55a778de1e2d45241001",
           "CanGrow": true,
-          "ClientRectangle": "0,25.05,18,1.8",
+          "ClientRectangle": "0,26.45,18,1.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -748,7 +653,9 @@
               "Ident": "StiText",
               "Name": "Text17",
               "Guid": "8754eee2814fb58952bac0a14c5dbc4d",
-              "ClientRectangle": "0.2,-0.05,17.6,1.6",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0.4,-0.05,17.4,1.4",
               "Expressions": {
                 "0": {
                   "Name": "Font"
