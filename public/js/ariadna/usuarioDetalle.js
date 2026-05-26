@@ -45,6 +45,7 @@ function initForm() {
     comprobarLogin();
     // de smart admin
     pageSetUp();
+    datePickerSpanish(); // see comun.js
     // 
     getVersionFooter();
     vm = new admData();
@@ -52,35 +53,56 @@ function initForm() {
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptar());
     $("#btnSalir").click(salir());
-    $("#frmUsuario").submit(function() {
+    $("#frmUsuario").submit(function () {
         return false;
     });
 
+    $("#chkActivo").change(function () {
+        if ($('#chkActivo').prop('checked')) {
+             var d = moment(new Date).format('DD/MM/YYYY')
+             vm.fechaBaja(d);
+        } else {
+            vm.fechaBaja(null);
+        }
+    });
+
+    $.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            var fv = moment(value, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var fp = moment($(params).val(), "DD/MM/YYYY").format("YYYY-MM-DD");
+            if (!/Invalid|NaN/.test(new Date(fv))) {
+                return new Date(fv) >= new Date(fp);
+            } else {
+                // esto es debido a que permitimos que la segunda fecha nula
+                return true;
+            }
+        }, 'La fecha de alta debe ser menor que la fecha de baja.');
+
     adminId = gup('UsuarioId');
-   
+
 
     initTablaDepartamentosClienteLineas();
 
     if (adminId != 0) {
         var data = {
-                usuarioId: adminId
-            }
-            // hay que buscar ese elemento en concreto
+            usuarioId: adminId
+        }
+        // hay que buscar ese elemento en concreto
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/usuarios/" + adminId,
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function(data, status) {
+            success: function (data, status) {
                 // hay que mostrarlo en la zona de datos
                 loadData(data);
                 loadLineasDepartamentoUsuario(data.usuarioId);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -107,6 +129,9 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.fechaAlta = ko.observable();
+    self.fechaBaja = ko.observable();
 
 }
 
@@ -121,6 +146,13 @@ function loadData(data) {
             vm.nivel(posiblesNiveles[i]);
         }
     }
+    if (data.activo) {
+        $('#chkActivo').prop('checked', true);
+    } else {
+        $('#chkActivo').prop('checked', false);
+    }
+    vm.fechaAlta(spanishDate(data.fechaAlta));
+    vm.fechaBaja(spanishDate(data.fechaBaja));
 }
 
 function datosOK() {
@@ -152,7 +184,13 @@ function datosOK() {
             txtEmail: {
                 required: true,
                 email: true
-            }
+            },
+            txtFechaAlta: {
+                required: true
+            },
+            txtFechaBaja: {
+                greaterThan: "#txtFechaAlta",
+            },
         },
         // Messages for form validation
         messages: {
@@ -168,10 +206,13 @@ function datosOK() {
             txtEmail: {
                 required: 'Introduzca el correo',
                 email: 'Debe usar un correo válido'
-            }
+            },
+            txtFechaAlta: {
+                required: "Debe seleccionar una fecha"
+            },
         },
         // Do not change code below
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element.parent());
         }
     });
@@ -185,7 +226,7 @@ function datosOK() {
 }
 
 function aceptar() {
-    var mf = function() {
+    var mf = function () {
         if (!datosOK())
             return;
         var data = {
@@ -195,7 +236,10 @@ function aceptar() {
                 "email": vm.email(),
                 "nombre": vm.nombre(),
                 "password": vm.password(),
-                "nivel": vm.nivel().id
+                "nivel": vm.nivel().idl,
+                "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                "activo": $('#chkActivo').prop('checked')
             }
         };
         if (adminId == 0) {
@@ -205,14 +249,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "UsuariosGeneral.html?UsuarioId=" + vm.usuarioId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -224,14 +268,14 @@ function aceptar() {
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data, status) {
+                success: function (data, status) {
                     // hay que mostrarlo en la zona de datos
                     loadData(data);
                     // Nos volvemos al general
                     var url = "UsuariosGeneral.html?UsuarioId=" + vm.usuarioId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -242,7 +286,7 @@ function aceptar() {
 }
 
 function salir() {
-    var mf = function() {
+    var mf = function () {
         var url = "UsuariosGeneral.html";
         window.open(url, '_self');
     }
@@ -256,7 +300,7 @@ function initTablaDepartamentosClienteLineas() {
         autoWidth: true,
         "columnDefs": [
             { "width": "60%", "targets": 0 }
-          ],
+        ],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -271,7 +315,7 @@ function initTablaDepartamentosClienteLineas() {
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
             var last = null;
-            
+
         },
         language: {
             processing: "Procesando...",
@@ -294,10 +338,10 @@ function initTablaDepartamentosClienteLineas() {
             }
         },
         data: dataDepartamentosLineas,
-        columns: [ {
+        columns: [{
             data: "nombreDepartamento",
             className: "text-left"
-        },  {
+        }, {
             data: "usuarioDepartamentoId",
             render: function (data, type, row) {
                 var html = "";
@@ -320,7 +364,7 @@ function loadTablatarifaClienteLineas(data) {
         $('#btnCopiar').hide();
     }
     dt.fnClearTable();
-    if (data != null){
+    if (data != null) {
         dt.fnAddData(data);
         $('#btnCopiar').show();
     }
@@ -328,7 +372,7 @@ function loadTablatarifaClienteLineas(data) {
 }
 
 
-function  loadLineasDepartamentoUsuario(id) {
+function loadLineasDepartamentoUsuario(id) {
     llamadaAjax("GET", "/api/usuarios/departamentos/" + id, null, function (err, data) {
         if (err) return;
         loadTablatarifaClienteLineas(data);
@@ -349,7 +393,7 @@ function loadDepartamentos(id) {
 }
 
 
-function loadCapitulos(id){
+function loadCapitulos(id) {
     llamadaAjax("GET", "/api/grupo_articulo", null, function (err, data) {
         if (err) return;
         var capitulos = [{ grupoArticuloId: 0, nombre: "Todos" }].concat(data);
@@ -379,7 +423,7 @@ function editDepartamentoUsuario(id) {
             vm.usuarioDepartamentoId(id);
             vm.departamentoId(data.departamentoId);
 
-        } 
+        }
 
     });
 }
@@ -392,17 +436,17 @@ function nuevoDepartamentoAsociado() {
 function limpiaDataLinea() {
     vm.usuarioDepartamentoId(0);
     vm.departamentoId(0);
-    
+
     loadDepartamentos();
 }
 
 
 
 function aceptarDepartamento() {
-    if(!datosOKNuevoDepartamentoAsociado()) {
+    if (!datosOKNuevoDepartamentoAsociado()) {
         return;
     }
-  
+
     var data = {
         departamento: {
             usuarioDepartamentoId: vm.usuarioDepartamentoId(),
@@ -411,17 +455,17 @@ function aceptarDepartamento() {
         }
     }
     //compruebaArticuloRepetido en misma tarifaCliente
-                var verbo = "POST";
-                var url = myconfig.apiUrl + "/api/usuarios/departamento";
-                if (lineaEnEdicion) {
-                    verbo = "PUT";
-                    url = myconfig.apiUrl + "/api/usuarios/departamento/" + vm.usuarioDepartamentoId();
-                }
-                llamadaAjax(verbo, url, data, function (err, data) {
-                    if (err) return;
-                    $('#modalDepartamento').modal('hide');
-                    loadLineasDepartamentoUsuario(vm.usuarioId());
-                });
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/usuarios/departamento";
+    if (lineaEnEdicion) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/usuarios/departamento/" + vm.usuarioDepartamentoId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalDepartamento').modal('hide');
+        loadLineasDepartamentoUsuario(vm.usuarioId());
+    });
 }
 
 
@@ -446,14 +490,14 @@ function deleteDepartamentoAsociado(usuarioDepartamentoId) {
 function datosOKNuevoDepartamentoAsociado() {
     $('#linea-form').validate({
         rules: {
-            
+
             cmbDepartamentosTrabajo: {
                 required: true
             }
         },
         // Messages for form validation
         messages: {
-           
+
             cmbDepartamentosTrabajo: {
                 required: 'Debe elegir un departamento'
             }

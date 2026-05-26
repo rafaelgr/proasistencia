@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "7b3e89ec4d8f22a74150ada414963ea9",
+  "ReportGuid": "4f66ed78c0ac7f06d6731cd616ee9b43",
   "ReportName": "acta_recepcion_reabita",
   "ReportAlias": "acta_recepcion_reabita",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779705012000+0200)/",
+  "ReportChanged": "/Date(1779705086000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -219,7 +219,7 @@
               "Name": "Text18",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0.6,0.95,16.8,1.05",
+              "ClientRectangle": "0.6,0.75,16.8,1.05",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -242,7 +242,7 @@
               "Name": "Text8",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0.6,2.2,16.8,2.65",
+              "ClientRectangle": "0.6,2,16.8,2.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -272,7 +272,7 @@
               "Text": {
                 "Value": "<b style=\"text-align: center;\"><font size=\"14\">ACTA DE RECEPCIÓN DE OBRA</font></b>"
               },
-              "HorAlignment": "Right",
+              "HorAlignment": "Center",
               "Font": ";10;;",
               "Border": ";;;;;;;solid:255,255,255",
               "Brush": "solid:245,248,252",
