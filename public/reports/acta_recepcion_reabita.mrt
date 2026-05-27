@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "4f66ed78c0ac7f06d6731cd616ee9b43",
+  "ReportGuid": "75fbb9099f84bf6acfb9eb9fef51f0e2",
   "ReportName": "acta_recepcion_reabita",
   "ReportAlias": "acta_recepcion_reabita",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779705086000+0200)/",
+  "ReportChanged": "/Date(1779873891000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -126,8 +126,8 @@
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
               "AllowHtmlTags": true,
               "Type": "Expression"
             },
@@ -173,8 +173,8 @@
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
               "AllowHtmlTags": true,
               "Type": "Expression"
             },
@@ -229,8 +229,8 @@
               "HorAlignment": "Right",
               "Font": ";10;;",
               "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -275,8 +275,8 @@
               "HorAlignment": "Center",
               "Font": ";10;;",
               "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
               "AllowHtmlTags": true,
               "Type": "Expression"
             }
@@ -317,8 +317,8 @@
               "VertAlignment": "Center",
               "Font": ";11;Bold;",
               "Border": ";;;;;;;solid:255,255,255",
-              "Brush": "solid:245,248,252",
-              "TextBrush": "solid:31,78,121",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
               "AllowHtmlTags": true,
               "LineSpacing": 1.2,
               "Type": "Expression"
