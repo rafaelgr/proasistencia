@@ -19,7 +19,7 @@ var usuario;
 var usaCalculadora;
 var usaContrato = true;//por defecto se usa contrato
 var antSerie = null;
-var servicioId; 
+var servicioId;
 var EmpresaId;
 var ClienteId;
 var ContratoId = 0;
@@ -46,13 +46,13 @@ function initForm() {
     vm = new admData();
     ko.applyBindings(vm);
 
-    
+
 
     // asignación de eventos al clic
-    $("#btnAceptar").click(function() {
+    $("#btnAceptar").click(function () {
         aceptarAntClien(true);
     });
-    $("#btnAceptar2").click(function() {
+    $("#btnAceptar2").click(function () {
         aceptarAntClien(false);
     });
 
@@ -77,7 +77,7 @@ function initForm() {
         //alert(JSON.stringify(e.added));
         if (e.added) loadDepartamento(e.added.id);
     });
-     loadDepartamentos();
+    loadDepartamentos();
 
 
 
@@ -100,10 +100,10 @@ function initForm() {
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
 
-    $('#txtFecha').change(function() {
+    $('#txtFecha').change(function () {
         loadContratos();
     });
-    
+
     antClienId = gup('AntClienId');
     ContratoId = gup("ContratoId");
     desdeContrato = gup("desdeContrato");
@@ -119,7 +119,7 @@ function initForm() {
             loadData(data);
             $('#txtFecha').prop('disabled', true);
             $('#btnAceptar2').show();
-            
+
         })
     } else {
         // caso alta
@@ -129,7 +129,7 @@ function initForm() {
         vm.sempresaId(null);
         vm.sclienteId(null);
         vm.sdepartamentoId(null);
-        if(servicioId && servicioId != '') {
+        if (servicioId && servicioId != '') {
             vm.servicioId(servicioId);
             vm.sdepartamentoId(7)
             loadDepartamentos(7)
@@ -138,7 +138,7 @@ function initForm() {
             loadEmpresas(EmpresaId);
             cambioEmpresa(EmpresaId);
         }
-        if(ClienteId != 0 && ClienteId != "") {
+        if (ClienteId != 0 && ClienteId != "") {
             vm.sclienteId(ClienteId);
             cambioCliente(ClienteId);
         }
@@ -162,6 +162,7 @@ function admData() {
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.noContabilizar = ko.observable();
+    self.noFactura = ko.observable();
     self.servicioId = ko.observable();
     //
     self.emisorNif = ko.observable();
@@ -207,17 +208,17 @@ function admData() {
     self.observaciones = ko.observable();
     //
     self.observaciones = ko.observable();
-     //
-     self.departamentoId = ko.observable();
-     self.sdepartamentoId = ko.observable();
-     //
-     self.posiblesDepartamentos = ko.observableArray([]);
-     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
 
     // Nuevo Total de coste para la antClien
     self.totalCoste = ko.observable();
     //
-    
+
     self.periodo = ko.observable();
     // 
     self.tipoClienteId = ko.observable();
@@ -260,17 +261,23 @@ function loadData(data) {
     loadFormasPago(data.formaPagoId);
     loadContratos(data.contratoId);
     loadDepartamentos(data.departamentoId);
-    if(!data.contratoId)  obtenerDepartamentoContrato(null);
-    vm.observaciones(data.observaciones); 
+    if (!data.contratoId) obtenerDepartamentoContrato(null);
+    vm.observaciones(data.observaciones);
     vm.periodo(data.periodo);
 
-    if(data.noContabilizar == 1){
+    if (data.noContabilizar == 1) {
         $('#chkNoContabilizar').prop("checked", true);
     } else {
         $('#chkNoContabilizar').prop("checked", false);
     }
-    
-    if(data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos()
+
+    if (data.contabilizada == 1 && !usuario.puedeEditar) bloqueaEdicionCampos()
+
+    if (data.noFactura == 1) {
+        $('#chkNoFactura').prop("checked", true);
+    } else {
+        $('#chkNoFactura').prop("checked", false);
+    }
     //
     document.title = "Anticipo: " + vm.numeroAnticipoCliente();
 }
@@ -294,7 +301,7 @@ function datosOK() {
             cmbFormasPago: {
                 required: true
             },
-              txtTotalConIva: {
+            txtTotalConIva: {
                 required: true,
             }
         },
@@ -333,7 +340,7 @@ var aceptarAntClien = function (salir) {
 
 
     eventSalir = false;
-    
+
     if (!vm.totalConIva()) {
         vm.totalConIva('0');
     }
@@ -350,22 +357,22 @@ var aceptarAntClien = function (salir) {
     }
 
     llamadaAjax(verb, url, data, function (err, data) {
-        if(err) return;
+        if (err) return;
         //loadData(data);
         returnUrl = returnUrl + vm.antClienId();
         //window.open(returnUrl, '_self');
-        if(!antSerie) {
+        if (!antSerie) {
             vm.serie(null);
         }
-        if(desdeContrato == "true" && antClienId != 0){
-            if(salir) {
-                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntCli=true', '_self');
+        if (desdeContrato == "true" && antClienId != 0) {
+            if (salir) {
+                window.open('ContratoDetalle.html?ContratoId=' + ContratoId + '&docAntCli=true', '_self');
             } else {
                 mensNormal('Anticipo guardado.')
             }
         }
-        else{
-            if(salir) {
+        else {
+            if (salir) {
                 window.open(returnUrl, '_self');
             } else {
                 mensNormal('Anticipo guardado.')
@@ -376,12 +383,17 @@ var aceptarAntClien = function (salir) {
 
 var generarAntClienDb = function () {
 
-    if($('#chkNoContabilizar').prop("checked")) {
+    if ($('#chkNoContabilizar').prop("checked")) {
         vm.noContabilizar(true);
     } else {
         vm.noContabilizar(false);
     }
-     var data = {
+    if ($('#chkNoFactura').prop("checked")) {
+        vm.noFactura(true);
+    } else {
+        vm.noFactura(false);
+    }
+    var data = {
         antClien: {
             "antClienId": vm.antClienId(),
             "numeroAnticipoCliente": vm.numeroAnticipoCliente(),
@@ -409,6 +421,7 @@ var generarAntClienDb = function () {
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "serie": vm.serie(),
             "noContabilizar": vm.noContabilizar(),
+            "noFactura": vm.noFactura(),
             "servicioId": vm.servicioId(),
             "serie": 'ANT'
         }
@@ -445,12 +458,12 @@ function loadFormasPago(formaPagoId) {
 
 var loadContratos = function (contratoId) {
     var fecha = null;
-    if(vm.fecha()) fecha = spanishDbDate(vm.fecha());
-    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId()  + "/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + usaContrato;    
+    if (vm.fecha()) fecha = spanishDbDate(vm.fecha());
+    var url = "/api/contratos/empresa-cliente/usuario/departamentos/" + vm.sempresaId() + "/" + vm.sclienteId() + "/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + usaContrato;
     if (contratoId) {
         url = "/api/contratos/uno/campo/departamento/" + contratoId;
     } else {
-        if(!vm.sempresaId() || !vm.sclienteId() || !vm.sdepartamentoId()) return;
+        if (!vm.sempresaId() || !vm.sclienteId() || !vm.sdepartamentoId()) return;
 
     }
     llamadaAjax("GET", url, null, function (err, data) {
@@ -493,13 +506,13 @@ function lanzaAviso() {
     var codPostal = vm.receptorCodPostal();
     var poblacion = vm.receptorPoblacion();
     var provincia = vm.receptorProvincia();
-    if(nif == "") nif = null;
-    if(nombre == "") nombre = null;
-    if(direccion == "") direccion = null;
-    if(codPostal == "") codPostal = null;
-    if(poblacion == "") poblacion = null;
-    if(provincia == "") provincia = null;
-    if(!nif || !nombre || !direccion || !codPostal || !poblacion || !provincia) {
+    if (nif == "") nif = null;
+    if (nombre == "") nombre = null;
+    if (direccion == "") direccion = null;
+    if (codPostal == "") codPostal = null;
+    if (poblacion == "") poblacion = null;
+    if (provincia == "") provincia = null;
+    if (!nif || !nombre || !direccion || !codPostal || !poblacion || !provincia) {
         mensAlerta("Faltan campos en el receptor");
     }
 }
@@ -526,10 +539,10 @@ function cambioContrato(contratoId) {
 }
 
 function obtenerDepartamentoContrato(contratoId) {
-    if(!contratoId) return;
+    if (!contratoId) return;
     llamadaAjax("GET", "/api/departamentos/contrato/asociado/" + contratoId, null, function (err, data) {
         if (err) return;
-        if(data) {
+        if (data) {
             vm.departamentoId(data.departamentoId);
             //vm.departamento(data.nombre);
             loadDepartamentos(data.departamentoId);
@@ -538,19 +551,19 @@ function obtenerDepartamentoContrato(contratoId) {
 }
 
 function loadDepartamento(departamentoId) {
-    if(!departamentoId) return;
-        llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
-            if (err) return;
-            if(data) {
-                usaCalculadora = data.usaCalculadora;
-                usaContrato = data.usaContrato
-                if(!usaCalculadora) {
-                    obtenerDepartamentoContrato();
-                }
-                loadContratos();
+    if (!departamentoId) return;
+    llamadaAjax("GET", "/api/departamentos/" + departamentoId, null, function (err, data) {
+        if (err) return;
+        if (data) {
+            usaCalculadora = data.usaCalculadora;
+            usaContrato = data.usaContrato
+            if (!usaCalculadora) {
+                obtenerDepartamentoContrato();
             }
+            loadContratos();
+        }
 
-        });
+    });
 }
 
 function loadDepartamentos(departamentoId) {
@@ -558,7 +571,7 @@ function loadDepartamentos(departamentoId) {
         if (err) return;
         var departamentos = [{ departamentoId: null, nombre: "" }].concat(data);
         vm.posiblesDepartamentos(departamentos);
-        if(departamentoId) {
+        if (departamentoId) {
             vm.departamentoId(departamentoId);
         }
         $("#cmbDepartamentosTrabajo").val([departamentoId]).trigger('change');
@@ -680,12 +693,12 @@ var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
 }
 
 function obtenerSerie(empresaId) {
-    if(!empresaId) return;
-        llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + empresaId, null, function (err, data) {
-            if(err) return;
-            if(vm.serie) antSerie = vm.serie();
-            vm.serie(data.seriePre);
-        });
+    if (!empresaId) return;
+    llamadaAjax("GET", myconfig.apiUrl + "/api/empresas/" + empresaId, null, function (err, data) {
+        if (err) return;
+        if (vm.serie) antSerie = vm.serie();
+        vm.serie(data.seriePre);
+    });
 }
 
 
@@ -698,7 +711,7 @@ function bloqueaEdicionCampos() {
     $("#frmAntClien :input").prop('readonly', true);
     $('#btnAceptar').hide();
 }
-    
+
 
 
 

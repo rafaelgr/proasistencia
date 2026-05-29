@@ -6,6 +6,7 @@ Funciones js par la página AntclienGeneral.html
 var dataAntcliens;
 var antClienId;
 var usuario;
+var inicializando = true;
 
 function initForm() {
     comprobarLogin();
@@ -21,44 +22,55 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
-    
+
     $('#chkTodos').change(function () {
         if (this.checked) {
-            cargarAntcliens2All();
-        } else {
-            cargarAntcliens2();
+            $('#chkNoFacturables').prop('checked', false);
         }
-    })
+
+        guardarEstadoChecksAnticipos();
+        cargarSegunChecksAnticipos();
+    });
+
+    $('#chkNoFacturables').change(function () {
+        if (this.checked) {
+            $('#chkTodos').prop('checked', false);
+        }
+
+        guardarEstadoChecksAnticipos();
+        cargarSegunChecksAnticipos();
+    });
 
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
+        if (inicializando) return;
+
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        cargarAntcliens()();
+
+        guardarEstadoChecksAnticipos();
+        cargarSegunChecksAnticipos();
     });
 
     vm = new admData();
     ko.applyBindings(vm);
 
-    recuperaDepartamento(function(err, data) {
-        if(err) mensError(m);
+    recuperaDepartamento(function (err, data) {
+        if (err) mensError(m);
         initTablaAntcliens();
+
+        restaurarEstadoChecksAnticipos();
         // comprobamos parámetros
         antClienId = gup('AntclienId');
-        if (antClienId !== '') {
-
-            // Si nos pasan una prefafctura determinada esa es
-            // la que mostramos en el grid
-            cargarAntcliens()(antClienId);
-    
-        } else {
-    
-            // Por defecto ahora a la entrada se van a cargar todas 
-            // las anticipos que tengamos en el sistema. En un futuro este
-            // criterio puede cambiar y habrá que adaptarlo.
-            cargarAntcliens()();
+        if (antClienId && antClienId !== '') {
+            cargarAnticipos()(antClienId);
+            inicializando = false;
+            return;
         }
+
+        cargarSegunChecksAnticipos();
+
+        inicializando = false;
     });
 }
 
@@ -67,14 +79,14 @@ function initForm() {
 
 function admData() {
     var self = this;
-    
+
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
-    
-} 
+
+}
 
 
 
@@ -84,15 +96,15 @@ function initTablaAntcliens() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 5) {
+                    if (column === 5) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 8) {
+                        if (column === 0 || column === 8) {
                             return "";
                         } else {
                             return data;
@@ -108,23 +120,23 @@ function initTablaAntcliens() {
         paging: true,
         "pageLength": 100,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            } ), 
+            }),
             {
-               
+
                 extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'LEGAL'
-            }, 
+            },
             'print'
         ],
         autoWidth: true,
@@ -166,24 +178,24 @@ function initTablaAntcliens() {
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
             }
-        },  {
+        }, {
             data: "totalConIva",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "observaciones"
-        },  {
+        }, {
             data: "antClienId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAntclien(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAntclien(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAntclien2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                if(row.contabilizada && !usuario.puedeEditar) bt1 = '';
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 +  "</div>";
+                if (row.contabilizada && !usuario.puedeEditar) bt1 = '';
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
         }]
@@ -229,13 +241,15 @@ function loadTablaAntcliens(data) {
 
 function buscarAntcliens() {
     var mf = function () {
-        cargarAntcliens()();
+        cargarAnticipos()();
     };
     return mf;
 }
 
 function crearAntclien() {
     var mf = function () {
+        guardarEstadoChecksAnticipos();
+
         var url = "AnticipoClienteDetalle.html?AntClienId=0";
         window.open(url, '_new');
     };
@@ -255,9 +269,9 @@ function deleteAntclien(id, noCalculadora) {
             mens += "<li><strong>Descontabilizar:</strong> Elimina la marca de contabilizado, con lo que puede ser contabilizado de nuevo</li>";
             mens += "<li><strong>Borrar:</strong> Elimina completamente el anticipo.</li>";
             mens += "</ul>"
-            if(data.length > 0) {
+            if (data.length > 0) {
                 mens += " ¡¡¡¡ATENCION!!! Este registro tiene facturas asociadas.";
-            } 
+            }
             // mensaje de confirmación
             $.SmartMessageBox({
                 title: "<i class='fa fa-info'></i> Mensaje",
@@ -280,14 +294,14 @@ function deleteAntclien(id, noCalculadora) {
                             // si hay algo más que hacer lo haremos aquí.
                         }
                     });
-                    
+
                 }
                 if (ButtonPressed === "Descontabilizar anticipo") {
                     var data = { facturaId: id };
                     llamadaAjax("POST", myconfig.apiUrl + "/api/anticiposClientes/descontabilizar/" + id, null, function (err, data) {
                         if (err) return;
-                        $('#chkTodos').prop('checked',false);
-                        if(data.changedRows > 0) {
+                        $('#chkTodos').prop('checked', false);
+                        if (data.changedRows > 0) {
                             mostrarMensajeAntclienDescontabilizada();
                         } else {
                             mostrarMensajeAnticipoNoCambiado();
@@ -317,7 +331,7 @@ var mostrarMensajeAntclienDescontabilizada = function () {
 var mostrarMensajeAnticipoNoCambiado = function () {
     var mens = "El anticipo NO se ha descontabilizado, es posible que no estubise contabilizada.";
     mensAlerta(mens);
-}   
+}
 
 var mostrarMensajeAntclienBorrada = function () {
     var mens = "El anticipo se ha borrado correctamente.";
@@ -327,11 +341,13 @@ var mostrarMensajeAntclienBorrada = function () {
 function editAntclien(id) {
     // hay que abrir la página de detalle de antclien
     // pasando en la url ese ID
+    guardarEstadoChecksAnticipos();
+
     var url = "AnticipoClienteDetalle.html?AntClienId=" + id;
     window.open(url, '_new');
 }
 
-function cargarAntcliens() {
+function cargarAnticipos() {
     var mf = function (id) {
         if (id) {
             var data = {
@@ -352,22 +368,26 @@ function cargarAntcliens() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-        } else {
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaAntcliens(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+            return;
         }
+
+        $('#chkTodos').prop("checked", false);
+        $('#chkNoFacturables').prop("checked", false);
+        
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                loadTablaAntcliens(data);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
     };
     return mf;
 }
@@ -428,7 +448,7 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
-function cargarAntcliens2() {
+function cargarAnticipos2() {
     $.ajax({
         type: "GET",
         url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
@@ -444,11 +464,11 @@ function cargarAntcliens2() {
     });
 }
 
-function cargarAntcliens2All() {
+function cargarAnticipos2All() {
     $.ajax({
         type: "GET",
-        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/all/"  + usuario.usuarioId + "/" + vm.sdepartamentoId(),
-        dataType: "json", 
+        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/all/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),
+        dataType: "json",
         contentType: "application/json",
         success: function (data, status) {
             loadTablaAntcliens(data);
@@ -463,4 +483,51 @@ function cargarAntcliens2All() {
 imprimirAntclien = function () {
     var url = "InfAntcliens.html";
     window.open(url, '_blank');
+}
+
+function guardarEstadoChecksAnticipos() {
+    localStorage.setItem("antclien_chkTodos", $('#chkTodos').prop('checked') ? "1" : "0");
+    localStorage.setItem("antclien_chkNoFacturables", $('#chkNoFacturables').prop('checked') ? "1" : "0");
+}
+
+function restaurarEstadoChecksAnticipos() {
+    var chkTodos = localStorage.getItem("antclien_chkTodos") === "1";
+    var chkNoFacturables = localStorage.getItem("antclien_chkNoFacturables") === "1";
+
+    // Son excluyentes
+    if (chkTodos && chkNoFacturables) {
+        chkNoFacturables = false;
+    }
+
+    $('#chkTodos').prop('checked', chkTodos);
+    $('#chkNoFacturables').prop('checked', chkNoFacturables);
+}
+
+function cargarSegunChecksAnticipos() {
+    if ($('#chkNoFacturables').prop('checked')) {
+        cargarAnticiposNoFacturables();
+    } else if ($('#chkTodos').prop('checked')) {
+        cargarAnticipos2All();
+    } else {
+        cargarAnticipos2();
+    }
+}
+
+function cargarAnticiposNoFacturables() {
+    var esColaborador = 0;
+
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/no-facturables/nueva/"
+            + usuario.usuarioId + "/"
+            + vm.sdepartamentoId(),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaAntcliens(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+        }
+    });
 }
