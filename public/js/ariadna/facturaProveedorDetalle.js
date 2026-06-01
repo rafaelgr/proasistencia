@@ -1605,7 +1605,12 @@ function cambioArticulo(articuloId) {
             $("#cmbTiposIva").val([10]).trigger('change');
             cambioTiposIva(10);
             $("#cmbTiposIva").prop("disabled", true);
-        } else {
+        }  else if (vm.tipoOperacionId() == 4) {
+            $("#cmbTiposIva").val([13]).trigger('change');
+            cambioTiposIva(13);
+            $("#cmbTiposIva").prop("disabled", true);
+        } 
+        else {
             $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
             cambioTiposIva(data.tipoIvaId);
             $("#cmbTiposIva").prop("disabled", false);

@@ -28,6 +28,12 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
+
+
+    $('#chkTodos').change(function () {
+        buscarUsuarios()();
+    });
+
     //$('#txtBuscar').keypress(function (e) {
     //    if (e.keyCode == 13)
     //        buscarUsuarios();
@@ -53,13 +59,14 @@ function initForm() {
                 var data2 = [data];
                 loadTablaUsuarios(data2);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
-    }else {
-        buscarTodos();
+    } else {
+        //buscarTodos();
+        buscarActivos();
     }
 }
 
@@ -120,7 +127,7 @@ function initTablaUsuarios() {
 }
 
 function datosOK() {
-    
+
     $('#frmBuscar').validate({
         rules: {
             txtBuscar: { required: true },
@@ -154,26 +161,49 @@ function loadTablaUsuarios(data) {
 
 function buscarUsuarios() {
     var mf = function () {
-        if (!datosOK()) {
+       /*  if (!datosOK()) {
             return;
-        }
+        } */
         // obtener el n.serie del certificado para la firma.
         var aBuscar = $('#txtBuscar').val();
+        if(!aBuscar || aBuscar === '') {
+            $('#txtBuscar').val('*');
+            aBuscar = '*';
+        }
         // enviar la consulta por la red (AJAX)
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/usuarios/?nombre=" + aBuscar,
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                // hay que mostrarlo en la zona de datos
-                loadTablaUsuarios(data);
-            },
-                            error: function (err) {
+        var opcion = $('#chkTodos').prop('checked');
+        if (opcion) {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/usuarios/?nombre=" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaUsuarios(data);
+                },
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
-        });
+            });
+
+        } else {
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/usuarios/activos/?nombre=" + aBuscar,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    loadTablaUsuarios(data);
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+        }
     };
     return mf;
 }
@@ -208,7 +238,7 @@ function deleteUsuario(id) {
                     var fn = buscarUsuarios();
                     fn();
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -228,7 +258,7 @@ function editUsuario(id) {
 }
 
 
-function buscarUsuarios() {
+/* function buscarUsuarios() {
     var mf = function () {
         if (!datosOK()) {
             return;
@@ -245,18 +275,25 @@ function buscarUsuarios() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaUsuarios(data);
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     };
     return mf;
+} */
+
+buscarTodos = function () {
+    var url = myconfig.apiUrl + "/api/usuarios/?nombre=*";
+    llamadaAjax("GET", url, null, function (err, data) {
+        loadTablaUsuarios(data);
+    });
 }
 
-buscarTodos = function(){
-    var url = myconfig.apiUrl + "/api/usuarios/?nombre=*";
-    llamadaAjax("GET",url, null, function(err, data){
+buscarActivos = function () {
+    var url = myconfig.apiUrl + "/api/usuarios/activos/?nombre=*";
+    llamadaAjax("GET", url, null, function (err, data) {
         loadTablaUsuarios(data);
     });
 }

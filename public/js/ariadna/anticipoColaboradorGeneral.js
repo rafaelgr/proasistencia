@@ -8,6 +8,7 @@ Funciones js par la página PreantturaGeneral.html
 var dataAnticipos;
 var antproveId;
 var usuario;
+var inicializando = true;
 
 
 
@@ -24,72 +25,86 @@ function initForm() {
     $('#frmBuscar').submit(function () {
         return false
     });
-    
+
     //Evento asociadpo al checkbox
     $('#chkTodos').change(function () {
         if (this.checked) {
-            cargarAnticipos2All();
-        } else {
-            cargarAnticipos2();
+            $('#chkNoFacturables').prop('checked', false);
         }
+
+        guardarEstadoChecksAnticipos();
+        cargarSegunChecksAnticipos();
+    });
+
+    $('#chkNoFacturables').change(function () {
+        if (this.checked) {
+            $('#chkTodos').prop('checked', false);
+        }
+
+        guardarEstadoChecksAnticipos();
+        cargarSegunChecksAnticipos();
     });
 
     //Evento asociado al cambio de departamento
     $("#cmbDepartamentosTrabajo").on('change', function (e) {
-        //alert(JSON.stringify(e.added));
+
+        if (inicializando) return;
+
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
-        cargarAnticipos()();
+
+        guardarEstadoChecksAnticipos();
+        cargarSegunChecksAnticipos();
     });
 
     vm = new admData();
     ko.applyBindings(vm);
 
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+
         initTablaAnticipos();
-        // comprobamos parámetros
+
+        restaurarEstadoChecksAnticipos();
+
         antproveId = gup('antproveId');
-        if (antproveId !== '') {
-    
-            // Si nos pasan una prefafctura determinada esa es
-            // la que mostramos en el grid
+
+        if (antproveId && antproveId !== '') {
             cargarAnticipos()(antproveId);
-    
-        } else {
-    
-            // Por defecto ahora a la entrada se van a cargar todas 
-            // las antturas que tengamos en el sistema. En un futuro este
-            // criterio puede cambiar y habrá que adaptarlo.
-            cargarAnticipos()();
+            inicializando = false;
+            return;
         }
+
+        cargarSegunChecksAnticipos();
+
+        inicializando = false;
     });
 }
 
 function admData() {
     var self = this;
-    
+
     self.departamentoId = ko.observable();
     self.sdepartamentoId = ko.observable();
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
-    
-} 
+
+}
 
 function initTablaAnticipos() {
     var buttonCommon = {
         exportOptions: {
             format: {
-                body: function ( data, row, column, node ) {
+                body: function (data, row, column, node) {
                     // Strip $ from salary column to make it numeric
-                    if(column === 6 || column === 7 || column === 8) {
+                    if (column === 6 || column === 7 || column === 8) {
                         //regresar = importe.toString().replace(/\./g,',');
                         var dato = numeroDbf(data);
                         console.log(dato);
                         return dato;
                     } else {
-                        if(column === 0 || column === 10) {
+                        if (column === 0 || column === 10) {
                             return "";
                         } else {
                             return data;
@@ -106,23 +121,23 @@ function initTablaAnticipos() {
         paging: true,
         "pageLength": 100,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C>r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
         buttons: [
-            'copy', 
-            'csv', 
-            $.extend( true, {}, buttonCommon, {
+            'copy',
+            'csv',
+            $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            } ), 
+            }),
             {
-               
+
                 extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'LEGAL'
-            }, 
+            },
             'print'
         ],
         columnDefs: [
@@ -130,22 +145,22 @@ function initTablaAnticipos() {
                 targets: 10, // El número de la columna que deseas mantener siempre visible (0 es la primera columna).
                 className: 'all', // Agrega la clase 'all' para que la columna esté siempre visible.
             },
-            { 
+            {
                 "type": "datetime-moment",
                 "targets": [5],
                 "render": function (data, type, row) {
                     if (type === 'display' || type === 'filter') {
-                        if(!data) return null;
+                        if (!data) return null;
                         return moment(data).format('DD/MM/YYYY');
                     }
                     // Si es para ordenar, usa un formato que DataTables pueda entender (p. ej., 'YYYY-MM-DD HH:mm:ss')
                     else if (type === 'sort') {
-                        if(!data) return null;
+                        if (!data) return null;
                         return moment(data).format('YYYY-MM-DD HH:mm:ss');
                     }
                     // En otros casos, solo devuelve los datos sin cambios
                     else {
-                        if(!data) return null;
+                        if (!data) return null;
                         return data;
                     }
                 }
@@ -191,13 +206,13 @@ function initTablaAnticipos() {
             data: "receptorNombre"
         }, {
             data: "fecha"
-        },{
+        }, {
             data: "importeServiciado",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        },{
+        }, {
             data: "total",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
@@ -209,7 +224,7 @@ function initTablaAnticipos() {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "antproveId",
@@ -217,7 +232,7 @@ function initTablaAnticipos() {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteAnticipo(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editAnticipo(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 //var bt3 = "<button class='btn btn-circle btn-success' onclick='printAnticipo2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                if(row.contabilizada) bt1 = '';
+                if (row.contabilizada) bt1 = '';
                 var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + /*bt3 +*/ "</div>";
                 return html;
             }
@@ -232,7 +247,7 @@ function initTablaAnticipos() {
             .draw();
     });
 
-    
+
 }
 
 function datosOK() {
@@ -273,6 +288,9 @@ function buscarAnticipos() {
 
 function crearAnticipo() {
     var mf = function () {
+
+        guardarEstadoChecksAnticipos();
+
         var url = "AnticipoColaboradorDetalle.html?antproveId=0";
         window.open(url, '_new');
     };
@@ -288,59 +306,59 @@ function deleteAnticipo(id) {
         contentType: "application/json",
         data: null,
         success: function (data, status) {
-            if(data.facproveId) {
+            if (data.facproveId) {
                 mens = "Este registro tiene facturas asociadas, ¿realmente desea borrarlo?";
             } else {
-                 mens = "¿Realmente desea borrar este registro?";
+                mens = "¿Realmente desea borrar este registro?";
             }
             // mensaje de confirmación
-    
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var data = {
-                id: antproveId
-            }
-            $.ajax({//buscamos la factura asociada para extraer su facproveId
-                type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    var data2 = {
-                        antproveId: id,
-                        facproveId: data.facproveId
-                    };
-                    $.ajax({
-                        type: "DELETE",
+
+            $.SmartMessageBox({
+                title: "<i class='fa fa-info'></i> Mensaje",
+                content: mens,
+                buttons: '[Aceptar][Cancelar]'
+            }, function (ButtonPressed) {
+                if (ButtonPressed === "Aceptar") {
+                    var data = {
+                        id: antproveId
+                    }
+                    $.ajax({//buscamos la factura asociada para extraer su facproveId
+                        type: "GET",
                         url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
                         dataType: "json",
                         contentType: "application/json",
-                        data: JSON.stringify(data2),
+                        data: JSON.stringify(data),
                         success: function (data, status) {
-                            var fn = buscarAnticipos();
-                            fn();
+                            var data2 = {
+                                antproveId: id,
+                                facproveId: data.facproveId
+                            };
+                            $.ajax({
+                                type: "DELETE",
+                                url: myconfig.apiUrl + "/api/anticiposProveedores/" + id,
+                                dataType: "json",
+                                contentType: "application/json",
+                                data: JSON.stringify(data2),
+                                success: function (data, status) {
+                                    var fn = buscarAnticipos();
+                                    fn();
+                                },
+                                error: function (err) {
+                                    mensErrorAjax(err);
+                                    // si hay algo más que hacer lo haremos aquí.
+                                }
+                            });
                         },
                         error: function (err) {
                             mensErrorAjax(err);
                             // si hay algo más que hacer lo haremos aquí.
                         }
                     });
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
+                }
+                if (ButtonPressed === "Cancelar") {
+                    // no hacemos nada (no quiere borrar)
                 }
             });
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
-    });
         },
         error: function (err) {
             mensErrorAjax(err);
@@ -350,8 +368,9 @@ function deleteAnticipo(id) {
 }
 
 function editAnticipo(id) {
-    // hay que abrir la página de detalle de anticipo
-    // pasando en la url ese ID
+
+    guardarEstadoChecksAnticipos();
+
     var url = "AnticipoColaboradorDetalle.html?antproveId=" + id;
     window.open(url, '_new');
 }
@@ -377,24 +396,27 @@ function cargarAnticipos() {
                     // si hay algo más que hacer lo haremos aquí.
                 }
             });
-        } else {
-            var esColaborador = 1
-            $('#chkTodos').prop("checked", false);
-            $.ajax({
-                type: "GET",
-                url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/nueva/"  + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    loadTablaAnticipos(data);
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+            return;
         }
+
+        $('#chkTodos').prop("checked", false);
+        $('#chkNoFacturables').prop("checked", false);
+
+        var esColaborador = 1;
+        $.ajax({
+            type: "GET",
+            url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/nueva/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + esColaborador,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                loadTablaAnticipos(data);
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
     };
     return mf;
 }
@@ -491,4 +513,52 @@ function cargarAnticipos2All() {
 imprimirAnticipo = function () {
     var url = "InfAnticiposProveedores.html";
     window.open(url, '_blank');
+}
+
+function cargarAnticiposNoFacturables() {
+    var esColaborador = 1;
+
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/anticiposProveedores/usuario/logado/departamento/no-facturables/nueva/"
+            + usuario.usuarioId + "/"
+            + vm.sdepartamentoId() + "/"
+            + esColaborador,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            loadTablaAnticipos(data);
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+        }
+    });
+}
+
+function guardarEstadoChecksAnticipos() {
+    localStorage.setItem("antcol_chkTodos", $('#chkTodos').prop('checked') ? "1" : "0");
+    localStorage.setItem("antcol_chkNoFacturables", $('#chkNoFacturables').prop('checked') ? "1" : "0");
+}
+
+function restaurarEstadoChecksAnticipos() {
+    var chkTodos = localStorage.getItem("antcol_chkTodos") === "1";
+    var chkNoFacturables = localStorage.getItem("antcol_chkNoFacturables") === "1";
+
+    // Son excluyentes
+    if (chkTodos && chkNoFacturables) {
+        chkNoFacturables = false;
+    }
+
+    $('#chkTodos').prop('checked', chkTodos);
+    $('#chkNoFacturables').prop('checked', chkNoFacturables);
+}
+
+function cargarSegunChecksAnticipos() {
+    if ($('#chkNoFacturables').prop('checked')) {
+        cargarAnticiposNoFacturables();
+    } else if ($('#chkTodos').prop('checked')) {
+        cargarAnticipos2All();
+    } else {
+        cargarAnticipos2();
+    }
 }
