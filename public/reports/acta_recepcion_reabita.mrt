@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "75fbb9099f84bf6acfb9eb9fef51f0e2",
+  "ReportGuid": "44472c5349393908fdc6d66ba564a36f",
   "ReportName": "acta_recepcion_reabita",
   "ReportAlias": "acta_recepcion_reabita",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779873891000+0200)/",
+  "ReportChanged": "/Date(1780306501000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -371,11 +371,60 @@
           }
         },
         "5": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand4",
+          "Guid": "40e9a952069a8db703d91b6de5692ae7",
+          "CanShrink": true,
+          "ClientRectangle": "0,10.55,18.2,0.85",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "765765e099fa4da102e762b65b43ac8f",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0.6,0.25,16.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<ul>\n<li>\nFactura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA con fecha {datos_contrato_pagos.fecvenci}\n</li>\n</ul>\n"
+              },
+              "HorAlignment": "Width",
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:255,255,255",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "Margins": {
+                "Left": 17,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "LineSpacing": 1.15,
+              "Type": "Expression"
+            }
+          },
+          "CanGrow": false,
+          "MinHeight": 0.1,
+          "DataSourceName": "datos_contrato_pagos",
+          "DataRelationName": "pagos_contrato"
+        },
+        "6": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
           "Guid": "1fa1bf38d102c9031aca9d28f5117a26",
           "CanGrow": true,
-          "ClientRectangle": "0,10.55,18.2,0",
+          "ClientRectangle": "0,12.2,18.2,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -385,12 +434,12 @@
             "Value": "{datos_contrato_letras_narrativa.contPlanificacionId}"
           }
         },
-        "6": {
+        "7": {
           "Ident": "StiDataBand",
           "Name": "DataBand3",
           "Guid": "f9f237dd8b73f1795ce09a027aaee3d9",
           "CanGrow": true,
-          "ClientRectangle": "0,11.35,18.2,0.85",
+          "ClientRectangle": "0,13,18.2,0.85",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -447,23 +496,23 @@
           },
           "DataSourceName": "datos_contrato_letras_narrativa"
         },
-        "7": {
+        "8": {
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,13,18.2,0.2",
+          "ClientRectangle": "0,14.65,18.2,0.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:"
         },
-        "8": {
+        "9": {
           "Ident": "StiDataBand",
           "Name": "DataBand6",
           "Guid": "f75d3f848f74ec1b9c248a8bc6c26789",
           "CanGrow": true,
-          "ClientRectangle": "0,14,18.2,2.2",
+          "ClientRectangle": "0,15.65,18.2,2.2",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -503,12 +552,12 @@
             }
           }
         },
-        "9": {
+        "10": {
           "Ident": "StiDataBand",
           "Name": "DataBand10",
           "Guid": "af5d80e61e0f55a778de1e2d45241001",
           "CanGrow": true,
-          "ClientRectangle": "0,17,18.2,2.2",
+          "ClientRectangle": "0,18.65,18.2,2.2",
           "Expressions": {
             "0": {
               "Name": "CountData"

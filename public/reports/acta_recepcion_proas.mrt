@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "6f8d2412263be41d2485212a125048dd",
+  "ReportGuid": "879cdac91522896c514db1b6d9160f44",
   "ReportName": "acta_recepcion_proas",
   "ReportAlias": "acta_recepcion_proas",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1779703625000+0200)/",
+  "ReportChanged": "/Date(1780302743000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -295,23 +295,24 @@
               "CanShrink": true,
               "MinSize": "0,0.1",
               "ClientRectangle": "0.35,0.05,17.2,0.55",
-              "Expressions": {
-                "0": {
-                  "Name": "Font"
-                }
-              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Factura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA"
+                "Value": "Factura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA con fecha {datos_contrato_pagos.fecvenci}"
               },
-              "HorAlignment": "Center",
-              "Font": "Tahoma;9;Bold;",
+              "HorAlignment": "Width",
+              "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:31,78,121",
-              "Brush": "solid:232,241,250",
-              "TextBrush": "solid:31,78,121",
-              "LineSpacing": 1.2,
+              "Brush": "solid:",
+              "TextBrush": "solid:45,45,45",
+              "Margins": {
+                "Left": 2,
+                "Right": 5,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "LineSpacing": 1.15,
               "Type": "Expression"
             }
           },
