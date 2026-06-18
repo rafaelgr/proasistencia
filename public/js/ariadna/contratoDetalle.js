@@ -43,7 +43,6 @@ var numLineas = 0;
 var antClienteId = null;
 var antClienteNombre = "";
 var RegPlanificacion = null;
-var tablaPrefacturas;
 var a = null;
 var _recepcionGestion;
 var dataDocumentacion;
@@ -58,6 +57,7 @@ let dataPlanificacion
 var totalPrefacturado = 0;
 var sumIntereses = 0
 var impAdicional = 0;
+let certFinal = 0;
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -91,7 +91,7 @@ function initForm() {
 
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
-    $("#btnImprimirActaRecepcion").click(imprimirActaRecepcion);
+    $("#btnImprimirActaRecepcion").click(copruebaDiferencia);
     $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
@@ -1269,6 +1269,7 @@ function loadData(data) {
     vm.importeAnualRenovacion(data.importeAnualRenovacion);
     vm.importeAnualRenovacionFormat(numeral(data.importeAnualRenovacion).format('0,0.00'));
 
+    certFinal = data.certificacionFinal;
     vm.certificacionFinal(data.certificacionFinal);
     loadTipoProyecto(data.tipoProyectoId);
     vm.fechaRenovacionIpc(spanishDate(data.fechaRenovacionIpc));
@@ -2484,7 +2485,7 @@ var recargaLineasBases = function () {
 */
 
 function initTablaBases() {
-    tablaCarro = $('#dt_bases').dataTable({
+    tablaBases = $('#dt_bases').dataTable({
         autoWidth: true,
         responsive: true,
         language: {
@@ -3039,7 +3040,7 @@ function datosOKComisionistas() {
 }
 
 function initTablaComisionistas() {
-    tablaCarro = $('#dt_comisiones').dataTable({
+    tablaComisionistas = $('#dt_comisiones').dataTable({
         autoWidth: true,
         responsive: true,
         language: {
@@ -3930,6 +3931,7 @@ var reglasDeValidacionAdicionales = function () {
         return (fechaFinal >= fechaInicial);
     }, "La fecha final debe ser superior a la inicial");
 }
+
 
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas(departamentoId) {
@@ -4975,7 +4977,7 @@ function initTablaFacturas() {
         }, {
             data: "vFacR"
         },
-         {
+        {
             data: "vFacD"
         }, {
             data: "vFPago"
@@ -7273,7 +7275,7 @@ function loadContratosCobros(id) {
 //FUNCIONES DE LOS CONCEPTOS/PORCENTAJES
 
 function initTablaConceptosLineas() {
-    tablaCarro = $('#dt_lineasConcepto').DataTable({
+    tablaConceptos = $('#dt_lineasConcepto').DataTable({
         autoWidth: true,
         responsive: true,
         "order": [[0, "asc"]],
@@ -8329,7 +8331,7 @@ function datosOKAscContratos() {
 }
 
 function initTablaAscContratos() {
-    tablaCarro = $('#dt_AscContratos').dataTable({
+    tablaAscContratos = $('#dt_AscContratos').dataTable({
         autoWidth: true,
         "paging": false,
         responsive: true,
@@ -10498,7 +10500,7 @@ function initTablaPrefacturasTemp(departamentoId) {
         }
     };
 
-    tablaPrefacturas = $('#dt_prefacturaTemp').DataTable({
+    tablaPrefacturasTemp = $('#dt_prefacturaTemp').DataTable({
         paging: false,
         responsive: true,
         "bDestroy": true,
@@ -10583,11 +10585,11 @@ function initTablaPrefacturasTemp(departamentoId) {
 
     // Filtro en cabecera
     $("#dt_prefacturaTemp thead th input[type=text]").on('keyup change', function () {
-        tablaPrefacturas.column($(this).parent().index() + ':visible').search(this.value).draw();
+        tablaPrefacturasTemp.column($(this).parent().index() + ':visible').search(this.value).draw();
     });
 
     // Ocultar columnas por defecto
-    [1, 10, 11, 12].forEach(idx => tablaPrefacturas.columns(idx).visible(false));
+    [1, 10, 11, 12].forEach(idx => tablaPrefacturasTemp.columns(idx).visible(false));
 }
 
 
@@ -11340,7 +11342,7 @@ function cambioAdicional(id) {
 //NOTAS WEB
 
 function initTablaNotasWeb() {
-    tablaCarro = $('#dt_notasweb').dataTable({
+    tablaNotasWeb = $('#dt_notasweb').dataTable({
         autoWidth: true,
         responsive: true,
         language: {
@@ -11388,9 +11390,9 @@ function initTablaNotasWeb() {
 
 function aceptarNotaWeb(id) {
 
-   /*  if (!datosOKLineasConceptos()) {
-        return;
-    } */
+    /*  if (!datosOKLineasConceptos()) {
+         return;
+     } */
     var data = {
         nota: {
             notaId: vm.notaId(),
@@ -11481,4 +11483,220 @@ function editNotaWeb(id) {
             // si hay algo más que hacer lo haremos aquí.
         }
     });
+}
+
+//FUNCIONES RELACIONADAS CON LA DIFERNCIA CONTRATO Y CERTIFICADO
+
+var copruebaDiferencia = function () {
+    var datos = tablaLineasPlanificacion.rows().data();
+    let encontrado = 0
+
+    if (!certFinal) {
+        mensError('No hay certificación final');
+        return;
+    }
+
+
+    for (var i = 0; i < datos.length; i++) {
+        if (datos[i].esAjuste == 1) {
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (encontrado) {
+        imprimirActaRecepcion();
+        return; // ya hay registro generado
+    }
+
+    // comprobar los importes
+    let porcentajeIva = 0;
+
+    // IVA desde tabla bases
+    let bases = tablaBases.DataTable().rows().data();
+
+    for (let i = 0; i < bases.length; i++) {
+        porcentajeIva += parseFloat(bases[i].porcentaje);
+    }
+
+    let certificacionFinalConIva = certFinal + (certFinal * porcentajeIva / 100);
+
+    // Sumar cobrado + pendiente desde tabla prefacturas
+    let prefacturas = tablaPrefacturas.rows().data();
+
+    let totalCobrado = 0;
+    let totalPendiente = 0;
+
+    for (let i = 0; i < prefacturas.length; i++) {
+        totalCobrado += parseFloat(prefacturas[i].total_cobrado);
+        totalPendiente += parseFloat(prefacturas[i].pendiente);
+    }
+
+    let diferencia = Math.round((certificacionFinalConIva - (totalCobrado + totalPendiente)) * 100) / 100;
+
+    if (Number.isNaN(diferencia)) {
+        mensError("Fallo al calcular la diferencia");
+        return;
+    }
+
+    if (diferencia == 0) {
+        imprimirActaRecepcion();
+        return;
+    }
+
+
+
+    $.SmartMessageBox({
+        title: "Generar ajuste",
+        content: "Se va a generar automáticamente una línea de ajuste de " + numeral(diferencia).format('0,0.00') + " € para cuadrar los importes. ¿Desea continuar?",
+        buttons: "[Cancelar][Aceptar]"
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            // generar ajuste
+            generarAjuste(diferencia, porcentajeIva);
+        } else {
+            imprimirActaRecepcion();
+        }
+    });
+
+}
+function generarAjuste(diferencia, porcentajeIva) {
+    let concepto = '';
+    let fechaVencimiento = '';
+
+    diferencia = parseFloat(diferencia) || 0;
+    porcentajeIva = parseFloat(porcentajeIva) || 0;
+
+    if (diferencia > 0) {
+        concepto = 'Factura';
+
+        let prefacturas = tablaPrefacturas.rows().data();
+        let ultimaFechaLetra = null;
+
+        for (let i = 0; i < prefacturas.length; i++) {
+            if (prefacturas[i].esLetra == 1 && prefacturas[i].fecha) {
+                let fecha = moment(prefacturas[i].fecha, 'YYYY-MM-DD');
+
+                if (fecha.isValid() && (!ultimaFechaLetra || fecha.isAfter(ultimaFechaLetra))) {
+                    ultimaFechaLetra = fecha;
+                }
+            }
+        }
+
+        if (!ultimaFechaLetra) {
+            mensError("No se ha encontrado ninguna letra en prefacturas");
+            return;
+        }
+
+        fechaVencimiento = moment(ultimaFechaLetra)
+            .add(1, 'month')
+            .format('YYYY-MM-DD');
+
+    } else {
+        concepto = "Abono";
+
+        if (!vm.fechaFirmaActa()) {
+            mensError('No hay una fecha de firma del acta de recepción');
+            return;
+        }
+
+        fechaVencimiento = moment(vm.fechaFirmaActa(), 'DD/MM/YYYY')
+            .add(1, 'month')
+            .format('YYYY-MM-DD');
+    }
+
+    let baseDiferencia = diferencia / (1 + porcentajeIva / 100);
+    baseDiferencia = Math.round(baseDiferencia * 100) / 100;
+
+    let baseImporteCliente = parseFloat(vm.importeCliente()) || 0;
+
+    if (baseImporteCliente == 0) {
+        mensError("El importe al cliente es 0");
+        return;
+    }
+
+    let porcentajeDiferencia = Math.round((baseDiferencia / baseImporteCliente) * 10000) / 100;
+
+    let dataPlanificacion = {
+        planificacion: {
+            contPlanificacionId: 0,
+            contratoId: vm.contratoId(),
+            concepto: concepto,
+            porcentaje: porcentajeDiferencia,
+            porRetenGarantias: 0,
+            fecha: moment().format('YYYY-MM-DD'),
+            importe: baseDiferencia,
+            esAdicional: 1,
+            contratoAdicionalId: null,
+            importeIntereses: 0,
+            importePrefacturado: 0,
+            importeFacturado: 0,
+            importeFacturadoIva: 0,
+            importeCobrado: 0,
+            formaPagoId: 17,
+            contPlanificacionTempId: null,
+            contPlanificacionIntId: null,
+            esAjuste: 1
+        }
+    };
+
+    llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/planificacion", dataPlanificacion, function (err, registroPlanificacion) {
+        if (err) {
+            mensError('Fallo al crear el registro en planificación');
+            return;
+        }
+
+        let idRegistro = registroPlanificacion.contPlanificacionId || registroPlanificacion.planificacionId || registroPlanificacion.id;
+
+        let nombreCliente = vm.nombreComercial();
+
+        if (!nombreCliente || nombreCliente == '') {
+            borrarAjusteSiFalla(idRegistro);
+            mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
+            return;
+        }
+
+        let clienteId = vm.clienteId();
+        let empresa = $("#cmbEmpresas").select2('data').text;
+
+        let regPlanificacion = [registroPlanificacion];
+        regPlanificacion[0].fecha = fechaVencimiento;
+
+        let prefacturas = crearPrefacturaPlanificacion(
+            1,
+            vm.sempresaId(),
+            clienteId,
+            empresa,
+            nombreCliente,
+            regPlanificacion
+        );
+
+        vm.prefacturasAGenerar(prefacturas);
+
+        let dataPrefacturas = {
+            prefacturas: vm.prefacturasAGenerar()
+        };
+
+        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), dataPrefacturas, function (err) {
+            if (err) {
+                borrarAjusteSiFalla(idRegistro);
+                mensError('Error al crear la prefactura. Se ha eliminado el ajuste generado.');
+                return;
+            }
+
+            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+
+            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
+                loadTablaPlanificacionLineasObras(data);
+                loadPrefacturasDelContrato(vm.contratoId());
+                actualizaCobrosPlanificacion(vm.contratoId());
+            });
+        });
+    });
+}
+
+function borrarAjusteSiFalla(idRegistro) {
+    if (!idRegistro) return;
+
+    deletePlanificacionLineaObras(idRegistro);
 }
