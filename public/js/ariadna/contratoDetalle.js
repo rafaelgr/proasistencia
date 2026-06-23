@@ -1564,6 +1564,7 @@ var clicAceptar = function (salir) {
         if (salir) {
             window.open(url, '_self');
         } else {
+            certFinal = parseFloat(vm.certificacionFinal());
             mensNormal('Contrato guardado.')
         }
     })

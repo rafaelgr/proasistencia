@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "21a58bc26856aba58e29b35924478e78",
+  "ReportGuid": "2423d38348e088ee9efde2d3671f39fa",
   "ReportName": "acta_recepcion_proas",
   "ReportAlias": "acta_recepcion_proas",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1781687868000+0200)/",
+  "ReportChanged": "/Date(1782213368000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -275,7 +275,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Dirección obra:        {datos_contrato.direccionTrabajo}  \n  Trabajos realizados:  {datos_contrato.tituloExpediente}\n\n  Ref. presupuesto:    {datos_contrato.referencia} \n  Certificación final:    {datos_contrato.certificacionFinal} € sin IVA\n  Importe total de la obra:     {datos_contrato.certificacionFinalConIvaIntereses} € con IVA e intereses\n  Fecha de contrato de ejecución de obras:    {datos_contrato.fechaInicio} \n  Saldo pendiente de abono al día de la fecha: {datos_contrato.totalPendienteFacturar} €  IVA INCLUIDO\n  El abono del saldo pendiente se realizará mediante:"
+                "Value": "  Dirección obra:        {datos_contrato.direccionTrabajo}  \n  Trabajos realizados:  {datos_contrato.tituloExpediente}\n\n  Ref. presupuesto:    {datos_contrato.referencia} \n  Certificación final:    {datos_contrato.certificacionFinal} € sin IVA\n  Importe total de la obra:     {datos_contrato.certificacionFinalConIvaIntereses} € {datos_contrato.textoIvaIntereses}\n  Fecha de contrato de ejecución de obras:    {datos_contrato.fechaInicio} \n  Saldo pendiente de abono al día de la fecha: {datos_contrato.totalPendienteFacturar} €  {datos_contrato.textoIvaIntereses}\n  El abono del saldo pendiente se realizará mediante:"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
@@ -291,10 +291,15 @@
         },
         "3": {
           "Ident": "StiDataBand",
-          "Name": "DataBand2",
-          "Guid": "54f75ff6b837f34b0f215a0c873d822f",
+          "Name": "DataBand8",
           "CanShrink": true,
-          "ClientRectangle": "0,7.4,18,0.65",
+          "CanGrow": true,
+          "ClientRectangle": "0,7.4,18,0.6",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -304,23 +309,28 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text4",
-              "Guid": "addfb712441346fa51609fa6fdf30a40",
+              "Guid": "2fe47f63805906fe4cdc4ab6e632c6cf",
               "CanShrink": true,
+              "CanGrow": true,
+              "GrowToHeight": true,
               "MinSize": "0,0.1",
-              "ClientRectangle": "0.35,0.05,17.2,0.55",
+              "ClientRectangle": "0.4,0,17.2,0.35",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Factura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA con fecha {datos_contrato_pagos.fecvenci}"
+                "Value": "{datos_contrato_pagos_narrativa.textoNarrativa}"
               },
               "HorAlignment": "Width",
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:31,78,121",
               "Brush": "solid:",
               "TextBrush": "solid:45,45,45",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
-                "Left": 2,
+                "Left": 1,
                 "Right": 5,
                 "Top": 0,
                 "Bottom": 0
@@ -328,18 +338,14 @@
               "LineSpacing": 1.15,
               "Type": "Expression"
             }
-          },
-          "CanGrow": false,
-          "MinHeight": 0.1,
-          "DataSourceName": "datos_contrato_pagos",
-          "DataRelationName": "pagos_contrato"
+          }
         },
         "4": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
           "Guid": "1fa1bf38d102c9031aca9d28f5117a26",
           "CanGrow": true,
-          "ClientRectangle": "0,8.85,18,0",
+          "ClientRectangle": "0,8.8,18,0.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -354,7 +360,7 @@
           "Name": "DataBand4",
           "Guid": "1cde985a6232c34df1cc2b79079f159b",
           "CanGrow": true,
-          "ClientRectangle": "0,9.65,18,0.6",
+          "ClientRectangle": "0,9.8,18,0.6",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -399,7 +405,7 @@
                 "WordWrap": true
               },
               "Margins": {
-                "Left": 0,
+                "Left": 4,
                 "Right": 5,
                 "Top": 0,
                 "Bottom": 0
@@ -414,7 +420,7 @@
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,11.05,18,0.2",
+          "ClientRectangle": "0,11.2,18,0",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -423,9 +429,59 @@
         },
         "7": {
           "Ident": "StiDataBand",
+          "Name": "DataBand7",
+          "CanGrow": true,
+          "ClientRectangle": "0,12,18,0.6",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "Guid": "51bb275c7f1bdc46552e1efa88579f28",
+              "CanShrink": true,
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "MinSize": "0,0.1",
+              "ClientRectangle": "0.2,0.15,17.2,0.35",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(datos_contrato_ajustes.importePrefacturadoIvaOriginal < 0,\n\"Abono de \" + datos_contrato_ajustes.importePrefacturadoIva.Replace(\"-\", \"\") + \" € incluido IVA con fecha de vencimiento \" + datos_contrato_ajustes.fecvenci,\n\"Recibo de \" + datos_contrato_ajustes.importePrefacturadoIva + \" € incluido IVA con fecha de vencimiento \" + datos_contrato_ajustes.fecvenci)}"
+              },
+              "HorAlignment": "Width",
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:31,78,121",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,45,45",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 8,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "LineSpacing": 1.15,
+              "Type": "Expression"
+            }
+          }
+        },
+        "8": {
+          "Ident": "StiDataBand",
           "Name": "DataBand3",
           "CanGrow": true,
-          "ClientRectangle": "0,12.05,18,4",
+          "ClientRectangle": "0,13.4,18,4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -518,12 +574,12 @@
           },
           "Columns": 2
         },
-        "8": {
+        "9": {
           "Ident": "StiDataBand",
           "Name": "DataBand6",
           "Guid": "f409c93f1e34bf66a8fd8eb7ba3ca0ed",
           "CanGrow": true,
-          "ClientRectangle": "0,16.85,18,1.4",
+          "ClientRectangle": "0,18.2,18,1.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -549,7 +605,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"9\">\n    <font face=\"Tahoma\">\n      Reunidos en Madrid, la empresa adjudicataria de las obras y la propiedad de la finca de referencia, para dar&nbsp;\n    </font>\n    <span style=\"font-family: Tahoma;\">\n      cumplimiento a lo dispuesto en el contrato suscrito por ambas partes, una vez finalizadas las mismas, recorrido a su&nbsp;\n    </span>\n    <span style=\"font-family: Tahoma;\">\n      ámbito de actuación para comprobar su terminación y en base al seguimiento realizado durante su ejecución.</span></font></div>\n</div>\n\n"
+                "Value": "<div style=\"\">\n  <div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\">\n    <font face=\"Tahoma\" style=\"\">\n      Reunidos en Madrid, la empresa adjudicataria de las obras y la propiedad de la finca de referencia, para dar&nbsp;\n    </font>\n    <span style=\"font-family: Tahoma;\">\n      cumplimiento a lo dispuesto en el contrato suscrito por ambas partes, una vez finalizadas las mismas, recorrido a su&nbsp;\n    </span>\n    <span style=\"font-family: Tahoma;\">\n      ámbito de actuación para comprobar su terminación y en base al seguimiento realizado durante su ejecución.</span></div>\n</div>\n\n"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:255,255,255",
@@ -565,11 +621,11 @@
             }
           }
         },
-        "9": {
+        "10": {
           "Ident": "StiDataBand",
           "Name": "DataBand11",
           "CanGrow": true,
-          "ClientRectangle": "0,19.05,18,0.8",
+          "ClientRectangle": "0,20.4,18,0.8",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -600,11 +656,11 @@
             }
           }
         },
-        "10": {
+        "11": {
           "Ident": "StiDataBand",
           "Name": "DataBand5",
           "CanGrow": true,
-          "ClientRectangle": "0,20.65,18,5.4",
+          "ClientRectangle": "0,22,18,4.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -620,7 +676,7 @@
               "Ident": "StiText",
               "Name": "Text10",
               "Guid": "c3d78213c4580feb9174523534412dcb",
-              "ClientRectangle": "0.2,-0.05,17.6,5.4",
+              "ClientRectangle": "0.2,-0.05,17.6,4.2",
               "Expressions": {
                 "0": {
                   "Name": "Font"
@@ -630,7 +686,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<ol>\n    <li><font size=\"10\">\n      Que los trabajos realizados del presupuesto de referencia, ascienden al importe de la certificación final indicada en el encabezamiento de este documento, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad señalada en el encabezamiento mediante la forma de abono indicada.</font></li><li><font face=\"Tahoma\" size=\"10\">Que las obras se han realizado de acuerdo con el contrato de ejecución de obras y del buen hacer de la construcción.</font></li><li><font face=\"Tahoma\" size=\"10\">Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de desecho, en el ámbito de las obras.</font></li><li><font size=\"10\">Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</font></li></ol>\n\n"
+                "Value": "<ol>\n    <li>\n      Que los trabajos realizados del presupuesto de referencia, ascienden al importe de la certificación final indicada en el encabezamiento de este documento, quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad señalada en el encabezamiento mediante la forma de abono indicada.</li><li><font face=\"Tahoma\">Que las obras se han realizado de acuerdo con el contrato de ejecución de obras y del buen hacer de la construcción.</font></li><li><font face=\"Tahoma\">Que no existen materiales nuevos ni usados sobrantes, ni tampoco materiales de desecho, en el ámbito de las obras.</font></li><li>Que las instalaciones existentes al comienzo de las obras, o no han sido afectadas por las mismas, o si lo han sido, se han repuesto tanto en su situación como en su correcto funcionamiento.</li></ol>\n\n"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:255,255,255",
@@ -646,12 +702,12 @@
             }
           }
         },
-        "11": {
+        "12": {
           "Ident": "StiDataBand",
           "Name": "DataBand10",
           "Guid": "af5d80e61e0f55a778de1e2d45241001",
           "CanGrow": true,
-          "ClientRectangle": "0,26.85,18,1.4",
+          "ClientRectangle": "0,27.2,18,1.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -679,7 +735,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\"><font size=\"10\">\n  \n  <div>\n    En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de {datos_contrato.tituloExpediente}</div>\n\n  <div>\n    Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados.\n  </div>\n\n</font></div>"
+                "Value": "<div style=\"font-family: Tahoma; line-height: 1.1; text-align: justify;\">\n  \n  <div style=\"\">\n    En consecuencia, acuerdan dar por recibidas definitivamente los trabajos de {datos_contrato.tituloExpediente}</div>\n\n  <div style=\"\">\n    Y para que así conste a los efectos oportunos, se extiende el presente Acta de Recepción de Obra que firman por duplicado ejemplar las personas citadas en el lugar y fecha indicados.\n  </div>\n\n</div>"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",

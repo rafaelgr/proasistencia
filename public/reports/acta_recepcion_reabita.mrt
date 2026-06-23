@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "332f86387050f63044a704ad6d231b47",
+  "ReportGuid": "1a2ec2ee9805bcf4177727e26d120c59",
   "ReportName": "acta_recepcion_reabita",
   "ReportAlias": "acta_recepcion_reabita",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1781687694000+0200)/",
+  "ReportChanged": "/Date(1782213667000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -367,7 +367,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<ol style=\"font-family: Arial;\">\n  <li style=\"\"><font face=\"Tahoma\">\n    Que las obras correspondientes a {datos_contrato.tituloExpediente}, con referencia de presupuesto {datos_contrato.referencia}, ascienden, según certificación final de obra, a un importe de {datos_contrato.certificacionFinal} € más IVA, siendo el total de la obra incluido IVA e intereses de {datos_contrato.certificacionFinalConIvaIntereses} € y quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad de {datos_contrato.totalPendienteFacturar} € IVA INCLUIDO, según se detalla:</font></li></ol>"
+                "Value": "<ol style=\"\">\n  <li style=\"\"><font face=\"Arial\" style=\"font-family: Tahoma;\">\n    Que las obras correspondientes a {datos_contrato.tituloExpediente}, con referencia de presupuesto {datos_contrato.referencia}, ascienden, según certificación final de obra, a un importe de {datos_contrato.certificacionFinal} € más IVA, siendo el total de la obra </font><font face=\"Tahoma\">{datos_contrato.textoIvaIntereses}</font><font face=\"Arial\" style=\"\"><font face=\"Tahoma\">&nbsp;de {datos_contrato.certificacionFinalConIvaIntereses} € y quedando pendiente por abonar la Propiedad a la Contrata al día de la fecha la cantidad de {datos_contrato.totalPendienteFacturar} € </font>{datos_contrato.textoIvaIntereses}<font face=\"Tahoma\">, según se detalla:</font></font></li></ol>"
               },
               "HorAlignment": "Width",
               "Font": ";10;;",
@@ -387,9 +387,13 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "DataBand4",
-          "Guid": "40e9a952069a8db703d91b6de5692ae7",
-          "CanShrink": true,
-          "ClientRectangle": "0,9.55,18.2,0.65",
+          "CanGrow": true,
+          "ClientRectangle": "0,9.55,18.2,0.8",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -399,15 +403,15 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text12",
-              "Guid": "765765e099fa4da102e762b65b43ac8f",
+              "Guid": "2abb05bbde963a823d4e792261ab7a38",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0.6,0.05,16.8,0.4",
+              "ClientRectangle": "0.6,0.25,16.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<ul style=\"\">\n<li style=\"\"><font face=\"Tahoma\">\nFactura de {datos_contrato_pagos.importePrefacturadoIva} € incluido IVA con fecha {datos_contrato_pagos.fecvenci}\n</font></li>\n</ul>\n"
+                "Value": "<ul style=\"\">\n<li style=\"\"><font face=\"Tahoma\">{datos_contrato_pagos_narrativa.textoNarrativa}</font></li>\n</ul>\n"
               },
               "HorAlignment": "Width",
               "Font": ";10;;",
@@ -427,18 +431,14 @@
               "LineSpacing": 1.15,
               "Type": "Expression"
             }
-          },
-          "CanGrow": false,
-          "MinHeight": 0.1,
-          "DataSourceName": "datos_contrato_pagos",
-          "DataRelationName": "pagos_contrato"
+          }
         },
         "6": {
           "Ident": "StiGroupHeaderBand",
           "Name": "GroupHeaderBand1",
           "Guid": "1fa1bf38d102c9031aca9d28f5117a26",
           "CanGrow": true,
-          "ClientRectangle": "0,11,18.2,0",
+          "ClientRectangle": "0,11.15,18.2,0",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -453,7 +453,7 @@
           "Name": "DataBand3",
           "Guid": "f9f237dd8b73f1795ce09a027aaee3d9",
           "CanGrow": true,
-          "ClientRectangle": "0,11.8,18.2,0.85",
+          "ClientRectangle": "0,11.95,18.2,0.85",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -514,7 +514,7 @@
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,13.45,18.2,0",
+          "ClientRectangle": "0,13.6,18.2,0",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -523,10 +523,64 @@
         },
         "9": {
           "Ident": "StiDataBand",
+          "Name": "DataBand7",
+          "CanGrow": true,
+          "ClientRectangle": "0,14.4,18.2,0.6",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "Guid": "8c5197914eaf5a355351a1efc0132096",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0.6,0.2,16.8,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<ul style=\"\">\n<li style=\"\"><font face=\"Tahoma\">{IIF(datos_contrato_ajustes.importePrefacturadoIvaOriginal < 0,\n\"Abono de \" + datos_contrato_ajustes.importePrefacturadoIva.Replace(\"-\", \"\") + \" € incluido IVA con fecha de vencimiento \" + datos_contrato_ajustes.fecvenci,\n\"Recibo de \" + datos_contrato_ajustes.importePrefacturadoIva + \" € incluido IVA con fecha de vencimiento \" + datos_contrato_ajustes.fecvenci)}</font></li><font face=\"Tahoma\">\n</font></ul><font face=\"Tahoma\">\n</font>"
+              },
+              "HorAlignment": "Width",
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:255,255,255",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "Margins": {
+                "Left": 17,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "LineSpacing": 1.15,
+              "Type": "Expression"
+            }
+          }
+        },
+        "10": {
+          "Ident": "StiDataBand",
           "Name": "DataBand6",
           "Guid": "f75d3f848f74ec1b9c248a8bc6c26789",
           "CanGrow": true,
-          "ClientRectangle": "0,14.25,18.2,2.2",
+          "ClientRectangle": "0,15.8,18.2,2.2",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -566,12 +620,12 @@
             }
           }
         },
-        "10": {
+        "11": {
           "Ident": "StiDataBand",
           "Name": "DataBand10",
           "Guid": "af5d80e61e0f55a778de1e2d45241001",
           "CanGrow": true,
-          "ClientRectangle": "0,17.25,18.2,2.2",
+          "ClientRectangle": "0,18.8,18.2,2.2",
           "Expressions": {
             "0": {
               "Name": "CountData"
