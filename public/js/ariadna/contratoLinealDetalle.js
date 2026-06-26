@@ -5786,7 +5786,7 @@ function initTablaFactcol() {
             }
         }
     };
-    tablaFacproves = $('#dt_factcol').DataTable({
+    tablaFactcol = $('#dt_factcol').DataTable({
         bSort: false,
         responsive: true,
         "paging": false,
@@ -5952,7 +5952,7 @@ function initTablaFactcol() {
 
     // Apply the filter
     $("#dt_factcol thead th input[type=text]").on('keyup change', function () {
-        tablaFacproves
+        tablaFactcol
             .column($(this).parent().index() + ':visible')
             .search(this.value)
             .draw();
@@ -6922,6 +6922,18 @@ function initTablaContratosCobros() {
             }, {
                 data: "nomforpa"
             }]
+    });
+    $(document).off('keyup change', '#dt_contratosCobros thead tr:first th input[type="text"]');
+
+    $(document).on('keyup change', '#dt_contratosCobros thead tr:first th input[type="text"]', function () {
+        var colIdx = $(this).closest('th')[0].cellIndex;
+
+        console.log('Filtro contratos cobros columna:', colIdx, 'valor:', this.value);
+
+        tablaContratoCobros
+            .column(colIdx)
+            .search(this.value)
+            .draw();
     });
 }
 
