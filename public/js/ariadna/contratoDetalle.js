@@ -91,7 +91,7 @@ function initForm() {
 
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
-    $("#btnImprimirActaRecepcion").click(copruebaDiferencia);
+    $("#btnImprimirActaRecepcion").click(compruebaDiferencia);
     $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
@@ -11488,7 +11488,7 @@ function editNotaWeb(id) {
 
 //FUNCIONES RELACIONADAS CON LA DIFERNCIA CONTRATO Y CERTIFICADO
 
-var copruebaDiferencia = function () {
+var compruebaDiferencia = function () {
     var datos = tablaLineasPlanificacion.rows().data();
     let encontrado = 0
 
@@ -11553,8 +11553,11 @@ var copruebaDiferencia = function () {
         buttons: "[Cancelar][Aceptar]"
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
-            // generar ajuste
-            generarAjuste(diferencia, porcentajeIva);
+            if (diferencia < 0) {
+                ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva);
+            } else {
+                generarAjuste(diferencia, porcentajeIva);
+            }
         } else {
             imprimirActaRecepcion();
         }
@@ -11693,6 +11696,91 @@ function generarAjuste(diferencia, porcentajeIva) {
                 actualizaCobrosPlanificacion(vm.contratoId());
             });
         });
+    });
+}
+
+function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
+    let importeACompensar = Math.abs(parseFloat(diferencia) || 0);
+
+    let prefacturas = tablaPrefacturas.rows().data().toArray();
+
+    let candidatas = prefacturas
+        .filter(p => {
+            return Number(p.esLetra || 0) === 1
+                && parseFloat(p.pendiente || 0) > 0
+                && Number(p.noFacturar || 0) === 0
+                && !p.facturaId;
+        })
+        .sort((a, b) => {
+            return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
+        });
+
+    let prefacturasAMarcar = [];
+    let totalCompensado = 0;
+
+    for (let i = 0; i < candidatas.length; i++) {
+        let importe = parseFloat(candidatas[i].pendiente || 0);
+
+        if (Math.round((totalCompensado + importe) * 100) / 100 <= importeACompensar) {
+            prefacturasAMarcar.push(candidatas[i]);
+            totalCompensado = Math.round((totalCompensado + importe) * 100) / 100;
+        }
+    }
+
+    let resto = Math.round((importeACompensar - totalCompensado) * 100) / 100;
+
+    if (prefacturasAMarcar.length === 0) {
+        generarAjuste(diferencia, porcentajeIva);
+        return;
+    }
+
+    let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
+
+    $.SmartMessageBox({
+        title: "Ajustar prefacturas",
+        content:
+            "La diferencia es negativa. Se marcarán " +
+            prefacturasAMarcar.length +
+            " prefactura(s) como no facturadas por un importe total de " +
+            numeral(totalCompensado).format('0,0.00') +
+            " €. " +
+            (resto > 0
+                ? "Además, se generará un abono por " + numeral(resto).format('0,0.00') + " €."
+                : "No será necesario generar abono.") +
+            " ¿Desea continuar?",
+        buttons: "[Cancelar][Aceptar]"
+    }, function (ButtonPressed) {
+        if (ButtonPressed !== "Aceptar") {
+            imprimirActaRecepcion();
+            return;
+        }
+
+        let data = {
+            prefacturasIds: idsPrefacturas
+        };
+
+        llamadaAjax(
+            "PUT",
+            myconfig.apiUrl + "/api/prefacturas/prefacturas/no-facturadas",
+            data,
+            function (err) {
+                if (err) {
+                    mensError("Error al marcar las prefacturas como no facturadas");
+                    return;
+                }
+
+                if (resto > 0) {
+                    generarAjuste(-resto, porcentajeIva);
+                } else {
+                    mostrarMensajeSmart("Prefacturas marcadas correctamente como no facturadas.");
+
+                    loadPrefacturasDelContrato(vm.contratoId());
+                    actualizaCobrosPlanificacion(vm.contratoId());
+
+                    imprimirActaRecepcion();
+                }
+            }
+        );
     });
 }
 
