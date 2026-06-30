@@ -67,7 +67,7 @@ function initForm() {
             // comprobamos parámetros
             facturaId = gup('FacturaId');
             var f = facturaId;
-            if (facturaId = '') {
+            if (facturaId == '') {
                 f = null
             }
             compruebaFiltros(f);
@@ -84,7 +84,7 @@ function initForm() {
         if (facturaId = '') {
             f = null
         }
-        //compruebaFiltros(f);
+     
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if (this.value != antDepartamentoId) {
