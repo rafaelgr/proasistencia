@@ -40,6 +40,8 @@ function initForm() {
     // 
     getVersionFooter();
 
+    eventSalir = false;
+
     eventoCerrar()
 
     vm = new admData();
@@ -503,6 +505,7 @@ var AvisaRecalculo = function (url, returnUrl) {
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
+
             actualizarLineasDeLaPrefacturaTrasCambioCostes(url, returnUrl);
         }
         if (ButtonPressed === "Cancelar") {
@@ -565,6 +568,7 @@ var generarPrefacturaDb = function () {
 
 function salir() {
     var mf = function () {
+        eventSalir = true;
         var returnUrl = "PrefacturaGeneral.html";
         if (prefacturaId != 0 || desdeContrato == "true") {
             returnUrl = 'ContratoDetalle.html?ContratoId=' + ContratoId + '&docPre=true', '_self';
@@ -1434,6 +1438,7 @@ var recalcularImportesGuardar = function (url2, returnUrl) {
             //actualizamos los importes y salimos
             llamadaAjax("PUT", url2, data, function (err, data) {
                 if (err) return;
+
                 returnUrl = returnUrl + vm.prefacturaId();
                 window.open(returnUrl, '_self');
             });

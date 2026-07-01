@@ -42,7 +42,9 @@ function initForm() {
     // 
     getVersionFooter();
 
-    eventoCerrar();
+    eventSalir = false;
+
+    eventoCerrar()
 
     vm = new admData();
     ko.applyBindings(vm);

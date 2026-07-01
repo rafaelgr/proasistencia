@@ -334,7 +334,7 @@ function buscarContratos() {
 
 function crearContrato() {
     var mf = function () {
-        var url = "ContratoDetalle.html?ContratoId=0&dep=arquitectura";
+        var url = "ContratoLinealDetalle.html?ContratoId=0&dep=arquitectura";
         window.open(url, '_new');
     };
     return mf;
@@ -375,7 +375,7 @@ function deleteContrato(id) {
 }
 
 function editContrato(id) {
-    var url = "ContratoDetalle.html?ContratoId=" + id + "&dep=arquitectura"
+    var url = "ContratoLinealDetalle.html?ContratoId=" + id + "&dep=arquitectura"
     window.open(url, '_new');
 }
 

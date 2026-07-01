@@ -49,7 +49,50 @@ var ConImpago;
 
 datePickerSpanish(); // see comun.js
 
+var timerCerrarSpinnerLineal = null;
+
+function mostrarCargandoLineal() {
+    if ($('#overlayCargando').length === 0) {
+        $('body').append(
+            '<div id="overlayCargando" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.75);z-index:99999;display:flex;align-items:center;justify-content:center;">' +
+            '<div style="text-align:center;font-size:18px;color:#333;">' +
+            '<i class="fa fa-spinner fa-spin fa-3x"></i><br><br>' +
+            '<span>Cargando contrato...</span>' +
+            '</div></div>'
+        );
+    } else {
+        $('#overlayCargando').show();
+    }
+}
+
+function ocultarCargandoLineal() {
+    $('#overlayCargando').hide();
+}
+
+function programarCierreSpinnerLineal() {
+    clearTimeout(timerCerrarSpinnerLineal);
+
+    timerCerrarSpinnerLineal = setTimeout(function () {
+        ocultarCargandoLineal();
+    }, 800);
+}
+
+$(document).ajaxSend(function () {
+    mostrarCargandoLineal();
+    clearTimeout(timerCerrarSpinnerLineal);
+});
+
+$(document).ajaxComplete(function () {
+    programarCierreSpinnerLineal();
+});
+
+$(window).on('load', function () {
+    programarCierreSpinnerLineal();
+});
+
 function initForm() {
+
+
     comprobarLogin();
     usuario = recuperarUsuario();
     // de smart admin
@@ -706,6 +749,7 @@ function initForm() {
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
 
+        ocultarCargandoLineal();
         //
         document.title = "NUEVO CONTRATO";
     }
@@ -3768,7 +3812,7 @@ function initTablaPrefacturas(departamentoId) {
                 if (aData.noFacturar) {
                     $(nRow).attr('style', 'background: #cc6c69ff');
                 }
-                 //prefactura rectificativa
+                //prefactura rectificativa
                 if (aData.total < 0) {
                     $(nRow).attr('style', 'background: rgb(175, 161, 216)');
                 }

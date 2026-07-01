@@ -60,7 +60,44 @@ var impAdicional = 0;
 let certFinal = 0;
 datePickerSpanish(); // see comun.js
 
+var cargasContratoPendientes = 0;
+
+function mostrarCargandoContrato() {
+    if ($('#overlayCargando').length === 0) {
+        $('body').append(
+            '<div id="overlayCargando" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.75);z-index:99999;display:flex;align-items:center;justify-content:center;">' +
+            '<div style="text-align:center;font-size:18px;color:#333;">' +
+            '<i class="fa fa-spinner fa-spin fa-3x"></i><br><br>' +
+            '<span>Cargando contrato...</span>' +
+            '</div>' +
+            '</div>'
+        );
+    } else {
+        $('#overlayCargando').show();
+    }
+}
+
+function ocultarCargandoContrato() {
+    $('#overlayCargando').hide();
+}
+
+$(document).ajaxSend(function () {
+    cargasContratoPendientes++;
+    mostrarCargandoContrato();
+});
+
+$(document).ajaxComplete(function () {
+    cargasContratoPendientes--;
+
+    if (cargasContratoPendientes <= 0) {
+        cargasContratoPendientes = 0;
+        ocultarCargandoContrato();
+    }
+});
+
 function initForm() {
+    mostrarCargandoContrato();
+
     comprobarLogin();
     usuario = recuperarUsuario();
     // de smart admin
@@ -771,8 +808,10 @@ function initForm() {
     $('#chkBeneficioLineal').prop('disabled', true);
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
-            if (err) return;
-
+            if (err) {
+               
+                return;
+            }
             vm.sempresaId(data.empresaId);
             loadData(data);
 
@@ -812,6 +851,7 @@ function initForm() {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
+           
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -832,6 +872,7 @@ function initForm() {
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
 
+       
 
         //
         document.title = "NUEVO CONTRATO";
@@ -859,6 +900,9 @@ function initForm() {
             }
         }, 'La fecha de la factura debe ser menor o igual que la fecha de fin de contrato.');
 }
+
+
+
 
 var mostrarMensajeEnFuncionDeCmd = function (cmd) {
     var mens = null;
@@ -7255,7 +7299,7 @@ function initTablaContratosCobros() {
                 data: "nomforpa"
             }]
     });
-    
+
     $(document).off('keyup change', '#dt_contratosCobros thead tr:first th input[type="text"]');
 
     $(document).on('keyup change', '#dt_contratosCobros thead tr:first th input[type="text"]', function () {
