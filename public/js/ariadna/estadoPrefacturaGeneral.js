@@ -41,7 +41,6 @@ function initForm() {
     if (conservaFiltro != 'true' && cleaned != 'true') limpiarFiltros();
     //
     $('#btnBuscar').click(buscarPrefacturas());
-    $('#btnAlta').click(crearPrefactura());
     $('#btnPrint').click(imprimirPrefactura);
     $('#btnLimpiar').click(limpiarFiltros);
     $('#frmBuscar').submit(function () {
@@ -178,8 +177,8 @@ function compruebaFiltros(id) {
         vm.hastaFecha(filtros.hastaFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
-        cargaCliente(filtros.clienteId)
-        vm.clienteId(filtros.clienteId);
+        if (filtros.clienteId) cargaCliente(filtros.clienteId)
+        
         if (filtros.todos) {
             $('#chkTodos').prop('checked', true)
         } else {
@@ -287,9 +286,11 @@ function initTablaPrefacturas() {
         "aoColumnDefs": [
             { "sType": "date-uk", "aTargets": [5] },
         ],
-        "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
-            "t" +
-            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+        dom:
+            "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
+            "rt" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
+            
         buttons: [
             'copy',
             'csv',
@@ -331,26 +332,7 @@ function initTablaPrefacturas() {
         },
         footerCallback: function (row, data, start, end, display) {
 
-            var api = this.api(), data;
-
-            // Remove the formatting to get integer data for summation
-            var intVal = function (i) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '') * 1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };
-
-            [6, 7, 8, 9, 10].forEach(function (columnIndex) {
-                var total = api
-                    .column(columnIndex, { filter: 'applied' })
-                    .data()
-                    .reduce(function (a, b) {
-                        return Math.round((intVal(a) + intVal(b)) * 100) / 100;
-                    }, 0);
-
-                $(api.columns(columnIndex).footer()).html(numeral(total).format('0,0.00'));
-            });
+            
 
         },
         language: {
@@ -439,11 +421,9 @@ function initTablaPrefacturas() {
         }, {
             data: "prefacturaId",
             render: function (data, type, row) {
-                var bt1 = "<button class='btn btn-circle btn-danger' onclick='deletePrefactura(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
-                if (row.contratoId == 8 || row.contPlanificacionId) { bt1 = ""; }
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "" + bt3 + "</div>";
+                var html = "<div class='pull-right'>" + bt2 + "" + bt3 + "</div>";
                 return html;
             }
         }]
@@ -517,18 +497,15 @@ function loadTablaPrefacturas(data) {
 function buscarPrefacturas() {
     var mf = function () {
         if (!datosOK()) return;
-        cargarPrefacturas()();
+        if($('#chkTodos').prop('checked')) {
+            cargarPrefacturasAll();
+        } else {
+            cargarPrefacturas()();
+        }
     };
     return mf;
 }
 
-function crearPrefactura() {
-    var mf = function () {
-        var url = "PrefacturaDetalle.html?PrefacturaId=0";
-        window.open(url, '_self');
-    };
-    return mf;
-}
 
 function deletePrefactura(id) {
     // mensaje de confirmación
@@ -654,7 +631,7 @@ function cargarPrefacturas() {
 
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/prefacturas/" + prefacturaId,
+                url: myconfig.apiUrl + "/api/prefacturas/con/cobro/" + empid + "/" + prefacturaId,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -757,7 +734,8 @@ var cargaCliente = function (id) {
         if (err) return;
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
-        vm.tipoClienteId(data.tipoClienteId);
+        vm.clienteId(data.clienteId);
+        //vm.tipoClienteId(data.tipoClienteId);
     });
 };
 

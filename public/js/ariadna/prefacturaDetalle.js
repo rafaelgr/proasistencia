@@ -143,7 +143,7 @@ function initForm() {
     EmpresaId = gup("EmpresaId");
     ClienteId = gup("ClienteId");
     desdeContrato = gup("desdeContrato");
-    conCobro = gup("ConCobro");
+    ConCobro = gup("ConCobro");
     vm.beneficioLineal(0);
     $('#chkBeneficioLineal').prop('disabled', true);
     if (prefacturaId != 0) {
@@ -317,7 +317,7 @@ function loadData(data) {
             url = "PrefacturaLinealDetalle.html?desdeContrato=true&PrefacturaId=" + data.prefacturaId + "&ContratoId=" + data.contratoId;
         }
         if (ConCobro == "true") {
-            url = "PrefacturaLinealDetalle.html?prefacturaId=" + data.prefacturaId + "&ConCobro=true";
+            url = "PrefacturaLinealDetalle.html?PrefacturaId=" + data.prefacturaId + "&ConCobro=true";
         }
         window.open(url, '_self');
         //return;
@@ -468,7 +468,7 @@ var aceptarPrefactura = function () {
         if (desdeContrato == "true" && prefacturaId != 0) {
             returnUrl = 'ContratoDetalle.html?ContratoId=' + ContratoId + '&docPre=true', '_self';
         }
-        if (conCobro == "true") {
+        if (ConCobro == "true") {
             returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
         }
         AvisaRecalculo(url, returnUrl);
@@ -480,7 +480,7 @@ var aceptarPrefactura = function () {
                 window.open('ContratoDetalle.html?ContratoId=' + ContratoId + '&docPre=true', '_self');
             }
             else {
-                if (conCobro == "true" && prefacturaId != 0) {
+                if (ConCobro == "true" && prefacturaId != 0) {
                     returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
                     window.open(returnUrl, '_self');
                 } else {
@@ -569,7 +569,7 @@ function salir() {
         if (prefacturaId != 0 || desdeContrato == "true") {
             returnUrl = 'ContratoDetalle.html?ContratoId=' + ContratoId + '&docPre=true', '_self';
         }
-        if (conCobro == "true") {
+        if (ConCobro == "true") {
             returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true";
         }
 
