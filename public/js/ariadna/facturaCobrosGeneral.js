@@ -84,7 +84,7 @@ function initForm() {
         if (facturaId = '') {
             f = null
         }
-     
+
         cambioDepartamento(this.value);
         vm.sdepartamentoId(this.value);
         if (this.value != antDepartamentoId) {
@@ -120,6 +120,8 @@ function initForm() {
         return false
     });
 
+    initAutoCliente();
+
     $("#enviarCorreo-form").submit(function () {
         return false;
     });
@@ -150,6 +152,10 @@ function admData() {
     self.titleReg = ko.observable();
     self.numReg = ko.observable();
     self.totalReg = ko.observable();
+    //
+    self.clienteId = ko.observable();
+    self.sclienteId = ko.observable();
+    self.tipoClienteId = ko.observable();
 }
 
 
@@ -161,6 +167,7 @@ function compruebaFiltros(id) {
         vm.hFecha(filtros.hFecha);
         loadEmpresas(filtros.empresaId);
         vm.sempresaId(filtros.empresaId);
+        if (filtros.clienteId) cargaCliente(filtros.clienteId);
         if (id > 0) {
             setTimeout(function () {
                 cargarFacturas2All(id)();
@@ -236,7 +243,7 @@ function initTablaFacturas() {
                 className: 'all'
             }
         ],
-         "oColVis": {
+        "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
 
@@ -294,7 +301,7 @@ function initTablaFacturas() {
             { data: "receptorNombre" },
             { data: "vNum" },
             { data: "vFacR" },
-             { data: "vFacD" },
+            { data: "vFacD" },
             { data: "nombreAgente" },
 
             // FECHA
@@ -559,6 +566,7 @@ function editFactura(id) {
         empresaId: vm.sempresaId(),
         dFecha: vm.dFecha(),
         hFecha: vm.hFecha(),
+        clienteId: vm.sclienteId()
     }
     setCookie("filtro_facturas_cobros", JSON.stringify(busquedaFacturas), 1);
     var url = "FacturaDetalle.html?FacturaId=" + id + "&ConCobro=true";
@@ -635,6 +643,8 @@ function cargarFacturas2All(id) {
             if (!(datosOK())) return;
         }
         let empid = vm.sempresaId() || 2;
+        var clienteId = vm.sclienteId() || null;
+        
         if (id) {
             var data = {
                 id: id
@@ -660,7 +670,13 @@ function cargarFacturas2All(id) {
 
             $.ajax({
                 type: "GET",
-                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/" + usuario.usuarioId + "/" + vm.sdepartamentoId() + "/" + dFecha + "/" + hFecha + "/" + empid,
+                url: myconfig.apiUrl + "/api/facturas/usuario/logado/departamento/all/cobros/"
+                    + usuario.usuarioId + "/"
+                    + vm.sdepartamentoId() + "/"
+                    + dFecha + "/"
+                    + hFecha + "/"
+                    + empid + "/"
+                    + clienteId,
                 dataType: "json",
                 contentType: "application/json",
                 success: function (data, status) {
@@ -785,3 +801,50 @@ function cambioEmpresa(empresaId) {
     if (!empresaId) return;
     buscarFacturas()();
 }
+
+var cargaCliente = function (id) {
+    llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
+        if (err) return;
+        $('#txtCliente').val(data.nombre);
+        vm.sclienteId(data.clienteId);
+        vm.clienteId(data.clienteId);
+    });
+};
+
+var initAutoCliente = function () {
+    $("#txtCliente").autocomplete({
+        source: function (request, response) {
+            llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
+                if (err) return;
+
+                var r = [];
+                data.forEach(function (d) {
+                    r.push({
+                        value: d.nombre,
+                        id: d.clienteId
+                    });
+                });
+
+                response(r);
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            vm.sclienteId(ui.item.id);
+            vm.clienteId(ui.item.id);
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                vm.sclienteId(null);
+                vm.clienteId(null);
+            }
+        }
+    });
+
+    $("#txtCliente").on("input", function () {
+        if ($(this).val().trim() === "") {
+            vm.sclienteId(null);
+            vm.clienteId(null);
+        }
+    });
+};

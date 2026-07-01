@@ -290,7 +290,7 @@ function initTablaPrefacturas() {
             "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'C >>" +
             "rt" +
             "<'dt-toolbar-footer'<'col-sm-6 col-xs-12'i><'col-sm-6 col-xs-12'p>>",
-            
+
         buttons: [
             'copy',
             'csv',
@@ -742,33 +742,39 @@ var cargaCliente = function (id) {
 // initAutoCliente
 // inicializa el control del cliente como un autocomplete
 var initAutoCliente = function () {
-    // incialización propiamente dicha
     $("#txtCliente").autocomplete({
         source: function (request, response) {
-            // call ajax
             llamadaAjax("GET", "/api/clientes/?nombre=" + request.term, null, function (err, data) {
                 if (err) return;
-                var r = []
+
+                var r = [];
                 data.forEach(function (d) {
-                    var v = {
+                    r.push({
                         value: d.nombre,
                         id: d.clienteId
-                    };
-                    r.push(v);
+                    });
                 });
+
                 response(r);
             });
         },
         minLength: 2,
         select: function (event, ui) {
             vm.sclienteId(ui.item.id);
-            //cambioCliente(ui.item.id);
+            vm.clienteId(ui.item.id);
+        },
+        change: function (event, ui) {
+            if (!ui.item) {
+                vm.sclienteId(null);
+                vm.clienteId(null);
+            }
         }
     });
-    // regla de validación para el control inicializado
-    jQuery.validator.addMethod("clienteNecesario", function (value, element) {
-        var r = false;
-        if (vm.sclienteId()) r = true;
-        return r;
-    }, "Debe seleccionar un cliente válido");
+
+    $("#txtCliente").on("input", function () {
+        if ($(this).val().trim() === "") {
+            vm.sclienteId(null);
+            vm.clienteId(null);
+        }
+    });
 };
