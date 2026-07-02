@@ -60,43 +60,9 @@ var impAdicional = 0;
 let certFinal = 0;
 datePickerSpanish(); // see comun.js
 
-var cargasContratoPendientes = 0;
 
-function mostrarCargandoContrato() {
-    if ($('#overlayCargando').length === 0) {
-        $('body').append(
-            '<div id="overlayCargando" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.75);z-index:99999;display:flex;align-items:center;justify-content:center;">' +
-            '<div style="text-align:center;font-size:18px;color:#333;">' +
-            '<i class="fa fa-spinner fa-spin fa-3x"></i><br><br>' +
-            '<span>Cargando contrato...</span>' +
-            '</div>' +
-            '</div>'
-        );
-    } else {
-        $('#overlayCargando').show();
-    }
-}
-
-function ocultarCargandoContrato() {
-    $('#overlayCargando').hide();
-}
-
-$(document).ajaxSend(function () {
-    cargasContratoPendientes++;
-    mostrarCargandoContrato();
-});
-
-$(document).ajaxComplete(function () {
-    cargasContratoPendientes--;
-
-    if (cargasContratoPendientes <= 0) {
-        cargasContratoPendientes = 0;
-        ocultarCargandoContrato();
-    }
-});
 
 function initForm() {
-    mostrarCargandoContrato();
 
     comprobarLogin();
     usuario = recuperarUsuario();
