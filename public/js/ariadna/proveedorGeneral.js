@@ -80,7 +80,7 @@ function initTablaProveedores() {
         }
     };
     tablaFacturas = $('#dt_proveedor').DataTable({
-        bSort: false,
+        bSort: true,
         responsive: true,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C Br >r>" +
         "t" +
@@ -147,6 +147,9 @@ function initTablaProveedores() {
             data: "departamento"
         }, {
             data: "cuentaContable"
+        },
+        {
+            data: "telefono"
         },{
             data: "proveedorId",
             render: function (data, type, row) {
