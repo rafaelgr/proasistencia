@@ -95,42 +95,68 @@ function initForm() {
         //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
+
+        var empresaId = vm.sempresaId();
+        var departamentoId = vm.sdepartamentoId();
+
+        loadContratos(
+            null,
+            null,
+            parseInt(departamentoId),
+            parseInt(empresaId)
+        );
     });
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
+
+    $('#cmbEmpresas').change(function (e) {
+        if (!e.added) return;
+
+        var empresaId = e.added.id;
+        var departamentoId = vm.sdepartamentoId();
+
+        loadContratos(
+            null,
+            null,
+            parseInt(departamentoId),
+            parseInt(empresaId)
+        );
+    });
 
     //
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     //
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
+    $("#cmbContratos").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-         //
-    initAutoCliente(); 
-    // verificamos si nos han llamado directamente
-    //     if (id) $('#selector').hide();
-    if (gup('prefacturaId') != "") {
-        vm.prefacturaId(gup('prefacturaId'));
-        verb = "GET";
-        var url = myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId();
-        llamadaAjax(verb, url, null, function (err, data) {
-            vm.sempresaId(data.empresaId);
-            obtainReport(true);
-            $('#selector').hide();
-        });
-    }
-        
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+        //
+        initAutoCliente();
+        // verificamos si nos han llamado directamente
+        //     if (id) $('#selector').hide();
+        if (gup('prefacturaId') != "") {
+            vm.prefacturaId(gup('prefacturaId'));
+            verb = "GET";
+            var url = myconfig.apiUrl + "/api/prefacturas/" + vm.prefacturaId();
+            llamadaAjax(verb, url, null, function (err, data) {
+                vm.sempresaId(data.empresaId);
+                obtainReport(true);
+                $('#selector').hide();
+            });
+        }
+
     });
-   
+
 }
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
@@ -159,10 +185,15 @@ function admData() {
     //
     self.posiblesDepartamentos = ko.observableArray([]);
     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.scontratoId = ko.observable();
+
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
 };
 
 var obtainReport = function (carga) {
-    if(!carga) {
+    if (!carga) {
         if (!datosOK()) return;
     }
     var ids = [];
@@ -170,7 +201,7 @@ var obtainReport = function (carga) {
     var report = new Stimulsoft.Report.StiReport();
     // Load report from url
     //report.loadFile("../reports/SimpleList.mrt");
-    var file = "../reports/prefactura_general.mrt";
+    var file = "../reports/preFactura_roman.mrt";
     verb = "GET";
     url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
     report.loadFile(file);
@@ -178,9 +209,9 @@ var obtainReport = function (carga) {
     llamadaAjax(verb, url, null, function (err, data) {
         var infPreFacturas = data.infPreFacturas;
         file = "../reports/" + infPreFacturas + ".mrt";
-        if(vm.sdepartamentoId() == 7) {
+        if (vm.sdepartamentoId() == 7) {
             file = "../reports/prefactura_reparaciones.mrt";
-        } else if(vm.sdepartamentoId() == 3 && vm.sempresaId() == 3) {
+        } else if (vm.sdepartamentoId() == 3 && vm.sempresaId() == 3) {
             file = "../reports/prefactura_alquileres_fondo.mrt";
         }
         var rpt = gup("report");
@@ -201,7 +232,7 @@ var obtainReport = function (carga) {
             if (str.indexOf("pf.prefacturaId") > -1) {
                 pos = i;
             }
-            if (str.indexOf("prefacturas_lineas") > -1)  {
+            if (str.indexOf("prefacturas_lineas") > -1) {
                 pos1 = i;
             }
             if (str.indexOf("prefacturas_bases") > -1) {
@@ -213,13 +244,13 @@ var obtainReport = function (carga) {
         var sql4 = report.dataSources.list[pos2].sqlCommand;
 
         var sql2 = rptPrefacturaParametros(sql);
-        verb = "POST"; 
+        verb = "POST";
         url = myconfig.apiUrl + "/api/informes/sql/nuevo";
-        llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
+        llamadaAjax(verb, url, { "sql": sql2 }, function (err, data) {
             if (err) return;
             if (data) {
-                if(data.length > 0) {
-                    for( var i = 0; i < data.length; i++) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
                         ids.push(data[i].prefacturaId);
                     }
                     sql3 = sql3 + ' WHERE pfl.prefacturaId IN ( ' + ids + ' )';
@@ -232,7 +263,7 @@ var obtainReport = function (carga) {
                 } else {
                     alert("No hay registros con estas condiciones");
                 }
-                
+
             } else {
                 alert("No hay registros con estas condiciones");
             }
@@ -318,6 +349,7 @@ var rptPrefacturaParametros = function (sql) {
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    var contratoId = vm.scontratoId();
     sql += " WHERE TRUE"
     if (prefacturaId) {
         sql += " AND pf.prefacturaId IN (" + prefacturaId + ")";
@@ -328,19 +360,45 @@ var rptPrefacturaParametros = function (sql) {
         if (empresaId) {
             sql += " AND pf.empresaId IN (" + empresaId + ")";
         }
+        if (contratoId && contratoId > 0) {
+            sql += " AND pf.contratoId = " + contratoId;
+        }
+
         if (dFecha) {
             sql += " AND pf.fecha >= '" + dFecha + " 00:00:00'";
         }
         if (hFecha) {
             sql += " AND pf.fecha <= '" + hFecha + " 23:59:59'";
         }
-        if(departamentoId && departamentoId > 0) {
+        if (departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
-            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
+            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = " + usuario.usuarioId + ")"
         }
 
     }
     return sql;
 }
 
+function loadContratos(dFecha, hFecha, departamentoId, empresaId) {
+
+    var url = myconfig.apiUrl +
+        "/api/contratos/recupera/todos/" +
+        dFecha + "/" +
+        hFecha + "/" +
+        departamentoId + "/" +
+        empresaId;
+
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) return;
+        cargarContratos(data);
+    });
+}
+
+function cargarContratos(data) {
+    var contratos = [{ contratoId: 0, contasoc: "" }].concat(data);
+
+    vm.posiblesContratos(contratos);
+
+    $("#cmbContratos").val(0).trigger('change');
+}

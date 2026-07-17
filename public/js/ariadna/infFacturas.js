@@ -100,6 +100,13 @@ function initForm() {
         //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
+
+        var empresaId = vm.sempresaId();
+        var departamentoId = vm.sdepartamentoId();
+        var dFecha = vm.dFecha();
+        var hFecha = vm.hFecha();
+
+        loadContratos(null, null, parseInt(departamentoId), parseInt(empresaId));
     });
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
@@ -112,11 +119,28 @@ function initForm() {
     loadColaboradores();
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-    //loadDepartamentos();
+
+    $("#cmbContratos").select2(select2Spanish());
+
+    $('#cmbDepartamentosTrabajo').change(function (e) {
+        if (!e.added) return;
+        var empresaId = vm.sempresaId()
+        var departamentoId = e.added.id;
+        loadContratos(null, null, parseInt(departamentoId), parseInt(empresaId));
+    });
+
+    $('#cmbEmpresas').change(function (e) {
+        if (!e.added) return;
+        var empresaId = e.added.id;
+        var departamentoId = vm.sdepartamentoId();
+
+        loadContratos(null, null, parseInt(departamentoId), parseInt(empresaId));
+    });
+
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        if(data) {
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+        if (data) {
             initAutoCliente();
             // verificamos si nos han llamado directamente
             //if (id) $('#selector').hide();
@@ -134,16 +158,16 @@ function initForm() {
         }
     });
     //
-    $.validator.addMethod("notEqualTo", function(value, element, param){
-        if(value == "0") return false
+    $.validator.addMethod("notEqualTo", function (value, element, param) {
+        if (value == "0") return false
         return true;
     });
 }
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new;
         }
     });
@@ -179,6 +203,11 @@ function admData() {
     //
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
+    //
+    self.scontratoId = ko.observable();
+    //
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
 };
 
 var obtainReport = function (carga) {
@@ -192,16 +221,16 @@ var obtainReport = function (carga) {
     url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
     llamadaAjax(verb, url, null, function (err, data) {
         var infFacturas;
-        if(vm.sdepartamentoId() == 7) {
+        if (vm.sdepartamentoId() == 7) {
             infFacturas = data.infFacCliRep + "_sin_imagen";
-        }else if (vm.sdepartamentoId() == 8) {
+        } else if (vm.sdepartamentoId() == 8) {
             infFacturas = data.infFacCliObr;
-         } else if (vm.sdepartamentoId() == 3) {
+        } else if (vm.sdepartamentoId() == 3) {
             infFacturas = data.infFacCliAlq;
-         }else {
-                infFacturas = data.infFacturas;
-            }
-    
+        } else {
+            infFacturas = data.infFacturas;
+        }
+
         file = "../reports/" + infFacturas + ".mrt";
         var rpt = gup("report");
         report.loadFile(file);
@@ -227,13 +256,13 @@ var obtainReport = function (carga) {
         var sql4 = report.dataSources.list[pos2].sqlCommand;
 
         var sql2 = rptFacturaParametros(sql);
-        verb = "POST"; 
+        verb = "POST";
         url = myconfig.apiUrl + "/api/informes/sql/nuevo";
-        llamadaAjax(verb, url, {"sql":sql2}, function(err, data){
+        llamadaAjax(verb, url, { "sql": sql2 }, function (err, data) {
             if (err) return;
             if (data) {
-                if(data.length > 0) {
-                    for( var i = 0; i < data.length; i++) {
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length; i++) {
                         ids.push(data[i].facturaId);
                     }
                     sql3 = sql3 + ' WHERE pfl.facturaId IN ( ' + ids + ' )';
@@ -267,31 +296,31 @@ var obtainReportJson = function (obj) {
         // Create a new report instance
         var report = new Stimulsoft.Report.StiReport();
 
-        if(vm.sdepartamentoId() == 7) {
+        if (vm.sdepartamentoId() == 7) {
             infFacturas = data.infFacCliRep + "_sin_imagen_json";
-        }else if (vm.sdepartamentoId() == 8) {
+        } else if (vm.sdepartamentoId() == 8) {
             infFacturas = data.infFacCliObr + "_json";
         } else {
             infFacturas = data.infFacturas + "_json";
         }
 
         file = "../reports/" + infFacturas + ".mrt";
-    
+
         // Remove all connections from the report template
         report.dictionary.databases.clear();
         report.loadFile(file);
-        
-        
+
+
 
         var dataSet = new Stimulsoft.System.Data.DataSet("fact");
         dataSet.readJson(obj);
-            
-    
-            //
-            report.regData("fact", "fact", dataSet);
-            report.dictionary.synchronize();
-    
-            viewer.report = report;
+
+
+        //
+        report.regData("fact", "fact", dataSet);
+        report.dictionary.synchronize();
+
+        viewer.report = report;
     });
 };
 
@@ -439,6 +468,7 @@ var rptFacturaParametros = function (sql) {
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    var contratoId = vm.scontratoId();
     sql += " WHERE TRUE"
     if (facturaId) {
         sql += " AND pf.facturaId IN (" + facturaId + ")";
@@ -449,8 +479,8 @@ var rptFacturaParametros = function (sql) {
         if (empresaId) {
             sql += " AND pf.empresaId IN (" + empresaId + ")";
         }
-        if(agenteId) {
-            if(departamentoId && departamentoId == 7) {
+        if (agenteId) {
+            if (departamentoId && departamentoId == 7) {
                 sql += " AND s.agenteId IN (" + agenteId + ")";
             } else {
                 sql += " AND cnt.agenteId IN (" + agenteId + ")";
@@ -462,10 +492,13 @@ var rptFacturaParametros = function (sql) {
         if (hFecha) {
             sql += " AND pf.fecha <= '" + hFecha + " 23:59:59'";
         }
-        if(departamentoId && departamentoId > 0) {
+        if (departamentoId && departamentoId > 0) {
             sql += " AND pf.departamentoId =" + departamentoId;
         } else {
-            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
+            sql += " AND pf.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = " + usuario.usuarioId + ")"
+        }
+        if (contratoId && contratoId > 0) {
+            sql += " AND pf.contratoId = " + contratoId;
         }
         sql += " ORDER BY  pf.serie, pf.fecha, pf.numero ASC"
 
@@ -481,29 +514,32 @@ var rptFacturaParametrosJson = function () {
     var empresaId = vm.sempresaId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
+    var contratoId = vm.scontratoId();
+    if (!clienteId) clienteId = 0;
+    if (!agenteId) agenteId = 0;
+    if (!facturaId) facturaId = 0;
+    if (!departamentoId) departamentoId = 0;
+    if (!empresaId) empresaId = 0;
+    if (!contratoId) contratoId = 0;
 
-    if(!clienteId) clienteId = 0;
-    if(!agenteId) agenteId = 0;
-    if(!facturaId) facturaId = 0;
-    if(!departamentoId) departamentoId = 0;
-    if(!empresaId) empresaId = 0;
 
 
-    
     var url = "/api/facturas/inf/facturas/json/visor/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
     url += "/" + clienteId;
     url += "/" + departamentoId;
     url += "/" + agenteId;
     url += "/" + facturaId;
+    url += "/" + contratoId;
+
     llamadaAjax("GET", url, null, function (err, data) {
-        if (err)   return;
-        if(data) {
+        if (err) return;
+        if (data) {
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
         }
-        
+
     });
 }
 
@@ -513,10 +549,14 @@ var exportarPDF = function () {
     var clienteId = vm.sclienteId();
     var empresaId = vm.sempresaId();
     var departamentoId = vm.sdepartamentoId();
+    var contratoId = vm.scontratoId();
+    var agenteId = vm.scomercialId();
 
     if (!empresaId) empresaId = 0;
     if (!clienteId) clienteId = 0;
-    if(!departamentoId) departamentoId = 0;
+    if (!departamentoId) departamentoId = 0;
+    if (!contratoId) contratoId = 0;
+    if (!agenteId) agenteId = 0;
 
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
@@ -527,6 +567,8 @@ var exportarPDF = function () {
     url += "/" + empresaId;
     url += "/" + clienteId;
     url += "/" + departamentoId;
+    url += "/" + contratoId;
+    url += "/" + agenteId;
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) {
             // hay que informar de error durante la exportación
@@ -537,6 +579,22 @@ var exportarPDF = function () {
         $('#modalExportar').modal('hide');
         var mens = "Los ficheros pdf con las facturas se encuentran en el directorio de descargas.";
         mensNormal(mens);
-        
+
     });
+}
+
+function loadContratos(dFecha, hFecha, departamentoId, empresaId) {
+
+    var url = myconfig.apiUrl + "/api/contratos/recupera/todos/" + dFecha + "/" + hFecha + "/" + departamentoId + "/" + empresaId;
+
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) return;
+        cargarContratos(data);
+    });
+}
+
+function cargarContratos(data) {
+    var contratos = [{ contratoId: 0, contasoc: "" }].concat(data);
+    vm.posiblesContratos(contratos);
+    $("#cmbContratos").val(0).trigger('change');
 }

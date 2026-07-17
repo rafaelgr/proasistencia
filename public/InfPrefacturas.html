@@ -42,10 +42,10 @@
     <!-- DATERANGE PICKER -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <!-- JQUERY SELECT2 INPUT -->
-    <script src="js/plugin/select2/select2.min.js"></script>    
+    <script src="js/plugin/select2/select2.min.js"></script>
     <!-- JQUERY VALIDATE -->
     <script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>
-    
+
     <!-- Report viewer scripts, may be external -->
     <!--
     <script type="text/javascript">
@@ -61,7 +61,7 @@
 
 <body>
     <div style="margin: 0px 5px; padding:10px;">
-        <div style="padding:10px;"  id="selector">
+        <div style="padding:10px;" id="selector">
             <div class="row">
                 <h2><i class="fa fa-bar-chart"></i> Informe de prefacturas</h2>
             </div>
@@ -72,14 +72,15 @@
                             <section class="col col-md-2">
                                 <label class="label">Desde fecha - Hasta fecha </label>
                                 <label class="input">
-                                    <input id="txtRFecha" name="txtRFecha"/>
+                                    <input id="txtRFecha" name="txtRFecha" />
                                 </label>
                             </section>
                             <div class="col col-md-3">
                                 <label class="label">Empresa</label>
                                 <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
-                                                    </label>
+                                    <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas"
+                                        data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
+                                </label>
                             </div>
                             <section class="col col-md-4">
                                 <label class="label">Cliente</label>
@@ -87,19 +88,39 @@
                                     <input id="txtCliente" name="txtCliente" />
                                 </label>
                             </section>
-                          
+
                             <section class="col col-md-3">
                                 <label class="label">Departamento</label>
                                 <label style="width:100%;">
-                                    <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
+                                    <select style="width:100%" id="cmbDepartamentosTrabajo"
+                                        name="cmbDepartamentosTrabajo"
+                                        data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
                                 </label>
                             </section>
-                            
+
+                        </div>
+                        <div class="row">
+                            <section class="col col-md-6">
+                                <label class="label">CONTRATO</label>
+                                <label style="width:100%;">
+                                    <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="
+                    options: posiblesContratos,
+                    optionsText: 'contasoc',
+                    optionsValue: 'contratoId',
+                    value: scontratoId,
+                    valueAllowUnset: true,
+                    selectedOptions: elegidosContratos,
+                    selected2:{}">
+                                    </select>
+                                    <i></i>
+                                </label>
+                            </section>
                         </div>
                     </fieldset>
                     <fieldset>
                         <div class="pull-right">
-                            <button id="btnImprimir" title="Imprimir prefactura" class="btn btn-success btn-circle btn-lg">
+                            <button id="btnImprimir" title="Imprimir prefactura"
+                                class="btn btn-success btn-circle btn-lg">
                                 <i class="fa fa-lg fa-print"></i>
                             </button>
                         </div>
@@ -117,13 +138,14 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <span>Proasistencia <span id="versionFooter">NO VERSION</span>
-                    <span class="hidden-xs"> - Aplicación general</span>
-                    <span> © Ariadna Software S.L. 2016-2017</span>
+                        <span class="hidden-xs"> - Aplicación general</span>
+                        <span> © Ariadna Software S.L. 2016-2017</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                     <div class="txt-color-white inline-block">
-                        <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
-                        <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                        <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong>
+                                &nbsp;</strong>
+                            <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ var rondaRealizadaId;
 var directorio
 var objectsS3 = [];
 var parametros = {};
+let usuario = null;
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -18,6 +19,7 @@ var breakpointDefinition = {
 
 
 function initForm() {
+    usuario = recuperarUsuario();
     comprobarLogin();
     datePickerSpanish(); // see comun.js
     // de smart admin
@@ -80,14 +82,37 @@ function initForm() {
         return false;
     });
 
-    /*  $('#cmbAnos').select2(select2Spanish());
-     loadAnyos();
- 
-     $('#cmbAnos2').select2(select2Spanish());
-     loadAnyos2(); */
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+
+        if (data) {
+            estableceFechaEjercicio();
+
+            //initAutoProveedor();
+
+
+            initArbolDocumentacion();
+            if (directorio == "facturas_proveedores/") {
+
+            } else if (directorio == "facturas/") {
+
+            } else {
+                getObjectsdocumentacion();
+            }
+        }
+    });
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas(2);
+
+    initAutoCliente();
+
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+
+    $("#cmbColaboradores").select2(select2Spanish());
+    loadColaboradores();
+
+    $("#cmbContratos").select2(select2Spanish());
 
     $("#cmbEmpresas2").select2(select2Spanish());
     loadEmpresas2(2);
@@ -95,19 +120,18 @@ function initForm() {
     $("#cmbProveedores").select2(select2Spanish());
     loadProveedores(0);
 
-    estableceFechaEjercicio();
+    $("#cmbEmpresas").change(function () {
+        loadContratosFacturas();
+    });
 
-    //initAutoProveedor();
+    $("#cmbDepartamentosTrabajo").change(function () {
+        loadContratosFacturas();
+    });
 
+    $("#txtDesdeFecha, #txtHastaFecha").change(function () {
+        loadContratosFacturas();
+    });
 
-    initArbolDocumentacion();
-    if (directorio == "facturas_proveedores/") {
-
-    } else if (directorio == "facturas/") {
-
-    } else {
-        getObjectsdocumentacion();
-    }
 }
 
 function admData() {
@@ -153,6 +177,32 @@ function admData() {
     self.dFecha2 = ko.observable();
     self.hFecha2 = ko.observable();
 
+    // CLIENTE
+    self.clienteId = ko.observable();
+    self.sclienteId = ko.observable();
+
+    self.posiblesClientes = ko.observableArray([]);
+    self.elegidosClientes = ko.observableArray([]);
+
+    // DEPARTAMENTO
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
+
+    // COLABORADOR
+    self.comercialId = ko.observable();
+    self.scomercialId = ko.observable();
+
+    self.posiblesColaboradores = ko.observableArray([]);
+    self.elegidosColaboradores = ko.observableArray([]);
+
+    // CONTRATO
+    self.scontratoId = ko.observable();
+
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
 
 }
 /* 
@@ -319,6 +369,7 @@ var descargarRenombrarFacproves2 = function () {
         if (!datosOKFacproves()) return;
     }
 
+
     llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha2 + "/" + hFecha2 + "/" + vm.sproveedorId(), null, function (err, data) {
         if (err) return;
         if (data.length == 0) return;
@@ -406,7 +457,7 @@ async function descargarObjetosFacprove(objetos) {
 
 //FUNCIONES DE DESCARGAR Y RENOMBRER FACTURAS
 var descargarRenombrarFacturas = function () {
-    var a = vm.sempresaId().toString();
+
     var dFecha = null;
     if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     var hFecha = vm.hFecha();
@@ -415,7 +466,23 @@ var descargarRenombrarFacturas = function () {
         if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
         if (!datosOKFacturas()) return;
     }
-    llamadaAjax("GET", "/api/facturas/entre-fechas/empresa/" + a + "/" + dFecha + "/" + hFecha, null, function (err, data) {
+    const empresaId = Number(vm.sempresaId()) || 0;
+    const clienteId = Number(vm.sclienteId()) || 0;
+    const departamentoId = Number(vm.sdepartamentoId()) || 0;
+    const colaboradorId = Number(vm.scomercialId()) || 0;
+    const contratoId = Number(vm.scontratoId()) || 0;
+
+    const url =
+        "/api/facturas/entre-fechas/filtros/" +
+        dFecha + "/" +
+        hFecha + "/" +
+        empresaId + "/" +
+        clienteId + "/" +
+        departamentoId + "/" +
+        colaboradorId + "/" +
+        contratoId;
+
+    llamadaAjax("GET", url, null, function (err, data) {
         if (data) {
             descargarObjetosFacturas(data)
                 .then(() => {
@@ -747,71 +814,156 @@ async function getObjectsdocumentacionFacproves() {
 }
 
 async function getObjectsdocumentacionFacturas() {
-    var dFecha = null;
-    if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-    var hFecha = vm.hFecha();
-    if (hFecha == '' || hFecha == undefined) hFecha = null;
-    if (hFecha != null) {
-        if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    let dFecha = null;
+    let hFecha = null;
+
+    if (vm.dFecha()) {
+        dFecha = moment(
+            vm.dFecha(),
+            "DD/MM/YYYY"
+        ).format("YYYY-MM-DD");
+    }
+
+    if (vm.hFecha()) {
+        hFecha = moment(
+            vm.hFecha(),
+            "DD/MM/YYYY"
+        ).format("YYYY-MM-DD");
+
         if (!datosOKFacturas()) return;
     }
-    llamadaAjax('GET', "/api/parametros/0", null, async function (err, data) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        parametros = data;
-        var arr = []
-        var a = vm.sempresaId().toString();
 
-        llamadaAjax("GET", "/api/facturas/entre-fechas/empresa/" + a + "/" + dFecha + "/" + hFecha, null, async function (err, data2) {
-            if (err) return;
-            if (data2.length == 0) return;
-            for (let i = 0; i < data2.length; i++) {
+    const empresaId = Number(vm.sempresaId()) || 0;
+    const clienteId = Number(vm.sclienteId()) || 0;
+    const departamentoId = Number(vm.sdepartamentoId()) || 0;
+    const colaboradorId = Number(vm.scomercialId()) || 0;
+    const contratoId = Number(vm.scontratoId()) || 0;
 
-                arr.push(directorio + data2[i].nombreFacturaPdf);
+    llamadaAjax(
+        "GET",
+        "/api/parametros/0",
+        null,
+        async function (err, data) {
+            if (err) {
+                console.error(err);
+                return;
             }
-            try {
-                const objetos = await listObjectsFilteredWithSignedUrls(parametros, arr);
 
-                let carpetas = [];
-                let archivos = [];
-                let id = 1;
-                let documentoId = 1;
-                let antCarpeta = null;
+            parametros = data;
 
-                objetos.forEach(e => {
-                    // Extraer nombre carpeta por el prefijo antes de "/"
-                    const indexSlash = e.Key.indexOf("/");
-                    const carpetaNombre = indexSlash > -1 ? e.Key.substring(0, indexSlash) : "SinCarpeta";
+            const url =
+                "/api/facturas/entre-fechas/filtros/" +
+                dFecha + "/" +
+                hFecha + "/" +
+                empresaId + "/" +
+                clienteId + "/" +
+                departamentoId + "/" +
+                colaboradorId + "/" +
+                contratoId;
 
-                    if (!antCarpeta) {
-                        carpetas.push({ carpetaNombre, carpetaId: id });
-                        archivos.push({ data: e, carpetaId: id, documentoId });
-                        antCarpeta = carpetaNombre;
-                    } else {
-                        if (carpetaNombre !== antCarpeta) {
-                            id++;
-                            carpetas.push({ carpetaNombre, carpetaId: id });
-                            archivos.push({ data: e, carpetaId: id, documentoId });
-                            antCarpeta = carpetaNombre;
-                        } else {
-                            archivos.push({ data: e, carpetaId: id, documentoId });
-                        }
+            llamadaAjax(
+                "GET",
+                url,
+                null,
+                async function (err, facturas) {
+                    if (err) return;
+
+                    if (!facturas || facturas.length === 0) {
+                        mensNormal(
+                            "No se han encontrado facturas con los filtros indicados."
+                        );
+                        return;
                     }
-                    documentoId++;
-                });
 
-                const regs = ProcesaDocumObjTree(archivos, carpetas);
-                loadDocumentacionTree(regs);
+                    const keys = facturas.map(
+                        factura =>
+                            directorio + factura.nombreFacturaPdf
+                    );
 
-            } catch (error) {
-                console.error("Error al listar o generar URLs firmadas:", error);
-            }
+                    try {
+                        const objetos =
+                            await listObjectsFilteredWithSignedUrls(
+                                parametros,
+                                keys
+                            );
+
+                        $("#lblTotalDocumentos").text(
+                            "Facturas: " + facturas.length +
+                            " | Documentos en S3: " + objetos.length
+                        );
 
 
-        });
-    });
+                        let carpetas = [];
+                        let archivos = [];
+                        let id = 1;
+                        let documentoId = 1;
+                        let antCarpeta = null;
+
+                        objetos.forEach(e => {
+                            const indexSlash = e.Key.indexOf("/");
+
+                            const carpetaNombre =
+                                indexSlash > -1
+                                    ? e.Key.substring(0, indexSlash)
+                                    : "SinCarpeta";
+
+                            if (!antCarpeta) {
+                                carpetas.push({
+                                    carpetaNombre: carpetaNombre,
+                                    carpetaId: id
+                                });
+
+                                archivos.push({
+                                    data: e,
+                                    carpetaId: id,
+                                    documentoId: documentoId
+                                });
+
+                                antCarpeta = carpetaNombre;
+                            } else {
+                                if (carpetaNombre !== antCarpeta) {
+                                    id++;
+
+                                    carpetas.push({
+                                        carpetaNombre: carpetaNombre,
+                                        carpetaId: id
+                                    });
+
+                                    archivos.push({
+                                        data: e,
+                                        carpetaId: id,
+                                        documentoId: documentoId
+                                    });
+
+                                    antCarpeta = carpetaNombre;
+                                } else {
+                                    archivos.push({
+                                        data: e,
+                                        carpetaId: id,
+                                        documentoId: documentoId
+                                    });
+                                }
+                            }
+
+                            documentoId++;
+                        });
+
+                        const regs = ProcesaDocumObjTree(
+                            archivos,
+                            carpetas
+                        );
+
+                        loadDocumentacionTree(regs);
+                    } catch (error) {
+                        console.error(
+                            "Error al listar o generar URLs firmadas:",
+                            error
+                        );
+                    }
+                }
+            );
+        }
+    );
 }
 
 
@@ -1095,3 +1247,99 @@ function datosOKFacturas() {
 }
 
 
+var initAutoCliente = function () {
+    $("#txtCliente").autocomplete({
+        source: function (request, response) {
+            llamadaAjax(
+                "GET",
+                "/api/clientes/?nombre=" + encodeURIComponent(request.term),
+                null,
+                function (err, data) {
+                    if (err) return;
+
+                    const resultados = data.map(cliente => ({
+                        value: cliente.nombre,
+                        id: cliente.clienteId
+                    }));
+
+                    response(resultados);
+                }
+            );
+        },
+
+        minLength: 2,
+
+        select: function (event, ui) {
+            vm.sclienteId(ui.item.id);
+            //loadContratosFacturas();
+        },
+
+        change: function (event, ui) {
+            if (!ui.item) {
+                vm.sclienteId(null);
+                $("#txtCliente").val("");
+                //loadContratosFacturas();
+            }
+        }
+    });
+};
+
+function loadColaboradores() {
+    llamadaAjax(
+        "GET",
+        "/api/comerciales/agentes/activos",
+        null,
+        function (err, data) {
+            if (err) return;
+
+            const colaboradores = [
+                {
+                    comercialId: 0,
+                    nombre: ""
+                }
+            ].concat(data);
+
+            vm.posiblesColaboradores(colaboradores);
+            vm.scomercialId(0);
+
+            $("#cmbColaboradores")
+                .val(0)
+                .trigger("change");
+        }
+    );
+}
+
+function loadContratosFacturas() {
+    const empresaId = Number(vm.sempresaId()) || 0;
+    const departamentoId = Number(vm.sdepartamentoId()) || 0;
+
+    let dFecha = null;
+    let hFecha = null;
+
+
+    const url =
+        myconfig.apiUrl +
+        "/api/contratos/recupera/todos/" +
+        dFecha + "/" +
+        hFecha + "/" +
+        departamentoId + "/" +
+        empresaId;
+
+    llamadaAjax("GET", url, null, function (err, data) {
+        if (err) return;
+
+        const contratos = [
+            {
+                contratoId: 0,
+                contasoc: ""
+            }
+        ].concat(data || []);
+
+        vm.posiblesContratos(contratos);
+        vm.scontratoId(0);
+
+        $("#cmbContratos")
+            .val(0)
+            .trigger("change");
+    });
+}
