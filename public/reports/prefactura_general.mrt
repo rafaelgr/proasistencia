@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "aa4c9a303b244169b4eeb3ca29a78f94",
+  "ReportGuid": "f43f0e46df9be5f1de67ffd8eb79868d",
   "ReportName": "Prefacturas_Proasistencia",
   "ReportAlias": "Prefacturas_Proasistencia",
   "ReportFile": "prefactura_general.mrt",
   "ReportCreated": "/Date(1493224135000+0200)/",
-  "ReportChanged": "/Date(1764689451000+0100)/",
+  "ReportChanged": "/Date(1784113544000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -34,7 +34,7 @@
             "Name": "numero",
             "NameInSource": "numero",
             "Alias": "numero",
-            "Type": "System.Int32"
+            "Type": "System.String"
           },
           "3": {
             "Name": "serie",
@@ -46,7 +46,7 @@
             "Name": "fecha",
             "NameInSource": "fecha",
             "Alias": "fecha",
-            "Type": "System.Byte[]"
+            "Type": "System.String"
           },
           "5": {
             "Name": "empresaId",
@@ -176,7 +176,7 @@
           }
         },
         "NameInSource": "PROA_REPORT",
-        "SqlCommand": "SELECT\npf.prefacturaId, pf.ano, pf.numero, pf.serie,DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.porcentajeRetencion, pf.importeRetencion\nFROM prefacturas AS pf\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\n"
+        "SqlCommand": "SELECT\npf.prefacturaId, pf.ano, LPAD(pf.numero, 9, '0') AS numero, pf.serie,DATE_FORMAT(pf.fecha,'%Y-%m-%d') AS fecha,\npf.empresaId, pf.clienteId, pf.contratoClienteMantenimientoId,\npf.emisorNif, pf.emisorNombre, pf.emisorDireccion, pf.emisorCodPostal, pf.emisorPoblacion, pf.emisorProvincia,\npf.receptorNif, pf.receptorNombre, pf.receptorDireccion, pf.receptorCodPostal, pf.receptorPoblacion, pf.receptorProvincia,\npf.total, pf.totalConIva, fp.nombre AS formaPago, pf.observaciones, pf.porcentajeRetencion, pf.importeRetencion\nFROM prefacturas AS pf\nLEFT JOIN formas_pago AS fp ON fp.formaPagoId = pf.formapagoId\n"
       },
       "1": {
         "Ident": "StiMySqlSource",
@@ -356,6 +356,7 @@
         "Name": "PROA_REPORT",
         "Alias": "PROA_REPORT",
         "Key": "54833dc271534ec8a77e2d9b743556c0",
+        "CastToColumnType": "CastToColumnType",
         "ConnectionStringEncrypted": "41rZa+9de83zQbWA5VjgY4tw0cLJS9nBa0ehzOp07ILCbNUJS0ur6eNMpZhNXGW70WppSMVRQ7xrYdWYTlx3Y410"
       }
     },
@@ -444,7 +445,7 @@
               "Ident": "StiText",
               "Name": "Text2",
               "Guid": "e0e3b4fd6255e3ec7c48437719450eb9",
-              "ClientRectangle": "11.4,3.4,7.2,0.4",
+              "ClientRectangle": "11.6,3.4,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -460,7 +461,7 @@
               "Ident": "StiText",
               "Name": "Text15",
               "Guid": "c8b7972009fa04062d427693efc5efda",
-              "ClientRectangle": "11.4,3.8,7.2,0.4",
+              "ClientRectangle": "11.6,3.8,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -476,7 +477,7 @@
               "Ident": "StiText",
               "Name": "Text17",
               "Guid": "e25dbf3a9610ea44347c39586477b5a3",
-              "ClientRectangle": "11.4,4.6,7.2,0.4",
+              "ClientRectangle": "11.6,4.6,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -491,7 +492,7 @@
               "Ident": "StiText",
               "Name": "Text1",
               "Guid": "5a51ed1b1359a6b2017db81298f59d7f",
-              "ClientRectangle": "1,3.4,7.2,0.4",
+              "ClientRectangle": "0.2,3.4,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -506,7 +507,7 @@
               "Ident": "StiText",
               "Name": "Text8",
               "Guid": "bc73cb3685824ea9266fcc612f16e519",
-              "ClientRectangle": "1,2.6,7.2,0.4",
+              "ClientRectangle": "0.2,2.6,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -523,7 +524,7 @@
               "Ident": "StiText",
               "Name": "Text9",
               "Guid": "b5affca268278ac4f2fea87a34b8078e",
-              "ClientRectangle": "1,3,7.2,0.4",
+              "ClientRectangle": "0.2,3,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -539,7 +540,7 @@
               "Ident": "StiText",
               "Name": "Text10",
               "Guid": "5ba9f5d1a19046fb8d9947be8025066a",
-              "ClientRectangle": "1,3.8,7.2,0.4",
+              "ClientRectangle": "0.2,3.8,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -554,7 +555,7 @@
               "Ident": "StiText",
               "Name": "Text11",
               "Guid": "e43a9f8a1e140b1afe76bf293e1e76c0",
-              "ClientRectangle": "1,4.2,7.2,0.4",
+              "ClientRectangle": "0.2,4.2,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -570,7 +571,7 @@
               "Ident": "StiText",
               "Name": "Text12",
               "Guid": "a3bc79c640f4abe247013bfe087d610a",
-              "ClientRectangle": "1,4.6,7.2,0.4",
+              "ClientRectangle": "0.2,4.6,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -585,7 +586,7 @@
               "Ident": "StiText",
               "Name": "Text13",
               "Guid": "8be8da561585918b6e92d2a89f288404",
-              "ClientRectangle": "11.4,2.6,7.2,0.4",
+              "ClientRectangle": "11.6,2.6,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -602,7 +603,7 @@
               "Ident": "StiText",
               "Name": "Text14",
               "Guid": "e677dfc8bf6fc8e9d9163b0d3d1a0ca4",
-              "ClientRectangle": "11.4,3,7.2,0.4",
+              "ClientRectangle": "11.6,3,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -618,7 +619,7 @@
               "Ident": "StiText",
               "Name": "Text16",
               "Guid": "ec0c291a562b1218a2efe4e6f893f4d0",
-              "ClientRectangle": "11.4,4.2,7.2,0.4",
+              "ClientRectangle": "11.6,4.2,7.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -633,14 +634,19 @@
             "12": {
               "Ident": "StiText",
               "Name": "Text6",
-              "ClientRectangle": "0.8,0.4,9.6,0.6",
+              "ClientRectangle": "0.2,1,9.6,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{cabecera_prefactura.serie} - {cabecera_prefactura.ano} - {cabecera_prefactura.numero}"
               },
-              "Font": ";18;;",
+              "Font": ";11;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
@@ -649,27 +655,36 @@
             "13": {
               "Ident": "StiText",
               "Name": "Text7",
-              "ClientRectangle": "0.8,1.2,9.6,0.6",
+              "ClientRectangle": "0.2,1.4,9.6,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "{cabecera_prefactura.fecha}"
               },
-              "Font": ";18;;",
+              "Font": ";11;Bold;",
               "Border": ";;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:0,0,0",
               "TextFormat": {
-                "Ident": "StiDateFormatService",
-                "StringFormat": "dd/MM/yyyy"
+                "Ident": "StiDateFormatService"
               },
               "Type": "DataColumn"
             },
             "14": {
               "Ident": "StiText",
               "Name": "Text5",
-              "ClientRectangle": "10.8,0.4,8,0.8",
+              "ClientRectangle": "10.8,1,8,0.8",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -677,7 +692,7 @@
                 "Value": "PREFACTURA"
               },
               "HorAlignment": "Right",
-              "Font": ";22;;",
+              "Font": ";11;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -701,7 +716,7 @@
               "Ident": "StiText",
               "Name": "Datalineas_prefactura_capituloLinea",
               "CanGrow": true,
-              "ClientRectangle": "0,0,18.8,0.8",
+              "ClientRectangle": "0.2,0,18.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -725,7 +740,7 @@
           "Ident": "StiHeaderBand",
           "Name": "CabeceraLineas",
           "CanGrow": true,
-          "ClientRectangle": "0,9.4,19,0.8",
+          "ClientRectangle": "0,9.4,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -735,7 +750,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text18",
-              "ClientRectangle": "0,0,1,0.6",
+              "ClientRectangle": "0.2,0,0.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -751,7 +766,7 @@
               "Ident": "StiText",
               "Name": "Text19",
               "Guid": "53dab71aa70f453b0f12fd64a96c9fa5",
-              "ClientRectangle": "1.2,0,9.4,0.6",
+              "ClientRectangle": "1.2,0,9.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -767,7 +782,7 @@
               "Ident": "StiText",
               "Name": "Text21",
               "Guid": "bb3051d6ba9dd3fb1374cba20611892d",
-              "ClientRectangle": "10.8,0,1.2,0.6",
+              "ClientRectangle": "10.8,0,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -783,7 +798,7 @@
               "Ident": "StiText",
               "Name": "Text23",
               "Guid": "7428c51c6e3cce61f637df68704eadee",
-              "ClientRectangle": "12.2,0,1.8,0.6",
+              "ClientRectangle": "12.2,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -800,7 +815,7 @@
               "Ident": "StiText",
               "Name": "Text25",
               "Guid": "2aa7b6aec695455fa22c6296a5e4e920",
-              "ClientRectangle": "14.4,0,1.8,0.6",
+              "ClientRectangle": "14.4,0,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -817,7 +832,7 @@
               "Ident": "StiText",
               "Name": "Text26",
               "Guid": "35ae56b34989cdfe7a40e96d82eba858",
-              "ClientRectangle": "16.4,0,2.4,0.6",
+              "ClientRectangle": "16.4,0,2.4,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -837,7 +852,7 @@
           "Ident": "StiDataBand",
           "Name": "Datalineas_prefactura",
           "CanGrow": true,
-          "ClientRectangle": "0,11,19,0.8",
+          "ClientRectangle": "0,10.8,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -867,7 +882,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text20",
-              "ClientRectangle": "0,0,1,0.8",
+              "ClientRectangle": "0.2,0,0.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -983,7 +998,7 @@
           "Ident": "StiGroupFooterBand",
           "Name": "GroupFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,12.6,19,0.8",
+          "ClientRectangle": "0,12.4,19,0.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -993,7 +1008,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text29",
-              "ClientRectangle": "16.4,0,2.4,0.8",
+              "ClientRectangle": "16.4,0,2.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1020,7 +1035,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text30",
-              "ClientRectangle": "12.6,0,3.6,0.8",
+              "ClientRectangle": "12.6,0,3.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1040,7 +1055,7 @@
           "Ident": "StiHeaderBand",
           "Name": "CabeceraBases",
           "CanGrow": true,
-          "ClientRectangle": "0,14.2,19,1.4",
+          "ClientRectangle": "0,13.8,19,1.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1050,7 +1065,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text31",
-              "ClientRectangle": "0.2,1,1.8,0.4",
+              "ClientRectangle": "0.2,0.8,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1066,7 +1081,7 @@
               "Ident": "StiText",
               "Name": "Text32",
               "Guid": "6ff84a8d24ad8353fbbb6e61fc216c24",
-              "ClientRectangle": "4.4,1,1.2,0.4",
+              "ClientRectangle": "4.4,0.8,1.2,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1083,7 +1098,7 @@
               "Ident": "StiText",
               "Name": "Text33",
               "Guid": "36e96938ee864c96be128cd42eaf370b",
-              "ClientRectangle": "2.2,1,1.8,0.4",
+              "ClientRectangle": "2.2,0.8,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1100,7 +1115,7 @@
               "Ident": "StiText",
               "Name": "Text34",
               "Guid": "530bf640d30a53529cf0922fabedbda4",
-              "ClientRectangle": "6,1,1.8,0.4",
+              "ClientRectangle": "6,0.8,1.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1136,7 +1151,7 @@
           "Ident": "StiDataBand",
           "Name": "Databases_prefactura",
           "CanGrow": true,
-          "ClientRectangle": "0,16.4,19,0.8",
+          "ClientRectangle": "0,15.8,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1241,7 +1256,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,18,19,5.6",
+          "ClientRectangle": "0,17.4,19,5.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -1386,7 +1401,7 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text43",
-              "ClientRectangle": "0,3.2,10,1.8",
+              "ClientRectangle": "0.2,3.2,9.8,1.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },

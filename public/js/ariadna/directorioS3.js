@@ -369,6 +369,7 @@ var descargarRenombrarFacproves2 = function () {
         if (!datosOKFacproves()) return;
     }
 
+
     llamadaAjax("GET", "/api/facturasProveedores/entre-fechas/empresa/proveedor/" + a + "/" + dFecha2 + "/" + hFecha2 + "/" + vm.sproveedorId(), null, function (err, data) {
         if (err) return;
         if (data.length == 0) return;
@@ -456,7 +457,7 @@ async function descargarObjetosFacprove(objetos) {
 
 //FUNCIONES DE DESCARGAR Y RENOMBRER FACTURAS
 var descargarRenombrarFacturas = function () {
-    var a = vm.sempresaId().toString();
+
     var dFecha = null;
     if (vm.dFecha()) dFecha = moment(vm.dFecha(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     var hFecha = vm.hFecha();
@@ -465,11 +466,23 @@ var descargarRenombrarFacturas = function () {
         if (hFecha != null) hFecha = moment(hFecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
         if (!datosOKFacturas()) return;
     }
+    const empresaId = Number(vm.sempresaId()) || 0;
     const clienteId = Number(vm.sclienteId()) || 0;
     const departamentoId = Number(vm.sdepartamentoId()) || 0;
     const colaboradorId = Number(vm.scomercialId()) || 0;
     const contratoId = Number(vm.scontratoId()) || 0;
-    llamadaAjax("GET", "/api/facturas/entre-fechas/empresa/" + a + "/" + dFecha + "/" + hFecha, null, function (err, data) {
+
+    const url =
+        "/api/facturas/entre-fechas/filtros/" +
+        dFecha + "/" +
+        hFecha + "/" +
+        empresaId + "/" +
+        clienteId + "/" +
+        departamentoId + "/" +
+        colaboradorId + "/" +
+        contratoId;
+
+    llamadaAjax("GET", url, null, function (err, data) {
         if (data) {
             descargarObjetosFacturas(data)
                 .then(() => {
@@ -874,8 +887,73 @@ async function getObjectsdocumentacionFacturas() {
                                 keys
                             );
 
-                        // Aquí continúa tu procesamiento actual
-                        // de carpetas, archivos y jsTree.
+                        $("#lblTotalDocumentos").text(
+                            "Facturas: " + facturas.length +
+                            " | Documentos en S3: " + objetos.length
+                        );
+
+
+                        let carpetas = [];
+                        let archivos = [];
+                        let id = 1;
+                        let documentoId = 1;
+                        let antCarpeta = null;
+
+                        objetos.forEach(e => {
+                            const indexSlash = e.Key.indexOf("/");
+
+                            const carpetaNombre =
+                                indexSlash > -1
+                                    ? e.Key.substring(0, indexSlash)
+                                    : "SinCarpeta";
+
+                            if (!antCarpeta) {
+                                carpetas.push({
+                                    carpetaNombre: carpetaNombre,
+                                    carpetaId: id
+                                });
+
+                                archivos.push({
+                                    data: e,
+                                    carpetaId: id,
+                                    documentoId: documentoId
+                                });
+
+                                antCarpeta = carpetaNombre;
+                            } else {
+                                if (carpetaNombre !== antCarpeta) {
+                                    id++;
+
+                                    carpetas.push({
+                                        carpetaNombre: carpetaNombre,
+                                        carpetaId: id
+                                    });
+
+                                    archivos.push({
+                                        data: e,
+                                        carpetaId: id,
+                                        documentoId: documentoId
+                                    });
+
+                                    antCarpeta = carpetaNombre;
+                                } else {
+                                    archivos.push({
+                                        data: e,
+                                        carpetaId: id,
+                                        documentoId: documentoId
+                                    });
+                                }
+                            }
+
+                            documentoId++;
+                        });
+
+                        const regs = ProcesaDocumObjTree(
+                            archivos,
+                            carpetas
+                        );
+
+                        loadDocumentacionTree(regs);
                     } catch (error) {
                         console.error(
                             "Error al listar o generar URLs firmadas:",
