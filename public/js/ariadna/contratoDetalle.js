@@ -775,7 +775,7 @@ function initForm() {
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) {
-               
+
                 return;
             }
             vm.sempresaId(data.empresaId);
@@ -817,7 +817,7 @@ function initForm() {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
-           
+
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -838,7 +838,7 @@ function initForm() {
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
 
-       
+
 
         //
         document.title = "NUEVO CONTRATO";
@@ -2213,9 +2213,10 @@ function initTablaContratosLineas() {
         }, {
             data: "descripcion",
             render: function (data, type, row) {
-                if (data) {
+                if (data && data !== '') {
                     return data.replace('\n', '<br/>');
-                }
+                } else {
+                    return '';}
 
             }
         }, {
@@ -3952,42 +3953,165 @@ function initTablaPrefacturas(departamentoId) {
         $('#dt_prefactura tbody').empty();
     }
 
+    function numeroExcel(valor) {
+        if (valor === null || valor === undefined || valor === '') {
+            return 0;
+        }
+
+        if (typeof valor === 'number') {
+            return valor;
+        }
+
+        // Quitar posibles etiquetas HTML
+        let texto = $('<div>').html(valor).text().trim();
+
+        // Quitar espacios, símbolos monetarios, etc.
+        texto = texto
+            .replace(/\s/g, '')
+            .replace(/[€$]/g, '');
+
+        /*
+         * Formato español:
+         * 6.782,59  -> 6782.59
+         * -147,15   -> -147.15
+         *
+         * Formato internacional:
+         * 6,782.59  -> 6782.59
+         */
+        if (texto.includes(',') && texto.includes('.')) {
+            if (texto.lastIndexOf(',') > texto.lastIndexOf('.')) {
+                // Español
+                texto = texto
+                    .replace(/\./g, '')
+                    .replace(',', '.');
+            } else {
+                // Internacional
+                texto = texto.replace(/,/g, '');
+            }
+        } else if (texto.includes(',')) {
+            texto = texto.replace(',', '.');
+        }
+
+        const numero = Number(texto);
+
+        return Number.isNaN(numero) ? 0 : numero;
+    }
     var buttonCommon = {
+        footer: true,
+
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (column === 0 || column === 25) {
-                            return "";
-                        } else {
-                            return data;
-                        }
+
+                    // Columnas numéricas
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
                     }
-                },
-                footer: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 17 || row === 18) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (row === 7) {
-                            return data
-                        } else {
-                            return "";
-                        }
+
+                    // No exportar columna inicial ni botones
+                    if (column === 0 || column === 25) {
+                        return '';
                     }
+
+                    return $('<div>').html(data).text();
                 },
+
+                footer: function (data, column, node) {
+
+                    // Totales numéricos del footer
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
+                    }
+
+                    if (column === 7) {
+                        return $('<div>').html(data).text();
+                    }
+
+                    return '';
+                }
             }
         },
 
+        customize: function (xlsx) {
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            var styles = xlsx.xl['styles.xml'];
+
+            /*
+             * Crear formato numérico:
+             * Excel mostrará separador de miles y dos decimales.
+             *
+             * En Excel español:
+             * 6782.59 se mostrará como 6.782,59
+             */
+            var numFmts = $('numFmts', styles);
+
+            if (numFmts.length === 0) {
+                $('styleSheet', styles).prepend(
+                    '<numFmts count="1">' +
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>' +
+                    '</numFmts>'
+                );
+            } else {
+                numFmts.append(
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>'
+                );
+
+                numFmts.attr(
+                    'count',
+                    parseInt(numFmts.attr('count') || 0, 10) + 1
+                );
+            }
+
+            // Crear estilo usando el formato anterior
+            var cellXfs = $('cellXfs', styles);
+            var estiloNumerico = $('xf', cellXfs).length;
+
+            cellXfs.append(
+                '<xf numFmtId="164" ' +
+                'fontId="0" ' +
+                'fillId="0" ' +
+                'borderId="0" ' +
+                'xfId="0" ' +
+                'applyNumberFormat="1"/>'
+            );
+
+            cellXfs.attr(
+                'count',
+                parseInt(cellXfs.attr('count') || 0, 10) + 1
+            );
+
+            /*
+             * Convierte la letra de la celda Excel en número:
+             * A = 1, B = 2, I = 9, etc.
+             */
+            function numeroColumnaExcel(referencia) {
+                var letras = referencia.replace(/[0-9]/g, '');
+                var numero = 0;
+
+                for (var i = 0; i < letras.length; i++) {
+                    numero = numero * 26 +
+                        letras.charCodeAt(i) - 64;
+                }
+
+                return numero;
+            }
+
+            /*
+             * Columnas 8 a 18 del DataTable equivalen,
+             * si se exportan todas, a las columnas Excel 9 a 19.
+             *
+             * Se aplica a todas las filas, incluido el footer.
+             */
+            $('sheetData row c', sheet).each(function () {
+                var celda = $(this);
+                var referencia = celda.attr('r');
+                var columnaExcel = numeroColumnaExcel(referencia);
+
+                if (columnaExcel >= 9 && columnaExcel <= 19) {
+                    celda.attr('s', estiloNumerico);
+                }
+            });
+        }
     };
     var buttonCommon2 = {
         exportOptions: {
