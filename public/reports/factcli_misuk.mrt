@@ -6,7 +6,7 @@
   "ReportFile": "factcli_misuk.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
-  "ReportChanged": "/Date(1785748171000+0200)/",
+  "ReportChanged": "/Date(1785748816000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -685,7 +685,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Misuk Estudio S.L. - Avda. América 16 - Madrid - misukadministracion@gmail.com - tlfn: 91000000"
+                "Value": "Misuk Estudio S.L. - Avda. América 16 - Madrid - misuk.studio16@gmail.com"
               },
               "HorAlignment": "Center",
               "Font": ";9.75;Bold;",
