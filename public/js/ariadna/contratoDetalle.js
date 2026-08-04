@@ -4195,12 +4195,14 @@ function initTablaPrefacturas(departamentoId) {
         buttons: [
             'copy',
             'csv',
+
             $.extend(true, {}, buttonCommon, {
-                extend: 'excel'
-            }, { footer: true }),
-            $.extend(true, {}, buttonCommon2, {
-                extend: 'pdf'
-            }, {
+                extend: 'excel',
+                footer: true
+            }),
+
+            {
+                extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'A3',
                 footer: true,
@@ -4230,13 +4232,10 @@ function initTablaPrefacturas(departamentoId) {
                 customize: function (doc) {
                     doc.pageOrientation = 'landscape';
                     doc.pageSize = 'A3';
-
-                    // Más espacio útil en la página
-                    doc.pageMargins = [5, 10, 5, 10];
+                    doc.pageMargins = [10, 10, 10, 10];
 
                     doc.styles.tableHeader.fontSize = 7;
                     doc.styles.tableHeader.alignment = 'center';
-
                     doc.defaultStyle.fontSize = 6;
 
                     var contenidoTabla = doc.content.find(function (elemento) {
@@ -4250,31 +4249,49 @@ function initTablaPrefacturas(departamentoId) {
                     var tabla = contenidoTabla.table;
                     var numeroColumnas = tabla.body[0].length;
 
-                    // Todas iguales inicialmente
-                    tabla.widths = Array(numeroColumnas).fill('*');
-
-                    /*
-                     * Dar más anchura a la última columna visible.
-                     * La penúltima también puede necesitar algo más.
-                     */
-                    if (numeroColumnas >= 2) {
-                        tabla.widths[numeroColumnas - 2] = '1.1*';
-                        tabla.widths[numeroColumnas - 1] = '1.3*';
+                    if (numeroColumnas === 9) {
+                        tabla.widths = [
+                            120,
+                            85,
+                            95,
+                            95,
+                            125,
+                            125,
+                            110,
+                            110,
+                            130
+                        ];
+                    } else {
+                        tabla.widths = Array(numeroColumnas).fill('*');
                     }
 
                     tabla.body.forEach(function (fila) {
-                        fila.forEach(function (celda) {
+                        fila.forEach(function (celda, indice) {
                             if (typeof celda === 'object') {
-                                celda.noWrap = false;
                                 celda.margin = [1, 1, 1, 1];
+                                celda.noWrap = false;
+
+                                if (indice >= 2) {
+                                    celda.alignment = 'right';
+                                }
                             }
                         });
                     });
+
+                    contenidoTabla.layout = {
+                        paddingLeft: function () { return 2; },
+                        paddingRight: function () { return 2; },
+                        paddingTop: function () { return 1; },
+                        paddingBottom: function () { return 1; },
+                        hLineWidth: function () { return 0; },
+                        vLineWidth: function () { return 0; }
+                    };
                 }
-            }),
+            },
 
             'print'
         ],
+        
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {

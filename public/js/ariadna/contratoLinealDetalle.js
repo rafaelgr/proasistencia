@@ -3890,26 +3890,25 @@ function initTablaPrefacturas(departamentoId) {
             'csv',
 
             $.extend(true, {}, buttonCommon, {
-                extend: 'excel'
-            }, {
+                extend: 'excel',
                 footer: true
             }),
 
-            $.extend(true, {}, buttonCommon2, {
-                extend: 'pdfHtml5',
+            {
+                extend: 'pdf',
                 orientation: 'landscape',
-                pageSize: 'A2',
+                pageSize: 'A3',
                 footer: true,
 
                 exportOptions: {
                     columns: ':visible:not(:first-child):not(:last-child)',
 
                     format: {
-                        body: function (data, row, column, node) {
+                        body: function (data) {
                             return $('<div>').html(data).text();
                         },
 
-                        footer: function (data, column, node) {
+                        footer: function (data, column) {
                             if (column >= 8 && column <= 18) {
                                 return data;
                             }
@@ -3925,41 +3924,67 @@ function initTablaPrefacturas(departamentoId) {
 
                 customize: function (doc) {
                     doc.pageOrientation = 'landscape';
-                    doc.pageSize = 'A2';
-                    doc.pageMargins = [8, 10, 8, 10];
+                    doc.pageSize = 'A3';
+                    doc.pageMargins = [10, 10, 10, 10];
 
-                    doc.styles.tableHeader.fontSize = 6;
+                    doc.styles.tableHeader.fontSize = 7;
                     doc.styles.tableHeader.alignment = 'center';
-                    doc.defaultStyle.fontSize = 5;
+                    doc.defaultStyle.fontSize = 6;
 
-                    var tabla = null;
+                    var contenidoTabla = doc.content.find(function (elemento) {
+                        return elemento.table;
+                    });
 
-                    for (var i = 0; i < doc.content.length; i++) {
-                        if (doc.content[i].table) {
-                            tabla = doc.content[i].table;
-                            break;
-                        }
-                    }
-
-                    if (!tabla) {
+                    if (!contenidoTabla) {
                         return;
                     }
 
-                    tabla.widths = Array(tabla.body[0].length).fill('*');
+                    var tabla = contenidoTabla.table;
+                    var numeroColumnas = tabla.body[0].length;
+
+                    if (numeroColumnas === 9) {
+                        tabla.widths = [
+                            120,
+                            85,
+                            95,
+                            95,
+                            125,
+                            125,
+                            110,
+                            110,
+                            130
+                        ];
+                    } else {
+                        tabla.widths = Array(numeroColumnas).fill('*');
+                    }
 
                     tabla.body.forEach(function (fila) {
-                        fila.forEach(function (celda) {
+                        fila.forEach(function (celda, indice) {
                             if (typeof celda === 'object') {
-                                celda.noWrap = false;
                                 celda.margin = [1, 1, 1, 1];
+                                celda.noWrap = false;
+
+                                if (indice >= 2) {
+                                    celda.alignment = 'right';
+                                }
                             }
                         });
                     });
+
+                    contenidoTabla.layout = {
+                        paddingLeft: function () { return 2; },
+                        paddingRight: function () { return 2; },
+                        paddingTop: function () { return 1; },
+                        paddingBottom: function () { return 1; },
+                        hLineWidth: function () { return 0; },
+                        vLineWidth: function () { return 0; }
+                    };
                 }
-            }),
+            },
 
             'print'
         ],
+        
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {
