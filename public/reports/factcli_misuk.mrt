@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2025.4.3",
   "ReportGuid": "b46c993689eb3fd3ab198081bc5fa794",
-  "ReportName": "FacturaReabita",
-  "ReportAlias": "FacturaReabita",
+  "ReportName": "FacturaMisuk",
+  "ReportAlias": "FacturaMisuk",
   "ReportFile": "factcli_misuk.mrt",
-  "ReportAuthor": "rafa@myariadna.com",
+  "ReportAuthor": "vicent@myariadna.com",
   "ReportCreated": "/Date(7200000+0100)/",
   "ReportChanged": "/Date(1785748816000+0200)/",
   "EngineVersion": "EngineV2",

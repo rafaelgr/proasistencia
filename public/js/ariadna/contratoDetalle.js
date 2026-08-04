@@ -2216,7 +2216,8 @@ function initTablaContratosLineas() {
                 if (data && data !== '') {
                     return data.replace('\n', '<br/>');
                 } else {
-                    return '';}
+                    return '';
+                }
 
             }
         }, {
@@ -4203,15 +4204,72 @@ function initTablaPrefacturas(departamentoId) {
                 orientation: 'landscape',
                 pageSize: 'A3',
                 footer: true,
+
+                exportOptions: {
+                    columns: ':visible:not(:first-child):not(:last-child)',
+
+                    format: {
+                        body: function (data) {
+                            return $('<div>').html(data).text();
+                        },
+
+                        footer: function (data, column) {
+                            if (column >= 8 && column <= 18) {
+                                return data;
+                            }
+
+                            if (column === 7) {
+                                return data;
+                            }
+
+                            return '';
+                        }
+                    }
+                },
+
                 customize: function (doc) {
-                    doc.styles.tableHeader.fontSize = 8;
-                    doc.defaultStyle.fontSize = 7;
+                    doc.pageOrientation = 'landscape';
+                    doc.pageSize = 'A3';
 
-                    doc.pageMargins = [10, 10, 10, 10]; // menos márgenes
+                    // Más espacio útil en la página
+                    doc.pageMargins = [5, 10, 5, 10];
 
-                    // Ajustar automáticamente ancho de columnas
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
+                    doc.styles.tableHeader.fontSize = 7;
+                    doc.styles.tableHeader.alignment = 'center';
 
+                    doc.defaultStyle.fontSize = 6;
+
+                    var contenidoTabla = doc.content.find(function (elemento) {
+                        return elemento.table;
+                    });
+
+                    if (!contenidoTabla) {
+                        return;
+                    }
+
+                    var tabla = contenidoTabla.table;
+                    var numeroColumnas = tabla.body[0].length;
+
+                    // Todas iguales inicialmente
+                    tabla.widths = Array(numeroColumnas).fill('*');
+
+                    /*
+                     * Dar más anchura a la última columna visible.
+                     * La penúltima también puede necesitar algo más.
+                     */
+                    if (numeroColumnas >= 2) {
+                        tabla.widths[numeroColumnas - 2] = '1.1*';
+                        tabla.widths[numeroColumnas - 1] = '1.3*';
+                    }
+
+                    tabla.body.forEach(function (fila) {
+                        fila.forEach(function (celda) {
+                            if (typeof celda === 'object') {
+                                celda.noWrap = false;
+                                celda.margin = [1, 1, 1, 1];
+                            }
+                        });
+                    });
                 }
             }),
 

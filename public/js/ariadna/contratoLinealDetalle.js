@@ -3673,42 +3673,140 @@ var reglasDeValidacionAdicionales = function () {
 
 // --------------- Solapa de prefacturas
 function initTablaPrefacturas(departamentoId) {
+
+    function numeroExcel(valor) {
+        if (valor === null || valor === undefined || valor === '') {
+            return 0;
+        }
+
+        if (typeof valor === 'number') {
+            return valor;
+        }
+
+        let texto = $('<div>').html(valor).text().trim();
+
+        texto = texto
+            .replace(/\s/g, '')
+            .replace(/[€$]/g, '');
+
+        if (texto.includes(',') && texto.includes('.')) {
+            if (texto.lastIndexOf(',') > texto.lastIndexOf('.')) {
+                texto = texto
+                    .replace(/\./g, '')
+                    .replace(',', '.');
+            } else {
+                texto = texto.replace(/,/g, '');
+            }
+        } else if (texto.includes(',')) {
+            texto = texto.replace(',', '.');
+        }
+
+        const numero = Number(texto);
+
+        return Number.isNaN(numero) ? 0 : numero;
+    }
     var buttonCommon = {
+        footer: true,
+
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14 || row === 15 || row === 16 || row === 18) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (column === 0 || column === 25) {
-                            return "";
-                        } else {
-                            return data;
-                        }
+
+                    // Columnas numéricas: coste hasta retención
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
                     }
-                },
-                footer: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 18) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (row === 7) {
-                            return data
-                        } else {
-                            return "";
-                        }
+
+                    // No exportar selector ni botones
+                    if (column === 0 || column === 25) {
+                        return '';
                     }
+
+                    return $('<div>').html(data).text();
                 },
+
+                footer: function (data, column, node) {
+
+                    // Totales numéricos
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
+                    }
+
+                    // Texto "Total:"
+                    if (column === 7) {
+                        return $('<div>').html(data).text();
+                    }
+
+                    return '';
+                }
             }
         },
 
+        customize: function (xlsx) {
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            var styles = xlsx.xl['styles.xml'];
+
+            var numFmts = $('numFmts', styles);
+
+            if (numFmts.length === 0) {
+                $('styleSheet', styles).prepend(
+                    '<numFmts count="1">' +
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>' +
+                    '</numFmts>'
+                );
+            } else {
+                numFmts.append(
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>'
+                );
+
+                numFmts.attr(
+                    'count',
+                    parseInt(numFmts.attr('count') || 0, 10) + 1
+                );
+            }
+
+            var cellXfs = $('cellXfs', styles);
+            var estiloNumerico = $('xf', cellXfs).length;
+
+            cellXfs.append(
+                '<xf numFmtId="164" ' +
+                'fontId="0" ' +
+                'fillId="0" ' +
+                'borderId="0" ' +
+                'xfId="0" ' +
+                'applyNumberFormat="1"/>'
+            );
+
+            cellXfs.attr(
+                'count',
+                parseInt(cellXfs.attr('count') || 0, 10) + 1
+            );
+
+            function numeroColumnaExcel(referencia) {
+                var letras = referencia.replace(/[0-9]/g, '');
+                var numero = 0;
+
+                for (var i = 0; i < letras.length; i++) {
+                    numero = numero * 26 + letras.charCodeAt(i) - 64;
+                }
+
+                return numero;
+            }
+
+            $('sheetData row c', sheet).each(function () {
+                var celda = $(this);
+                var referencia = celda.attr('r');
+                var columnaExcel = numeroColumnaExcel(referencia);
+
+                /*
+                 * DataTable 8-18 corresponde a Excel I-S
+                 * porque también se exporta la primera columna.
+                 */
+                if (columnaExcel >= 9 && columnaExcel <= 19) {
+                    celda.attr('s', estiloNumerico);
+                }
+            });
+        }
     };
     var buttonCommon2 = {
         exportOptions: {
@@ -3790,26 +3888,76 @@ function initTablaPrefacturas(departamentoId) {
         buttons: [
             'copy',
             'csv',
+
             $.extend(true, {}, buttonCommon, {
                 extend: 'excel'
-            }, { footer: true }),
-            $.extend(true, {}, buttonCommon2, {
-                extend: 'pdf'
             }, {
+                footer: true
+            }),
+
+            $.extend(true, {}, buttonCommon2, {
+                extend: 'pdfHtml5',
                 orientation: 'landscape',
-                pageSize: 'A3',
+                pageSize: 'A2',
                 footer: true,
+
+                exportOptions: {
+                    columns: ':visible:not(:first-child):not(:last-child)',
+
+                    format: {
+                        body: function (data, row, column, node) {
+                            return $('<div>').html(data).text();
+                        },
+
+                        footer: function (data, column, node) {
+                            if (column >= 8 && column <= 18) {
+                                return data;
+                            }
+
+                            if (column === 7) {
+                                return data;
+                            }
+
+                            return '';
+                        }
+                    }
+                },
+
                 customize: function (doc) {
-                    doc.styles.tableHeader.fontSize = 8;
-                    doc.defaultStyle.fontSize = 7;
+                    doc.pageOrientation = 'landscape';
+                    doc.pageSize = 'A2';
+                    doc.pageMargins = [8, 10, 8, 10];
 
-                    doc.pageMargins = [10, 10, 10, 10]; // menos márgenes
+                    doc.styles.tableHeader.fontSize = 6;
+                    doc.styles.tableHeader.alignment = 'center';
+                    doc.defaultStyle.fontSize = 5;
 
-                    // Ajustar automáticamente ancho de columnas
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
+                    var tabla = null;
 
+                    for (var i = 0; i < doc.content.length; i++) {
+                        if (doc.content[i].table) {
+                            tabla = doc.content[i].table;
+                            break;
+                        }
+                    }
+
+                    if (!tabla) {
+                        return;
+                    }
+
+                    tabla.widths = Array(tabla.body[0].length).fill('*');
+
+                    tabla.body.forEach(function (fila) {
+                        fila.forEach(function (celda) {
+                            if (typeof celda === 'object') {
+                                celda.noWrap = false;
+                                celda.margin = [1, 1, 1, 1];
+                            }
+                        });
+                    });
                 }
             }),
+
             'print'
         ],
         autoWidth: false,
