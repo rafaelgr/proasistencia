@@ -775,7 +775,7 @@ function initForm() {
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) {
-               
+
                 return;
             }
             vm.sempresaId(data.empresaId);
@@ -817,7 +817,7 @@ function initForm() {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
-           
+
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -838,7 +838,7 @@ function initForm() {
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
 
-       
+
 
         //
         document.title = "NUEVO CONTRATO";
@@ -2213,8 +2213,10 @@ function initTablaContratosLineas() {
         }, {
             data: "descripcion",
             render: function (data, type, row) {
-                if (data) {
+                if (data && data !== '') {
                     return data.replace('\n', '<br/>');
+                } else {
+                    return '';
                 }
 
             }
@@ -3952,42 +3954,165 @@ function initTablaPrefacturas(departamentoId) {
         $('#dt_prefactura tbody').empty();
     }
 
+    function numeroExcel(valor) {
+        if (valor === null || valor === undefined || valor === '') {
+            return 0;
+        }
+
+        if (typeof valor === 'number') {
+            return valor;
+        }
+
+        // Quitar posibles etiquetas HTML
+        let texto = $('<div>').html(valor).text().trim();
+
+        // Quitar espacios, símbolos monetarios, etc.
+        texto = texto
+            .replace(/\s/g, '')
+            .replace(/[€$]/g, '');
+
+        /*
+         * Formato español:
+         * 6.782,59  -> 6782.59
+         * -147,15   -> -147.15
+         *
+         * Formato internacional:
+         * 6,782.59  -> 6782.59
+         */
+        if (texto.includes(',') && texto.includes('.')) {
+            if (texto.lastIndexOf(',') > texto.lastIndexOf('.')) {
+                // Español
+                texto = texto
+                    .replace(/\./g, '')
+                    .replace(',', '.');
+            } else {
+                // Internacional
+                texto = texto.replace(/,/g, '');
+            }
+        } else if (texto.includes(',')) {
+            texto = texto.replace(',', '.');
+        }
+
+        const numero = Number(texto);
+
+        return Number.isNaN(numero) ? 0 : numero;
+    }
     var buttonCommon = {
+        footer: true,
+
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (column === 0 || column === 25) {
-                            return "";
-                        } else {
-                            return data;
-                        }
+
+                    // Columnas numéricas
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
                     }
-                },
-                footer: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 17 || row === 18) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (row === 7) {
-                            return data
-                        } else {
-                            return "";
-                        }
+
+                    // No exportar columna inicial ni botones
+                    if (column === 0 || column === 25) {
+                        return '';
                     }
+
+                    return $('<div>').html(data).text();
                 },
+
+                footer: function (data, column, node) {
+
+                    // Totales numéricos del footer
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
+                    }
+
+                    if (column === 7) {
+                        return $('<div>').html(data).text();
+                    }
+
+                    return '';
+                }
             }
         },
 
+        customize: function (xlsx) {
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            var styles = xlsx.xl['styles.xml'];
+
+            /*
+             * Crear formato numérico:
+             * Excel mostrará separador de miles y dos decimales.
+             *
+             * En Excel español:
+             * 6782.59 se mostrará como 6.782,59
+             */
+            var numFmts = $('numFmts', styles);
+
+            if (numFmts.length === 0) {
+                $('styleSheet', styles).prepend(
+                    '<numFmts count="1">' +
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>' +
+                    '</numFmts>'
+                );
+            } else {
+                numFmts.append(
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>'
+                );
+
+                numFmts.attr(
+                    'count',
+                    parseInt(numFmts.attr('count') || 0, 10) + 1
+                );
+            }
+
+            // Crear estilo usando el formato anterior
+            var cellXfs = $('cellXfs', styles);
+            var estiloNumerico = $('xf', cellXfs).length;
+
+            cellXfs.append(
+                '<xf numFmtId="164" ' +
+                'fontId="0" ' +
+                'fillId="0" ' +
+                'borderId="0" ' +
+                'xfId="0" ' +
+                'applyNumberFormat="1"/>'
+            );
+
+            cellXfs.attr(
+                'count',
+                parseInt(cellXfs.attr('count') || 0, 10) + 1
+            );
+
+            /*
+             * Convierte la letra de la celda Excel en número:
+             * A = 1, B = 2, I = 9, etc.
+             */
+            function numeroColumnaExcel(referencia) {
+                var letras = referencia.replace(/[0-9]/g, '');
+                var numero = 0;
+
+                for (var i = 0; i < letras.length; i++) {
+                    numero = numero * 26 +
+                        letras.charCodeAt(i) - 64;
+                }
+
+                return numero;
+            }
+
+            /*
+             * Columnas 8 a 18 del DataTable equivalen,
+             * si se exportan todas, a las columnas Excel 9 a 19.
+             *
+             * Se aplica a todas las filas, incluido el footer.
+             */
+            $('sheetData row c', sheet).each(function () {
+                var celda = $(this);
+                var referencia = celda.attr('r');
+                var columnaExcel = numeroColumnaExcel(referencia);
+
+                if (columnaExcel >= 9 && columnaExcel <= 19) {
+                    celda.attr('s', estiloNumerico);
+                }
+            });
+        }
     };
     var buttonCommon2 = {
         exportOptions: {
@@ -4070,29 +4195,103 @@ function initTablaPrefacturas(departamentoId) {
         buttons: [
             'copy',
             'csv',
+
             $.extend(true, {}, buttonCommon, {
-                extend: 'excel'
-            }, { footer: true }),
-            $.extend(true, {}, buttonCommon2, {
-                extend: 'pdf'
-            }, {
+                extend: 'excel',
+                footer: true
+            }),
+
+            {
+                extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'A3',
                 footer: true,
+
+                exportOptions: {
+                    columns: ':visible:not(:first-child):not(:last-child)',
+
+                    format: {
+                        body: function (data) {
+                            return $('<div>').html(data).text();
+                        },
+
+                        footer: function (data, column) {
+                            if (column >= 8 && column <= 18) {
+                                return data;
+                            }
+
+                            if (column === 7) {
+                                return data;
+                            }
+
+                            return '';
+                        }
+                    }
+                },
+
                 customize: function (doc) {
-                    doc.styles.tableHeader.fontSize = 8;
-                    doc.defaultStyle.fontSize = 7;
+                    doc.pageOrientation = 'landscape';
+                    doc.pageSize = 'A3';
+                    doc.pageMargins = [10, 10, 10, 10];
 
-                    doc.pageMargins = [10, 10, 10, 10]; // menos márgenes
+                    doc.styles.tableHeader.fontSize = 7;
+                    doc.styles.tableHeader.alignment = 'center';
+                    doc.defaultStyle.fontSize = 6;
 
-                    // Ajustar automáticamente ancho de columnas
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
+                    var contenidoTabla = doc.content.find(function (elemento) {
+                        return elemento.table;
+                    });
 
+                    if (!contenidoTabla) {
+                        return;
+                    }
+
+                    var tabla = contenidoTabla.table;
+                    var numeroColumnas = tabla.body[0].length;
+
+                    if (numeroColumnas === 9) {
+                        tabla.widths = [
+                            120,
+                            85,
+                            95,
+                            95,
+                            125,
+                            125,
+                            110,
+                            110,
+                            130
+                        ];
+                    } else {
+                        tabla.widths = Array(numeroColumnas).fill('*');
+                    }
+
+                    tabla.body.forEach(function (fila) {
+                        fila.forEach(function (celda, indice) {
+                            if (typeof celda === 'object') {
+                                celda.margin = [1, 1, 1, 1];
+                                celda.noWrap = false;
+
+                                if (indice >= 2) {
+                                    celda.alignment = 'right';
+                                }
+                            }
+                        });
+                    });
+
+                    contenidoTabla.layout = {
+                        paddingLeft: function () { return 2; },
+                        paddingRight: function () { return 2; },
+                        paddingTop: function () { return 1; },
+                        paddingBottom: function () { return 1; },
+                        hLineWidth: function () { return 0; },
+                        vLineWidth: function () { return 0; }
+                    };
                 }
-            }),
+            },
 
             'print'
         ],
+
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {
@@ -11558,11 +11757,15 @@ var compruebaDiferencia = function () {
     let totalPendiente = 0;
 
     for (let i = 0; i < prefacturas.length; i++) {
-        totalCobrado += parseFloat(prefacturas[i].total_cobrado);
-        totalPendiente += parseFloat(prefacturas[i].pendiente);
+        if (prefacturas[i].estado == 'COBRADO') {
+            totalCobrado += parseFloat(prefacturas[i].totalReal);
+        } else {
+            totalPendiente += parseFloat(prefacturas[i].totalReal);
+        }
+
     }
 
-    let diferencia = Math.round((certificacionFinalConIva - (totalCobrado + totalPendiente)) * 100) / 100;
+    let diferencia = Math.round((certFinal - (totalCobrado + totalPendiente)) * 100) / 100;
 
     if (Number.isNaN(diferencia)) {
         mensError("Fallo al calcular la diferencia");
@@ -11638,7 +11841,7 @@ function generarAjuste(diferencia, porcentajeIva) {
             .format('YYYY-MM-DD');
     }
 
-    let baseDiferencia = diferencia / (1 + porcentajeIva / 100);
+    let baseDiferencia = diferencia;
     baseDiferencia = Math.round(baseDiferencia * 100) / 100;
 
     let baseImporteCliente = parseFloat(vm.importeCliente()) || 0;
@@ -11729,7 +11932,14 @@ function generarAjuste(diferencia, porcentajeIva) {
 }
 
 function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
-    let importeACompensar = Math.abs(parseFloat(diferencia) || 0);
+    diferencia = parseFloat(diferencia) || 0;
+    porcentajeIva = parseFloat(porcentajeIva) || 0;
+
+    let factorIva = 1 + (porcentajeIva / 100);
+
+    // La diferencia recibida es base sin IVA
+    let importeACompensarBase = Math.abs(diferencia);
+    importeACompensarBase = Math.round(importeACompensarBase * 100) / 100;
 
     let prefacturas = tablaPrefacturas.rows().data().toArray();
 
@@ -11745,18 +11955,54 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
         });
 
     let prefacturasAMarcar = [];
-    let totalCompensado = 0;
+    let totalCompensadoBase = 0;
+    let totalCompensadoConIva = 0;
 
     for (let i = 0; i < candidatas.length; i++) {
-        let importe = parseFloat(candidatas[i].pendiente || 0);
+        // El pendiente almacenado incluye IVA
+        let importeConIva = parseFloat(candidatas[i].pendiente || 0);
+        importeConIva = Math.round(importeConIva * 100) / 100;
 
-        if (Math.round((totalCompensado + importe) * 100) / 100 <= importeACompensar) {
+        // Se obtiene la base individual de cada letra
+        let importeBase = importeConIva / factorIva;
+
+        /*
+         * Se mantienen más decimales internamente para evitar acumular
+         * errores de redondeo al sumar muchas letras.
+         */
+        importeBase = Math.round(importeBase * 10000) / 10000;
+
+        let nuevoTotalBase = Math.round(
+            (totalCompensadoBase + importeBase) * 10000
+        ) / 10000;
+
+        /*
+         * Se permite una tolerancia de un céntimo por los redondeos
+         * producidos al repartir el IVA entre muchas letras.
+         */
+        if (nuevoTotalBase <= importeACompensarBase + 0.01) {
             prefacturasAMarcar.push(candidatas[i]);
-            totalCompensado = Math.round((totalCompensado + importe) * 100) / 100;
+
+            totalCompensadoBase = nuevoTotalBase;
+
+            totalCompensadoConIva = Math.round(
+                (totalCompensadoConIva + importeConIva) * 100
+            ) / 100;
         }
     }
 
-    let resto = Math.round((importeACompensar - totalCompensado) * 100) / 100;
+    // El resto se calcula en base, porque generarAjuste espera importe sin IVA
+    let restoBase = Math.round(
+        (importeACompensarBase - totalCompensadoBase) * 100
+    ) / 100;
+
+    /*
+     * Si el descuadre es únicamente de un céntimo por redondeos,
+     * se considera completamente compensado.
+     */
+    if (Math.abs(restoBase) <= 0.01) {
+        restoBase = 0;
+    }
 
     if (prefacturasAMarcar.length === 0) {
         generarAjuste(diferencia, porcentajeIva);
@@ -11771,11 +12017,15 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
             "La diferencia es negativa. Se marcarán " +
             prefacturasAMarcar.length +
             " prefactura(s) como no facturadas por un importe total de " +
-            numeral(totalCompensado).format('0,0.00') +
-            " €. " +
-            (resto > 0
-                ? "Además, se generará un abono por " + numeral(resto).format('0,0.00') + " €."
-                : "No será necesario generar abono.") +
+            numeral(totalCompensadoConIva).format('0,0.00') +
+            " € IVA incluido. " +
+            (
+                restoBase > 0
+                    ? "Además, se generará un abono con una base de " +
+                    numeral(restoBase).format('0,0.00') +
+                    " €."
+                    : "No será necesario generar abono."
+            ) +
             " ¿Desea continuar?",
         buttons: "[Cancelar][Aceptar]"
     }, function (ButtonPressed) {
@@ -11794,20 +12044,25 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
             data,
             function (err) {
                 if (err) {
-                    mensError("Error al marcar las prefacturas como no facturadas");
+                    mensError(
+                        "Error al marcar las prefacturas como no facturadas"
+                    );
                     return;
                 }
 
-                if (resto > 0) {
-                    generarAjuste(-resto, porcentajeIva);
-                } else {
-                    mostrarMensajeSmart("Prefacturas marcadas correctamente como no facturadas.");
-
-                    loadPrefacturasDelContrato(vm.contratoId());
-                    actualizaCobrosPlanificacion(vm.contratoId());
-
-                    imprimirActaRecepcion();
+                if (restoBase > 0) {
+                    generarAjuste(-restoBase, porcentajeIva);
+                    return;
                 }
+
+                mostrarMensajeSmart(
+                    "Prefacturas marcadas correctamente como no facturadas."
+                );
+
+                loadPrefacturasDelContrato(vm.contratoId());
+                actualizaCobrosPlanificacion(vm.contratoId());
+
+                imprimirActaRecepcion();
             }
         );
     });
