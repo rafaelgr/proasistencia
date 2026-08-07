@@ -11959,12 +11959,12 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
     let totalCompensadoConIva = 0;
 
     for (let i = 0; i < candidatas.length; i++) {
-        // El pendiente almacenado incluye IVA
-        let importeConIva = parseFloat(candidatas[i].pendiente || 0);
-        importeConIva = Math.round(importeConIva * 100) / 100;
+        
+        let importe = parseFloat(candidatas[i].total || 0);
+        importe = Math.round(importe * 100) / 100;
 
         // Se obtiene la base individual de cada letra
-        let importeBase = importeConIva / factorIva;
+        let importeBase = importe
 
         /*
          * Se mantienen más decimales internamente para evitar acumular
@@ -11980,14 +11980,11 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
          * Se permite una tolerancia de un céntimo por los redondeos
          * producidos al repartir el IVA entre muchas letras.
          */
-        if (nuevoTotalBase <= importeACompensarBase + 0.01) {
+        if (nuevoTotalBase <= importeACompensarBase) {
             prefacturasAMarcar.push(candidatas[i]);
 
             totalCompensadoBase = nuevoTotalBase;
 
-            totalCompensadoConIva = Math.round(
-                (totalCompensadoConIva + importeConIva) * 100
-            ) / 100;
         }
     }
 
@@ -12017,8 +12014,8 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
             "La diferencia es negativa. Se marcarán " +
             prefacturasAMarcar.length +
             " prefactura(s) como no facturadas por un importe total de " +
-            numeral(totalCompensadoConIva).format('0,0.00') +
-            " € IVA incluido. " +
+            numeral(totalCompensadoBase).format('0,0.00') +
+            " € sin IVA. " +
             (
                 restoBase > 0
                     ? "Además, se generará un abono con una base de " +
