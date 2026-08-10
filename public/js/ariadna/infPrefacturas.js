@@ -204,7 +204,7 @@ var obtainReport = function (carga) {
     var file = "../reports/preFactura_roman.mrt";
     verb = "GET";
     url = myconfig.apiUrl + "/api/empresas/" + vm.sempresaId();
-    report.loadFile(file);
+    //report.loadFile(file);
 
     llamadaAjax(verb, url, null, function (err, data) {
         var infPreFacturas = data.infPreFacturas;

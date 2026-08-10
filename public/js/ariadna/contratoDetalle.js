@@ -4291,7 +4291,6 @@ function initTablaPrefacturas(departamentoId) {
 
             'print'
         ],
-        
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {
@@ -11757,11 +11756,15 @@ var compruebaDiferencia = function () {
     let totalPendiente = 0;
 
     for (let i = 0; i < prefacturas.length; i++) {
-        totalCobrado += parseFloat(prefacturas[i].total_cobrado);
-        totalPendiente += parseFloat(prefacturas[i].pendiente);
+        if (prefacturas[i].estado == 'COBRADO') {
+            totalCobrado += parseFloat(prefacturas[i].totalReal);
+        } else {
+            totalPendiente += parseFloat(prefacturas[i].totalReal);
+        }
+
     }
 
-    let diferencia = Math.round((certificacionFinalConIva - (totalCobrado + totalPendiente)) * 100) / 100;
+    let diferencia = Math.round((certFinal - (totalCobrado + totalPendiente)) * 100) / 100;
 
     if (Number.isNaN(diferencia)) {
         mensError("Fallo al calcular la diferencia");
@@ -11792,52 +11795,241 @@ var compruebaDiferencia = function () {
     });
 
 }
-function generarAjuste(diferencia, porcentajeIva) {
+
+function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
+
+    diferencia = parseFloat(diferencia) || 0;
+    porcentajeIva = parseFloat(porcentajeIva) || 0;
+
+    // La diferencia recibida es base sin IVA
+    let importeACompensarBase = Math.abs(diferencia);
+    importeACompensarBase = Math.round(importeACompensarBase * 100) / 100;
+
+    let prefacturas = tablaPrefacturas.rows().data().toArray();
+
+    let candidatas = prefacturas
+        .filter(p => {
+            return Number(p.esLetra || 0) === 1
+                && parseFloat(p.pendiente || 0) > 0
+                && Number(p.noFacturar || 0) === 0
+                && !p.facturaId;
+        })
+        .sort((a, b) => {
+            return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
+        });
+
+    let prefacturasAMarcar = [];
+    let totalCompensadoBase = 0;
+
+    for (let i = 0; i < candidatas.length; i++) {
+
+        let importe = parseFloat(candidatas[i].total || 0);
+        importe = Math.round(importe * 100) / 100;
+
+        // Se obtiene la base individual de cada letra
+        let importeBase = importe;
+
+        /*
+         * Se mantienen más decimales internamente para evitar acumular
+         * errores de redondeo al sumar muchas letras.
+         */
+        importeBase = Math.round(importeBase * 10000) / 10000;
+
+        let nuevoTotalBase = Math.round(
+            (totalCompensadoBase + importeBase) * 10000
+        ) / 10000;
+
+        /*
+         * Solo se marca la letra completa si no supera
+         * la diferencia que tenemos que compensar.
+         */
+        if (nuevoTotalBase <= importeACompensarBase) {
+
+            prefacturasAMarcar.push(candidatas[i]);
+
+            totalCompensadoBase = nuevoTotalBase;
+        }
+    }
+
+    // El resto se calcula en base, porque generarAjuste
+    // espera importe sin IVA
+    let restoBase = Math.round(
+        (importeACompensarBase - totalCompensadoBase) * 100
+    ) / 100;
+
+    /*
+     * Si el descuadre es únicamente de un céntimo por redondeos,
+     * se considera completamente compensado.
+     */
+    if (Math.abs(restoBase) <= 0.01) {
+        restoBase = 0;
+    }
+
+    /*
+     * Si no se puede marcar ninguna letra completa,
+     * se genera directamente el abono.
+     *
+     * No hay IDs que excluir.
+     */
+    if (prefacturasAMarcar.length === 0) {
+        generarAjuste(diferencia, porcentajeIva);
+        return;
+    }
+
+    let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
+
+    $.SmartMessageBox({
+        title: "Ajustar prefacturas",
+        content:
+            "La diferencia es negativa. Se marcarán " +
+            prefacturasAMarcar.length +
+            " prefactura(s) como no facturadas por un importe total de " +
+            numeral(totalCompensadoBase).format('0,0.00') +
+            " € sin IVA. " +
+            (
+                restoBase > 0
+                    ? "Además, se generará un abono con una base de " +
+                    numeral(restoBase).format('0,0.00') +
+                    " €."
+                    : "No será necesario generar abono."
+            ) +
+            " ¿Desea continuar?",
+        buttons: "[Cancelar][Aceptar]"
+    }, function (ButtonPressed) {
+
+        if (ButtonPressed !== "Aceptar") {
+            imprimirActaRecepcion();
+            return;
+        }
+
+        let data = {
+            prefacturasIds: idsPrefacturas
+        };
+
+        llamadaAjax(
+            "PUT",
+            myconfig.apiUrl + "/api/prefacturas/prefacturas/no-facturadas",
+            data,
+            function (err) {
+
+                if (err) {
+                    mensError(
+                        "Error al marcar las prefacturas como no facturadas"
+                    );
+                    return;
+                }
+
+                /*
+                 * Si queda una diferencia después de marcar las letras,
+                 * generamos el abono.
+                 *
+                 * Pasamos los IDs que acabamos de marcar para que
+                 * generarAjuste no los tenga en cuenta al buscar
+                 * la última letra facturable.
+                 */
+                if (restoBase > 0) {
+
+                    generarAjuste(
+                        -restoBase,
+                        porcentajeIva,
+                        idsPrefacturas
+                    );
+
+                    return;
+                }
+
+                mostrarMensajeSmart(
+                    "Prefacturas marcadas correctamente como no facturadas."
+                );
+
+                loadPrefacturasDelContrato(vm.contratoId());
+                actualizaCobrosPlanificacion(vm.contratoId());
+
+                imprimirActaRecepcion();
+            }
+        );
+    });
+}
+
+
+function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
+
     let concepto = '';
     let fechaVencimiento = '';
 
     diferencia = parseFloat(diferencia) || 0;
     porcentajeIva = parseFloat(porcentajeIva) || 0;
 
-    if (diferencia > 0) {
-        concepto = 'Factura';
+    /*
+     * Buscamos la última letra que siga siendo facturable.
+     *
+     * También excluimos las prefacturas que acabamos de marcar
+     * como no facturables, porque tablaPrefacturas puede que
+     * todavía no se haya actualizado.
+     */
+    let prefacturas = tablaPrefacturas.rows().data();
+    let ultimaFechaLetra = null;
 
-        let prefacturas = tablaPrefacturas.rows().data();
-        let ultimaFechaLetra = null;
+    for (let i = 0; i < prefacturas.length; i++) {
 
-        for (let i = 0; i < prefacturas.length; i++) {
-            if (prefacturas[i].esLetra == 1 && prefacturas[i].fecha) {
-                let fecha = moment(prefacturas[i].fecha, 'YYYY-MM-DD');
+        let prefactura = prefacturas[i];
 
-                if (fecha.isValid() && (!ultimaFechaLetra || fecha.isAfter(ultimaFechaLetra))) {
-                    ultimaFechaLetra = fecha;
-                }
+        let estaExcluida = idsExcluir.some(id =>
+            Number(id) === Number(prefactura.prefacturaId)
+        );
+
+        if (
+            Number(prefactura.esLetra || 0) === 1 &&
+            Number(prefactura.noFacturar || 0) === 0 &&
+            !estaExcluida &&
+            prefactura.fecha
+        ) {
+
+           let fecha = moment(prefactura.fecha);
+
+
+            if (
+                fecha.isValid() &&
+                (!ultimaFechaLetra || fecha.isAfter(ultimaFechaLetra))
+            ) {
+                ultimaFechaLetra = fecha;
             }
         }
+    }
 
-        if (!ultimaFechaLetra) {
-            mensError("No se ha encontrado ninguna letra en prefacturas");
-            return;
-        }
+    if (!ultimaFechaLetra) {
+        mensError(
+            "No se ha encontrado ninguna letra facturable en prefacturas"
+        );
+        return;
+    }
+
+    /*
+     * FECHA DEL AJUSTE
+     *
+     * Factura:
+     * un mes después de la última letra facturable.
+     *
+     * Abono:
+     * el mismo día de la última letra facturable.
+     */
+    if (diferencia > 0) {
+
+        concepto = 'Factura';
 
         fechaVencimiento = moment(ultimaFechaLetra)
             .add(1, 'month')
             .format('YYYY-MM-DD');
 
     } else {
-        concepto = "Abono";
 
-        if (!vm.fechaFirmaActa()) {
-            mensError('No hay una fecha de firma del acta de recepción');
-            return;
-        }
+        concepto = 'Abono';
 
-        fechaVencimiento = moment(vm.fechaFirmaActa(), 'DD/MM/YYYY')
-            .add(1, 'month')
+        fechaVencimiento = moment(ultimaFechaLetra)
             .format('YYYY-MM-DD');
     }
 
-    let baseDiferencia = diferencia / (1 + porcentajeIva / 100);
+    let baseDiferencia = diferencia;
     baseDiferencia = Math.round(baseDiferencia * 100) / 100;
 
     let baseImporteCliente = parseFloat(vm.importeCliente()) || 0;
@@ -11847,7 +12039,9 @@ function generarAjuste(diferencia, porcentajeIva) {
         return;
     }
 
-    let porcentajeDiferencia = Math.round((baseDiferencia / baseImporteCliente) * 10000) / 100;
+    let porcentajeDiferencia = Math.round(
+        (baseDiferencia / baseImporteCliente) * 10000
+    ) / 100;
 
     let dataPlanificacion = {
         planificacion: {
@@ -11872,144 +12066,115 @@ function generarAjuste(diferencia, porcentajeIva) {
         }
     };
 
-    llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/planificacion", dataPlanificacion, function (err, registroPlanificacion) {
-        if (err) {
-            mensError('Fallo al crear el registro en planificación');
-            return;
-        }
+    llamadaAjax(
+        "POST",
+        myconfig.apiUrl + "/api/contratos/planificacion",
+        dataPlanificacion,
+        function (err, registroPlanificacion) {
 
-        let idRegistro = registroPlanificacion.contPlanificacionId || registroPlanificacion.planificacionId || registroPlanificacion.id;
-
-        let nombreCliente = vm.nombreComercial();
-
-        if (!nombreCliente || nombreCliente == '') {
-            borrarAjusteSiFalla(idRegistro);
-            mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
-            return;
-        }
-
-        let clienteId = vm.clienteId();
-        let empresa = $("#cmbEmpresas").select2('data').text;
-
-        let regPlanificacion = [registroPlanificacion];
-        regPlanificacion[0].fecha = fechaVencimiento;
-
-        let prefacturas = crearPrefacturaPlanificacion(
-            1,
-            vm.sempresaId(),
-            clienteId,
-            empresa,
-            nombreCliente,
-            regPlanificacion
-        );
-
-        vm.prefacturasAGenerar(prefacturas);
-
-        let dataPrefacturas = {
-            prefacturas: vm.prefacturasAGenerar()
-        };
-
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), dataPrefacturas, function (err) {
             if (err) {
-                borrarAjusteSiFalla(idRegistro);
-                mensError('Error al crear la prefactura. Se ha eliminado el ajuste generado.');
+                mensError(
+                    'Fallo al crear el registro en planificación'
+                );
                 return;
             }
 
-            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            let idRegistro =
+                registroPlanificacion.contPlanificacionId ||
+                registroPlanificacion.planificacionId ||
+                registroPlanificacion.id;
 
-            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
-                loadTablaPlanificacionLineasObras(data);
-                loadPrefacturasDelContrato(vm.contratoId());
-                actualizaCobrosPlanificacion(vm.contratoId());
-            });
-        });
-    });
-}
+            let nombreCliente = vm.nombreComercial();
 
-function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
-    let importeACompensar = Math.abs(parseFloat(diferencia) || 0);
+            if (!nombreCliente || nombreCliente == '') {
 
-    let prefacturas = tablaPrefacturas.rows().data().toArray();
+                borrarAjusteSiFalla(idRegistro);
 
-    let candidatas = prefacturas
-        .filter(p => {
-            return Number(p.esLetra || 0) === 1
-                && parseFloat(p.pendiente || 0) > 0
-                && Number(p.noFacturar || 0) === 0
-                && !p.facturaId;
-        })
-        .sort((a, b) => {
-            return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
-        });
+                mensError(
+                    "El cliente no tiene un nombre fiscal establecido en su ficha."
+                );
 
-    let prefacturasAMarcar = [];
-    let totalCompensado = 0;
-
-    for (let i = 0; i < candidatas.length; i++) {
-        let importe = parseFloat(candidatas[i].pendiente || 0);
-
-        if (Math.round((totalCompensado + importe) * 100) / 100 <= importeACompensar) {
-            prefacturasAMarcar.push(candidatas[i]);
-            totalCompensado = Math.round((totalCompensado + importe) * 100) / 100;
-        }
-    }
-
-    let resto = Math.round((importeACompensar - totalCompensado) * 100) / 100;
-
-    if (prefacturasAMarcar.length === 0) {
-        generarAjuste(diferencia, porcentajeIva);
-        return;
-    }
-
-    let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
-
-    $.SmartMessageBox({
-        title: "Ajustar prefacturas",
-        content:
-            "La diferencia es negativa. Se marcarán " +
-            prefacturasAMarcar.length +
-            " prefactura(s) como no facturadas por un importe total de " +
-            numeral(totalCompensado).format('0,0.00') +
-            " €. " +
-            (resto > 0
-                ? "Además, se generará un abono por " + numeral(resto).format('0,0.00') + " €."
-                : "No será necesario generar abono.") +
-            " ¿Desea continuar?",
-        buttons: "[Cancelar][Aceptar]"
-    }, function (ButtonPressed) {
-        if (ButtonPressed !== "Aceptar") {
-            imprimirActaRecepcion();
-            return;
-        }
-
-        let data = {
-            prefacturasIds: idsPrefacturas
-        };
-
-        llamadaAjax(
-            "PUT",
-            myconfig.apiUrl + "/api/prefacturas/prefacturas/no-facturadas",
-            data,
-            function (err) {
-                if (err) {
-                    mensError("Error al marcar las prefacturas como no facturadas");
-                    return;
-                }
-
-                if (resto > 0) {
-                    generarAjuste(-resto, porcentajeIva);
-                } else {
-                    mostrarMensajeSmart("Prefacturas marcadas correctamente como no facturadas.");
-
-                    loadPrefacturasDelContrato(vm.contratoId());
-                    actualizaCobrosPlanificacion(vm.contratoId());
-
-                    imprimirActaRecepcion();
-                }
+                return;
             }
-        );
-    });
+
+            let clienteId = vm.clienteId();
+
+            let empresa =
+                $("#cmbEmpresas").select2('data').text;
+
+            let regPlanificacion = [
+                registroPlanificacion
+            ];
+
+            /*
+             * Esta será la fecha que utilizará
+             * crearPrefacturaPlanificacion.
+             */
+            regPlanificacion[0].fecha = fechaVencimiento;
+
+            let prefacturas = crearPrefacturaPlanificacion(
+                1,
+                vm.sempresaId(),
+                clienteId,
+                empresa,
+                nombreCliente,
+                regPlanificacion
+            );
+
+            vm.prefacturasAGenerar(prefacturas);
+
+            let dataPrefacturas = {
+                prefacturas: vm.prefacturasAGenerar()
+            };
+
+            llamadaAjax(
+                'POST',
+                myconfig.apiUrl +
+                "/api/contratos/generar-prefactura/" +
+                vm.contratoId(),
+                dataPrefacturas,
+                function (err) {
+
+                    if (err) {
+
+                        borrarAjusteSiFalla(idRegistro);
+
+                        mensError(
+                            'Error al crear la prefactura. ' +
+                            'Se ha eliminado el ajuste generado.'
+                        );
+
+                        return;
+                    }
+
+                    mostrarMensajeSmart(
+                        'Prefacturas creadas correctamente. ' +
+                        'Puede consultarlas en la solapa correspondiente.'
+                    );
+
+                    llamadaAjax(
+                        "GET",
+                        myconfig.apiUrl +
+                        "/api/contratos/lineas/planificacion/" +
+                        vm.contratoId(),
+                        null,
+                        function (err, data) {
+
+                            loadTablaPlanificacionLineasObras(data);
+
+                            loadPrefacturasDelContrato(
+                                vm.contratoId()
+                            );
+
+                            actualizaCobrosPlanificacion(
+                                vm.contratoId()
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
 }
 
 function borrarAjusteSiFalla(idRegistro) {
