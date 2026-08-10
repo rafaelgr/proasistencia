@@ -775,7 +775,7 @@ function initForm() {
     if (contratoId != 0) {
         llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/uno/campo/departamento/" + contratoId, null, function (err, data) {
             if (err) {
-               
+
                 return;
             }
             vm.sempresaId(data.empresaId);
@@ -817,7 +817,7 @@ function initForm() {
                 $('#labObras').hide();
                 $('#labNoObras').show();
             }
-           
+
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -838,7 +838,7 @@ function initForm() {
         $('#btnAltaPrefactura').hide();
         $('#btnContratoAsociado').hide();
 
-       
+
 
         //
         document.title = "NUEVO CONTRATO";
@@ -2213,8 +2213,10 @@ function initTablaContratosLineas() {
         }, {
             data: "descripcion",
             render: function (data, type, row) {
-                if (data) {
+                if (data && data !== '') {
                     return data.replace('\n', '<br/>');
+                } else {
+                    return '';
                 }
 
             }
@@ -3952,42 +3954,165 @@ function initTablaPrefacturas(departamentoId) {
         $('#dt_prefactura tbody').empty();
     }
 
+    function numeroExcel(valor) {
+        if (valor === null || valor === undefined || valor === '') {
+            return 0;
+        }
+
+        if (typeof valor === 'number') {
+            return valor;
+        }
+
+        // Quitar posibles etiquetas HTML
+        let texto = $('<div>').html(valor).text().trim();
+
+        // Quitar espacios, símbolos monetarios, etc.
+        texto = texto
+            .replace(/\s/g, '')
+            .replace(/[€$]/g, '');
+
+        /*
+         * Formato español:
+         * 6.782,59  -> 6782.59
+         * -147,15   -> -147.15
+         *
+         * Formato internacional:
+         * 6,782.59  -> 6782.59
+         */
+        if (texto.includes(',') && texto.includes('.')) {
+            if (texto.lastIndexOf(',') > texto.lastIndexOf('.')) {
+                // Español
+                texto = texto
+                    .replace(/\./g, '')
+                    .replace(',', '.');
+            } else {
+                // Internacional
+                texto = texto.replace(/,/g, '');
+            }
+        } else if (texto.includes(',')) {
+            texto = texto.replace(',', '.');
+        }
+
+        const numero = Number(texto);
+
+        return Number.isNaN(numero) ? 0 : numero;
+    }
     var buttonCommon = {
+        footer: true,
+
         exportOptions: {
             format: {
                 body: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (column === 8 || column === 9 || column === 10 || column === 11 || column === 12 || column === 13 || column === 14) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (column === 0 || column === 25) {
-                            return "";
-                        } else {
-                            return data;
-                        }
+
+                    // Columnas numéricas
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
                     }
-                },
-                footer: function (data, row, column, node) {
-                    // Strip $ from salary column to make it numeric
-                    if (row === 8 || row === 9 || row === 10 || row === 11 || row === 12 || row === 13 || row === 14 || row === 15 || row === 16 || row === 17 || row === 18) {
-                        //regresar = importe.toString().replace(/\./g,',');
-                        var dato = numeroDbf(data);
-                        console.log(dato);
-                        return dato;
-                    } else {
-                        if (row === 7) {
-                            return data
-                        } else {
-                            return "";
-                        }
+
+                    // No exportar columna inicial ni botones
+                    if (column === 0 || column === 25) {
+                        return '';
                     }
+
+                    return $('<div>').html(data).text();
                 },
+
+                footer: function (data, column, node) {
+
+                    // Totales numéricos del footer
+                    if (column >= 8 && column <= 18) {
+                        return numeroExcel(data);
+                    }
+
+                    if (column === 7) {
+                        return $('<div>').html(data).text();
+                    }
+
+                    return '';
+                }
             }
         },
 
+        customize: function (xlsx) {
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            var styles = xlsx.xl['styles.xml'];
+
+            /*
+             * Crear formato numérico:
+             * Excel mostrará separador de miles y dos decimales.
+             *
+             * En Excel español:
+             * 6782.59 se mostrará como 6.782,59
+             */
+            var numFmts = $('numFmts', styles);
+
+            if (numFmts.length === 0) {
+                $('styleSheet', styles).prepend(
+                    '<numFmts count="1">' +
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>' +
+                    '</numFmts>'
+                );
+            } else {
+                numFmts.append(
+                    '<numFmt numFmtId="164" formatCode="#,##0.00"/>'
+                );
+
+                numFmts.attr(
+                    'count',
+                    parseInt(numFmts.attr('count') || 0, 10) + 1
+                );
+            }
+
+            // Crear estilo usando el formato anterior
+            var cellXfs = $('cellXfs', styles);
+            var estiloNumerico = $('xf', cellXfs).length;
+
+            cellXfs.append(
+                '<xf numFmtId="164" ' +
+                'fontId="0" ' +
+                'fillId="0" ' +
+                'borderId="0" ' +
+                'xfId="0" ' +
+                'applyNumberFormat="1"/>'
+            );
+
+            cellXfs.attr(
+                'count',
+                parseInt(cellXfs.attr('count') || 0, 10) + 1
+            );
+
+            /*
+             * Convierte la letra de la celda Excel en número:
+             * A = 1, B = 2, I = 9, etc.
+             */
+            function numeroColumnaExcel(referencia) {
+                var letras = referencia.replace(/[0-9]/g, '');
+                var numero = 0;
+
+                for (var i = 0; i < letras.length; i++) {
+                    numero = numero * 26 +
+                        letras.charCodeAt(i) - 64;
+                }
+
+                return numero;
+            }
+
+            /*
+             * Columnas 8 a 18 del DataTable equivalen,
+             * si se exportan todas, a las columnas Excel 9 a 19.
+             *
+             * Se aplica a todas las filas, incluido el footer.
+             */
+            $('sheetData row c', sheet).each(function () {
+                var celda = $(this);
+                var referencia = celda.attr('r');
+                var columnaExcel = numeroColumnaExcel(referencia);
+
+                if (columnaExcel >= 9 && columnaExcel <= 19) {
+                    celda.attr('s', estiloNumerico);
+                }
+            });
+        }
     };
     var buttonCommon2 = {
         exportOptions: {
@@ -4070,29 +4195,103 @@ function initTablaPrefacturas(departamentoId) {
         buttons: [
             'copy',
             'csv',
+
             $.extend(true, {}, buttonCommon, {
-                extend: 'excel'
-            }, { footer: true }),
-            $.extend(true, {}, buttonCommon2, {
-                extend: 'pdf'
-            }, {
+                extend: 'excel',
+                footer: true
+            }),
+
+            {
+                extend: 'pdf',
                 orientation: 'landscape',
                 pageSize: 'A3',
                 footer: true,
+
+                exportOptions: {
+                    columns: ':visible:not(:first-child):not(:last-child)',
+
+                    format: {
+                        body: function (data) {
+                            return $('<div>').html(data).text();
+                        },
+
+                        footer: function (data, column) {
+                            if (column >= 8 && column <= 18) {
+                                return data;
+                            }
+
+                            if (column === 7) {
+                                return data;
+                            }
+
+                            return '';
+                        }
+                    }
+                },
+
                 customize: function (doc) {
-                    doc.styles.tableHeader.fontSize = 8;
-                    doc.defaultStyle.fontSize = 7;
+                    doc.pageOrientation = 'landscape';
+                    doc.pageSize = 'A3';
+                    doc.pageMargins = [10, 10, 10, 10];
 
-                    doc.pageMargins = [10, 10, 10, 10]; // menos márgenes
+                    doc.styles.tableHeader.fontSize = 7;
+                    doc.styles.tableHeader.alignment = 'center';
+                    doc.defaultStyle.fontSize = 6;
 
-                    // Ajustar automáticamente ancho de columnas
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length).fill('*');
+                    var contenidoTabla = doc.content.find(function (elemento) {
+                        return elemento.table;
+                    });
 
+                    if (!contenidoTabla) {
+                        return;
+                    }
+
+                    var tabla = contenidoTabla.table;
+                    var numeroColumnas = tabla.body[0].length;
+
+                    if (numeroColumnas === 9) {
+                        tabla.widths = [
+                            120,
+                            85,
+                            95,
+                            95,
+                            125,
+                            125,
+                            110,
+                            110,
+                            130
+                        ];
+                    } else {
+                        tabla.widths = Array(numeroColumnas).fill('*');
+                    }
+
+                    tabla.body.forEach(function (fila) {
+                        fila.forEach(function (celda, indice) {
+                            if (typeof celda === 'object') {
+                                celda.margin = [1, 1, 1, 1];
+                                celda.noWrap = false;
+
+                                if (indice >= 2) {
+                                    celda.alignment = 'right';
+                                }
+                            }
+                        });
+                    });
+
+                    contenidoTabla.layout = {
+                        paddingLeft: function () { return 2; },
+                        paddingRight: function () { return 2; },
+                        paddingTop: function () { return 1; },
+                        paddingBottom: function () { return 1; },
+                        hLineWidth: function () { return 0; },
+                        vLineWidth: function () { return 0; }
+                    };
                 }
-            }),
+            },
 
             'print'
         ],
+
         autoWidth: false,
 
         "footerCallback": function (row, data, start, end, display) {
@@ -11558,11 +11757,15 @@ var compruebaDiferencia = function () {
     let totalPendiente = 0;
 
     for (let i = 0; i < prefacturas.length; i++) {
-        totalCobrado += parseFloat(prefacturas[i].total_cobrado);
-        totalPendiente += parseFloat(prefacturas[i].pendiente);
+        if (prefacturas[i].estado == 'COBRADO') {
+            totalCobrado += parseFloat(prefacturas[i].totalReal);
+        } else {
+            totalPendiente += parseFloat(prefacturas[i].totalReal);
+        }
+
     }
 
-    let diferencia = Math.round((certificacionFinalConIva - (totalCobrado + totalPendiente)) * 100) / 100;
+    let diferencia = Math.round((certFinal - (totalCobrado + totalPendiente)) * 100) / 100;
 
     if (Number.isNaN(diferencia)) {
         mensError("Fallo al calcular la diferencia");
@@ -11593,52 +11796,241 @@ var compruebaDiferencia = function () {
     });
 
 }
-function generarAjuste(diferencia, porcentajeIva) {
+
+function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
+
+    diferencia = parseFloat(diferencia) || 0;
+    porcentajeIva = parseFloat(porcentajeIva) || 0;
+
+    // La diferencia recibida es base sin IVA
+    let importeACompensarBase = Math.abs(diferencia);
+    importeACompensarBase = Math.round(importeACompensarBase * 100) / 100;
+
+    let prefacturas = tablaPrefacturas.rows().data().toArray();
+
+    let candidatas = prefacturas
+        .filter(p => {
+            return Number(p.esLetra || 0) === 1
+                && parseFloat(p.pendiente || 0) > 0
+                && Number(p.noFacturar || 0) === 0
+                && !p.facturaId;
+        })
+        .sort((a, b) => {
+            return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
+        });
+
+    let prefacturasAMarcar = [];
+    let totalCompensadoBase = 0;
+
+    for (let i = 0; i < candidatas.length; i++) {
+
+        let importe = parseFloat(candidatas[i].total || 0);
+        importe = Math.round(importe * 100) / 100;
+
+        // Se obtiene la base individual de cada letra
+        let importeBase = importe;
+
+        /*
+         * Se mantienen más decimales internamente para evitar acumular
+         * errores de redondeo al sumar muchas letras.
+         */
+        importeBase = Math.round(importeBase * 10000) / 10000;
+
+        let nuevoTotalBase = Math.round(
+            (totalCompensadoBase + importeBase) * 10000
+        ) / 10000;
+
+        /*
+         * Solo se marca la letra completa si no supera
+         * la diferencia que tenemos que compensar.
+         */
+        if (nuevoTotalBase <= importeACompensarBase) {
+
+            prefacturasAMarcar.push(candidatas[i]);
+
+            totalCompensadoBase = nuevoTotalBase;
+        }
+    }
+
+    // El resto se calcula en base, porque generarAjuste
+    // espera importe sin IVA
+    let restoBase = Math.round(
+        (importeACompensarBase - totalCompensadoBase) * 100
+    ) / 100;
+
+    /*
+     * Si el descuadre es únicamente de un céntimo por redondeos,
+     * se considera completamente compensado.
+     */
+    if (Math.abs(restoBase) <= 0.01) {
+        restoBase = 0;
+    }
+
+    /*
+     * Si no se puede marcar ninguna letra completa,
+     * se genera directamente el abono.
+     *
+     * No hay IDs que excluir.
+     */
+    if (prefacturasAMarcar.length === 0) {
+        generarAjuste(diferencia, porcentajeIva);
+        return;
+    }
+
+    let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
+
+    $.SmartMessageBox({
+        title: "Ajustar prefacturas",
+        content:
+            "La diferencia es negativa. Se marcarán " +
+            prefacturasAMarcar.length +
+            " prefactura(s) como no facturadas por un importe total de " +
+            numeral(totalCompensadoBase).format('0,0.00') +
+            " € sin IVA. " +
+            (
+                restoBase > 0
+                    ? "Además, se generará un abono con una base de " +
+                    numeral(restoBase).format('0,0.00') +
+                    " €."
+                    : "No será necesario generar abono."
+            ) +
+            " ¿Desea continuar?",
+        buttons: "[Cancelar][Aceptar]"
+    }, function (ButtonPressed) {
+
+        if (ButtonPressed !== "Aceptar") {
+            imprimirActaRecepcion();
+            return;
+        }
+
+        let data = {
+            prefacturasIds: idsPrefacturas
+        };
+
+        llamadaAjax(
+            "PUT",
+            myconfig.apiUrl + "/api/prefacturas/prefacturas/no-facturadas",
+            data,
+            function (err) {
+
+                if (err) {
+                    mensError(
+                        "Error al marcar las prefacturas como no facturadas"
+                    );
+                    return;
+                }
+
+                /*
+                 * Si queda una diferencia después de marcar las letras,
+                 * generamos el abono.
+                 *
+                 * Pasamos los IDs que acabamos de marcar para que
+                 * generarAjuste no los tenga en cuenta al buscar
+                 * la última letra facturable.
+                 */
+                if (restoBase > 0) {
+
+                    generarAjuste(
+                        -restoBase,
+                        porcentajeIva,
+                        idsPrefacturas
+                    );
+
+                    return;
+                }
+
+                mostrarMensajeSmart(
+                    "Prefacturas marcadas correctamente como no facturadas."
+                );
+
+                loadPrefacturasDelContrato(vm.contratoId());
+                actualizaCobrosPlanificacion(vm.contratoId());
+
+                imprimirActaRecepcion();
+            }
+        );
+    });
+}
+
+
+function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
+
     let concepto = '';
     let fechaVencimiento = '';
 
     diferencia = parseFloat(diferencia) || 0;
     porcentajeIva = parseFloat(porcentajeIva) || 0;
 
-    if (diferencia > 0) {
-        concepto = 'Factura';
+    /*
+     * Buscamos la última letra que siga siendo facturable.
+     *
+     * También excluimos las prefacturas que acabamos de marcar
+     * como no facturables, porque tablaPrefacturas puede que
+     * todavía no se haya actualizado.
+     */
+    let prefacturas = tablaPrefacturas.rows().data();
+    let ultimaFechaLetra = null;
 
-        let prefacturas = tablaPrefacturas.rows().data();
-        let ultimaFechaLetra = null;
+    for (let i = 0; i < prefacturas.length; i++) {
 
-        for (let i = 0; i < prefacturas.length; i++) {
-            if (prefacturas[i].esLetra == 1 && prefacturas[i].fecha) {
-                let fecha = moment(prefacturas[i].fecha, 'YYYY-MM-DD');
+        let prefactura = prefacturas[i];
 
-                if (fecha.isValid() && (!ultimaFechaLetra || fecha.isAfter(ultimaFechaLetra))) {
-                    ultimaFechaLetra = fecha;
-                }
+        let estaExcluida = idsExcluir.some(id =>
+            Number(id) === Number(prefactura.prefacturaId)
+        );
+
+        if (
+            Number(prefactura.esLetra || 0) === 1 &&
+            Number(prefactura.noFacturar || 0) === 0 &&
+            !estaExcluida &&
+            prefactura.fecha
+        ) {
+
+           let fecha = moment(prefactura.fecha);
+
+
+            if (
+                fecha.isValid() &&
+                (!ultimaFechaLetra || fecha.isAfter(ultimaFechaLetra))
+            ) {
+                ultimaFechaLetra = fecha;
             }
         }
+    }
 
-        if (!ultimaFechaLetra) {
-            mensError("No se ha encontrado ninguna letra en prefacturas");
-            return;
-        }
+    if (!ultimaFechaLetra) {
+        mensError(
+            "No se ha encontrado ninguna letra facturable en prefacturas"
+        );
+        return;
+    }
+
+    /*
+     * FECHA DEL AJUSTE
+     *
+     * Factura:
+     * un mes después de la última letra facturable.
+     *
+     * Abono:
+     * el mismo día de la última letra facturable.
+     */
+    if (diferencia > 0) {
+
+        concepto = 'Factura';
 
         fechaVencimiento = moment(ultimaFechaLetra)
             .add(1, 'month')
             .format('YYYY-MM-DD');
 
     } else {
-        concepto = "Abono";
 
-        if (!vm.fechaFirmaActa()) {
-            mensError('No hay una fecha de firma del acta de recepción');
-            return;
-        }
+        concepto = 'Abono';
 
-        fechaVencimiento = moment(vm.fechaFirmaActa(), 'DD/MM/YYYY')
-            .add(1, 'month')
+        fechaVencimiento = moment(ultimaFechaLetra)
             .format('YYYY-MM-DD');
     }
 
-    let baseDiferencia = diferencia / (1 + porcentajeIva / 100);
+    let baseDiferencia = diferencia;
     baseDiferencia = Math.round(baseDiferencia * 100) / 100;
 
     let baseImporteCliente = parseFloat(vm.importeCliente()) || 0;
@@ -11648,7 +12040,9 @@ function generarAjuste(diferencia, porcentajeIva) {
         return;
     }
 
-    let porcentajeDiferencia = Math.round((baseDiferencia / baseImporteCliente) * 10000) / 100;
+    let porcentajeDiferencia = Math.round(
+        (baseDiferencia / baseImporteCliente) * 10000
+    ) / 100;
 
     let dataPlanificacion = {
         planificacion: {
@@ -11673,144 +12067,115 @@ function generarAjuste(diferencia, porcentajeIva) {
         }
     };
 
-    llamadaAjax("POST", myconfig.apiUrl + "/api/contratos/planificacion", dataPlanificacion, function (err, registroPlanificacion) {
-        if (err) {
-            mensError('Fallo al crear el registro en planificación');
-            return;
-        }
+    llamadaAjax(
+        "POST",
+        myconfig.apiUrl + "/api/contratos/planificacion",
+        dataPlanificacion,
+        function (err, registroPlanificacion) {
 
-        let idRegistro = registroPlanificacion.contPlanificacionId || registroPlanificacion.planificacionId || registroPlanificacion.id;
-
-        let nombreCliente = vm.nombreComercial();
-
-        if (!nombreCliente || nombreCliente == '') {
-            borrarAjusteSiFalla(idRegistro);
-            mensError("El cliente no tiene un nombre fiscal establecido en su ficha.");
-            return;
-        }
-
-        let clienteId = vm.clienteId();
-        let empresa = $("#cmbEmpresas").select2('data').text;
-
-        let regPlanificacion = [registroPlanificacion];
-        regPlanificacion[0].fecha = fechaVencimiento;
-
-        let prefacturas = crearPrefacturaPlanificacion(
-            1,
-            vm.sempresaId(),
-            clienteId,
-            empresa,
-            nombreCliente,
-            regPlanificacion
-        );
-
-        vm.prefacturasAGenerar(prefacturas);
-
-        let dataPrefacturas = {
-            prefacturas: vm.prefacturasAGenerar()
-        };
-
-        llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/generar-prefactura/" + vm.contratoId(), dataPrefacturas, function (err) {
             if (err) {
-                borrarAjusteSiFalla(idRegistro);
-                mensError('Error al crear la prefactura. Se ha eliminado el ajuste generado.');
+                mensError(
+                    'Fallo al crear el registro en planificación'
+                );
                 return;
             }
 
-            mostrarMensajeSmart('Prefacturas creadas correctamente. Puede consultarlas en la solapa correspondiente.');
+            let idRegistro =
+                registroPlanificacion.contPlanificacionId ||
+                registroPlanificacion.planificacionId ||
+                registroPlanificacion.id;
 
-            llamadaAjax("GET", myconfig.apiUrl + "/api/contratos/lineas/planificacion/" + vm.contratoId(), null, function (err, data) {
-                loadTablaPlanificacionLineasObras(data);
-                loadPrefacturasDelContrato(vm.contratoId());
-                actualizaCobrosPlanificacion(vm.contratoId());
-            });
-        });
-    });
-}
+            let nombreCliente = vm.nombreComercial();
 
-function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
-    let importeACompensar = Math.abs(parseFloat(diferencia) || 0);
+            if (!nombreCliente || nombreCliente == '') {
 
-    let prefacturas = tablaPrefacturas.rows().data().toArray();
+                borrarAjusteSiFalla(idRegistro);
 
-    let candidatas = prefacturas
-        .filter(p => {
-            return Number(p.esLetra || 0) === 1
-                && parseFloat(p.pendiente || 0) > 0
-                && Number(p.noFacturar || 0) === 0
-                && !p.facturaId;
-        })
-        .sort((a, b) => {
-            return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
-        });
+                mensError(
+                    "El cliente no tiene un nombre fiscal establecido en su ficha."
+                );
 
-    let prefacturasAMarcar = [];
-    let totalCompensado = 0;
-
-    for (let i = 0; i < candidatas.length; i++) {
-        let importe = parseFloat(candidatas[i].pendiente || 0);
-
-        if (Math.round((totalCompensado + importe) * 100) / 100 <= importeACompensar) {
-            prefacturasAMarcar.push(candidatas[i]);
-            totalCompensado = Math.round((totalCompensado + importe) * 100) / 100;
-        }
-    }
-
-    let resto = Math.round((importeACompensar - totalCompensado) * 100) / 100;
-
-    if (prefacturasAMarcar.length === 0) {
-        generarAjuste(diferencia, porcentajeIva);
-        return;
-    }
-
-    let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
-
-    $.SmartMessageBox({
-        title: "Ajustar prefacturas",
-        content:
-            "La diferencia es negativa. Se marcarán " +
-            prefacturasAMarcar.length +
-            " prefactura(s) como no facturadas por un importe total de " +
-            numeral(totalCompensado).format('0,0.00') +
-            " €. " +
-            (resto > 0
-                ? "Además, se generará un abono por " + numeral(resto).format('0,0.00') + " €."
-                : "No será necesario generar abono.") +
-            " ¿Desea continuar?",
-        buttons: "[Cancelar][Aceptar]"
-    }, function (ButtonPressed) {
-        if (ButtonPressed !== "Aceptar") {
-            imprimirActaRecepcion();
-            return;
-        }
-
-        let data = {
-            prefacturasIds: idsPrefacturas
-        };
-
-        llamadaAjax(
-            "PUT",
-            myconfig.apiUrl + "/api/prefacturas/prefacturas/no-facturadas",
-            data,
-            function (err) {
-                if (err) {
-                    mensError("Error al marcar las prefacturas como no facturadas");
-                    return;
-                }
-
-                if (resto > 0) {
-                    generarAjuste(-resto, porcentajeIva);
-                } else {
-                    mostrarMensajeSmart("Prefacturas marcadas correctamente como no facturadas.");
-
-                    loadPrefacturasDelContrato(vm.contratoId());
-                    actualizaCobrosPlanificacion(vm.contratoId());
-
-                    imprimirActaRecepcion();
-                }
+                return;
             }
-        );
-    });
+
+            let clienteId = vm.clienteId();
+
+            let empresa =
+                $("#cmbEmpresas").select2('data').text;
+
+            let regPlanificacion = [
+                registroPlanificacion
+            ];
+
+            /*
+             * Esta será la fecha que utilizará
+             * crearPrefacturaPlanificacion.
+             */
+            regPlanificacion[0].fecha = fechaVencimiento;
+
+            let prefacturas = crearPrefacturaPlanificacion(
+                1,
+                vm.sempresaId(),
+                clienteId,
+                empresa,
+                nombreCliente,
+                regPlanificacion
+            );
+
+            vm.prefacturasAGenerar(prefacturas);
+
+            let dataPrefacturas = {
+                prefacturas: vm.prefacturasAGenerar()
+            };
+
+            llamadaAjax(
+                'POST',
+                myconfig.apiUrl +
+                "/api/contratos/generar-prefactura/" +
+                vm.contratoId(),
+                dataPrefacturas,
+                function (err) {
+
+                    if (err) {
+
+                        borrarAjusteSiFalla(idRegistro);
+
+                        mensError(
+                            'Error al crear la prefactura. ' +
+                            'Se ha eliminado el ajuste generado.'
+                        );
+
+                        return;
+                    }
+
+                    mostrarMensajeSmart(
+                        'Prefacturas creadas correctamente. ' +
+                        'Puede consultarlas en la solapa correspondiente.'
+                    );
+
+                    llamadaAjax(
+                        "GET",
+                        myconfig.apiUrl +
+                        "/api/contratos/lineas/planificacion/" +
+                        vm.contratoId(),
+                        null,
+                        function (err, data) {
+
+                            loadTablaPlanificacionLineasObras(data);
+
+                            loadPrefacturasDelContrato(
+                                vm.contratoId()
+                            );
+
+                            actualizaCobrosPlanificacion(
+                                vm.contratoId()
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
 }
 
 function borrarAjusteSiFalla(idRegistro) {
