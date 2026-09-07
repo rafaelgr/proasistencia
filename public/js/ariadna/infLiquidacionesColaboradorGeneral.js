@@ -41,85 +41,112 @@ function initForm() {
     $("#frmRptLiquidaciones").submit(function () {
         return false;
     });
+
+    var inicioAno = moment().startOf('year');
     //
     $('#txtRFecha').daterangepicker({
-        "showDropdowns": true,
-        "locale": {
-            "direction": "ltr",
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "Desde",
-            "toLabel": "Hasta",
-            "customRangeLabel": "Personalizado",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
+        showDropdowns: true,
+
+        locale: {
+            direction: 'ltr',
+            format: 'DD/MM/YYYY',
+            separator: ' - ',
+            applyLabel: 'Aceptar',
+            cancelLabel: 'Cancelar',
+            fromLabel: 'Desde',
+            toLabel: 'Hasta',
+            customRangeLabel: 'Personalizado',
+            daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: [
+                'Enero', 'Febrero', 'Marzo', 'Abril',
+                'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Septiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
+            firstDay: 1
         },
-        "alwaysShowCalendars": true,
+
+        alwaysShowCalendars: true,
+
         ranges: {
             'Hoy': [moment(), moment()],
-            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Esta semana': [moment().startOf('week'), moment().endOf('week')],
-            'Semana pasada': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-            'Este mes': [moment().startOf('month'), moment().endOf('month')],
-            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'Este año': [moment().startOf('year'), moment().endOf('year')],
-            'Último año': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            'Ayer': [
+                moment().subtract(1, 'days'),
+                moment().subtract(1, 'days')
+            ],
+            'Esta semana': [
+                moment().startOf('week'),
+                moment().endOf('week')
+            ],
+            'Semana pasada': [
+                moment().subtract(1, 'week').startOf('week'),
+                moment().subtract(1, 'week').endOf('week')
+            ],
+            'Este mes': [
+                moment().startOf('month'),
+                moment().endOf('month')
+            ],
+            'Último mes': [
+                moment().subtract(1, 'month').startOf('month'),
+                moment().subtract(1, 'month').endOf('month')
+            ],
+
+            '1.er trimestre': [
+                inicioAno.clone(),
+                inicioAno.clone().add(2, 'months').endOf('month')
+            ],
+            '2.º trimestre': [
+                inicioAno.clone().add(3, 'months'),
+                inicioAno.clone().add(5, 'months').endOf('month')
+            ],
+            '3.er trimestre': [
+                inicioAno.clone().add(6, 'months'),
+                inicioAno.clone().add(8, 'months').endOf('month')
+            ],
+            '4.º trimestre': [
+                inicioAno.clone().add(9, 'months'),
+                inicioAno.clone().add(11, 'months').endOf('month')
+            ],
+
+            'Este año': [
+                moment().startOf('year'),
+                moment().endOf('year')
+            ],
+            'Último año': [
+                moment().subtract(1, 'year').startOf('year'),
+                moment().subtract(1, 'year').endOf('year')
+            ]
         }
     }, function (start, end, label) {
-        //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-        
+        vm.dFecha(start.format('YYYY-MM-DD'));
+        vm.hFecha(end.format('YYYY-MM-DD'));
     });
-    
+
     //
     $("#cmbColaboradores").select2(select2Spanish());
     loadColaboradores();
     initAutoCliente();
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
-  
-        
-        if (gup("tipoComercialId") != "0"){
-            vm.tipoComercialId(gup("tipoComercialId"))
-        }
-        if (gup("contratoId") != "0"){
-            vm.contratoId(gup("contratoId"))
-        }
-        vm.contratoId(gup('contratoId'));
-        vm.comercialId(gup('comercialId'));
-        obtainReport();
-        $('#selector').hide();
-    
+
+
+    if (gup("tipoComercialId") != "0") {
+        vm.tipoComercialId(gup("tipoComercialId"))
+    }
+    if (gup("contratoId") != "0") {
+        vm.contratoId(gup("contratoId"))
+    }
+    vm.contratoId(gup('contratoId'));
+    vm.comercialId(gup('comercialId'));
+    obtainReport();
+    $('#selector').hide();
+
 }
 
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
@@ -276,28 +303,28 @@ var initAutoCliente = function () {
 
 var rptLiquidacionGeneralParametros = function () {
     var comercialId = vm.comercialId();
-    if(comercialId == "undefined") comercialId = 0;
+    if (comercialId == "undefined") comercialId = 0;
     comercialId = parseInt(comercialId);
 
 
     var contratoId = vm.contratoId()
-    if(contratoId == "undefined") contratoId = 0;
+    if (contratoId == "undefined") contratoId = 0;
     contratoId = parseInt(contratoId);
-    
+
     sql = "SELECT lf.comercialId, c.nombre, tc.nombre AS tipo, SUM(lf.impCliente) AS totFactura, ";
     sql += " SUM(lf.base) AS totBase, SUM(lf.comision) + SUM(lf.comision2) AS totComision";
     sql += " FROM liquidacion_comercial AS lf";
-    
+
     sql += " LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId";
     sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
     sql += "  WHERE lf.facturaId IS NULL";
     if (comercialId > 0) {
         sql += " AND lf.comercialId IN (" + comercialId + ")";
     }
-    if(contratoId > 0) {
-        sql += "  AND lf.contratoId = "+contratoId;
+    if (contratoId > 0) {
+        sql += "  AND lf.contratoId = " + contratoId;
     }
-   sql += " GROUP BY lf.comercialId";
+    sql += " GROUP BY lf.comercialId";
     return sql;
 }
 

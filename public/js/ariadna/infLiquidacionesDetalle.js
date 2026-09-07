@@ -4,7 +4,7 @@ var responsiveHelper_dt_basic = undefined;
 var responsiveHelper_datatable_fixed_column = undefined;
 var responsiveHelper_datatable_col_reorder = undefined;
 var responsiveHelper_datatable_tabletools = undefined;
- 
+
 var liqGeneral;
 
 
@@ -50,87 +50,113 @@ function initForm() {
         return false;
     });
     //
+    var inicioAno = moment().startOf('year');
     $('#txtRFecha').daterangepicker({
-        "showDropdowns": true,
-        "locale": {
-            "direction": "ltr",
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "Desde",
-            "toLabel": "Hasta",
-            "customRangeLabel": "Personalizado",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
+        showDropdowns: true,
+
+        locale: {
+            direction: 'ltr',
+            format: 'DD/MM/YYYY',
+            separator: ' - ',
+            applyLabel: 'Aceptar',
+            cancelLabel: 'Cancelar',
+            fromLabel: 'Desde',
+            toLabel: 'Hasta',
+            customRangeLabel: 'Personalizado',
+            daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: [
+                'Enero', 'Febrero', 'Marzo', 'Abril',
+                'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Septiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
+            firstDay: 1
         },
-        "alwaysShowCalendars": true,
+
+        alwaysShowCalendars: true,
+
         ranges: {
             'Hoy': [moment(), moment()],
-            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Esta semana': [moment().startOf('week'), moment().endOf('week')],
-            'Semana pasada': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-            'Este mes': [moment().startOf('month'), moment().endOf('month')],
-            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'Este año': [moment().startOf('year'), moment().endOf('year')],
-            'Último año': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            'Ayer': [
+                moment().subtract(1, 'days'),
+                moment().subtract(1, 'days')
+            ],
+            'Esta semana': [
+                moment().startOf('week'),
+                moment().endOf('week')
+            ],
+            'Semana pasada': [
+                moment().subtract(1, 'week').startOf('week'),
+                moment().subtract(1, 'week').endOf('week')
+            ],
+            'Este mes': [
+                moment().startOf('month'),
+                moment().endOf('month')
+            ],
+            'Último mes': [
+                moment().subtract(1, 'month').startOf('month'),
+                moment().subtract(1, 'month').endOf('month')
+            ],
+
+            '1.er trimestre': [
+                inicioAno.clone(),
+                inicioAno.clone().add(2, 'months').endOf('month')
+            ],
+            '2.º trimestre': [
+                inicioAno.clone().add(3, 'months'),
+                inicioAno.clone().add(5, 'months').endOf('month')
+            ],
+            '3.er trimestre': [
+                inicioAno.clone().add(6, 'months'),
+                inicioAno.clone().add(8, 'months').endOf('month')
+            ],
+            '4.º trimestre': [
+                inicioAno.clone().add(9, 'months'),
+                inicioAno.clone().add(11, 'months').endOf('month')
+            ],
+
+            'Este año': [
+                moment().startOf('year'),
+                moment().endOf('year')
+            ],
+            'Último año': [
+                moment().subtract(1, 'year').startOf('year'),
+                moment().subtract(1, 'year').endOf('year')
+            ]
         }
     }, function (start, end, label) {
-        //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
     });
+    
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
-     //
-     $("#cmbTiposComerciales").select2(select2Spanish());
-     loadTiposComerciales();
- 
-     $('#cmbTiposComerciales').change(function(e) {
-         if(!e.added) return;
-         loadColaboradores(e.added);
-     });
- 
+    //
+    $("#cmbTiposComerciales").select2(select2Spanish());
+    loadTiposComerciales();
+
+    $('#cmbTiposComerciales').change(function (e) {
+        if (!e.added) return;
+        loadColaboradores(e.added);
+    });
+
 
     //
     $("#cmbColaboradores").select2(select2Spanish());
 
-    
+
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
         //
         initAutoCliente();
 
         tipo = gup('tipoColaborador');
         departamentoId = gup('departamentoId');
-        if(gup("departamentoId") !="") vm.sdepartamentoId(gup("departamentoId"));
+        if (gup("departamentoId") != "") vm.sdepartamentoId(gup("departamentoId"));
         liqGeneral = gup('liqGeneral');
         vm.stipoComercialId(tipo);
         // verificamos si nos han llamado directamente
@@ -141,14 +167,14 @@ function initForm() {
             vm.scomercialId(gup('comercialId'));
             obtainReport();
             $('#selector').hide();
-        }    
+        }
     });
 }
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
@@ -185,18 +211,18 @@ function admData() {
 };
 
 var obtainReport = function () {
-    if(liqGeneral != 'true') {
+    if (liqGeneral != 'true') {
         if (!datosOK()) return;
     }
-    
+
     var tipoColaborador = vm.stipoComercialId();
     var file;
-    if(tipoColaborador != 1) {
+    if (tipoColaborador != 1) {
         file = "../reports/liquidacion_detalle_colaborador.mrt";
     } else {
         file = "../reports/liquidacion_detalle.mrt";
     }
-    
+
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
     report.loadFile(file);
@@ -272,11 +298,11 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptLiquidaciones').validate({
         rules: {
-            cmbTiposComerciales: {required : true}
+            cmbTiposComerciales: { required: true }
         },
         // Messages for form validation
         messages: {
-            cmbTiposComerciales: {required : "Deve introducir un tipo de comercial"}
+            cmbTiposComerciales: { required: "Deve introducir un tipo de comercial" }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -297,14 +323,14 @@ function loadTiposComerciales(tipoComercialId) {
 }
 
 function loadColaboradores(e) {
-    if(e) {
+    if (e) {
         var tipoComercialId = e.id;
-            llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
-                if (err) return;
-                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-                vm.posiblesColaboradores(colaboradores);
-                $("#cmbColaboradores").val([0]).trigger('change');
-            });
+        llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
+            if (err) return;
+            var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesColaboradores(colaboradores);
+            $("#cmbColaboradores").val([0]).trigger('change');
+        });
     }
 }
 
@@ -352,12 +378,12 @@ var rptLiquidacionGeneralParametros = function () {
     sql += " LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId";
     sql += " LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId";
     sql += " LEFT JOIN tipos_via AS tp ON tp.tipoViaId = ccm.tipoViaId";
-    if(tipoComercialId == 1) {
-        sql += " WHERE f.fecha >= '" + dFecha +  "' AND f.fecha <= '" + hFecha + "'";
+    if (tipoComercialId == 1) {
+        sql += " WHERE f.fecha >= '" + dFecha + "' AND f.fecha <= '" + hFecha + "'";
     } else {
         sql += " WHERE ccm.fechaFinal >= '" + dFecha + "' AND ccm.fechaFinal <= '" + hFecha + "'";
     }
-    if (tipoComercialId){
+    if (tipoComercialId) {
         sql += " AND lf.comercialId IN (SELECT comercialId from comerciales where tipoComercialId = " + tipoComercialId + ")";
     }
     if (comercialId) {
@@ -365,13 +391,13 @@ var rptLiquidacionGeneralParametros = function () {
     }
     if (departamentoId != 0 && tipoComercialId == 1) {
         sql += " AND f.departamentoId = " + departamentoId;
-    } 
-    else if(departamentoId == 0 && tipoComercialId == 1) {
-        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"            
-    }  else if (departamentoId != 0) {
+    }
+    else if (departamentoId == 0 && tipoComercialId == 1) {
+        sql += " AND f.departamentoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = " + usuario.usuarioId + ")"
+    } else if (departamentoId != 0) {
         sql += " AND ccm.tipoContratoId = " + departamentoId;
     } else {
-        sql += " AND ccm.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"   
+        sql += " AND ccm.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = " + usuario.usuarioId + ")"
     }
     return sql;
 }

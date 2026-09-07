@@ -49,64 +49,84 @@ function initForm() {
         return false;
     });
     //
+    var inicioAno = moment().startOf('year');
     $('#txtRFecha').daterangepicker({
-        "showDropdowns": true,
-        "locale": {
-            "direction": "ltr",
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "Desde",
-            "toLabel": "Hasta",
-            "customRangeLabel": "Personalizado",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
+        showDropdowns: true,
+
+        locale: {
+            direction: 'ltr',
+            format: 'DD/MM/YYYY',
+            separator: ' - ',
+            applyLabel: 'Aceptar',
+            cancelLabel: 'Cancelar',
+            fromLabel: 'Desde',
+            toLabel: 'Hasta',
+            customRangeLabel: 'Personalizado',
+            daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: [
+                'Enero', 'Febrero', 'Marzo', 'Abril',
+                'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Septiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
+            firstDay: 1
         },
-        "alwaysShowCalendars": true,
+
+        alwaysShowCalendars: true,
+
         ranges: {
             'Hoy': [moment(), moment()],
-            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Esta semana': [moment().startOf('week'), moment().endOf('week')],
-            'Semana pasada': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-            'Este mes': [moment().startOf('month'), moment().endOf('month')],
-            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'Este año': [moment().startOf('year'), moment().endOf('year')],
-            'Último año': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            'Ayer': [
+                moment().subtract(1, 'days'),
+                moment().subtract(1, 'days')
+            ],
+            'Esta semana': [
+                moment().startOf('week'),
+                moment().endOf('week')
+            ],
+            'Semana pasada': [
+                moment().subtract(1, 'week').startOf('week'),
+                moment().subtract(1, 'week').endOf('week')
+            ],
+            'Este mes': [
+                moment().startOf('month'),
+                moment().endOf('month')
+            ],
+            'Último mes': [
+                moment().subtract(1, 'month').startOf('month'),
+                moment().subtract(1, 'month').endOf('month')
+            ],
+
+            '1.er trimestre': [
+                inicioAno.clone(),
+                inicioAno.clone().add(2, 'months').endOf('month')
+            ],
+            '2.º trimestre': [
+                inicioAno.clone().add(3, 'months'),
+                inicioAno.clone().add(5, 'months').endOf('month')
+            ],
+            '3.er trimestre': [
+                inicioAno.clone().add(6, 'months'),
+                inicioAno.clone().add(8, 'months').endOf('month')
+            ],
+            '4.º trimestre': [
+                inicioAno.clone().add(9, 'months'),
+                inicioAno.clone().add(11, 'months').endOf('month')
+            ],
+
+            'Este año': [
+                moment().startOf('year'),
+                moment().endOf('year')
+            ],
+            'Último año': [
+                moment().subtract(1, 'year').startOf('year'),
+                moment().subtract(1, 'year').endOf('year')
+            ]
         }
     }, function (start, end, label) {
-        //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
-
-        var empresaId =  vm.sempresaId(); 
-        var departamentoId = vm.sdepartamentoId();
-        var dFecha = vm.dFecha();
-        var hFecha = vm.hFecha();
-        loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
     });
+    
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
@@ -123,25 +143,25 @@ function initForm() {
     $("#cmbContratos").select2(select2Spanish());
 
 
-    $('#cmbTiposComerciales').change(function(e) {
-        if(!e.added) return;
+    $('#cmbTiposComerciales').change(function (e) {
+        if (!e.added) return;
         loadColaboradores(parseInt(e.added.id));
     });
 
 
-    $('#cmbDepartamentosTrabajo').change(function(e) {
-        if(!e.added) return;
+    $('#cmbDepartamentosTrabajo').change(function (e) {
+        if (!e.added) return;
         var empresaId = vm.sempresaId()
-        var departamentoId =  e.added.id;
+        var departamentoId = e.added.id;
         var dFecha = vm.dFecha();
         var hFecha = vm.hFecha();
         loadContratos(dFecha, hFecha, parseInt(departamentoId), parseInt(empresaId));
     });
 
 
-    $('#cmbEmpresas').change(function(e) {
-        if(!e.added) return;
-        var empresaId =  e.added.id; 
+    $('#cmbEmpresas').change(function (e) {
+        if (!e.added) return;
+        var empresaId = e.added.id;
         var departamentoId = vm.sdepartamentoId();
         var dFecha = vm.dFecha();
         var hFecha = vm.hFecha();
@@ -149,14 +169,14 @@ function initForm() {
     });
 
 
-    
+
 
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
-        if(data) {
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
+        if (data) {
             initAutoCliente();
             var d = vm.sdepartamentoId();
             var e = vm.sempresaId()
@@ -167,19 +187,19 @@ function initForm() {
         }
     });
 
-    
-    
+
+
     //
-    $.validator.addMethod("notEqualTo", function(value, element, param){
-        if(value == "0") return false
+    $.validator.addMethod("notEqualTo", function (value, element, param) {
+        if (value == "0") return false
         return true;
     });
 }
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
@@ -214,20 +234,20 @@ function admData() {
     //
     self.posiblesColaboradores = ko.observableArray([]);
     self.elegidosColaboradores = ko.observableArray([]);
-     //
-     self.scontratoId = ko.observable();
-     //
-     self.posiblesContratos = ko.observableArray([]);
-     self.elegidosContratos = ko.observableArray([]);
-     self.observaciones = ko.observable();
-     self.observacionesPago = ko.observable();
-     //
+    //
+    self.scontratoId = ko.observable();
+    //
+    self.posiblesContratos = ko.observableArray([]);
+    self.elegidosContratos = ko.observableArray([]);
+    self.observaciones = ko.observable();
+    self.observacionesPago = ko.observable();
+    //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
     //
     self.posiblesTiposComerciales = ko.observableArray([]);
     self.elegidosTiposComerciales = ko.observableArray([]);
-     //
+    //
 };
 
 
@@ -285,10 +305,10 @@ function loadTiposComerciales() {
 function loadColaboradores(e) {
     var tipoComercialId = 0;
     var url = "/api/comerciales"
-   
-        var tipoComercialId = e;
-        url =  "/api/comerciales/colaboradores/por/tipo/" + tipoComercialId
-    
+
+    var tipoComercialId = e;
+    url = "/api/comerciales/colaboradores/por/tipo/" + tipoComercialId
+
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
@@ -298,9 +318,9 @@ function loadColaboradores(e) {
 }
 
 function loadContratos(dFecha, hFecha, departamentoId, empresaId) {
-   
-    var url = myconfig.apiUrl +"/api/contratos/recupera/todos/" + dFecha + "/" +hFecha + "/" + departamentoId + "/" + empresaId;
-    
+
+    var url = myconfig.apiUrl + "/api/contratos/recupera/todos/" + dFecha + "/" + hFecha + "/" + departamentoId + "/" + empresaId;
+
     llamadaAjax("GET", url, null, function (err, data) {
         if (err) return;
         cargarContratos(data);
@@ -343,10 +363,10 @@ var initAutoCliente = function () {
 
 
 var rptContratosParametrosJson = function () {
-    if(!datosOK()) return;
+    if (!datosOK()) return;
     //si no hay cliente en el campo de texto el cliente es 0
     var c = $('#txtCliente').val();
-    if(c == '') {
+    if (c == '') {
         vm.sclienteId(null);
     }
     var tipoComercialId = vm.stipoComercialId();
@@ -357,18 +377,18 @@ var rptContratosParametrosJson = function () {
     var contratoId = vm.scontratoId();
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    
-    
-
-    if(!clienteId) clienteId = 0;
-    if(!comercialId) comercialId = 0;
-    if(!tipoComercialId) tipoComercialId = 0;
-    if(!departamentoId) departamentoId = 0;
-    if(!empresaId) empresaId = 0;
-    if(!contratoId) contratoId = 0;
 
 
-    
+
+    if (!clienteId) clienteId = 0;
+    if (!comercialId) comercialId = 0;
+    if (!tipoComercialId) tipoComercialId = 0;
+    if (!departamentoId) departamentoId = 0;
+    if (!empresaId) empresaId = 0;
+    if (!contratoId) contratoId = 0;
+
+
+
     var url = "/api/contratos/inf/contratos/json/visor/" + dFecha + "/" + hFecha;
     url += "/" + empresaId;
     url += "/" + clienteId;
@@ -378,30 +398,30 @@ var rptContratosParametrosJson = function () {
     url += "/" + contratoId;
     url += "/" + usuario.usuarioId;
     llamadaAjax("GET", url, null, function (err, data) {
-        if (err)   return;
-        if(data) {
+        if (err) return;
+        if (data) {
             obtainReportJson(data)
         } else {
             alert("No hay registros con estas condiciones");
         }
-        
+
     });
 }
 
 var obtainReportJson = function (obj) {
     var file = "../reports/inf_cobros.mrt";
     var report = new Stimulsoft.Report.StiReport();
-        
-        
+
+
     report.loadFile(file);
 
     var dataSet = new Stimulsoft.System.Data.DataSet("liq_ant");
     dataSet.readJson(obj);
-    
-     // Remove all connections from the report template
-     report.dictionary.databases.clear();
 
-     //
+    // Remove all connections from the report template
+    report.dictionary.databases.clear();
+
+    //
     report.regData(dataSet.dataSetName, "", dataSet);
     report.dictionary.synchronize();
 
