@@ -853,6 +853,10 @@ function generaLiquidaciones2(
             usuario.usuarioId
     };
 
+    $("#btnAlta").prop(
+        'disabled',
+        true
+    );
 
     $.ajax({
 
@@ -876,7 +880,13 @@ function generaLiquidaciones2(
             status
         ) {
 
+             $("#btnAlta").prop(
+                'disabled',
+                false
+            );
+            
             $("#btnAlta").hide();
+
 
             mensNormal(
                 "Las liquidaciones han sido generadas, " +
@@ -895,6 +905,10 @@ function generaLiquidaciones2(
 
         error: function (err) {
 
+            $("#btnAlta").prop(
+                'disabled',
+                false
+            );
             mensErrorAjax(err);
         }
     });

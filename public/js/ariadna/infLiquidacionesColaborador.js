@@ -15,16 +15,17 @@ var mrt = null;
 // License Key
 
 // Create the report viewer with default options
-var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer", false);
+
 var options = new Stimulsoft.Viewer.StiViewerOptions();
+options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.Continuous;
 StiOptions.WebServer.url = "/api/streport";
 Stimulsoft.Base.Localization.StiLocalization.setLocalizationFile("../Localization/es.xml", true);
 
+var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
+
 obtainKey();//obtiene la clave de usuario de stimulsoft de la configuracion
 
-options.appearance.scrollbarsMode = true;
-options.appearance.fullScreenMode = true;
-options.toolbar.showSendEmailButton = true;
+
 //var viewer = new Stimulsoft.Viewer.StiViewer(options, "StiViewer", false);
 viewer.onEmailReport = function (event) {
     console.log('EMAIL REPORT');
