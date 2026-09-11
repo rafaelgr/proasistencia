@@ -1,894 +1,1390 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<StiSerializer version="1.02" type="Net" application="StiReport">
-  <Dictionary Ref="1" type="Dictionary" isKey="true">
-    <BusinessObjects isList="true" count="0" />
-    <Databases isList="true" count="1">
-      <PROA_REPORT Ref="2" type="Stimulsoft.Report.Dictionary.StiMySqlDatabase" isKey="true">
-        <Alias>PROA_REPORT</Alias>
-        <ConnectionStringEncrypted>41rPa+9de83zQbWA51j2Y4tU9aHJUfrNcUeh+Op0Oy/CbNkJT13D9WpHTcxOQGUv1WppAkZLMXxGTLns6xh3Y9Vw+w==</ConnectionStringEncrypted>
-        <Name>PROA_REPORT</Name>
-      </PROA_REPORT>
-    </Databases>
-    <DataSources isList="true" count="1">
-      <liqdet Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
-        <Alias>liqdet</Alias>
-        <Columns isList="true" count="28">
-          <value>nombre,System.String</value>
-          <value>tipo,System.String</value>
-          <value>liquidacionComercialId,System.Int32</value>
-          <value>facturaId,System.Int32</value>
-          <value>comercialId,System.Int32</value>
-          <value>contratoClienteMantenimientoId,System.Int32</value>
-          <value>impCliente,System.Decimal</value>
-          <value>coste,System.Decimal</value>
-          <value>CA,System.Decimal</value>
-          <value>PC,System.Decimal</value>
-          <value>PCA,System.Decimal</value>
-          <value>PCO,System.Decimal</value>
-          <value>ICO,System.Decimal</value>
-          <value>IJO,System.Decimal</value>
-          <value>IOT,System.Decimal</value>
-          <value>IAT,System.Decimal</value>
-          <value>IC,System.Decimal</value>
-          <value>porComer,System.Decimal</value>
-          <value>base,System.Decimal</value>
-          <value>comision,System.Decimal</value>
-          <value>contratoId,System.Int32</value>
-          <value>facNum,System.String</value>
-          <value>base2,System.Decimal</value>
-          <value>fechaFactura,System.Byte[]</value>
-          <value>fecha,System.DateTime</value>
-          <value>dFecha,System.String</value>
-          <value>hFecha,System.String</value>
-          <value>contrato,System.String</value>
-        </Columns>
-        <CommandTimeout>30</CommandTimeout>
-        <Dictionary isRef="1" />
-        <Name>liqdet</Name>
-        <NameInSource>PROA_REPORT</NameInSource>
-        <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT c.nombre, tc.nombre AS tipo, lf.*, CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, lf.base as base2,
-DATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, f.fecha, '01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato 
-FROM liquidacion_comercial AS lf 
-LEFT JOIN facturas AS f ON f.facturaId = lf.facturaId 
-LEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId 
-LEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId 
-LEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId 
-WHERE f.fecha &gt;= '2017-01-01' AND f.fecha &lt;= '2017-12-31'</SqlCommand>
-      </liqdet>
-    </DataSources>
-    <Relations isList="true" count="0" />
-    <Report isRef="0" />
-    <Resources isList="true" count="0" />
-    <Variables isList="true" count="0" />
-  </Dictionary>
-  <EngineVersion>EngineV2</EngineVersion>
-  <GlobalizationStrings isList="true" count="0" />
-  <MetaTags isList="true" count="0" />
-  <Pages isList="true" count="1">
-    <Page1 Ref="4" type="Page" isKey="true">
-      <Border>None;Black;2;Solid;False;4;Black</Border>
-      <Brush>Transparent</Brush>
-      <Components isList="true" count="5">
-        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,0.4,27.7,2.4</ClientRectangle>
-          <Components isList="true" count="2">
-            <Text3 Ref="6" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>13.6,0.2,13.8,1</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,20,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text3</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>Informe de liquidaciones (Detalle)</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text3>
-            <Text4 Ref="7" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>13.6,1.2,13.8,1</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,16,Bold</Font>
-              <Guid>c5652dc38701408da4abdf68a940c1c8</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text4</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>Desde {liqdet.dFecha} hasta {liqdet.hFecha}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text4>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Name>PageHeaderBand1</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </PageHeaderBand1>
-        <GroupHeaderBand1 Ref="8" type="GroupHeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,3.6,27.7,1</ClientRectangle>
-          <Components isList="true" count="1">
-            <Dataliqdet_nombre Ref="9" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0.2,18.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_nombre</Name>
-              <Page isRef="4" />
-              <Parent isRef="8" />
-              <Text>COLABORADOR: {liqdet.nombre} / {liqdet.tipo}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_nombre>
-          </Components>
-          <Condition>{liqdet.nombre}</Condition>
-          <Conditions isList="true" count="0" />
-          <Name>GroupHeaderBand1</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </GroupHeaderBand1>
-        <Headerliqdet Ref="10" type="HeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,5.4,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="16">
-            <Headerliqdet_CA Ref="11" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>7.6,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_CA</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Agente</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_CA>
-            <Headerliqdet_PC Ref="12" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>9,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PC</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>% Ventas</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PC>
-            <Headerliqdet_PCA Ref="13" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PCA</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>% Comercial</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PCA>
-            <Headerliqdet_PCO Ref="14" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_PCO</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>% Costes</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_PCO>
-            <Headerliqdet_ICO Ref="15" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_ICO</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Costes</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_ICO>
-            <Headerliqdet_IJO Ref="16" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IJO</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Jefe Obras</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IJO>
-            <Headerliqdet_IOT Ref="17" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>19,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IOT</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Asesor Técnico</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IOT>
-            <Headerliqdet_IAT Ref="18" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>17.4,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IAT</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Oficina Técnica</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IAT>
-            <Headerliqdet_IC Ref="19" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>20.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_IC</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Comercial</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_IC>
-            <Headerliqdet_base_ Ref="20" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>22.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_base_</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Base Calculo</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_base_>
-            <Headerliqdet_comision Ref="21" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_comision</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Comisión</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_comision>
-            <Headerliqdet_fechaFactura Ref="22" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_fechaFactura</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Fecha</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_fechaFactura>
-            <Headerliqdet_contrato Ref="23" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>3.6,0,2.2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_contrato</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Contrato</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_contrato>
-            <Headerliqdet_facNum Ref="24" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_facNum</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Factura</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_facNum>
-            <Headerliqdet_impCliente Ref="25" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>5.8,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_impCliente</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>Imp. Fact.</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_impCliente>
-            <Headerliqdet_porComer Ref="26" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>24.6,0,1,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Headerliqdet_porComer</Name>
-              <Page isRef="4" />
-              <Parent isRef="10" />
-              <Text>%</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="27" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Headerliqdet_porComer>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Name>Headerliqdet</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </Headerliqdet>
-        <Dataliqdet Ref="28" type="DataBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,7,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="16">
-            <Dataliqdet_impCliente Ref="29" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>5.8,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_impCliente</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.impCliente}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_impCliente>
-            <Dataliqdet_CA Ref="31" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>7.6,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_CA</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.CA}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_CA>
-            <Dataliqdet_PC Ref="33" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>9,0,1.4,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_PC</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.PC}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_PC>
-            <Dataliqdet_PCA Ref="34" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>10.4,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_PCA</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.PCA}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_PCA>
-            <Dataliqdet_PCO Ref="35" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>12.4,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_PCO</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.PCO}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_PCO>
-            <Dataliqdet_ICO Ref="36" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>14,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_ICO</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.ICO}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="37" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_ICO>
-            <Dataliqdet_IJO Ref="38" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>15.8,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IJO</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.IJO}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="39" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IJO>
-            <Dataliqdet_IOT Ref="40" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>19,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IOT</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.IOT}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IOT>
-            <Dataliqdet_IAT Ref="42" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>17.4,0,1.6,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IAT</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.IAT}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IAT>
-            <Dataliqdet_IC Ref="44" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>20.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_IC</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.IC}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_IC>
-            <Dataliqdet_base_ Ref="46" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>22.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_base_</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.base2}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_base_>
-            <Dataliqdet_comision Ref="48" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>25.6,0,2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_comision</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.comision}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="49" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_comision>
-            <Dataliqdet_facNum Ref="50" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>1.8,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_facNum</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.facNum}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_facNum>
-            <Dataliqdet_fechaFactura Ref="51" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_fechaFactura</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.fechaFactura}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="52" type="DateFormat" isKey="true">
-                <StringFormat>dd/MM/yyyy</StringFormat>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>DataColumn</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_fechaFactura>
-            <Dataliqdet_contrato Ref="53" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>3.6,0,2.2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_contrato</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.contrato}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_contrato>
-            <Dataliqdet_porComer Ref="54" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>24.6,0,1,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Dataliqdet_porComer</Name>
-              <Page isRef="4" />
-              <Parent isRef="28" />
-              <Text>{liqdet.porComer}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="55" type="NumberFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>1</NegativePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern</State>
-              </TextFormat>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <VertAlignment>Center</VertAlignment>
-            </Dataliqdet_porComer>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <DataRelationName isNull="true" />
-          <DataSourceName>liqdet</DataSourceName>
-          <Filters isList="true" count="0" />
-          <Name>Dataliqdet</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-          <Sort isList="true" count="4">
-            <value>ASC</value>
-            <value>fecha</value>
-            <value>ASC</value>
-            <value>contrato</value>
-          </Sort>
-        </Dataliqdet>
-        <GroupFooterBand1 Ref="56" type="GroupFooterBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,8.6,27.7,0.8</ClientRectangle>
-          <Components isList="true" count="2">
-            <Text1 Ref="57" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>17.6,0,7.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,10,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text1</Name>
-              <Page isRef="4" />
-              <Parent isRef="56" />
-              <Text>TOTAL COMISIONES</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text1>
-            <Text2 Ref="58" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>25.6,0,2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>Arial,8,Bold</Font>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text2</Name>
-              <Page isRef="4" />
-              <Parent isRef="56" />
-              <Text>{Sum(GroupHeaderBand1,liqdet.comision)}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="59" type="CurrencyFormat" isKey="true">
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>3</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text2>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Name>GroupFooterBand1</Name>
-          <NewPageAfter>True</NewPageAfter>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </GroupFooterBand1>
-      </Components>
-      <Conditions isList="true" count="0" />
-      <Guid>57e70703340742f09e1faf13763bc732</Guid>
-      <Margins>1,1,1,1</Margins>
-      <Name>Page1</Name>
-      <Orientation>Landscape</Orientation>
-      <PageHeight>21</PageHeight>
-      <PageWidth>29.7</PageWidth>
-      <Report isRef="0" />
-      <Watermark Ref="60" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
-        <Font>Arial,100</Font>
-        <TextBrush>[50:0:0:0]</TextBrush>
-      </Watermark>
-    </Page1>
-  </Pages>
-  <PrinterSettings Ref="61" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
-  <ReferencedAssemblies isList="true" count="8">
-    <value>System.Dll</value>
-    <value>System.Drawing.Dll</value>
-    <value>System.Windows.Forms.Dll</value>
-    <value>System.Data.Dll</value>
-    <value>System.Xml.Dll</value>
-    <value>Stimulsoft.Controls.Dll</value>
-    <value>Stimulsoft.Base.Dll</value>
-    <value>Stimulsoft.Report.Dll</value>
-  </ReferencedAssemblies>
-  <ReportAlias>liquidacion_detalle</ReportAlias>
-  <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>2/24/2021 9:20:28 AM</ReportChanged>
-  <ReportCreated>5/10/2017 10:31:47 AM</ReportCreated>
-  <ReportFile>C:\ariadna\proasistencia\public\reports\liquidacion_detalle.mrt</ReportFile>
-  <ReportGuid>8c910896bec44a1689f52ec9999936dd</ReportGuid>
-  <ReportImage isNull="true" />
-  <ReportName>liquidacion_detalle</ReportName>
-  <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2017.1.10.0</ReportVersion>
-  <Script>using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Data;
-using Stimulsoft.Controls;
-using Stimulsoft.Base.Drawing;
-using Stimulsoft.Report;
-using Stimulsoft.Report.Dialogs;
-using Stimulsoft.Report.Components;
-
-namespace Reports
 {
-    public class liquidacion_detalle : Stimulsoft.Report.StiReport
-    {
-        public liquidacion_detalle()        {
-            this.InitializeComponent();
-        }
-
-        #region StiReport Designer generated code - do not modify
-		#endregion StiReport Designer generated code - do not modify
+  "ReportVersion": "2025.4.3",
+  "ReportGuid": "8c910896bec44a1689f52ec9999936dd",
+  "ReportName": "liquidacion_detalle",
+  "ReportAlias": "liquidacion_detalle",
+  "ReportFile": "public/reports/liquidacion_detalle.mrt",
+  "ReportAuthor": "rafa@myariadna.com",
+  "ReportCreated": "/Date(0+0100)/",
+  "ReportChanged": "/Date(0+0100)/",
+  "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
+  "ReportImage": "",
+  "CalculationMode": "Interpretation",
+  "Dictionary": {
+    "DataSources": {
+      "0": {
+        "Ident": "StiMySqlSource",
+        "Name": "liqdet",
+        "Alias": "liqdet",
+        "Columns": {
+          "0": {
+            "Name": "nombre",
+            "NameInSource": "nombre",
+            "Alias": "nombre",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "tipo",
+            "NameInSource": "tipo",
+            "Alias": "tipo",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "liquidacionComercialId",
+            "NameInSource": "liquidacionComercialId",
+            "Alias": "liquidacionComercialId",
+            "Type": "System.Int32"
+          },
+          "3": {
+            "Name": "facturaId",
+            "NameInSource": "facturaId",
+            "Alias": "facturaId",
+            "Type": "System.Int32"
+          },
+          "4": {
+            "Name": "comercialId",
+            "NameInSource": "comercialId",
+            "Alias": "comercialId",
+            "Type": "System.Int32"
+          },
+          "5": {
+            "Name": "contratoClienteMantenimientoId",
+            "NameInSource": "contratoClienteMantenimientoId",
+            "Alias": "contratoClienteMantenimientoId",
+            "Type": "System.Int32"
+          },
+          "6": {
+            "Name": "impCliente",
+            "NameInSource": "impCliente",
+            "Alias": "impCliente",
+            "Type": "System.Decimal"
+          },
+          "7": {
+            "Name": "coste",
+            "NameInSource": "coste",
+            "Alias": "coste",
+            "Type": "System.Decimal"
+          },
+          "8": {
+            "Name": "CA",
+            "NameInSource": "CA",
+            "Alias": "CA",
+            "Type": "System.Decimal"
+          },
+          "9": {
+            "Name": "PC",
+            "NameInSource": "PC",
+            "Alias": "PC",
+            "Type": "System.Decimal"
+          },
+          "10": {
+            "Name": "PCA",
+            "NameInSource": "PCA",
+            "Alias": "PCA",
+            "Type": "System.Decimal"
+          },
+          "11": {
+            "Name": "PCO",
+            "NameInSource": "PCO",
+            "Alias": "PCO",
+            "Type": "System.Decimal"
+          },
+          "12": {
+            "Name": "ICO",
+            "NameInSource": "ICO",
+            "Alias": "ICO",
+            "Type": "System.Decimal"
+          },
+          "13": {
+            "Name": "IJO",
+            "NameInSource": "IJO",
+            "Alias": "IJO",
+            "Type": "System.Decimal"
+          },
+          "14": {
+            "Name": "IOT",
+            "NameInSource": "IOT",
+            "Alias": "IOT",
+            "Type": "System.Decimal"
+          },
+          "15": {
+            "Name": "IAT",
+            "NameInSource": "IAT",
+            "Alias": "IAT",
+            "Type": "System.Decimal"
+          },
+          "16": {
+            "Name": "IC",
+            "NameInSource": "IC",
+            "Alias": "IC",
+            "Type": "System.Decimal"
+          },
+          "17": {
+            "Name": "porComer",
+            "NameInSource": "porComer",
+            "Alias": "porComer",
+            "Type": "System.Decimal"
+          },
+          "18": {
+            "Name": "base",
+            "NameInSource": "base",
+            "Alias": "base",
+            "Type": "System.Decimal"
+          },
+          "19": {
+            "Name": "comision",
+            "NameInSource": "comision",
+            "Alias": "comision",
+            "Type": "System.Decimal"
+          },
+          "20": {
+            "Name": "contratoId",
+            "NameInSource": "contratoId",
+            "Alias": "contratoId",
+            "Type": "System.Int32"
+          },
+          "21": {
+            "Name": "facNum",
+            "NameInSource": "facNum",
+            "Alias": "facNum",
+            "Type": "System.String"
+          },
+          "22": {
+            "Name": "base2",
+            "NameInSource": "base2",
+            "Alias": "base2",
+            "Type": "System.Decimal"
+          },
+          "23": {
+            "Name": "fechaFactura",
+            "NameInSource": "fechaFactura",
+            "Alias": "fechaFactura",
+            "Type": "System.String"
+          },
+          "24": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.DateTime"
+          },
+          "25": {
+            "Name": "dFecha",
+            "NameInSource": "dFecha",
+            "Alias": "dFecha",
+            "Type": "System.String"
+          },
+          "26": {
+            "Name": "hFecha",
+            "NameInSource": "hFecha",
+            "Alias": "hFecha",
+            "Type": "System.String"
+          },
+          "27": {
+            "Name": "contrato",
+            "NameInSource": "contrato",
+            "Alias": "contrato",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT c.nombre, tc.nombre AS tipo, lf.*, CONCAT(COALESCE(f.serie,' '),'-',COALESCE(CAST(f.ano AS CHAR(50)),' '),'-',COALESCE(CAST(f.numero AS CHAR(50)),' ')) AS facNum, lf.base as base2,\nDATE_FORMAT(f.fecha, '%Y-%m-%d' ) AS fechaFactura, f.fecha, '01/01/2017' AS dFecha, '31/12/2017' AS hFecha, ccm.referencia AS contrato \nFROM liquidacion_comercial AS lf \nLEFT JOIN facturas AS f ON f.facturaId = lf.facturaId \nLEFT JOIN comerciales AS c ON c.comercialId = lf.comercialId \nLEFT JOIN tipos_comerciales AS tc ON tc.tipoComercialId = c.tipoComercialId \nLEFT JOIN contratos AS ccm ON ccm.contratoId = lf.contratoId \nWHERE f.fecha >= '2017-01-01' AND f.fecha <= '2017-12-31'"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiMySqlDatabase",
+        "Name": "PROA_REPORT",
+        "Alias": "PROA_REPORT",
+        "ConnectionStringEncrypted": "41rPa+9de83zQbWA51j2Y4tU9aHJUfrNcUeh+Op0Oy/CbNkJT13D9WpHTcxOQGUv1WppAkZLMXxGTLns6xh3Y9Vw+w=="
+      }
     }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "57e70703340742f09e1faf13763bc732",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:",
+      "Components": {
+        "0": {
+          "Ident": "StiPageHeaderBand",
+          "Name": "PageHeaderBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,0.4,27.7,1.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "ClientRectangle": "0.15,0.1,27.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Informe de liquidaciones (Detalle)"
+              },
+              "VertAlignment": "Center",
+              "Font": ";17;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:40,51,65",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "Guid": "c5652dc38701408da4abdf68a940c1c8",
+              "ClientRectangle": "0.15,0.95,27.4,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Desde {liqdet.dFecha} hasta {liqdet.hFecha}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";11;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:90,100,110",
+              "Type": "Expression"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,3,27.7,0.7",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:245,247,250",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_nombre",
+              "CanGrow": true,
+              "ClientRectangle": "0.2,0.05,27.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "COLABORADOR: {liqdet.nombre} / {liqdet.tipo}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:40,51,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          },
+          "Condition": {
+            "Value": "{liqdet.nombre}"
+          }
+        },
+        "2": {
+          "Ident": "StiHeaderBand",
+          "Name": "Headerliqdet",
+          "CanGrow": true,
+          "ClientRectangle": "0,4.5,27.7,0.85",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:235,239,243",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_CA",
+              "ClientRectangle": "10.8,0,1.55,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Agente"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_PC",
+              "ClientRectangle": "12.35,0,1.1,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "%\nVen"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_PCA",
+              "ClientRectangle": "13.45,0,1.15,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "%\nCom"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_PCO",
+              "ClientRectangle": "14.6,0,1.05,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "%\nCost"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_ICO",
+              "ClientRectangle": "15.65,0,1.5,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Costes"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_IJO",
+              "ClientRectangle": "17.15,0,1.5,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Jefe\nObras"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_IOT",
+              "ClientRectangle": "20.15,0,1.5,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Asesor\nTécnico"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_IAT",
+              "ClientRectangle": "18.65,0,1.5,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Oficina\nTécnica"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_IC",
+              "ClientRectangle": "21.65,0,1.6,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Comercial"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_base_",
+              "ClientRectangle": "23.25,0,1.85,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Base\nCálculo"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_comision",
+              "ClientRectangle": "25.95,0,1.75,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Comisión"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "11": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_fechaFactura",
+              "ClientRectangle": "0,0,1.55,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Fecha"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "12": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_contrato",
+              "ClientRectangle": "4.55,0,4.25,.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Contrato"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "13": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_facNum",
+              "ClientRectangle": "1.55,0,3,.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Factura"
+              },
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "14": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_impCliente",
+              "ClientRectangle": "8.8,0,2,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Imp. Fact."
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "15": {
+              "Ident": "StiText",
+              "Name": "Headerliqdet_porComer",
+              "ClientRectangle": "25.1,0,0.85,0.85",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "%"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";;Bold;",
+              "Border": "Bottom;160,175,190;;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            }
+          }
+        },
+        "3": {
+          "Ident": "StiDataBand",
+          "Name": "Dataliqdet",
+          "CanGrow": true,
+          "ClientRectangle": "0,6.15,27.7,0.52",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_impCliente",
+              "CanGrow": true,
+              "ClientRectangle": "8.8,0,2,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.impCliente}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_CA",
+              "CanGrow": true,
+              "ClientRectangle": "10.8,0,1.55,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.CA}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_PC",
+              "CanGrow": true,
+              "ClientRectangle": "12.35,0,1.1,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.PC}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_PCA",
+              "CanGrow": true,
+              "ClientRectangle": "13.45,0,1.15,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.PCA}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_PCO",
+              "CanGrow": true,
+              "ClientRectangle": "14.6,0,1.05,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.PCO}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_ICO",
+              "CanGrow": true,
+              "ClientRectangle": "15.65,0,1.5,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.ICO}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_IJO",
+              "CanGrow": true,
+              "ClientRectangle": "17.15,0,1.5,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.IJO}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_IOT",
+              "CanGrow": true,
+              "ClientRectangle": "20.15,0,1.5,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.IOT}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_IAT",
+              "CanGrow": true,
+              "ClientRectangle": "18.65,0,1.5,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.IAT}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_IC",
+              "CanGrow": true,
+              "ClientRectangle": "21.65,0,1.6,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.IC}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_base_",
+              "CanGrow": true,
+              "ClientRectangle": "23.25,0,1.85,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.base2}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:245,247,250",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "11": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_comision",
+              "CanGrow": true,
+              "ClientRectangle": "25.95,0,1.75,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.comision}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:245,247,250",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "12": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_facNum",
+              "CanGrow": true,
+              "ClientRectangle": "1.55,0,3,.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.facNum}"
+              },
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "13": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_fechaFactura",
+              "CanGrow": true,
+              "ClientRectangle": "0,0,1.55,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(Substring(liqdet.fechaFactura, 4, 1) == \"-\", Substring(liqdet.fechaFactura, 8, 2) + \"/\" + Substring(liqdet.fechaFactura, 5, 2) + \"/\" + Substring(liqdet.fechaFactura, 2, 2), liqdet.fechaFactura)}"
+              },
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "Type": "DataColumn",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "14": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_contrato",
+              "CanGrow": true,
+              "ClientRectangle": "4.55,0,4.25,.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.contrato}"
+              },
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            },
+            "15": {
+              "Ident": "StiText",
+              "Name": "Dataliqdet_porComer",
+              "CanGrow": true,
+              "ClientRectangle": "25.1,0,0.85,0.52",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqdet.porComer}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "GrowToHeight": true
+            }
+          },
+          "DataSourceName": "liqdet",
+          "Sort": {
+            "0": "ASC",
+            "1": "fecha",
+            "2": "ASC",
+            "3": "contrato"
+          }
+        },
+        "4": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,7.47,27.7,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "FondoTotalComisiones",
+              "GrowToHeight": true,
+              "ClientRectangle": "0,0,27.7,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": "Top;91,155,213;;;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:Black"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "ClientRectangle": "17.6,0.1,8.35,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL COMISIONES"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 4,
+                "Top": 0,
+                "Bottom": 0
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text2",
+              "ClientRectangle": "25.95,0.1,1.75,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand1,liqdet.comision)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 3,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 0,
+                "Bottom": 0
+              }
+            }
+          },
+          "NewPageAfter": true
+        }
+      },
+      "Orientation": "Landscape",
+      "PageWidth": 29.7,
+      "PageHeight": 21,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      }
+    }
+  }
 }
-</Script>
-  <ScriptLanguage>CSharp</ScriptLanguage>
-  <Styles isList="true" count="0" />
-</StiSerializer>

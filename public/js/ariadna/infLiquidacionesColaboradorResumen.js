@@ -46,77 +46,103 @@ function initForm() {
         return false;
     });
     //
+    var inicioAno = moment().startOf('year');
     $('#txtRFecha').daterangepicker({
-        "showDropdowns": true,
-        "locale": {
-            "direction": "ltr",
-            "format": "DD/MM/YYYY",
-            "separator": " - ",
-            "applyLabel": "Aceptar",
-            "cancelLabel": "Cancelar",
-            "fromLabel": "Desde",
-            "toLabel": "Hasta",
-            "customRangeLabel": "Personalizado",
-            "daysOfWeek": [
-                "Do",
-                "Lu",
-                "Ma",
-                "Mi",
-                "Ju",
-                "Vi",
-                "Sa"
+        showDropdowns: true,
+
+        locale: {
+            direction: 'ltr',
+            format: 'DD/MM/YYYY',
+            separator: ' - ',
+            applyLabel: 'Aceptar',
+            cancelLabel: 'Cancelar',
+            fromLabel: 'Desde',
+            toLabel: 'Hasta',
+            customRangeLabel: 'Personalizado',
+            daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: [
+                'Enero', 'Febrero', 'Marzo', 'Abril',
+                'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
             ],
-            "monthNames": [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Septiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
-            ],
-            "firstDay": 1
+            firstDay: 1
         },
-        "alwaysShowCalendars": true,
+
+        alwaysShowCalendars: true,
+
         ranges: {
             'Hoy': [moment(), moment()],
-            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Esta semana': [moment().startOf('week'), moment().endOf('week')],
-            'Semana pasada': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-            'Este mes': [moment().startOf('month'), moment().endOf('month')],
-            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'Este año': [moment().startOf('year'), moment().endOf('year')],
-            'Último año': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            'Ayer': [
+                moment().subtract(1, 'days'),
+                moment().subtract(1, 'days')
+            ],
+            'Esta semana': [
+                moment().startOf('week'),
+                moment().endOf('week')
+            ],
+            'Semana pasada': [
+                moment().subtract(1, 'week').startOf('week'),
+                moment().subtract(1, 'week').endOf('week')
+            ],
+            'Este mes': [
+                moment().startOf('month'),
+                moment().endOf('month')
+            ],
+            'Último mes': [
+                moment().subtract(1, 'month').startOf('month'),
+                moment().subtract(1, 'month').endOf('month')
+            ],
+
+            '1.er trimestre': [
+                inicioAno.clone(),
+                inicioAno.clone().add(2, 'months').endOf('month')
+            ],
+            '2.º trimestre': [
+                inicioAno.clone().add(3, 'months'),
+                inicioAno.clone().add(5, 'months').endOf('month')
+            ],
+            '3.er trimestre': [
+                inicioAno.clone().add(6, 'months'),
+                inicioAno.clone().add(8, 'months').endOf('month')
+            ],
+            '4.º trimestre': [
+                inicioAno.clone().add(9, 'months'),
+                inicioAno.clone().add(11, 'months').endOf('month')
+            ],
+
+            'Este año': [
+                moment().startOf('year'),
+                moment().endOf('year')
+            ],
+            'Último año': [
+                moment().subtract(1, 'year').startOf('year'),
+                moment().subtract(1, 'year').endOf('year')
+            ]
         }
     }, function (start, end, label) {
-        //alert('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
     });
+    
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
     //
     $("#cmbColaboradores").select2(select2Spanish());
-    
+
     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
     //loadDepartamentos();
     //Recuperamos el departamento de trabajo
-   /*  recuperaDepartamento(function(err, data) {
-        if(err) return;
-        
-    }); */
+    /*  recuperaDepartamento(function(err, data) {
+         if(err) return;
+         
+     }); */
     //
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
 
-    $('#cmbTiposComerciales').change(function(e) {
-        if(!e.added) return;
+    $('#cmbTiposComerciales').change(function (e) {
+        if (!e.added) return;
         loadColaboradores(e.added);
     });
 
@@ -134,8 +160,8 @@ function initForm() {
 
 function obtainKey() {
     llamadaAjax('GET', '/api/configuracion', null, function (err, data) {
-        if(err) return;
-        if(data) {
+        if (err) return;
+        if (data) {
             Stimulsoft.Base.StiLicense.key = data.sti_key_new
         }
     });
@@ -171,9 +197,9 @@ var obtainReport = function () {
     if (!datosOK()) return;
     var file;
     var tipoColaborador = vm.stipoComercialId();
-    if(tipoColaborador != 1) {
+    if (tipoColaborador != 1) {
         file = "../reports/liquidacion_colaborador_resumen.mrt";
-    } 
+    }
 
     // Create a new report instance
     var report = new Stimulsoft.Report.StiReport();
@@ -250,12 +276,12 @@ var printReport = function (url) {
 function datosOK() {
     $('#frmRptLiquidaciones').validate({
         rules: {
-            cmbTiposComerciales: {required : true}
+            cmbTiposComerciales: { required: true }
 
         },
         // Messages for form validation
         messages: {
-            cmbTiposComerciales: {required : "Deve introducir un tipo de comercial"}
+            cmbTiposComerciales: { required: "Deve introducir un tipo de comercial" }
         },
         // Do not change code below
         errorPlacement: function (error, element) {
@@ -267,14 +293,14 @@ function datosOK() {
 }
 
 function loadColaboradores(e) {
-    if(e) {
+    if (e) {
         var tipoComercialId = e.id;
-            llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
-                if (err) return;
-                var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-                vm.posiblesColaboradores(colaboradores);
-                $("#cmbColaboradores").val([0]).trigger('change');
-            });
+        llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
+            if (err) return;
+            var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+            vm.posiblesColaboradores(colaboradores);
+            $("#cmbColaboradores").val([0]).trigger('change');
+        });
     }
 }
 
@@ -300,24 +326,30 @@ function loadTiposComerciales(tipoComercialId) {
 
 var obtainReportJson = function (obj) {
     var tipoColaborador = vm.stipoComercialId();
-    if(tipoColaborador != 1) {
+    if (tipoColaborador != 1) {
         file = "../reports/liquidacion_colaborador_resumen.mrt";
     } else {
         file = "../reports/liquidacion_agente_resumen.mrt";
     }
 
     var report = new Stimulsoft.Report.StiReport();
-        
-        
+
+
     report.loadFile(file);
+
+    // El periodo procede del filtro, no de fechas UTC serializadas en los datos.
+    if (tipoColaborador == 1) {
+        report.getComponentByName("Text48").text = "Desde " + moment(vm.dFecha(), "YYYY-MM-DD").format("DD/MM/YYYY")
+            + " hasta " + moment(vm.hFecha(), "YYYY-MM-DD").format("DD/MM/YYYY");
+    }
 
     var dataSet = new Stimulsoft.System.Data.DataSet("liq_col");
     dataSet.readJson(obj);
-    
-     // Remove all connections from the report template
-     report.dictionary.databases.clear();
 
-     //
+    // Remove all connections from the report template
+    report.dictionary.databases.clear();
+
+    //
     report.regData(dataSet.dataSetName, "", dataSet);
     report.dictionary.synchronize();
 
@@ -332,20 +364,20 @@ var rptLiquidacionGeneralParametrosJson = function () {
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
 
-    if(tipoComercialId != 1) {
+    if (tipoComercialId != 1) {
         obtainReport();
         return;
     }
 
-    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/resumen/" + dFecha +"/" + hFecha +  "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario.usuarioId;
+    var url = myconfig.apiUrl + "/api/liquidaciones/colaborador/informe/crea/json/resumen/" + dFecha + "/" + hFecha + "/" + comercialId + "/" + tipoComercialId + "/" + departamentoId + "/" + usuario.usuarioId;
     $('#btnImprimir').prop('disabled', true);
     mensNormal('Espere mientras se procesa el resultado...tardará unos segundos');
     llamadaAjax("POST", url, null, function (err, data) {
-        if(err) {
+        if (err) {
             $('#btnImprimir').prop('disabled', false);
             return;
         }
-        if(data) {
+        if (data) {
             $('#btnImprimir').prop('disabled', false);
             obtainReportJson(data);
         } else {
@@ -353,193 +385,193 @@ var rptLiquidacionGeneralParametrosJson = function () {
             alert("No hay registros con estas condiciones");
         }
     });
-   
-    
+
+
 }
 
 var rptLiquidacionGeneralParametros = function () {
-    var sql= "";
+    var sql = "";
     var comercialId = vm.scomercialId();
     var tipoComercialId = vm.stipoComercialId();
     var departamentoId = 0;
     var dFecha = vm.dFecha();
     var hFecha = vm.hFecha();
-    
-  /*   if(departamentoId !=7 && departamentoId > 0) {
-        sql = "SELECT";
-        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
-        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
-        sql += " com.comercialId,";
-        sql += " com.nombre AS nomComercial,";
-        sql += " tpp.nombre AS tipoProyecto,";
-        sql += " cli.nombre AS nomCliente,";
-        sql += " cnt.direccion,"
-        sql += " cnt.referencia,";
-        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
-        sql += " fac.numero,";
-        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
-        sql += " fac.facturaId,";
-        sql += " fac.fecha,";
-        sql += " fac.serie,";
-        sql += " fac.ano,";
-        sql += " liq.impCliente,";
-        sql += " liq.base As baseCalculo,";
-        sql += " liq.porComer, ";
-        sql += " liq.comision,";
-        sql += " tpm.nombre AS departamento,";
-        sql += " tpc.nombre AS tipoColaborador, ";
-        sql += "  DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal";
-        sql += " FROM liquidacion_comercial AS liq";
-        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
-        sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
-        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
-        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
-        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
-        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
-        sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-        if(tipoComercialId != 1) {
-            sql += " WHERE cnt.fechaFinal >= '" + dFecha + "' AND cnt.fechaFinal <= '" + hFecha + "'";
-        } else {
-            sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
-        }
-        if (comercialId) {
-            sql += " AND liq.comercialId IN (" + comercialId + ")";
-        }
-        if (tipoComercialId) {
-            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
-        }
-        if (departamentoId && departamentoId > 0) {
-            sql += " AND cnt.tipoContratoId = " + departamentoId;
-        }else {
-            sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
-        }
+
+    /*   if(departamentoId !=7 && departamentoId > 0) {
+          sql = "SELECT";
+          sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+          sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
+          sql += " com.comercialId,";
+          sql += " com.nombre AS nomComercial,";
+          sql += " tpp.nombre AS tipoProyecto,";
+          sql += " cli.nombre AS nomCliente,";
+          sql += " cnt.direccion,"
+          sql += " cnt.referencia,";
+          sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+          sql += " fac.numero,";
+          sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+          sql += " fac.facturaId,";
+          sql += " fac.fecha,";
+          sql += " fac.serie,";
+          sql += " fac.ano,";
+          sql += " liq.impCliente,";
+          sql += " liq.base As baseCalculo,";
+          sql += " liq.porComer, ";
+          sql += " liq.comision,";
+          sql += " tpm.nombre AS departamento,";
+          sql += " tpc.nombre AS tipoColaborador, ";
+          sql += "  DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal";
+          sql += " FROM liquidacion_comercial AS liq";
+          sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+          sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
+          sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
+          sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+          sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
+          sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+          sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
+          if(tipoComercialId != 1) {
+              sql += " WHERE cnt.fechaFinal >= '" + dFecha + "' AND cnt.fechaFinal <= '" + hFecha + "'";
+          } else {
+              sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+          }
+          if (comercialId) {
+              sql += " AND liq.comercialId IN (" + comercialId + ")";
+          }
+          if (tipoComercialId) {
+              sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+          }
+          if (departamentoId && departamentoId > 0) {
+              sql += " AND cnt.tipoContratoId = " + departamentoId;
+          }else {
+              sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario+")"
+          }
+      }
+      else if(departamentoId == 7)  {
+          sql = "SELECT";
+          sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+          sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
+          sql += " com.comercialId,"; 
+          sql += " com.nombre AS nomComercial,";
+          sql += " '' AS tipoProyecto,";
+          sql += " cli.nombre AS nomCliente,";
+          sql += " '' AS direccion,";
+          sql += " '' AS referencia,";
+          sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+          sql += " fac.numero,";
+          sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+          sql += " fac.facturaId,"
+          sql += " fac.fecha,";
+          sql += " fac.serie,";
+          sql += " fac.ano,";
+          sql += " liq.impCliente,";
+          sql += " liq.base As baseCalculo,";
+          sql += " liq.porComer, ";
+          sql += " liq.comision,";
+          sql += " tpm.nombre AS departamento,";
+          sql += " tpc.nombre AS tipoColaborador,";
+          sql += " NULL AS fechaFinal ";
+          sql += " FROM liquidacion_comercial AS liq ";
+          sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+          sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+          sql += " LEFT JOIN clientes AS cli ON cli.clienteId = fac.clienteId";
+          sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = fac.departamentoId";
+          sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+          sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+          if (comercialId) {
+              sql += " AND liq.comercialId IN (" + comercialId + ")";
+          }
+          if (tipoComercialId) {
+              sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+          }
+          sql += " AND fac.departamentoId = 7";
+      } */
+
+    sql = "SELECT";
+    sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+    sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
+    sql += " com.comercialId,";
+    sql += " com.nombre AS nomComercial,";
+    sql += " tpp.nombre AS tipoProyecto,";
+    sql += " cli.nombre AS nomCliente,";
+    sql += " cnt.direccion,"
+    sql += " cnt.referencia,";
+    sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+    sql += " fac.numero,";
+    sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+    sql += " fac.facturaId,";
+    sql += " fac.fecha,";
+    sql += " fac.serie,";
+    sql += " fac.ano,";
+    sql += " liq.impCliente,";
+    sql += " liq.base As baseCalculo,";
+    sql += " liq.porComer, ";
+    sql += " liq.comision,";
+    sql += " tpm.nombre AS departamento,";
+    sql += " tpc.nombre AS tipoColaborador, ";
+    sql += "  DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal";
+    sql += " FROM liquidacion_comercial AS liq";
+    sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+    sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
+    sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
+    sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+    sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
+    sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+    sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
+    if (tipoComercialId != 1) {
+        sql += " WHERE cnt.fechaFinal >= '" + dFecha + "' AND cnt.fechaFinal <= '" + hFecha + "'";
+    } else {
+        sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
     }
-    else if(departamentoId == 7)  {
-        sql = "SELECT";
-        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
-        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
-        sql += " com.comercialId,"; 
-        sql += " com.nombre AS nomComercial,";
-        sql += " '' AS tipoProyecto,";
-        sql += " cli.nombre AS nomCliente,";
-        sql += " '' AS direccion,";
-        sql += " '' AS referencia,";
-        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
-        sql += " fac.numero,";
-        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
-        sql += " fac.facturaId,"
-        sql += " fac.fecha,";
-        sql += " fac.serie,";
-        sql += " fac.ano,";
-        sql += " liq.impCliente,";
-        sql += " liq.base As baseCalculo,";
-        sql += " liq.porComer, ";
-        sql += " liq.comision,";
-        sql += " tpm.nombre AS departamento,";
-        sql += " tpc.nombre AS tipoColaborador,";
-        sql += " NULL AS fechaFinal ";
-        sql += " FROM liquidacion_comercial AS liq ";
-        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
-        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
-        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = fac.clienteId";
-        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = fac.departamentoId";
-        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
-        sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
-        if (comercialId) {
-            sql += " AND liq.comercialId IN (" + comercialId + ")";
-        }
-        if (tipoComercialId) {
-            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
-        }
-        sql += " AND fac.departamentoId = 7";
-    } */
-    
-        sql = "SELECT";
-        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
-        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,";
-        sql += " com.comercialId,";
-        sql += " com.nombre AS nomComercial,";
-        sql += " tpp.nombre AS tipoProyecto,";
-        sql += " cli.nombre AS nomCliente,";
-        sql += " cnt.direccion,"
-        sql += " cnt.referencia,";
-        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
-        sql += " fac.numero,";
-        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
-        sql += " fac.facturaId,";
-        sql += " fac.fecha,";
-        sql += " fac.serie,";
-        sql += " fac.ano,";
-        sql += " liq.impCliente,";
-        sql += " liq.base As baseCalculo,";
-        sql += " liq.porComer, ";
-        sql += " liq.comision,";
-        sql += " tpm.nombre AS departamento,";
-        sql += " tpc.nombre AS tipoColaborador, ";
-        sql += "  DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal";
-        sql += " FROM liquidacion_comercial AS liq";
-        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
-        sql += " LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId";
-        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId";
-        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
-        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = cnt.tipoContratoId";
-        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
-        sql += " LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId";
-        if(tipoComercialId != 1) {
-            sql += " WHERE cnt.fechaFinal >= '" + dFecha + "' AND cnt.fechaFinal <= '" + hFecha + "'";
-        } else {
-            sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
-        }
-        if (comercialId) {
-            sql += " AND liq.comercialId IN (" + comercialId + ")";
-        }
-        if (tipoComercialId) {
-            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
-        }
-        sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = "+ usuario.usuarioId+")"
+    if (comercialId) {
+        sql += " AND liq.comercialId IN (" + comercialId + ")";
+    }
+    if (tipoComercialId) {
+        sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+    }
+    sql += " AND cnt.tipoContratoId IN (SELECT departamentoId FROM usuarios_departamentos WHERE usuarioId = " + usuario.usuarioId + ")"
 
-        sql += " UNION";
+    sql += " UNION";
 
-        sql += " SELECT";
-        sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
-        sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
-        sql += " "
-        sql += " com.comercialId,"; 
-        sql += " com.nombre AS nomComercial,";
-        sql += " '' AS tipoProyecto,";
-        sql += " cli.nombre AS nomCliente,";
-        sql += " '' AS direccion,";
-        sql += " '' AS referencia,";
-        sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
-        sql += " fac.numero,";
-        sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
-        sql += " fac.facturaId,"
-        sql += " fac.fecha,";
-        sql += " fac.serie,";
-        sql += " fac.ano,";
-        sql += " liq.impCliente,";
-        sql += " liq.base As baseCalculo,";
-        sql += " liq.porComer, ";
-        sql += " liq.comision,";
-        sql += " tpm.nombre AS departamento,";
-        sql += " tpc.nombre AS tipoColaborador,";
-        sql += " NULL AS fechaFinal ";
-        sql += " FROM liquidacion_comercial AS liq ";
-        sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
-        sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
-        sql += " LEFT JOIN clientes AS cli ON cli.clienteId = fac.clienteId";
-        sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = fac.departamentoId";
-        sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
-        sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
-        if (comercialId) {
-            sql += " AND liq.comercialId IN (" + comercialId + ")";
-        }
-        if (tipoComercialId) {
-            sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
-        }
-        sql += " AND fac.departamentoId = 7";
+    sql += " SELECT";
+    sql += " '" + moment(dFecha).format('DD/MM/YYYY') + "' as dFecha,";
+    sql += " '" + moment(hFecha).format('DD/MM/YYYY') + "' as hFecha,"
+    sql += " "
+    sql += " com.comercialId,";
+    sql += " com.nombre AS nomComercial,";
+    sql += " '' AS tipoProyecto,";
+    sql += " cli.nombre AS nomCliente,";
+    sql += " '' AS direccion,";
+    sql += " '' AS referencia,";
+    sql += " CONCAT(fac.serie, '-', fac.ano, '-', fac.numero) AS numfactu,";
+    sql += " fac.numero,";
+    sql += " DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis,";
+    sql += " fac.facturaId,"
+    sql += " fac.fecha,";
+    sql += " fac.serie,";
+    sql += " fac.ano,";
+    sql += " liq.impCliente,";
+    sql += " liq.base As baseCalculo,";
+    sql += " liq.porComer, ";
+    sql += " liq.comision,";
+    sql += " tpm.nombre AS departamento,";
+    sql += " tpc.nombre AS tipoColaborador,";
+    sql += " NULL AS fechaFinal ";
+    sql += " FROM liquidacion_comercial AS liq ";
+    sql += " LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId";
+    sql += " LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId";
+    sql += " LEFT JOIN clientes AS cli ON cli.clienteId = fac.clienteId";
+    sql += " LEFT JOIN departamentos AS tpm ON tpm.departamentoId = fac.departamentoId";
+    sql += " LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId";
+    sql += " WHERE fac.fecha >= '" + dFecha + "' AND fac.fecha <= '" + hFecha + "'";
+    if (comercialId) {
+        sql += " AND liq.comercialId IN (" + comercialId + ")";
+    }
+    if (tipoComercialId) {
+        sql += " AND com.tipoComercialId IN (" + tipoComercialId + ")";
+    }
+    sql += " AND fac.departamentoId = 7";
 
-    
+
     return sql;
 }
 
