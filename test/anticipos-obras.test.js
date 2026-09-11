@@ -39,6 +39,54 @@ test('todos los hitos tampoco reducen la base por el anticipo', () => {
     assert.equal(r.comision, 800);
 });
 
+for (const adicional of [1000, -1000]) {
+    for (const porcentaje of [0, 10]) {
+        test(`adicional ${adicional} al ${porcentaje}% se liquida una sola vez`, () => {
+            let r = obra({ certificacionFinal: 10000 + adicional,
+                abonado: 10000 + adicional, porComer: porcentaje, anticipo: 0,
+                baseAnterior: 10000, pagadoAnterior30: 3000,
+                pagadoAnterior20: 2000, pagadoAnterior50: 5000 });
+            r = context.calculaLiquidacionObras(r, '2026-01-01', '2026-03-31');
+            assert.equal(r.basePeriodo, adicional);
+            assert.equal(r.comision, adicional * porcentaje / 100);
+            assert.equal(r.adicionalPagadoPeriodo, adicional * porcentaje / 100);
+            for (let mes of ['04', '07', '10']) {
+                // Tambien debe mantenerse liquidado si el porcentaje pasa de cero a diez.
+                r.porComer = 10;
+                r = context.calculaLiquidacionObras(r, `2026-${mes}-01`, `2026-${mes}-28`);
+                assert.equal(r.basePeriodo, 0);
+                assert.equal(r.baseAnterior, 10000 + adicional);
+                assert.equal(r.comision, 0);
+                assert.equal(r.adicionalPagadoAnterior, adicional * porcentaje / 100 || 0);
+            }
+        });
+    }
+}
+
+test('traslada juntos los hitos y el adicional con porcentaje cero', () => {
+    let r = obra({ certificacionFinal: 11000, abonado: 11000, porComer: 0,
+        firmaActa: 1, fechaFirmaActa: '2026-02-01', anticipo: 0 });
+    r = context.calculaLiquidacionObras(r, '2026-01-01', '2026-03-31');
+    assert.equal(r.basePeriodo, 11000);
+    for (const mes of ['04', '07']) {
+        r = context.calculaLiquidacionObras(r, `2026-${mes}-01`, `2026-${mes}-28`);
+        assert.equal(r.baseAnterior, 11000);
+        assert.equal(r.basePeriodo, 0);
+    }
+});
+
+test('el adicional espera al cobro de certificacion conservando la tolerancia de centimos', () => {
+    const pendiente = obra({ certificacionFinal: 11000.90, abonado: 10000,
+        baseAnterior: 10000, pagadoAnterior30: 3000,
+        pagadoAnterior20: 2000, pagadoAnterior50: 5000, anticipo: 0 });
+    let r = context.calculaLiquidacionObras(pendiente, '2026-01-01', '2026-03-31');
+    assert.equal(r.basePeriodo, 0);
+    r.abonado = 11000.10;
+    r = context.calculaLiquidacionObras(r, '2026-04-01', '2026-06-30');
+    assert.equal(Math.round(r.basePeriodo * 100), 100090);
+    assert.equal(r.comision, 100.09);
+});
+
 function guardar(anticipos, failInsert) {
     const calls = [];
     const con = { query(sql, params, cb) {

@@ -337,6 +337,12 @@ var obtainReportJson = function (obj) {
 
     report.loadFile(file);
 
+    // El periodo procede del filtro, no de fechas UTC serializadas en los datos.
+    if (tipoColaborador == 1) {
+        report.getComponentByName("Text48").text = "Desde " + moment(vm.dFecha(), "YYYY-MM-DD").format("DD/MM/YYYY")
+            + " hasta " + moment(vm.hFecha(), "YYYY-MM-DD").format("DD/MM/YYYY");
+    }
+
     var dataSet = new Stimulsoft.System.Data.DataSet("liq_col");
     dataSet.readJson(obj);
 

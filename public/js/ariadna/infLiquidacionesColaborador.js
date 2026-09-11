@@ -125,7 +125,7 @@ function initForm() {
         vm.dFecha(start.format('YYYY-MM-DD'));
         vm.hFecha(end.format('YYYY-MM-DD'));
     });
-    
+
     vm.dFecha(moment().format('YYYY-MM-DD'));
     vm.hFecha(moment().format('YYYY-MM-DD'));
 
@@ -142,6 +142,7 @@ function initForm() {
     //
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
+    //
 
     $('#cmbTiposComerciales').change(function (e) {
         if (!e.added) return;
@@ -152,6 +153,9 @@ function initForm() {
     $('#cmbDepartamentosTrabajo').change(function (e) {
         getParametrosTipo(null);
     });
+
+    loadColaboradores(null);//cargamos por defecto los agentes
+    getParametrosTipo(1);//cargamos por defecto los parametros del tipo de comercial agente
 
     // verificamos si nos han llamado directamente
     //     if (id) $('#selector').hide();
@@ -300,15 +304,17 @@ function datosOK() {
 }
 
 function loadColaboradores(e) {
+    var tipoComercialId = 1
     if (e) {
-        var tipoComercialId = e.id;
-        llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
-            if (err) return;
-            var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
-            vm.posiblesColaboradores(colaboradores);
-            $("#cmbColaboradores").val([0]).trigger('change');
-        });
+        tipoComercialId = e.id;
+
     }
+    llamadaAjax("GET", "/api/comerciales/colaboradores/activos/por/tipo/" + tipoComercialId, null, function (err, data) {
+        if (err) return;
+        var colaboradores = [{ comercialId: 0, nombre: "" }].concat(data);
+        vm.posiblesColaboradores(colaboradores);
+        $("#cmbColaboradores").val([0]).trigger('change');
+    });
 }
 
 
