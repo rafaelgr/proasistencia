@@ -47,8 +47,8 @@ function initForm() {
         }, 'La fecha final debe ser mayor que la inicial.');
     //
     //
-    $.validator.addMethod("notEqualTo", function(value, element, param){
-        if(value == "0") return false
+    $.validator.addMethod("notEqualTo", function (value, element, param) {
+        if (value == "0") return false
         return true;
     });
     vm = new admData();
@@ -65,8 +65,8 @@ function initForm() {
     //loadTiposContrato();
     //Recuperamos el departamento de trabajo
 
-     //SE OCULTA EL BOTÓN DE BORRAR SI NO SE TIENEN PERMISOS
-     if(usuario.puedeVisualizar) {
+    //SE OCULTA EL BOTÓN DE BORRAR SI NO SE TIENEN PERMISOS
+    if (usuario.puedeVisualizar) {
         $('#btnBorrar').show();
     } else {
         $('#btnBorrar').hide();
@@ -74,11 +74,11 @@ function initForm() {
 
     //Evento de marcar/desmarcar todos los checks
     $('#checkMain').click(
-        function(e){
-            if($('#checkMain').prop('checked')) {
+        function (e) {
+            if ($('#checkMain').prop('checked')) {
                 $('.checkAll').prop('checked', true);
                 updateAllFacturas(true);
-              
+
             } else {
                 $('.checkAll').prop('checked', false);
                 updateAllFacturas(false);
@@ -87,8 +87,8 @@ function initForm() {
     );
 
     $('#checkMain2').click(
-        function(e){
-            if($('#checkMain2').prop('checked')) {
+        function (e) {
+            if ($('#checkMain2').prop('checked')) {
                 $('.checkAll2').prop('checked', true);
                 updateAllContratos(true);
             } else {
@@ -98,8 +98,8 @@ function initForm() {
         }
     );
 
-    recuperaDepartamento(function(err, data) {
-        if(err) return;
+    recuperaDepartamento(function (err, data) {
+        if (err) return;
         ajustaDepartamentos(data)
 
         $("#cmbEmpresas").select2(select2Spanish());
@@ -119,7 +119,7 @@ function initForm() {
 
         initTablaFacturas();
         initTablaContratos();
-      
+
         // comprobamos parámetros
         contratoId = gup('contratoId');
     });
@@ -135,19 +135,19 @@ function ajustaDepartamentos(data) {
         nombre: ""
     }].concat(data);
     vm.posiblesDepartamentos(departamentos);
-    if(id == 8)  {
+    if (id == 8) {
         $("#cmbDepartamentosTrabajo").val([0]).trigger('change');
         vm.sdepartamentoId(0);
     }
 }
 
 function cambioDepartamento(id) {
-    if(id == 7 && totalFacturas > 0) {
-       updateAllFacturas(false);
+    if (id == 7 && totalFacturas > 0) {
+        updateAllFacturas(false);
     }
-     else if(id != 7 && totalContratos > 0) {
-         updateAllContratos(false);
-     }
+    else if (id != 7 && totalContratos > 0) {
+        updateAllContratos(false);
+    }
 
 }
 
@@ -156,11 +156,11 @@ function updateAllFacturas(opcion) {
     var datos = null;
     var sel = 0;
     var tb = $('#dt_factura').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(opcion)  sel = 1
-    
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
+    var datos = tb.rows({ page: 'current' }).data();
+    if (opcion) sel = 1
+
+    if (datos) {
+        for (var i = 0; i < datos.length; i++) {
             var data = {
                 factura: {
                     facturaId: datos[i].facturaId,
@@ -168,14 +168,14 @@ function updateAllFacturas(opcion) {
                     clienteId: datos[i].clienteId,
                     fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
                     sel: sel
-            }
-        };
-                
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
+                }
+            };
+
+
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/facturas/%s', myconfig.apiUrl, datos[i].facturaId);
             $.ajax({
                 type: type,
                 url: url,
@@ -194,7 +194,7 @@ function updateAllFacturas(opcion) {
 
 
 
-function   loadAnyos(){
+function loadAnyos() {
     var d = new Date();
     var n = d.getFullYear();
     n = n - 1
@@ -202,16 +202,16 @@ function   loadAnyos(){
     var ano = {}
     var anoText;
     var limit = n + 1
-    for(var i = n; i <= limit; i++){
+    for (var i = n; i <= limit; i++) {
         anoText = i.toString();
-      ano = {
-        nombreAno: anoText,
-        ano: i
-      };
-      anos.push(ano);
+        ano = {
+            nombreAno: anoText,
+            ano: i
+        };
+        anos.push(ano);
     }
     vm.optionsAnos(anos);
-    $("#cmbAnos").val([ n + 1]).trigger('change');
+    $("#cmbAnos").val([n + 1]).trigger('change');
 }
 
 // tratamiento knockout
@@ -243,11 +243,11 @@ function admData() {
         {
             'nombrePeriodo': 'Enero',
             'periodo': '1'
-        }, 
+        },
         {
             'nombrePeriodo': 'Febrero',
             'periodo': '2'
-        }, 
+        },
         {
             'nombrePeriodo': 'Marzo',
             'periodo': '3'
@@ -295,7 +295,7 @@ function admData() {
     self.speriodo = ko.observable();
 
     self.optionsAnos = ko.observableArray([]);
-    self.ano = ko.observable(); 
+    self.ano = ko.observable();
     self.sano = ko.observable();
     self.selectedAnos = ko.observableArray([]);
 }
@@ -304,11 +304,11 @@ function initTablaContratos() {
     tablaCarro = $('#dt_contrato').dataTable({
         autoWidth: false,
         paging: false,
-        "columnDefs": [ {
+        "columnDefs": [{
             "targets": 0,
             "orderable": false,
             "width": "20%"
-            } ],
+        }],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -353,16 +353,16 @@ function initTablaContratos() {
                 return html;
             }
         }, {
-            data:  "referencia"
+            data: "referencia"
         }, {
             data: "comisionista"
-        },{
+        }, {
             data: "importeContrato",
             render: function (data, type, row) {
                 var string = numeral(data).format('0,0.00');
                 return string;
             }
-        },{
+        }, {
             data: "fechaFinal",
             render: function (data, type, row) {
                 return moment(data).format('DD/MM/YYYY');
@@ -371,7 +371,7 @@ function initTablaContratos() {
             data: "nombreEmpresa"
         }, {
             data: "nombreCliente"
-        },{
+        }, {
             data: "contratoComisionistaId",
             render: function (data, type, row) {
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editContrato(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
@@ -386,11 +386,11 @@ function initTablaFacturas() {
     tablaCarro = $('#dt_factura').dataTable({
         autoWidth: false,
         paging: false,
-        "columnDefs": [ {
+        "columnDefs": [{
             "targets": 0,
             "orderable": false,
             "width": "20%"
-            } ],
+        }],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -435,7 +435,7 @@ function initTablaFacturas() {
                 return html;
             }
         }, {
-            data:  "vFac"
+            data: "vFac"
         }, {
             data: "tipoProyectoNombre"
         }, {
@@ -447,7 +447,7 @@ function initTablaFacturas() {
             data: "nombreEmpresa"
         }, {
             data: "nombreCliente"
-        },  {
+        }, {
             data: "total",
             render: function (data, type, row) {
                 var string = numeral(data).format('0.00');
@@ -516,7 +516,7 @@ function loadTablaContratos(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
-    if(data && data.length > 0) totalContratos = data.length;
+    if (data && data.length > 0) totalContratos = data.length;
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -561,7 +561,7 @@ function loadTablaFacturas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
-    if(data && data.length > 0) totalFacturas = data.length;
+    if (data && data.length > 0) totalFacturas = data.length;
     dt.fnClearTable();
     dt.fnAddData(data);
     dt.fnDraw();
@@ -611,7 +611,7 @@ function buscarContratos() {
         var departamentoId = 0;
         if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
         //ACTULIZAMOS LOS SELECCIONADOS SI HAY CAMBIO DE DEPPARTAMENTO
-        if((antDepartamentoId != departamentoId && departamentoId != 0) && antDepartamentoId != 0) cambioDepartamento(antDepartamentoId);
+        if ((antDepartamentoId != departamentoId && departamentoId != 0) && antDepartamentoId != 0) cambioDepartamento(antDepartamentoId);
         var empresaId = 0;
         if (vm.sempresaId()) empresaId = vm.sempresaId();
         var comercialId = 0;
@@ -619,7 +619,7 @@ function buscarContratos() {
         var url = myconfig.apiUrl + "/api/contratos/contratos/beneficio/comercial/" + vm.desdeFecha() + "/" + vm.hastaFecha();
         $('#tbFactura').hide();
         $('#tbContrato').show();
-        if(departamentoId == 7)  {
+        if (departamentoId == 7) {
             url = myconfig.apiUrl + "/api/facturas/reparaciones/beneficio/comercial/" + vm.desdeFecha() + "/" + vm.hastaFecha();
             $('#tbFactura').show();
             $('#tbContrato').hide();
@@ -635,14 +635,14 @@ function buscarContratos() {
             contentType: "application/json",
             success: function (data, status) {
                 antDepartamentoId = departamentoId;
-                if(departamentoId == 7) {
+                if (departamentoId == 7) {
                     loadTablaFacturas(data);
                     $('#checkMain').prop('checked', false);
                 } else {
                     loadTablaContratos(data);
                     $('#checkMain2').prop('checked', false);
                 }
-               
+
                 // mostramos el botén de alta
                 $("#btnAlta").show();
             },
@@ -661,7 +661,7 @@ function componFechas() {
     var dFecha = "";
     var hFecha = "";
     var diasMes = null;
-    
+
     switch (option) {
         case 1:
             diasMes = new Date(ano, option, 0).getDate();
@@ -669,85 +669,85 @@ function componFechas() {
             hFecha = ano + "-01-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
+            break;
         case 2:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-02-01";
             hFecha = ano + "-02-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
+            break;
         case 3:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-03-01";
             hFecha = ano + "-03-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 4:
+            break;
+        case 4:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-04-01";
             hFecha = ano + "-04-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 5:
+            break;
+        case 5:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-05-01";
             hFecha = ano + "-05-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 6:
+            break;
+        case 6:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-06-01";
             hFecha = ano + "-06-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 7:
+            break;
+        case 7:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-07-01";
             hFecha = ano + "-07-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 8:
+            break;
+        case 8:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-08-01";
             hFecha = ano + "-08-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 9:
+            break;
+        case 9:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-09-01";
             hFecha = ano + "-09-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 10:
+            break;
+        case 10:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-10-01";
             hFecha = ano + "-10-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 11:
+            break;
+        case 11:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-11-01";
             hFecha = ano + "-11-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-          case 12:
+            break;
+        case 12:
             diasMes = new Date(ano, option, 0).getDate();
             dFecha = ano + "-12-01";
             hFecha = ano + "-12-" + diasMes;
             vm.desdeFecha(dFecha);
             vm.hastaFecha(hFecha);
-          break;
-      }
+            break;
+    }
 }
 
 
@@ -755,23 +755,23 @@ function componFechas() {
 function updateAllContratos(option) {
     var datos = null;
     var sel = 0;
-    if(option)  sel = 1
+    if (option) sel = 1
     var tb = $('#dt_contrato').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
+    var datos = tb.rows({ page: 'current' }).data();
+    if (datos) {
+        for (var i = 0; i < datos.length; i++) {
             var data = {
                 contratoComisionista: {
                     contratoComisionistaId: datos[i].contratoComisionistaId,
                     sel: sel
-            }
-        };
-                
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%sapi/contratos/comisionista/%s', myconfig.apiUrl, datos[i].contratoId);
+                }
+            };
+
+
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%sapi/contratos/comisionista/%s', myconfig.apiUrl, datos[i].contratoId);
             $.ajax({
                 type: type,
                 url: url,
@@ -853,6 +853,12 @@ function generaLiquidaciones2() {
     url += "/" + empresaId;
     url += "/" + comercialId;
     url += "/" + usuario.usuarioId;
+
+    $("#btnAlta").prop(
+        'disabled',
+        true
+    );
+
     $.ajax({
         type: "POST",
         url: url,
@@ -860,18 +866,30 @@ function generaLiquidaciones2() {
         contentType: "application/json",
         success: function (data, status) {
             // borramos datos
+
+            $("#btnAlta").prop(
+                'disabled',
+                false
+            );
+
             $("#btnAlta").hide();
             mensNormal('Las liquidaciones han sido generadas, puede consultarlas en el punto de menú específico');
             vm.desdeFecha(null);
             vm.hastaFecha(null);
             loadComerciales(0);
-            if(departamentoId == 7) {
+            if (departamentoId == 7) {
                 loadTablaFacturas(null);
                 return;
             }
             loadTablaContratos(null);
         },
         error: function (err) {
+            
+            $("#btnAlta").prop(
+                'disabled',
+                false
+            );
+            
             mensErrorAjax(err);
             // si hay algo más que hacer lo haremos aquí.
         }
@@ -879,44 +897,44 @@ function generaLiquidaciones2() {
 }
 
 function borrarUltimaLiquidacion() {
-    var mf = function() {
-    var departamentoId = 0;
-    if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
-    if(departamentoId == 0) {
-        mensError("No hay seleccionado ningún departamento");
-        return;
-    }
-    var mens = "Se borrará la última liquidación del departamento seleccionado. ¿Desea continuar?";
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            var url = myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/contratos";
-            if(departamentoId == 7) url = myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/colaboradores/facturas";
-            var data = {
-                departamentoId: departamentoId
-            };
-            $.ajax({
-                type: "DELETE",
-                url:url,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                   mensNormal("Se ha borrado la liquidación con fecha de inicio " + data + " del departamento seleccionado");
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
+    var mf = function () {
+        var departamentoId = 0;
+        if (vm.sdepartamentoId()) departamentoId = vm.sdepartamentoId();
+        if (departamentoId == 0) {
+            mensError("No hay seleccionado ningún departamento");
+            return;
         }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
-    });
+        var mens = "Se borrará la última liquidación del departamento seleccionado. ¿Desea continuar?";
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar][Cancelar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
+                var url = myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/contratos";
+                if (departamentoId == 7) url = myconfig.apiUrl + "/api/liquidaciones/borrar/ultima/colaboradores/facturas";
+                var data = {
+                    departamentoId: departamentoId
+                };
+                $.ajax({
+                    type: "DELETE",
+                    url: url,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (data, status) {
+                        mensNormal("Se ha borrado la liquidación con fecha de inicio " + data + " del departamento seleccionado");
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+            }
+            if (ButtonPressed === "Cancelar") {
+                // no hacemos nada (no quiere borrar)
+            }
+        });
     }
     return mf
 }
@@ -928,7 +946,7 @@ function editContrato(id) {
     // hay que abrir la página de detalle del contrato
     // pasando en la url ese ID
     var url = "";
-    if( vm.sdepartamentoId() == 7) {
+    if (vm.sdepartamentoId() == 7) {
         url = "FacturaDetalle.html?FacturaId=" + id;
         window.open(url, '_blank');
         return;

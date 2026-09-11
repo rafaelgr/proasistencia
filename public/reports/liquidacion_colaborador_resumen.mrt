@@ -1,846 +1,1193 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<StiSerializer version="1.02" type="Net" application="StiReport">
-  <Dictionary Ref="1" type="Dictionary" isKey="true">
-    <BusinessObjects isList="true" count="0" />
-    <Databases isList="true" count="1">
-      <PROA_REPORT Ref="2" type="Stimulsoft.Report.Dictionary.StiMySqlDatabase" isKey="true">
-        <Alias>PROA_REPORT</Alias>
-        <ConnectionStringEncrypted>41rPa+9de83zQbWA51j2Y4tU9aHJUfrNcUeh+Op0Oy/CbNkJT13D9WpHTcxOQGUv1WppAkZLMXxGTLns6xh3Y9Vw+w==</ConnectionStringEncrypted>
-        <Name>PROA_REPORT</Name>
-      </PROA_REPORT>
-    </Databases>
-    <DataSources isList="true" count="1">
-      <LiqAgente Ref="3" type="Stimulsoft.Report.Dictionary.StiMySqlSource" isKey="true">
-        <Alias>LiqAgente</Alias>
-        <Columns isList="true" count="21">
-          <value>dFecha,System.String</value>
-          <value>hFecha,System.String</value>
-          <value>tipoProyecto,System.String</value>
-          <value>comercialId,System.Int32</value>
-          <value>nomComercial,System.String</value>
-          <value>referencia,System.String</value>
-          <value>nomCliente,System.String</value>
-          <value>direccion,System.String</value>
-          <value>facturaId,System.Int32</value>
-          <value>fechaBis,System.Byte[]</value>
-          <value>fecha,System.DateTime</value>
-          <value>serie,System.String</value>
-          <value>ano,System.Int32</value>
-          <value>numero,System.Int32</value>
-          <value>impCliente,System.Decimal</value>
-          <value>base,System.Decimal</value>
-          <value>porComer,System.Decimal</value>
-          <value>comision,System.Decimal</value>
-          <value>departamento,System.String</value>
-          <value>tipoColaborador,System.String</value>
-          <value>fechaFinal,System.Byte[]</value>
-        </Columns>
-        <CommandTimeout>30</CommandTimeout>
-        <Dictionary isRef="1" />
-        <Key>307b71fe1aec4bdda768ac3957ad27ac</Key>
-        <Name>LiqAgente</Name>
-        <NameInSource>PROA_REPORT</NameInSource>
-        <Parameters isList="true" count="0" />
-        <SqlCommand>SELECT 
-'01/01/2017' AS dFecha, '31/12/2017' AS hFecha, tpp.nombre AS tipoProyecto,
-com.comercialId, com.nombre AS nomComercial,
-cnt.referencia, cli.nombre AS nomCliente, cnt.direccion,
-fac.facturaId,  DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero, 
-liq.impCliente, liq.base, liq.porComer, liq.comision,
-tpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal 
-FROM liquidacion_comercial AS liq
-LEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId
-LEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId
-LEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId
-LEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId
-LEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId
-LEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId
-LEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId
-ORDER BY com.nombre, fac.fecha;</SqlCommand>
-      </LiqAgente>
-    </DataSources>
-    <Relations isList="true" count="0" />
-    <Report isRef="0" />
-    <Resources isList="true" count="0" />
-    <Variables isList="true" count="0" />
-  </Dictionary>
-  <EngineVersion>EngineV2</EngineVersion>
-  <GlobalizationStrings isList="true" count="0" />
-  <Key>9323ccb5fb5d487dbd4fd30a6a407e08</Key>
-  <MetaTags isList="true" count="0" />
-  <Pages isList="true" count="1">
-    <Page1 Ref="4" type="Page" isKey="true">
-      <Border>None;Black;2;Solid;False;4;Black</Border>
-      <Brush>Transparent</Brush>
-      <Components isList="true" count="7">
-        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,0.4,19,3</ClientRectangle>
-          <Components isList="true" count="10">
-            <Image1 Ref="6" type="Image" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,3,1.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <IconColor>68, 114, 196</IconColor>
-              <ImageURL>https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_fondogar.png</ImageURL>
-              <Margins>0,0,0,0</Margins>
-              <Name>Image1</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Stretch>True</Stretch>
-            </Image1>
-            <Text49 Ref="7" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,2.2,2.2,1</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>4b12c9b89c7f416cb1041d6e4473fedc</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text49</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>BASE 
-CALCULO</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text49>
-            <Text51 Ref="8" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>16.4,2.2,2.4,1</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>30e5d666407649afa9e10c665e3eae3f</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text51</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>IMPORTE
-LIQUI.</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text51>
-            <Text53 Ref="9" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>4,2.2,2.4,1</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>1be68630a8694c82b5a64551e50217e1</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text53</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>IMPORTE</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text53>
-            <Text54 Ref="10" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,2.2,3.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>650de4c2ca92498c88c42149cccb48b1</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text54</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>PERIODO ACTUAL</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text54>
-            <Text55 Ref="11" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,2.8,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>5b8ecd06b32d4c3ea67bc731fe97ef56</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text55</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>PAGADO</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text55>
-            <Text56 Ref="12" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,2.2,3.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>a40d43aa434f4dd3a5d20947e94e0087</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text56</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>PERIODO ANTERIOR</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text56>
-            <Text57 Ref="13" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,2.8,2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>746c197be7a94825aff0693fbf94f6bc</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text57</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>PAGADO</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text57>
-            <Text58 Ref="14" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,2.8,1.8,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>3928442a010e46aeb26c5243133ce32e</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text58</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>PTE.PAGO</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text58>
-            <Text59 Ref="15" type="Text" isKey="true">
-              <Border>Bottom;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>8.4,2.8,1.8,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9.75,Bold,Point,False,0</Font>
-              <Guid>a626e7ce5181490ba998c8e9d4fd41bd</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text59</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Text>PTE.PAGO</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text59>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Name>PageHeaderBand1</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </PageHeaderBand1>
-        <PageFooterBand1 Ref="16" type="PageFooterBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,26.9,19,0.8</ClientRectangle>
-          <Components isList="true" count="1">
-            <Text22 Ref="17" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,0.1,18.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text22</Name>
-              <Page isRef="4" />
-              <Parent isRef="16" />
-              <Text>Página {PageNumber} de {TotalPageCount}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <Type>Expression</Type>
-            </Text22>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Name>PageFooterBand1</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </PageFooterBand1>
-        <GroupHeaderBand2 Ref="18" type="GroupHeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,4.2,19,0.8</ClientRectangle>
-          <Components isList="true" count="2">
-            <Text1 Ref="19" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>0,0,12.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,10</Font>
-              <Guid>d118d9c500a340d7aa645a51843a284a</Guid>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text1</Name>
-              <Page isRef="4" />
-              <Parent isRef="18" />
-              <Text>{LiqAgente.tipoColaborador}: {LiqAgente.nomComercial}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
-              <Type>Expression</Type>
-            </Text1>
-            <Text3 Ref="20" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.8,0,6.2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,10</Font>
-              <Guid>2e55329c19fa4bfe97499cbd6ffa7ea9</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text3</Name>
-              <Page isRef="4" />
-              <Parent isRef="18" />
-              <Text>Desde {LiqAgente.dFecha} hasta {LiqAgente.hFecha}</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-            </Text3>
-          </Components>
-          <Condition>{LiqAgente.comercialId}</Condition>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Name>GroupHeaderBand2</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </GroupHeaderBand2>
-        <GroupHeaderBand3 Ref="21" type="GroupHeaderBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,5.8,19,0</ClientRectangle>
-          <Components isList="true" count="0" />
-          <Condition>{LiqAgente.departamento}</Condition>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Name>GroupHeaderBand3</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-          <ResetPageNumber>True</ResetPageNumber>
-        </GroupHeaderBand3>
-        <DataLiqAgente Ref="22" type="DataBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,6.6,19,0</ClientRectangle>
-          <Components isList="true" count="0" />
-          <Conditions isList="true" count="0" />
-          <DataRelationName isNull="true" />
-          <DataSourceName>LiqAgente</DataSourceName>
-          <Expressions isList="true" count="0" />
-          <Filters isList="true" count="0" />
-          <Name>DataLiqAgente</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-          <Sort isList="true" count="4">
-            <value>ASC</value>
-            <value>nomComercial</value>
-            <value>DESC</value>
-            <value>fecha</value>
-          </Sort>
-        </DataLiqAgente>
-        <GroupFooterBand2 Ref="23" type="GroupFooterBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,7.4,19,0.8</ClientRectangle>
-          <Components isList="true" count="8">
-            <Text4 Ref="24" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,3.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Regular,Point,False,0</Font>
-              <Guid>2e03c482c1fb4020b75a7cb75901aa33</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text4</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>TOTAL {LiqAgente.departamento}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text4>
-            <Text6 Ref="25" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>16.4,0,2.4,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Regular,Point,False,0</Font>
-              <Guid>4d832e34d7a5483d8327760e72ee08c3</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text6</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>{Sum(GroupHeaderBand3,LiqAgente.comision)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="26" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text6>
-            <Text14 Ref="27" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>4,0,2.4,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Regular,Point,False,0</Font>
-              <Guid>f99288e4ac984da48f38ed46af606c49</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text14</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>{Sum(GroupHeaderBand3,LiqAgente.impCliente)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="28" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text14>
-            <Text15 Ref="29" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,0,1.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Regular,Point,False,0</Font>
-              <Guid>18b1655fbb6441439154689a0eeea8ec</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text15</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>{Sum(GroupHeaderBand3,LiqAgente.pagadoPeriodo)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="30" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text15>
-            <Text23 Ref="31" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,0,2.2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Regular,Point,False,0</Font>
-              <Guid>577a41a224444f89b2526343b94ea8a4</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text23</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>{Sum(GroupHeaderBand3,LiqAgente.baseCalculo)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text23>
-            <Text27 Ref="33" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>8.2,0,2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Guid>6fb71f109ce34744b6a3798ccc0f8b48</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text27</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>0,00 €</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text27>
-            <Text26 Ref="35" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,0,2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Guid>8936435c8ac54dbc96ac66ef42dca78b</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text26</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>0,00 €</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="36" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text26>
-            <Text28 Ref="37" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,0,1.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,8</Font>
-              <Guid>9a19173cd601486b89b5be83a6852769</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text28</Name>
-              <Page isRef="4" />
-              <Parent isRef="23" />
-              <Text>0,00 €</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="38" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text28>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Name>GroupFooterBand2</Name>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </GroupFooterBand2>
-        <GroupFooterBand3 Ref="39" type="GroupFooterBand" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>0,9,19,0.8</ClientRectangle>
-          <Components isList="true" count="8">
-            <Text8 Ref="40" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>16.4,0,2.4,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>45935038da894ac4acb3f2755c1127f2</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text8</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>{Sum(GroupHeaderBand2,LiqAgente.comision)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="41" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text8>
-            <Text10 Ref="42" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>4,0,2.4,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>50ec067aa4a14676b41a74bbb18d885d</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text10</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>{Sum(GroupHeaderBand2,LiqAgente.impCliente)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="43" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text10>
-            <Text12 Ref="44" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,0,1.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>7ddbf92aa2e0448f920bce394185558e</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text12</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>{Sum(GroupHeaderBand2,LiqAgente.pagadoPeriodo)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="45" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text12>
-            <Text19 Ref="46" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>14.2,0,2.2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>6823e050367e4cbf9ae1b8c8890ce0dd</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text19</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>{Sum(GroupHeaderBand2,LiqAgente.baseCalculo)}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <TextFormat Ref="47" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>8</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Totals</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text19>
-            <Text8 Ref="48" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0,3.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>29c3a93d7bf445528450726e10799040</Guid>
-              <HorAlignment>Right</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text8</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>TOTALES RESUMEN</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text8>
-            <Text16 Ref="49" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>8.2,0,2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>ae0c085359b14b9badba4b7a184b4540</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text16</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>0,00 €</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="50" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text16>
-            <Text17 Ref="51" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>10.4,0,2,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>1ad8b80e332846ce8fbd34801d89c674</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text17</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>0,00 €</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="52" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text17>
-            <Text18 Ref="53" type="Text" isKey="true">
-              <Border>Top;Black;1;Solid;False;4;Black</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>12.4,0,1.8,0.6</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,9,Bold,Point,False,0</Font>
-              <Guid>549a4cd382ec400d81da4a454d6d1ad3</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text18</Name>
-              <Page isRef="4" />
-              <Parent isRef="39" />
-              <Text>0,00 €</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="54" type="CurrencyFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator>.</GroupSeparator>
-                <NegativePattern>5</NegativePattern>
-                <PositivePattern>1</PositivePattern>
-                <State>DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol</State>
-                <Symbol>€</Symbol>
-              </TextFormat>
-              <Type>Expression</Type>
-            </Text18>
-          </Components>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Guid>98d057adf1fa4624b1eac06af2262e21</Guid>
-          <Name>GroupFooterBand3</Name>
-          <NewPageAfter>True</NewPageAfter>
-          <Page isRef="4" />
-          <Parent isRef="4" />
-        </GroupFooterBand3>
-      </Components>
-      <Conditions isList="true" count="0" />
-      <Expressions isList="true" count="0" />
-      <Guid>e3096213613f42ffbf0a0a4954ad2ea4</Guid>
-      <Margins>1,1,1,1</Margins>
-      <Name>Page1</Name>
-      <PageHeight>29.7</PageHeight>
-      <PageWidth>21</PageWidth>
-      <Report isRef="0" />
-    </Page1>
-  </Pages>
-  <ReferencedAssemblies isList="true" count="8">
-    <value>System.Dll</value>
-    <value>System.Drawing.Dll</value>
-    <value>System.Windows.Forms.Dll</value>
-    <value>System.Data.Dll</value>
-    <value>System.Xml.Dll</value>
-    <value>Stimulsoft.Controls.Dll</value>
-    <value>Stimulsoft.Base.Dll</value>
-    <value>Stimulsoft.Report.Dll</value>
-  </ReferencedAssemblies>
-  <ReportAlias>LiquidacionAgente</ReportAlias>
-  <ReportAuthor>rafa@myariadna.com</ReportAuthor>
-  <ReportChanged>8/17/2021 10:56:06 AM</ReportChanged>
-  <ReportCreated>5/18/2017 10:54:27 AM</ReportCreated>
-  <ReportFile>C:\node_apps\proasistencia\public\reports\liquidacion_colaborador_resumen.mrt</ReportFile>
-  <ReportGuid>388d92c5c51b4f87828c4cca8348baef</ReportGuid>
-  <ReportName>LiquidacionAgente</ReportName>
-  <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2021.3.6.0</ReportVersion>
-  <Script>using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Data;
-using Stimulsoft.Controls;
-using Stimulsoft.Base.Drawing;
-using Stimulsoft.Report;
-using Stimulsoft.Report.Dialogs;
-using Stimulsoft.Report.Components;
-
-namespace Reports
 {
-    public class Report : Stimulsoft.Report.StiReport
-    {
-        public Report()        {
-            this.InitializeComponent();
-        }
-
-        #region StiReport Designer generated code - do not modify
-		#endregion StiReport Designer generated code - do not modify
+  "ReportVersion": "2025.4.3",
+  "ReportGuid": "388d92c5c51b4f87828c4cca8348baef",
+  "ReportName": "LiquidacionAgente",
+  "ReportAlias": "LiquidacionAgente",
+  "ReportFile": "public/reports/liquidacion_colaborador_resumen.mrt",
+  "ReportAuthor": "rafa@myariadna.com",
+  "ReportCreated": "/Date(0+0100)/",
+  "ReportChanged": "/Date(0+0100)/",
+  "EngineVersion": "EngineV2",
+  "ReportUnit": "Centimeters",
+  "ScriptLanguage": "CSharp",
+  "CalculationMode": "Interpretation",
+  "Dictionary": {
+    "DataSources": {
+      "0": {
+        "Ident": "StiMySqlSource",
+        "Name": "LiqAgente",
+        "Alias": "LiqAgente",
+        "Key": "307b71fe1aec4bdda768ac3957ad27ac",
+        "Columns": {
+          "0": {
+            "Name": "dFecha",
+            "NameInSource": "dFecha",
+            "Alias": "dFecha",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "hFecha",
+            "NameInSource": "hFecha",
+            "Alias": "hFecha",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "tipoProyecto",
+            "NameInSource": "tipoProyecto",
+            "Alias": "tipoProyecto",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "comercialId",
+            "NameInSource": "comercialId",
+            "Alias": "comercialId",
+            "Type": "System.Int32"
+          },
+          "4": {
+            "Name": "nomComercial",
+            "NameInSource": "nomComercial",
+            "Alias": "nomComercial",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "referencia",
+            "NameInSource": "referencia",
+            "Alias": "referencia",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "nomCliente",
+            "NameInSource": "nomCliente",
+            "Alias": "nomCliente",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "direccion",
+            "NameInSource": "direccion",
+            "Alias": "direccion",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "facturaId",
+            "NameInSource": "facturaId",
+            "Alias": "facturaId",
+            "Type": "System.Int32"
+          },
+          "9": {
+            "Name": "fechaBis",
+            "NameInSource": "fechaBis",
+            "Alias": "fechaBis",
+            "Type": "System.Byte[]"
+          },
+          "10": {
+            "Name": "fecha",
+            "NameInSource": "fecha",
+            "Alias": "fecha",
+            "Type": "System.DateTime"
+          },
+          "11": {
+            "Name": "serie",
+            "NameInSource": "serie",
+            "Alias": "serie",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "ano",
+            "NameInSource": "ano",
+            "Alias": "ano",
+            "Type": "System.Int32"
+          },
+          "13": {
+            "Name": "numero",
+            "NameInSource": "numero",
+            "Alias": "numero",
+            "Type": "System.Int32"
+          },
+          "14": {
+            "Name": "impCliente",
+            "NameInSource": "impCliente",
+            "Alias": "impCliente",
+            "Type": "System.Decimal"
+          },
+          "15": {
+            "Name": "base",
+            "NameInSource": "base",
+            "Alias": "base",
+            "Type": "System.Decimal"
+          },
+          "16": {
+            "Name": "porComer",
+            "NameInSource": "porComer",
+            "Alias": "porComer",
+            "Type": "System.Decimal"
+          },
+          "17": {
+            "Name": "comision",
+            "NameInSource": "comision",
+            "Alias": "comision",
+            "Type": "System.Decimal"
+          },
+          "18": {
+            "Name": "departamento",
+            "NameInSource": "departamento",
+            "Alias": "departamento",
+            "Type": "System.String"
+          },
+          "19": {
+            "Name": "tipoColaborador",
+            "NameInSource": "tipoColaborador",
+            "Alias": "tipoColaborador",
+            "Type": "System.String"
+          },
+          "20": {
+            "Name": "fechaFinal",
+            "NameInSource": "fechaFinal",
+            "Alias": "fechaFinal",
+            "Type": "System.Byte[]"
+          }
+        },
+        "NameInSource": "PROA_REPORT",
+        "SqlCommand": "SELECT \n'01/01/2017' AS dFecha, '31/12/2017' AS hFecha, tpp.nombre AS tipoProyecto,\ncom.comercialId, com.nombre AS nomComercial,\ncnt.referencia, cli.nombre AS nomCliente, cnt.direccion,\nfac.facturaId,  DATE_FORMAT(fac.fecha, '%Y-%m-%d') AS fechaBis, fac.fecha, fac.serie, fac.ano, fac.numero, \nliq.impCliente, liq.base, liq.porComer, liq.comision,\ntpm.nombre AS departamento, tpc.nombre AS tipoColaborador, DATE_FORMAT(cnt.fechaFinal, '%Y-%m-%d') AS fechaFinal \nFROM liquidacion_comercial AS liq\nLEFT JOIN comerciales AS com ON com.comercialId = liq.comercialId\nLEFT JOIN contratos AS cnt ON cnt.contratoId = liq.contratoId\nLEFT JOIN clientes AS cli ON cli.clienteId = cnt.clienteId\nLEFT JOIN facturas AS fac ON fac.facturaId = liq.facturaId\nLEFT JOIN tipos_mantenimiento AS tpm ON tpm.tipoMantenimientoId = cnt.tipoContratoId\nLEFT JOIN tipos_comerciales AS tpc ON tpc.tipoComercialId = com.tipoComercialId\nLEFT JOIN tipos_proyecto AS tpp ON tpp.tipoProyectoId = cnt.tipoProyectoId\nORDER BY com.nombre, fac.fecha;"
+      }
+    },
+    "Databases": {
+      "0": {
+        "Ident": "StiMySqlDatabase",
+        "Name": "PROA_REPORT",
+        "Alias": "PROA_REPORT",
+        "ConnectionStringEncrypted": "41rPa+9de83zQbWA51j2Y4tU9aHJUfrNcUeh+Op0Oy/CbNkJT13D9WpHTcxOQGUv1WppAkZLMXxGTLns6xh3Y9Vw+w=="
+      }
     }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "e3096213613f42ffbf0a0a4954ad2ea4",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:",
+      "Components": {
+        "0": {
+          "Ident": "StiPageHeaderBand",
+          "Name": "PageHeaderBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,0.4,19,3.2",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "FondoCabeceraResumen",
+              "ClientRectangle": "0,2.2,19,1",
+              "Brush": "solid:232,238,244",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black"
+            },
+            "1": {
+              "Ident": "StiImage",
+              "Name": "Image1",
+              "ClientRectangle": "15.8,0,3,1.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "Stretch": true,
+              "ImageURL": {
+                "Value": "https://tdinf-uploads.s3.eu-west-1.amazonaws.com/comercializa/logos/logo_fondogar.png"
+              },
+              "ImageBytes": ""
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text49",
+              "Guid": "4b12c9b89c7f416cb1041d6e4473fedc",
+              "ClientRectangle": "14.2,2.2,2.2,1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "BASE\nCÁLCULO"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text51",
+              "Guid": "30e5d666407649afa9e10c665e3eae3f",
+              "ClientRectangle": "16.4,2.2,2.6,1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "IMPORTE\nLIQUI."
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text53",
+              "Guid": "1be68630a8694c82b5a64551e50217e1",
+              "ClientRectangle": "4,2.2,2.4,1",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "IMPORTE"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text54",
+              "Guid": "650de4c2ca92498c88c42149cccb48b1",
+              "ClientRectangle": "6.4,2.2,3.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PERIODO ACTUAL"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text55",
+              "Guid": "5b8ecd06b32d4c3ea67bc731fe97ef56",
+              "ClientRectangle": "6.4,2.8,1.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PAGADO"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text56",
+              "Guid": "a40d43aa434f4dd3a5d20947e94e0087",
+              "ClientRectangle": "10.2,2.2,4,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PERIODO ANTERIOR"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text57",
+              "Guid": "746c197be7a94825aff0693fbf94f6bc",
+              "ClientRectangle": "10.2,2.8,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PAGADO"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text58",
+              "Guid": "3928442a010e46aeb26c5243133ce32e",
+              "ClientRectangle": "12.2,2.8,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PTE.PAGO"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Text59",
+              "Guid": "a626e7ce5181490ba998c8e9d4fd41bd",
+              "ClientRectangle": "8.2,2.8,2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "PTE.PAGO"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Bottom;160,175,190;1;;;;;solid:Black",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "11": {
+              "Ident": "StiText",
+              "Name": "TituloResumen",
+              "ClientRectangle": "0,0.3,15.3,0.8",
+              "Font": "Arial;17;Bold;",
+              "Text": {
+                "Value": "Resumen de liquidaciones"
+              },
+              "TextBrush": "solid:40,51,65"
+            },
+            "12": {
+              "Ident": "StiText",
+              "Name": "CabeceraDepartamento",
+              "ClientRectangle": "0,2.2,4,1",
+              "Text": {
+                "Value": "DEPARTAMENTO"
+              },
+              "Font": "Arial;9;Bold;",
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              },
+              "TextBrush": "solid:45,55,65",
+              "Brush": "solid:"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiPageFooterBand",
+          "Name": "PageFooterBand1",
+          "CanGrow": true,
+          "ClientRectangle": "0,26.9,19,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text22",
+              "ClientRectangle": "0.4,0.1,18.2,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Página {PageNumber} de {TotalPageCount}"
+              },
+              "HorAlignment": "Center",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:0,0,0",
+              "Type": "Expression"
+            }
+          }
+        },
+        "2": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand2",
+          "CanGrow": true,
+          "ClientRectangle": "0,4.4,19,1.3",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:245,247,250",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "Guid": "d118d9c500a340d7aa645a51843a284a",
+              "CanGrow": true,
+              "ClientRectangle": "0.15,0.05,18.7,0.55",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{LiqAgente.tipoColaborador}: {LiqAgente.nomComercial}"
+              },
+              "Font": "Arial;9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression",
+              "HorAlignment": "Left"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "2e55329c19fa4bfe97499cbd6ffa7ea9",
+              "ClientRectangle": "0.15,0.65,18.7,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Desde {LiqAgente.dFecha} hasta {LiqAgente.hFecha}"
+              },
+              "HorAlignment": "Left",
+              "Font": "Arial;9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression"
+            }
+          },
+          "Condition": {
+            "Value": "{LiqAgente.comercialId}"
+          }
+        },
+        "3": {
+          "Ident": "StiGroupHeaderBand",
+          "Name": "GroupHeaderBand3",
+          "CanGrow": true,
+          "ClientRectangle": "0,5.8,19,0",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "ResetPageNumber": true,
+          "Condition": {
+            "Value": "{LiqAgente.departamento}"
+          }
+        },
+        "4": {
+          "Ident": "StiDataBand",
+          "Name": "DataLiqAgente",
+          "CanGrow": true,
+          "ClientRectangle": "0,6.6,19,0",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "DataSourceName": "LiqAgente",
+          "Sort": {
+            "0": "ASC",
+            "1": "nomComercial",
+            "2": "DESC",
+            "3": "fecha"
+          }
+        },
+        "5": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand2",
+          "CanGrow": true,
+          "ClientRectangle": "0,7.4,19,.58",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "Guid": "2e03c482c1fb4020b75a7cb75901aa33",
+              "ClientRectangle": "0,0,4,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTAL: {LiqAgente.departamento}"
+              },
+              "HorAlignment": "Left",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "Guid": "4d832e34d7a5483d8327760e72ee08c3",
+              "ClientRectangle": "16.4,0,2.6,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand3,LiqAgente.comision)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:245,247,250",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text14",
+              "Guid": "f99288e4ac984da48f38ed46af606c49",
+              "ClientRectangle": "4,0,2.4,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand3,LiqAgente.impCliente)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text15",
+              "Guid": "18b1655fbb6441439154689a0eeea8ec",
+              "ClientRectangle": "6.4,0,1.8,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand3,LiqAgente.pagadoPeriodo)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text23",
+              "Guid": "577a41a224444f89b2526343b94ea8a4",
+              "ClientRectangle": "14.2,0,2.2,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand3,LiqAgente.baseCalculo)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:245,247,250",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text27",
+              "Guid": "6fb71f109ce34744b6a3798ccc0f8b48",
+              "ClientRectangle": "8.2,0,2,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "0,00 €"
+              },
+              "HorAlignment": "Right",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "Font": "Arial;9;;",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text26",
+              "Guid": "8936435c8ac54dbc96ac66ef42dca78b",
+              "ClientRectangle": "10.2,0,2,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "0,00 €"
+              },
+              "HorAlignment": "Right",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "Font": "Arial;9;;",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text28",
+              "Guid": "9a19173cd601486b89b5be83a6852769",
+              "ClientRectangle": "12.2,0,2,.58",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "0,00 €"
+              },
+              "HorAlignment": "Right",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "Font": "Arial;9;;",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            }
+          }
+        },
+        "6": {
+          "Ident": "StiGroupFooterBand",
+          "Name": "GroupFooterBand3",
+          "Guid": "98d057adf1fa4624b1eac06af2262e21",
+          "CanGrow": true,
+          "ClientRectangle": "0,9,19,.7",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "FondoTotalResumen",
+              "ClientRectangle": "0,0,19,0.7",
+              "GrowToHeight": true,
+              "Brush": "solid:232,238,244",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text8",
+              "Guid": "45935038da894ac4acb3f2755c1127f2",
+              "ClientRectangle": "16.4,0,2.6,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand2,LiqAgente.comision)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Text10",
+              "Guid": "50ec067aa4a14676b41a74bbb18d885d",
+              "ClientRectangle": "4,0,2.4,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand2,LiqAgente.impCliente)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "7ddbf92aa2e0448f920bce394185558e",
+              "ClientRectangle": "6.4,0,1.8,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand2,LiqAgente.pagadoPeriodo)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text19",
+              "Guid": "6823e050367e4cbf9ae1b8c8890ce0dd",
+              "ClientRectangle": "14.2,0,2.2,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Sum(GroupHeaderBand2,LiqAgente.baseCalculo)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 8,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Totals",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "EtiquetaTotalResumen",
+              "Guid": "29c3a93d7bf445528450726e10799040",
+              "ClientRectangle": "0,0,4,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "TOTALES RESUMEN"
+              },
+              "HorAlignment": "Left",
+              "VertAlignment": "Center",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "Type": "Expression",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text16",
+              "Guid": "ae0c085359b14b9badba4b7a184b4540",
+              "ClientRectangle": "8.2,0,2,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "0,00 €"
+              },
+              "HorAlignment": "Right",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text17",
+              "Guid": "1ad8b80e332846ce8fbd34801d89c674",
+              "ClientRectangle": "10.2,0,2,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "0,00 €"
+              },
+              "HorAlignment": "Right",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text18",
+              "Guid": "549a4cd382ec400d81da4a454d6d1ad3",
+              "ClientRectangle": "12.2,0,2,.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "0,00 €"
+              },
+              "HorAlignment": "Right",
+              "Font": "Arial;9;Bold;",
+              "Border": "Top;91,155,213;1;Solid;;;true;solid:91,155,213",
+              "Brush": "solid:232,238,244",
+              "TextBrush": "solid:45,55,65",
+              "TextFormat": {
+                "Ident": "StiCurrencyFormatService",
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
+                "NegativePattern": 5,
+                "PositivePattern": 1,
+                "Symbol": "€"
+              },
+              "Type": "Expression",
+              "GrowToHeight": true,
+              "CanGrow": true,
+              "VertAlignment": "Center",
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 1,
+                "Bottom": 1
+              }
+            }
+          },
+          "NewPageAfter": true
+        }
+      },
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      }
+    }
+  }
 }
-</Script>
-  <ScriptLanguage>CSharp</ScriptLanguage>
-  <Styles isList="true" count="0" />
-</StiSerializer>
