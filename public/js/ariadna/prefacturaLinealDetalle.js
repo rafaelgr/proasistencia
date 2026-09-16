@@ -14,6 +14,7 @@ var ClienteId = 0;
 var usuario;
 var desdeContrato;
 var ConCobro;
+var GenerarCobro;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -144,6 +145,8 @@ function initForm() {
     ClienteId = gup("ClienteId");
     desdeContrato = gup("desdeContrato");
     ConCobro = gup("ConCobro");
+    GenerarCobro = gup("GenerarCobro");
+
     if (prefacturaId != 0) {
         // caso edicion
         llamadaAjax("GET", myconfig.apiUrl + "/api/prefacturas/" + prefacturaId, null, function (err, data) {
@@ -469,6 +472,9 @@ var aceptarPrefactura = function () {
         if (ConCobro == "true") {
             returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
         }
+        if(GenerarCobro == "true") {
+            returnUrl = "GenerarRecibosGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
+        }
         AvisaRecalculo(url, returnUrl);
     } else {
         llamadaAjax(verb, url, data, function (err, data) {
@@ -479,6 +485,9 @@ var aceptarPrefactura = function () {
             }
             if (ConCobro == "true" && prefacturaId != 0) {
                 returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
+                window.open(returnUrl, '_self');
+            } else if(GenerarCobro == "true")  {
+                returnUrl = "GenerarRecibosGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
                 window.open(returnUrl, '_self');
             } else {
                 window.open(returnUrl, '_self');
@@ -565,6 +574,8 @@ function salir() {
              returnUrl = 'ContratoLinealDetalle.html?ContratoId=' + ContratoId + '&docPre=true', '_self';
         } if (ConCobro == "true") {
             returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true";
+        } if(GenerarCobro == "true") {
+            returnUrl = "GenerarRecibosGeneral.html?ConservaFiltro=true";
         }
          window.open(returnUrl, '_self');
     }

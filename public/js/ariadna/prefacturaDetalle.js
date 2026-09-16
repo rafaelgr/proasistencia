@@ -14,6 +14,7 @@ var ClienteId = 0;
 var usuario;
 var desdeContrato;
 var ConCobro;
+var GenerarCobro;
 
 var cmd = "";
 var lineaEnEdicion = false;
@@ -146,6 +147,7 @@ function initForm() {
     ClienteId = gup("ClienteId");
     desdeContrato = gup("desdeContrato");
     ConCobro = gup("ConCobro");
+    GenerarCobro = gup("GenerarCobro");
     vm.beneficioLineal(0);
     $('#chkBeneficioLineal').prop('disabled', true);
     if (prefacturaId != 0) {
@@ -321,6 +323,9 @@ function loadData(data) {
         if (ConCobro == "true") {
             url = "PrefacturaLinealDetalle.html?PrefacturaId=" + data.prefacturaId + "&ConCobro=true";
         }
+         if (GenerarCobro == "true") {
+            url = "PrefacturaLinealDetalle.html?PrefacturaId=" + data.prefacturaId + "&GenerarCobro=true";
+        }
         window.open(url, '_self');
         //return;
     }
@@ -473,6 +478,11 @@ var aceptarPrefactura = function () {
         if (ConCobro == "true") {
             returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
         }
+
+        if (GenerarCobro == "true") {
+            returnUrl = "GenerarRecibosGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
+        }
+
         AvisaRecalculo(url, returnUrl);
     } else {
         llamadaAjax(verb, url, data, function (err, data) {
@@ -484,6 +494,9 @@ var aceptarPrefactura = function () {
             else {
                 if (ConCobro == "true" && prefacturaId != 0) {
                     returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
+                    window.open(returnUrl, '_self');
+                } else if (GenerarCobro == "true") {
+                    returnUrl = "GenerarRecibosGeneral.html?ConservaFiltro=true&PrefacturaId=" + prefacturaId;
                     window.open(returnUrl, '_self');
                 } else {
                     window.open(returnUrl, '_self');
@@ -575,6 +588,9 @@ function salir() {
         }
         if (ConCobro == "true") {
             returnUrl = "EstadoPrefacturaGeneral.html?ConservaFiltro=true";
+        }
+         if (GenerarCobro == "true") {
+            returnUrl = "GenerarRecibosGeneral.html?ConservaFiltro=true";
         }
 
         window.open(returnUrl, '_self');
