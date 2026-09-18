@@ -4335,28 +4335,57 @@ function initTablaPrefacturas(departamentoId) {
 
             // Columnas normales (sin negativos)
             columnas.forEach(function (col) {
-                totales[col] = api
-                    .column(col)
-                    .data()
-                    .reduce(function (a, b) {
-                        return Math.round((parseVal(a) + parseVal(b)) * 100) / 100;
-                    }, 0);
 
-                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+                let total = 0;
+
+                api.rows().every(function () {
+
+                    let fila = this.data();
+
+                    // Los contratos ASC NO participan en los cálculos
+                    if (fila.esAsc == 1) return;
+
+                    let valor = fila[api.column(col).dataSrc()];
+
+                    total = Math.round(
+                        (total + parseVal(valor)) * 100
+                    ) / 100;
+                });
+
+                totales[col] = total;
+
+                $(api.column(col).footer()).html(
+                    numeral(total).format('0,0.00')
+                );
             });
+
 
             // Columnas con negativos
             columnasConNegativos.forEach(function (col) {
-                totales[col] = api
-                    .column(col)
-                    .data()
-                    .reduce(function (a, b) {
-                        return Math.round((a + parseNumber(b)) * 100) / 100;
-                    }, 0);
 
-                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+                let total = 0;
+
+                api.rows().every(function () {
+
+                    let fila = this.data();
+
+                    // Los contratos ASC NO participan en los cálculos
+                    if (fila.esAsc == 1) return;
+
+                    let valor = fila[api.column(col).dataSrc()];
+
+                    total = Math.round(
+                        (total + parseNumber(valor)) * 100
+                    ) / 100;
+                });
+
+                totales[col] = total;
+
+                $(api.column(col).footer()).html(
+                    numeral(total).format('0,0.00')
+                );
             });
-
+            
             // 👉 lógica extra que ya tenías
             let total9 = totales[9] || 0;
 
@@ -4368,7 +4397,10 @@ function initTablaPrefacturas(departamentoId) {
 
             // 👉 caso especial letras
             if (vm.tipoContratoId() == 8) {
-                var c = api.data();
+                var c = api.data().toArray().filter(function (fila) {
+                    return fila.esAsc != 1;
+                });
+
                 calculaImportesInformativosPrefacturas(c);
             }
         },
@@ -11986,7 +12018,7 @@ function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
             prefactura.fecha
         ) {
 
-           let fecha = moment(prefactura.fecha);
+            let fecha = moment(prefactura.fecha);
 
 
             if (
