@@ -15,6 +15,7 @@ var filtros = {};
 var tablaPrefacturas;
 // Selección local de esta vista; no se persiste en el campo sel.
 var prefacturasSeleccionadas = [];
+var prefacturaSeleccionada = []
 
 var breakpointDefinition = {
     tablet: 1024,
@@ -85,14 +86,9 @@ function initForm() {
 
     });
 
-
-    /* $('#chkTodos').change(function () {
-        if (this.checked) {
-            cargarPrefacturasAll();
-        } else {
-            cargarPrefacturas()();
-        }
-    }); */
+    $("#generarRecibo-form").submit(function () {
+        return false;
+    });
 
     $("#checkMain").change(function () {
         updateAll(this.checked);
@@ -134,6 +130,9 @@ function admData() {
     self.clienteId = ko.observable();
     self.sclienteId = ko.observable();
     self.tipoClienteId = ko.observable();
+    //
+    self.fechaRecibo = ko.observable();
+    self.importeRecibo = ko.observable();
 
 }
 
@@ -165,24 +164,6 @@ function renderEstadoPrefactura(data) {
 
     return "<span class='label " + color + "'>" + estado + "</span>";
 }
-
-/* function calcularResumen(data) {
-    var totalCobrado = 0;
-    var totalPendiente = 0;
-    var totalDevuelto = 0;
-
-    if (data && data.length > 0) {
-        data.forEach(function (p) {
-            totalCobrado += Number(p.total_cobrado || 0);
-            totalPendiente += Number(p.pendiente || 0);
-            totalDevuelto += Number(p.total_devuelto || 0);
-        });
-    }
-
-    $('#totalCobrado').text(numeral(totalCobrado).format('0,0.00') + ' €');
-    $('#totalPendiente').text(numeral(totalPendiente).format('0,0.00') + ' €');
-    $('#totalDevuelto').text(numeral(totalDevuelto).format('0,0.00') + ' €');
-} */
 
 function compruebaFiltros(id) {
     if (filtros) {
@@ -409,12 +390,7 @@ function initTablaPrefacturas() {
                 return string;
             }
         }, {
-            data: "total_cobrado",
-            render: function (data, type, row) {
-                return numeral(data || 0).format('0,0.00');
-            }
-        }, {
-            data: "total_devuelto",
+            data: "anticipo_total",
             render: function (data, type, row) {
                 return numeral(data || 0).format('0,0.00');
             }
@@ -428,9 +404,7 @@ function initTablaPrefacturas() {
             render: function (data, type, row) {
                 return renderEstadoPrefactura(data || obtenerEstadoPrefactura(row));
             }
-        }, {
-            data: "vFac"
-        }, {
+        },  {
             data: "vFPago"
         }, {
             data: "observaciones"
@@ -438,10 +412,18 @@ function initTablaPrefacturas() {
             data: "dirTrabajo"
         }, {
             data: "prefacturaId",
-            render: function (data, type, row) {
+            render: function (data, type, row, meta) {
+                var bt1 = "<button class='btn btn-circle btn-primary' " +
+                    "data-toggle='modal' " +
+                    "data-target='#modalGenerarRecibo' " +
+                    "onclick='loadModalGenerarRecibo(" + meta.row + ");' " +
+                    "title='Generar recibo'>" +
+                    "<i class='fa fa-eur fa-fw'></i>" +
+                    "</button>";
+
                 var bt2 = "<button class='btn btn-circle btn-success' onclick='editPrefactura(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 var bt3 = "<button class='btn btn-circle btn-success' onclick='printPrefactura2(" + data + ");' title='Imprimir PDF'> <i class='fa fa-print fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt2 + "" + bt3 + "</div>";
+                var html = "<div class='pull-right'>" + bt1 + "" + bt2 + "" + bt3 + "</div>";
                 return html;
             }
         }]
@@ -475,8 +457,8 @@ function initTablaPrefacturas() {
     });
 
     // Hide some columns by default
-    tablaPrefacturas.columns(12).visible(false);
-    tablaPrefacturas.columns(14).visible(false);
+    tablaPrefacturas.columns(11).visible(false);
+    tablaPrefacturas.columns(13).visible(false);
 }
 
 function datosOK() {
@@ -848,7 +830,8 @@ function generarRecibos() {
         type: "POST",
         url: "/api/prefacturas/generar-recibos",
         data: JSON.stringify({
-            prefacturas: prefacturasSeleccionadas
+            prefacturas: prefacturasSeleccionadas,
+            datos: null
         }),
         contentType: "application/json",
         success: function (data) {
@@ -858,4 +841,57 @@ function generarRecibos() {
             mensError(xhr.responseText || "Error al generar los recibos");
         }
     });
+}
+
+function loadModalGenerarRecibo(data) {
+    limpiarModalGenerarRecibo();
+    let row = tablaPrefacturas.row(data).data();
+    //recuperemos anticipos de la prefactura
+    $.ajax({
+        type: "GET",
+        url: "/api/anticiposClientes/recuperar/anticipos/prefacturas/" + row.prefacturaId,
+        data: null,
+        contentType: "application/json",
+        success: function (datos) {
+            vm.importeRecibo(row.totalConIva - datos.data.total)
+            vm.fechaRecibo(moment().format('DD/MM/YYYY'));
+            prefacturaSeleccionada.push(row.prefacturaId);
+        },
+        error: function (xhr) {
+            mensError(xhr.responseText || "Error al recuperar los anticipos de la prefactura");
+        }
+    });
+}
+
+function limpiarModalGenerarRecibo() {
+    vm.importeRecibo(0);
+    vm.fechaRecibo(null)
+    prefacturaSeleccionada = []
+}
+function confirmarGenerarReciboParcial() {
+    if (!prefacturaSeleccionada || prefacturaSeleccionada.length === 0) {
+        mensError("Debe seleccionar al menos una prefactura");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/api/prefacturas/generar-recibos",
+        data: JSON.stringify({
+            prefacturas: prefacturaSeleccionada,
+            datos: { importeRecibo: vm.importeRecibo(), fechaRecibo: moment(vm.fechaRecibo(), 'DD/MM/YYYY').format('YYYY-MM-DD') }
+        }),
+        contentType: "application/json",
+        success: function (data) {
+            mensNormal("Recibo generado correctamente");
+            $('#modalGenerarRecibo').modal('hide');
+        },
+        error: function (xhr) {
+            mensError(xhr.responseText || "Error al generar el recibo");
+        }
+    });
+}
+
+function cancelarGenerarRecibo() {
+    limpiarModalGenerarRecibo()
 }

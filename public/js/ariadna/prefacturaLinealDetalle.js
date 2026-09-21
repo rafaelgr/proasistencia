@@ -197,6 +197,7 @@ function admData() {
     self.clienteId = ko.observable();
     self.contratoId = ko.observable();
     self.beneficioLineal = ko.observable();
+    self.esCobrado = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -335,6 +336,7 @@ function loadData(data) {
     vm.coste(data.coste);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.beneficioLineal(data.beneficioLineal);
+    vm.esCobrado(data.esCobrado);
 
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
@@ -562,6 +564,7 @@ var generarPrefacturaDb = function () {
             "observacionesPago": vm.observacionesPago(),
             "tipoProyectoId": vm.tipoProyectoId(),
             "beneficioLineal": 1,
+             "esCobrado": vm.esCobrado()
         }
     };
     return data;

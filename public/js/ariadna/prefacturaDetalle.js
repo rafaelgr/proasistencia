@@ -201,6 +201,7 @@ function admData() {
     self.clienteId = ko.observable();
     self.contratoId = ko.observable();
     self.beneficioLineal = ko.observable();
+    self.esCobrado = ko.observable();
     //
     self.emisorNif = ko.observable();
     self.emisorNombre = ko.observable();
@@ -342,6 +343,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.antPorcentajeBeneficio(data.porcentajeBeneficio);
     vm.beneficioLineal(data.beneficioLineal)
+    vm.esCobrado(data.esCobrado);
 
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.antPorcentajeAgente(data.porcentajeAgente);
@@ -572,7 +574,8 @@ var generarPrefacturaDb = function () {
             "departamentoId": vm.departamentoId(),
             "observacionesPago": vm.observacionesPago(),
             "tipoProyectoId": vm.tipoProyectoId(),
-            "beneficioLineal": vm.beneficioLineal()
+            "beneficioLineal": vm.beneficioLineal(),
+            "esCobrado": vm.esCobrado()
         }
     };
     if (vm.beneficioLineal()) data.prefactura.porcentajeRetencion = 0;

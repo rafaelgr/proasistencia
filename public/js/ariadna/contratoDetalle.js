@@ -4180,6 +4180,7 @@ function initTablaPrefacturas(departamentoId) {
                 if (aData.total < 0) {
                     $(nRow).attr('style', 'background: rgb(175, 161, 216)');
                 }
+                if (aData.esCobrado) $(nRow).css('background', '#48c951'); // registro facturado sin factura
 
             },
 
@@ -4385,7 +4386,7 @@ function initTablaPrefacturas(departamentoId) {
                     numeral(total).format('0,0.00')
                 );
             });
-            
+
             // 👉 lógica extra que ya tenías
             let total9 = totales[9] || 0;
 
@@ -10797,6 +10798,7 @@ function initTablaPrefacturasTemp(departamentoId) {
             else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
             else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
             else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable
+           
         },
         language: {
             processing: "Procesando...",
