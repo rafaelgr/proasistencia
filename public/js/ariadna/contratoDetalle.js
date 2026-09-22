@@ -10798,7 +10798,7 @@ function initTablaPrefacturasTemp(departamentoId) {
             else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
             else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
             else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable
-           
+
         },
         language: {
             processing: "Procesando...",
@@ -12052,8 +12052,12 @@ function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
 
         concepto = 'Factura';
 
-        fechaVencimiento = moment(ultimaFechaLetra)
+        /* fechaVencimiento = moment(ultimaFechaLetra)
             .add(1, 'month')
+            .format('YYYY-MM-DD'); */
+        // 10 días después de la fecha actual
+        fechaVencimiento = moment()
+            .add(10, 'days')
             .format('YYYY-MM-DD');
 
     } else {
