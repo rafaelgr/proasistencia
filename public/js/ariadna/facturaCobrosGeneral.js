@@ -259,7 +259,93 @@ function initTablaFacturas() {
             {
                 extend: 'pdf',
                 orientation: 'landscape',
-                pageSize: 'LEGAL'
+                pageSize: 'A3',
+
+                exportOptions: {
+                    columns: [1, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+                },
+
+                title: function () {
+                    return $('#cmbEmpresas option:selected').text();
+                },
+
+
+                customize: function (doc) {
+
+                    doc.defaultStyle.fontSize = 8;
+                    doc.styles.tableHeader.fontSize = 8;
+                    doc.styles.tableHeader.alignment = 'left';
+
+                    doc.pageMargins = [15, 15, 15, 15];
+
+                    // Obtener filtros
+                    var empresa = $('#cmbEmpresas option:selected').text();
+                    var cliente = $('#cmbClientes option:selected').text();
+
+                    var desde = $('#txtDesdeFecha').val();
+                    var hasta = $('#txtHastaFecha').val();
+
+                    var verFacturadas = $('#chkFacturadas').is(':checked') ? 'Sí' : 'No';
+
+                    // Título
+                    doc.content[0].text = empresa;
+
+                    // Añadir información de filtros
+                    doc.content.splice(1, 0, {
+                        text:
+                            'Desde: ' + desde +
+                            '    Hasta: ' + hasta +
+                            '    Cliente: ' + cliente +
+                            '    Ver facturadas: ' + verFacturadas,
+                        fontSize: 8,
+                        margin: [0, 0, 0, 10]
+                    });
+
+                    // Ahora la tabla pasa a ser content[2]
+                    var table = doc.content[2].table;
+
+                    table.widths = [
+                        65,     // Referencia
+                        '*',    // Receptor
+                        75,     // Número
+                        70,     // Agente
+                        50,     // Fecha
+                        45,     // Base
+                        45,     // Total
+                        45,     // Cobrado
+                        45,     // Devuelto
+                        45,     // Pendiente
+                        50,     // Estado
+                        80      // Forma pago
+                    ];
+
+                    // Cabeceras
+                    table.body[0].forEach(function (cell, index) {
+
+                        if (index >= 5 && index <= 9) {
+                            cell.alignment = 'right';
+                        } else {
+                            cell.alignment = 'left';
+                        }
+
+                        cell.margin = [2, 3, 2, 3];
+                    });
+
+                    // Datos
+                    for (var i = 1; i < table.body.length; i++) {
+
+                        table.body[i].forEach(function (cell, index) {
+
+                            if (index >= 5 && index <= 9) {
+                                cell.alignment = 'right';
+                            } else {
+                                cell.alignment = 'left';
+                            }
+
+                            cell.margin = [2, 2, 2, 2];
+                        });
+                    }
+                }
             },
             'print'
         ],
@@ -644,7 +730,7 @@ function cargarFacturas2All(id) {
         }
         let empid = vm.sempresaId() || 2;
         var clienteId = vm.sclienteId() || null;
-        
+
         if (id) {
             var data = {
                 id: id

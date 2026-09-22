@@ -133,6 +133,7 @@ function admData() {
     //
     self.fechaRecibo = ko.observable();
     self.importeRecibo = ko.observable();
+    self.importeReciboCopia = ko.observable();
 
 }
 
@@ -404,7 +405,7 @@ function initTablaPrefacturas() {
             render: function (data, type, row) {
                 return renderEstadoPrefactura(data || obtenerEstadoPrefactura(row));
             }
-        },  {
+        }, {
             data: "vFPago"
         }, {
             data: "observaciones"
@@ -854,6 +855,7 @@ function loadModalGenerarRecibo(data) {
         contentType: "application/json",
         success: function (datos) {
             vm.importeRecibo(row.totalConIva - datos.data.total)
+            vm.importeReciboCopia(row.totalConIva - datos.data.total)
             vm.fechaRecibo(moment().format('DD/MM/YYYY'));
             prefacturaSeleccionada.push(row.prefacturaId);
         },
@@ -865,12 +867,19 @@ function loadModalGenerarRecibo(data) {
 
 function limpiarModalGenerarRecibo() {
     vm.importeRecibo(0);
+    vm.importeReciboCopia(0);
     vm.fechaRecibo(null)
     prefacturaSeleccionada = []
 }
+
 function confirmarGenerarReciboParcial() {
     if (!prefacturaSeleccionada || prefacturaSeleccionada.length === 0) {
         mensError("Debe seleccionar al menos una prefactura");
+        return;
+    }
+
+    if(vm.importeRecibo() > vm.importeReciboCopia()) {
+        mensError("Em importe introducido no puede ser mayor de " + vm.importeReciboCopia());
         return;
     }
 
