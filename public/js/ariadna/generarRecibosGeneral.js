@@ -157,13 +157,13 @@ function renderEstadoPrefactura(data) {
     var estado = data || "PENDIENTE";
     var color = "label-default";
 
-    if (estado === "COBRADO") color = "label-success";
+    /* if (estado === "COBRADO") color = "label-success";
     else if (estado === "DEVUELTO") color = "label-danger";
     else if (estado === "PARCIAL") color = "label-warning";
     else if (estado === "FACTURADA") color = "label-primary";
-    else if (estado === "NO FACTURAR") color = "label-danger";
+    else if (estado === "NO FACTURAR") color = "label-danger"; */
 
-    return "<span class='label " + color + "'>" + estado + "</span>";
+    return "<span class='label " + color + "' style='background-color: #88345e'>" + estado + "</span>";
 }
 
 function compruebaFiltros(id) {
@@ -836,7 +836,10 @@ function generarRecibos() {
         }),
         contentType: "application/json",
         success: function (data) {
-            mensNormal("Recibos generados correctamente");
+            mensNormal("Recibo generado correctamente");
+            setTimeout(function () {
+                cargarPrefacturas()();
+            }, 1000);
         },
         error: function (xhr) {
             mensError(xhr.responseText || "Error al generar los recibos");
@@ -894,6 +897,9 @@ function confirmarGenerarReciboParcial() {
         success: function (data) {
             mensNormal("Recibo generado correctamente");
             $('#modalGenerarRecibo').modal('hide');
+            setTimeout(function () {
+                cargarPrefacturas()();
+            }, 1000);
         },
         error: function (xhr) {
             mensError(xhr.responseText || "Error al generar el recibo");
