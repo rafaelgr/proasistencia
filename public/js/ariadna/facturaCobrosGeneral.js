@@ -257,94 +257,10 @@ function initTablaFacturas() {
             'csv',
             $.extend(true, {}, buttonCommon, { extend: 'excel' }),
             {
-                extend: 'pdf',
-                orientation: 'landscape',
-                pageSize: 'A3',
-
-                exportOptions: {
-                    columns: [1, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-                },
-
-                title: function () {
-                    return $('#cmbEmpresas option:selected').text();
-                },
-
-
-                customize: function (doc) {
-
-                    doc.defaultStyle.fontSize = 8;
-                    doc.styles.tableHeader.fontSize = 8;
-                    doc.styles.tableHeader.alignment = 'left';
-
-                    doc.pageMargins = [15, 15, 15, 15];
-
-                    // Obtener filtros
-                    var empresa = $('#cmbEmpresas option:selected').text();
-                    var cliente = $('#cmbClientes option:selected').text();
-
-                    var desde = $('#txtDesdeFecha').val();
-                    var hasta = $('#txtHastaFecha').val();
-
-                    var verFacturadas = $('#chkFacturadas').is(':checked') ? 'Sí' : 'No';
-
-                    // Título
-                    doc.content[0].text = empresa;
-
-                    // Añadir información de filtros
-                    doc.content.splice(1, 0, {
-                        text:
-                            'Desde: ' + desde +
-                            '    Hasta: ' + hasta +
-                            '    Cliente: ' + cliente +
-                            '    Ver facturadas: ' + verFacturadas,
-                        fontSize: 8,
-                        margin: [0, 0, 0, 10]
-                    });
-
-                    // Ahora la tabla pasa a ser content[2]
-                    var table = doc.content[2].table;
-
-                    table.widths = [
-                        65,     // Referencia
-                        '*',    // Receptor
-                        75,     // Número
-                        70,     // Agente
-                        50,     // Fecha
-                        45,     // Base
-                        45,     // Total
-                        45,     // Cobrado
-                        45,     // Devuelto
-                        45,     // Pendiente
-                        50,     // Estado
-                        80      // Forma pago
-                    ];
-
-                    // Cabeceras
-                    table.body[0].forEach(function (cell, index) {
-
-                        if (index >= 5 && index <= 9) {
-                            cell.alignment = 'right';
-                        } else {
-                            cell.alignment = 'left';
-                        }
-
-                        cell.margin = [2, 3, 2, 3];
-                    });
-
-                    // Datos
-                    for (var i = 1; i < table.body.length; i++) {
-
-                        table.body[i].forEach(function (cell, index) {
-
-                            if (index >= 5 && index <= 9) {
-                                cell.alignment = 'right';
-                            } else {
-                                cell.alignment = 'left';
-                            }
-
-                            cell.margin = [2, 2, 2, 2];
-                        });
-                    }
+                text: 'PDF',
+                className: 'buttons-pdf buttons-html5',
+                action: function () {
+                    generarPdfFacturas();
                 }
             },
             'print'
@@ -934,3 +850,589 @@ var initAutoCliente = function () {
         }
     });
 };
+
+function generarPdfFacturas() {
+
+    var jsPDF = window.jspdf.jsPDF;
+
+    var doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+    });
+
+
+    // --------------------------------------------------------
+    // DATOS CABECERA
+    // --------------------------------------------------------
+
+    var empresa = $('#cmbEmpresas option:selected').text();
+    var cliente = $('#cmbClientes option:selected').text();
+
+    var desde = $('#txtDesdeFecha').val();
+    var hasta = $('#txtHastaFecha').val();
+
+
+    // --------------------------------------------------------
+    // TÍTULO
+    // --------------------------------------------------------
+
+    doc.setFontSize(14);
+    doc.text(empresa, 10, 10);
+
+    doc.setFontSize(8);
+
+    doc.text(
+        'Desde: ' + desde +
+        '    Hasta: ' + hasta +
+        '    Cliente: ' + cliente,
+        10,
+        16
+    );
+
+
+    // --------------------------------------------------------
+    // COLUMNAS A EXPORTAR
+    // --------------------------------------------------------
+
+    /*
+     * Índices reales de tablaFacturas:
+     *
+     * 0  Icono
+     * 1  Referencia
+     * 2  Emisor
+     * 3  Receptor
+     * 4  Número
+     * 5  Rectificativa
+     * 6  Derivada
+     * 7  Agente
+     * 8  Fecha
+     * 9  Base
+     * 10 Total factura
+     * 11 Cobrado
+     * 12 Devuelto
+     * 13 Pendiente
+     * 14 Estado
+     * 15 Forma de pago
+     * 16 Observaciones
+     * 17 Dir. Trabajo
+     * 18 Botones
+     */
+
+    var nombresColumnas = {
+        1: 'Referencia',
+        2: 'Emisor',
+        3: 'Receptor',
+        4: 'Número',
+        5: 'Rectificativa',
+        6: 'Derivada',
+        7: 'Agente',
+        8: 'Fecha',
+        9: 'Base',
+        10: 'Total factura',
+        11: 'Cobrado',
+        12: 'Devuelto',
+        13: 'Pendiente',
+        14: 'Estado',
+        15: 'Forma de pago',
+        16: 'Observaciones',
+        17: 'Dir. Trabajo'
+    };
+
+
+    // --------------------------------------------------------
+    // COLUMNAS VISIBLES
+    // --------------------------------------------------------
+
+    var columnasExportadas = [];
+
+    tablaFacturas.columns().every(function (index) {
+
+        /*
+         * Mantenemos el mismo criterio que tenías:
+         *
+         * - columnas 1 a 17
+         * - columna 2 NO se exporta
+         * - respetar COLVIS
+         */
+
+        if (
+            index >= 1 &&
+            index <= 17 &&
+            index != 2 &&
+            this.visible()
+        ) {
+
+            columnasExportadas.push(index);
+        }
+
+    });
+
+
+    if (columnasExportadas.length === 0) {
+
+        mensError('No hay columnas visibles para exportar');
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // CABECERAS
+    // --------------------------------------------------------
+
+    var head = [
+        columnasExportadas.map(function (index) {
+            return nombresColumnas[index] || '';
+        })
+    ];
+
+
+    // --------------------------------------------------------
+    // FILAS
+    // --------------------------------------------------------
+
+    /*
+     * search: applied
+     *      -> respeta filtros
+     *
+     * order: applied
+     *      -> respeta orden
+     *
+     * page: all
+     *      -> exporta TODAS las filas filtradas
+     */
+
+    var filas = tablaFacturas.rows({
+        search: 'applied',
+        order: 'applied',
+        page: 'all'
+    }).data();
+
+
+    var body = [];
+
+
+    filas.each(function (row) {
+
+        var fila = [];
+
+        columnasExportadas.forEach(function (columna) {
+
+            var valor = '';
+
+
+            switch (columna) {
+
+                // REFERENCIA
+                case 1:
+
+                    valor = row.referencia || '';
+
+                    break;
+
+
+                // EMISOR
+                case 2:
+
+                    valor = row.emisorNombre || '';
+
+                    break;
+
+
+                // RECEPTOR
+                case 3:
+
+                    valor = row.receptorNombre || '';
+
+                    break;
+
+
+                // NÚMERO
+                case 4:
+
+                    valor = row.vNum || '';
+
+                    break;
+
+
+                // RECTIFICATIVA
+                case 5:
+
+                    valor = row.vFacR || '';
+
+                    break;
+
+
+                // DERIVADA
+                case 6:
+
+                    valor = row.vFacD || '';
+
+                    break;
+
+
+                // AGENTE
+                case 7:
+
+                    valor = row.nombreAgente || '';
+
+                    break;
+
+
+                // FECHA
+                case 8:
+
+                    valor = row.fecha
+                        ? moment(row.fecha).format('DD/MM/YYYY')
+                        : '';
+
+                    break;
+
+
+                // BASE
+                case 9:
+
+                    valor = numeral(row.total || 0).format('0,0.00');
+
+                    break;
+
+
+                // TOTAL FACTURA
+                case 10:
+
+                    valor = numeral(row.totalConIva || 0).format('0,0.00');
+
+                    break;
+
+
+                // COBRADO
+                case 11:
+
+                    valor = numeral(row.total_cobrado || 0).format('0,0.00');
+
+                    break;
+
+
+                // DEVUELTO
+                case 12:
+
+                    valor = numeral(row.total_devuelto || 0).format('0,0.00');
+
+                    break;
+
+
+                // PENDIENTE
+                case 13:
+
+                    valor = numeral(row.pendiente || 0).format('0,0.00');
+
+                    break;
+
+
+                // ESTADO
+                case 14:
+
+                    valor = row.estado || '';
+
+                    break;
+
+
+                // FORMA DE PAGO
+                case 15:
+
+                    valor = row.vFPago || '';
+
+                    break;
+
+
+                // OBSERVACIONES
+                case 16:
+
+                    valor = row.observaciones || '';
+
+                    break;
+
+
+                // DIRECCIÓN TRABAJO
+                case 17:
+
+                    valor = row.dirTrabajo || '';
+
+                    break;
+            }
+
+
+            fila.push(valor);
+
+        });
+
+
+        body.push(fila);
+
+    });
+
+
+    // --------------------------------------------------------
+    // ESTILOS POR POSICIÓN REAL DEL PDF
+    // --------------------------------------------------------
+
+    var columnStyles = {};
+
+
+    columnasExportadas.forEach(function (columnaDT, posicionPDF) {
+
+        switch (columnaDT) {
+
+            case 1:     // Referencia
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 20
+                };
+
+                break;
+
+
+            case 3:     // Receptor
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 30
+                };
+
+                break;
+
+
+            case 4:     // Número
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 23
+                };
+
+                break;
+
+
+            case 5:     // Rectificativa
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 18
+                };
+
+                break;
+
+
+            case 6:     // Derivada
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 18
+                };
+
+                break;
+
+
+            case 7:     // Agente
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 30
+                };
+
+                break;
+
+
+            case 8:     // Fecha
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 18
+                };
+
+                break;
+
+
+            case 9:     // Base
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 16,
+                    halign: 'right'
+                };
+
+                break;
+
+
+            case 10:    // Total factura
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 17,
+                    halign: 'right'
+                };
+
+                break;
+
+
+            case 11:    // Cobrado
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 17,
+                    halign: 'right'
+                };
+
+                break;
+
+
+            case 12:    // Devuelto
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 17,
+                    halign: 'right'
+                };
+
+                break;
+
+
+            case 13:    // Pendiente
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 17,
+                    halign: 'right'
+                };
+
+                break;
+
+
+            case 14:    // Estado
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 20
+                };
+
+                break;
+
+
+            case 15:    // Forma pago
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 25
+                };
+
+                break;
+
+
+            case 16:    // Observaciones
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 35
+                };
+
+                break;
+
+
+            case 17:    // Dir. Trabajo
+
+                columnStyles[posicionPDF] = {
+                    cellWidth: 35
+                };
+
+                break;
+        }
+
+    });
+
+
+    // --------------------------------------------------------
+    // CREAR TABLA
+    // --------------------------------------------------------
+
+    doc.autoTable({
+
+        head: head,
+
+        body: body,
+
+        startY: 21,
+
+        margin: {
+            top: 10,
+            right: 7,
+            bottom: 10,
+            left: 7
+        },
+
+        styles: {
+
+            fontSize: 6,
+
+            cellPadding: 1,
+
+            overflow: 'linebreak',
+
+            valign: 'middle'
+
+        },
+
+        headStyles: {
+
+            fontSize: 6,
+
+            fontStyle: 'bold',
+
+            halign: 'left'
+
+        },
+
+        columnStyles: columnStyles,
+
+
+        // ----------------------------------------------------
+        // SALTOS HORIZONTALES
+        // ----------------------------------------------------
+
+        /*
+         * Si todas las columnas visibles no caben en una
+         * única hoja A4, AutoTable continúa las columnas
+         * horizontalmente en otra hoja.
+         *
+         * Esto evita que desaparezcan por la derecha.
+         */
+
+        horizontalPageBreak: true,
+
+        horizontalPageBreakBehaviour: 'immediately',
+
+
+        // ----------------------------------------------------
+        // PIE DE PÁGINA
+        // ----------------------------------------------------
+
+        didDrawPage: function (data) {
+
+            var pageSize = doc.internal.pageSize;
+
+            var pageHeight = pageSize.height
+                ? pageSize.height
+                : pageSize.getHeight();
+
+            doc.setFontSize(7);
+
+            doc.text(
+                'Página ' + doc.internal.getNumberOfPages(),
+                pageSize.getWidth() - 25,
+                pageHeight - 5
+            );
+        }
+
+    });
+
+
+    // --------------------------------------------------------
+    // GUARDAR
+    // --------------------------------------------------------
+
+    var nombreEmpresa = empresa
+        .replace(/[\/\\:*?"<>|]/g, '')
+        .trim();
+
+
+    doc.save(
+        'Facturas_' +
+        nombreEmpresa +
+        '.pdf'
+    );
+}

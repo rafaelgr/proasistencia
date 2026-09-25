@@ -276,106 +276,11 @@ function initTablaPrefacturas() {
             }, {
                 footer: true
             }),
-
             {
-                extend: 'pdf',
-                orientation: 'landscape',
-                pageSize: 'A3',
-
-                exportOptions: {
-                    columns: function (idx, data, node) {
-                        // Solo columnas 1 a 14 y además visibles
-                        return idx >= 0 &&
-                            idx <= 14 && idx != 1 &&
-                            tablaPrefacturas.column(idx).visible();
-                    }
-                },
-
-                title: function () {
-                    return $('#cmbEmpresas option:selected').text();
-                },
-
-
-                customize: function (doc) {
-
-                    doc.defaultStyle.fontSize = 10;
-                    doc.styles.tableHeader.fontSize = 10;
-                    doc.styles.tableHeader.alignment = 'left';
-
-                    doc.pageMargins = [15, 15, 15, 15];
-
-                    // Obtener filtros
-                    var empresa = $('#cmbEmpresas option:selected').text();
-                    var cliente = $('#cmbClientes option:selected').text();
-
-                    var desde = $('#txtDesdeFecha').val();
-                    var hasta = $('#txtHastaFecha').val();
-
-                    var verFacturadas = $('#chkFacturadas').is(':checked') ? 'Sí' : 'No';
-
-                    // Título
-                    doc.content[0].text = empresa;
-
-                    // Añadir información de filtros
-                    doc.content.splice(1, 0, {
-                        text:
-                            'Desde: ' + desde +
-                            '    Hasta: ' + hasta +
-                            '    Cliente: ' + cliente +
-                            '    Ver facturadas: ' + verFacturadas,
-                        fontSize: 13,
-                        margin: [0, 0, 0, 10]
-                    });
-
-                    // Ahora la tabla pasa a ser content[2]
-                    var table = doc.content[2].table;
-
-                    table.widths = new Array(table.body[0].length).fill('*');
-
-                    /* table.widths = [
-                        100,     // EMISOR
-                        150,    // receptor
-                        100,     // numero
-                        70,     // fecha
-                        50,     // base
-                        45,     // total
-                        45,     // cobrado
-                        45,     // devuelto
-                        50,     // pendiente
-                        100,     // estado
-                        50,     // forma de pagp
-                        100,     // observaciones
-                        50,     // dir. trabajo
-                        100     // anticipos
-                       
-                    ]; */
-
-                    // Cabeceras
-                    table.body[0].forEach(function (cell, index) {
-
-                        if (index >= 5 && index <= 9) {
-                            cell.alignment = 'right';
-                        } else {
-                            cell.alignment = 'left';
-                        }
-
-                        cell.margin = [2, 3, 2, 3];
-                    });
-
-                    // Datos
-                    for (var i = 1; i < table.body.length; i++) {
-
-                        table.body[i].forEach(function (cell, index) {
-
-                            if (index >= 5 && index <= 9) {
-                                cell.alignment = 'right';
-                            } else {
-                                cell.alignment = 'left';
-                            }
-
-                            cell.margin = [2, 2, 2, 2];
-                        });
-                    }
+                text: 'PDF',
+                className: 'buttons-pdf buttons-html5',
+                action: function () {
+                    generarPdfPrefacturas();
                 }
             },
 
@@ -1014,3 +919,350 @@ var initAutoCliente = function () {
         }
     });
 };
+
+function generarPdfPrefacturas() {
+
+    var jsPDF = window.jspdf.jsPDF;
+
+    var doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+    });
+
+    // ---------------------------------------------------------
+    // FILTROS
+    // ---------------------------------------------------------
+
+    var empresa = $('#cmbEmpresas option:selected').text() || '';
+    var cliente = $('#txtCliente').val() || '';
+    var desde = $('#txtDesdeFecha').val() || '';
+    var hasta = $('#txtHastaFecha').val() || '';
+
+    // ---------------------------------------------------------
+    // NOMBRES DE LAS COLUMNAS
+    // Índices originales de DataTables
+    // ---------------------------------------------------------
+
+    var nombresColumnas = {
+        0: 'Referencia',
+        1: 'Emisor',
+        2: 'Receptor',
+        3: 'Número',
+        4: 'Fecha',
+        5: 'Base',
+        6: 'Total',
+        7: 'Cobrado',
+        8: 'Devuelto',
+        9: 'Pendiente',
+        10: 'Estado',
+        11: 'Forma de pago',
+        12: 'Observaciones',
+        13: 'Dir. Trabajo',
+        14: 'Anticipos'
+    };
+
+    // ---------------------------------------------------------
+    // COLUMNAS VISIBLES
+    //
+    // 0 - 14 = datos
+    // 15 = botones -> NO exportar
+    // ---------------------------------------------------------
+
+    var columnasExportadas = [];
+
+    tablaPrefacturas.columns().every(function (index) {
+
+        if (
+            index >= 0 &&
+            index <= 14 &&
+            this.visible()
+        ) {
+            columnasExportadas.push(index);
+        }
+
+    });
+
+    // ---------------------------------------------------------
+    // CABECERAS
+    // ---------------------------------------------------------
+
+    var head = [
+        columnasExportadas.map(function (index) {
+            return nombresColumnas[index];
+        })
+    ];
+
+    // ---------------------------------------------------------
+    // FILAS
+    // Todas las filtradas, no solamente la página actual
+    // ---------------------------------------------------------
+
+    var filas = tablaPrefacturas.rows({
+        search: 'applied',
+        order: 'applied',
+        page: 'all'
+    }).data();
+
+    var body = [];
+
+    filas.each(function (row) {
+
+        var fila = [];
+
+        columnasExportadas.forEach(function (index) {
+
+            var valor = '';
+
+            switch (index) {
+
+                case 0:
+                    valor = row.referencia || '';
+                    break;
+
+                case 1:
+                    valor = row.emisorNombre || '';
+                    break;
+
+                case 2:
+                    valor = row.receptorNombre || '';
+                    break;
+
+                case 3:
+                    valor = row.vNum || '';
+                    break;
+
+                case 4:
+                    valor = row.fecha
+                        ? moment(row.fecha).format('DD/MM/YYYY')
+                        : '';
+                    break;
+
+                case 5:
+                    valor = numeral(row.total || 0)
+                        .format('0,0.00');
+                    break;
+
+                case 6:
+                    valor = numeral(row.totalConIva || 0)
+                        .format('0,0.00');
+                    break;
+
+                case 7:
+                    valor = numeral(row.total_cobrado || 0)
+                        .format('0,0.00');
+                    break;
+
+                case 8:
+                    valor = numeral(row.total_devuelto || 0)
+                        .format('0,0.00');
+                    break;
+
+                case 9:
+                    valor = numeral(row.pendiente || 0)
+                        .format('0,0.00');
+                    break;
+
+                case 10:
+                    valor = row.estado ||
+                        obtenerEstadoPrefactura(row);
+                    break;
+
+                case 11:
+                    valor = row.vFPago || '';
+                    break;
+
+                case 12:
+                    valor = row.observaciones || '';
+                    break;
+
+                case 13:
+                    valor = row.dirTrabajo || '';
+                    break;
+
+                case 14:
+                    // Quitamos el estado "|COBRADO", etc.
+                    // para mostrar únicamente los números.
+                    if (row.numerosAnticipos) {
+
+                        valor = row.numerosAnticipos
+                            .split(',')
+                            .map(function (a) {
+                                return a.trim().split('|')[0];
+                            })
+                            .join(', ');
+
+                    } else {
+                        valor = '';
+                    }
+
+                    break;
+            }
+
+            fila.push(valor);
+
+        });
+
+        body.push(fila);
+
+    });
+
+    // ---------------------------------------------------------
+    // ANCHOS / ALINEACIONES
+    //
+    // IMPORTANTE:
+    // AutoTable trabaja con la posición dentro del PDF,
+    // no con el índice original de DataTables.
+    // ---------------------------------------------------------
+
+    var columnStyles = {};
+
+    columnasExportadas.forEach(function (indiceDT, posicionPDF) {
+
+        var estilo = {
+            valign: 'middle'
+        };
+
+        switch (indiceDT) {
+
+            case 0: // Referencia
+                estilo.cellWidth = 22;
+                break;
+
+            case 1: // Emisor
+                estilo.cellWidth = 28;
+                break;
+
+            case 2: // Receptor
+                estilo.cellWidth = 30;
+                break;
+
+            case 3: // Número
+                estilo.cellWidth = 22;
+                break;
+
+            case 4: // Fecha
+                estilo.cellWidth = 18;
+                break;
+
+            case 5: // Base
+            case 6: // Total
+            case 7: // Cobrado
+            case 8: // Devuelto
+            case 9: // Pendiente
+
+                estilo.cellWidth = 17;
+                estilo.halign = 'right';
+                break;
+
+            case 10: // Estado
+                estilo.cellWidth = 21;
+                break;
+
+            case 11: // Forma pago
+                estilo.cellWidth = 24;
+                break;
+
+            case 12: // Observaciones
+                estilo.cellWidth = 35;
+                break;
+
+            case 13: // Dirección
+                estilo.cellWidth = 35;
+                break;
+
+            case 14: // Anticipos
+                estilo.cellWidth = 28;
+                break;
+        }
+
+        columnStyles[posicionPDF] = estilo;
+
+    });
+
+    // ---------------------------------------------------------
+    // TÍTULO
+    // ---------------------------------------------------------
+
+    doc.setFontSize(13);
+    doc.text(empresa, 7, 9);
+
+    doc.setFontSize(7);
+
+    var textoFiltros =
+        'Desde: ' + desde +
+        '    Hasta: ' + hasta;
+
+    if (cliente) {
+        textoFiltros += '    Cliente: ' + cliente;
+    }
+
+    doc.text(textoFiltros, 7, 14);
+
+    // ---------------------------------------------------------
+    // TABLA
+    // ---------------------------------------------------------
+
+    doc.autoTable({
+
+        head: head,
+        body: body,
+
+        startY: 18,
+
+        margin: {
+            top: 10,
+            right: 7,
+            bottom: 10,
+            left: 7
+        },
+
+        styles: {
+            fontSize: 6,
+            cellPadding: 1,
+            overflow: 'linebreak',
+            valign: 'middle'
+        },
+
+        headStyles: {
+            fontSize: 6,
+            fontStyle: 'bold',
+            halign: 'left'
+        },
+
+        columnStyles: columnStyles,
+
+        horizontalPageBreak: true,
+        horizontalPageBreakBehaviour: 'immediately',
+
+        didDrawPage: function () {
+
+            var pageWidth = doc.internal.pageSize.getWidth();
+            var pageHeight = doc.internal.pageSize.getHeight();
+
+            doc.setFontSize(7);
+
+            doc.text(
+                'Página ' + doc.internal.getNumberOfPages(),
+                pageWidth - 25,
+                pageHeight - 5
+            );
+
+        }
+
+    });
+
+    // ---------------------------------------------------------
+    // DESCARGAR
+    // ---------------------------------------------------------
+
+    var nombreEmpresa = empresa
+        .replace(/[\/\\:*?"<>|]/g, '')
+        .trim();
+
+    doc.save(
+        'Prefacturas_' +
+        (nombreEmpresa || 'Listado') +
+        '.pdf'
+    );
+}
