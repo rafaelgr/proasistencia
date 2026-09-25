@@ -4180,6 +4180,7 @@ function initTablaPrefacturas(departamentoId) {
                 if (aData.total < 0) {
                     $(nRow).attr('style', 'background: rgb(175, 161, 216)');
                 }
+                if (aData.esCobrado) $(nRow).css('background', '#48c951'); // registro facturado sin factura
 
             },
 
@@ -4335,26 +4336,55 @@ function initTablaPrefacturas(departamentoId) {
 
             // Columnas normales (sin negativos)
             columnas.forEach(function (col) {
-                totales[col] = api
-                    .column(col)
-                    .data()
-                    .reduce(function (a, b) {
-                        return Math.round((parseVal(a) + parseVal(b)) * 100) / 100;
-                    }, 0);
 
-                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+                let total = 0;
+
+                api.rows().every(function () {
+
+                    let fila = this.data();
+
+                    // Los contratos ASC NO participan en los cálculos
+                    if (fila.esAsc == 1) return;
+
+                    let valor = fila[api.column(col).dataSrc()];
+
+                    total = Math.round(
+                        (total + parseVal(valor)) * 100
+                    ) / 100;
+                });
+
+                totales[col] = total;
+
+                $(api.column(col).footer()).html(
+                    numeral(total).format('0,0.00')
+                );
             });
+
 
             // Columnas con negativos
             columnasConNegativos.forEach(function (col) {
-                totales[col] = api
-                    .column(col)
-                    .data()
-                    .reduce(function (a, b) {
-                        return Math.round((a + parseNumber(b)) * 100) / 100;
-                    }, 0);
 
-                $(api.column(col).footer()).html(numeral(totales[col]).format('0,0.00'));
+                let total = 0;
+
+                api.rows().every(function () {
+
+                    let fila = this.data();
+
+                    // Los contratos ASC NO participan en los cálculos
+                    if (fila.esAsc == 1) return;
+
+                    let valor = fila[api.column(col).dataSrc()];
+
+                    total = Math.round(
+                        (total + parseNumber(valor)) * 100
+                    ) / 100;
+                });
+
+                totales[col] = total;
+
+                $(api.column(col).footer()).html(
+                    numeral(total).format('0,0.00')
+                );
             });
 
             // 👉 lógica extra que ya tenías
@@ -4368,7 +4398,10 @@ function initTablaPrefacturas(departamentoId) {
 
             // 👉 caso especial letras
             if (vm.tipoContratoId() == 8) {
-                var c = api.data();
+                var c = api.data().toArray().filter(function (fila) {
+                    return fila.esAsc != 1;
+                });
+
                 calculaImportesInformativosPrefacturas(c);
             }
         },
@@ -10765,6 +10798,7 @@ function initTablaPrefacturasTemp(departamentoId) {
             else if (aData.fechaRecibida) $(nRow).css('background', '#68ACCD'); // letra recibida
             else if (aData.fechaGestionCobros) $(nRow).css('background', '#FFC281'); // gestión cobros
             else if (aData.noFacturar) $(nRow).css('background', '#cc6c69ff'); // no facturable
+
         },
         language: {
             processing: "Procesando...",
@@ -11986,7 +12020,7 @@ function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
             prefactura.fecha
         ) {
 
-           let fecha = moment(prefactura.fecha);
+            let fecha = moment(prefactura.fecha);
 
 
             if (
@@ -12018,8 +12052,12 @@ function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
 
         concepto = 'Factura';
 
-        fechaVencimiento = moment(ultimaFechaLetra)
+        /* fechaVencimiento = moment(ultimaFechaLetra)
             .add(1, 'month')
+            .format('YYYY-MM-DD'); */
+        // 10 días después de la fecha actual
+        fechaVencimiento = moment()
+            .add(10, 'days')
             .format('YYYY-MM-DD');
 
     } else {
