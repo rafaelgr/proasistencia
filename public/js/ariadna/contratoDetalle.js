@@ -1101,6 +1101,7 @@ function admData() {
     self.importePrefacturado = ko.observable();
     self.diferenciaPrefacturado = ko.observable();
     self.certificacionFinalFormat = ko.observable();
+    self.fechaCertFinal = ko.observable();
     //
     self.fechaRecepcionGestion = ko.observable();
     self.emitidas = ko.observable();
@@ -1190,7 +1191,6 @@ function admData() {
     self.diferenciaTemp = ko.observable();
     self.importePrefacturadoTemp = ko.observable();
     self.diferenciaPrefacturadoTemp = ko.observable();
-    self.certificacionFinalFormat = ko.observable();
     self.porRetenGarantiasTemp = ko.observable();
     self.esAdicionalTemp = ko.observable();
     //
@@ -1281,6 +1281,7 @@ function loadData(data) {
 
     certFinal = data.certificacionFinal;
     vm.certificacionFinal(data.certificacionFinal);
+    vm.fechaCertFinal(spanishDate(data.fechaCertFinal))
     loadTipoProyecto(data.tipoProyectoId);
     vm.fechaRenovacionIpc(spanishDate(data.fechaRenovacionIpc));
     vm.ipc(data.ipc);
@@ -1667,6 +1668,7 @@ var generarContratoDb = function () {
             "importeAgente": vm.importeAgente(),
             "importeCliente": vm.importeCliente(),
             "certificacionFinal": vm.certificacionFinal(),
+            "fechaCertFinal": spanishDbDate(vm.fechaCertFinal()),
             "importeMantenedor": vm.importeMantenedor(),
             "observaciones": vm.observaciones(),
             "formaPagoId": vm.sformaPagoId(),
@@ -12057,7 +12059,7 @@ function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
             .format('YYYY-MM-DD'); */
         // 10 días después de la fecha actual
         fechaVencimiento = moment()
-            .add(10, 'days')
+            .add(5, 'days')
             .format('YYYY-MM-DD');
 
     } else {
