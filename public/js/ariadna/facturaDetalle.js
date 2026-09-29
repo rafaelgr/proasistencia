@@ -127,8 +127,16 @@ function initForm() {
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        if (e.added) cambioArticulo(e.added.id);
+
+        if (!e.added) return;
+
+        if (vm.departamentoId() == 7) {
+            // REPARACIONES: mantener IVA del cliente
+            cambioArticuloClienteRep(e.added.id);
+        } else {
+            // RESTO: IVA del artículo
+            cambioArticulo(e.added.id);
+        }
     });
 
     // select2 things
@@ -836,6 +844,22 @@ function cambioCliente(clienteId) {
         vm.receptorProvincia(data.provincia);
         vm.tipoClienteId(data.tipoClienteId);
         $("#cmbFormasPago").val([data.formaPagoId]).trigger('change');
+        // REPARACIONES: IVA DEL CLIENTE
+        if (vm.departamentoId() == 7 && data.tipoIvaId) {
+
+            llamadaAjax(
+                "GET",
+                "/api/tipos_iva/" + data.tipoIvaId,
+                null,
+                function (err, tipoIva) {
+
+                    if (err) return;
+
+                    vm.tipoIvaId(tipoIva.tipoIvaId);
+                    vm.porcentaje(tipoIva.porcentaje);
+                }
+            );
+        }
         loadContratos();
         lanzaAviso();
     });
@@ -962,8 +986,13 @@ function limpiaDataLinea(data) {
     vm.facturaLineaId(0);
     vm.linea(null);
     vm.articuloId(null);
-    vm.tipoIvaId(null);
-    vm.porcentaje(null);
+    if (vm.departamentoId() != 7) {
+        vm.tipoIvaId(null);
+        vm.porcentaje(null);
+        loadTiposIva();
+    } else {
+        loadTiposIva(vm.tipoIvaId());
+    }
     vm.descripcion(null);
     vm.cantidad(null);
     vm.importe(null);
@@ -973,7 +1002,7 @@ function limpiaDataLinea(data) {
     //
     loadGrupoArticulos();
     // loadArticulos();
-    loadTiposIva();
+
     //
     loadArticulos();
     loadUnidades();
@@ -1447,6 +1476,33 @@ function cambioArticulo(articuloId) {
     });
 }
 
+function cambioArticuloClienteRep(articuloId) {
+
+    if (!articuloId) return;
+
+    llamadaAjax("GET", "/api/articulos/" + articuloId, null, function (err, data) {
+
+        if (err) return;
+
+        if (data.descripcion == null) {
+            vm.descripcion(data.nombre);
+        } else {
+            vm.descripcion(data.nombre + ':\n' + data.descripcion);
+        }
+
+        vm.cantidad(1);
+        vm.importe(data.precioUnitario);
+
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
+
+        // REPARACIONES:
+        // No modificamos tipoIvaId ni porcentaje.
+        // Se mantiene el IVA cargado desde el cliente.
+
+        cambioPrecioCantidad();
+    });
+}
+
 function cambioGrupoArticulo(grupoArticuloId) {
     //
     if (!grupoArticuloId) return;
@@ -1736,11 +1792,31 @@ function loadCobrosFactura(facturaId) {
 // cargaCliente
 // carga en el campo txtCliente el valor seleccionado
 var cargaCliente = function (id) {
+
     llamadaAjax("GET", "/api/clientes/" + id, null, function (err, data) {
+
         if (err) return;
+
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.tipoClienteId(data.tipoClienteId);
+
+        // REPARACIONES: IVA DEL CLIENTE
+        if (vm.departamentoId() == 7 && data.tipoIvaId) {
+
+            llamadaAjax(
+                "GET",
+                "/api/tipos_iva/" + data.tipoIvaId,
+                null,
+                function (err, tipoIva) {
+
+                    if (err) return;
+
+                    vm.tipoIvaId(tipoIva.tipoIvaId);
+                    vm.porcentaje(tipoIva.porcentaje);
+                }
+            );
+        }
     });
 };
 

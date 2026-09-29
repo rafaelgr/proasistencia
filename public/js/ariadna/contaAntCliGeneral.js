@@ -99,11 +99,39 @@ function admData() {
 
 function initTablaAnticipos() {
     tablaCarro = $('#dt_anticipo').dataTable({
-        autoWidth: true,
+        autoWidth: false,
         paging: false,
         columnDefs: [{
-            "width": "20%",
+            "width": "5%",
             "targets": 0
+        },
+         {
+            "width": "15%",
+            "targets": 1
+        },
+         {
+            "width": "15%",
+            "targets": 2
+        },
+        {
+            "width": "15%",
+            "targets": 3
+        },
+        {
+            "width": "8%",
+            "targets": 4
+        },
+        {
+            "width": "8%",
+            "targets": 8
+        },
+        {
+            "width": "8%",
+            "targets": 9
+        },
+        {
+            "width": "15%",
+            "targets": 10
         }],
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
@@ -155,7 +183,7 @@ function initTablaAnticipos() {
         }, {
             data: "dirTrabajo"
         }, {
-            data: "vNum"
+            data: "vant"
         }, {
             data: "fecha",
             render: function (data, type, row) {
@@ -169,6 +197,10 @@ function initTablaAnticipos() {
             }
         }, {
             data: "formaPago"
+        }, {
+            data: "vprefac"
+        }, {
+            data: "vfac"
         }, {
             data: "observaciones"
         }, {
@@ -563,11 +595,11 @@ function updateAll(opcion) {
     var datos = null;
     var sel = 0;
     var tb = $('#dt_anticipo').dataTable().api();
-    var datos = tb.rows( {page:'current'} ).data();
-    if(opcion)  sel = 1
-    
-    if(datos) {
-        for( var i = 0; i < datos.length; i++) {
+    var datos = tb.rows({ page: 'current' }).data();
+    if (opcion) sel = 1
+
+    if (datos) {
+        for (var i = 0; i < datos.length; i++) {
             var data = {
                 antClien: {
                     antClienId: datos[i].antClienId,
@@ -575,14 +607,14 @@ function updateAll(opcion) {
                     clienteId: datos[i].clienteId,
                     fecha: moment(datos[i].fecha).format('YYYY-MM-DD'),
                     sel: sel
-            }
-        };
-                
-               
-        var url = "", type = "";
-         // updating record
-         var type = "PUT";
-         var url = sprintf('%s/api/anticiposClientes/%s', myconfig.apiUrl, datos[i].antClienId);
+                }
+            };
+
+
+            var url = "", type = "";
+            // updating record
+            var type = "PUT";
+            var url = sprintf('%s/api/anticiposClientes/%s', myconfig.apiUrl, datos[i].antClienId);
             $.ajax({
                 type: type,
                 url: url,

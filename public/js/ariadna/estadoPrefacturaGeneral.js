@@ -521,16 +521,19 @@ function initTablaPrefacturas() {
                             }
 
                             return `
-                    <div style="margin-bottom:5px;">
-                        <span class="label ${clase}">
-                            ${numero}
-                        </span>
-                    </div>
-                `;
+                            <div style="margin-bottom:5px;">
+                                <span class="label ${clase}">
+                                    ${numero}
+                                </span>
+                            </div>
+                        `;
                         })
                         .join('');
 
-                    return `
+
+                    if (anticipos.length > 1) {
+
+                        return `
                         <div class="dropdown">
 
                             <button class="btn btn-xs btn-success dropdown-toggle"
@@ -552,6 +555,16 @@ function initTablaPrefacturas() {
 
                         </div>
                     `;
+                    } else {
+                        return `
+                        <div 
+                                style="padding:8px 12px; min-width:190px;">
+
+                                ${lista}
+
+                            </div>
+                        `;
+                    }
                 }
             },
             // 15
@@ -1211,21 +1224,21 @@ function generarPdfPrefacturas() {
         startY: 18,
 
         margin: {
-            top: 10,
-            right: 7,
-            bottom: 10,
-            left: 7
+            top: 8,
+            right: 4,
+            bottom: 8,
+            left: 4
         },
 
         styles: {
-            fontSize: 6,
+            fontSize: 7.5,
             cellPadding: 1,
             overflow: 'linebreak',
             valign: 'middle'
         },
 
         headStyles: {
-            fontSize: 6,
+            fontSize: 7.5,
             fontStyle: 'bold',
             halign: 'left'
         },
@@ -1234,6 +1247,19 @@ function generarPdfPrefacturas() {
 
         horizontalPageBreak: true,
         horizontalPageBreakBehaviour: 'immediately',
+
+        didParseCell: function (data) {
+
+            if (data.section === 'head') {
+
+                var indiceDT = columnasExportadas[data.column.index];
+
+                // Base, Total, Cobrado, Devuelto y Pendiente
+                if (indiceDT >= 5 && indiceDT <= 9) {
+                    data.cell.styles.halign = 'right';
+                }
+            }
+        },
 
         didDrawPage: function () {
 
