@@ -115,10 +115,10 @@ function initTablaAntcliens() {
         }
     };
     tablaAntcliens = $('#dt_antclien').DataTable({
-        bSort: false,
         responsive: true,
         paging: true,
         bSort: true,
+        autoWidth: true,
         "pageLength": 100,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
             "t" +
@@ -140,7 +140,6 @@ function initTablaAntcliens() {
             },
             'print'
         ],
-        autoWidth: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",

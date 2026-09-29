@@ -657,8 +657,15 @@ function initForm() {
     $("#cmbArticulos").select2(select2Spanish());
     // loadArticulos();
     $("#cmbArticulos").select2().on('change', function (e) {
-        //alert(JSON.stringify(e.added));
-        cambioArticulo(e.added);
+
+        if (!e.added) return;
+
+        if (vm.stipoContratoId() == 7) {
+            cambioArticuloClienteRep(e.added);
+        } else {
+            cambioArticulo(e.added);
+        }
+
     });
 
     $("#cmbTiposIva").select2(select2Spanish());
@@ -1891,6 +1898,17 @@ var cambioCliente = function (datos) {
         vm.nombreComercial(data.nombreComercial)
         antClienteId = datos.id;
         antClienteNombre = datos.value;
+        if (vm.stipoContratoId() == 7 && data.tipoIvaId) {
+
+            llamadaAjax('GET', "/api/tipos_iva/" + data.tipoIvaId, null, function (err, tipoIva) {
+
+                if (err) return;
+
+                vm.tipoIvaId(tipoIva.tipoIvaId);
+                vm.porcentaje(tipoIva.porcentaje);
+
+            });
+        }
     });
 }
 
@@ -2025,9 +2043,14 @@ function limpiaDataLinea(data) {
     vm.contratoLineaId(0);
     vm.capituloLinea('')
     vm.linea('');
+    if (vm.stipoContratoId() == 7) {
+        loadTiposIva(vm.tipoIvaId());
+    } else {
+        loadTiposIva();
+        vm.tipoIvaId(null);
+        vm.porcentaje(null);
+    }
     vm.articuloId(null);
-    vm.tipoIvaId(null);
-    vm.porcentaje(null);
     vm.descripcion(null);
     vm.cantidad(null);
     vm.importe(null);
@@ -2049,7 +2072,6 @@ function limpiaDataLinea(data) {
         loadArticulos();
     }
  */
-    loadTiposIva();
     loadUnidades();
 }
 
@@ -2398,6 +2420,38 @@ function cambioArticulo(data) {
     });
 }
 
+function cambioArticuloClienteRep(data) {
+
+    if (!data) {
+        return;
+    }
+
+    var articuloId = data.id;
+
+    llamadaAjax('GET', "/api/articulos/" + articuloId, null, function (err, data) {
+
+        if (err) return;
+
+        if (data.descripcion == null) {
+            vm.descripcion(data.nombre);
+        } else {
+            vm.descripcion(data.nombre + ':\n' + data.descripcion);
+        }
+
+        vm.cantidad(1);
+        vm.importe(data.precioUnitario);
+
+        // unidades por defecto del artículo
+        $("#cmbUnidades").val([data.unidadId]).trigger('change');
+
+        // IMPORTANTE:
+        // En reparaciones NO modificamos el IVA.
+        // Se mantiene el IVA del cliente.
+
+        cambioPrecioCantidad();
+    });
+}
+
 function cambioGrupoArticulo(data) {
     if (!data) return;
     var grupoArticuloId = data.id;
@@ -2584,17 +2638,36 @@ function loadBasesContrato(id) {
 // ----------- Funciones relacionadas con el manejo de autocomplete
 
 var cargaCliente = function (id) {
+
     if (!id) return;
+
     llamadaAjax('GET', "/api/clientes/" + id, null, function (err, data) {
+
         if (err) return;
+
         $('#txtCliente').val(data.nombre);
         vm.sclienteId(data.clienteId);
         vm.clienteId(data.clienteId);
         vm.nombreCliente(data.nombre);
         vm.nombreComercial(data.nombreComercial);
         vm.iban(data.iban);
+
         antClienteId = data.clienteId;
         antClienteNombre = data.nombre;
+
+        // En reparaciones el IVA viene del cliente
+        if (vm.stipoContratoId() == 7 && data.tipoIvaId) {
+
+            llamadaAjax('GET', "/api/tipos_iva/" + data.tipoIvaId, null, function (err, tipoIva) {
+
+                if (err) return;
+
+                vm.tipoIvaId(tipoIva.tipoIvaId);
+                vm.porcentaje(tipoIva.porcentaje);
+
+            });
+        }
+
     });
 };
 
