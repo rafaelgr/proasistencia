@@ -61,16 +61,16 @@ function initForm() {
 
         restaurarEstadoChecksAnticipos();
         // comprobamos parámetros
-        antClienId = gup('AntclienId');
+        antClienId = gup('AntClienId');
         if (antClienId && antClienId !== '') {
             cargarAnticipos()(antClienId);
             inicializando = false;
             return;
+        } else {
+            cargarSegunChecksAnticipos();
+
+            inicializando = false;
         }
-
-        cargarSegunChecksAnticipos();
-
-        inicializando = false;
     });
 }
 
@@ -115,9 +115,10 @@ function initTablaAntcliens() {
         }
     };
     tablaAntcliens = $('#dt_antclien').DataTable({
-        bSort: false,
         responsive: true,
         paging: true,
+        bSort: true,
+        autoWidth: true,
         "pageLength": 100,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'Br><'col-sm-6 col-xs-6 hidden-xs' 'l C >r>" +
             "t" +
@@ -139,7 +140,6 @@ function initTablaAntcliens() {
             },
             'print'
         ],
-        autoWidth: true,
         language: {
             processing: "Procesando...",
             info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -172,7 +172,7 @@ function initTablaAntcliens() {
         }, {
             data: "receptorNombre"
         }, {
-            data: "vNum"
+            data: "vant"
         }, {
             data: "fecha",
             render: function (data, type, row) {
@@ -186,6 +186,10 @@ function initTablaAntcliens() {
             }
         }, {
             data: "vFPago"
+        }, {
+            data: "vprefac"
+        }, {
+            data: "vfac"
         }, {
             data: "observaciones"
         }, {
@@ -373,7 +377,7 @@ function cargarAnticipos() {
 
         $('#chkTodos').prop("checked", false);
         $('#chkNoFacturables').prop("checked", false);
-        
+
         $.ajax({
             type: "GET",
             url: myconfig.apiUrl + "/api/anticiposClientes/usuario/logado/departamento/" + usuario.usuarioId + "/" + vm.sdepartamentoId(),

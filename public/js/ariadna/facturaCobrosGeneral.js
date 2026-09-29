@@ -1343,83 +1343,63 @@ function generarPdfFacturas() {
     doc.autoTable({
 
         head: head,
-
         body: body,
 
-        startY: 21,
+        startY: 18,
 
         margin: {
-            top: 10,
-            right: 7,
-            bottom: 10,
-            left: 7
+            top: 8,
+            right: 4,
+            bottom: 8,
+            left: 4
         },
 
         styles: {
-
-            fontSize: 6,
-
-            cellPadding: 1,
-
+            fontSize: 7.5,
+            cellPadding: 0.8,
             overflow: 'linebreak',
-
             valign: 'middle'
-
         },
 
         headStyles: {
-
-            fontSize: 6,
-
+            fontSize: 7.5,
             fontStyle: 'bold',
-
             halign: 'left'
-
         },
 
         columnStyles: columnStyles,
 
-
-        // ----------------------------------------------------
-        // SALTOS HORIZONTALES
-        // ----------------------------------------------------
-
-        /*
-         * Si todas las columnas visibles no caben en una
-         * única hoja A4, AutoTable continúa las columnas
-         * horizontalmente en otra hoja.
-         *
-         * Esto evita que desaparezcan por la derecha.
-         */
-
         horizontalPageBreak: true,
-
         horizontalPageBreakBehaviour: 'immediately',
 
+        didParseCell: function (data) {
 
-        // ----------------------------------------------------
-        // PIE DE PÁGINA
-        // ----------------------------------------------------
+            if (data.section === 'head') {
 
-        didDrawPage: function (data) {
+                var indiceDT = columnasExportadas[data.column.index];
 
-            var pageSize = doc.internal.pageSize;
+                // Base, Total factura, Cobrado, Devuelto y Pendiente
+                if (indiceDT >= 9 && indiceDT <= 13) {
+                    data.cell.styles.halign = 'right';
+                }
+            }
+        },
 
-            var pageHeight = pageSize.height
-                ? pageSize.height
-                : pageSize.getHeight();
+        didDrawPage: function () {
+
+            var pageWidth = doc.internal.pageSize.getWidth();
+            var pageHeight = doc.internal.pageSize.getHeight();
 
             doc.setFontSize(7);
 
             doc.text(
                 'Página ' + doc.internal.getNumberOfPages(),
-                pageSize.getWidth() - 25,
+                pageWidth - 25,
                 pageHeight - 5
             );
         }
 
     });
-
 
     // --------------------------------------------------------
     // GUARDAR
