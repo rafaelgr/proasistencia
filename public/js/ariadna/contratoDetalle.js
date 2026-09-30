@@ -1216,6 +1216,12 @@ function admData() {
     self.correoFirmante = ko.observable();
     self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
+    //DATOS DE LA DIRECCIÓNB FACULTATIVA
+    self.DFnombre = ko.observable();
+    self.DFncolegiado = ko.observable();
+    self.DFcorreo = ko.observable();
+    self.DFprofesion = ko.observable();
+    //
     self.nExpediente = ko.observable();
     self.tituloExpediente = ko.observable();
     //importes prefacturacion real
@@ -1371,6 +1377,11 @@ function loadData(data) {
     vm.correoFirmante(data.correoFirmante);
     vm.cargoFirmante(data.cargoFirmante);
     vm.fechaJunta(spanishDate(data.fechaJunta));
+    //
+    vm.DFnombre(data.DFnombre);
+    vm.DFncolegiado(data.DFncolegiado);
+    vm.DFcorreo(data.DFcorreo);
+    vm.DFprofesion(data.DFprofesion);
     //
     vm.nExpediente(data.nExpediente);
     vm.tituloExpediente(data.tituloExpediente);
@@ -1714,7 +1725,12 @@ var generarContratoDb = function () {
             "cargoFirmante": vm.cargoFirmante(),
             "fechaJunta": spanishDbDate(vm.fechaJunta()),
             "contratoInteresesId": vm.contratoInteresesId(),
-            "tituloExpediente": vm.tituloExpediente()
+            "tituloExpediente": vm.tituloExpediente(),
+            //
+            "DFnombre": vm.DFnombre(),
+            "DFncolegiado": vm.DFncolegiado(),
+            "DFcorreo": vm.DFcorreo(),
+            "DFprofesion": vm.DFprofesion()
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
