@@ -435,7 +435,7 @@
                                 <li>
                                     <a href="FacturaGeneral.html"><i class="fa fa-fw fa-th-list"></i> Facturas</a>
                                 </li>
-                                
+
                                 <li>
                                     <a href="AnticipoClienteGeneral.html"><i class="fa fa-money"></i> Anticipos
                                         de clientes</a>
@@ -515,15 +515,17 @@
                                 </li>
                             </ul>
                         </li>
-                        
-                             <li id="cobros">
+
+                        <li id="cobros">
                             <a href="#"><i class="fa fa-fw fa-eur"></i> Gestión de cobros</a>
                             <ul>
                                 <li>
-                                    <a href="GenerarRecibosGeneral.html"><i class="fa fa-fw fa-money"></i> Generar recibos</a>
+                                    <a href="GenerarRecibosGeneral.html"><i class="fa fa-fw fa-money"></i> Generar
+                                        recibos</a>
                                 </li>
                                 <li>
-                                    <a href="EstadoPrefacturaGeneral.html"><i class="fa fa-fw fa-th"></i> Estado de prefacturas</a>
+                                    <a href="EstadoPrefacturaGeneral.html"><i class="fa fa-fw fa-th"></i> Estado de
+                                        prefacturas</a>
                                 </li>
                                 <li>
                                     <a href="FacturaCobrosGeneral.html"><i class="fa fa-fw fa-line-chart"></i>
@@ -1024,7 +1026,8 @@
                                                                                     </label>
                                                                                 </section>
                                                                                 <section class="col col-md-2">
-                                                                                    <label class="label">Fecha certificación
+                                                                                    <label class="label">Fecha
+                                                                                        certificación
                                                                                         final (Obras)</label>
                                                                                     <label class="input">
                                                                                         <input
@@ -1211,6 +1214,67 @@
                                                                                 <section class="col col-md-12"
                                                                                     style="border:solid; border-width:1px;">
                                                                                     <header>Datos del Firmante
+                                                                                    </header>
+                                                                                    <div class="row">
+                                                                                        <section class="col col-md-4">
+                                                                                            <label
+                                                                                                class="label">Nombre</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtNombreFirmante"
+                                                                                                    name="txtNombreFirmante"
+                                                                                                    data-bind="value: nombreFirmante" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label
+                                                                                                class="label">DNI</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtDniFirmante"
+                                                                                                    name="txtDniFirmante"
+                                                                                                    data-bind="value: dniFirmante" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label
+                                                                                                class="label">Cargo</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtCargoFirmante"
+                                                                                                    name="txtCargoFirmante"
+                                                                                                    data-bind="value: cargoFirmante" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label
+                                                                                                class="label">Correo</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtCorreoFirmante"
+                                                                                                    name="txtCorreoFirmante"
+                                                                                                    data-bind="value: correoFirmante" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label">Fecha
+                                                                                                de la junta</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtFechaJunta"
+                                                                                                    name="txtFechaJunta"
+                                                                                                    data-bind="value: fechaJunta"
+                                                                                                    class="datepicker"
+                                                                                                    data-dateformat="dd/mm/yy" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                </section>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <section class="col col-md-12"
+                                                                                    style="border:solid; border-width:1px;">
+                                                                                    <header>Dirección facultativa
                                                                                     </header>
                                                                                     <div class="row">
                                                                                         <section class="col col-md-4">
@@ -2712,9 +2776,10 @@
                                                                                     style="background-color: rgb(175, 161, 216); color: rgb(175, 161, 216);">text</span>
                                                                                 <span>Prefactura rectificativa</span>
                                                                                 <br>
-                                                                                 <span
+                                                                                <span
                                                                                     style="background-color: #48c951; color: #48c951;">text</span>
-                                                                                <span>Prefactura no facturable cobrada</span>
+                                                                                <span>Prefactura no facturable
+                                                                                    cobrada</span>
                                                                                 <br>
 
                                                                                 <span
