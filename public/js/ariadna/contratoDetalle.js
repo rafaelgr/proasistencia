@@ -99,6 +99,7 @@ function initForm() {
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
     });
+    $('#btnEnviarActaRecepcion').click(imprimir);
 
     //Evento dfel modal de la documentación
     $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
@@ -837,6 +838,7 @@ function initForm() {
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
         $("#btnImprimirActaRecepcion").hide();
+        $('#btnEnviarActaRecepcion').hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
@@ -1260,11 +1262,13 @@ function loadData(data) {
         $('#btnIntereses').hide();
         $("#btnImprimirActaRecepcion").hide();
         $('#btnImportarPlanificacionObrasTemp').hide();
+        $('#btnEnviarActaRecepcion').hide();
     } else {
         $("#btnImprimir").show();
         $('#btnIntereses').show();
         $("#btnImprimirActaRecepcion").show();
         $('#btnImportarPlanificacionObrasTemp').show();
+        $('#btnEnviarActaRecepcion').show();
     }
 
     $('#btnNuevaLinea').show();
@@ -1402,6 +1406,7 @@ function loadData(data) {
         //
         $('#btnImprimirActaRecepcion').hide();
         $('#btnImprimir').hide();
+        $('#btnEnviarActaRecepcion').hide();
     } else {
         $('.obras').show()
         actualizaCobrosPlanificacion(data.contratoId);
@@ -12311,4 +12316,14 @@ function borrarAjusteSiFalla(idRegistro) {
     if (!idRegistro) return;
 
     deletePlanificacionLineaObras(idRegistro);
+}
+
+//ENVÍO CORREO ACTA + CERT FINAL
+//IMPRESION DE CONTRATO
+var sendCorreoActa = function () {
+    
+    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/send/acta/" + vm.contratoId(), null, function (err, data) {
+        if (err) { return errorGeneral(err, done); }
+        
+    });
 }
