@@ -99,7 +99,7 @@ function initForm() {
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
     });
-    $('#btnEnviarActaRecepcion').click(imprimir);
+    $('#btnEnviarActaRecepcion').click(compruebaCorreos);
 
     //Evento dfel modal de la documentación
     $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
@@ -1247,6 +1247,9 @@ function admData() {
     self.accion = ko.observable();
     self.notaId = ko.observable();
 
+    //
+    self.erpId = ko.observable();
+
 }
 
 function loadData(data) {
@@ -1389,6 +1392,8 @@ function loadData(data) {
     //
     vm.nExpediente(data.nExpediente);
     vm.tituloExpediente(data.tituloExpediente);
+    //
+    vm.erpId(data.erpId);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -12321,8 +12326,18 @@ function borrarAjusteSiFalla(idRegistro) {
 //ENVÍO CORREO ACTA + CERT FINAL
 //IMPRESION DE CONTRATO
 var sendCorreoActa = function () {
+    if(!vm.erpId() || vm.erpId() == 0){ 
+        mensError("No se ha generado el contrato en el ERP, no se puede enviar el correo.");
+    }
     
-    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/send/acta/" + vm.contratoId(), null, function (err, data) {
+    llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" + vm.contratoId() + "/" + vm.sempresaId() + "/" + vm.erpId(), null, function (err, data) {
+        if (err) { return errorGeneral(err, done); }
+        
+    });
+}
+
+var compruebaCorreos = function () {
+   llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/comprueba/correos/acta/recepcion/" + vm.contratoId(), null, function (err, data) {
         if (err) { return errorGeneral(err, done); }
         
     });
