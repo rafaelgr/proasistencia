@@ -32,3 +32,6 @@ CREATE TABLE `correos` (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+ALTER TABLE `facprove`   
+	ADD COLUMN `codintra` VARCHAR(1) NULL AFTER `esColaborador`;
