@@ -693,7 +693,7 @@
                                                                             <section class="col col-md-6"></section>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <section class="col col-md-3">
+                                                                            <section class="col col-md-2">
                                                                                 <label class="label">NIF</label>
                                                                                 <label class="input">
                                                                                     <input id="txtNif" name="txtNif" class="esNif" data-bind="value: nif" />
@@ -705,7 +705,13 @@
                                                                                     <input id="txtNombre" name="txtNombre" data-bind="value: nombre" />
                                                                                 </label>
                                                                             </section>
-                                                                            <section class="col col-md-4">
+                                                                            <section class="col col-md-3">
+                                                                                <label class="label">Nº Colegiado</label>
+                                                                                <label class="input">
+                                                                                    <input id="txtnColegiado" name="txtnColegiado" data-bind="value: nColegiado" />
+                                                                                </label>
+                                                                            </section>
+                                                                            <section class="col col-md-2">
                                                                                 <label class="label">Tarifa asociada</label>
                                                                                 <label style="width:100%;">
                                                                                     <select style="width:100%" id="cmbTarifas" name="cmbTarifas" data-bind="options: posiblesTarifas, optionsText: 'nombre', optionsValue: 'tarifaClienteId', value: starifaClienteId, valueAllowUnset: true, selectedOptions: elegidasTarifas, selected2:{}"></select>

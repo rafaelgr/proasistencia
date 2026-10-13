@@ -35,3 +35,7 @@ CREATE TABLE `correos` (
 
 ALTER TABLE `facprove`   
 	ADD COLUMN `codintra` VARCHAR(1) NULL AFTER `esColaborador`;
+
+
+ALTER TABLE `comerciales`   
+	ADD COLUMN `nColegiado` VARCHAR(255) NULL AFTER `nif`;

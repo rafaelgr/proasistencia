@@ -373,6 +373,7 @@ function admData() {
     self.antiguoColaboradorNombre = ko.observable();
     self.nuevoColaboradorNombre = ko.observable();
     self.fechaCambio = ko.observable();
+    self.nColegiado = ko.observable();
     //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -463,6 +464,7 @@ function loadData(data, desdeLoad) {
     vm.comercialId(data.comercialId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
+    vm.nColegiado(data.nColegiado);
     vm.nif(data.nif);
     nifGuardado = data.nif
     vm.fechaAlta(spanishDate(data.fechaAlta));
@@ -637,6 +639,7 @@ function aceptar() {
                 "comercialId": vm.comercialId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
+                "nColegiado": vm.nColegiado(),
                 "nif": vm.nif(),
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
