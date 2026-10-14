@@ -1277,7 +1277,7 @@
                                                                                     <header>Dirección facultativa
                                                                                     </header>
                                                                                     <div class="row">
-                                                                                        <section class="col col-md-4">
+                                                                                        <section class="col col-md-5">
                                                                                             <label
                                                                                                 class="label">Nombre</label>
                                                                                             <label class="input">
@@ -1286,7 +1286,7 @@
                                                                                                     data-bind="value: DFnombre" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        <section class="col col-md-3">
+                                                                                        <section class="col col-md-2">
                                                                                             <label class="label">Nº
                                                                                                 Colegiado</label>
                                                                                             <label class="input">
@@ -1296,7 +1296,7 @@
                                                                                                     data-bind="value: DFncolegiado" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        <section class="col col-md-3">
+                                                                                        <section class="col col-md-5">
                                                                                             <label
                                                                                                 class="label">Profesion</label>
                                                                                             <label class="input">
@@ -1306,7 +1306,11 @@
                                                                                                     data-bind="value: DFprofesion" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        <section class="col col-md-2">
+                                                                                        
+                                                                                        
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                       <section class="col col-md-8">
                                                                                             <label
                                                                                                 class="label">Correo</label>
                                                                                             <label class="input">
@@ -1315,8 +1319,51 @@
                                                                                                     data-bind="value: DFcorreo" />
                                                                                             </label>
                                                                                         </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label"
+                                                                                                style="margin-top: 15%;">
+                                                                                                Firma
+                                                                                                del acta DF</label>
+                                                                                            <div id="radioActaDF">
+                                                                                                <div><input type='radio'
+                                                                                                        id='radioFirmaActaDF1'
+                                                                                                        name='firmaActaDFGroup'
+                                                                                                        value='0'
+                                                                                                        data-bind="checked: firmaActa" />
+                                                                                                    No </div>
+                                                                                                <div><input type='radio'
+                                                                                                        id='radioFirmaActaDF2'
+                                                                                                        name='firmaActaDFGroup'
+                                                                                                        value='1'
+                                                                                                        data-bind="checked: firmaActa" />
+                                                                                                    Si</div>
+                                                                                                <div><input type='radio'
+                                                                                                        id='radioFirmaActaDF3'
+                                                                                                        name='firmaActaDFGroup'
+                                                                                                        value='2'
+                                                                                                        data-bind="checked: firmaActaDF" />
+                                                                                                    ¿Si?
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </section>
+                                                                                        <section class="col col-md-2">
+                                                                                            <label class="label"
+                                                                                                style="margin-top: 10%;">Fecha
+                                                                                                de firma del
+                                                                                                acta</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtFechaFirmaActaDF"
+                                                                                                    name="txtFechaFirmaActaDF"
+                                                                                                    data-bind="value: fechaFirmaActaDF"
+                                                                                                    class="datepicker"
+                                                                                                    data-dateformat="dd/mm/yy" />
+                                                                                            </label>
+                                                                                        </section>
                                                                                     </div>
                                                                                 </section>
+
                                                                             </div>
                                                                             <div class="row">
                                                                                 <section class="col col-md-12">
@@ -1501,8 +1548,8 @@
                                                                                     title="Enviar certificación final y acta de recepción por correo"
                                                                                     class="btn btn-circle btn-lg"
                                                                                     style="background-color: #006064; color: white;">
-                                                                                    <i
-                                                                                        class="fa fa-lg fa-paper-plane"  style="position: relative; left: -5px; top: -2px;"></i>
+                                                                                    <i class="fa fa-lg fa-paper-plane"
+                                                                                        style="position: relative; left: -5px; top: -2px;"></i>
                                                                                 </button>
                                                                                 <button id="btnImprimir"
                                                                                     title="Imprimir contrato"
@@ -5908,7 +5955,7 @@
         </div>
     </div>
     <!-- /.modal -->
-     <!-- /.modal -->
+    <!-- /.modal -->
     <div class="modal fade" id="modalDestinatariosCorreo" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false">
         <div class="modal-dialog modal-lg">
@@ -5949,8 +5996,7 @@
                             </div>
                         </fieldset>
                         <footer>
-                            <button id="btnAceptarDestinatarios" class="btn btn-primary"
-                                onclick="sendCorreoActa()">
+                            <button id="btnAceptarDestinatarios" class="btn btn-primary" onclick="sendCorreoActa()">
                                 Enviar correo
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">

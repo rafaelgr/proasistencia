@@ -953,6 +953,7 @@ function admData() {
     //
     self.fechaInicio = ko.observable();
     self.fechaFirmaActa = ko.observable();
+    self.fechaFirmaActaDF = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
     //self.fechaUltimaFactura = ko.observable();
@@ -965,6 +966,7 @@ function admData() {
     self.fechaPreFactura = ko.observable();
     self.contratoIntereses = ko.observable();
     self.firmaActa = ko.observable();
+    self.firmaActaDF = ko.observable();
     self.preaviso = ko.observable();
     self.iban = ko.observable();
     //
@@ -1336,8 +1338,11 @@ function loadData(data) {
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFirmaActa(spanishDate(data.fechaFirmaActa));
+    vm.fechaFirmaActaDF(spanishDate(data.fechaFirmaActaDF));
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
+    var firmaDF = data.firmaActaDF.toString();
+    vm.firmaActaDF(firmaDF);
 
 
     vm.fechaFinal(spanishDate(data.fechaFinal));
@@ -1466,6 +1471,10 @@ function loadData(data) {
         $("#radioFirmaActa2").prop('disabled', true);
         $("#radioFirmaActa3").prop('disabled', true);
         $('#txtFechaFirmaActa').prop('disabled', true);
+        //
+        $("#radioFirmaActaDF1").prop('disabled', true);
+        $("#radioFirmaActaDF2").prop('disabled', true);
+        $("#radioFirmaActaDF3").prop('disabled', true);
         esVinculado = true;
     } else {
         $("#tabAscContratos").show();
@@ -1473,6 +1482,9 @@ function loadData(data) {
         $("#radioFirmaActa2").prop('disabled', false);
         $("#radioFirmaActa3").prop('disabled', false);
         $('#txtFechaFirmaActa').prop('disabled', false);
+        $("#radioFirmaActaDF1").prop('disabled', false);
+        $("#radioFirmaActaDF2").prop('disabled', false);
+        $("#radioFirmaActaDF3").prop('disabled', false);
         esVinculado = false;
     }
     if (data.tipoContratoId != 8) {
@@ -1637,6 +1649,12 @@ var guardarContrato = function (done) {
             return errorGeneral(new Error('Se requiere una fecha para la firma del acta'), done);
         }
     }
+    var firmaDF = parseInt(vm.firmaActaDF());
+    if (firmaDF) {
+        if (!vm.fechaFirmaActaDF() || vm.fechaFirmaActaDF() == '') {
+            return errorGeneral(new Error('Se requiere una fecha para la firma del acta de la dirección faculatativa'), done);
+        }
+    }
     comprobarSiHayMantenedor();
     vm.porcentajeBeneficio((vm.porcentajeBeneficio()));
 
@@ -1720,6 +1738,7 @@ var generarContratoDb = function () {
             "formaPagoId": vm.sformaPagoId(),
             "fechaInicio": spanishDbDate(vm.fechaInicio()),
             "fechaFirmaActa": spanishDbDate(vm.fechaFirmaActa()),
+            "fechaFirmaActaDF": spanishDbDate(vm.fechaFirmaActaDF()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
             //"fechaUltimaFactura": spanishDbDate(vm.fechaUltimaFactura()),
@@ -1738,6 +1757,7 @@ var generarContratoDb = function () {
             "beneficioLineal": vm.beneficioLineal(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
+            "firmaActaDF": vm.firmaActaDF(),
             "liquidarBasePrefactura": vm.liquidarBase(),
             "fechaRenovacionIpc": spanishDbDate(vm.fechaRenovacionIpc()),
             "ipc": vm.ipc(),
@@ -12371,34 +12391,34 @@ function initTablaDestinatariosCorreo() {
         data: dataDestinatariosCorreo,
         columns: [
             {
-            data: "comercialId",
-            render: function (data, type, row) {
-                var html = "<i class='fa fa-file-o'></i>";
-                return html;
-            }
-        },{
-            data: "nombreColaborador"
-        },
-        {
-            data: "correoColaborador",
-            render: function (data, type, row) {
-
-                if (type !== 'display') {
-                    return data || '';
+                data: "comercialId",
+                render: function (data, type, row) {
+                    var html = "<i class='fa fa-file-o'></i>";
+                    return html;
                 }
+            }, {
+                data: "nombreColaborador"
+            },
+            {
+                data: "correoColaborador",
+                render: function (data, type, row) {
 
-                return $('<input>', {
-                    type: 'email',
-                    class: 'form-control input-sm correo-editable',
-                    value: data || '',
-                    placeholder: 'Correo electrónico'
-                }).prop('outerHTML');
-            }
-        },
-        {
-            data: "nombreTipoComercial",
-            className: "text-center"
-        }]
+                    if (type !== 'display') {
+                        return data || '';
+                    }
+
+                    return $('<input>', {
+                        type: 'email',
+                        class: 'form-control input-sm correo-editable',
+                        value: data || '',
+                        placeholder: 'Correo electrónico'
+                    }).prop('outerHTML');
+                }
+            },
+            {
+                data: "nombreTipoComercial",
+                className: "text-center"
+            }]
     });
 }
 

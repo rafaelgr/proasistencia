@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "8589dd040f04ae6ec2824f7b15b6dfad",
+  "ReportGuid": "eef96e44ee9b1b9d5a77763bfc747002",
   "ReportName": "acta_recepcion_proas",
   "ReportAlias": "acta_recepcion_proas",
   "ReportFile": "acta_recepcion_proas_DF.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1791211897000+0200)/",
+  "ReportChanged": "/Date(1791976504000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -229,7 +229,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fdo. {datos_contrato.DFncolegiado}"
+                "Value": "Nº Colegiado {datos_contrato.DFncolegiado}"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
@@ -251,7 +251,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Fdo. {datos_contrato.DFprofesion}"
+                "Value": "{datos_contrato.DFprofesion}"
               },
               "Font": "Tahoma;9;;",
               "Border": ";;;;;;;solid:Black",
