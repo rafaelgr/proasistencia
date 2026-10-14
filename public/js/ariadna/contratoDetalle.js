@@ -13,6 +13,7 @@ var dataContratosTasas;
 var dataBases;
 var dataComisionistas;
 var dataGenerarPrefacturas;
+var dataDestinatariosCorreo;
 var dataPrefacturas;
 var dataFacturas;
 var dataFacProves;
@@ -99,6 +100,11 @@ function initForm() {
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
     });
+    $('#btnEnviarActaRecepcion').click(compruebaCorreos);
+
+    $('#dt_destinatarios-correo')
+        .off('change', '.correo-editable')
+        .on('change', '.correo-editable', cambioCorreoDestinatario);
 
     //Evento dfel modal de la documentación
     $('#modalUploadDoc').on('hidden.bs.modal', function (event) {
@@ -238,6 +244,9 @@ function initForm() {
         return false;
     });
     $("#notasweb-form").submit(function () {
+        return false;
+    });
+    $("#destinatarios-correo-form").submit(function () {
         return false;
     });
 
@@ -549,6 +558,14 @@ function initForm() {
 
     });
 
+    $('#modalDestinatariosCorreo').on('hidden.bs.modal', function () {
+        // --- 1. LIMPIAR DATATABLE ---
+        if ($.fn.DataTable.isDataTable('#dt_destinatarios-correo')) {
+            $('#dt_destinatarios-correo').DataTable().clear().draw();
+        }
+
+    });
+
 
 
 
@@ -698,8 +715,10 @@ function initForm() {
     initTablaPlanificacionLineasObrasTemp();
     initTablaAdicionales();
     initTablaNotasWeb();
+    initTablaDestinatariosCorreo();
     //initTablaDocumentacion();
     initArbolDocumentacion();
+
 
     $("#cmbComerciales").select2(select2Spanish());
     loadComerciales();
@@ -837,6 +856,7 @@ function initForm() {
         // ocultamos líneas y bases
         $("#btnImprimir").hide();
         $("#btnImprimirActaRecepcion").hide();
+        $('#btnEnviarActaRecepcion').hide();
         $("#lineasfactura").hide();
         $("#basesycuotas").hide();
         $('#btnAltaFacprove').hide();
@@ -933,6 +953,7 @@ function admData() {
     //
     self.fechaInicio = ko.observable();
     self.fechaFirmaActa = ko.observable();
+    self.fechaFirmaActaDF = ko.observable();
     self.fechaFinal = ko.observable();
     self.fechaPrimeraFactura = ko.observable();
     //self.fechaUltimaFactura = ko.observable();
@@ -945,6 +966,7 @@ function admData() {
     self.fechaPreFactura = ko.observable();
     self.contratoIntereses = ko.observable();
     self.firmaActa = ko.observable();
+    self.firmaActaDF = ko.observable();
     self.preaviso = ko.observable();
     self.iban = ko.observable();
     //
@@ -1216,6 +1238,12 @@ function admData() {
     self.correoFirmante = ko.observable();
     self.cargoFirmante = ko.observable();
     self.fechaJunta = ko.observable();
+    //DATOS DE LA DIRECCIÓNB FACULTATIVA
+    self.DFnombre = ko.observable();
+    self.DFncolegiado = ko.observable();
+    self.DFcorreo = ko.observable();
+    self.DFprofesion = ko.observable();
+    //
     self.nExpediente = ko.observable();
     self.tituloExpediente = ko.observable();
     //importes prefacturacion real
@@ -1239,6 +1267,9 @@ function admData() {
     self.accion = ko.observable();
     self.notaId = ko.observable();
 
+    //
+    self.erpId = ko.observable();
+
 }
 
 function loadData(data) {
@@ -1254,11 +1285,13 @@ function loadData(data) {
         $('#btnIntereses').hide();
         $("#btnImprimirActaRecepcion").hide();
         $('#btnImportarPlanificacionObrasTemp').hide();
+        $('#btnEnviarActaRecepcion').hide();
     } else {
         $("#btnImprimir").show();
         $('#btnIntereses').show();
         $("#btnImprimirActaRecepcion").show();
         $('#btnImportarPlanificacionObrasTemp').show();
+        $('#btnEnviarActaRecepcion').show();
     }
 
     $('#btnNuevaLinea').show();
@@ -1305,8 +1338,11 @@ function loadData(data) {
     //
     vm.fechaInicio(spanishDate(data.fechaInicio));
     vm.fechaFirmaActa(spanishDate(data.fechaFirmaActa));
+    vm.fechaFirmaActaDF(spanishDate(data.fechaFirmaActaDF));
     var firma = data.firmaActa.toString();
     vm.firmaActa(firma);
+    var firmaDF = data.firmaActaDF.toString();
+    vm.firmaActaDF(firmaDF);
 
 
     vm.fechaFinal(spanishDate(data.fechaFinal));
@@ -1372,8 +1408,15 @@ function loadData(data) {
     vm.cargoFirmante(data.cargoFirmante);
     vm.fechaJunta(spanishDate(data.fechaJunta));
     //
+    vm.DFnombre(data.DFnombre);
+    vm.DFncolegiado(data.DFncolegiado);
+    vm.DFcorreo(data.DFcorreo);
+    vm.DFprofesion(data.DFprofesion);
+    //
     vm.nExpediente(data.nExpediente);
     vm.tituloExpediente(data.tituloExpediente);
+    //
+    vm.erpId(data.erpId);
 
     //src del iframe con los datos del cliente
     var url = "ClienteDetalle.html?ClienteId=" + data.clienteId + "&frContrato=true"
@@ -1391,6 +1434,7 @@ function loadData(data) {
         //
         $('#btnImprimirActaRecepcion').hide();
         $('#btnImprimir').hide();
+        $('#btnEnviarActaRecepcion').hide();
     } else {
         $('.obras').show()
         actualizaCobrosPlanificacion(data.contratoId);
@@ -1427,6 +1471,10 @@ function loadData(data) {
         $("#radioFirmaActa2").prop('disabled', true);
         $("#radioFirmaActa3").prop('disabled', true);
         $('#txtFechaFirmaActa').prop('disabled', true);
+        //
+        $("#radioFirmaActaDF1").prop('disabled', true);
+        $("#radioFirmaActaDF2").prop('disabled', true);
+        $("#radioFirmaActaDF3").prop('disabled', true);
         esVinculado = true;
     } else {
         $("#tabAscContratos").show();
@@ -1434,6 +1482,9 @@ function loadData(data) {
         $("#radioFirmaActa2").prop('disabled', false);
         $("#radioFirmaActa3").prop('disabled', false);
         $('#txtFechaFirmaActa').prop('disabled', false);
+        $("#radioFirmaActaDF1").prop('disabled', false);
+        $("#radioFirmaActaDF2").prop('disabled', false);
+        $("#radioFirmaActaDF3").prop('disabled', false);
         esVinculado = false;
     }
     if (data.tipoContratoId != 8) {
@@ -1598,6 +1649,12 @@ var guardarContrato = function (done) {
             return errorGeneral(new Error('Se requiere una fecha para la firma del acta'), done);
         }
     }
+    var firmaDF = parseInt(vm.firmaActaDF());
+    if (firmaDF) {
+        if (!vm.fechaFirmaActaDF() || vm.fechaFirmaActaDF() == '') {
+            return errorGeneral(new Error('Se requiere una fecha para la firma del acta de la dirección faculatativa'), done);
+        }
+    }
     comprobarSiHayMantenedor();
     vm.porcentajeBeneficio((vm.porcentajeBeneficio()));
 
@@ -1681,6 +1738,7 @@ var generarContratoDb = function () {
             "formaPagoId": vm.sformaPagoId(),
             "fechaInicio": spanishDbDate(vm.fechaInicio()),
             "fechaFirmaActa": spanishDbDate(vm.fechaFirmaActa()),
+            "fechaFirmaActaDF": spanishDbDate(vm.fechaFirmaActaDF()),
             "fechaFinal": spanishDbDate(vm.fechaFinal()),
             "fechaPrimeraFactura": spanishDbDate(vm.fechaPrimeraFactura()),
             //"fechaUltimaFactura": spanishDbDate(vm.fechaUltimaFactura()),
@@ -1699,6 +1757,7 @@ var generarContratoDb = function () {
             "beneficioLineal": vm.beneficioLineal(),
             "contratoIntereses": vm.contratoIntereses(),
             "firmaActa": vm.firmaActa(),
+            "firmaActaDF": vm.firmaActaDF(),
             "liquidarBasePrefactura": vm.liquidarBase(),
             "fechaRenovacionIpc": spanishDbDate(vm.fechaRenovacionIpc()),
             "ipc": vm.ipc(),
@@ -1714,7 +1773,12 @@ var generarContratoDb = function () {
             "cargoFirmante": vm.cargoFirmante(),
             "fechaJunta": spanishDbDate(vm.fechaJunta()),
             "contratoInteresesId": vm.contratoInteresesId(),
-            "tituloExpediente": vm.tituloExpediente()
+            "tituloExpediente": vm.tituloExpediente(),
+            //
+            "DFnombre": vm.DFnombre(),
+            "DFncolegiado": vm.DFncolegiado(),
+            "DFcorreo": vm.DFcorreo(),
+            "DFprofesion": vm.DFprofesion()
         }
     };
     if (data.contrato.beneficioLineal) vm.porcentajeBeneficio(0)
@@ -12295,4 +12359,161 @@ function borrarAjusteSiFalla(idRegistro) {
     if (!idRegistro) return;
 
     deletePlanificacionLineaObras(idRegistro);
+}
+
+//ENVÍO CORREO ACTA + CERT FINAL
+
+function initTablaDestinatariosCorreo() {
+    let tablaDestinatariosCorreo = $('#dt_destinatarios-correo').dataTable({
+        bSort: false,
+        autoWidth: true,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        data: dataDestinatariosCorreo,
+        columns: [
+            {
+                data: "comercialId",
+                render: function (data, type, row) {
+                    var html = "<i class='fa fa-file-o'></i>";
+                    return html;
+                }
+            }, {
+                data: "nombreColaborador"
+            },
+            {
+                data: "correoColaborador",
+                render: function (data, type, row) {
+
+                    if (type !== 'display') {
+                        return data || '';
+                    }
+
+                    return $('<input>', {
+                        type: 'email',
+                        class: 'form-control input-sm correo-editable',
+                        value: data || '',
+                        placeholder: 'Correo electrónico'
+                    }).prop('outerHTML');
+                }
+            },
+            {
+                data: "nombreTipoComercial",
+                className: "text-center"
+            }]
+    });
+}
+
+var sendCorreoActa = function () {
+    var mens = "Se enviará un correo con el acta de recepción + certificacion final, ¿Desea continuar?.";
+    $.SmartMessageBox({
+        title: "<i class='fa fa-info'></i> Mensaje",
+        content: mens,
+        buttons: '[Aceptar][Cancelar]'
+    }, function (ButtonPressed) {
+        if (ButtonPressed === "Aceptar") {
+            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" + vm.contratoId() + "/" + vm.sempresaId() + "/" + vm.erpId(), null, function (err, data) {
+                if (err) { return errorGeneral(err, done); }
+                if (data) {
+                    $('#modalDestinatariosCorreo').modal('hide');
+                }
+            });
+        }
+
+        if (ButtonPressed === "Cancelar") {
+            // no hacemois nada, el usuario ha cancelado la acción
+        }
+    });
+}
+
+var compruebaCorreos = function () {
+    if (!vm.erpId() || vm.erpId() == 0) {
+        mensError("No se ha generado el contrato en el ERP, no se puede enviar el correo.");
+    }
+
+    llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/comprueba/correos/acta/recepcion/" + vm.contratoId(), null, function (err, data) {
+        if (err) { return errorGeneral(err, done); }
+        if (data && data.length > 0) {
+            $('#modalDestinatariosCorreo').modal({
+                show: 'true'
+            });
+            loadTablaDestinatariosCorreo(data)
+        } else {
+            sendCorreoActa();
+        }
+    });
+}
+
+function loadTablaDestinatariosCorreo(data) {
+    var dt = $('#dt_destinatarios-correo').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function cambioCorreoDestinatario() {
+
+    const tabla = $('#dt_destinatarios-correo').DataTable();
+    const fila = tabla.row($(this).closest('tr'));
+    const datos = fila.data();
+
+    if (!datos) return;
+
+    const input = $(this);
+    const nuevoCorreo = input.val().trim();
+    const correoAnterior = datos.correoColaborador || '';
+
+    if (nuevoCorreo === correoAnterior) return;
+
+    if (!this.checkValidity()) {
+        mensError('El correo electrónico no es válido');
+        input.val(correoAnterior);
+        return;
+    }
+
+    input.prop('disabled', true);
+
+    llamadaAjax(
+        'PUT',
+        myconfig.apiUrl + '/api/comerciales/' + datos.comercialId + '/email',
+        {
+            comercial: {
+                email: nuevoCorreo
+            }
+        },
+        function (err, result) {
+
+            input.prop('disabled', false);
+
+            if (err) {
+                mensError('Error actualizando el correo');
+                input.val(correoAnterior);
+                return;
+            }
+            mensNormal("Correo actualizado en la ficha del colaborador")
+            datos.correoColaborador = nuevoCorreo;
+            fila.invalidate('data');
+        }
+    );
 }

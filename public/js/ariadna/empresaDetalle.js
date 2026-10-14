@@ -180,6 +180,7 @@ function admData() {
     self.infFacCliRep = ko.observable();
     self.infFacCliObr = ko.observable();
     self.infFacCliAlq = ko.observable();
+    self.infActa = ko.observable();
     //
     self.tipoViaId = ko.observable();
     self.stipoViaId = ko.observable();
@@ -294,7 +295,7 @@ function loadData(data) {
     vm.infFacCliRep(data.infFacCliRep);
     vm.infFacCliObr(data.infFacCliObr);
     vm.infFacCliAlq(data.infFacCliAlq);
-    // 
+    vm.infActa(data.infActa);
     vm.plantillaCorreoFacturas(data.plantillaCorreoFacturas);
     vm.plantillaCorreoFacturasRep(data.plantillaCorreoFacturasRep);
     vm.plantillaCorreoArq(data.plantillaCorreoArq);
@@ -428,7 +429,8 @@ function aceptar() {
                 "passCorreo": vm.passCorreo(),
                 "infFacCliRep": vm.infFacCliRep(),
                 "infFacCliObr": vm.infFacCliObr(),
-                "infFacCliAlq": vm.infFacCliAlq()
+                "infFacCliAlq": vm.infFacCliAlq(),
+                "infActa": vm.infActa()
             }
         };
         if (empId == 0) {

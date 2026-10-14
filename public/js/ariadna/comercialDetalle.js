@@ -49,7 +49,7 @@ function initForm() {
         return false;
     });
 
-    
+
     $('#frmProveedorAsc').submit(function () {
         return false;
     });
@@ -74,6 +74,8 @@ function initForm() {
     // select2 things
     $("#cmbTiposComerciales").select2(select2Spanish());
     loadTiposComerciales();
+    $("#cmbTiposProfesionales").select2(select2Spanish());
+    loadTiposProfesionales();
     $("#cmbAscComerciales").select2(select2Spanish());
     loadAscComerciales();
     // select2 things
@@ -81,7 +83,7 @@ function initForm() {
     loadFormasPago();
     // select2 things
     $("#cmbMotivosBaja").select2(select2Spanish());
-    loadMotivosBaja(); 
+    loadMotivosBaja();
     // select2 things
     $("#cmbTiposVia").select2(select2Spanish());
     loadTiposVia();
@@ -103,60 +105,60 @@ function initForm() {
         cambioAscColaborador(e.added);
     });
 
-   /*  $("#txtNif").on('blur', function () {
-       vm.dniFirmante(vm.nif());
-    }); */
+    /*  $("#txtNif").on('blur', function () {
+        vm.dniFirmante(vm.nif());
+     }); */
 
     $("#txtNombre").on('blur', function () {
         vm.firmante(vm.nombre());
-     });
-    
+    });
+
     initTablaClientesAgentes();
 
-   //actuaizacion de visualización del iban
-   $(function () {
-    $("#txtIban").change(function () {
-        this.value = this.value.replace(/[- \s]/g, '');
-        vm.iban(this.value);
-        var num = 0;
-        var cadena = null;
-        var n1 = 0;
-        for(var j = 1; j < 7; j++) {
-            var s = $(this).attr('id').substr(0, 7);
-            var s2 = s + j;
-            $("#" + s2).val(null);
-        }
-        
-        console.log(this.value)
-        if (this.value.length > 0) {
-            for(var i = 0; i < this.value.length; i++ ) {
-                if(!cadena) {
-                    cadena = this.value.substr(i, 1);
-                    num++;
-                } else {
-                    cadena += this.value.substr(i, 1);
-                    num++;
-                }
-                if (num == 4) {
-                    var r = $(this).attr('id').substr(0, 7);
-                    n1++;
-                    var r2 = r + n1;
-                    $("#" + r2).val(cadena);
-                    num = 0;
-                    cadena = null;
-                }
+    //actuaizacion de visualización del iban
+    $(function () {
+        $("#txtIban").change(function () {
+            this.value = this.value.replace(/[- \s]/g, '');
+            vm.iban(this.value);
+            var num = 0;
+            var cadena = null;
+            var n1 = 0;
+            for (var j = 1; j < 7; j++) {
+                var s = $(this).attr('id').substr(0, 7);
+                var s2 = s + j;
+                $("#" + s2).val(null);
             }
-           
-        }
-    });
+
+            console.log(this.value)
+            if (this.value.length > 0) {
+                for (var i = 0; i < this.value.length; i++) {
+                    if (!cadena) {
+                        cadena = this.value.substr(i, 1);
+                        num++;
+                    } else {
+                        cadena += this.value.substr(i, 1);
+                        num++;
+                    }
+                    if (num == 4) {
+                        var r = $(this).attr('id').substr(0, 7);
+                        n1++;
+                        var r2 = r + n1;
+                        $("#" + r2).val(cadena);
+                        num = 0;
+                        cadena = null;
+                    }
+                }
+
+            }
+        });
     });
 
     $("#txtNif").on('change', function (e) {
         var nif = $("#txtNif").val();
-        if(!nif || nif == "") return;
+        if (!nif || nif == "") return;
 
-        if(nif != "") {
-            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+        if (nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             vm.nif(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
@@ -164,7 +166,7 @@ function initForm() {
 
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
-            if(esNif || esCif) {
+            if (esNif || esCif) {
                 vm.dniFirmante(nif);
             } else {
                 mensError('El nif introducido no tiene un formato valido');
@@ -175,10 +177,10 @@ function initForm() {
 
     $("#txtDniFirmante").on('change', function (e) {
         var nif = $("#txtDniFirmante").val();
-        if(!nif || nif == "") return;
+        if (!nif || nif == "") return;
 
-        if(nif != "") {
-            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+        if (nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             vm.dniFirmante(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
@@ -186,7 +188,7 @@ function initForm() {
 
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
-            if(esNif || esCif) {
+            if (esNif || esCif) {
                 firmanteValido = true;
             } else {
                 mensError('El DNI del firmante habitual introducido no tiene un formato valido');
@@ -198,10 +200,10 @@ function initForm() {
 
     $("#txtDniRp").on('change', function (e) {
         var nif = $("#txtDniRp").val();
-        if(!nif || nif == "") return;
+        if (!nif || nif == "") return;
 
-        if(nif != "") {
-            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+        if (nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             vm.dniRp(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
@@ -209,8 +211,8 @@ function initForm() {
 
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
-            if(esNif || esCif) {
-               
+            if (esNif || esCif) {
+
             } else {
                 mensError('El DNI del recurso preventivo introducido no tiene un formato valido');
                 //$('#txtNif').val('');
@@ -220,10 +222,10 @@ function initForm() {
 
     $("#txtDniRepresentante").on('change', function (e) {
         var nif = $("#txtDniRepresentante").val();
-        if(!nif || nif == "") return;
+        if (!nif || nif == "") return;
 
-        if(nif != "") {
-            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+        if (nif != "") {
+            nif = nif.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
             vm.dniRepresentante(nif);
 
             var patron = new RegExp(/^\d{8}[a-zA-Z]{1}$/);//VALIDA NIF
@@ -231,8 +233,8 @@ function initForm() {
 
             var patron2 = new RegExp(/^[a-zA-Z]{1}\d{7}[a-zA-Z0-9]{1}$/);
             var esCif = patron2.test(nif);
-            if(esNif || esCif) {
-               
+            if (esNif || esCif) {
+
             } else {
                 mensError('El DNI del representante introducido no tiene un formato valido');
                 //$('#txtNif').val('');
@@ -240,19 +242,19 @@ function initForm() {
         }
     });
 
-    
+
 
     $("#cmbTiposComerciales").on('change', function (e) {
         //SI EL TIPO COMERCIAL ELEGIDO ES DIFERENTE DE 
         //JEFE DE OBRAS OCUYLTAMOS LOS CAMPOS DE RECURSO PREVENTIVO
-         //alert(JSON.stringify(e.added));
-         if (e.added)  {
-            if(e.added.id != 5) {
+        //alert(JSON.stringify(e.added));
+        if (e.added) {
+            if (e.added.id != 5) {
                 $('#esJObras').hide();
             } else {
                 $('#esJObras').show();
             }
-         }
+        }
     });
 
     empId = gup('ComercialId');
@@ -283,14 +285,14 @@ function initForm() {
                         // hay que mostrarlo en la zona de datos
                         loadTablaContratosComerciales(data);
                     },
-                                    error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
                 });
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl +  "/api/clientes/agente/" + empId,
+                    url: myconfig.apiUrl + "/api/clientes/agente/" + empId,
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(data),
@@ -298,14 +300,14 @@ function initForm() {
                         // hay que mostrarlo en la zona de datos
                         loadTablaClientes(data);
                     },
-                                    error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
                 });
                 $.ajax({
                     type: "GET",
-                    url: myconfig.apiUrl +  "/api/comerciales/obten/correos/empresa/" + empId,
+                    url: myconfig.apiUrl + "/api/comerciales/obten/correos/empresa/" + empId,
                     dataType: "json",
                     contentType: "application/json",
                     data: null,
@@ -313,16 +315,16 @@ function initForm() {
                         // hay que mostrarlo en la zona de datos
                         loadTablaComercialCorreos(data);
                     },
-                                    error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
                 });
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     } else {
         // se trata de un alta ponemos el id a cero para indicarlo.
@@ -373,6 +375,7 @@ function admData() {
     self.antiguoColaboradorNombre = ko.observable();
     self.nuevoColaboradorNombre = ko.observable();
     self.fechaCambio = ko.observable();
+    self.nColegiado = ko.observable();
     //
     self.tipoComercialId = ko.observable();
     self.stipoComercialId = ko.observable();
@@ -403,22 +406,22 @@ function admData() {
     //
     self.posiblesMotivosBaja = ko.observableArray([]);
     self.elegidosMotivosBaja = ko.observableArray([]);
-     //
-     self.tarifaClienteId = ko.observable();
-     self.starifaClienteId = ko.observable();
-     //
-     self.posiblesTarifas = ko.observableArray([]);
-     self.elegidasTarifas = ko.observableArray([]);
+    //
+    self.tarifaClienteId = ko.observable();
+    self.starifaClienteId = ko.observable();
+    //
+    self.posiblesTarifas = ko.observableArray([]);
+    self.elegidasTarifas = ko.observableArray([]);
 
-     //COMBO PROVEEDORES
-     //
-     self.proveedorId = ko.observable();
-     self.sproveedorId = ko.observable();
-     //
-     self.posiblesProveedores = ko.observableArray([]);
-     self.elegidosProveedores = ko.observableArray([]);
+    //COMBO PROVEEDORES
+    //
+    self.proveedorId = ko.observable();
+    self.sproveedorId = ko.observable();
+    //
+    self.posiblesProveedores = ko.observableArray([]);
+    self.elegidosProveedores = ko.observableArray([]);
 
-     //RECURSO PRVENTIVO
+    //RECURSO PRVENTIVO
     self.nombreRp = ko.observable();
     self.dniRp = ko.observable();
     self.direccionRp = ko.observable();
@@ -447,22 +450,29 @@ function admData() {
     self.posiblesTiposViaRepresentante = ko.observableArray([]);
     self.elegidosTiposViaRepresentante = ko.observableArray([]);
 
-     //
-     self.empresaId = ko.observable();
-     self.sempresaId = ko.observable();
-     //
-     self.posiblesEmpresas = ko.observableArray([]);
-     self.elegidosEmpresas = ko.observableArray([]);
-     //
-     self.comercialCorreoId = ko.observable()
-     self.correo = ko.observable();
-     self.password = ko.observable()
+    //
+    self.empresaId = ko.observable();
+    self.sempresaId = ko.observable();
+    //
+    self.posiblesEmpresas = ko.observableArray([]);
+    self.elegidosEmpresas = ko.observableArray([]);
+    //
+    self.comercialCorreoId = ko.observable()
+    self.correo = ko.observable();
+    self.password = ko.observable()
+    //
+    self.tipoProfesionalId = ko.observable();
+    self.stipoProfesionalId = ko.observable();
+
+    self.posiblesTiposProfesionales = ko.observableArray([]);
+    self.elegidosTiposProfesionales = ko.observableArray([]);
 }
 
 function loadData(data, desdeLoad) {
     vm.comercialId(data.comercialId);
     vm.proId(data.proId);
     vm.nombre(data.nombre);
+    vm.nColegiado(data.nColegiado);
     vm.nif(data.nif);
     nifGuardado = data.nif
     vm.fechaAlta(spanishDate(data.fechaAlta));
@@ -489,11 +499,13 @@ function loadData(data, desdeLoad) {
     vm.ascComercialId(data.ascComercialId);
     vm.antiguoAscCoimercialId(data.ascComercialId);
     vm.antiguoColaboradorNombre(data.colaborador);
+    vm.tipoProfesionalId(data.tipoProfesionalId);
+    loadTiposProfesionales(data.tipoProfesionalId);
 
     loadTiposComerciales(data.tipoComercialId);
     //si el tipo comercial es diferente de jefe de obras ocultamos los campos de recurso preventivo
     $('#esJObras').show();
-    if(data.tipoComercialId != 5) $('#esJObras').hide();
+    if (data.tipoComercialId != 5) $('#esJObras').hide();
     loadAscComerciales(data.ascComercialId);
     //recurso preventivo
     vm.nombreRp(data.nombreRp);
@@ -518,7 +530,7 @@ function loadData(data, desdeLoad) {
     vm.provinciaRepresentante(data.provinciaRepresentante);
 
     vm.iban(data.iban);
-    loadMotivosBaja(data.motivoBajaId);    
+    loadMotivosBaja(data.motivoBajaId);
     // split iban
     if (vm.iban()) {
         var ibanl = vm.iban().match(/.{1,4}/g);
@@ -528,7 +540,7 @@ function loadData(data, desdeLoad) {
             vm['iban' + i](ibn);
         });
     }
- 
+
 
     loadFormasPago(data.formaPagoId);
     loadTiposVia(data.tipoViaId);
@@ -537,9 +549,9 @@ function loadData(data, desdeLoad) {
     loadProveedorAsc(data.proveedorId);
 
     //PESTAÑA CORREOS SOLO VISIBLE PARA LOS JEFES DE OBRA
-    if(data.tipoComercialId != 5) $('#tabCorreo').hide();
+    if (data.tipoComercialId != 5) $('#tabCorreo').hide();
 
-    if(data.comercialId == 32) {
+    if (data.comercialId == 32) {
         $('#btnActualizarClientes').hide();
     } else {
         $('#btnActualizarClientes').show();
@@ -628,7 +640,7 @@ function aceptar() {
     var mf = function () {
         if (!datosOK())
             return;
-        if(!firmanteValido && vm.dniFirmante() != "") {
+        if (!firmanteValido && vm.dniFirmante() != "") {
             mensError('El DNI del firmante habitual introducido no tiene un formato valido');
             return;
         }
@@ -637,6 +649,7 @@ function aceptar() {
                 "comercialId": vm.comercialId(),
                 "proId": vm.proId(),
                 "nombre": vm.nombre(),
+                "nColegiado": vm.nColegiado(),
                 "nif": vm.nif(),
                 "fechaAlta": spanishDbDate(vm.fechaAlta()),
                 "fechaBaja": spanishDbDate(vm.fechaBaja()),
@@ -683,7 +696,8 @@ function aceptar() {
                 "codPostalRepresentante": vm.codPostalRepresentante(),
                 "provinciaRepresentante": vm.provinciaRepresentante(),
                 "tipoViaRepresentanteId": vm.stipoViaRepresentanteId(),
-                "nivelFormativoSalud": vm.nivelFormativoSalud()
+                "nivelFormativoSalud": vm.nivelFormativoSalud(),
+                "tipoProfesionalId": vm.stipoProfesionalId(),
             }
         };
         if (empId == 0) {
@@ -700,7 +714,7 @@ function aceptar() {
                     var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -719,7 +733,7 @@ function aceptar() {
                     var url = "ComercialesGeneral.html?ComercialId=" + vm.comercialId();
                     window.open(url, '_self');
                 },
-                                error: function (err) {
+                error: function (err) {
                     mensErrorAjax(err);
                     // si hay algo más que hacer lo haremos aquí.
                 }
@@ -759,10 +773,10 @@ function importar() {
                 // volver a cargar  el tipoComercial
                 loadTiposComerciales(vm.stipoComercialId());
             },
-                            error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     };
     return mf;
@@ -773,58 +787,58 @@ function actualizaClientes() {
         if (!datosImportOK())
             return;
 
-    var mens = "Se actualizarán los datos de TODOS los clientes asociados al Agente en gestión y contabilidad.  ¿Realmente desea continuar?";
+        var mens = "Se actualizarán los datos de TODOS los clientes asociados al Agente en gestión y contabilidad.  ¿Realmente desea continuar?";
 
-    $.SmartMessageBox({
-        title: "<i class='fa fa-info'></i> Mensaje",
-        content: mens,
-        buttons: '[Aceptar][Cancelar]'
-    }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
+        $.SmartMessageBox({
+            title: "<i class='fa fa-info'></i> Mensaje",
+            content: mens,
+            buttons: '[Aceptar][Cancelar]'
+        }, function (ButtonPressed) {
+            if (ButtonPressed === "Aceptar") {
 
-            $('#btnActualizaClientes').addClass('fa-spin');
-            var url = myconfig.apiUrl + "/api/clientes/desde/agente/" + empId
-            var data = {
-                cliente: {
-                    tipoViaId3: vm.stipoViaId(),
-                    direccion3: vm.direccion(),
-                    poblacion3: vm.poblacion(),
-                    codPostal3: vm.codPostal(),
-                    provincia3: vm.provincia(),
-                    telefono1: vm.telefono1(),
-                    fax: vm.fax(),
-                    email: vm.email(),
-                    email2: vm.email2(),
-                    emailFacturas: vm.emailFacturas(),
-                    colaboradorId: vm.sascComercialId(),
-                    tarifaId: vm.starifaClienteId()
-                }
-            };
-           
-            $.ajax({
-                type: "PUT",
-                url: url,
-                dataType: "json",
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                success: function (data, status) {
-                    $('#btnActualizaClientes').removeClass('fa-spin');
-                    mensNormal('Los clientes se han actualizado con exito, compruebe la contabilidad de alguno de ellos para verificar que los cambios se han aplicado correctamente');
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-            
-            
-        }
-        if (ButtonPressed === "Cancelar") {
-            // no hacemos nada (no quiere borrar)
-        }
-    });
+                $('#btnActualizaClientes').addClass('fa-spin');
+                var url = myconfig.apiUrl + "/api/clientes/desde/agente/" + empId
+                var data = {
+                    cliente: {
+                        tipoViaId3: vm.stipoViaId(),
+                        direccion3: vm.direccion(),
+                        poblacion3: vm.poblacion(),
+                        codPostal3: vm.codPostal(),
+                        provincia3: vm.provincia(),
+                        telefono1: vm.telefono1(),
+                        fax: vm.fax(),
+                        email: vm.email(),
+                        email2: vm.email2(),
+                        emailFacturas: vm.emailFacturas(),
+                        colaboradorId: vm.sascComercialId(),
+                        tarifaId: vm.starifaClienteId()
+                    }
+                };
+
+                $.ajax({
+                    type: "PUT",
+                    url: url,
+                    dataType: "json",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (data, status) {
+                        $('#btnActualizaClientes').removeClass('fa-spin');
+                        mensNormal('Los clientes se han actualizado con exito, compruebe la contabilidad de alguno de ellos para verificar que los cambios se han aplicado correctamente');
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+
+
+            }
+            if (ButtonPressed === "Cancelar") {
+                // no hacemos nada (no quiere borrar)
+            }
+        });
     };
-    
+
     return mf;
 }
 
@@ -851,15 +865,43 @@ function loadTiposComerciales(id) {
             //}
             $("#cmbTiposComerciales").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+function loadTiposProfesionales(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/tipos_profesional",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+
+            var tiposProfesionales = [
+                { tipoProfesionalId: 0, nombre: "" }
+            ].concat(
+                data.filter(function (item) {
+                    return [10, 11, 43].includes(Number(item.tipoProfesionalId));
+                })
+            );
+
+            vm.posiblesTiposProfesionales(tiposProfesionales);
+
+            $("#cmbTiposProfesionales")
+                .val(id || 0)
+                .trigger('change');
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+        }
     });
 }
 
 function loadAscComerciales(id) {
-    if(id < 0) {
+    if (id < 0) {
         id = vm.antiguoAscCoimercialId();
     }
     $.ajax({
@@ -875,10 +917,10 @@ function loadAscComerciales(id) {
             //}
             $("#cmbAscComerciales").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -893,10 +935,10 @@ function loadFormasPago(id) {
             vm.posiblesFormasPago(formasPago);
             $("#cmbFormasPago").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -1070,10 +1112,10 @@ function loadTiposVia(id) {
             vm.posiblesTiposVia(tiposVia);
             $("#cmbTiposVia").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -1125,10 +1167,10 @@ function loadMotivosBaja(id) {
             vm.posiblesMotivosBaja(motivosBaja);
             $("#cmbMotivosBaja").val([id]).trigger('change');
         },
-                        error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
     });
 }
 
@@ -1172,7 +1214,7 @@ function cambioAscColaborador(data, desdeLoad) {
                 });
                 loadModal(data)
             } else {
-                if(!desdeLoad) {
+                if (!desdeLoad) {
                     realizarCambioColaborador(data);
                 }
             }
@@ -1199,87 +1241,87 @@ function guardaAgenteColaborador() {
     if (!datosOkAgenteColaborador()) {
         return;
     } else {
-            if (!datosOK())
-                return;
+        if (!datosOK())
+            return;
 
 
-            var dataAgenteColaborador = {
-                AgenteColaborador: {
-                    agenteId: vm.comercialId(),
-                    colaboradorId:  vm.antiguoAscCoimercialId(),
-                    fechaCambio: spanishDbDate(vm.fechaCambio())
-                }
+        var dataAgenteColaborador = {
+            AgenteColaborador: {
+                agenteId: vm.comercialId(),
+                colaboradorId: vm.antiguoAscCoimercialId(),
+                fechaCambio: spanishDbDate(vm.fechaCambio())
             }
-           
-            var data = {
-                comercial: {
-                    "comercialId": vm.comercialId(),
-                    "proId": vm.proId(),
-                    "nombre": vm.nombre(),
-                    "nif": vm.nif(),
-                    "fechaAlta": spanishDbDate(vm.fechaAlta()),
-                    "fechaBaja": spanishDbDate(vm.fechaBaja()),
-                    "activa": vm.activa(),
-                    "contacto1": vm.contacto1(),
-                    "contacto2": vm.contacto2(),
-                    "direccion": vm.direccion(),
-                    "poblacion": vm.poblacion(),
-                    "provincia": vm.provincia(),
-                    "codPostal": vm.codPostal(),
-                    "telefono1": vm.telefono1(),
-                    "telefono2": vm.telefono2(),
-                    "fax": vm.fax(),
-                    "email": vm.email(),
-                    "email2": vm.email2(),
-                    "observaciones": vm.observaciones(),
-                    "dniFirmante": vm.dniFirmante(),
-                    "firmante": vm.firmante(),
-                    "tipoComercialId": vm.stipoComercialId(),
-                    "ascComercialId": vm.sascComercialId(),
-                    "formaPagoId": vm.sformaPagoId(),
-                    "iban": vm.iban(),
-                    "tipoViaId": vm.stipoViaId(),
-                    "motivoBajaId": vm.smotivoBajaId(),
-                    "loginWeb": vm.loginWeb(),
-                    "passWeb": vm.passWeb()
-                }
-            };            
-            $.ajax({
-                type: "PUT",
-                url: myconfig.apiUrl + "/api/comerciales/" + empId,
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data, status) {
-                    //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
-                    $.ajax({
-                        type: "POST",
-                        url: myconfig.apiUrl + "/api/comerciales/agente",
-                        dataType: "json",
-                        contentType: "application/json",
-                        data: JSON.stringify(dataAgenteColaborador),
-                        success: function (data, status) {
-                            limpiaModalAgentesColaboradores();
-                            loadAgentesColaboradores(empId);
-                            /*var datos = {
-                                comercialId: vm.sagenteId()
-                            }
-                            actualizaColaboradorAsociado(datos);*/
+        }
 
-
-                        },
-                        error: function (err) {
-                            mensErrorAjax(err);
-                            // si hay algo más que hacer lo haremos aquí.
+        var data = {
+            comercial: {
+                "comercialId": vm.comercialId(),
+                "proId": vm.proId(),
+                "nombre": vm.nombre(),
+                "nif": vm.nif(),
+                "fechaAlta": spanishDbDate(vm.fechaAlta()),
+                "fechaBaja": spanishDbDate(vm.fechaBaja()),
+                "activa": vm.activa(),
+                "contacto1": vm.contacto1(),
+                "contacto2": vm.contacto2(),
+                "direccion": vm.direccion(),
+                "poblacion": vm.poblacion(),
+                "provincia": vm.provincia(),
+                "codPostal": vm.codPostal(),
+                "telefono1": vm.telefono1(),
+                "telefono2": vm.telefono2(),
+                "fax": vm.fax(),
+                "email": vm.email(),
+                "email2": vm.email2(),
+                "observaciones": vm.observaciones(),
+                "dniFirmante": vm.dniFirmante(),
+                "firmante": vm.firmante(),
+                "tipoComercialId": vm.stipoComercialId(),
+                "ascComercialId": vm.sascComercialId(),
+                "formaPagoId": vm.sformaPagoId(),
+                "iban": vm.iban(),
+                "tipoViaId": vm.stipoViaId(),
+                "motivoBajaId": vm.smotivoBajaId(),
+                "loginWeb": vm.loginWeb(),
+                "passWeb": vm.passWeb()
+            }
+        };
+        $.ajax({
+            type: "PUT",
+            url: myconfig.apiUrl + "/api/comerciales/" + empId,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data, status) {
+                //actualizamos la tabla clientes_agentes si el cliente se ha cambiado con exito
+                $.ajax({
+                    type: "POST",
+                    url: myconfig.apiUrl + "/api/comerciales/agente",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataAgenteColaborador),
+                    success: function (data, status) {
+                        limpiaModalAgentesColaboradores();
+                        loadAgentesColaboradores(empId);
+                        /*var datos = {
+                            comercialId: vm.sagenteId()
                         }
-                    });
-                },
-                error: function (err) {
-                    mensErrorAjax(err);
-                    // si hay algo más que hacer lo haremos aquí.
-                }
-            });
-        
+                        actualizaColaboradorAsociado(datos);*/
+
+
+                    },
+                    error: function (err) {
+                        mensErrorAjax(err);
+                        // si hay algo más que hacer lo haremos aquí.
+                    }
+                });
+            },
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
+        });
+
     }
 
 }
@@ -1389,15 +1431,15 @@ function deleteAgentesColaboradores(agenteColaboradorId) {
         llamadaAjax("DELETE", "/api/comerciales/AgenteColaborador/" + agenteColaboradorId, null, function (err, data) {
             if (err) return;
 
-            var data2 =  {
+            var data2 = {
                 comercial: {
-                 comercialId: empId,
-                 nombre: vm.nombre(),
-                 nif: vm.nif(),
-                 ascComercialId: data[0].colaboradorId
+                    comercialId: empId,
+                    nombre: vm.nombre(),
+                    nif: vm.nif(),
+                    ascComercialId: data[0].colaboradorId
                 }
             }
-            
+
             $.ajax({
                 type: "PUT",
                 url: myconfig.apiUrl + "/api/comerciales/" + empId,
@@ -1463,138 +1505,138 @@ function limpiaModalAgentesColaboradores() {
 }
 
 function actualizaColaboradorAsociado(datos) {
-    
-    var data =  {
+
+    var data = {
         comercial: {
-         comercialId: empId,
-         nombre: vm.nombre(),
-         nif: vm.nif(),
-         ascComercialId: datos.comercialId
+            comercialId: empId,
+            nombre: vm.nombre(),
+            nif: vm.nif(),
+            ascComercialId: datos.comercialId
         }
     }
     $.ajax({
-     type: "PUT",
-     url: myconfig.apiUrl + "/api/comerciales/" + empId,
-     dataType: "json",
-     contentType: "application/json",
-     data: JSON.stringify(data),
-     success: function (data, status) {
-        loadAgentesColaboradores(datos.comercialId);
-        
-     },
-     error: function (err) {
-         mensErrorAjax(err);
-     }
-     });
+        type: "PUT",
+        url: myconfig.apiUrl + "/api/comerciales/" + empId,
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data, status) {
+            loadAgentesColaboradores(datos.comercialId);
+
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+        }
+    });
 }
 
 
 function aceptarExportar() {
-        var proveedorId = vm.sproveedorId();
-        //  URL Y METODO POR DEFECTO
-        var url = myconfig.apiUrl + "api/comerciales/" +  vm.comercialId();
-        var method = "PUT";
-        var datos = {
-            comercial: {
-                comercialId: vm.comercialId(),
-                nombre: vm.nombre(),
-                nif: vm.nif(),
-                proveedorId: proveedorId
-            }
+    var proveedorId = vm.sproveedorId();
+    //  URL Y METODO POR DEFECTO
+    var url = myconfig.apiUrl + "api/comerciales/" + vm.comercialId();
+    var method = "PUT";
+    var datos = {
+        comercial: {
+            comercialId: vm.comercialId(),
+            nombre: vm.nombre(),
+            nif: vm.nif(),
+            proveedorId: proveedorId
         }
+    }
 
-        // obtener el número de digitos de la contabilidad
-        // para controlar la cuenta contable.
-        $.ajax({
-            type: "GET",
-            url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data, status) {
-                numDigitos = data.numDigitos
-                // contador de código
-                $.ajax({
-                    type: "GET",
-                    url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor/autogenerado",
-                    dataType: "json",
-                    contentType: "application/json",
-                    success: function (data, status) {
-                        // hay que mostrarlo en la zona de datos
-                        var codigo = data;
-                        var codmacta = montarCuentaContable('410', codigo, numDigitos); 
-                        //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
-                        if(proveedorId == 0) {
-                            url = myconfig.apiUrl + "api/proveedores/";
-                            method = "POST";
-                            datos = preparaObjProveedor(codigo, codmacta);
-                        }
-
-                        $.ajax({
-                            type: method,
-                            url: url,
-                            dataType: "json",
-                            data: JSON.stringify(datos),
-                            contentType: "application/json",
-                            success: function (data, status) {
-                                if(method == "POST") {
-                                    url = myconfig.apiUrl + "api/comerciales/" +  vm.comercialId();
-                                    method = "PUT";
-                                    data = {
-                                        comercial: {
-                                            comercialId: vm.comercialId(),
-                                            nombre: vm.nombre(),
-                                            nif: vm.nif(),
-                                            proveedorId: data.proveedorId
-                                        }
-                                    }
-                                    $.ajax({
-                                        type: method,
-                                        url: url,
-                                        dataType: "json",
-                                        data: JSON.stringify(data),
-                                        contentType: "application/json",
-                                        success: function (data, status) {
-                                            $('#modalProveedorAsc').modal('hide'); 
-                                            loadProveedorAsc(data.proveedorId);
-                                            mensNormal("Puede comprobar los datos del nuevo proveedor creado en la nueva pestaña que se ha abierto")
-                                            var nuevo = "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
-                                            window.open(nuevo, '_new');
-                                        },
-                                        error: function (err) {
-                                            mensErrorAjax(err);
-                                                // si hay algo más que hacer lo haremos aquí.
-                                        }
-                                    });
-                                } else {
-                                    $('#modalProveedorAsc').modal('hide'); 
-                                    loadProveedorAsc(proveedorId);
-                                }
-                        
-                            },
-                            error: function (err) {
-                                mensErrorAjax(err);
-                                    // si hay algo más que hacer lo haremos aquí.
-                            }
-                        });
-                        
-                    },
-                    error: function (err) {
-                        mensErrorAjax(err);
-                
-                        // si hay algo más que hacer lo haremos aquí.
+    // obtener el número de digitos de la contabilidad
+    // para controlar la cuenta contable.
+    $.ajax({
+        type: "GET",
+        url: myconfig.apiUrl + "/api/contabilidad/infcontable/",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            numDigitos = data.numDigitos
+            // contador de código
+            $.ajax({
+                type: "GET",
+                url: myconfig.apiUrl + "/api/proveedores/nuevoCod/proveedor/acreedor/autogenerado",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (data, status) {
+                    // hay que mostrarlo en la zona de datos
+                    var codigo = data;
+                    var codmacta = montarCuentaContable('410', codigo, numDigitos);
+                    //SI SE ELIGE EL CAMPO VACIO DEL DESPLEGABLE SE CREA Y VINCULA UN PROVEEDOR
+                    if (proveedorId == 0) {
+                        url = myconfig.apiUrl + "api/proveedores/";
+                        method = "POST";
+                        datos = preparaObjProveedor(codigo, codmacta);
                     }
-                });
-       
-            },
-            error: function (err) {
-                mensErrorAjax(err);
-                // si hay algo más que hacer lo haremos aquí.
-            }
-        });
+
+                    $.ajax({
+                        type: method,
+                        url: url,
+                        dataType: "json",
+                        data: JSON.stringify(datos),
+                        contentType: "application/json",
+                        success: function (data, status) {
+                            if (method == "POST") {
+                                url = myconfig.apiUrl + "api/comerciales/" + vm.comercialId();
+                                method = "PUT";
+                                data = {
+                                    comercial: {
+                                        comercialId: vm.comercialId(),
+                                        nombre: vm.nombre(),
+                                        nif: vm.nif(),
+                                        proveedorId: data.proveedorId
+                                    }
+                                }
+                                $.ajax({
+                                    type: method,
+                                    url: url,
+                                    dataType: "json",
+                                    data: JSON.stringify(data),
+                                    contentType: "application/json",
+                                    success: function (data, status) {
+                                        $('#modalProveedorAsc').modal('hide');
+                                        loadProveedorAsc(data.proveedorId);
+                                        mensNormal("Puede comprobar los datos del nuevo proveedor creado en la nueva pestaña que se ha abierto")
+                                        var nuevo = "ProveedorDetalle.html?ProveedorId=" + data.proveedorId;
+                                        window.open(nuevo, '_new');
+                                    },
+                                    error: function (err) {
+                                        mensErrorAjax(err);
+                                        // si hay algo más que hacer lo haremos aquí.
+                                    }
+                                });
+                            } else {
+                                $('#modalProveedorAsc').modal('hide');
+                                loadProveedorAsc(proveedorId);
+                            }
+
+                        },
+                        error: function (err) {
+                            mensErrorAjax(err);
+                            // si hay algo más que hacer lo haremos aquí.
+                        }
+                    });
+
+                },
+                error: function (err) {
+                    mensErrorAjax(err);
+
+                    // si hay algo más que hacer lo haremos aquí.
+                }
+            });
+
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
 }
 
 
-function preparaObjProveedor (codigo, codmacta) {
+function preparaObjProveedor(codigo, codmacta) {
     var data = {
         proveedor: {
             "proveedorId": 0,
@@ -1624,7 +1666,7 @@ function preparaObjProveedor (codigo, codmacta) {
             "fianza": 0,
             "tipoIvaId": 3,
             "fianzaAcumulada": 0,
-            "retencionFianza" : 0,
+            "retencionFianza": 0,
             "revisionFianza": null,
             "tarifaId": 1,
             "codigoRetencion": 0,
@@ -1652,7 +1694,7 @@ function preparaObjProveedor (codigo, codmacta) {
             "nivelFormativoSalud": vm.nivelFormativoSalud()
         },
         departamentos: {
-            "departamentos": [1,2,3,4,5,6,7,8]
+            "departamentos": [1, 2, 3, 4, 5, 6, 7, 8]
         },
         profesiones: {
             "profesiones": []
@@ -1663,13 +1705,13 @@ function preparaObjProveedor (codigo, codmacta) {
 
 function loadProveedores() {
     var datos = [];
-    if((!nifGuardado || nifGuardado == '') || (!vm.sformaPagoId() ||  vm.sformaPagoId() == '' )) {
+    if ((!nifGuardado || nifGuardado == '') || (!vm.sformaPagoId() || vm.sformaPagoId() == '')) {
         mensError("Se requiere el NIF y la forma de pago del colaborador para poder vincular, alguno de estos campos están vacios");
-        setTimeout( function() { $('#modalProveedorAsc').modal('hide'); }, 50);
+        setTimeout(function () { $('#modalProveedorAsc').modal('hide'); }, 50);
         return;
     }
     datos.push(nifGuardado);
-    if(vm.dniFirmante() && vm.dniFirmante() != "") datos.push(vm.dniFirmante());
+    if (vm.dniFirmante() && vm.dniFirmante() != "") datos.push(vm.dniFirmante());
     $.ajax({
         type: "POST",
         url: "/api/proveedores/activos/proveedores/todos/por/nif",
@@ -1732,7 +1774,7 @@ function initTablaProveedorAsc() {
             data: "nif"
         }, {
             data: "cuentaContable"
-        },{
+        }, {
             data: "comercialId",
             render: function (data, type, row) {
                 var html = "";
@@ -1750,8 +1792,8 @@ function loadTablaProveedorAsc(data) {
     if (data !== null && data.length === 0) {
         data = null;
         $('#btnExportar').show();
-    } 
-    else if(!data) {
+    }
+    else if (!data) {
         $('#btnExportar').show();
     }
     else {
@@ -1764,7 +1806,7 @@ function loadTablaProveedorAsc(data) {
 
 
 function loadProveedorAsc(proveedorId) {
-    if(!proveedorId) return;
+    if (!proveedorId) return;
     llamadaAjax("GET", "/api/proveedores/" + proveedorId, null, function (err, data) {
         if (err) return;
         loadTablaProveedorAsc(data);
@@ -1836,13 +1878,13 @@ function initTablaComercialCorreos() {
             data: "correo",
         }, {
             data: "password",
-           
+
         }, {
             data: "comercialCorreoId",
             render: function (data, type, row) {
                 var bt1 = "<button class='btn btn-circle btn-danger' onclick='deleteComercialCorreos(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
                 var bt2 = "<button class='btn btn-circle btn-success btn-sm' data-toggle='modal' data-target='#modalLineaCorreo' onclick='editComercialCorreos(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
-                var html = "<div class='pull-right'>" + bt2  + bt1  +"</div>";
+                var html = "<div class='pull-right'>" + bt2 + bt1 + "</div>";
                 return html;
             }
         }]
@@ -1861,7 +1903,7 @@ function loadTablaComercialCorreos(data) {
 
 function editComercialCorreos(id) {
     lineaEnEdicion = true;
-    
+
     llamadaAjax("GET", "/api/comerciales/obten/un-correo/empresa/" + id, null, function (err, data) {
         if (err) return;
         if (data.length > 0) loadDataLinea(data[0]);
@@ -1870,12 +1912,12 @@ function editComercialCorreos(id) {
 
 function deleteComercialCorreos(id) {
     lineaEnEdicion = true;
-    
+
     llamadaAjax("DELETE", "/api/comerciales/lineas/delete-correo/" + id, null, function (err, data) {
         if (err) return;
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl +  "/api/comerciales/obten/correos/empresa/" + empId,
+            url: myconfig.apiUrl + "/api/comerciales/obten/correos/empresa/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: null,
@@ -1883,10 +1925,10 @@ function deleteComercialCorreos(id) {
                 // hay que mostrarlo en la zona de datos
                 loadTablaComercialCorreos(data);
             },
-                            error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     });
 }
@@ -1914,7 +1956,7 @@ function limpiaDataLinea(data) {
 }
 
 
-function loadEmpresas(id){
+function loadEmpresas(id) {
     llamadaAjax('GET', "/api/empresas", null, function (err, data) {
         if (err) return
         var empresas = [{
@@ -1922,12 +1964,12 @@ function loadEmpresas(id){
             nombre: ""
         }].concat(data);
         vm.posiblesEmpresas(empresas);
-        if(id) {
+        if (id) {
             vm.empresaId(id);
             vm.sempresaId(id);
         }
         $("#cmbEmpresas").val([id]).trigger('change');
-        
+
     });
 }
 
@@ -1957,7 +1999,7 @@ function aceptarLinea() {
         $('#modalLineaCorreo').modal('hide');
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl +  "/api/comerciales/obten/correos/empresa/" + empId,
+            url: myconfig.apiUrl + "/api/comerciales/obten/correos/empresa/" + empId,
             dataType: "json",
             contentType: "application/json",
             data: null,
@@ -1965,10 +2007,10 @@ function aceptarLinea() {
                 // hay que mostrarlo en la zona de datos
                 loadTablaComercialCorreos(data);
             },
-                            error: function (err) {
-            mensErrorAjax(err);
-            // si hay algo más que hacer lo haremos aquí.
-        }
+            error: function (err) {
+                mensErrorAjax(err);
+                // si hay algo más que hacer lo haremos aquí.
+            }
         });
     });
 }
