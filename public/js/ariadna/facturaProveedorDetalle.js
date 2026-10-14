@@ -44,7 +44,6 @@ var breakpointDefinition = {
 };
 
 
-
 datePickerSpanish(); // see comun.js
 
 function initForm() {
@@ -70,8 +69,11 @@ function initForm() {
 
     initTablaServiciadas();
 
+
     vm = new admData();
     ko.applyBindings(vm);
+
+    //vm.posiblesTiposIntracomunitaria(tiposIntracomunitaria);
 
     // Eventos de la calculadora de costes
     $('#txtCoste').on('blur', cambioCampoConRecalculoDesdeCoste);
@@ -141,6 +143,8 @@ function initForm() {
     $("#cmbDepartamentosTrabajo").select2().on('change', function (e) {
         if (e.added) loadDepartamentos(e.added.id);
     });
+
+    $("#cmbTiposIntracomunitaria").select2(select2Spanish());
 
     $("#txtFechaRecepcion").on('change', function (e) {
         if (fechaRe) {
@@ -235,6 +239,20 @@ function initForm() {
     });
 
 
+    $("#cmbTiposOperacion").select2().on('change', function (e) {
+        //alert(JSON.stringify(e.added));
+        if (e.added && e.added.id != 2) {
+            vm.posiblesTiposIntracomunitaria([]);
+            vm.scodintra(null);
+            vm.codintra(null);
+            // Actualizar Select2 visualmente
+            $("#cmbTiposIntracomunitaria")
+                .val('')
+                .trigger('change');
+        } else if (e.added && e.added.id == 2) {
+            loadTiposIntracomunitarias("A");
+        }
+    });
     $("#txtCantidad").blur(cambioPrecioCantidad);
     $("#txtPrecio").blur(cambioPrecioCantidad);
     $('#txtPorcentajeRetencionLinea').blur(cambioPrecioCantidad);
@@ -534,6 +552,12 @@ function admData() {
     //
     self.posiblesTiposOperacion = ko.observableArray([]);
     self.elegidosTiposOperacion = ko.observableArray([]);
+    //
+    self.codintra = ko.observable();
+    self.scodintra = ko.observable();
+    //
+    self.posiblesTiposIntracomunitaria = ko.observableArray([]);
+    self.elegidosTiposIntracomunitaria = ko.observableArray([]);
 
 
 
@@ -629,12 +653,14 @@ function loadData(data) {
     vm.nombreFacprovePdf(data.nombreFacprovePdf);
     vm.antiguoPdf(data.nombreFacprovePdf);
     vm.anticipo(data.anticipo);
-    vm.antproveId(data.antproveId)
+    vm.antproveId(data.antproveId);
+
 
     //
     loadEmpresas(data.empresaId);
     loadDepartamentos(data.departamentoId);
-    loadTiposOperacion(data.tipoOperacionId)
+    loadTiposOperacion(data.tipoOperacionId);
+    loadTiposIntracomunitarias(data.codintra)
 
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
@@ -920,6 +946,7 @@ var generarFacturaDb = function () {
             "conceptoAnticipo": vm.conceptoAnticipo(),
             "tipoOperacionId": vm.stipoOperacionId(),
             "enviadaCorreo": vm.enviadaCorreo(),
+            "codintra": vm.scodintra(),
             "esColaborador": 0
 
         }
@@ -965,6 +992,23 @@ function loadTiposOperacion(tipoOperacionId) {
             vm.tipoOperacionId(tipoOperacionId);
         }
         $("#cmbTiposOperacion").val([tipoOperacionId]).trigger('change');
+    });
+}
+
+function loadTiposIntracomunitarias(codintra) {
+
+    llamadaAjax("GET", "/api/facturasProveedores/tipo/intracomunitaria/factura", null, function (err, data) {
+
+        if (err) return;
+
+        vm.posiblesTiposIntracomunitaria(data);
+
+        vm.scodintra(codintra || undefined);
+        vm.codintra(codintra || null);
+
+        $("#cmbTiposIntracomunitaria")
+            .val(codintra || '')
+            .trigger('change');
     });
 }
 
@@ -1605,11 +1649,11 @@ function cambioArticulo(articuloId) {
             $("#cmbTiposIva").val([10]).trigger('change');
             cambioTiposIva(10);
             $("#cmbTiposIva").prop("disabled", true);
-        }  else if (vm.tipoOperacionId() == 4) {
+        } else if (vm.tipoOperacionId() == 4) {
             $("#cmbTiposIva").val([13]).trigger('change');
             cambioTiposIva(13);
             $("#cmbTiposIva").prop("disabled", true);
-        } 
+        }
         else {
             $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
             cambioTiposIva(data.tipoIvaId);
@@ -1716,11 +1760,6 @@ function cambioTiposRetencion(codigo) {
     });
 }
 
-function establecerTotal() {
-    /*  if(vm.antTotal()) {
-         vm.total(vm.antTotal());
-     } */
-}
 
 var cambioPrecioCantidad = function () {
 

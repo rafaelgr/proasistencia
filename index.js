@@ -15,6 +15,7 @@ var cors = require('cors');
 var serveIndex = require('serve-index');
 var moment = require('moment');
 const daemonApi = require('./lib/daemons/daemons');
+const recordatoriosActaRecepcion = require('./lib/demonios/recordatoriosActaRecepcion');
 
 
 // api support
@@ -336,6 +337,7 @@ ioAPI.init(io);
 
 //starting daemon
 setInterval(daemonApi.run, process.env.COMERCIALIZA_DELAY || 900000);
+recordatoriosActaRecepcion.iniciar();
 
 
 // -- console message
