@@ -13,4 +13,4 @@ ALTER TABLE `prefacturas`
 
 
 ALTER TABLE `prefactura_antcliens`  
-  ADD CONSTRAINT `anticipo_clienteFK` FOREIGN KEY (`antClienId`) REFERENCES `proasistencia`.`antclien`(`antClienId`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `anticipo_clienteFK` FOREIGN KEY (`antClienId`) REFERENCES `antclien`(`antClienId`) ON UPDATE CASCADE ON DELETE CASCADE;
