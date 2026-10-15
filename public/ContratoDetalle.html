@@ -146,7 +146,71 @@
         /* color al pasar el mouse */
         border-color: #313442;
     }
+
+    .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 20, 20, 0.45);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 99999;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        animation: fadeIn .2s ease-in-out;
+    }
+
+    .loading-content {
+        background: #fff;
+        padding: 35px 45px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, .25);
+        min-width: 220px;
+    }
+
+    .loading-content h4 {
+        margin-top: 20px;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .loading-content small {
+        color: #777;
+    }
+
+    /* Spinner moderno */
+    .loader-ring {
+        width: 60px;
+        height: 60px;
+        border: 5px solid #e5e5e5;
+        border-top: 5px solid #3276B1;
+        /* color SmartAdmin */
+        border-radius: 50%;
+        animation: spin .8s linear infinite;
+        margin: 0 auto;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
 </style>
+
 
 <body class="">
     <!-- #HEADER -->
@@ -1306,11 +1370,11 @@
                                                                                                     data-bind="value: DFprofesion" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        
-                                                                                        
+
+
                                                                                     </div>
                                                                                     <div class="row">
-                                                                                       <section class="col col-md-8">
+                                                                                        <section class="col col-md-8">
                                                                                             <label
                                                                                                 class="label">Correo</label>
                                                                                             <label class="input">
@@ -6011,6 +6075,15 @@
         <!-- /.modal-dialog -->
     </div>
     <!--End Modal-->
+    <div id="loadingSpinner" style="display:none;">
+        <div class="loading-overlay">
+            <div class="loading-content">
+                <div class="loader-ring"></div>
+                <h4>Enviando correo...</h4>
+                <small>Espere un momento</small>
+            </div>
+        </div>
+    </div>
     <!-- PAGE FOOTER -->
     <div class="page-footer">
         <div class="row">

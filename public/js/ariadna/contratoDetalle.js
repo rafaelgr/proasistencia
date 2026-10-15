@@ -12422,23 +12422,39 @@ function initTablaDestinatariosCorreo() {
 }
 
 var sendCorreoActa = function () {
-    var mens = "Se enviará un correo con el acta de recepción + certificacion final, ¿Desea continuar?.";
+    var mens = "Se enviará un correo con el acta de recepción + certificación final, ¿Desea continuar?.";
+
     $.SmartMessageBox({
         title: "<i class='fa fa-info'></i> Mensaje",
         content: mens,
         buttons: '[Aceptar][Cancelar]'
     }, function (ButtonPressed) {
-        if (ButtonPressed === "Aceptar") {
-            llamadaAjax('POST', myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" + vm.contratoId() + "/" + vm.sempresaId() + "/" + vm.erpId(), null, function (err, data) {
-                if (err) { return errorGeneral(err, done); }
-                if (data) {
-                    $('#modalDestinatariosCorreo').modal('hide');
-                }
-            });
-        }
 
-        if (ButtonPressed === "Cancelar") {
-            // no hacemois nada, el usuario ha cancelado la acción
+        if (ButtonPressed === "Aceptar") {
+
+            // Mostrar spinner
+            $('#loadingSpinner').show();
+
+            llamadaAjax(
+                'POST',
+                myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" +
+                vm.contratoId() + "/" + vm.sempresaId() + "/" + vm.erpId(),
+                null,
+                function (err, data) {
+
+                    // Ocultar spinner
+                    $('#loadingSpinner').hide();
+                    if (err) {
+                        return errorGeneral(err, done);
+                    }
+
+                    if (data && data.ok) {
+                        $('#modalDestinatariosCorreo').modal('hide');
+                        mensNormal("Correo enviado correctamente");
+                        cargaTablaDocumentacion();
+                    }
+                }
+            );
         }
     });
 }
@@ -12446,6 +12462,7 @@ var sendCorreoActa = function () {
 var compruebaCorreos = function () {
     if (!vm.erpId() || vm.erpId() == 0) {
         mensError("No se ha generado el contrato en el ERP, no se puede enviar el correo.");
+        return;
     }
 
     llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/comprueba/correos/acta/recepcion/" + vm.contratoId(), null, function (err, data) {
