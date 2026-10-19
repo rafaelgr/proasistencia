@@ -1,230 +1,16 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "1a53697b9dcd4b0d2d9b5f4ae41f8cb2",
+  "ReportGuid": "7b80ba0caaccda2542c2d950023c2885",
   "ReportName": "LiquidacionAgente",
   "ReportAlias": "LiquidacionAgente",
   "ReportFile": "liquidacion_agente_obras.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1792151720000+0200)/",
+  "ReportChanged": "/Date(1792405066000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
   "CalculationMode": "Interpretation",
-  "Dictionary": {
-    "DataSources": {
-      "0": {
-        "Ident": "StiDataTableSource",
-        "Name": "liqAgente",
-        "Alias": "liqAgente",
-        "Columns": {
-          "0": {
-            "Name": "FechaFirmaActa",
-            "NameInSource": "FechaFirmaActa",
-            "Alias": "FechaFirmaActa",
-            "Type": "System.DateTime"
-          },
-          "1": {
-            "Name": "abonado",
-            "NameInSource": "abonado",
-            "Alias": "abonado",
-            "Type": "System.Decimal"
-          },
-          "2": {
-            "Name": "adicionalPagadoAnterior",
-            "NameInSource": "adicionalPagadoAnterior",
-            "Alias": "adicionalPagadoAnterior",
-            "Type": "System.Decimal"
-          },
-          "3": {
-            "Name": "adicionalPagadoPeriodo",
-            "NameInSource": "adicionalPagadoPeriodo",
-            "Alias": "adicionalPagadoPeriodo",
-            "Type": "System.Decimal"
-          },
-          "4": {
-            "Name": "anticipo",
-            "NameInSource": "anticipo",
-            "Alias": "anticipo",
-            "Type": "System.Decimal"
-          },
-          "5": {
-            "Name": "baseAdicional",
-            "NameInSource": "baseAdicional",
-            "Alias": "baseAdicional",
-            "Type": "System.Decimal"
-          },
-          "6": {
-            "Name": "baseAnterior",
-            "NameInSource": "baseAnterior",
-            "Alias": "baseAnterior",
-            "Type": "System.Decimal"
-          },
-          "7": {
-            "Name": "basePeriodo",
-            "NameInSource": "basePeriodo",
-            "Alias": "basePeriodo",
-            "Type": "System.Decimal"
-          },
-          "8": {
-            "Name": "certificacionFinal",
-            "NameInSource": "certificacionFinal",
-            "Alias": "certificacionFinal",
-            "Type": "System.Decimal"
-          },
-          "9": {
-            "Name": "comercialId",
-            "NameInSource": "comercialId",
-            "Alias": "comercialId",
-            "Type": "System.Decimal"
-          },
-          "10": {
-            "Name": "comision",
-            "NameInSource": "comision",
-            "Alias": "comision",
-            "Type": "System.Decimal"
-          },
-          "11": {
-            "Name": "contratoId",
-            "NameInSource": "contratoId",
-            "Alias": "contratoId",
-            "Type": "System.Decimal"
-          },
-          "12": {
-            "Name": "dFecha",
-            "NameInSource": "dFecha",
-            "Alias": "dFecha",
-            "Type": "System.String"
-          },
-          "13": {
-            "Name": "direccion",
-            "NameInSource": "direccion",
-            "Alias": "direccion",
-            "Type": "System.String"
-          },
-          "14": {
-            "Name": "facturado",
-            "NameInSource": "facturado",
-            "Alias": "facturado",
-            "Type": "System.Decimal"
-          },
-          "15": {
-            "Name": "firmaActa",
-            "NameInSource": "firmaActa",
-            "Alias": "firmaActa",
-            "Type": "System.String"
-          },
-          "16": {
-            "Name": "hFecha",
-            "NameInSource": "hFecha",
-            "Alias": "hFecha",
-            "Type": "System.String"
-          },
-          "17": {
-            "Name": "importeObra",
-            "NameInSource": "importeObra",
-            "Alias": "importeObra",
-            "Type": "System.Decimal"
-          },
-          "18": {
-            "Name": "nomCliente",
-            "NameInSource": "nomCliente",
-            "Alias": "nomCliente",
-            "Type": "System.String"
-          },
-          "19": {
-            "Name": "nomComercial",
-            "NameInSource": "nomComercial",
-            "Alias": "nomComercial",
-            "Type": "System.String"
-          },
-          "20": {
-            "Name": "pagadoAnterior20",
-            "NameInSource": "pagadoAnterior20",
-            "Alias": "pagadoAnterior20",
-            "Type": "System.Decimal"
-          },
-          "21": {
-            "Name": "pagadoAnterior30",
-            "NameInSource": "pagadoAnterior30",
-            "Alias": "pagadoAnterior30",
-            "Type": "System.Decimal"
-          },
-          "22": {
-            "Name": "pagadoAnterior50",
-            "NameInSource": "pagadoAnterior50",
-            "Alias": "pagadoAnterior50",
-            "Type": "System.Decimal"
-          },
-          "23": {
-            "Name": "pagadoPeriodo20",
-            "NameInSource": "pagadoPeriodo20",
-            "Alias": "pagadoPeriodo20",
-            "Type": "System.Decimal"
-          },
-          "24": {
-            "Name": "pagadoPeriodo30",
-            "NameInSource": "pagadoPeriodo30",
-            "Alias": "pagadoPeriodo30",
-            "Type": "System.Decimal"
-          },
-          "25": {
-            "Name": "pagadoPeriodo50",
-            "NameInSource": "pagadoPeriodo50",
-            "Alias": "pagadoPeriodo50",
-            "Type": "System.Decimal"
-          },
-          "26": {
-            "Name": "pendienteAbono",
-            "NameInSource": "pendienteAbono",
-            "Alias": "pendienteAbono",
-            "Type": "System.Decimal"
-          },
-          "27": {
-            "Name": "porComer",
-            "NameInSource": "porComer",
-            "Alias": "porComer",
-            "Type": "System.Decimal"
-          },
-          "28": {
-            "Name": "referencia",
-            "NameInSource": "referencia",
-            "Alias": "referencia",
-            "Type": "System.String"
-          },
-          "29": {
-            "Name": "tipoColaborador",
-            "NameInSource": "tipoColaborador",
-            "Alias": "tipoColaborador",
-            "Type": "System.String"
-          },
-          "30": {
-            "Name": "tipoProyecto",
-            "NameInSource": "tipoProyecto",
-            "Alias": "tipoProyecto",
-            "Type": "System.String"
-          },
-          "31": {
-            "Name": "anticipoPendiente",
-            "NameInSource": "anticipoPendiente",
-            "Alias": "anticipoPendiente",
-            "Type": "System.Decimal"
-          }
-        },
-        "NameInSource": "liquidacion_agente_obras.liqAgente"
-      }
-    },
-    "Databases": {
-      "0": {
-        "Ident": "StiJsonDatabase",
-        "Name": "liquidacion_agente_obras",
-        "Alias": "liquidacion_agente_obras",
-        "CastToColumnType": "CastToColumnType",
-        "PathData": "E:\\node_apps\\proasistencia\\public\\reports\\liquidacion_agente_obras.json",
-        "HeadersString": "YyoQVHvZXeyY3LY5ASN05g=="
-      }
-    }
-  },
   "Pages": {
     "0": {
       "Ident": "StiPage",
@@ -2950,6 +2736,11 @@
               "Ident": "StiText",
               "Name": "Text527",
               "ClientRectangle": "13.1,6.8,2.9,0.5",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2957,7 +2748,7 @@
                 "Value": "Total abonado"
               },
               "VertAlignment": "Center",
-              "Font": ";9;;",
+              "Font": ";9;Bold;",
               "Border": "::Double;::Solid;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:252,232,216",
               "TextBrush": "solid:Black",
@@ -3364,7 +3155,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{IIF(liqAgente.abonado >= liqAgente.importeObra, \"SI\", \"NO\")}"
+                "Value": "{IIF(liqAgente.abonado >= liqAgente.certificacionFinal, \"SI\", \"NO\")}"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -3447,6 +3238,11 @@
               "Name": "Text7",
               "Guid": "847c51a80f923a6d34eea84802f5252d",
               "ClientRectangle": "16,6.79,3,0.52",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -3454,7 +3250,7 @@
                 "Value": "{Round(liqAgente.baseAnterior * liqAgente.porComer / 100, 2)+liqAgente.comisionBruta} "
               },
               "VertAlignment": "Center",
-              "Font": ";9;;",
+              "Font": ";9;Bold;",
               "Border": "::Double;::Solid;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:252,232,216",
               "TextBrush": "solid:Black",
