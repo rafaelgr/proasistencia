@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "2bd5deb961554d7fe7b3d7046b27f6d1",
+  "ReportGuid": "5a61bf2d40bd1b3fb0a03e5d2d0c9d82",
   "ReportName": "LiquidacionAgente",
   "ReportAlias": "LiquidacionAgente",
   "ReportFile": "liquidacion_agente_obras.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1792489030000+0200)/",
+  "ReportChanged": "/Date(1792495990000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -3206,6 +3206,17 @@
               "Name": "Text6",
               "Guid": "b1263f08be5c545a8c442f49b068c4c8",
               "ClientRectangle": "16,6.3,3,0.53",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Item": "Expression",
+                  "Expression": {
+                    "Value": "{Math.Round(liqAgente.baseAnterior + liqAgente.basePeriodo, 2) != Math.Round(liqAgente.certificacionFinal, 2) &&liqAgente.importeObra != 0 &&Math.Round(liqAgente.abonado / liqAgente.importeObra * 100, 0) >= 100}"
+                  },
+                  "Font": ";9;Bold;",
+                  "BorderSides": "None"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
