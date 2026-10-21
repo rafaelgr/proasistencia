@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "4159a4fd23071c2ededcb12bd1da96dd",
+  "ReportGuid": "106c04aeaf2170201f43c63d7b8fb144",
   "ReportName": "LiquidacionAgente",
   "ReportAlias": "LiquidacionAgente",
   "ReportFile": "liquidacion_agente_obras.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1789116910000+0200)/",
+  "ReportChanged": "/Date(1792578845000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -130,7 +130,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text408",
-              "ClientRectangle": "0,2.3,2.3,1.2",
+              "ClientRectangle": "0,2.3,2.9,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -157,7 +157,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text411",
-              "ClientRectangle": "2.3,2.3,4.5,1.2",
+              "ClientRectangle": "2.9,2.3,5.3,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -166,7 +166,6 @@
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
-              "Font": ";;Bold;",
               "Border": "Top, Bottom;;;;;;;solid:0,0,0",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -184,7 +183,7 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text414",
-              "ClientRectangle": "6.8,2.3,2.35,1.2",
+              "ClientRectangle": "8.2,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -211,7 +210,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text419",
-              "ClientRectangle": "9.15,2.3,2.35,1.2",
+              "ClientRectangle": "10.4,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -238,7 +237,7 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text424",
-              "ClientRectangle": "11.5,2.3,2.35,1.2",
+              "ClientRectangle": "12.6,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -265,7 +264,7 @@
             "9": {
               "Ident": "StiText",
               "Name": "Text429",
-              "ClientRectangle": "13.85,2.3,2.35,1.2",
+              "ClientRectangle": "14.8,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -292,7 +291,7 @@
             "10": {
               "Ident": "StiText",
               "Name": "Text434",
-              "ClientRectangle": "16.2,2.3,2.35,1.2",
+              "ClientRectangle": "17,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -319,7 +318,7 @@
             "11": {
               "Ident": "StiText",
               "Name": "Text439",
-              "ClientRectangle": "18.55,2.3,1.1,1.2",
+              "ClientRectangle": "19.2,2.3,1,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -346,7 +345,7 @@
             "12": {
               "Ident": "StiText",
               "Name": "Text442",
-              "ClientRectangle": "19.65,2.3,2.85,1.2",
+              "ClientRectangle": "20.2,2.3,2.65,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -373,7 +372,7 @@
             "13": {
               "Ident": "StiText",
               "Name": "Text447",
-              "ClientRectangle": "22.5,2.3,2.5,1.2",
+              "ClientRectangle": "22.85,2.3,2.4,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -400,7 +399,7 @@
             "14": {
               "Ident": "StiText",
               "Name": "Text452",
-              "ClientRectangle": "25,2.3,2.7,1.2",
+              "ClientRectangle": "25.25,2.3,2.5,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -447,7 +446,7 @@
               "Name": "Text409",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0,0,2.3,0.65",
+              "ClientRectangle": "0,0,2.9,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -462,7 +461,7 @@
                 "WordWrap": true
               },
               "Margins": {
-                "Left": 2,
+                "Left": 5,
                 "Right": 0,
                 "Top": 2,
                 "Bottom": 0
@@ -474,7 +473,7 @@
               "Name": "Text412",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.3,0,4.5,0.65",
+              "ClientRectangle": "2.9,0,5.3,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -501,7 +500,7 @@
               "Name": "Text415",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "6.8,0,2.35,0.65",
+              "ClientRectangle": "8.2,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -523,14 +522,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -539,7 +536,7 @@
               "Name": "Text420",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "9.15,0,2.35,0.65",
+              "ClientRectangle": "10.4,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -561,14 +558,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -577,7 +572,7 @@
               "Name": "Text425",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "11.5,0,2.35,0.65",
+              "ClientRectangle": "12.6,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -599,14 +594,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -615,7 +608,7 @@
               "Name": "Text430",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "13.85,0,2.35,0.65",
+              "ClientRectangle": "14.8,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -637,14 +630,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -653,7 +644,7 @@
               "Name": "Text435",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "16.2,0,2.35,0.65",
+              "ClientRectangle": "17,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -675,14 +666,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -691,7 +680,7 @@
               "Name": "Text440",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "18.55,0,1.1,0.65",
+              "ClientRectangle": "19.2,0,1,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -719,7 +708,7 @@
               "Name": "Text443",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "19.65,0,2.85,0.65",
+              "ClientRectangle": "20.2,0,2.65,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -741,14 +730,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -757,12 +744,12 @@
               "Name": "Text448",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "22.5,0,2.5,0.65",
+              "ClientRectangle": "22.85,0,2.4,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{liqAgente.anticipo}"
+                "Value": "{-liqAgente.anticipo}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -779,14 +766,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -795,7 +780,12 @@
               "Name": "Text453",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "25,0,2.7,0.65",
+              "ClientRectangle": "25.25,0,2.5,0.65",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -804,6 +794,7 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
+              "Font": ";;Bold;",
               "Border": "::Solid;::Solid;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:242,242,242",
               "TextBrush": "solid:Black",
@@ -817,14 +808,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             }
@@ -851,7 +840,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text410",
-              "ClientRectangle": "0,0,2.3,0.6",
+              "ClientRectangle": "0,0,2.1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -877,7 +866,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text413",
-              "ClientRectangle": "2.3,0,4.5,0.6",
+              "ClientRectangle": "2.1,0,6.1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -900,7 +889,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text417",
-              "ClientRectangle": "6.8,0,2.35,0.6",
+              "ClientRectangle": "8.2,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -923,21 +912,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "3": {
               "Ident": "StiText",
               "Name": "Text422",
-              "ClientRectangle": "9.15,0,2.35,0.6",
+              "ClientRectangle": "10.4,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -960,21 +947,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "4": {
               "Ident": "StiText",
               "Name": "Text427",
-              "ClientRectangle": "11.5,0,2.35,0.6",
+              "ClientRectangle": "12.6,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -997,21 +982,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "5": {
               "Ident": "StiText",
               "Name": "Text432",
-              "ClientRectangle": "13.85,0,2.35,0.6",
+              "ClientRectangle": "14.8,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1034,21 +1017,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "6": {
               "Ident": "StiText",
               "Name": "Text437",
-              "ClientRectangle": "16.2,0,2.35,0.6",
+              "ClientRectangle": "17,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1071,21 +1052,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "7": {
               "Ident": "StiText",
               "Name": "Text441",
-              "ClientRectangle": "18.55,0,1.1,0.6",
+              "ClientRectangle": "19.2,0,1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1109,7 +1088,7 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text445",
-              "ClientRectangle": "19.65,0,2.85,0.6",
+              "ClientRectangle": "20.2,0,2.65,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1132,26 +1111,24 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "9": {
               "Ident": "StiText",
               "Name": "Text450",
-              "ClientRectangle": "22.5,0,2.5,0.6",
+              "ClientRectangle": "22.85,0,2.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Sum(GrupoResumen,liqAgente.anticipo)}"
+                "Value": "{-Sum(GrupoResumen,liqAgente.anticipo)}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -1169,21 +1146,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "10": {
               "Ident": "StiText",
               "Name": "Text455",
-              "ClientRectangle": "25,0,2.7,0.6",
+              "ClientRectangle": "25.25,0,2.5,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1206,21 +1181,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "11": {
               "Ident": "StiText",
               "Name": "Text457",
-              "ClientRectangle": "0,1.6,27.7,0.5",
+              "ClientRectangle": "0,1.6,28.85,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1246,7 +1219,7 @@
             "12": {
               "Ident": "StiText",
               "Name": "Text458",
-              "ClientRectangle": "0,2.2,27.7,0.4",
+              "ClientRectangle": "0,2.2,28.85,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1272,12 +1245,12 @@
             "13": {
               "Ident": "StiText",
               "Name": "Text459",
-              "ClientRectangle": "0,2.6,27.7,0.4",
+              "ClientRectangle": "0,2.6,28.85,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "20% del importe total del presupuesto inicial, cuando esté firmada el acta de recepción de obra."
+                "Value": "20% de la certificación final (o del contrato si no existe certificación), al firmar el acta."
               },
               "VertAlignment": "Center",
               "Font": ";9;;",
@@ -1298,12 +1271,12 @@
             "14": {
               "Ident": "StiText",
               "Name": "Text460",
-              "ClientRectangle": "0,3,27.7,0.4",
+              "ClientRectangle": "0,3,28.85,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "50% del importe total del presupuesto inicial, cuando la obra esté abonada en un 100%."
+                "Value": "50% de la certificación final (o del contrato si no existe certificación), al cumplir el hito de abono."
               },
               "VertAlignment": "Center",
               "Font": ";9;;",
@@ -1324,12 +1297,12 @@
             "15": {
               "Ident": "StiText",
               "Name": "Text461",
-              "ClientRectangle": "0,3.4,27.7,0.4",
+              "ClientRectangle": "0,3.4,28.85,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Adicional: diferencia de certificación final incluida en la liquidación final."
+                "Value": "Adicional: diferencia entre certificación final e importe del contrato, al liquidar los tres hitos."
               },
               "VertAlignment": "Center",
               "Font": ";9;;",
@@ -1480,7 +1453,7 @@
           "Ident": "StiDataBand",
           "Name": "DataLiqAgente",
           "CanGrow": true,
-          "ClientRectangle": "0,2.85,19,8.25",
+          "ClientRectangle": "0,2.85,19,8.95",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1618,14 +1591,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -1681,21 +1652,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "7": {
               "Ident": "StiText",
               "Name": "Text477",
-              "ClientRectangle": "0,2.3,6.5,0.5",
+              "ClientRectangle": "0,2.5,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1721,7 +1690,7 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text478",
-              "ClientRectangle": "6.5,2.3,3.4,0.5",
+              "ClientRectangle": "6.5,2.5,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1744,21 +1713,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
             "9": {
               "Ident": "StiText",
               "Name": "Text480",
-              "ClientRectangle": "0,2.8,6.5,0.5",
+              "ClientRectangle": "0,3,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1784,7 +1751,7 @@
             "10": {
               "Ident": "StiText",
               "Name": "Text481",
-              "ClientRectangle": "6.5,2.8,3.4,0.5",
+              "ClientRectangle": "6.5,3,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1807,14 +1774,12 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
@@ -1872,7 +1837,7 @@
             "13": {
               "Ident": "StiText",
               "Name": "Text485",
-              "ClientRectangle": "10,1.5,3,0.5",
+              "ClientRectangle": "0,1.9,6.6,0.7",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1897,44 +1862,8 @@
             },
             "14": {
               "Ident": "StiText",
-              "Name": "Text486",
-              "ClientRectangle": "13,1.5,6,0.5",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{liqAgente.certificacionFinal - liqAgente.importeObra}"
-              },
-              "VertAlignment": "Center",
-              "Font": ";9;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Margins": {
-                "Left": 2,
-                "Right": 0,
-                "Top": 2,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
-              },
-              "Type": "Expression"
-            },
-            "15": {
-              "Ident": "StiText",
               "Name": "Text488",
-              "ClientRectangle": "10,2.8,3,0.5",
+              "ClientRectangle": "10,3,3,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1957,10 +1886,10 @@
               },
               "Type": "Expression"
             },
-            "16": {
+            "15": {
               "Ident": "StiText",
               "Name": "Text489",
-              "ClientRectangle": "13,2.8,6,0.5",
+              "ClientRectangle": "13,3,6,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1983,10 +1912,10 @@
               },
               "Type": "Expression"
             },
-            "17": {
+            "16": {
               "Ident": "StiText",
               "Name": "Text490",
-              "ClientRectangle": "0,3.6,6.5,0.5",
+              "ClientRectangle": "0,3.8,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2005,10 +1934,10 @@
               },
               "Type": "Expression"
             },
-            "18": {
+            "17": {
               "Ident": "StiText",
               "Name": "Text491",
-              "ClientRectangle": "6.5,3.6,3.4,0.5",
+              "ClientRectangle": "6.5,3.8,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2030,10 +1959,10 @@
               },
               "Type": "Expression"
             },
-            "19": {
+            "18": {
               "Ident": "StiText",
               "Name": "Text492",
-              "ClientRectangle": "9.9,3.6,3.2,0.5",
+              "ClientRectangle": "9.9,3.8,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2056,10 +1985,10 @@
               },
               "Type": "Expression"
             },
-            "20": {
+            "19": {
               "Ident": "StiText",
               "Name": "Text493",
-              "ClientRectangle": "13.1,3.6,5.9,0.5",
+              "ClientRectangle": "13.1,3.8,5.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2081,10 +2010,10 @@
               },
               "Type": "Expression"
             },
-            "21": {
+            "20": {
               "Ident": "StiText",
               "Name": "Text494",
-              "ClientRectangle": "0,4.1,6.5,0.5",
+              "ClientRectangle": "0,4.3,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2106,10 +2035,10 @@
               },
               "Type": "Expression"
             },
-            "22": {
+            "21": {
               "Ident": "StiText",
               "Name": "Text495",
-              "ClientRectangle": "6.5,4.1,3.4,0.5",
+              "ClientRectangle": "6.5,4.3,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2131,21 +2060,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "23": {
+            "22": {
               "Ident": "StiText",
               "Name": "Text497",
-              "ClientRectangle": "9.9,4.1,3.2,0.5",
+              "ClientRectangle": "9.9,4.3,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2167,26 +2094,24 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "24": {
+            "23": {
               "Ident": "StiText",
               "Name": "Text499",
-              "ClientRectangle": "13.1,4.1,5.9,0.5",
+              "ClientRectangle": "13.1,4.3,2.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "% Abonado ≥ 50%: {IIF(liqAgente.abonado >= liqAgente.importeObra * 0.5, \"Sí\", \"No\")}"
+                "Value": "% Abonado ≥ 50%"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -2203,10 +2128,10 @@
               },
               "Type": "Expression"
             },
-            "25": {
+            "24": {
               "Ident": "StiText",
               "Name": "Text500",
-              "ClientRectangle": "0,4.6,6.5,0.5",
+              "ClientRectangle": "0,4.8,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2228,10 +2153,10 @@
               },
               "Type": "Expression"
             },
-            "26": {
+            "25": {
               "Ident": "StiText",
               "Name": "Text501",
-              "ClientRectangle": "6.5,4.6,3.4,0.5",
+              "ClientRectangle": "6.5,4.8,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2253,21 +2178,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "27": {
+            "26": {
               "Ident": "StiText",
               "Name": "Text503",
-              "ClientRectangle": "9.9,4.6,3.2,0.5",
+              "ClientRectangle": "9.9,4.8,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2289,26 +2212,24 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "28": {
+            "27": {
               "Ident": "StiText",
               "Name": "Text505",
-              "ClientRectangle": "13.1,4.6,5.9,0.5",
+              "ClientRectangle": "13.1,4.8,2.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Acta firmada: {liqAgente.firmaActa}"
+                "Value": "Acta firmada"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -2325,10 +2246,10 @@
               },
               "Type": "Expression"
             },
-            "29": {
+            "28": {
               "Ident": "StiText",
               "Name": "Text506",
-              "ClientRectangle": "0,5.1,6.5,0.5",
+              "ClientRectangle": "0,5.3,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2350,10 +2271,10 @@
               },
               "Type": "Expression"
             },
-            "30": {
+            "29": {
               "Ident": "StiText",
               "Name": "Text507",
-              "ClientRectangle": "6.5,5.1,3.4,0.5",
+              "ClientRectangle": "6.5,5.3,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2375,21 +2296,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "31": {
+            "30": {
               "Ident": "StiText",
               "Name": "Text509",
-              "ClientRectangle": "9.9,5.1,3.2,0.5",
+              "ClientRectangle": "9.9,5.3,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2411,26 +2330,24 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "32": {
+            "31": {
               "Ident": "StiText",
               "Name": "Text511",
-              "ClientRectangle": "13.1,5.1,5.9,0.5",
+              "ClientRectangle": "13.1,5.3,2.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "% Abonado ≥ 100%: {IIF(liqAgente.abonado >= liqAgente.importeObra, \"Sí\", \"No\")}"
+                "Value": "% Abonado ≥ 100%"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -2447,10 +2364,10 @@
               },
               "Type": "Expression"
             },
-            "33": {
+            "32": {
               "Ident": "StiText",
               "Name": "Text512",
-              "ClientRectangle": "0,5.6,6.5,0.5",
+              "ClientRectangle": "0,5.8,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2472,10 +2389,10 @@
               },
               "Type": "Expression"
             },
-            "34": {
+            "33": {
               "Ident": "StiText",
               "Name": "Text513",
-              "ClientRectangle": "6.5,5.6,3.4,0.5",
+              "ClientRectangle": "6.5,5.8,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2497,21 +2414,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "35": {
+            "34": {
               "Ident": "StiText",
               "Name": "Text515",
-              "ClientRectangle": "9.9,5.6,3.2,0.5",
+              "ClientRectangle": "9.9,5.8,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2533,26 +2448,24 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "36": {
+            "35": {
               "Ident": "StiText",
               "Name": "Text517",
-              "ClientRectangle": "13.1,5.6,5.9,0.5",
+              "ClientRectangle": "13.1,5.8,2.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Liquidación final: {IIF(liqAgente.certificacionFinal > 0 && liqAgente.pendienteAbono <= 0, \"Sí\", \"No\")}"
+                "Value": "Liquidación final"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -2569,10 +2482,10 @@
               },
               "Type": "Expression"
             },
-            "37": {
+            "36": {
               "Ident": "StiText",
               "Name": "Text518",
-              "ClientRectangle": "0,6.1,6.5,0.5",
+              "ClientRectangle": "0,6.3,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2595,10 +2508,10 @@
               },
               "Type": "Expression"
             },
-            "38": {
+            "37": {
               "Ident": "StiText",
               "Name": "Text519",
-              "ClientRectangle": "6.5,6.1,3.4,0.5",
+              "ClientRectangle": "6.5,6.3,3.4,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2621,21 +2534,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "39": {
+            "38": {
               "Ident": "StiText",
               "Name": "Text521",
-              "ClientRectangle": "9.9,6.1,3.2,0.5",
+              "ClientRectangle": "9.9,6.3,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2658,23 +2569,24 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "40": {
+            "39": {
               "Ident": "StiText",
               "Name": "Text523",
-              "ClientRectangle": "13.1,6.1,5.9,0.5",
+              "ClientRectangle": "13.1,6.3,2.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Total liquidado"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
@@ -2692,10 +2604,10 @@
               },
               "Type": "Expression"
             },
-            "41": {
+            "40": {
               "Ident": "StiText",
               "Name": "Text524",
-              "ClientRectangle": "0,6.6,9.9,0.5",
+              "ClientRectangle": "0,6.8,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2718,10 +2630,10 @@
               },
               "Type": "Expression"
             },
-            "42": {
+            "41": {
               "Ident": "StiText",
               "Name": "Text525",
-              "ClientRectangle": "9.9,6.6,3.2,0.5",
+              "ClientRectangle": "9.9,6.8,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2744,26 +2656,32 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "43": {
+            "42": {
               "Ident": "StiText",
               "Name": "Text527",
-              "ClientRectangle": "13.1,6.6,5.9,0.5",
+              "ClientRectangle": "13.1,6.8,2.9,0.5",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
+              "Text": {
+                "Value": "Total abonado"
+              },
               "VertAlignment": "Center",
-              "Font": ";9;;",
+              "Font": ";9;Bold;",
               "Border": "::Double;::Solid;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:252,232,216",
               "TextBrush": "solid:Black",
@@ -2778,10 +2696,10 @@
               },
               "Type": "Expression"
             },
-            "44": {
+            "43": {
               "Ident": "StiText",
               "Name": "Text528",
-              "ClientRectangle": "0,7.1,9.9,0.5",
+              "ClientRectangle": "0,7.3,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2804,15 +2722,15 @@
               },
               "Type": "Expression"
             },
-            "45": {
+            "44": {
               "Ident": "StiText",
               "Name": "Text529",
-              "ClientRectangle": "9.9,7.1,3.2,0.5",
+              "ClientRectangle": "9.9,7.3,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{liqAgente.anticipo}"
+                "Value": "{-liqAgente.anticipo}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -2830,21 +2748,19 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             },
-            "46": {
+            "45": {
               "Ident": "StiText",
               "Name": "Text531",
-              "ClientRectangle": "13.1,7.1,5.9,0.5",
+              "ClientRectangle": "13.1,7.3,5.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2864,10 +2780,10 @@
               },
               "Type": "Expression"
             },
-            "47": {
+            "46": {
               "Ident": "StiText",
               "Name": "Text532",
-              "ClientRectangle": "0,7.6,9.9,0.5",
+              "ClientRectangle": "0,7.8,6.5,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2890,10 +2806,10 @@
               },
               "Type": "Expression"
             },
-            "48": {
+            "47": {
               "Ident": "StiText",
               "Name": "Text533",
-              "ClientRectangle": "9.9,7.6,3.2,0.5",
+              "ClientRectangle": "9.9,7.8,3.2,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -2916,21 +2832,466 @@
                 "Bottom": 0
               },
               "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
                 "DecimalSeparator": ",",
                 "DecimalDigits": 2,
                 "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, PositivePattern, NegativePattern, CurrencySymbol",
-                "NegativePattern": 5,
-                "PositivePattern": 1,
-                "Symbol": "€"
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "48": {
+              "Ident": "StiText",
+              "Name": "Text535",
+              "ClientRectangle": "13.1,7.8,5.9,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:242,242,242",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 0
               },
               "Type": "Expression"
             },
             "49": {
               "Ident": "StiText",
-              "Name": "Text535",
-              "ClientRectangle": "13.1,7.6,5.9,0.5",
+              "Name": "TextAntComision",
+              "ClientRectangle": "6.5,6.8,3.4,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Round(liqAgente.baseAnterior * liqAgente.porComer / 100, 2)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "::Double;::Solid;::Solid;::Solid;;;solid:Black",
+              "Brush": "solid:252,232,216",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "50": {
+              "Ident": "StiText",
+              "Name": "TextAntAnticipo",
+              "ClientRectangle": "6.5,7.3,3.4,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{-liqAgente.anticipoAnterior}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "51": {
+              "Ident": "StiText",
+              "Name": "TextAntLiquido",
+              "ClientRectangle": "6.5,7.8,3.4,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Round(liqAgente.baseAnterior * liqAgente.porComer / 100, 2) - liqAgente.anticipoAnterior}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:242,242,242",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "52": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "Guid": "4f38e2c041ece3a2637d53bde9a8785c",
+              "ClientRectangle": "6.6,1.95,3.4,0.7",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(liqAgente.certificacionFinal == null || liqAgente.certificacionFinal == 0, 0, liqAgente.certificacionFinal - liqAgente.importeObra)}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "53": {
+              "Ident": "StiText",
+              "Name": "Text2",
+              "Guid": "4fe79823fce630bfa1d13992c1f5d4c9",
+              "ClientRectangle": "16,4.3,3,0.49",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(liqAgente.abonado >= liqAgente.importeObra * 0.5, \"SI\", \"NO\")}"
+              },
+              "VertAlignment": "Center",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 5,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "Type": "Expression"
+            },
+            "54": {
+              "Ident": "StiText",
+              "Name": "Text3",
+              "Guid": "c0cec13a088b23b292c78dc54e265acb",
+              "ClientRectangle": "16,4.8,3,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqAgente.firmaActa}"
+              },
+              "VertAlignment": "Center",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 5,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "Type": "Expression"
+            },
+            "55": {
+              "Ident": "StiText",
+              "Name": "Text4",
+              "Guid": "3614479b0d080b8c6d2977eb55e80c2f",
+              "ClientRectangle": "16,5.31,3,0.49",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(liqAgente.abonado >= liqAgente.certificacionFinal, \"SI\", \"NO\")}"
+              },
+              "VertAlignment": "Center",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 5,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "Type": "Expression"
+            },
+            "56": {
+              "Ident": "StiText",
+              "Name": "Text5",
+              "Guid": "2756525e7d21440ad9246171c92a6807",
+              "ClientRectangle": "16,5.82,3,0.48",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(liqAgente.certificacionFinal > 0 && liqAgente.pendienteAbono <= 0, \"SI\", \"NO\")}"
+              },
+              "VertAlignment": "Center",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 5,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "Type": "Expression"
+            },
+            "57": {
+              "Ident": "StiText",
+              "Name": "Text6",
+              "Guid": "b1263f08be5c545a8c442f49b068c4c8",
+              "ClientRectangle": "16,6.3,3,0.53",
+              "Conditions": {
+                "0": {
+                  "Ident": "StiCondition",
+                  "Item": "Expression",
+                  "Expression": {
+                    "Value": "{Math.Round(liqAgente.baseAnterior + liqAgente.basePeriodo, 2) != Math.Round(liqAgente.certificacionFinal, 2) &&liqAgente.importeObra != 0 &&Math.Round(liqAgente.abonado / liqAgente.importeObra * 100, 0) >= 100}"
+                  },
+                  "Font": ";9;Bold;",
+                  "BorderSides": "None"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{liqAgente.baseAnterior+liqAgente.basePeriodo}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 2
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "58": {
+              "Ident": "StiText",
+              "Name": "Text7",
+              "Guid": "847c51a80f923a6d34eea84802f5252d",
+              "ClientRectangle": "16,6.79,3,0.52",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{Round(liqAgente.baseAnterior * liqAgente.porComer / 100, 2)+liqAgente.comisionBruta} "
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "::Double;::Solid;::Solid;::Solid;;;solid:Black",
+              "Brush": "solid:252,232,216",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 2
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "59": {
+              "Ident": "StiText",
+              "Name": "TextSaldoEtiqueta",
+              "ClientRectangle": "0,8.3,6.5,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Saldo pendiente de compensar"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:242,242,242",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 0,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "Type": "Expression"
+            },
+            "60": {
+              "Ident": "StiText",
+              "Name": "TextSaldoAnt",
+              "ClientRectangle": "6.5,8.3,3.4,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:242,242,242",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "61": {
+              "Ident": "StiText",
+              "Name": "TextSaldoValor",
+              "ClientRectangle": "9.9,8.3,3.2,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{-liqAgente.anticipoPendiente}"
+              },
+              "HorAlignment": "Right",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Red",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 2,
+                "Right": 2,
+                "Top": 2,
+                "Bottom": 0
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "DecimalSeparator": ",",
+                "DecimalDigits": 2,
+                "GroupSeparator": ".",
+                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
+              },
+              "Type": "Expression"
+            },
+            "62": {
+              "Ident": "StiText",
+              "Name": "TextSaldoResto",
+              "ClientRectangle": "13.1,8.3,5.9,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
