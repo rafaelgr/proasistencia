@@ -1,12 +1,12 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "5a61bf2d40bd1b3fb0a03e5d2d0c9d82",
+  "ReportGuid": "106c04aeaf2170201f43c63d7b8fb144",
   "ReportName": "LiquidacionAgente",
   "ReportAlias": "LiquidacionAgente",
   "ReportFile": "liquidacion_agente_obras.mrt",
   "ReportAuthor": "rafa@myariadna.com",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1792495990000+0200)/",
+  "ReportChanged": "/Date(1792578845000+0200)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -130,7 +130,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text408",
-              "ClientRectangle": "0,2.3,2.1,1.2",
+              "ClientRectangle": "0,2.3,2.9,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -157,7 +157,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text411",
-              "ClientRectangle": "2.1,2.3,3.7,1.2",
+              "ClientRectangle": "2.9,2.3,5.3,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -183,7 +183,7 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text414",
-              "ClientRectangle": "5.8,2.3,2.2,1.2",
+              "ClientRectangle": "8.2,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -210,7 +210,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text419",
-              "ClientRectangle": "8,2.3,2.2,1.2",
+              "ClientRectangle": "10.4,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -237,7 +237,7 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text424",
-              "ClientRectangle": "10.2,2.3,2.2,1.2",
+              "ClientRectangle": "12.6,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -264,7 +264,7 @@
             "9": {
               "Ident": "StiText",
               "Name": "Text429",
-              "ClientRectangle": "12.4,2.3,2.2,1.2",
+              "ClientRectangle": "14.8,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -291,7 +291,7 @@
             "10": {
               "Ident": "StiText",
               "Name": "Text434",
-              "ClientRectangle": "14.6,2.3,2.2,1.2",
+              "ClientRectangle": "17,2.3,2.2,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -318,7 +318,7 @@
             "11": {
               "Ident": "StiText",
               "Name": "Text439",
-              "ClientRectangle": "16.8,2.3,1,1.2",
+              "ClientRectangle": "19.2,2.3,1,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -345,7 +345,7 @@
             "12": {
               "Ident": "StiText",
               "Name": "Text442",
-              "ClientRectangle": "17.8,2.3,2.65,1.2",
+              "ClientRectangle": "20.2,2.3,2.65,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -372,7 +372,7 @@
             "13": {
               "Ident": "StiText",
               "Name": "Text447",
-              "ClientRectangle": "20.45,2.3,2.4,1.2",
+              "ClientRectangle": "22.85,2.3,2.4,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -399,39 +399,12 @@
             "14": {
               "Ident": "StiText",
               "Name": "Text452",
-              "ClientRectangle": "22.85,2.3,2.5,1.2",
+              "ClientRectangle": "25.25,2.3,2.5,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Líquido a\npercibir"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:242,242,242",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Margins": {
-                "Left": 2,
-                "Right": 0,
-                "Top": 2,
-                "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "15": {
-              "Ident": "StiText",
-              "Name": "TextSaldoCabecera",
-              "ClientRectangle": "25.35,2.3,2.5,1.2",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Saldo pendiente\nde compensar"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
@@ -473,7 +446,7 @@
               "Name": "Text409",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0,0,2.1,0.65",
+              "ClientRectangle": "0,0,2.9,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -488,7 +461,7 @@
                 "WordWrap": true
               },
               "Margins": {
-                "Left": 2,
+                "Left": 5,
                 "Right": 0,
                 "Top": 2,
                 "Bottom": 0
@@ -500,7 +473,7 @@
               "Name": "Text412",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "2.1,0,3.7,0.65",
+              "ClientRectangle": "2.9,0,5.3,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -527,7 +500,7 @@
               "Name": "Text415",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "5.8,0,2.2,0.65",
+              "ClientRectangle": "8.2,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -563,7 +536,7 @@
               "Name": "Text420",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "8,0,2.2,0.65",
+              "ClientRectangle": "10.4,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -599,7 +572,7 @@
               "Name": "Text425",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "10.2,0,2.2,0.65",
+              "ClientRectangle": "12.6,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -635,7 +608,7 @@
               "Name": "Text430",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "12.4,0,2.2,0.65",
+              "ClientRectangle": "14.8,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -671,7 +644,7 @@
               "Name": "Text435",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "14.6,0,2.2,0.65",
+              "ClientRectangle": "17,0,2.2,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -707,7 +680,7 @@
               "Name": "Text440",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "16.8,0,1,0.65",
+              "ClientRectangle": "19.2,0,1,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -735,7 +708,7 @@
               "Name": "Text443",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "17.8,0,2.65,0.65",
+              "ClientRectangle": "20.2,0,2.65,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -771,7 +744,7 @@
               "Name": "Text448",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "20.45,0,2.4,0.65",
+              "ClientRectangle": "22.85,0,2.4,0.65",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -807,7 +780,12 @@
               "Name": "Text453",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "22.85,0,2.5,0.65",
+              "ClientRectangle": "25.25,0,2.5,0.65",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -816,45 +794,10 @@
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
+              "Font": ";;Bold;",
               "Border": "::Solid;::Solid;::Solid;::Solid;;;solid:Black",
               "Brush": "solid:242,242,242",
               "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Margins": {
-                "Left": 2,
-                "Right": 2,
-                "Top": 2,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
-              },
-              "Type": "Expression"
-            },
-            "11": {
-              "Ident": "StiText",
-              "Name": "TextSaldoPeriodo",
-              "CanGrow": true,
-              "GrowToHeight": true,
-              "ClientRectangle": "25.35,0,2.5,0.65",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{-liqAgente.anticipoPendiente}"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Border": "::Solid;::Solid;::Solid;::Solid;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Red",
               "TextOptions": {
                 "WordWrap": true
               },
@@ -923,7 +866,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text413",
-              "ClientRectangle": "2.1,0,3.7,0.6",
+              "ClientRectangle": "2.1,0,6.1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -946,7 +889,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text417",
-              "ClientRectangle": "5.8,0,2.2,0.6",
+              "ClientRectangle": "8.2,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -981,7 +924,7 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text422",
-              "ClientRectangle": "8,0,2.2,0.6",
+              "ClientRectangle": "10.4,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1016,7 +959,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text427",
-              "ClientRectangle": "10.2,0,2.2,0.6",
+              "ClientRectangle": "12.6,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1051,7 +994,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text432",
-              "ClientRectangle": "12.4,0,2.2,0.6",
+              "ClientRectangle": "14.8,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1086,7 +1029,7 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text437",
-              "ClientRectangle": "14.6,0,2.2,0.6",
+              "ClientRectangle": "17,0,2.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1121,7 +1064,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text441",
-              "ClientRectangle": "16.8,0,1,0.6",
+              "ClientRectangle": "19.2,0,1,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1145,7 +1088,7 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text445",
-              "ClientRectangle": "17.8,0,2.65,0.6",
+              "ClientRectangle": "20.2,0,2.65,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1180,7 +1123,7 @@
             "9": {
               "Ident": "StiText",
               "Name": "Text450",
-              "ClientRectangle": "20.45,0,2.4,0.6",
+              "ClientRectangle": "22.85,0,2.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1215,7 +1158,7 @@
             "10": {
               "Ident": "StiText",
               "Name": "Text455",
-              "ClientRectangle": "22.85,0,2.5,0.6",
+              "ClientRectangle": "25.25,0,2.5,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1359,7 +1302,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Adicional: 30% de la diferencia entre certificación final e importe del contrato, al liquidar los tres hitos."
+                "Value": "Adicional: diferencia entre certificación final e importe del contrato, al liquidar los tres hitos."
               },
               "VertAlignment": "Center",
               "Font": ";9;;",
@@ -1374,41 +1317,6 @@
                 "Right": 0,
                 "Top": 2,
                 "Bottom": 0
-              },
-              "Type": "Expression"
-            },
-            "16": {
-              "Ident": "StiText",
-              "Name": "TextSaldoTotal",
-              "ClientRectangle": "25.35,0,2.5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{-Sum(GrupoResumen,liqAgente.anticipoPendiente)}"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": ";;Bold;",
-              "Border": "::Double;::Solid;::Solid;::Solid;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Margins": {
-                "Left": 2,
-                "Right": 2,
-                "Top": 2,
-                "Bottom": 0
-              },
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "DecimalSeparator": ",",
-                "DecimalDigits": 2,
-                "GroupSeparator": ".",
-                "State": "DecimalDigits, DecimalSeparator, GroupSeparator, GroupSize, NegativePattern"
               },
               "Type": "Expression"
             }
