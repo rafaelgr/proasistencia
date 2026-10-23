@@ -1273,11 +1273,12 @@
                                                                             </div>
                                                                             <div class="row">
                                                                                 <section class="col col-md-12"
-                                                                                    style="border:solid; border-width:1px;">
+                                                                                    style="border:solid; border-width:1px">
                                                                                     <header>Dirección facultativa
                                                                                     </header>
-                                                                                    <div class="row">
-                                                                                        <section class="col col-md-5">
+                                                                                    <div class="row"
+                                                                                        style="margin-top: 15px;">
+                                                                                        <section class="col col-md-2">
                                                                                             <label
                                                                                                 class="label">Nombre</label>
                                                                                             <label class="input">
@@ -1296,7 +1297,7 @@
                                                                                                     data-bind="value: DFncolegiado" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        <section class="col col-md-5">
+                                                                                        <section class="col col-md-2">
                                                                                             <label
                                                                                                 class="label">Profesion</label>
                                                                                             <label class="input">
@@ -1306,11 +1307,7 @@
                                                                                                     data-bind="value: DFprofesion" />
                                                                                             </label>
                                                                                         </section>
-                                                                                        
-                                                                                        
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                       <section class="col col-md-8">
+                                                                                        <section class="col col-md-2">
                                                                                             <label
                                                                                                 class="label">Correo</label>
                                                                                             <label class="input">
@@ -1320,10 +1317,21 @@
                                                                                             </label>
                                                                                         </section>
                                                                                         <section class="col col-md-2">
-                                                                                            <label class="label"
-                                                                                                style="margin-top: 15%;">
-                                                                                                Firma
-                                                                                                del acta DF</label>
+                                                                                            <label class="label">
+                                                                                                Fecha de firma del
+                                                                                                acta</label>
+                                                                                            <label class="input">
+                                                                                                <input
+                                                                                                    id="txtFechaFirmaActaDF"
+                                                                                                    name="txtFechaFirmaActaDF"
+                                                                                                    data-bind="value: fechaFirmaActaDF"
+                                                                                                    class="datepicker"
+                                                                                                    data-dateformat="dd/mm/yy" />
+                                                                                            </label>
+                                                                                        </section>
+                                                                                        <section class="col col-md-1">
+                                                                                            <label class="label">
+                                                                                                Firma acta DF</label>
                                                                                             <div id="radioActaDF">
                                                                                                 <div><input type='radio'
                                                                                                         id='radioFirmaActaDF1'
@@ -1347,21 +1355,20 @@
 
                                                                                             </div>
                                                                                         </section>
-                                                                                        <section class="col col-md-2">
-                                                                                            <label class="label"
-                                                                                                style="margin-top: 10%;">Fecha
-                                                                                                de firma del
-                                                                                                acta</label>
-                                                                                            <label class="input">
-                                                                                                <input
-                                                                                                    id="txtFechaFirmaActaDF"
-                                                                                                    name="txtFechaFirmaActaDF"
-                                                                                                    data-bind="value: fechaFirmaActaDF"
-                                                                                                    class="datepicker"
-                                                                                                    data-dateformat="dd/mm/yy" />
-                                                                                            </label>
+                                                                                        <section class="col col-md-1">
+                                                                                            <div class="pull-right">
+                                                                                                <button
+                                                                                                    id="btnImprimirActaRecepcionDF"
+                                                                                                    title="Imprimir acta de recepción DF"
+                                                                                                    class="btn custom-btn2 btn-circle btn-lg">
+                                                                                                    <i
+                                                                                                        class="fa fa-lg fa-file-text-o"></i>
+                                                                                                </button>
+                                                                                            </div>
                                                                                         </section>
+
                                                                                     </div>
+
                                                                                 </section>
 
                                                                             </div>

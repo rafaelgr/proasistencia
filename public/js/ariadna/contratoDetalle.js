@@ -96,6 +96,7 @@ function initForm() {
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#btnImprimirActaRecepcion").click(compruebaDiferencia);
+    $("#btnImprimirActaRecepcionDF").click(imprimirActaRecepcionDF);
     $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
@@ -11239,9 +11240,22 @@ var imprimirActaRecepcion = function () {
     printActaRecepcion();
 }
 
+var imprimirActaRecepcionDF = function () {
+    if (!certFinal) {
+        mensError('No hay certificación final');
+        return;
+    }
+    printActaRecepcionDF();
+}
+
 
 function printActaRecepcion() {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcion=true&ContratoInteresesId=" + vm.contratoInteresesId();
+    window.open(url, '_blank');
+}
+
+function printActaRecepcionDF() {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcionDF=true&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_blank');
 }
 

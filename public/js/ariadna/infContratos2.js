@@ -170,6 +170,7 @@ function initForm() {
             vm.esAdicional(gup('esAdicional'));
             vm.esContrato(gup('esContrato'));
             vm.esRecepcion(gup('esRecepcion'));
+            vm.esRecepcionDF(gup('esRecepcionDF'));
             vm.empresaId(gup('EmpresaId'));
             vm.contratoAdicionalId(gup('contratoAdicionalId'));
             verb = "GET";
@@ -184,7 +185,7 @@ function initForm() {
                 verb = "POST";
             }
 
-            if (vm.esRecepcion()) {
+            if (vm.esRecepcion() || vm.esRecepcionDF()) {
                 url = myconfig.apiUrl + "/api/contratos/obtiene/objeto/contrato/acta/recepcion/" + vm.contratoId();
                 verb = "GET";
             }
@@ -259,6 +260,7 @@ function admData() {
     self.esAdicional = ko.observable();
     self.esContrato = ko.observable();
     self.esRecepcion = ko.observable();
+    self.esRecepcionDF = ko.observable();
     self.contratoAdicionalId = ko.observable();
     //
     self.posiblesContratos = ko.observableArray([]);
@@ -447,6 +449,10 @@ function obtainReportJson(obj) {
     if (vm.esRecepcion()) {
          if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
          if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
+    }
+    if (vm.esRecepcionDF()) {
+         if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas_DF.mrt";
+         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita_DF.mrt";
     }
     if(!file) return mensError("No se ha encontrado el archivo de informe.");
  
