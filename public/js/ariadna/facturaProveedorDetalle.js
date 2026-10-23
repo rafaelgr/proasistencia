@@ -661,6 +661,12 @@ function loadData(data) {
     loadDepartamentos(data.departamentoId);
     loadTiposOperacion(data.tipoOperacionId);
     loadTiposIntracomunitarias(data.codintra)
+    if (data.tipoOperacionId == 2) {
+        loadTiposIntracomunitarias(data.codintra)
+    } else {
+        loadTiposIntracomunitarias(null);
+        $('#cmbTiposIntracomunitaria').prop('disabled', true);
+    }
 
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);

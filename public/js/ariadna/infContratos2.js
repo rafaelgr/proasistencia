@@ -438,17 +438,18 @@ var rptContratosParametrosJson = function () {
 function obtainReportJson(obj) {
 
     let file = null
-    if(vm.esContrato()) {
+    if (vm.esContrato()) {
         if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
+        if (vm.empresaId() == 13 && vm.contratoId()) file = "/reports/contrato_misuk.mrt";
     }
     if (vm.esAdicional()) {
-         if (vm.empresaId() == 2 ) file = "/reports/contrato_proas_adicional.mrt";
-         if (vm.empresaId() == 7) file = "/reports/contrato_reabita_adicional.mrt";
+        if (vm.empresaId() == 2) file = "/reports/contrato_proas_adicional.mrt";
+        if (vm.empresaId() == 7) file = "/reports/contrato_reabita_adicional.mrt";
     }
     if (vm.esRecepcion()) {
-         if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
-         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
+        if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas.mrt";
+        if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/acta_recepcion_reabita.mrt";
     }
     if (vm.esRecepcionDF()) {
          if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/acta_recepcion_proas_DF.mrt";
@@ -466,7 +467,7 @@ function obtainReportJson(obj) {
 
     // Cargar el reporte desde archivo .mrt
     report.loadFile(file);
-    report.culture = "es-ES";  
+    report.culture = "es-ES";
 
     // Crear DataSet y registrar
     const dataSet = new Stimulsoft.System.Data.DataSet("datos_contrato");
@@ -489,11 +490,11 @@ function obtainReportJson(obj) {
     // Asignar y renderizar
     viewer.report = report;
 
-  /*  const jsonString = JSON.stringify(obj, null, 2);
-      const blob = new Blob([jsonString], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'datosReporte.json';
-      link.click();  */
+    /*  const jsonString = JSON.stringify(obj, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'datosReporte.json';
+        link.click();  */
 }
 
