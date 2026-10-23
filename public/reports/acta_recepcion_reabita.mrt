@@ -248,7 +248,7 @@
                 "WordWrap": true
               },
               "AllowHtmlTags": true,
-              "LineSpacing": 1.5,
+              "LineSpacing": 1.2,
               "Type": "Expression"
             },
             "1": {
@@ -279,12 +279,12 @@
               "Ident": "StiText",
               "Name": "Text9",
               "Guid": "35052808a12da06cfe6f1422b24d23af",
-              "ClientRectangle": "0.6,0,16.8,0.65",
+              "ClientRectangle": "0.6,0.04,16.8,0.7",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<b style=\"text-align: center;\"><font size=\"14\">ACTA DE RECEPCIÓN DE OBRA</font></b>"
+                "Value": "<b style=\"text-align: center;\"><font size=\"15\">ACTA DE RECEPCIÓN DE OBRA</font></b>"
               },
               "HorAlignment": "Center",
               "Font": ";10;;",
@@ -329,7 +329,7 @@
                 "Value": "<div style=\"font-family: Tahoma; text-align:left;\"><b style=\"\"><font size=\"10\">EXPONEN:</font></b></div>"
               },
               "VertAlignment": "Center",
-              "Font": ";11;Bold;",
+              "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:255,255,255",
               "Brush": "solid:255,255,255",
               "TextBrush": "solid:0,0,0",
@@ -431,7 +431,10 @@
               "LineSpacing": 1.15,
               "Type": "Expression"
             }
-          }
+          },
+          "DataSourceName": "datos_contrato_pagos_narrativa",
+          "CanShrink": true,
+          "PrintIfEmpty": false
         },
         "6": {
           "Ident": "StiGroupHeaderBand",
@@ -573,7 +576,10 @@
               "LineSpacing": 1.15,
               "Type": "Expression"
             }
-          }
+          },
+          "DataSourceName": "datos_contrato_ajustes",
+          "CanShrink": true,
+          "PrintIfEmpty": false
         },
         "10": {
           "Ident": "StiDataBand",
