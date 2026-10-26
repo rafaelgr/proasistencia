@@ -11983,7 +11983,7 @@ var compruebaDiferencia = function () {
 
 }
 
-function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
+async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     diferencia = parseFloat(diferencia) || 0;
     porcentajeIva = parseFloat(porcentajeIva) || 0;
@@ -12007,6 +12007,7 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     let prefacturasAMarcar = [];
     let totalCompensadoBase = 0;
+    let totalCompensadoBaseIntereses = 0;
 
     for (let i = 0; i < candidatas.length; i++) {
 
@@ -12065,6 +12066,47 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
 
+    let idsPrefacturasIntereses = (prefacturasAMarcar || [])
+        .map(p => p.prefacturaInteresesId)
+        .filter(id => id != null);
+
+    //si hay prefacturas de intereses
+
+    if (idsPrefacturasIntereses.length > 0) {
+        let p = await buscarIntereses(idsPrefacturasIntereses)
+        if (!p) {
+            mensError("fallo al recuperar las prefacturas de intereses");
+            return;
+        }
+        for (let h = 0; h < p.length; h++) {
+
+            let importe = parseFloat(p[h].total || 0);
+            importe = Math.round(importe * 100) / 100;
+
+            // Se obtiene la base individual de cada letra
+            let importeBase = importe;
+
+            /*
+             * Se mantienen más decimales internamente para evitar acumular
+             * errores de redondeo al sumar muchas letras.
+             */
+            importeBase = Math.round(importeBase * 10000) / 10000;
+
+            totalCompensadoBaseIntereses += importeBase
+        }
+    }
+
+    let mensajeIntereses = "";
+
+    if (idsPrefacturasIntereses.length > 0) {
+        mensajeIntereses =
+            "<br><br>Además, se marcarán " +
+            idsPrefacturasIntereses.length +
+            " letra(s) de intereses como no facturadas, por un importe total de " +
+            numeral(totalCompensadoBaseIntereses).format('0,0.00') +
+            " € sin IVA.";
+    }
+
     $.SmartMessageBox({
         title: "Ajustar prefacturas",
         content:
@@ -12073,6 +12115,10 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
             " prefactura(s) como no facturadas por un importe total de " +
             numeral(totalCompensadoBase).format('0,0.00') +
             " € sin IVA. " +
+            
+            mensajeIntereses +
+
+            "<br><br>" +
             (
                 restoBase > 0
                     ? "Además, se generará un abono con una base de " +
@@ -12090,7 +12136,8 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
         }
 
         let data = {
-            prefacturasIds: idsPrefacturas
+            prefacturasIds: idsPrefacturas,
+            prefacturasInteresesIds: idsPrefacturasIntereses
         };
 
         llamadaAjax(
@@ -12133,6 +12180,23 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
                 actualizaCobrosPlanificacion(vm.contratoId());
 
                 imprimirActaRecepcion();
+            }
+        );
+    });
+}
+
+async function buscarIntereses(ids) {
+    return new Promise((resolve, reject) => {
+        llamadaAjax(
+            "POST",
+            "/api/prefacturas/devuelve/varias/prefacturas/",
+            ids,
+            function (err, prefacturas) {
+                if (err) {
+                    return reject(null);
+                }
+
+                resolve(prefacturas);
             }
         );
     });
