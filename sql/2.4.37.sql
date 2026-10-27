@@ -1,0 +1,2 @@
+ALTER TABLE prefacturas
+ADD COLUMN devueltaActa TINYINT(1) NOT NULL DEFAULT 0;

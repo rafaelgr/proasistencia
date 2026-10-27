@@ -251,6 +251,10 @@ function initForm() {
         return false;
     });
 
+    $("#correoActa-form").submit(function () {
+        return false;
+    })
+
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
     $("#cmbEmpresas").select2().on('change', function (e) {
@@ -1270,6 +1274,7 @@ function admData() {
 
     //
     self.erpId = ko.observable();
+    self.correoActa = ko.observable()
 
 }
 
@@ -12115,7 +12120,7 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
             " prefactura(s) como no facturadas por un importe total de " +
             numeral(totalCompensadoBase).format('0,0.00') +
             " € sin IVA. " +
-            
+
             mensajeIntereses +
 
             "<br><br>" +
@@ -12137,7 +12142,8 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
 
         let data = {
             prefacturasIds: idsPrefacturas,
-            prefacturasInteresesIds: idsPrefacturasIntereses
+            prefacturasInteresesIds: idsPrefacturasIntereses,
+            devueltaActa: 1
         };
 
         llamadaAjax(
@@ -12500,6 +12506,7 @@ function initTablaDestinatariosCorreo() {
 }
 
 var sendCorreoActa = function () {
+
     var mens = "Se enviará un correo con el acta de recepción + certificación final, ¿Desea continuar?.";
 
     $.SmartMessageBox({
@@ -12516,26 +12523,77 @@ var sendCorreoActa = function () {
             llamadaAjax(
                 'POST',
                 myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" +
-                vm.contratoId() + "/" + vm.sempresaId() + "/" + vm.erpId(),
+                vm.contratoId() + "/" +
+                vm.sempresaId() + "/" +
+                vm.erpId() + "/" +
+                vm.correoActa(),
                 null,
                 function (err, data) {
 
                     // Ocultar spinner
                     $('#loadingSpinner').hide();
+
+                    // ==========================================
+                    // ERROR GENERAL DE LA API
+                    // ==========================================
+
                     if (err) {
-                        return errorGeneral(err, done);
+                        return errorGeneral(err);
                     }
 
-                    if (data && data.ok) {
-                        $('#modalDestinatariosCorreo').modal('hide');
-                        mensNormal("Correo enviado correctamente");
-                        cargaTablaDocumentacion();
+                    if (!data) {
+                        return mensError("No se ha recibido respuesta del servidor.");
                     }
+
+                    // ==========================================
+                    // TODOS LOS CORREOS ENVIADOS
+                    // ==========================================
+
+                    if (data.ok) {
+
+                        $('#modalCorreoActa').modal('hide');
+
+                        mensNormal(data.mensaje);
+
+                        cargaTablaDocumentacion();
+
+                    }
+                    // ==========================================
+                    // ENVÍO PARCIAL
+                    // ==========================================
+
+                    else if (data.parcial) {
+
+                        $('#modalCorreoActa').modal('hide');
+
+                        $.SmartMessageBox({
+                            title: "<i class='fa fa-warning'></i> Envío parcial",
+                            content: data.mensaje.replace(/\n/g, '<br>'),
+                            buttons: '[Aceptar]'
+                        });
+
+                        cargaTablaDocumentacion();
+
+                    }
+                    // ==========================================
+                    // NINGÚN CORREO ENVIADO
+                    // ==========================================
+
+                    else {
+
+                        $.SmartMessageBox({
+                            title: "<i class='fa fa-exclamation-triangle'></i> No se ha realizado el envío",
+                            content: data.mensaje.replace(/\n/g, '<br>'),
+                            buttons: '[Aceptar]'
+                        });
+
+                    }
+
                 }
             );
         }
     });
-}
+};
 
 var compruebaCorreos = function () {
     if (!vm.erpId() || vm.erpId() == 0) {
@@ -12551,7 +12609,10 @@ var compruebaCorreos = function () {
             });
             loadTablaDestinatariosCorreo(data)
         } else {
-            sendCorreoActa();
+            $('#modalCorreoActa').modal({
+                show: 'true'
+            });
+            //sendCorreoActa();
         }
     });
 }

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "1a2ec2ee9805bcf4177727e26d120c59",
+  "ReportGuid": "90c9f3c7542a134bf0ed476a90b44ca4",
   "ReportName": "acta_recepcion_reabita",
   "ReportAlias": "acta_recepcion_reabita",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1782213667000+0200)/",
+  "ReportChanged": "/Date(1793094684000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -67,7 +67,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,32.26,18.2,0.5",
+          "ClientRectangle": "0,37.72,18.2,0.5",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -106,7 +106,7 @@
           "Guid": "4b34768ba2f07e5acd6aee57acbc2baf",
           "PrintOn": "OnlyLastPage",
           "CanGrow": true,
-          "ClientRectangle": "0,27.26,18.2,4.2",
+          "ClientRectangle": "0,32.72,18.2,4.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -387,6 +387,7 @@
         "5": {
           "Ident": "StiDataBand",
           "Name": "DataBand4",
+          "CanShrink": true,
           "CanGrow": true,
           "ClientRectangle": "0,9.55,18.2,0.8",
           "Expressions": {
@@ -432,9 +433,7 @@
               "Type": "Expression"
             }
           },
-          "DataSourceName": "datos_contrato_pagos_narrativa",
-          "CanShrink": true,
-          "PrintIfEmpty": false
+          "DataSourceName": "datos_contrato_pagos_narrativa"
         },
         "6": {
           "Ident": "StiGroupHeaderBand",
@@ -527,6 +526,7 @@
         "9": {
           "Ident": "StiDataBand",
           "Name": "DataBand7",
+          "CanShrink": true,
           "CanGrow": true,
           "ClientRectangle": "0,14.4,18.2,0.6",
           "Expressions": {
@@ -577,16 +577,71 @@
               "Type": "Expression"
             }
           },
-          "DataSourceName": "datos_contrato_ajustes",
-          "CanShrink": true,
-          "PrintIfEmpty": false
+          "DataSourceName": "datos_contrato_ajustes"
         },
         "10": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand8",
+          "Guid": "5ccff0481da44f9b13f9dfc9e03aebf7",
+          "CanShrink": true,
+          "CanGrow": true,
+          "ClientRectangle": "0,15.8,18.2,0.6",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text14",
+              "Guid": "a47a8ca8ac40bee665868e45fe9f438e",
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "ClientRectangle": "0.6,0.2,16.8,0.4",
+              "Expressions": {
+                "0": {
+                  "Name": "Font"
+                }
+              },
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "<ul style=\"\">\n<li style=\"\"><font face=\"Tahoma\">{datos_contrato_letras_devueltas_narrativa.textoNarrativa}</font></li><font face=\"Tahoma\">\n</font></ul><font face=\"Tahoma\">\n</font>"
+              },
+              "HorAlignment": "Width",
+              "Font": ";10;;",
+              "Border": ";;;;;;;solid:255,255,255",
+              "Brush": "solid:255,255,255",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "AllowHtmlTags": true,
+              "Margins": {
+                "Left": 17,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "LineSpacing": 1.15,
+              "Type": "Expression"
+            }
+          },
+          "DataSourceName": "datos_contrato_ajustes"
+        },
+        "11": {
           "Ident": "StiDataBand",
           "Name": "DataBand6",
           "Guid": "f75d3f848f74ec1b9c248a8bc6c26789",
           "CanGrow": true,
-          "ClientRectangle": "0,15.8,18.2,2.2",
+          "ClientRectangle": "0,17.2,18.2,2.2",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -626,12 +681,12 @@
             }
           }
         },
-        "11": {
+        "12": {
           "Ident": "StiDataBand",
           "Name": "DataBand10",
           "Guid": "af5d80e61e0f55a778de1e2d45241001",
           "CanGrow": true,
-          "ClientRectangle": "0,18.8,18.2,2.2",
+          "ClientRectangle": "0,20.2,18.2,2.2",
           "Expressions": {
             "0": {
               "Name": "CountData"

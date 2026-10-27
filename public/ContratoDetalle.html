@@ -6082,6 +6082,50 @@
         <!-- /.modal-dialog -->
     </div>
     <!--End Modal-->
+    <div class="modal fade" id="modalCorreoActa" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog" style="width: 380px; margin: 30px auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h5 class="modal-title"> CORREO ACTA + CERT. FINAL</h5>
+                </div>
+                <div class="modal-body no-padding">
+                    <form id="correoActa-form" class="smart-form">
+                        <fieldset>
+                            <section class="col col-md-12">
+                                <label class="label" style="font-weight: bold;"> Enviar correo</label>
+                                <div id="radioCorreoActa">
+                                    <div><input type='radio' id='radioCorreoActa1' name='firmaActaGroup' value='0'
+                                            data-bind="checked: correoActa" />
+                                        Al cliente y la DF </div>
+                                    <div><input type='radio' id='radioCorreoActa2' name='firmaActaGroup' value='1'
+                                            data-bind="checked: correoActa" />
+                                        Al cliente</div>
+                                    <div><input type='radio' id='radioCorreoActa3' name='firmaActaGroup' value='2'
+                                            data-bind="checked: correoActa" />
+                                        A la DF</div>
+                                </div>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button id="btnAceptarEnvio" class="btn btn-primary" onclick="sendCorreoActa()">
+                                Aceptar
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <div id="loadingSpinner" style="display:none;">
         <div class="loading-overlay">
             <div class="loading-content">

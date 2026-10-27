@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "2423d38348e088ee9efde2d3671f39fa",
+  "ReportGuid": "0d2d5838607d5280ed607be42753572e",
   "ReportName": "acta_recepcion_proas",
   "ReportAlias": "acta_recepcion_proas",
   "ReportFile": "acta_recepcion_proas.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1782213368000+0200)/",
+  "ReportChanged": "/Date(1793095972000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -67,7 +67,7 @@
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,41.92,18,0.8",
+          "ClientRectangle": "0,47.26,18,0.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -104,7 +104,7 @@
           "Guid": "4b34768ba2f07e5acd6aee57acbc2baf",
           "PrintOn": "OnlyLastPage",
           "CanGrow": true,
-          "ClientRectangle": "0,36.92,18,4.2",
+          "ClientRectangle": "0,42.26,18,4.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -479,9 +479,60 @@
         },
         "8": {
           "Ident": "StiDataBand",
+          "Name": "DataBand2",
+          "Guid": "1b80aaf9b84bbf80c2d8b948fb80565e",
+          "CanGrow": true,
+          "ClientRectangle": "0,13.4,18,0.6",
+          "Expressions": {
+            "0": {
+              "Name": "CountData"
+            }
+          },
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "7aa6aef528c62d14821badb0cc98090c",
+              "CanShrink": true,
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "MinSize": "0,0.1",
+              "ClientRectangle": "0.2,0.15,17.2,0.35",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{datos_contrato_letras_devueltas_narrativa.textoNarrativa}"
+              },
+              "HorAlignment": "Width",
+              "Font": "Tahoma;9;;",
+              "Border": ";;;;;;;solid:31,78,121",
+              "Brush": "solid:",
+              "TextBrush": "solid:45,45,45",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 8,
+                "Right": 0,
+                "Top": 0,
+                "Bottom": 0
+              },
+              "LineSpacing": 1.15,
+              "Type": "Expression"
+            }
+          }
+        },
+        "9": {
+          "Ident": "StiDataBand",
           "Name": "DataBand3",
           "CanGrow": true,
-          "ClientRectangle": "0,13.4,18,4",
+          "ClientRectangle": "0,14.8,18,4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -574,12 +625,12 @@
           },
           "Columns": 2
         },
-        "9": {
+        "10": {
           "Ident": "StiDataBand",
           "Name": "DataBand6",
           "Guid": "f409c93f1e34bf66a8fd8eb7ba3ca0ed",
           "CanGrow": true,
-          "ClientRectangle": "0,18.2,18,1.4",
+          "ClientRectangle": "0,19.6,18,1.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -621,18 +672,13 @@
             }
           }
         },
-        "10": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand11",
+        "11": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand1",
           "CanGrow": true,
-          "ClientRectangle": "0,20.4,18,0.8",
-          "Expressions": {
-            "0": {
-              "Name": "CountData"
-            }
-          },
+          "ClientRectangle": "0,21.8,18,0.8",
           "Interaction": {
-            "Ident": "StiBandInteraction"
+            "Ident": "StiInteraction"
           },
           "Border": ";;;;;;;solid:Black",
           "Brush": "solid:",
@@ -640,7 +686,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text19",
-              "ClientRectangle": "0.4,0.15,17.4,0.6",
+              "ClientRectangle": "0.4,0.07,17.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -656,11 +702,11 @@
             }
           }
         },
-        "11": {
+        "12": {
           "Ident": "StiDataBand",
           "Name": "DataBand5",
           "CanGrow": true,
-          "ClientRectangle": "0,22,18,4.4",
+          "ClientRectangle": "0,23.4,18,4.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
@@ -702,12 +748,12 @@
             }
           }
         },
-        "12": {
+        "13": {
           "Ident": "StiDataBand",
           "Name": "DataBand10",
           "Guid": "af5d80e61e0f55a778de1e2d45241001",
           "CanGrow": true,
-          "ClientRectangle": "0,27.2,18,1.4",
+          "ClientRectangle": "0,28.6,18,1.4",
           "Expressions": {
             "0": {
               "Name": "CountData"
