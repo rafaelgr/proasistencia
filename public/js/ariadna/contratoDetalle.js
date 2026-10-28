@@ -1522,6 +1522,21 @@ function loadData(data) {
         });
     }
 
+    //buscamos los correos
+    if (data.tipoContratoId === 8) {
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/recupera/correos/acta-recepcion/contrato/" + data.contratoId, null, function (err, correos) {
+            if (err) return;
+            const hayCorreoCliente = correos.some(
+                correo => correo.tipoCorreo === 'ACTA_RECEPCION'
+            );
+
+            const hayCorreoDF = correos.some(
+                correo => correo.tipoCorreo === 'ACTA_RECEPCION_DF'
+            );
+            if(hayCorreoDF && !hayCorreoCliente) mensAlerta("Se envió un correo a la dirección facultativa pero no al cliente!!!")
+        });
+    }
+
 }
 
 
