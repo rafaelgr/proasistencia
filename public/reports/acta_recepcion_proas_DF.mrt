@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "eef96e44ee9b1b9d5a77763bfc747002",
+  "ReportGuid": "649c12fb235b90480a4985ca322922f5",
   "ReportName": "acta_recepcion_proas",
   "ReportAlias": "acta_recepcion_proas",
   "ReportFile": "acta_recepcion_proas_DF.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1791976504000+0200)/",
+  "ReportChanged": "/Date(1793799544000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -302,7 +302,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; text-align: right;\">\n  <font size=\"9\">\n    <font face=\"Tahoma\">\n      <font style=\"letter-spacing: -0.133333px;\">\n        <span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t</span>&nbsp; En Madrid a</font><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.fechaActual}</span>\n    </font>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"9\">\n    <span style=\"letter-spacing: -0.133333px;\">\n      <font face=\"Tahoma\"><b>DATOS DE LA OBRA</b></font>\n    </span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"9\">\n    <span style=\"letter-spacing: -0.133333px;\"><br></span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\"><br></div>\n"
+                "Value": "<div style=\"font-family: Tahoma; text-align: right;\">\n  <font size=\"10\">\n    <font face=\"Tahoma\">\n      <font style=\"letter-spacing: -0.133333px;\">\n        <span style=\"white-space: pre;\">\t\t\t\t\t\t\t\t\t</span>&nbsp; En Madrid a</font><span style=\"letter-spacing: -0.133333px;\">&nbsp;</span><span style=\"letter-spacing: -0.133333px;\">{datos_contrato.</span></font></font><span style=\"font-size: small; letter-spacing: -0.133333px;\">fechaCertFinal</span><font size=\"10\"><font face=\"Tahoma\"><span style=\"letter-spacing: -0.133333px;\">}</span>\n    </font>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"10\">\n    <span style=\"letter-spacing: -0.133333px;\">\n      <font face=\"Tahoma\"><b>DATOS DE LA OBRA</b></font>\n    </span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\">\n  <font size=\"10\">\n    <span style=\"letter-spacing: -0.133333px;\"><br></span>\n  </font>\n</div>\n\n<div style=\"font-family: Tahoma; text-align: justify;\"><br></div>\n"
               },
               "HorAlignment": "Right",
               "Font": "Tahoma;9;;",

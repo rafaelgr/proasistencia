@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2025.4.3",
-  "ReportGuid": "90c9f3c7542a134bf0ed476a90b44ca4",
+  "ReportGuid": "6d1fc735a3cf2027ddb9e57106fa1d88",
   "ReportName": "acta_recepcion_reabita",
   "ReportAlias": "acta_recepcion_reabita",
   "ReportFile": "acta_recepcion_reabita.mrt",
   "ReportCreated": "/Date(0+0100)/",
-  "ReportChanged": "/Date(1793094684000+0100)/",
+  "ReportChanged": "/Date(1793797449000+0100)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Centimeters",
   "ScriptLanguage": "CSharp",
@@ -237,7 +237,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "<div style=\"font-family: Tahoma; text-align:right; margin-top: 4pt;\">Madrid, {datos_contrato.fechaActual}</div>\n\n<div style=\"font-family: Tahoma; text-align:justify; line-height:1.2;\"><b style=\"\">OBRA. - </b>{datos_contrato.tituloExpediente} en la comunidad de propietarios&nbsp; {datos_contrato.direccionTrabajo}</div>"
+                "Value": "<div style=\"font-family: Tahoma; text-align:right; margin-top: 4pt;\">Madrid, {datos_contrato.fechaCertFinal}</div>\n\n<div style=\"font-family: Tahoma; text-align:justify; line-height:1.2;\"><b style=\"\">OBRA. - </b>{datos_contrato.tituloExpediente} en la comunidad de propietarios&nbsp; {datos_contrato.direccionTrabajo}</div>"
               },
               "HorAlignment": "Right",
               "Font": ";10;;",
