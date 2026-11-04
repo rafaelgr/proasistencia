@@ -1533,7 +1533,7 @@ function loadData(data) {
             const hayCorreoDF = correos.some(
                 correo => correo.tipoCorreo === 'ACTA_RECEPCION_DF'
             );
-            if(hayCorreoDF && !hayCorreoCliente) mensAlerta("Se envió un correo a la dirección facultativa pero no al cliente!!!")
+            if (hayCorreoDF && !hayCorreoCliente) mensAlerta("Se envió un correo a la dirección facultativa pero no al cliente!!!")
         });
     }
 
@@ -11992,7 +11992,14 @@ var compruebaDiferencia = function () {
     }, function (ButtonPressed) {
         if (ButtonPressed === "Aceptar") {
             if (diferencia < 0) {
-                ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva);
+                setTimeout(() => {
+                    ajustarPrefacturasPorDiferenciaNegativa(
+                        diferencia,
+                        porcentajeIva
+                    ).catch(err => {
+                        console.error("Error ajustando prefacturas:", err);
+                    });
+                }, 300);
             } else {
                 generarAjuste(diferencia, porcentajeIva);
             }
@@ -12086,36 +12093,43 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
 
     let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
 
-    let idsPrefacturasIntereses = (prefacturasAMarcar || [])
-        .map(p => p.prefacturaInteresesId)
-        .filter(id => id != null);
+    const idsPrefacturasIntereses = [
+        ...new Set(
+            prefacturasAMarcar
+                .map(p => Number(p.prefacturaInteresesId))
+                .filter(id => Number.isInteger(id) && id > 0)
+        )
+    ];
+
+    console.log("Prefacturas seleccionadas:", prefacturasAMarcar);
+    console.log("IDs de intereses:", idsPrefacturasIntereses);
 
     //si hay prefacturas de intereses
 
     if (idsPrefacturasIntereses.length > 0) {
-        let p = await buscarIntereses(idsPrefacturasIntereses)
-        if (!p) {
-            mensError("fallo al recuperar las prefacturas de intereses");
+
+        let prefacturasIntereses;
+
+        try {
+            prefacturasIntereses = await buscarIntereses(
+                idsPrefacturasIntereses
+            );
+        } catch (error) {
+            console.error("Error recuperando prefacturas de intereses:", error);
+            mensError("Fallo al recuperar las prefacturas de intereses");
             return;
         }
-        for (let h = 0; h < p.length; h++) {
 
-            let importe = parseFloat(p[h].total || 0);
-            importe = Math.round(importe * 100) / 100;
+        for (const prefactura of prefacturasIntereses) {
 
-            // Se obtiene la base individual de cada letra
-            let importeBase = importe;
+            const importe = Number(prefactura.total || 0);
 
-            /*
-             * Se mantienen más decimales internamente para evitar acumular
-             * errores de redondeo al sumar muchas letras.
-             */
-            importeBase = Math.round(importeBase * 10000) / 10000;
-
-            totalCompensadoBaseIntereses += importeBase
+            totalCompensadoBaseIntereses += importe;
         }
-    }
 
+        totalCompensadoBaseIntereses =
+            Math.round(totalCompensadoBaseIntereses * 100) / 100;
+    }
     let mensajeIntereses = "";
 
     if (idsPrefacturasIntereses.length > 0) {
@@ -12207,14 +12221,33 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
 }
 
 async function buscarIntereses(ids) {
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return [];
+    }
+
     return new Promise((resolve, reject) => {
+
         llamadaAjax(
             "POST",
-            "/api/prefacturas/devuelve/varias/prefacturas/",
+            myconfig.apiUrl + "/api/prefacturas/devuelve/varias/prefacturas/",
             ids,
             function (err, prefacturas) {
+
                 if (err) {
-                    return reject(null);
+                    console.error("Error al buscar intereses:", err);
+                    return reject(err);
+                }
+
+                if (!Array.isArray(prefacturas)) {
+                    console.error(
+                        "Respuesta incorrecta de buscarIntereses:",
+                        prefacturas
+                    );
+
+                    return reject(
+                        new Error("La API no ha devuelto un array de prefacturas")
+                    );
                 }
 
                 resolve(prefacturas);
