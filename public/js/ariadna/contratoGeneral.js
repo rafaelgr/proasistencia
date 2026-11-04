@@ -194,6 +194,10 @@ function initTablaContratos() {
             if(fechaFinal <= fechaActual && aData.contratoCerrado == 0) {
                 $(nRow).attr('style', 'background: #99DACF'); 
             }
+            //contratos vencidos
+            if(aData.correoDFSinCliente == 1) {
+                $(nRow).attr('style', 'background: #cc994d'); 
+            }
         },
         "stateSave": true,
         "stateLoaded": function (settings, state) {

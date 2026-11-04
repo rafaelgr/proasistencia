@@ -96,6 +96,7 @@ function initForm() {
     $("#btnSalir").click(salir());
     $("#btnImprimir").click(imprimir);
     $("#btnImprimirActaRecepcion").click(compruebaDiferencia);
+    $("#btnImprimirActaRecepcionDF").click(imprimirActaRecepcionDF);
     $('#btnIntereses').click(crearContratoIntereses);
     $('#txtPrecio').focus(function () {
         $('#txtPrecio').val(null);
@@ -249,6 +250,10 @@ function initForm() {
     $("#destinatarios-correo-form").submit(function () {
         return false;
     });
+
+    $("#correoActa-form").submit(function () {
+        return false;
+    })
 
     $("#cmbEmpresas").select2(select2Spanish());
     loadEmpresas();
@@ -1269,6 +1274,7 @@ function admData() {
 
     //
     self.erpId = ko.observable();
+    self.correoActa = ko.observable()
 
 }
 
@@ -1513,6 +1519,21 @@ function loadData(data) {
             data.forEach(function (linea) {
                 totalIntereses += linea.totalLinea;
             });
+        });
+    }
+
+    //buscamos los correos
+    if (data.tipoContratoId === 8) {
+        llamadaAjax('GET', myconfig.apiUrl + "/api/contratos/recupera/correos/acta-recepcion/contrato/" + data.contratoId, null, function (err, correos) {
+            if (err) return;
+            const hayCorreoCliente = correos.some(
+                correo => correo.tipoCorreo === 'ACTA_RECEPCION'
+            );
+
+            const hayCorreoDF = correos.some(
+                correo => correo.tipoCorreo === 'ACTA_RECEPCION_DF'
+            );
+            if(hayCorreoDF && !hayCorreoCliente) mensAlerta("Se envió un correo a la dirección facultativa pero no al cliente!!!")
         });
     }
 
@@ -11238,9 +11259,22 @@ var imprimirActaRecepcion = function () {
     printActaRecepcion();
 }
 
+var imprimirActaRecepcionDF = function () {
+    if (!certFinal) {
+        mensError('No hay certificación final');
+        return;
+    }
+    printActaRecepcionDF();
+}
+
 
 function printActaRecepcion() {
     var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcion=true&ContratoInteresesId=" + vm.contratoInteresesId();
+    window.open(url, '_blank');
+}
+
+function printActaRecepcionDF() {
+    var url = "InfContratos2.html?ContratoId=" + vm.contratoId() + "&EmpresaId=" + vm.sempresaId() + "&esRecepcionDF=true&ContratoInteresesId=" + vm.contratoInteresesId();
     window.open(url, '_blank');
 }
 
@@ -11969,7 +12003,7 @@ var compruebaDiferencia = function () {
 
 }
 
-function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
+async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     diferencia = parseFloat(diferencia) || 0;
     porcentajeIva = parseFloat(porcentajeIva) || 0;
@@ -11993,6 +12027,7 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     let prefacturasAMarcar = [];
     let totalCompensadoBase = 0;
+    let totalCompensadoBaseIntereses = 0;
 
     for (let i = 0; i < candidatas.length; i++) {
 
@@ -12051,6 +12086,47 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
 
+    let idsPrefacturasIntereses = (prefacturasAMarcar || [])
+        .map(p => p.prefacturaInteresesId)
+        .filter(id => id != null);
+
+    //si hay prefacturas de intereses
+
+    if (idsPrefacturasIntereses.length > 0) {
+        let p = await buscarIntereses(idsPrefacturasIntereses)
+        if (!p) {
+            mensError("fallo al recuperar las prefacturas de intereses");
+            return;
+        }
+        for (let h = 0; h < p.length; h++) {
+
+            let importe = parseFloat(p[h].total || 0);
+            importe = Math.round(importe * 100) / 100;
+
+            // Se obtiene la base individual de cada letra
+            let importeBase = importe;
+
+            /*
+             * Se mantienen más decimales internamente para evitar acumular
+             * errores de redondeo al sumar muchas letras.
+             */
+            importeBase = Math.round(importeBase * 10000) / 10000;
+
+            totalCompensadoBaseIntereses += importeBase
+        }
+    }
+
+    let mensajeIntereses = "";
+
+    if (idsPrefacturasIntereses.length > 0) {
+        mensajeIntereses =
+            "<br><br>Además, se marcarán " +
+            idsPrefacturasIntereses.length +
+            " letra(s) de intereses como no facturadas, por un importe total de " +
+            numeral(totalCompensadoBaseIntereses).format('0,0.00') +
+            " € sin IVA.";
+    }
+
     $.SmartMessageBox({
         title: "Ajustar prefacturas",
         content:
@@ -12059,6 +12135,10 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
             " prefactura(s) como no facturadas por un importe total de " +
             numeral(totalCompensadoBase).format('0,0.00') +
             " € sin IVA. " +
+
+            mensajeIntereses +
+
+            "<br><br>" +
             (
                 restoBase > 0
                     ? "Además, se generará un abono con una base de " +
@@ -12076,7 +12156,9 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
         }
 
         let data = {
-            prefacturasIds: idsPrefacturas
+            prefacturasIds: idsPrefacturas,
+            prefacturasInteresesIds: idsPrefacturasIntereses,
+            devueltaActa: 1
         };
 
         llamadaAjax(
@@ -12119,6 +12201,23 @@ function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
                 actualizaCobrosPlanificacion(vm.contratoId());
 
                 imprimirActaRecepcion();
+            }
+        );
+    });
+}
+
+async function buscarIntereses(ids) {
+    return new Promise((resolve, reject) => {
+        llamadaAjax(
+            "POST",
+            "/api/prefacturas/devuelve/varias/prefacturas/",
+            ids,
+            function (err, prefacturas) {
+                if (err) {
+                    return reject(null);
+                }
+
+                resolve(prefacturas);
             }
         );
     });
@@ -12422,6 +12521,7 @@ function initTablaDestinatariosCorreo() {
 }
 
 var sendCorreoActa = function () {
+
     var mens = "Se enviará un correo con el acta de recepción + certificación final, ¿Desea continuar?.";
 
     $.SmartMessageBox({
@@ -12438,26 +12538,77 @@ var sendCorreoActa = function () {
             llamadaAjax(
                 'POST',
                 myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" +
-                vm.contratoId() + "/" + vm.sempresaId() + "/" + vm.erpId(),
+                vm.contratoId() + "/" +
+                vm.sempresaId() + "/" +
+                vm.erpId() + "/" +
+                vm.correoActa(),
                 null,
                 function (err, data) {
 
                     // Ocultar spinner
                     $('#loadingSpinner').hide();
+
+                    // ==========================================
+                    // ERROR GENERAL DE LA API
+                    // ==========================================
+
                     if (err) {
-                        return errorGeneral(err, done);
+                        return errorGeneral(err);
                     }
 
-                    if (data && data.ok) {
-                        $('#modalDestinatariosCorreo').modal('hide');
-                        mensNormal("Correo enviado correctamente");
-                        cargaTablaDocumentacion();
+                    if (!data) {
+                        return mensError("No se ha recibido respuesta del servidor.");
                     }
+
+                    // ==========================================
+                    // TODOS LOS CORREOS ENVIADOS
+                    // ==========================================
+
+                    if (data.ok) {
+
+                        $('#modalCorreoActa').modal('hide');
+
+                        mensNormal(data.mensaje);
+
+                        cargaTablaDocumentacion();
+
+                    }
+                    // ==========================================
+                    // ENVÍO PARCIAL
+                    // ==========================================
+
+                    else if (data.parcial) {
+
+                        $('#modalCorreoActa').modal('hide');
+
+                        $.SmartMessageBox({
+                            title: "<i class='fa fa-warning'></i> Envío parcial",
+                            content: data.mensaje.replace(/\n/g, '<br>'),
+                            buttons: '[Aceptar]'
+                        });
+
+                        cargaTablaDocumentacion();
+
+                    }
+                    // ==========================================
+                    // NINGÚN CORREO ENVIADO
+                    // ==========================================
+
+                    else {
+
+                        $.SmartMessageBox({
+                            title: "<i class='fa fa-exclamation-triangle'></i> No se ha realizado el envío",
+                            content: data.mensaje.replace(/\n/g, '<br>'),
+                            buttons: '[Aceptar]'
+                        });
+
+                    }
+
                 }
             );
         }
     });
-}
+};
 
 var compruebaCorreos = function () {
     if (!vm.erpId() || vm.erpId() == 0) {
@@ -12473,7 +12624,10 @@ var compruebaCorreos = function () {
             });
             loadTablaDestinatariosCorreo(data)
         } else {
-            sendCorreoActa();
+            $('#modalCorreoActa').modal({
+                show: 'true'
+            });
+            //sendCorreoActa();
         }
     });
 }
