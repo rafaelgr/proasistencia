@@ -31,7 +31,7 @@
     <script src="js/numeral.js"></script>
     <script src="js/sprintf/sprintf.min.js"></script>
     <!-- CUSTOM NOTIFICATION -->
-    <script src="js/notification/SmartNotification.min.js"></script>    
+    <script src="js/notification/SmartNotification.min.js"></script>
     <script src="js/ariadna/comun.js"></script>
     <script src="myconfig.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -61,66 +61,17 @@
 
 <body>
     <div style="margin: 0px 5px; padding:10px;">
-        <div style="padding:10px;  display: none;">
+        <div style="padding:10px;">
             <div class="row">
                 <h2><i class="fa fa-bar-chart"></i> Informe de contratos</h2>
             </div>
-            <div style="display: none;" class="row" style="background-color:darkorange; border:solid 1px;">
+            <div class="row" style="background-color:darkorange; border:solid 1px;">
                 <form id="frmRptContratos" class="smart-form">
                     <fieldset>
-                        <div class="row">
-                            <section class="col col-md-2">
-                                <label class="label">Desde fecha - Hasta fecha </label>
-                                <label class="input">
-                                    <input id="txtRFecha" name="txtRFecha"/>
-                                </label>
-                            </section>
-                            <section class="col col-md-2">
-                                <label class="label">Empresa</label>
-                                <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbEmpresas" name="cmbEmpresas" data-bind="options: posiblesEmpresas, optionsText: 'nombre', optionsValue: 'empresaId', value: sempresaId, valueAllowUnset: true, selectedOptions: elegidosEmpresas, selected2:{}"></select><i></i>
-                                                    </label>
-                            </section>
-                            <section class="col col-md-5">
-                                <label class="label">Cliente</label>
-                                <label class="input">
-                                    <input id="txtCliente" name="txtCliente" />
-                                </label>
-                            </section>
-                            <section class="col col-md-3">
-                                <label class="label">Departamento</label>
-                                <label style="width:100%;">
-                                    <select style="width:100%" id="cmbDepartamentosTrabajo" name="cmbDepartamentosTrabajo" data-bind="options: posiblesDepartamentos, optionsText: 'nombre', optionsValue: 'departamentoId', value: sdepartamentoId, valueAllowUnset: true, selectedOptions: elegidosDepartamentos, selected2:{}"></select><i></i>
-                                </label>
-                            </section>
-                            
-                        </div>
-                        <div class="row">
-                            <section class="col col-md-2">
-                                <label class="label">Tipo colaborador</label>
-                                <label style="width:100%; height:50px;">
-                                                        <select style="width:100%" id="cmbTiposComerciales" name="cmbTiposComerciales" data-bind="options: posiblesTiposComerciales, optionsText: 'nombre', optionsValue: 'tipoComercialId', value: stipoComercialId, valueAllowUnset: true, selectedOptions: elegidosTiposComerciales, selected2:{}"></select><i></i>
-                                                    </label>
-                            </section>  
-                            <section class="col col-md-4">
-                                <label class="label">Colaborador</label>
-                                <label style="width:100%; height:50px;">
-                                    <select style="width:100%" id="cmbColaboradores" name="cmbColaboradores" data-bind="options: posiblesColaboradores, optionsText: 'nombre', optionsValue: 'comercialId', value: scomercialId, valueAllowUnset: true, selectedOptions: elegidosColaboradores, selected2:{}"></select><i></i>
-                                </label>
-                            </section>            
-                            <section class="col col-md-6" id="contrato">
-                                <label class="label">CONTRATO</label>
-                                <label style="width:100%;">
-                                    <select style="width:100%" id="cmbContratos" name="cmbContratos" data-bind="options: posiblesContratos, optionsText: 'contasoc', optionsValue: 'contratoId', value: scontratoId, valueAllowUnset: true, selectedOptions: elegidosContratos, selected2:{}"></select>
-                                    <i></i>
-                                </label>
-                            </section>
-                        </div>
-                    </fieldset>
-                    <fieldset>
                         <div class="pull-right">
-                            <button id="btnBuscar" title="Buscar contratos" class="btn btn-success btn-circle btn-lg">
-                                <i class="fa fa-lg fa-print"></i>
+                            <button id="btnUploadDocum" onclick="obtenerOpcionesCarpetas()" title="Subir documento"
+                                class="btn btn-success btn-circle btn-lg">
+                                <i class="fa fa-lg fa-upload"></i>
                             </button>
                         </div>
                     </fieldset>
@@ -133,23 +84,65 @@
                 viewer.renderHtml();
             </script>
         </div>
+        <!--MODAL-->
+        <div class="modal fade" id="modalCorreoActa" tabindex="-1" role="dialog" data-backdrop="static"
+            data-keyboard="false">
+            <div class="modal-dialog" style="width: 380px; margin: 30px auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h5 class="modal-title"> SUBIR DOCUMENTO</h5>
+                    </div>
+                    <div class="modal-body no-padding">
+                        <form id="correoActa-form" class="smart-form">
+                            <fieldset>
+                                <section class="col col-md-12">
+                                    <label class="label" style="font-weight: bold;">
+                                        Carpetas disponibles para subir el documento
+                                    </label>
+
+                                    <div id="radioCarpetas"></div>
+                                </section>
+                            </fieldset>
+
+                            <footer>
+                                <button type="button" id="btnAceptarEnvio" class="btn btn-primary"
+                                    onclick="guardarInformeEnCarpeta()">
+                                    Guardar PDF
+                                </button>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Cancelar
+                                </button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
         <div style="margin:5px; padding:10px;">
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <span>Proasistencia <span id="versionFooter">NO VERSION</span>
-                    <span class="hidden-xs"> - Aplicación general</span>
-                    <span> © Ariadna Software S.L. 2016-2017</span>
+                        <span class="hidden-xs"> - Aplicación general</span>
+                        <span> © Ariadna Software S.L. 2016-2017</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 text-right hidden-xs">
                     <div class="txt-color-white inline-block">
-                        <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong> &nbsp;</strong>
-                        <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
+                        <i class="txt-color-blueLight hidden-mobile"><i class="fa fa-phone"></i> <strong>
+                                &nbsp;</strong>
+                            <i class="fa fa-envelope"></i> <strong> &nbsp;</strong> </i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  
+
     <script type="text/javascript">
         (function ($) {
             $(document).ready(function () {
