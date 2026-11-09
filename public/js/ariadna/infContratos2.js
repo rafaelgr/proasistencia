@@ -150,6 +150,8 @@ function admData() {
     self.posiblesTiposComerciales = ko.observableArray([]);
     self.elegidosTiposComerciales = ko.observableArray([]);
     //
+    self.referencia = ko.observable();
+    self.nombreCliente = ko.observable();
 };
 
 
@@ -158,6 +160,8 @@ function admData() {
 function obtainReportJson(obj) {
 
     let file = null
+    vm.referencia(obj.datos_contrato.referencia);
+    vm.nombreCliente(obj.datos_contrato.nombreCliente);
     if (vm.esContrato()) {
         if (vm.empresaId() == 2 && vm.contratoId()) file = "/reports/contrato_proas.mrt";
         if (vm.empresaId() == 7 && vm.contratoId()) file = "/reports/contrato_reabita2.mrt";
@@ -282,14 +286,26 @@ function cargarRadioCarpetas(opciones) {
         div.append(radio, label);
 
         contenedor.append(div);
+
+        const radio2 = $('input[name="firmaActaGroup"]:checked');
+        const nombreCarpeta = radio2.next('label').text().trim();
+        $('#nombreDocumento').val(`${nombreCarpeta}_${vm.referencia()}_${vm.nombreCliente()}`);
+
+        $('#radioCarpetas').change(function () {
+            const radio2 = $('input[name="firmaActaGroup"]:checked');
+            const nombreCarpeta = radio2.next('label').text().trim();
+            $('#nombreDocumento').val(`${nombreCarpeta}_${vm.referencia()}_${vm.nombreCliente()}`);
+        });
+
     });
 }
 
 
 async function guardarInformeEnCarpeta() {
+    const radio = $('input[name="firmaActaGroup"]:checked');
 
-    const carpetaId =
-        $('input[name="firmaActaGroup"]:checked').val();
+    const carpetaId = radio.val();
+    const nombreCarpeta = radio.next('label').text().trim();
 
     if (!carpetaId) {
         mensError("Debe seleccionar una carpeta.");
@@ -371,36 +387,31 @@ async function guardarInformeEnCarpeta() {
         });
 
 
-        // 3. Preparar formulario
-        const formData = new FormData();
+        // docName = r.carpetaNombre + "_" + vm.referencia() + "_" + vm.nombreCliente();
+        // 3. Enviar PDF directamente a la API
 
-        formData.append(
-            'archivo',
-            blob,
-            `Informe_${vm.contratoId()}.pdf`
-        );
-
-        formData.append('carpetaId', carpetaId);
-        formData.append('contratoId', vm.contratoId());
-
-        // 4. Enviar a la API
+        if (!$('#nombreDocumento').val() || $('#nombreDocumento').val().trim() === "") {
+            mensError("Debe ingresar un nombre para el documento.");
+            return;
+        }
+        const nombreArchivo = `${$('#nombreDocumento').val()}.pdf`;
         await $.ajax({
-            url: '/api/documentacion/subir/informe',
+            url: `/api/upload/subir/informe/${vm.contratoId()}/${carpetaId}?nombreArchivo=${encodeURIComponent(nombreArchivo)}`,
             type: 'POST',
-            data: formData,
+            data: blob,
             processData: false,
-            contentType: false
+            contentType: 'application/pdf'
         });
 
         $('#modalCorreoActa').modal('hide');
 
-        mensSuccess("Informe guardado correctamente.");
+        mensNormal("Informe guardado correctamente.");
 
     } catch (error) {
 
-        console.error("Error guardando informe:", error);
+        console.error();
 
-        mensError("No se ha podido guardar el informe.");
+        mensError("Error guardando informe:", error);
 
     } finally {
 
