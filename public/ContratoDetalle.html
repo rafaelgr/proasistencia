@@ -1609,6 +1609,16 @@
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
+                                                                                <button id="btnRevertirAjuste"
+                                                                                    type="button"
+                                                                                    title="Revertir ajuste de certificación final"
+                                                                                    class="btn btn-warning btn-circle btn-lg"
+                                                                                    data-bind="visible: ajusteCertFinal() == 1"
+                                                                                    onclick="confirmarReversionAjuste()">
+
+                                                                                    <i class="fa fa-lg fa-undo"></i>
+
+                                                                                </button>
                                                                                 <button id="btnImprimirActaRecepcion"
                                                                                     title="Imprimir acta de recepción"
                                                                                     class="btn custom-btn2 btn-circle btn-lg">

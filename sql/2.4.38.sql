@@ -1,0 +1,2 @@
+ALTER TABLE contratos
+ADD COLUMN ajusteCertFinal TINYINT(1) NOT NULL DEFAULT 0;
