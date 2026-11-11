@@ -13182,12 +13182,16 @@ var compruebaCorreos = function () {
             });
             loadTablaDestinatariosCorreo(data)
         } else {
-            $('#modalCorreoActa').modal({
-                show: 'true'
-            });
-            //sendCorreoActa();
+            loadModalTipocorreo();
         }
     });
+}
+
+let loadModalTipocorreo = function () {
+    $('#modalDestinatariosCorreo').modal('hide');
+    $('#modalCorreoActa').modal({
+                show: 'true'
+            });
 }
 
 function loadTablaDestinatariosCorreo(data) {
