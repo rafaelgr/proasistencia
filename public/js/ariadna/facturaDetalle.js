@@ -62,9 +62,14 @@ function initForm() {
     $("#frmFactura").submit(function () {
         return false;
     });
-    $("#txtPrecio").focus(function () {
+    /* $("#txtPrecio").focus(function () {
         if (vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtPrecio').val(null);
+    });
+ */
+    $("#txtPrecio").dblclick(function () {
+        if (vm.contabilizada() && !usuario.puedeEditar) return;
+        $(this).val(null);
     });
 
     $("#frmAnt").submit(function () {

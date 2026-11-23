@@ -98,9 +98,15 @@ function initForm() {
     $("#btnImprimirActaRecepcion").click(compruebaDiferencia);
     $("#btnImprimirActaRecepcionDF").click(imprimirActaRecepcionDF);
     $('#btnIntereses').click(crearContratoIntereses);
-    $('#txtPrecio').focus(function () {
+
+    /*     $('#txtPrecio').focus(function () {
+            $('#txtPrecio').val(null);
+        });
+     */
+    $('#txtPrecio').dblclick(function () {
         $('#txtPrecio').val(null);
     });
+
     $('#btnEnviarActaRecepcion').click(compruebaCorreos);
 
     $('#dt_destinatarios-correo')
@@ -1274,7 +1280,7 @@ function admData() {
 
     //
     self.erpId = ko.observable();
-    self.correoActa = ko.observable()
+    self.correoActa = ko.observable('0')
 
     //
     self.ajusteCertFinal = ko.observable();
@@ -1508,6 +1514,12 @@ function loadData(data) {
         $('#chkContratoCerrado').prop('disabled', false);
     } else if (data.contratoCerrado && !usuario.puedeAbrir) {
         $('#chkContratoCerrado').prop('disabled', true);
+    }
+
+    if (!data.erpId && !data.nExpediente) {
+        $('#btnEnviarActaRecepcion').prop('disabled', true)
+    } else {
+        $('#btnEnviarActaRecepcion').prop('disabled', false)
     }
 
 
@@ -12013,7 +12025,7 @@ var compruebaDiferencia = function () {
         if (ButtonPressed === "Aceptar") {
             if (diferencia < 0) {
                 setTimeout(() => {
-                    ajustarPrefacturasPorDiferenciaNegativaBis(
+                    ajustarPrefacturasPorDiferenciaNegativa(
                         diferencia,
                         porcentajeIva
                     ).catch(err => {
@@ -12034,6 +12046,9 @@ var compruebaDiferencia = function () {
 
 }
 
+
+
+
 async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva) {
 
     diferencia = parseFloat(diferencia) || 0;
@@ -12045,78 +12060,135 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
 
     let prefacturas = tablaPrefacturas.rows().data().toArray();
 
-    let candidatas = prefacturas
+    /*
+     * Funciones auxiliares.
+     */
+    const esDevuelta = p => {
+        return String(p.estado || '').trim().toUpperCase() === 'DEVUELTO';
+    };
+
+    const esElegible = p => {
+        return Number(p.esLetra || 0) === 1
+            && parseFloat(p.pendiente || 0) > 0
+            && Number(p.noFacturar || 0) === 0;
+    };
+
+    const obtenerBase = p => {
+        return Math.round(
+            (parseFloat(p.total || 0)) * 10000
+        ) / 10000;
+    };
+
+    /*
+     * 1. Seleccionar primero TODAS las letras devueltas.
+     *
+     * Se incluyen aunque tengan facturaId.
+     * No se modifica su estado ni su pendiente.
+     */
+    let devueltas = prefacturas
+        .filter(p => esElegible(p) && esDevuelta(p))
+        .sort((a, b) => {
+            return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
+        });
+
+    /*
+     * 2. Obtener las letras pendientes sin facturar.
+     *
+     * Se utilizarán únicamente si las devueltas
+     * no compensan toda la diferencia.
+     */
+    let pendientes = prefacturas
         .filter(p => {
-            return Number(p.esLetra || 0) === 1
-                && parseFloat(p.pendiente || 0) > 0
-                && Number(p.noFacturar || 0) === 0
+            return esElegible(p)
+                && !esDevuelta(p)
                 && !p.facturaId;
         })
         .sort((a, b) => {
             return moment(b.fecha).valueOf() - moment(a.fecha).valueOf();
         });
 
-    let prefacturasAMarcar = [];
+    /*
+     * 3. Incorporar todas las letras devueltas.
+     */
+    let prefacturasAMarcar = [...devueltas];
+
     let totalCompensadoBase = 0;
     let totalCompensadoBaseIntereses = 0;
 
-    for (let i = 0; i < candidatas.length; i++) {
+    for (const prefactura of devueltas) {
 
-        let importe = parseFloat(candidatas[i].total || 0);
-        importe = Math.round(importe * 100) / 100;
-
-        // Se obtiene la base individual de cada letra
-        let importeBase = importe;
-
-        /*
-         * Se mantienen más decimales internamente para evitar acumular
-         * errores de redondeo al sumar muchas letras.
-         */
-        importeBase = Math.round(importeBase * 10000) / 10000;
-
-        let nuevoTotalBase = Math.round(
-            (totalCompensadoBase + importeBase) * 10000
+        totalCompensadoBase = Math.round(
+            (totalCompensadoBase + obtenerBase(prefactura)) * 10000
         ) / 10000;
-
-        /*
-         * Solo se marca la letra completa si no supera
-         * la diferencia que tenemos que compensar.
-         */
-        if (nuevoTotalBase <= importeACompensarBase) {
-
-            prefacturasAMarcar.push(candidatas[i]);
-
-            totalCompensadoBase = nuevoTotalBase;
-        }
     }
 
-    // El resto se calcula en base, porque generarAjuste
-    // espera importe sin IVA
+    /*
+     * 4. Añadir letras pendientes sin facturar
+     * hasta alcanzar o superar la diferencia.
+     */
+    for (const prefactura of pendientes) {
+
+        if (totalCompensadoBase >= importeACompensarBase) {
+            break;
+        }
+
+        let importeBase = obtenerBase(prefactura);
+
+        if (importeBase <= 0) {
+            continue;
+        }
+
+        prefacturasAMarcar.push(prefactura);
+
+        totalCompensadoBase = Math.round(
+            (totalCompensadoBase + importeBase) * 10000
+        ) / 10000;
+    }
+
+    /*
+     * 5. Calcular el importe restante.
+     *
+     * restoBase > 0: falta compensar -> abono.
+     * restoBase < 0: exceso compensado -> recibo positivo.
+     * restoBase = 0: no hay ajuste adicional.
+     */
     let restoBase = Math.round(
         (importeACompensarBase - totalCompensadoBase) * 100
     ) / 100;
 
-    /*
-     * Si el descuadre es únicamente de un céntimo por redondeos,
-     * se considera completamente compensado.
-     */
     if (Math.abs(restoBase) <= 0.01) {
         restoBase = 0;
     }
 
     /*
-     * Si no se puede marcar ninguna letra completa,
-     * se genera directamente el abono.
-     *
-     * No hay IDs que excluir.
+     * Si no existen letras para marcar,
+     * generar directamente el ajuste original.
      */
     if (prefacturasAMarcar.length === 0) {
-        generarAjuste(diferencia, porcentajeIva);
+
+        generarAjuste(
+            diferencia,
+            porcentajeIva
+        );
+
         return;
     }
 
-    let idsPrefacturas = prefacturasAMarcar.map(p => p.prefacturaId);
+    /*
+     * 6. Obtener los IDs de todas las letras seleccionadas.
+     *
+     * Incluye:
+     * - Devueltas.
+     * - Pendientes sin facturar.
+     */
+    let idsPrefacturas = prefacturasAMarcar.map(
+        p => p.prefacturaId
+    );
 
+    /*
+     * 7. Obtener los IDs de las letras de intereses
+     * asociadas a las seleccionadas.
+     */
     const idsPrefacturasIntereses = [
         ...new Set(
             prefacturasAMarcar
@@ -12125,22 +12197,37 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
         )
     ];
 
+    console.log("Letras devueltas:", devueltas);
+    console.log("Letras pendientes:", pendientes);
     console.log("Prefacturas seleccionadas:", prefacturasAMarcar);
     console.log("IDs de intereses:", idsPrefacturasIntereses);
+    console.log("Total compensado base:", totalCompensadoBase);
+    console.log("Resto base:", restoBase);
 
-    //si hay prefacturas de intereses
-
+    /*
+     * 8. Recuperar los importes de intereses.
+     */
     if (idsPrefacturasIntereses.length > 0) {
 
         let prefacturasIntereses;
 
         try {
+
             prefacturasIntereses = await buscarIntereses(
                 idsPrefacturasIntereses
             );
+
         } catch (error) {
-            console.error("Error recuperando prefacturas de intereses:", error);
-            mensError("Fallo al recuperar las prefacturas de intereses");
+
+            console.error(
+                "Error recuperando prefacturas de intereses:",
+                error
+            );
+
+            mensError(
+                "Fallo al recuperar las prefacturas de intereses"
+            );
+
             return;
         }
 
@@ -12151,51 +12238,107 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
             totalCompensadoBaseIntereses += importe;
         }
 
-        totalCompensadoBaseIntereses =
-            Math.round(totalCompensadoBaseIntereses * 100) / 100;
+        totalCompensadoBaseIntereses = Math.round(
+            totalCompensadoBaseIntereses * 100
+        ) / 100;
     }
+
+    /*
+     * 9. Preparar mensaje de intereses.
+     */
     let mensajeIntereses = "";
 
     if (idsPrefacturasIntereses.length > 0) {
+
         mensajeIntereses =
             "<br><br>Además, se marcarán " +
             idsPrefacturasIntereses.length +
-            " letra(s) de intereses como no facturadas, por un importe total de " +
+            " letra(s) de intereses como no facturadas, " +
+            "por un importe total de " +
             numeral(totalCompensadoBaseIntereses).format('0,0.00') +
             " € sin IVA.";
     }
 
+    /*
+     * 10. Preparar mensaje del ajuste.
+     */
+    let mensajeAjuste = "";
+
+    if (restoBase > 0) {
+
+        mensajeAjuste =
+            "Además, se generará un abono al cliente " +
+            "con una base de " +
+            numeral(restoBase).format('0,0.00') +
+            " €.";
+
+    } else if (restoBase < 0) {
+
+        mensajeAjuste =
+            "Además, se generará un recibo positivo al cliente " +
+            "con una base de " +
+            numeral(Math.abs(restoBase)).format('0,0.00') +
+            " €, para compensar el exceso de letras devueltas " +
+            "y pendientes marcadas como no facturables.";
+
+    } else {
+
+        mensajeAjuste =
+            "No será necesario generar ningún ajuste.";
+    }
+
+    /*
+     * 11. Confirmación.
+     */
     $.SmartMessageBox({
+
         title: "Ajustar prefacturas",
+
         content:
-            "La diferencia es negativa. Se marcarán " +
+            "La diferencia es negativa." +
+
+            "<br><br>Se marcarán " +
+            devueltas.length +
+            " letra(s) devuelta(s) como no facturables." +
+
+            "<br><br>En total se marcarán " +
             prefacturasAMarcar.length +
-            " prefactura(s) como no facturadas por un importe total de " +
+            " prefactura(s) por un importe de " +
             numeral(totalCompensadoBase).format('0,0.00') +
-            " € sin IVA. " +
+            " € sin IVA." +
 
             mensajeIntereses +
 
             "<br><br>" +
-            (
-                restoBase > 0
-                    ? "Además, se generará un abono con una base de " +
-                    numeral(restoBase).format('0,0.00') +
-                    " €."
-                    : "No será necesario generar abono."
-            ) +
-            " ¿Desea continuar?",
+            mensajeAjuste +
+
+            "<br><br>¿Desea continuar?",
+
         buttons: "[Cancelar][Aceptar]"
+
     }, function (ButtonPressed) {
 
         if (ButtonPressed !== "Aceptar") {
+
             imprimirActaRecepcion();
             return;
         }
 
+        /*
+         * 12. Enviar todas las prefacturas seleccionadas.
+         *
+         * La API marcará:
+         * - noFacturar = 1
+         * - devueltaActa = 1
+         *
+         * No modifica facturaId, pendiente ni estado.
+         */
         let data = {
+
             prefacturasIds: idsPrefacturas,
+
             prefacturasInteresesIds: idsPrefacturasIntereses,
+
             devueltaActa: 1
         };
 
@@ -12206,21 +12349,21 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
             function (err) {
 
                 if (err) {
+
                     mensError(
                         "Error al marcar las prefacturas como no facturadas"
                     );
+
                     return;
                 }
 
                 /*
-                 * Si queda una diferencia después de marcar las letras,
-                 * generamos el abono.
+                 * 13. Generar ajuste si existe diferencia.
                  *
-                 * Pasamos los IDs que acabamos de marcar para que
-                 * generarAjuste no los tenga en cuenta al buscar
-                 * la última letra facturable.
+                 * restoBase > 0 -> abono negativo.
+                 * restoBase < 0 -> recibo positivo.
                  */
-                if (restoBase > 0) {
+                if (restoBase !== 0) {
 
                     generarAjuste(
                         -restoBase,
@@ -12231,24 +12374,41 @@ async function ajustarPrefacturasPorDiferenciaNegativa(diferencia, porcentajeIva
                     return;
                 }
 
-                marcarContratoAjustado(vm.contratoId(), function (err) {
+                /*
+                 * 14. Si no hay ajuste adicional,
+                 * marcar el contrato como ajustado.
+                 */
+                marcarContratoAjustado(
+                    vm.contratoId(),
+                    function (err) {
 
-                    if (err) return;
+                        if (err) {
+                            return;
+                        }
 
-                    mostrarMensajeSmart(
-                        "Contrato ajustado correctamente. " +
-                        "Las prefacturas se han marcado como no facturables."
-                    );
+                        mostrarMensajeSmart(
+                            "Contrato ajustado correctamente. " +
+                            "Las prefacturas se han marcado " +
+                            "como no facturables."
+                        );
 
-                    loadPrefacturasDelContrato(vm.contratoId());
-                    actualizaCobrosPlanificacion(vm.contratoId());
+                        loadPrefacturasDelContrato(
+                            vm.contratoId()
+                        );
 
-                    imprimirActaRecepcion();
-                });
+                        actualizaCobrosPlanificacion(
+                            vm.contratoId()
+                        );
+
+                        imprimirActaRecepcion();
+                    }
+                );
             }
         );
     });
 }
+
+
 
 async function ajustarPrefacturasPorDiferenciaNegativaBis(
     diferencia,
@@ -12269,15 +12429,15 @@ async function ajustarPrefacturasPorDiferenciaNegativaBis(
     const prefacturas = tablaPrefacturas.rows().data().toArray();
 
     // =====================================================
-    // 1. OBTENER RECIBOS PENDIENTES
+    // 1. RECIBOS DEVUELTOS
     // =====================================================
 
-    const recibosPendientes = prefacturas.filter(p => {
-        return Number(p.esLetra || 0) === 0
-            && Number(p.pendiente || 0) > 0
-            && Number(p.noFacturar || 0) === 0
-            && !p.facturaId;
-    });
+    const recibosPendientes = prefacturas.filter(p =>
+        Number(p.esLetra || 0) === 0 &&
+        Number(p.pendiente || 0) > 0 &&
+        Number(p.noFacturar || 0) === 0 &&
+        Number(p.total_devuelto || 0) > 0
+    );
 
     const totalRecibosBase = redondear(
         recibosPendientes.reduce(
@@ -12286,109 +12446,183 @@ async function ajustarPrefacturasPorDiferenciaNegativaBis(
         )
     );
 
+    const totalRecibosConIva = redondear(
+        recibosPendientes.reduce(
+            (total, p) => total + Number(p.total_devuelto || 0),
+            0
+        )
+    );
+
     // =====================================================
-    // 2. OBTENER LETRAS PENDIENTES
+    // 2. LETRAS CANDIDATAS
     // =====================================================
 
     const candidatas = prefacturas
-        .filter(p => {
-            return Number(p.esLetra || 0) === 1
-                && Number(p.pendiente || 0) > 0
-                && Number(p.noFacturar || 0) === 0
-                && !p.facturaId;
-        })
-        .sort((a, b) => {
-            return moment(b.fecha).valueOf() -
-                moment(a.fecha).valueOf();
-        });
-
-    // =====================================================
-    // 3. SELECCIONAR LETRAS A DEVOLVER
-    // =====================================================
-
-    const letrasDevolucionInicial = [];
-    let totalDevolucionInicial = 0;
-
-    for (const letra of candidatas) {
-
-        const importeBase = redondear(letra.total || 0);
-
-        const nuevoTotal = redondear(
-            totalDevolucionInicial + importeBase
+        .filter(p =>
+            Number(p.esLetra || 0) === 1 &&
+            Number(p.pendiente || 0) > 0 &&
+            Number(p.noFacturar || 0) === 0 &&
+            Number(p.total_devuelto || 0) === 0 &&
+            !p.facturaId
+        )
+        .sort((a, b) =>
+            moment(b.fecha).valueOf() -
+            moment(a.fecha).valueOf()
         );
 
-        if (nuevoTotal <= importeACompensarBase) {
-
-            letrasDevolucionInicial.push(letra);
-            totalDevolucionInicial = nuevoTotal;
-        }
-    }
-
     // =====================================================
-    // 4. CONSERVAR LETRAS PARA SUSTITUIR RECIBOS
+    // 3. LETRAS YA DEVUELTAS
     // =====================================================
 
-    const letrasAConservar = [];
-    let totalLetrasConservadas = 0;
-
-    for (const letra of letrasDevolucionInicial) {
-
-        const importeBase = redondear(letra.total || 0);
-
-        if (
-            redondear(totalLetrasConservadas + importeBase)
-            <= totalRecibosBase
-        ) {
-
-            letrasAConservar.push(letra);
-
-            totalLetrasConservadas = redondear(
-                totalLetrasConservadas + importeBase
-            );
-        }
-    }
-
-    const idsConservar = new Set(
-        letrasAConservar.map(p => Number(p.prefacturaId))
+    const letrasYaDevueltas = prefacturas.filter(p =>
+        Number(p.esLetra || 0) === 1 &&
+        Number(p.total_devuelto || 0) > 0 &&
+        Number(p.noFacturar || 0) === 0
     );
 
-    // Letras que realmente se devolverán
-    const prefacturasAMarcar = letrasDevolucionInicial.filter(
-        p => !idsConservar.has(Number(p.prefacturaId))
-    );
-
-    const totalCompensadoBase = redondear(
-        prefacturasAMarcar.reduce(
+    const totalLetrasYaDevueltasBase = redondear(
+        letrasYaDevueltas.reduce(
             (total, p) => total + Number(p.total || 0),
             0
         )
     );
 
     // =====================================================
-    // 5. CALCULAR RECIBO POSITIVO
+    // 4. INTERESES DE LAS LETRAS
     // =====================================================
 
-    const reciboPositivoBase = redondear(
-        totalRecibosBase - totalLetrasConservadas
+    const idsInteresesCandidatas = [
+        ...new Set(
+            candidatas
+                .map(p => Number(p.prefacturaInteresesId))
+                .filter(id => Number.isInteger(id) && id > 0)
+        )
+    ];
+
+    let interesesCandidatas = [];
+
+    if (idsInteresesCandidatas.length > 0) {
+        interesesCandidatas = await buscarIntereses(
+            idsInteresesCandidatas
+        );
+    }
+
+    const mapaIntereses = new Map(
+        interesesCandidatas.map(p => [
+            Number(p.prefacturaId),
+            Number(p.total || 0)
+        ])
     );
 
     // =====================================================
-    // 6. CALCULAR ABONO RESTANTE
+    // 5. IMPORTE A COMPENSAR POR CERTIFICACIÓN
     // =====================================================
 
-    let restoBase = redondear(
+    // La letra ya devuelta está compensada.
+    // El recibo devuelto se recupera conservando letras.
+
+    const importeCertificacionPendienteBase = redondear(
         importeACompensarBase -
-        totalCompensadoBase -
-        totalRecibosBase +
-        reciboPositivoBase
+        totalLetrasYaDevueltasBase
     );
 
-    if (Math.abs(restoBase) <= 0.01) {
-        restoBase = 0;
+    // =====================================================
+    // 6. SELECCIONAR LETRAS A ANULAR
+    // =====================================================
+
+    const prefacturasAMarcar = [];
+    let totalCompensadoBase = 0;
+
+    // Se seleccionan letras completas sin superar
+    // inicialmente la diferencia de certificación.
+
+    for (const letra of candidatas) {
+
+        const importeBase = redondear(letra.total || 0);
+
+        if (importeBase <= 0) continue;
+
+        const nuevoTotal = redondear(
+            totalCompensadoBase + importeBase
+        );
+
+        if (nuevoTotal <= importeCertificacionPendienteBase) {
+
+            prefacturasAMarcar.push(letra);
+            totalCompensadoBase = nuevoTotal;
+
+        } else {
+            break;
+        }
     }
 
     // =====================================================
-    // 7. IDS DE PREFACTURAS
+    // 7. CONSERVAR LETRAS PARA RECUPERAR RECIBOS
+    // =====================================================
+
+    let importeRecuperado = 0;
+    const letrasConservadasPorRecibos = [];
+
+    while (
+        prefacturasAMarcar.length > 0 &&
+        importeRecuperado < totalRecibosConIva
+    ) {
+
+        const letra = prefacturasAMarcar.pop();
+
+        const principalConIva = redondear(
+            letra.totalConIva || 0
+        );
+
+        const intereses = redondear(
+            mapaIntereses.get(
+                Number(letra.prefacturaInteresesId)
+            ) || 0
+        );
+
+        const importeLetra = redondear(
+            principalConIva + intereses
+        );
+
+        letrasConservadasPorRecibos.push(letra);
+
+        importeRecuperado = redondear(
+            importeRecuperado + importeLetra
+        );
+
+        totalCompensadoBase = redondear(
+            totalCompensadoBase - Number(letra.total || 0)
+        );
+    }
+
+    // =====================================================
+    // 8. CALCULAR AJUSTE FINAL
+    // =====================================================
+
+    // El recibo se descuenta por su base.
+    // La letra ya devuelta también está compensada.
+
+    const importeNetoACompensarBase = redondear(
+        importeACompensarBase -
+        totalRecibosBase -
+        totalLetrasYaDevueltasBase
+    );
+
+    // Conservamos el signo para detectar tanto
+    // compensaciones insuficientes como excesivas.
+
+    const diferenciaFinalBase = redondear(
+        importeNetoACompensarBase - totalCompensadoBase
+    );
+
+    let ajusteNetoBase = redondear(-diferenciaFinalBase);
+
+    if (Math.abs(ajusteNetoBase) <= 0.01) {
+        ajusteNetoBase = 0;
+    }
+
+    // =====================================================
+    // 9. IDS DE PREFACTURAS
     // =====================================================
 
     const idsPrefacturas = prefacturasAMarcar.map(
@@ -12415,45 +12649,40 @@ async function ajustarPrefacturasPorDiferenciaNegativaBis(
     ];
 
     // =====================================================
-    // 8. RECUPERAR INTERESES
+    // 10. TOTAL INTERESES ANULADOS
     // =====================================================
 
-    let totalCompensadoBaseIntereses = 0;
-
-    if (idsPrefacturasIntereses.length > 0) {
-
-        let prefacturasIntereses;
-
-        try {
-
-            prefacturasIntereses = await buscarIntereses(
-                idsPrefacturasIntereses
+    const totalCompensadoBaseIntereses = redondear(
+        prefacturasAMarcar.reduce((total, p) => {
+            return total + (
+                mapaIntereses.get(
+                    Number(p.prefacturaInteresesId)
+                ) || 0
             );
-
-        } catch (error) {
-
-            console.error(
-                "Error recuperando prefacturas de intereses:",
-                error
-            );
-
-            mensError(
-                "Fallo al recuperar las prefacturas de intereses"
-            );
-
-            throw error;
-        }
-
-        totalCompensadoBaseIntereses = redondear(
-            prefacturasIntereses.reduce(
-                (total, p) => total + Number(p.total || 0),
-                0
-            )
-        );
-    }
+        }, 0)
+    );
 
     // =====================================================
-    // 9. MOSTRAR RESUMEN DEL AJUSTE
+    // 11. COMPROBACIONES
+    // =====================================================
+
+    console.log('========== COMPENSACIÓN ==========');
+    console.log('Diferencia certificación:', importeACompensarBase);
+    console.log('Recibo devuelto base:', totalRecibosBase);
+    console.log('Recibo devuelto con IVA:', totalRecibosConIva);
+    console.log('Letra ya devuelta base:', totalLetrasYaDevueltasBase);
+    console.log('Letras conservadas para recuperar recibo:',
+        letrasConservadasPorRecibos.length);
+    console.log('Importe recuperable:', importeRecuperado);
+    console.log('Letras nuevas anuladas:', prefacturasAMarcar.length);
+    console.log('Principal anulado:', totalCompensadoBase);
+    console.log('Intereses anulados:', totalCompensadoBaseIntereses);
+    console.log('Importe neto a compensar:', importeNetoACompensarBase);
+    console.log('Ajuste final:', ajusteNetoBase);
+    console.log('==================================');
+
+    // =====================================================
+    // 12. RESUMEN
     // =====================================================
 
     let mensaje = "";
@@ -12463,65 +12692,54 @@ async function ajustarPrefacturasPorDiferenciaNegativaBis(
         formato(importeACompensarBase) +
         " € sin IVA.";
 
-    if (recibosPendientes.length > 0) {
-
-        mensaje +=
-            "<br><br><b>Recibos pendientes:</b>" +
-            "<br>Se marcarán " +
-            recibosPendientes.length +
-            " recibo(s) como no facturables, por " +
-            formato(totalRecibosBase) +
-            " € sin IVA.";
-
-        mensaje +=
-            "<br>Se conservarán " +
-            letrasAConservar.length +
-            " letra(s) adicionales por " +
-            formato(totalLetrasConservadas) +
-            " € para sustituir esos recibos.";
-
-        if (reciboPositivoBase > 0) {
-
-            mensaje +=
-                "<br>Se generará un recibo positivo de " +
-                formato(reciboPositivoBase) +
-                " € sin IVA.";
-        }
-    }
+    mensaje +=
+        "<br><br>Se marcarán " +
+        recibosPendientes.length +
+        " recibo(s) como no facturables por " +
+        formato(totalRecibosBase) +
+        " €.";
 
     mensaje +=
-        "<br><br><b>Letras a devolver:</b>" +
+        "<br>Se conservarán " +
+        letrasConservadasPorRecibos.length +
+        " letra(s) para recuperar los recibos devueltos.";
+
+    mensaje +=
         "<br>Se marcarán " +
         prefacturasAMarcar.length +
-        " letra(s) como no facturables, por " +
+        " letra(s) como no facturables por " +
         formato(totalCompensadoBase) +
-        " € sin IVA.";
+        " € de principal.";
 
-    if (idsPrefacturasIntereses.length > 0) {
+    mensaje +=
+        "<br>También se anularán " +
+        idsPrefacturasIntereses.length +
+        " prefactura(s) de intereses por " +
+        formato(totalCompensadoBaseIntereses) +
+        " €.";
 
-        mensaje +=
-            "<br>Además, se marcarán " +
-            idsPrefacturasIntereses.length +
-            " letra(s) de intereses por " +
-            formato(totalCompensadoBaseIntereses) +
-            " € sin IVA.";
-    }
-
-    if (restoBase > 0) {
+    if (ajusteNetoBase < 0) {
 
         mensaje +=
             "<br><br>Se generará un abono por " +
-            formato(restoBase) +
+            formato(Math.abs(ajusteNetoBase)) +
+            " € sin IVA.";
+
+    } else if (ajusteNetoBase > 0) {
+
+        mensaje +=
+            "<br><br>Se generará un ajuste positivo por " +
+            formato(ajusteNetoBase) +
             " € sin IVA.";
 
     } else {
 
         mensaje +=
-            "<br><br>No será necesario generar abono.";
+            "<br><br>No será necesario generar ajuste adicional.";
     }
 
     // =====================================================
-    // 10. CONFIRMACIÓN
+    // 13. CONFIRMACIÓN
     // =====================================================
 
     return new Promise((resolve, reject) => {
@@ -12539,149 +12757,30 @@ async function ajustarPrefacturasPorDiferenciaNegativaBis(
         }, async function (ButtonPressed) {
 
             if (ButtonPressed !== "Aceptar") {
-
                 imprimirActaRecepcion();
                 resolve(false);
                 return;
             }
 
-            let prefacturasMarcadas = false;
+            // PROTECCIÓN TEMPORAL:
+            // No modificar datos hasta validar la liquidación.
+            mensError(
+                "La liquidación está pendiente de validación. " +
+                "No se ha modificado ninguna prefactura."
+            );
 
-            try {
+            resolve(false);
+            return;
 
-                // =========================================
-                // 11. MARCAR LETRAS Y RECIBOS
-                // =========================================
-
-                const data = {
-                    prefacturasIds: idsTodasPrefacturas,
-                    prefacturasInteresesIds:
-                        idsPrefacturasIntereses,
-                    devueltaActa: 1
-                };
-
-                if (
-                    idsTodasPrefacturas.length > 0 ||
-                    idsPrefacturasIntereses.length > 0
-                ) {
-
-                    await new Promise((resolveAjax, rejectAjax) => {
-
-                        llamadaAjax(
-                            "PUT",
-                            myconfig.apiUrl +
-                            "/api/prefacturas/prefacturas/no-facturadas",
-                            data,
-                            function (err) {
-
-                                if (err) {
-                                    rejectAjax(err);
-                                } else {
-                                    resolveAjax();
-                                }
-                            }
-                        );
-                    });
-
-                    prefacturasMarcadas = true;
-                }
-
-                // =========================================
-                // 12. GENERAR RECIBO POSITIVO
-                // =========================================
-
-                if (reciboPositivoBase > 0) {
-
-                    console.log(
-                        "Generando recibo positivo:",
-                        reciboPositivoBase
-                    );
-
-                    await generarAjuste(
-                        reciboPositivoBase,
-                        porcentajeIva,
-                        idsTodasPrefacturas
-                    );
-                }
-
-                // =========================================
-                // 13. GENERAR ABONO
-                // =========================================
-
-                if (restoBase > 0) {
-
-                    console.log(
-                        "Generando abono:",
-                        restoBase
-                    );
-
-                    await generarAjuste(
-                        -restoBase,
-                        porcentajeIva,
-                        idsTodasPrefacturas
-                    );
-                }
-
-                // =========================================
-                // 14. MARCAR CONTRATO COMO AJUSTADO
-                // =========================================
-
-                await new Promise((resolveAjuste, rejectAjuste) => {
-
-                    marcarContratoAjustado(
-                        vm.contratoId(),
-                        function (err) {
-
-                            if (err) {
-                                rejectAjuste(err);
-                            } else {
-                                resolveAjuste();
-                            }
-                        }
-                    );
-                });
-
-                // =========================================
-                // 15. ACTUALIZAR DATOS
-                // =========================================
-
-                loadPrefacturasDelContrato(
-                    vm.contratoId()
-                );
-
-                actualizaCobrosPlanificacion(
-                    vm.contratoId()
-                );
-
-                mostrarMensajeSmart(
-                    "Contrato ajustado correctamente. " +
-                    "Se han actualizado las letras y los recibos."
-                );
-
-                imprimirActaRecepcion();
-
-                resolve(true);
-
-
-            } catch (error) {
-
-                console.error(
-                    "Error ajustando prefacturas:",
-                    error
-                );
-
-                mensError(
-                    "Error al completar el ajuste del contrato." +
-                    (
-                        prefacturasMarcadas
-                            ? " Algunas prefacturas ya se han modificado. " +
-                            "Revise el contrato antes de repetir el ajuste."
-                            : ""
-                    )
-                );
-
-                reject(error);
-            }
+            // Una vez validado el cálculo, aquí se recuperará
+            // el bloque original de actualización:
+            //
+            // PUT /api/prefacturas/prefacturas/no-facturadas
+            // generarAjuste(...)
+            // marcarContratoAjustado(...)
+            // loadPrefacturasDelContrato(...)
+            // actualizaCobrosPlanificacion(...)
+            // imprimirActaRecepcion()
 
         });
     });
@@ -12788,7 +12887,7 @@ async function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
             }
         }
 
-        if (!ultimaFechaLetra) {
+        if (diferencia < 0 && !ultimaFechaLetra) {
             throw new Error(
                 "No se ha encontrado ninguna letra facturable en prefacturas"
             );
@@ -13093,12 +13192,19 @@ var sendCorreoActa = function () {
             // Mostrar spinner
             $('#loadingSpinner').show();
 
+            let id = vm.erpId() || vm.nExpediente();
+            if (!id) {
+                mensError("Falta el identificador del ERP.");
+                return;
+            }
+
+
             llamadaAjax(
                 'POST',
                 myconfig.apiUrl + "/api/contratos/envia/correo/acta/recepcion/" +
                 vm.contratoId() + "/" +
                 vm.sempresaId() + "/" +
-                vm.erpId() + "/" +
+                id + "/" +
                 vm.correoActa(),
                 null,
                 function (err, data) {
@@ -13169,7 +13275,7 @@ var sendCorreoActa = function () {
 };
 
 var compruebaCorreos = function () {
-    if (!vm.erpId() || vm.erpId() == 0) {
+    if (!vm.erpId() && !vm.nExpediente()) {
         mensError("No se ha generado el contrato en el ERP, no se puede enviar el correo.");
         return;
     }
@@ -13190,8 +13296,8 @@ var compruebaCorreos = function () {
 let loadModalTipocorreo = function () {
     $('#modalDestinatariosCorreo').modal('hide');
     $('#modalCorreoActa').modal({
-                show: 'true'
-            });
+        show: 'true'
+    });
 }
 
 function loadTablaDestinatariosCorreo(data) {

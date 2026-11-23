@@ -62,9 +62,16 @@ function initForm() {
     $("#frmAntClien").submit(function () {
         return false;
     });
-    $("#txtPrecio").focus(function () {
+
+   /*  $("#txtPrecio").focus(function () {
         $('#txtPrecio').val(null);
     });
+ */
+    
+    $('#txtPrecio').dblclick(function () {
+        if (!usuario.puedeEditar) return;
+        $(this).val('');
+    })
 
     // select2 things
     $("#cmbEmpresas").select2(select2Spanish());

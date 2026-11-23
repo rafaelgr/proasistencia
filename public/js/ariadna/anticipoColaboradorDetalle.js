@@ -51,7 +51,7 @@ function initForm() {
     pageSetUp();
     // 
     getVersionFooter();
-    
+
     initTablaServiciadas();
 
     vm = new admData();
@@ -62,24 +62,24 @@ function initForm() {
     $('#txtPorcentajeBeneficio').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
-    
 
-    
+
+
     eventoCerrar();
 
-    
-    
+
+
     // asignación de eventos al clic
-    $("#btnAceptar").click(function() {
+    $("#btnAceptar").click(function () {
         aceptarAnticipo(true);
     });
 
-    $("#btnAceptar2").click(function() {
+    $("#btnAceptar2").click(function () {
         aceptarAnticipo(false);
     });
 
     $("#btnSalir").click(salir());
-    
+
     //$("#btnImprimir").click(imprimir);
     $("#frmAnticipo").submit(function () {
         return false;
@@ -97,14 +97,22 @@ function initForm() {
         return false;
     });
 
-    $("#txtPrecio").focus(function () {
-        if(vm.contabilizada() && !usuario.puedeEditar) return;
+    /*     $("#txtPrecio").focus(function () {
+            if(vm.contabilizada() && !usuario.puedeEditar) return;
+            var val = $('#txtPrecio').val();
+            if(!val || val == '') return; 
+            $('#txtPrecio').val(null);
+        });
+     */
+
+    $("#txtPrecio").dblclick(function () {
+        if (vm.contabilizada() && !usuario.puedeEditar) return;
         var val = $('#txtPrecio').val();
-        if(!val || val == '') return; 
+        if (!val || val == '') return;
         $('#txtPrecio').val(null);
     });
 
-    
+
 
     //evento de foco en el modal
     $('#modalLinea').on('shown.bs.modal', function () {
@@ -121,7 +129,7 @@ function initForm() {
 
     $("#txtNumero").on('change', function (e) {
         var numeroAnt = $("#txtNumero").val();
-     
+
         compruebaRepetido(numeroAnt, vm.sproveedorId());
     });
 
@@ -129,9 +137,9 @@ function initForm() {
     initAutoProveedor();
 
     // select2 things
-     // select2 things
-     $("#cmbDepartamentosTrabajo").select2(select2Spanish());
-     loadDepartamentos();
+    // select2 things
+    $("#cmbDepartamentosTrabajo").select2(select2Spanish());
+    loadDepartamentos();
 
     $("#cmbEmpresaServiciadas").select2(select2Spanish());
     loadEmpresaServiciadas();
@@ -158,9 +166,9 @@ function initForm() {
         if (e.added) cambioGrupoArticulo(e.added.id);
     });
 
-    
-    $('#txtTotalConIva').focus( function () {
-        if(vm.contabilizada() && !usuario.puedeEditar) return;
+
+    $('#txtTotalConIva').focus(function () {
+        if (vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtTotalConIva').val('');
     })
 
@@ -195,7 +203,7 @@ function initForm() {
     $("#txtPrecio").blur(cambioPrecioCantidad);
     $('#txtPorcentajeRetencionLinea').blur(cambioPrecioCantidad);
 
-    
+
     initTablaAnticiposLineas();
     initTablaBases();
     initTablaRetenciones();
@@ -209,68 +217,68 @@ function initForm() {
     proveedores = gup('Proveedores');
     servicioId = gup('ServicioId');
     proveedores = proveedores.split(',');
-    if(proveedores.length == 1 && proveedores[0] == "") proveedores = null;
-    datosPro = {proveedores: proveedores}
+    if (proveedores.length == 1 && proveedores[0] == "") proveedores = null;
+    datosPro = { proveedores: proveedores }
 
-    
+
 
     //evento asociado a la carga de un archivo
     $('#upload-input').on('change', function () {
         var files = $(this).get(0).files;
-        
+
         // create a FormData object which will be sent as the data payload in the
         // AJAX request
         var formData = new FormData();
         // loop through all the selected files and add them to the formData object
-        
+
         var file = files[0];
         var ext = file.name.split('.').pop().toLowerCase();
-                
+
         // add the files to formData object for the data payload
         formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
-            
-            $.ajax({
-                url: '/api/upload',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    filename = data;
-                    vm.file(filename);
-                    checkVisibility(filename);
-                },
-                xhr: function () {
-                    // create an XMLHttpRequest
-                    var xhr = new XMLHttpRequest();
-                    // listen to the 'progress' event
-                    xhr.upload.addEventListener('progress', function (evt) {
-                        if (evt.lengthComputable) {
-                            // calculate the percentage of upload completed
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-                            // update the Bootstrap progress bar with the new percentage
-                            $('.progress-bar').text(percentComplete + '%');
-                            $('.progress-bar').width(percentComplete + '%');
-                            // once the upload reaches 100%, set the progress bar text to done
-                            if (percentComplete === 100) {
-                                $('.progress-bar').html('Fichero subido');
-                            }
+
+        $.ajax({
+            url: '/api/upload',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                filename = data;
+                vm.file(filename);
+                checkVisibility(filename);
+            },
+            xhr: function () {
+                // create an XMLHttpRequest
+                var xhr = new XMLHttpRequest();
+                // listen to the 'progress' event
+                xhr.upload.addEventListener('progress', function (evt) {
+                    if (evt.lengthComputable) {
+                        // calculate the percentage of upload completed
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        // update the Bootstrap progress bar with the new percentage
+                        $('.progress-bar').text(percentComplete + '%');
+                        $('.progress-bar').width(percentComplete + '%');
+                        // once the upload reaches 100%, set the progress bar text to done
+                        if (percentComplete === 100) {
+                            $('.progress-bar').html('Fichero subido');
                         }
-                    }, false);
-                    return xhr;
-                }
-            });
+                    }
+                }, false);
+                return xhr;
+            }
+        });
     });
 
     //Evento asociado al cambio de chkcompleto
     $('#chkCompleto').change(function () {
-        if($('#chkCompleto').is(':checked')) {
+        if ($('#chkCompleto').is(':checked')) {
             $('#lineasanticipo').show();
             $('#basesycuotas').show();
             $('#retenciones').show();
             $('#txtTotalConIva').prop('disabled', true);
-        } else  {
+        } else {
             $('#lineasanticipo').hide();
             $('#basesycuotas').hide();
             $('#retenciones').hide();
@@ -281,32 +289,32 @@ function initForm() {
 
     if (antproveId != 0) {
         // caso edicion
-        llamadaAjax("GET",  "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
+        llamadaAjax("GET", "/api/anticiposProveedores/" + antproveId, null, function (err, data) {
             if (err) return;
             $('#btnAceptar2').show();
             loadData(data);
             loadServiciadasAntprove(antproveId);
             $('#btnAltaServiciada').click(reiniciaValores);
-            if($('#chkCompleto').prop('checked')) {
+            if ($('#chkCompleto').prop('checked')) {
                 loadLineasAnticipo(data.antproveId);
                 loadBasesAntprove(data.antproveId);
                 loadRetencionesAntprove(data.antproveId);
             }
             $('#chkCompleto').click(
-                function(e){
-                    if(numLineas > 0 && !completo) {
+                function (e) {
+                    if (numLineas > 0 && !completo) {
                         $('#chkCompleto').prop('checked', true);
                         mensError('Hay que borrar las lineas del anticipo para poder realizar esta acción.');
                         return;
                     }
-                    if(numServ > 0)  {
+                    if (numServ > 0) {
                         var opcion = $('#chkCompleto').prop('checked');
-                        if(opcion) {
+                        if (opcion) {
                             $('#chkCompleto').prop('checked', false);
                         } else {
                             $('#chkCompleto').prop('checked', true)
                         }
-                       
+
                         mensError('Hay que borrar las serviciadas del anticipo para poder realizar esta acción.');
                         return;
                     }
@@ -322,7 +330,7 @@ function initForm() {
                     var datosArray = [];
                     datosArray.push(data)
                     llamadaAjax(verb, url, datosArray, function (err, data) {
-                        if(err) return;
+                        if (err) return;
                         var totIva = numeroDbfComprueba(vm.totalConIva());
                         vm.totalConIva(totIva);
                         /* if(!isNaN(vm.totalConIva()) && completo) {
@@ -337,7 +345,7 @@ function initForm() {
 
                 }
             );
-    
+
         })
     } else {
         // caso alta
@@ -364,7 +372,7 @@ function initForm() {
             cargaProveedor(ProveedorId);
             cambioProveedor(ProveedorId);
         }
-        if(servicioId && servicioId != '') vm.servicioId(servicioId);
+        if (servicioId && servicioId != '') vm.servicioId(servicioId);
     }
 
     //Evento asociado al checkbox
@@ -372,22 +380,22 @@ function initForm() {
 
 }
 
-function contratosCerrados(id){
-    
-    if(vm.sempresaServiciadaId()){
+function contratosCerrados(id) {
+
+    if (vm.sempresaServiciadaId()) {
         if ($('#chkCerrados').prop('checked')) {
-            ruta =  myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();//todos los contratos
-        }else{
+            ruta = myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();//todos los contratos
+        } else {
             ruta = myconfig.apiUrl + "/api/contratos/empresa/cliente/" + vm.sempresaServiciadaId();//contratos activos
         }
-        if(id){
+        if (id) {
             loadContratos(id);
-        } else{
+        } else {
             loadContratos(vm.scontratoId());
         }
-        
+
     }
-    
+
 }
 
 function admData() {
@@ -447,12 +455,12 @@ function admData() {
     //
     self.posiblesFormasPago = ko.observableArray([]);
     self.elegidosFormasPago = ko.observableArray([]);
-     //
-     self.departamentoId = ko.observable();
-     self.sdepartamentoId = ko.observable();
-     //
-     self.posiblesDepartamentos = ko.observableArray([]);
-     self.elegidosDepartamentos = ko.observableArray([]);
+    //
+    self.departamentoId = ko.observable();
+    self.sdepartamentoId = ko.observable();
+    //
+    self.posiblesDepartamentos = ko.observableArray([]);
+    self.elegidosDepartamentos = ko.observableArray([]);
     //
     self.observaciones = ko.observable();
 
@@ -500,7 +508,7 @@ function admData() {
     //
     self.posiblesTiposRetencion = ko.observableArray([]);
     self.elegidosCodigos = ko.observableArray([]);
-    
+
 
 
 
@@ -524,9 +532,9 @@ function admData() {
     self.importeRetencion = ko.observable();
 
     //valores para carga de archivos
-    
+
     self.file = ko.observable();
-   
+
 
     //valores para la solapa serviciadas
     self.antproveServiciadoId = ko.observable();
@@ -557,7 +565,7 @@ function loadData(data) {
     vm.porcentajeBeneficio(data.porcentajeBeneficio);
     vm.porcentajeAgente(data.porcentajeAgente);
     vm.importeAlCliente(data.totalAlCliente);
-    if($('#chkCompleto').prop('checked')) {
+    if ($('#chkCompleto').prop('checked')) {
         recalcularCostesImportesDesdeCoste();
     } else {
         vm.totalConIva(data.totalConIva);
@@ -585,13 +593,13 @@ function loadData(data) {
     vm.importeServiciada(0);
     vm.servicioId(data.servicioId);
     vm.contabilizada(data.contabilizada);
-    
+
 
     //
     loadEmpresas(data.empresaId);
     loadDepartamentos(data.departamentoId);
-   
-    
+
+
     cargaProveedor(data.proveedorId);
     loadFormasPago(data.formaPagoId);
     vm.observaciones(data.observaciones);
@@ -606,18 +614,18 @@ function loadData(data) {
     if (cmd == "nueva") {
         mostrarMensajeAnticipoNueva();
     }
-    if(data.noContabilizar == 1){
+    if (data.noContabilizar == 1) {
         $('#chkNoContabilizar').prop("checked", true);
     } else {
         $('#chkNoContabilizar').prop("checked", false);
     }
-    if(data.noFactura == 1){
+    if (data.noFactura == 1) {
         $('#chkNoFactura').prop("checked", true);
     } else {
         $('#chkNoFactura').prop("checked", false);
     }
     //
-    if(data.completo == 1){
+    if (data.completo == 1) {
         $('#chkCompleto').prop("checked", true);
         $('#lineasanticipo').show();
         $('#basesycuotas').show();
@@ -654,7 +662,7 @@ function datosOK() {
             txtFecha: {
                 required: true
             },
-           
+
             cmbFormasPago: {
                 required: true
             },
@@ -726,34 +734,34 @@ var aceptarAnticipo = function (salir) {
     var data = generarAnticipoDb();
     var ext;
     // caso alta
-    
+
     var verb = "POST";
-    var url =  "/api/anticiposProveedores";
-    var returnUrl = "AnticipoColaboradorDetalle.html?desdeContrato="+ desdeContrato+"&ContratoId="+ ContratoId +"&cmd=nueva&antproveId=";
-   
-    
-    
+    var url = "/api/anticiposProveedores";
+    var returnUrl = "AnticipoColaboradorDetalle.html?desdeContrato=" + desdeContrato + "&ContratoId=" + ContratoId + "&cmd=nueva&antproveId=";
+
+
+
     // caso modificación
     if (antproveId != 0) {
         verb = "PUT";
-        url =  "/api/anticiposProveedores/" + antproveId;
+        url = "/api/anticiposProveedores/" + antproveId;
         returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
     }
     var datosArray = [];
     datosArray.push(data)
     llamadaAjax(verb, url, datosArray, function (err, result) {
         //loadData(data);
-        if(desdeContrato == "true" && antproveId != 0){
-            if(salir) {
-                window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
+        if (desdeContrato == "true" && antproveId != 0) {
+            if (salir) {
+                window.open('ContratoDetalle.html?ContratoId=' + ContratoId + '&docAntcol=true', '_self');
             } else {
                 loadData(result);
                 mensNormal('Anticipo guardado.')
             }
         }
-        else{
-            if(salir) {
-                if(verb == 'POST') {
+        else {
+            if (salir) {
+                if (verb == 'POST') {
                     returnUrl = returnUrl + result.antproveId;
                     window.open(returnUrl, '_self');
 
@@ -762,33 +770,33 @@ var aceptarAnticipo = function (salir) {
                     returnUrl = returnUrl + vm.antproveId();
                     window.open(returnUrl, '_self');
                 }
-               
+
             } else {
                 loadData(result);
                 mensNormal('Anticipo guardado.')
             }
         }
-       
+
     });
 }
 
 var generarAnticipoDb = function () {
     var totConIva;
-    if($('#chkNoContabilizar').prop("checked")) {
+    if ($('#chkNoContabilizar').prop("checked")) {
         vm.noContabilizar(true);
     } else {
         vm.noContabilizar(false);
     }
-    if($('#chkNoFactura').prop("checked")) {
+    if ($('#chkNoFactura').prop("checked")) {
         vm.noFactura(true);
     } else {
         vm.noFactura(false);
     }
     //
-    if($('#chkCompleto').prop("checked")) {
-        if(antproveId != 0) totConIva = numeroDbf(vm.totalConIva());
+    if ($('#chkCompleto').prop("checked")) {
+        if (antproveId != 0) totConIva = numeroDbf(vm.totalConIva());
         vm.completo(true);
-        
+
     } else {
         vm.completo(false);
         totConIva = vm.totalConIva();
@@ -843,10 +851,10 @@ var generarAnticipoDb = function () {
 
 function salir() {
     var mf = function () {
-        
-        if(EmpresaId != "" || desdeContrato == "true"){
-            window.open('ContratoDetalle.html?ContratoId='+ ContratoId +'&docAntcol=true', '_self');
-        }else{
+
+        if (EmpresaId != "" || desdeContrato == "true") {
+            window.open('ContratoDetalle.html?ContratoId=' + ContratoId + '&docAntcol=true', '_self');
+        } else {
             var url = "AnticipoColaboradorGeneral.html";
             window.open(url, '_self');
         }
@@ -864,13 +872,13 @@ function loadEmpresas(empresaId) {
     });
 }
 
-function loadEmpresaServiciadas(empresaId2){
+function loadEmpresaServiciadas(empresaId2) {
     llamadaAjax("GET", "/api/empresas", null, function (err, data) {
         if (err) return;
         var empresaServiciada = [{ empresaId: null, nombre: "" }].concat(data);
         vm.posiblesEmpresaServiciadas(empresaServiciada);
         $("#cmbEmpresaServiciadas").val([empresaId2]).trigger('change');
-        if(vm.sempresaId() == vm.sempresaServiciadaId()) contratosCerrados();
+        if (vm.sempresaId() == vm.sempresaServiciadaId()) contratosCerrados();
     });
 }
 
@@ -884,8 +892,8 @@ function loadFormasPago(formaPagoId) {
 }
 
 var loadContratos = function (contratoId) {
-    if(!ruta){
-        ruta = myconfig.apiUrl +"/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
+    if (!ruta) {
+        ruta = myconfig.apiUrl + "/api/contratos/concat/referencia/direccion/tipo/" + vm.sempresaServiciadaId();
     }
     llamadaAjax("GET", ruta, null, function (err, data) {
         if (err) return;
@@ -896,13 +904,13 @@ var loadContratos = function (contratoId) {
 var cargarContratos = function (data, contratoId) {
     var contratos = [{ contratoId: null, contasoc: "" }].concat(data);
     vm.posiblesContratos(contratos);
-    if(contratoId){
+    if (contratoId) {
         $("#cmbContratos").val([contratoId]).trigger('change');
-    }else{
+    } else {
         $("#cmbContratos").val(0).trigger('change');
     }
 }
-    
+
 function loadDepartamentos(departamentoId) {
     llamadaAjax("GET", "/api/departamentos/usuario/" + usuario.usuarioId, null, function (err, data) {
         if (err) return;
@@ -940,13 +948,13 @@ function lanzaAviso() {
     var codPostal = vm.emisorCodPostal();
     var poblacion = vm.emisorPoblacion();
     var provincia = vm.emisorProvincia();
-    if(nif == "") nif = null;
-    if(nombre == "") nombre = null;
-    if(direccion == "") direccion = null;
-    if(codPostal == "") codPostal = null;
-    if(poblacion == "") poblacion = null;
-    if(provincia == "") provincia = null;
-    if(!nif || !nombre || !direccion || !codPostal || !poblacion || !provincia) {
+    if (nif == "") nif = null;
+    if (nombre == "") nombre = null;
+    if (direccion == "") direccion = null;
+    if (codPostal == "") codPostal = null;
+    if (poblacion == "") poblacion = null;
+    if (provincia == "") provincia = null;
+    if (!nif || !nombre || !direccion || !codPostal || !poblacion || !provincia) {
         mensAlerta("Faltan campos en el emisor");
     }
 }
@@ -954,10 +962,10 @@ function lanzaAviso() {
 
 function cambioEmpresa(empresaId) {
     if (!empresaId) return;
-    
+
     llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
-        if(err) return;
-        if(data){
+        if (err) return;
+        if (data) {
             vm.receptorNif(data.nif);
             vm.receptorNombre(data.nombre);
             vm.receptorDireccion(data.direccion);
@@ -971,7 +979,7 @@ function cambioEmpresa(empresaId) {
                 antprove: {
                     fecha: spanishDbDate(vm.fecha()),
                     empresaId: data.empresaId
-    
+
                 }
             }
         }
@@ -980,10 +988,10 @@ function cambioEmpresa(empresaId) {
 
 function cambioEmpresaServiciada(empresaId) {
     if (!empresaId) return;
-    
+
     llamadaAjax("GET", "/api/empresas/" + empresaId, null, function (err, data) {
-        if(err) return;
-        if(data){
+        if (err) return;
+        if (data) {
             contratosCerrados(data.contratoId);
         }
     });
@@ -1003,31 +1011,31 @@ function obrenerTipoClienteID(contratoId) {
 }
 
 function compruebaRepetido(numeroAnt, proveedorId) {
-    if(numeroAnt.length > 0 && proveedorId > 0) {
-       
+    if (numeroAnt.length > 0 && proveedorId > 0) {
 
-    
+
+
         $.ajax({
             type: "GET",
-            url: myconfig.apiUrl + "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" +  proveedorId,
+            url: myconfig.apiUrl + "/api/anticiposProveedores/proveedor/anticipos/solapa/muestra/tabla/datos/anticipo/" + proveedorId,
             dataType: "json",
             contentType: "application/json",
-            data:null,
+            data: null,
             success: function (data, status) {
-                if(data) {
-                    data.forEach( (f) => {
+                if (data) {
+                    data.forEach((f) => {
                         var num = f.numeroAnticipoProveedor;
                         var ano = moment(spanishDbDate(vm.fecha())).year();
                         var antAno = moment(f.fecha).year();
-                        
-                        if(num == numeroAnt && f.antproveId != vm.antproveId() && ano == antAno) {
+
+                        if (num == numeroAnt && f.antproveId != vm.antproveId() && ano == antAno) {
                             mensError('Ya existe una anticipo con este numero para este proveedor');
                             $('#txtNumero').val(antNumAnt);
                             return;
                         }
                     });
-                 //
-                //
+                    //
+                    //
                 }
             },
             error: function (err) {
@@ -1049,7 +1057,7 @@ function nuevaLinea() {
     lineaEnEdicion = false;
     llamadaAjax("GET", "/api/anticiposProveedores/nextlinea/" + vm.antproveId(), null, function (err, data) {
         vm.linea(data);
-        
+
         recuperaParametrosPorDefecto();
     });
 }
@@ -1077,7 +1085,7 @@ function limpiaDataLinea(data) {
 }
 
 var obtenerValoresPorDefectoDelContratoMantenimiento = function (contratoId) {
-    llamadaAjax("GET",  "/api/contratos/" + contratoId, null, function (err, data) {
+    llamadaAjax("GET", "/api/contratos/" + contratoId, null, function (err, data) {
         if (err) return;
         vm.porcentajeBeneficio(data.porcentajeBeneficio);
         vm.porcentajeAgente(data.porcentajeAgente);
@@ -1091,7 +1099,7 @@ function aceptarLinea() {
         return;
     }
 
-    
+
 
     var data = {
         antproveLinea: {
@@ -1117,15 +1125,15 @@ function aceptarLinea() {
         }
     }
     var verbo = "POST";
-    var url =  "/api/anticiposProveedores/lineas-nuevo";
+    var url = "/api/anticiposProveedores/lineas-nuevo";
     if (lineaEnEdicion) {
         verbo = "PUT";
-        url =  "/api/anticiposProveedores/lineas-nuevo/" + vm.antproveLineaId();
+        url = "/api/anticiposProveedores/lineas-nuevo/" + vm.antproveLineaId();
     }
     llamadaAjax(verbo, url, data, function (err, data) {
         if (err) return;
         $('#modalLinea').modal('hide');
-        llamadaAjax("GET",  "/api/anticiposProveedores/" + data.antproveId, null, function (err, data) {
+        llamadaAjax("GET", "/api/anticiposProveedores/" + data.antproveId, null, function (err, data) {
             cmd = "";
             loadData(data);
             loadLineasAnticipo(data.antproveId);
@@ -1282,7 +1290,7 @@ function initTablaAnticiposLineas() {
                 var bt2 = "<button class='btn btn-circle btn-success btn-lg' data-toggle='modal' data-target='#modalLinea' onclick='editAnticipoLinea(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
                 // if (!vm.generada())
                 //     html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
-                if(vm.contabilizada() && !usuario.puedeEditar) bt1 = '';
+                if (vm.contabilizada() && !usuario.puedeEditar) bt1 = '';
                 html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
                 return html;
             }
@@ -1326,9 +1334,9 @@ function loadDataLineaDefecto(data) {
     vm.porcentajeRetencionLinea(0);
     vm.importeRetencionLinea(0);
     vm.codigo(0);
-   
-   
-    
+
+
+
     //
     /*loadGrupoArticulos(data.grupoArticuloId);
     loadArticulos(data.articuloId);
@@ -1337,7 +1345,7 @@ function loadDataLineaDefecto(data) {
     //
     //cambioGrupoArticulo(data.grupoArticuloId)
     cambioTiposIva(data.tipoIvaId)
-   
+
 }
 
 
@@ -1348,7 +1356,7 @@ function loadTablaAnticipoLineas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
-    if(data) numLineas = data.length;
+    if (data) numLineas = data.length;
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();
@@ -1383,7 +1391,7 @@ function loadArticulos(id) {
 
 function loadGrupoArticulos(id) {
     llamadaAjax("GET", "/api/grupo_articulo/departamento/" + vm.departamentoId(), null, function (err, data) {
-        if(err) return;
+        if (err) return;
         var grupos = [{ grupoArticuloId: 0, nombre: "" }].concat(data);
         vm.posiblesGrupoArticulos(grupos);
         if (id) {
@@ -1414,9 +1422,9 @@ function loadTiposRetencion(id) {
         vm.posiblesTiposRetencion(data);
         if (id) {
             $("#cmbTiposRetencion").val([id]).trigger('change');
-            for( var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var re = data[i];
-                if(re.codigo == id) {
+                if (re.codigo == id) {
                     vm.antCodigo(id);
                     vm.antCuentaRetencion(re.cuentaPorDefecto);
                     vm.scodigo(id);
@@ -1425,7 +1433,7 @@ function loadTiposRetencion(id) {
                     break;
                 }
             }
-        
+
         } else {
             $("#cmbTiposRetencion").val([0]).trigger('change');
             vm.antCodigo(0);
@@ -1463,10 +1471,10 @@ function cambioArticulo(articuloId) {
             vm.descripcion(data.nombre + ':\n' + data.descripcion);
         }
         vm.cantidad(1);
-        if(data.precioUnitario) {
+        if (data.precioUnitario) {
             vm.importe(data.precioUnitario);
         }
-        
+
         $("#cmbTiposIva").val([data.tipoIvaId]).trigger('change');
         $("#cmbUnidades").val([data.unidadId]).trigger('change');
         cambioTiposIva(data.tipoIvaId);
@@ -1479,14 +1487,14 @@ function cambioGrupoArticulo(grupoArticuloId) {
     if (!grupoArticuloId) return;
     // montar el texto de capítulo si no lo hay
     //if (!vm.capituloLinea()) {
-        var numeroCapitulo = Math.floor(vm.linea());
-        var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
-        // ahora hay que buscar el nombre del capitulo para concatenarlo
-        llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
-            if (err) return;
-            nombreCapitulo += data.nombre;
-            vm.capituloLinea(nombreCapitulo);
-        });
+    var numeroCapitulo = Math.floor(vm.linea());
+    var nombreCapitulo = "Capitulo " + numeroCapitulo + ": ";
+    // ahora hay que buscar el nombre del capitulo para concatenarlo
+    llamadaAjax("GET", "/api/grupo_articulo/" + grupoArticuloId, null, function (err, data) {
+        if (err) return;
+        nombreCapitulo += data.nombre;
+        vm.capituloLinea(nombreCapitulo);
+    });
     //}
     llamadaAjax("GET", "/api/articulos/grupo/" + grupoArticuloId, null, function (err, data) {
         var articulos = [{ articuloId: 0, nombre: "" }].concat(data);
@@ -1500,7 +1508,7 @@ function cambioTiposIva(tipoIvaId) {
         if (err) return;
         vm.tipoIvaId(data.tipoIvaId);
         vm.porcentaje(data.porcentaje);
-       
+
     });
 }
 
@@ -1510,18 +1518,18 @@ function cambioTiposRetencion(codigo) {
     //comprobamos los tipos de retencion de la anticipo
     var acumulado = 0;
     var retSelec;
-    llamadaAjax("GET","/api/anticiposProveedores/retenciones/" + vm.antproveId(), null, function (err, datos) {
+    llamadaAjax("GET", "/api/anticiposProveedores/retenciones/" + vm.antproveId(), null, function (err, datos) {
         if (err) return;
-        if(datos.length == 2) {// si hay dos tipos de retncion diferentes
+        if (datos.length == 2) {// si hay dos tipos de retncion diferentes
             retSelec = vm.scodigo();
             //comprobamos que lA nueva retencion introducida no sea diferente de las dos que existen
-            for(var i = 0; i < datos.length; i++) {
-                if( vm.scodigo() != datos[i].codigoRetencion) {
+            for (var i = 0; i < datos.length; i++) {
+                if (vm.scodigo() != datos[i].codigoRetencion) {
                     acumulado++;
                 }
             }
         }
-        if(acumulado == 2) {
+        if (acumulado == 2) {
             mostrarMensajeTipoNoPermitido();
             vm.codigo(vm.antCodigo());
             vm.scodigo(vm.antCodigo());
@@ -1530,8 +1538,8 @@ function cambioTiposRetencion(codigo) {
             //loadTiposRetencion(codigo);
             return;
         }
-        if(datos.length == 1 &&  vm.scodigo() != 0) {
-            if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && !lineaEnEdicion) {
+        if (datos.length == 1 && vm.scodigo() != 0) {
+            if (datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && !lineaEnEdicion) {
                 mostrarMensajeTipoNoPermitido();
                 vm.codigo(0);
                 vm.scodigo(0);
@@ -1541,7 +1549,7 @@ function cambioTiposRetencion(codigo) {
                 $("#cmbTiposRetencion").val([0]).trigger('change');
                 //loadTiposRetencion(codigo);
                 return;
-            } else if(datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && lineaEnEdicion){
+            } else if (datos[0].codigoRetencion != 0 && datos[0].codigoRetencion != vm.scodigo() && lineaEnEdicion) {
                 mostrarMensajeTipoNoPermitido();
                 vm.codigo(vm.antCodigo());
                 vm.scodigo(vm.antCodigo());
@@ -1551,12 +1559,12 @@ function cambioTiposRetencion(codigo) {
                 return;
             }
         }
-        
+
         llamadaAjax("GET", "/api/anticiposProveedores/retenciones/tiposreten/antprove/" + codigo, null, function (err, data) {
             if (err) return;
             vm.codigo(data.codigo);
             vm.antCodigo(data.codigo);
-            if(vm.codigo() != 0) {
+            if (vm.codigo() != 0) {
                 vm.porcentajeRetencionLinea(data.porcentajePorDefecto);
                 vm.cuentaRetencion(data.cuentaPorDefecto);
             } else {
@@ -1573,22 +1581,22 @@ function cambioTiposRetencion(codigo) {
 
 
 function establecerTotal() {
-   /*  if(vm.antTotal()) {
-        vm.total(vm.antTotal());
-    } */
+    /*  if(vm.antTotal()) {
+         vm.total(vm.antTotal());
+     } */
 }
 
 var cambioPrecioCantidad = function () {
-    
-        //vm.antTotal(vm.total()); //guardamos el total
-    
+
+    //vm.antTotal(vm.total()); //guardamos el total
+
     vm.costeLinea(vm.cantidad() * vm.importe());
     recalcularCostesImportesDesdeCoste();
     vm.totalLinea(obtenerImporteAlClienteDesdeCoste(vm.costeLinea()));
     //calculamos el importe de retencion
     var porcentajeRetencionLinea = vm.porcentajeRetencionLinea();
-    if(porcentajeRetencionLinea != 0) {
-        vm.importeRetencionLinea(roundToTwo((vm.porcentajeRetencionLinea() * vm.totalLinea())/100))
+    if (porcentajeRetencionLinea != 0) {
+        vm.importeRetencionLinea(roundToTwo((vm.porcentajeRetencionLinea() * vm.totalLinea()) / 100))
     } else {
         vm.importeRetencionLinea(0);
         vm.porcentajeRetencionLinea(0);
@@ -1612,9 +1620,9 @@ function deleteAnticipoLinea(antproveLineaId) {
                 antproveId: vm.antproveId()
             }
         };
-        llamadaAjax("DELETE",  "/api/anticiposProveedores/lineas-nuevo/" + antproveLineaId, data, function (err, data) {
+        llamadaAjax("DELETE", "/api/anticiposProveedores/lineas-nuevo/" + antproveLineaId, data, function (err, data) {
             if (err) return;
-            llamadaAjax("GET",  "/api/anticiposProveedores/" + vm.antproveId(), null, function (err, data) {
+            llamadaAjax("GET", "/api/anticiposProveedores/" + vm.antproveId(), null, function (err, data) {
                 if (err) return;
                 loadData(data);
                 loadLineasAnticipo(data.antproveId);
@@ -1718,13 +1726,13 @@ function loadBasesAntprove(antproveId) {
         }
         llamadaAjax("GET", "/api/anticiposProveedores/retenciones/" + antproveId, null, function (err, dataBis) {
             if (err) return;
-            for(var j = 0; j < dataBis.length; j++) {
+            for (var j = 0; j < dataBis.length; j++) {
                 t2 = t2 - dataBis[j].importeRetencion;
             }
             vm.total(numeral(t1).format('0,0.00'));
             vm.totalCuota(numeral(t3).format('0,0.00'));
             vm.totalConIva(numeral(t2).format('0,0.00'));
-           
+
             loadTablaBases(data);
         });
     });
@@ -1738,7 +1746,7 @@ function loadBasesAntprove(antproveId) {
 function initTablaRetenciones() {
     tablaCarro = $('#dt_retenciones').dataTable({
         autoWidth: true,
-        
+
         preDrawCallback: function () {
             // Initialize the responsive datatables helper once.
             if (!responsiveHelper_dt_basic) {
@@ -1774,7 +1782,7 @@ function initTablaRetenciones() {
         data: dataBases,
         columns: [{
             data: "descripcion",
-        },{
+        }, {
             data: "porcentajeRetencion",
             className: "text-left",
             render: function (data, type, row) {
@@ -1811,7 +1819,7 @@ function loadTablaRetenciones(data) {
 function loadRetencionesAntprove(antproveId) {
     llamadaAjax("GET", "/api/anticiposProveedores/retenciones/" + antproveId, null, function (err, data) {
         if (err) return;
-        
+
         loadTablaRetenciones(data);
     });
 }
@@ -1877,7 +1885,7 @@ var cambioCampoConRecalculoDesdeCoste = function () {
     actualizarLineasDeLaAnticipoTrasCambioCostes();
 };
 
-var guardarPorcentajes = function(){
+var guardarPorcentajes = function () {
     var data = {
         antprove: {
             antproveId: vm.antproveId(),
@@ -1888,9 +1896,9 @@ var guardarPorcentajes = function(){
             porcentajeAgente: vm.porcentajeAgente()
         }
     }
-    if(vm.antproveId() === 0) return;
+    if (vm.antproveId() === 0) return;
 
-    llamadaAjax("PUT", "/api/anticiposProveedores/"+vm.antproveId(), data, function (err, data) {
+    llamadaAjax("PUT", "/api/anticiposProveedores/" + vm.antproveId(), data, function (err, data) {
         if (err) return;
         return;
     });
@@ -1902,7 +1910,7 @@ var cambioCampoConRecalculoDesdeBeneficio = function () {
 }
 
 var recalcularCostesImportesDesdeCoste = function () {
-    if(vm.porcentajeAgente() ==0 && vm.porcentajeBeneficio() == 0 ) return;
+    if (vm.porcentajeAgente() == 0 && vm.porcentajeBeneficio() == 0) return;
     if (vm.coste() != null) {
         if (vm.porcentajeBeneficio() != null) {
             vm.importeBeneficio(roundToTwo(vm.porcentajeBeneficio() * vm.coste() / 100));
@@ -1931,21 +1939,21 @@ var recalcularCostesImportesDesdeBeneficio = function () {
 };
 
 var actualizarLineasDeLaAnticipoTrasCambioCostes = function () {
-    if (vm.totalLinea() === undefined || vm.antproveId() === 0) { 
+    if (vm.totalLinea() === undefined || vm.antproveId() === 0) {
         return;
-    }else {
-        var url =  "/api/anticiposProveedores/recalculo/" + vm.antproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
-        
-         llamadaAjax("PUT", url, null, function (err, data) {
-             if (err) return;
-             llamadaAjax("GET",  "/api/anticiposProveedores/" + vm.antproveId(), null, function (err, data) {
-                 loadLineasAnticipo(data.antproveId);
-                 loadBasesAntprove(data.antproveId);
-                 loadRetencionesAntprove(data.antproveId);
-             });
-         });
+    } else {
+        var url = "/api/anticiposProveedores/recalculo/" + vm.antproveId() + '/' + vm.coste() + '/' + vm.porcentajeBeneficio() + '/' + vm.porcentajeAgente() + '/' + vm.tipoClienteId();
+
+        llamadaAjax("PUT", url, null, function (err, data) {
+            if (err) return;
+            llamadaAjax("GET", "/api/anticiposProveedores/" + vm.antproveId(), null, function (err, data) {
+                loadLineasAnticipo(data.antproveId);
+                loadBasesAntprove(data.antproveId);
+                loadRetencionesAntprove(data.antproveId);
+            });
+        });
     }
-    
+
 };
 
 var ocultarCamposPreanticiposGeneradas = function () {
@@ -1968,7 +1976,7 @@ var mostrarMensajeAnticipoNueva = function () {
     mensNormal(mens);
 }
 
-var mostrarMensajeTipoNoPermitido = function() {
+var mostrarMensajeTipoNoPermitido = function () {
     var mens = "Solo se permiten tipos de retencion exentos y otro tipo en una misma anticipo";
     mensNormal(mens);
 }
@@ -2003,7 +2011,7 @@ var imprimir = function () {
 function printPreanticipo(id) {
     llamadaAjax("GET", "/api/informes/preanticipos/" + id, null, function (err, data) {
         if (err) return;
-        
+
     });
 }
 
@@ -2035,7 +2043,7 @@ var f_open_post = function (verb, url, data, target) {
 };
 
 
-var recuperaParametrosPorDefecto = function (){
+var recuperaParametrosPorDefecto = function () {
     llamadaAjax("GET", "/api/parametros/parametro/grupo", null, function (err, data) {
         if (err) return;
         loadDataLineaDefecto(data);
@@ -2048,8 +2056,8 @@ function initTablaServiciadas() {
     tablaAntproves = $('#dt_serviciada').DataTable({
         bSort: false,
         "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs' 'l C T >r>" +
-        "t" +
-        "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+            "t" +
+            "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
         "oColVis": {
             "buttonText": "Mostrar / ocultar columnas"
         },
@@ -2158,27 +2166,27 @@ function initTablaServiciadas() {
             .draw();
     });
 
-    
+
 }
 
 
 function loadServiciadasAntprove(antproveId) {
-    llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
         if (err) return;
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             acumulado += parseFloat(data[i].importe);
         }
         numServiciadas = data.length;
-        if(numServiciadas == 0) {
+        if (numServiciadas == 0) {
             mostrarMensajeCrearServiciadas();
         }
-        setTimeout(function() {
-            if($('#chkCompleto').prop("checked")) {
+        setTimeout(function () {
+            if ($('#chkCompleto').prop("checked")) {
                 tot = parseFloat(numeroDbf(vm.total()));
             } else {
                 tot = parseFloat(vm.totalConIva());
             }
-            vm.importeServiciada(roundToTwo(tot-acumulado).toFixed(2));
+            vm.importeServiciada(roundToTwo(tot - acumulado).toFixed(2));
             loadTablaServiciadas(data);
         }, 1000);
     });
@@ -2190,19 +2198,19 @@ function loadTablaServiciadas(data) {
     if (data !== null && data.length === 0) {
         data = null;
     }
-    if(data) numServ = data.length;
+    if (data) numServ = data.length;
     dt.fnClearTable();
     if (data != null) dt.fnAddData(data);
     dt.fnDraw();
 }
 
 function editServiciada(id) {
-    llamadaAjax("GET", "/api/anticiposProveedores/servicidas/anticipos/proveedor/una/para/editar/"+ id, null, function (err, data) {
+    llamadaAjax("GET", "/api/anticiposProveedores/servicidas/anticipos/proveedor/una/para/editar/" + id, null, function (err, data) {
         if (err) return;
         importeModificar = data.importe;
         loadDataServiciadas(data)
     });
-   
+
 }
 
 function loadDataServiciadas(data) {
@@ -2219,49 +2227,49 @@ function loadDataServiciadas(data) {
 function nuevaServiciada() {
     //primero comprobamos que el colaborador no exceda el límite de lo que tiene anticipado
     var verb = "POST";
-    var url =  '/api/anticiposProveedores/nueva/serviciada';
-    
+    var url = '/api/anticiposProveedores/nueva/serviciada';
+
     // caso modificación
     if (vm.antproveServiciadoId() != 0) {
-       
+
 
         verb = "PUT";
-        url =  "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
+        url = "/api/anticiposProveedores/serviciada/edita/" + vm.antproveServiciadoId();
         returnUrl = "AnticipoColaboradorGeneral.html?antproveId=";
-        
+
     }
-    compruebaAnticiposColaborador(verb, function(err, result) {
-        if(err) return mensError(err);
+    compruebaAnticiposColaborador(verb, function (err, result) {
+        if (err) return mensError(err);
         var imp;
         var tot;
         acumulado = 0;
-    
+
         //recalculamos el acumulado de todas las empresas serviciadas de del anticipo
-        llamadaAjax("GET", myconfig.apiUrl +  "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
+        llamadaAjax("GET", myconfig.apiUrl + "/api/anticiposProveedores/servicidas/anticipos/proveedor/todas/" + antproveId, null, function (err, data) {
             if (err) return;
-            for(var i = 0; i < data.length; i++){
+            for (var i = 0; i < data.length; i++) {
                 acumulado += data[i].importe;
             }
-           
-            if(vm.antproveServiciadoId() != 0) {
+
+            if (vm.antproveServiciadoId() != 0) {
                 imp = acumulado - importeModificar + parseFloat(vm.importeServiciada());
                 imp = Math.trunc(imp * 100) / 100;
-                
+
             } else {
                 imp = acumulado + parseFloat(vm.importeServiciada());
                 imp = Math.trunc(imp * 100) / 100;
-                if($('#chkCompleto').prop("checked")) {
+                if ($('#chkCompleto').prop("checked")) {
                     tot = parseFloat(numeroDbf(vm.total()));
                 } else {
                     tot = parseFloat(vm.totalConIva());
                 }
             }
-        
-            if( imp > tot){
+
+            if (imp > tot) {
                 mostrarMensajeSmart('El total de la suma del importe de las empresas serviciadas supera al de la anticipo');
                 return;
             }
-            else if(!datosOKServiciada()){
+            else if (!datosOKServiciada()) {
                 vm.importeServiciada(0);
                 return;
             }
@@ -2278,36 +2286,36 @@ function nuevaServiciada() {
                 loadServiciadasAntprove(antproveId);
                 $('#modalServiciado').modal('hide');
             });
-            
+
         });
     });
 }
 
 function compruebaAnticiposColaborador(verb, callback) {
     var f = spanishDbDate(vm.fecha());
-    llamadaAjax("GET", "/api/comerciales/limite/anticipo/"+ vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId() + "/" + vm.comercialId() + "/" + vm.tipoComercialId() + "/" + f, null, function (err, data) {
+    llamadaAjax("GET", "/api/comerciales/limite/anticipo/" + vm.proveedorId() + "/" + vm.sempresaServiciadaId() + "/" + vm.scontratoId() + "/" + vm.comercialId() + "/" + vm.tipoComercialId() + "/" + f, null, function (err, data) {
         if (err) return callback(err);
-        if(Object.keys(data).length === 0 && data.constructor === Object) {
+        if (Object.keys(data).length === 0 && data.constructor === Object) {
             var err = "Está intentando crear un anticipo para un colaborador que no está vinculado al contrato o dicho colaborador no tiene contrato de colaborador creado.";
-            return callback(err); 
+            return callback(err);
         } else {
             var imp = 0;
             var totAnt = 0;
             //comprobamos si se ha superado el límite
             // si el limite es null no se hace nada
-            if(data.limite == null) return callback(null, null);
+            if (data.limite == null) return callback(null, null);
             //sumamos lo que le estamos anticipando a lo ya anticipado y vemos si supera el límite
             //caso post 
-            if(verb == "POST") {
+            if (verb == "POST") {
                 imp = parseFloat(vm.importeServiciada());
                 totAnt = parseFloat(data.totAnticipado) + imp;
             } else {
                 imp = parseFloat(vm.importeServiciada());
                 totAnt = (parseFloat(data.totAnticipado) - importeModificar) + imp;
             }
-            if(totAnt > data.limite) {
+            if (totAnt > data.limite) {
                 var err = "Limite para este colaborador sobrepasado en este contrato.<br>" + " Limite: " + numeral(data.limite).format('0,0.00') + ".<br>" + "Total que se intenta anticipar: " + numeral(totAnt).format('0,0.00');
-                return callback(err); 
+                return callback(err);
             }
             callback(null, null);
         }
@@ -2315,10 +2323,10 @@ function compruebaAnticiposColaborador(verb, callback) {
     });
 }
 function datosOKServiciada() {
-    if(vm.importeServiciada() == "") {
+    if (vm.importeServiciada() == "") {
         vm.porcentaje(null);
-       }
-    
+    }
+
     $('#frmServiciadas').validate({
         rules: {
             txtImporteServiciada: {
@@ -2327,12 +2335,12 @@ function datosOKServiciada() {
                 min: 0.000000000001
             },
             cmbEmpresaServiciadas: {
-               required: true
+                required: true
             },
             cmbContratos: {
-                required:true
+                required: true
             }
-        
+
         },
         // Messages for form validation
         messages: {
@@ -2365,13 +2373,13 @@ function reiniciaValores() {
     vm.scontratoId(null);
     loadEmpresaServiciadas(vm.empresaId());
     loadServiciadasAntprove(antproveId);
-    if(ContratoId != 0) {
+    if (ContratoId != 0) {
         $('#chkCerrados').prop('checked', true);
         vm.scontratoId(ContratoId);
         loadContratos(vm.scontratoId());
         cambioContrato(ContratoId);
     }
-    
+
 }
 
 

@@ -52,9 +52,16 @@ function initForm() {
     $('#txtPorcentajeBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeCosteLinea);
     $('#txtImporteBeneficioLinea').on('blur', cambioCampoConRecalculoDesdeBeneficioLinea);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
-    $("#txtPrecio").focus(function () {
+
+    /* $("#txtPrecio").focus(function () {
         $('#txtPrecio').val(null);
+    }); */
+
+    $("#txtPrecio").dblclick(function () {
+        if (!usuario.puedeEditar) return;
+        $(this).val(null);
     });
+    
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarPrefactura);
     $("#btnSalir").click(salir());
