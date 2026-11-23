@@ -1609,6 +1609,16 @@
                                                                         </fieldset>
                                                                         <fieldset>
                                                                             <div class="pull-right">
+                                                                                <button id="btnRevertirAjuste"
+                                                                                    type="button"
+                                                                                    title="Revertir ajuste de certificación final"
+                                                                                    class="btn btn-warning btn-circle btn-lg"
+                                                                                    data-bind="visible: ajusteCertFinal() == 1"
+                                                                                    onclick="confirmarReversionAjuste()">
+
+                                                                                    <i class="fa fa-lg fa-undo"></i>
+
+                                                                                </button>
                                                                                 <button id="btnImprimirActaRecepcion"
                                                                                     title="Imprimir acta de recepción"
                                                                                     class="btn custom-btn2 btn-circle btn-lg">
@@ -6035,7 +6045,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title"> DESTINATARIOS SIN CORREO</h4>
+                    <h4 class="modal-title"> DESTINATARIOS DEL CORREO</h4>
                 </div>
                 <div class="modal-body no-padding">
                     <form id="destinatarios-correo-form" class="smart-form">
@@ -6067,7 +6077,7 @@
                             </div>
                         </fieldset>
                         <footer>
-                            <button id="btnAceptarDestinatarios" class="btn btn-primary" onclick="sendCorreoActa()">
+                            <button id="btnAceptarDestinatarios" class="btn btn-primary" onclick="loadModalTipocorreo()">
                                 Enviar correo
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -6098,7 +6108,8 @@
                             <section class="col col-md-12">
                                 <label class="label" style="font-weight: bold;"> Enviar correo</label>
                                 <div id="radioCorreoActa">
-                                    <div><input type='radio' id='radioCorreoActa1' name='firmaActaGroup' value='0'
+                                    <div>
+                                        <input type='radio' id='radioCorreoActa1' name='firmaActaGroup' value='0'
                                             data-bind="checked: correoActa" />
                                         Al cliente y la DF </div>
                                     <div><input type='radio' id='radioCorreoActa2' name='firmaActaGroup' value='1'

@@ -170,10 +170,18 @@ function initForm() {
     });
 
 
-    $('#txtPrecio').focus(function () {
+    
+/*     $('#txtPrecio').focus(function () {
         if (vm.contabilizada() && !usuario.puedeEditar) return;
         $('#txtPrecio').val('');
+    }) */
+
+    $('#txtPrecio').dblclick(function () {
+        if (vm.contabilizada() && !usuario.puedeEditar) return;
+        $(this).val('');
     })
+
+    
 
     // Ahora Proveedor en autocomplete
     initAutoProveedor();

@@ -54,9 +54,16 @@ function initForm() {
     //$('#txtImporteBeneficio').on('blur', cambioCampoConRecalculoDesdeBeneficio);
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
-    $("#txtPrecio").focus(function () {
+
+   /*  $("#txtPrecio").focus(function () {
         $('#txtPrecio').val(null);
+    }); */
+
+    $("#txtPrecio").dblclick(function () {
+        if (!usuario.puedeEditar) return;
+        $(this).val(null);
     });
+
     // asignación de eventos al clic
     $("#btnAceptar").click(aceptarPrefactura);
     $("#btnSalir").click(salir());
