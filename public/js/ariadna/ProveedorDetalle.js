@@ -851,7 +851,7 @@ function aceptar(salir) {
                 "empresaId": vm.sempresaId(),
                 "nombreRp": vm.nombreRp(),
                 "dniRp": vm.dniRp(),
-                "tipoViaRpId": vm.stipoViaRpId(),
+                "tipoViaRpId": vm.stipoViaRpId() ? vm.stipoViaRpId() : null,
                 "direccionRp": vm.direccionRp(),
                 "poblacionRp": vm.poblacionRp(),
                 "codPostalRp": vm.codPostalRp(),
@@ -866,7 +866,7 @@ function aceptar(salir) {
                 "poblacionRepresentante": vm.poblacionRepresentante(),
                 "codPostalRepresentante": vm.codPostalRepresentante(),
                 "provinciaRepresentante": vm.provinciaRepresentante(),
-                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId()
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId() ? vm.tipoViaRepresentanteId() : null
             },
             departamentos: {
                 "departamentos": vm.elegidosDepartamentos()

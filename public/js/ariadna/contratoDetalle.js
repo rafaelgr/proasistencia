@@ -12101,7 +12101,8 @@ async function ajustarPrefacturasPorDiferenciaNegativa(
             await generarAjuste(
                 -importeAbono,
                 porcentajeIva,
-                []
+                [],
+                false
             );
 
             // Marcar contrato como ajustado
@@ -12587,9 +12588,6 @@ async function ajustarPrefacturasPorDiferenciaNegativa(
 
                     if (err) return;
 
-                    mostrarMensajeSmart(
-                        "Contrato ajustado correctamente."
-                    );
 
                     loadPrefacturasDelContrato(
                         vm.contratoId()
@@ -12599,7 +12597,13 @@ async function ajustarPrefacturasPorDiferenciaNegativa(
                         vm.contratoId()
                     );
 
+                    vm.ajusteCertFinal(1)
+
                     imprimirActaRecepcion();
+
+                    mostrarMensajeSmart(
+                        "Contrato ajustado correctamente."
+                    );
                 }
             );
         };
@@ -12613,7 +12617,8 @@ async function ajustarPrefacturasPorDiferenciaNegativa(
                     await generarAjuste(
                         -importeAbonoBase,
                         porcentajeIva,
-                        idsPrefacturas
+                        idsPrefacturas,
+                        false
                     );
 
                 }
@@ -13092,7 +13097,7 @@ async function buscarIntereses(ids) {
 }
 
 
-async function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
+async function generarAjuste(diferencia, porcentajeIva, idsExcluir = [], mostrarMensaje = true) {
 
     let concepto = '';
     let fechaVencimiento = '';
@@ -13337,11 +13342,12 @@ async function generarAjuste(diferencia, porcentajeIva, idsExcluir = []) {
             vm.contratoId()
         );
 
-        mostrarMensajeSmart(
-            'Prefacturas creadas correctamente. ' +
-            'Puede consultarlas en la solapa correspondiente.'
-        );
-
+        if (mostrarMensaje) {
+            mostrarMensajeSmart(
+                'Prefacturas creadas correctamente. ' +
+                'Puede consultarlas en la solapa correspondiente.'
+            );
+        }
         // =====================================================
         // 9. DEVOLVER RESULTADO
         // =====================================================
@@ -13645,6 +13651,8 @@ function confirmarReversionAjuste() {
 
     const contratoId = vm.contratoId();
 
+    const contratoInteresesId = vm.contratoInteresesId()
+
     if (!contratoId) {
         mensError("No se ha identificado el contrato");
         return;
@@ -13681,6 +13689,8 @@ function confirmarReversionAjuste() {
             myconfig.apiUrl +
             "/api/contratos/" +
             contratoId +
+            "/" +
+            contratoInteresesId +
             "/revertir-ajuste",
             {},
             function (err, resultado) {
