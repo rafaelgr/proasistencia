@@ -112,6 +112,10 @@ var documentacion_router = require('./lib/documentacion/documentacion_controller
 var propuestas_router = require('./lib/propuestas/propuestas_controller');
 
 
+//notas
+var notas_router = require('./lib/propuestas/propuestas_controller')
+
+
 
 
 var pack = require('./package.json');
@@ -322,6 +326,10 @@ app.use('/api/documentacion', documentacion_router);
 
 //PROPUESTAS 
 app.use('/api/propuestas', propuestas_router);
+
+//NOTAS
+
+app.use('api/notas', notas_router)
 
 
 
