@@ -201,6 +201,28 @@ function obtainReportJson(obj) {
     report.regData(dataSet.dataSetName, "", dataSet);
     report.dictionary.synchronize();
 
+    // Ocultar DataBand8 cuando no existen pagos en la narrativa
+    // Exclusivamente para el acta de recepción de PROAS
+
+    if (file === "/reports/acta_recepcion_proas.mrt") {
+
+        const narrativa = obj.datos_contrato_pagos_narrativa;
+
+        if (!Array.isArray(narrativa) || narrativa.length === 0) {
+
+            report.pages.list.forEach(page => {
+
+                const banda = page.components.list.find(
+                    c => c.name === "DataBand8"
+                );
+
+                if (banda) {
+                    page.components.remove(banda);
+                    console.log("DataBand8 eliminada del informe");
+                }
+            });
+        }
+    }
     // Habilitar HTML en todos los textos
     report.pages.list.forEach(page => {
         page.components.list.forEach(component => {
