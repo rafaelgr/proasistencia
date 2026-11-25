@@ -866,7 +866,7 @@ function aceptar(salir) {
                 "poblacionRepresentante": vm.poblacionRepresentante(),
                 "codPostalRepresentante": vm.codPostalRepresentante(),
                 "provinciaRepresentante": vm.provinciaRepresentante(),
-                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId() ? vm.tipoViaRepresentanteId() : null
+                "tipoViaRepresentanteId": vm.stipoViaRepresentanteId() ? vm.stipoViaRepresentanteId() : null
             },
             departamentos: {
                 "departamentos": vm.elegidosDepartamentos()

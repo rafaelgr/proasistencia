@@ -1628,7 +1628,7 @@
                                                     <div class="widget-body">
                                                         <!-- this is what the user will see -->
                                                         <header>
-                                                            Notas web del contrato
+                                                            Notas web de la factura
                                                         </header>
                                                         <form id="frmNotasWeb">
                                                             <fieldset>
@@ -1651,10 +1651,16 @@
                                                                     <tr>
                                                                         <th data-class="expand">
                                                                             <i
-                                                                                class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Acción
+                                                                                class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Titulo
                                                                         </th>
                                                                         <th data-hide="phone">
                                                                             Texto
+                                                                        </th>
+                                                                        <th data-hide="phone">
+                                                                            Fecha de Creación
+                                                                        </th>
+                                                                        <th data-hide="phone">
+                                                                            Fecha de edición
                                                                         </th>
                                                                         <th data-hide="phone">
                                                                             Usuario
@@ -1908,8 +1914,8 @@
                                     <section class="col col-md-12">
                                         <label class="label">Acción</label>
                                         <label class="input">
-                                            <input id="txtAccion" name="accion" type="text" maxlength="255"
-                                                data-bind="value: accion">
+                                            <input id="txtTitulo" name="txtTitulo" type="text" maxlength="255"
+                                                data-bind="value: titulo">
                                         </label>
                                     </section>
 
@@ -1919,7 +1925,7 @@
                             <section>
                                 <label class="label">Texto</label>
                                 <label class="textarea">
-                                    <textarea id="txtTextoNota" name="textoNota" class="custom-scroll" rows="6"
+                                    <textarea id="txtTextoNota" name="txtTextoNota" class="custom-scroll" rows="6"
                                         data-bind="value: textoNota"></textarea>
                                 </label>
                             </section>

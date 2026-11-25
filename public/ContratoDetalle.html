@@ -4575,10 +4575,16 @@
                                                                             <tr>
                                                                                 <th data-class="expand">
                                                                                     <i
-                                                                                        class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Acción
+                                                                                        class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Titulo
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Texto
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Fecha de Creación
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Fecha de edición
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Usuario
@@ -5998,10 +6004,10 @@
 
                                     <!-- Acción -->
                                     <section class="col col-md-12">
-                                        <label class="label">Acción</label>
+                                        <label class="label">Titulo</label>
                                         <label class="input">
-                                            <input id="txtAccion" name="accion" type="text" maxlength="255"
-                                                data-bind="value: accion">
+                                            <input id="txtTitulo" name="txtTitulo" type="text" maxlength="255"
+                                                data-bind="value: titulo">
                                         </label>
                                     </section>
 
@@ -6011,7 +6017,7 @@
                             <section>
                                 <label class="label">Texto</label>
                                 <label class="textarea">
-                                    <textarea id="txtTextoNota" name="textoNota" class="custom-scroll" rows="6"
+                                    <textarea id="txtTextoNota" name="txtTextoNota" class="custom-scroll" rows="6"
                                         data-bind="value: textoNota"></textarea>
                                 </label>
                             </section>
@@ -6077,7 +6083,8 @@
                             </div>
                         </fieldset>
                         <footer>
-                            <button id="btnAceptarDestinatarios" class="btn btn-primary" onclick="loadModalTipocorreo()">
+                            <button id="btnAceptarDestinatarios" class="btn btn-primary"
+                                onclick="loadModalTipocorreo()">
                                 Enviar correo
                             </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -6111,7 +6118,8 @@
                                     <div>
                                         <input type='radio' id='radioCorreoActa1' name='firmaActaGroup' value='0'
                                             data-bind="checked: correoActa" />
-                                        Al cliente y la DF </div>
+                                        Al cliente y la DF
+                                    </div>
                                     <div><input type='radio' id='radioCorreoActa2' name='firmaActaGroup' value='1'
                                             data-bind="checked: correoActa" />
                                         Al cliente</div>

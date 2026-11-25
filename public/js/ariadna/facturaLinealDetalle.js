@@ -155,12 +155,77 @@ function initForm() {
     initTablaCobros();
     initTablaAnticipos();
     initTablaAnticiposAsociados();
+    initTablaNotasWeb();
+
+    $("#notasweb-form").submit(function (event) {
+        event.preventDefault();
+        aceptarNotaWeb();
+    });
+    $('#myTab a[href="#s4"]').on("shown.bs.tab", function () {
+        $("#dt_notasweb").DataTable().columns.adjust();
+    });
 
     facturaId = gup('FacturaId');
     cmd = gup("cmd");
     desdeContrato = gup("desdeContrato");
     ContratoId = gup("ContratoId");
     conCobro = gup("ConCobro");
+
+    //evento asociado a la carga de un archivo
+    $('#upload-input').on('change', function () {
+        var files = this.files;
+        if (!files.length || !Number(vm.facturaId())) return;
+
+        // create a FormData object which will be sent as the data payload in the
+        // AJAX request
+        var formData = new FormData();
+        // loop through all the selected files and add them to the formData object
+
+        var file = files[0];
+        this.value = '';
+        var ext = file.name.split('.').pop().toLowerCase();
+        if (ext != "pdf") return mensError("No se permiten formatos diferentes a pdf");
+        // add the files to formData object for the data payload
+        formData.append('uploads[]', file, usuario.usuarioId + "@" + file.name);
+        var name = vm.serie() + "-" + vm.ano() + "-" + String(vm.numero() || 0).padStart(6, '0') + "_" + vm.empresaId() + "." + ext;
+
+        $.ajax({
+            url: '/api/upload/s3/factura/' + name + "/" + vm.facturaId(),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                loadDoc(data);
+            },
+            xhr: function () {
+                // create an XMLHttpRequest
+                var xhr = new XMLHttpRequest();
+                // listen to the 'progress' event
+                xhr.upload.addEventListener('progress', function (evt) {
+                    if (evt.lengthComputable) {
+                        // calculate the percentage of upload completed
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        // update the Bootstrap progress bar with the new percentage
+                        $('#s3 .progress-bar').text(percentComplete + '%');
+                        $('#s3 .progress-bar').width(percentComplete + '%');
+                        // once the upload reaches 100%, set the progress bar text to done
+                        if (percentComplete === 100) {
+                            $('#s3 .progress-bar').html('Fichero subido');
+                        }
+                    }
+                }, false);
+                return xhr;
+            },
+            error: function (xhr, textStatus, errorThrwon) {
+                var m = xhr.responseText;
+                if (!m) m = "Error al cargar";
+                mensError(m);
+                return;
+            }
+        });
+    });
 
     $('#btnNuevaLinea').prop('disabled', false);
     $('#btnAceptarLinea').prop('disabled', false);
@@ -174,6 +239,8 @@ function initForm() {
             loadLineasFactura(data.facturaId);
             loadBasesFactura(data.facturaId);
             loadCobrosFactura(data.facturaId);
+            getNotasWeb(data.facturaId);
+            if (data.nombreFacturaPdf) loadDoc(data.nombreFacturaPdf);
             $('#txtFecha').prop('disabled', true);
             //actualización de propiedad al click
             var clienteId = data.clienteId;
@@ -226,6 +293,7 @@ function initForm() {
 
         })
     } else {
+        $('#myTab a[href="#s3"], #myTab a[href="#s4"]').parent().hide();
         // caso alta
         vm.facturaId(0);
         vm.porcentajeRetencion(0);
@@ -243,6 +311,9 @@ function initForm() {
 function admData() {
     var self = this;
     self.facturaId = ko.observable();
+    self.notaId = ko.observable();
+    self.titulo = ko.observable();
+    self.textoNota = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
     self.serie = ko.observable();
@@ -2357,7 +2428,215 @@ function bloqueaEdicionCampos() {
     $('#btnVincularAnticipo').hide();
 }
 
+// Vista previa del documento de la factura
+function loadDoc(filename) {
+    if (!filename) return;
+    llamadaAjax("GET", "/api/parametros/0", null, function (err, data) {
+        if (err) return;
+        var extension = filename.split(".").pop().toLowerCase();
+        var url = data.raiz_url_server + "facturas/" + encodeURIComponent(filename);
+        var container = $("#docContainer").empty();
+        $("#msgContainer").empty();
+        if (extension === "pdf") {
+            $("<iframe>", { src: url, title: "Factura PDF", width: "100%", height: 600 })
+                .appendTo(container);
+        } else if (["jpg", "png", "gif"].indexOf(extension) !== -1) {
+            $("<img>", { src: url, alt: "Factura", width: "100%" }).appendTo(container);
+        } else {
+            $("#msgContainer").text("Vista previa no disponible");
+        }
+    });
+}
+
+function initTablaNotasWeb() {
+    $('#dt_notasweb').dataTable({
+        autoWidth: false,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        columnDefs: [{
+            "width": "50%",
+            "targets": 1
+        }],
+        columns: [{
+            data: "titulo"
+        }, {
+            data: "texto"
+        },
+        {
+            data: "fechaCreacion",
+            render: function (data, type, row) {
+                if (data) return moment(data).format('DD/MM/YYYY');
+                return '';
+            }
+        },
+        {
+            data: "fechaEdicion",
+            render: function (data, type, row) {
+                if (data) return moment(data).format('DD/MM/YYYY');
+                return '';
+            }
+        }, {
+            data: "usuarioNombre"
+        },
+        {
+            data: "notaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteNotaWeb(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' onclick='editNotaWeb(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                if (!usuario.puedeEditar) {
+                    if(row.usuarioNombre !== usuario.nombre) {
+                        bt1 = ""; 
+                        bt2 = ""
+                    }
+                }
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function aceptarNotaWeb() {
+
+     if (!datosOKNotas()) {
+        return;
+    }
+
+    if (!Number(vm.facturaId())) return;
+    var data = {
+        nota: {
+            notaId: vm.notaId(),
+            registroId: vm.facturaId(),
+            tipo: 2,
+            titulo: vm.titulo(),
+            texto: vm.textoNota(),
+            usuarioId: usuario.usuarioId
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/notas/";
+    if (vm.notaId()) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/notas/" + vm.notaId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalNotasWeb').modal('hide');
+        getNotasWeb(vm.facturaId());
+    });
+}
+
+function deleteNotaWeb(id) {
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/notas/" + id, null, function (err, data) {
+            if (err) return;
+            getNotasWeb(vm.facturaId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadNotaWeb(data) {
+    vm.notaId(data.notaId);
+    vm.titulo(data.titulo);
+    vm.textoNota(data.texto);
+}
+
+function limpiaNotaWeb(data) {
+    vm.notaId(0);
+    vm.titulo(null);
+    vm.textoNota(null);
+}
+
+
+function nuevaNotaWeb() {
+    limpiaNotaWeb(); // es un alta
+}
+
+function loadTablaNotasWeb(data) {
+    var dt = $('#dt_notasweb').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function getNotasWeb(facturaId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/notas/por-tipo/" + facturaId + "/" + 2, null, function (err, data) {
+        if (err) return;
+        loadTablaNotasWeb(data);
+    });
+}
+
+function editNotaWeb(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/notas/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                loadNotaWeb(data);
+                $("#modalNotasWeb").modal("show");
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
 
 
 
 
+function datosOKNotas() {
+    $('#notasweb-form').validate({
+        rules: {
+            txtTitulo: {
+                required: true
+            },
+            txtTextoNota: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtTitulo: {
+                required: "Debe escribir un título"
+            },
+            txtTextoNota: {
+                required: "Debe escribir un texto",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#notasweb-form').valid();
+}

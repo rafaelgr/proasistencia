@@ -113,7 +113,7 @@ var propuestas_router = require('./lib/propuestas/propuestas_controller');
 
 
 //notas
-var notas_router = require('./lib/propuestas/propuestas_controller')
+var notas_router = require('./lib/notas/notas_controller')
 
 
 
@@ -329,7 +329,7 @@ app.use('/api/propuestas', propuestas_router);
 
 //NOTAS
 
-app.use('api/notas', notas_router)
+app.use('/api/notas', notas_router)
 
 
 
@@ -345,7 +345,7 @@ ioAPI.init(io);
 
 //starting daemon
 setInterval(daemonApi.run, process.env.COMERCIALIZA_DELAY || 900000);
-recordatoriosActaRecepcion.iniciar();
+//recordatoriosActaRecepcion.iniciar();
 
 
 // -- console message

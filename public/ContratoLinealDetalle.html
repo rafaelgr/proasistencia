@@ -646,7 +646,7 @@
                                         <a data-toggle="tab" href="#s12"><i class="fa fa-user"></i> <span
                                                 class="hidden-mobile hidden-tablet">Datos cliente</span></a>
                                     </li>
-                                    <li id="tabNotas">
+                                    <li id="tabNotas" style="display: none">
                                         <a data-toggle="tab" href="#s16"><i class="fa fa-list-alt"></i> <span
                                                 class="hidden-mobile hidden-tablet">Notas</span></a>
                                     </li>
@@ -3508,7 +3508,7 @@
                                                                 <form id="frmNotasWeb">
                                                                     <fieldset>
                                                                         <div class="pull-right">
-                                                                            <button id="btnNuevaNotaWeb"
+                                                                            <button id="btnNuevaNotaWeb" type="button"
                                                                                 title="Nueva nota web"
                                                                                 data-toggle="modal"
                                                                                 data-target="#modalNotasWeb"
@@ -3528,10 +3528,16 @@
                                                                             <tr>
                                                                                 <th data-class="expand">
                                                                                     <i
-                                                                                        class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Acción
+                                                                                        class="fa fa-fw fa-th text-muted hidden-md hidden-sm hidden-xs"></i>Título
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Texto
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Fecha de Creación
+                                                                                </th>
+                                                                                <th data-hide="phone">
+                                                                                    Fecha de edición
                                                                                 </th>
                                                                                 <th data-hide="phone">
                                                                                     Usuario
@@ -4677,10 +4683,10 @@
 
                                     <!-- Acción -->
                                     <section class="col col-md-12">
-                                        <label class="label">Acción</label>
+                                        <label class="label">Título</label>
                                         <label class="input">
-                                            <input id="txtAccion" name="accion" type="text" maxlength="255"
-                                                data-bind="value: accion">
+                                            <input id="txtTitulo" name="txtTitulo" type="text" maxlength="255"
+                                                data-bind="value: titulo">
                                         </label>
                                     </section>
 
@@ -4690,7 +4696,7 @@
                             <section>
                                 <label class="label">Texto</label>
                                 <label class="textarea">
-                                    <textarea id="txtTextoNota" name="textoNota" class="custom-scroll" rows="6"
+                                    <textarea id="txtTextoNota" name="txtTextoNota" class="custom-scroll" rows="6"
                                         data-bind="value: textoNota"></textarea>
                                 </label>
                             </section>
@@ -4698,8 +4704,7 @@
                         </fieldset>
 
                         <footer>
-                            <button id="btnAceptarNota" type="button" class="btn btn-primary"
-                                onclick="aceptarNotaWeb()">
+                            <button id="btnAceptarNota" type="submit" class="btn btn-primary">
                                 Aceptar
                             </button>
 

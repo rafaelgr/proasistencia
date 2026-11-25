@@ -55,9 +55,9 @@ function initForm() {
     $('#txtPorcentajeAgente').on('blur', cambioCampoConRecalculoDesdeCoste);
     $('#txtPorcentajeRetencion').on('blur', cambioPorcentajeRetencion);
 
-   /*  $("#txtPrecio").focus(function () {
-        $('#txtPrecio').val(null);
-    }); */
+    /*  $("#txtPrecio").focus(function () {
+         $('#txtPrecio').val(null);
+     }); */
 
     $("#txtPrecio").dblclick(function () {
         if (!usuario.puedeEditar) return;
@@ -154,6 +154,15 @@ function initForm() {
     initTablaPrefacturasLineas();
     initTablaBases();
 
+    initTablaNotasWeb();
+    $("#notasweb-form").submit(function (event) {
+        event.preventDefault();
+        aceptarNotaWeb();
+    });
+    $('#prefacturaTabs a[href="#prefactura-notas"]').on("shown.bs.tab", function () {
+        $("#dt_notasweb").DataTable().columns.adjust();
+    });
+
     prefacturaId = gup('PrefacturaId');
     cmd = gup("cmd");
     ContratoId = gup("ContratoId");
@@ -176,6 +185,8 @@ function initForm() {
             loadData(data);
             loadLineasPrefactura(data.prefacturaId);
             loadBasesPrefactura(data.prefacturaId);
+            $("#tabNotas").show();
+            getNotasWeb(data.prefacturaId);
         })
     } else {
         // caso alta
@@ -205,6 +216,9 @@ function initForm() {
 
 function admData() {
     var self = this;
+    self.notaId = ko.observable();
+    self.titulo = ko.observable();
+    self.textoNota = ko.observable();
     self.prefacturaId = ko.observable();
     self.ano = ko.observable();
     self.numero = ko.observable();
@@ -792,7 +806,7 @@ function limpiaDataLinea(data) {
         vm.porcentaje(null);
         loadTiposIva();
     } else {
-         loadTiposIva(vm.tipoIvaId());
+        loadTiposIva(vm.tipoIvaId());
     }
     vm.descripcion(null);
     vm.cantidad(null);
@@ -1635,3 +1649,195 @@ var f_open_post = function (verb, url, data, target) {
     form.submit();
 };
 
+function initTablaNotasWeb() {
+    $('#dt_notasweb').dataTable({
+        autoWidth: false,
+        responsive: true,
+        language: {
+            processing: "Procesando...",
+            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            infoPostFix: "",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            paginate: {
+                first: "Primero",
+                previous: "Anterior",
+                next: "Siguiente",
+                last: "Último"
+            },
+            aria: {
+                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                sortDescending: ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        columnDefs: [{
+            "width": "50%",
+            "targets": 1
+        }],
+        columns: [{
+            data: "titulo"
+        }, {
+            data: "texto"
+        },
+        {
+            data: "fechaCreacion",
+            render: function (data, type, row) {
+                if (data) return moment(data).format('DD/MM/YYYY');
+                return '';
+            }
+        },
+        {
+            data: "fechaEdicion",
+            render: function (data, type, row) {
+                if (data) return moment(data).format('DD/MM/YYYY');
+                return '';
+            }
+        }, {
+            data: "usuarioNombre"
+        },
+        {
+            data: "notaId",
+            render: function (data, type, row) {
+                var bt1 = "<button class='btn btn-circle btn-danger btn-sm' onclick='deleteNotaWeb(" + data + ");' title='Eliminar registro'> <i class='fa fa-trash-o fa-fw'></i> </button>";
+                var bt2 = "<button class='btn btn-circle btn-success btn-sm' onclick='editNotaWeb(" + data + ");' title='Editar registro'> <i class='fa fa-edit fa-fw'></i> </button>";
+                if (!usuario.puedeEditar) {
+                    if (row.usuarioNombre !== usuario.nombre) {
+                        bt1 = "";
+                        bt2 = ""
+                    }
+                }
+                var html = "<div class='pull-right'>" + bt1 + " " + bt2 + "</div>";
+                return html;
+            }
+        }]
+    });
+}
+
+function aceptarNotaWeb() {
+
+
+    if (!datosOKNotas()) {
+        return;
+    }
+
+    if (!Number(vm.prefacturaId())) return;
+    var data = {
+        nota: {
+            notaId: vm.notaId(),
+            registroId: vm.prefacturaId(),
+            tipo: 1,
+            titulo: vm.titulo(),
+            texto: vm.textoNota(),
+            usuarioId: usuario.usuarioId
+        }
+    }
+    var verbo = "POST";
+    var url = myconfig.apiUrl + "/api/notas/";
+    if (vm.notaId()) {
+        verbo = "PUT";
+        url = myconfig.apiUrl + "/api/notas/" + vm.notaId();
+    }
+    llamadaAjax(verbo, url, data, function (err, data) {
+        if (err) return;
+        $('#modalNotasWeb').modal('hide');
+        getNotasWeb(vm.prefacturaId());
+    });
+}
+
+function deleteNotaWeb(id) {
+    var mensaje = "¿Realmente desea borrar este registro?";
+    mensajeAceptarCancelar(mensaje, function () {
+        // aceptar borra realmente la línea
+        llamadaAjax('DELETE', myconfig.apiUrl + "/api/notas/" + id, null, function (err, data) {
+            if (err) return;
+            getNotasWeb(vm.prefacturaId());
+        });
+    }, function () {
+        // cancelar no hace nada
+    });
+}
+
+function loadNotaWeb(data) {
+    vm.notaId(data.notaId);
+    vm.titulo(data.titulo);
+    vm.textoNota(data.texto);
+}
+
+function limpiaNotaWeb(data) {
+    vm.notaId(0);
+    vm.titulo(null);
+    vm.textoNota(null);
+}
+
+
+function nuevaNotaWeb() {
+    limpiaNotaWeb(); // es un alta
+}
+
+function loadTablaNotasWeb(data) {
+    var dt = $('#dt_notasweb').dataTable();
+    if (data !== null && data.length === 0) {
+        data = null;
+    }
+    dt.fnClearTable();
+    if (data) dt.fnAddData(data);
+    dt.fnDraw();
+}
+
+function getNotasWeb(prefacturaId) {
+    llamadaAjax("GET", myconfig.apiUrl + "/api/notas/por-tipo/" + prefacturaId + "/" + 1, null, function (err, data) {
+        if (err) return;
+        loadTablaNotasWeb(data);
+    });
+}
+
+function editNotaWeb(id) {
+    $.ajax({
+        type: "GET",
+        url: "/api/notas/" + id,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (data, status) {
+            if (data) {
+                loadNotaWeb(data);
+                $("#modalNotasWeb").modal("show");
+            }
+        },
+        error: function (err) {
+            mensErrorAjax(err);
+            // si hay algo más que hacer lo haremos aquí.
+        }
+    });
+}
+
+
+
+function datosOKNotas() {
+    $('#notasweb-form').validate({
+        rules: {
+            txtTitulo: {
+                required: true
+            },
+            txtTextoNota: {
+                required: true
+            }
+        },
+        // Messages for form validation
+        messages: {
+            txtTitulo: {
+                required: "Debe escribir un título"
+            },
+            txtTextoNota: {
+                required: "Debe escribir un texto",
+            }
+        },
+        // Do not change code below
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+    return $('#notasweb-form').valid();
+}
