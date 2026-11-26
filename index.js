@@ -113,7 +113,10 @@ var propuestas_router = require('./lib/propuestas/propuestas_controller');
 
 
 //notas
-var notas_router = require('./lib/notas/notas_controller')
+var notas_router = require('./lib/notas/notas_controller');
+
+// AGENTE INTELIGENCIA ARTIFICIAL
+var agente_ia_router = require('./lib/agente_ia/agente_ia_controller');
 
 
 
@@ -328,8 +331,10 @@ app.use('/api/documentacion', documentacion_router);
 app.use('/api/propuestas', propuestas_router);
 
 //NOTAS
+app.use('/api/notas', notas_router);
 
-app.use('/api/notas', notas_router)
+// AGENTE INTELIGENCIA ARTIFICIAL
+app.use('/api/agente_ia', agente_ia_router);
 
 
 
